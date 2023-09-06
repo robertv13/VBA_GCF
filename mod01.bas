@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.9"
+Global Const gAppVersion As String = "v1.9.1"
 
 Sub FilterProfDate()
 
