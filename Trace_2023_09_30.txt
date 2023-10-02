@@ -1,0 +1,1277 @@
+CRÉATION D'UNE NOUVELLE FACTURE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New()
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 14 - Le 30 septembre 2023
+
+SAUVEGARDE DE LA FACTURE, SANS AVOIR SAISI DE CLIENT ???
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 16   B21 (Next Invoice #) = 14   et InvRow = 16
+		InvRow = 16   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 16   InvCol = 3   Cellule = B18   et Valeur = 5
+		InvRow = 16   InvCol = 4   Cellule = J4   et Valeur = Marie Guay
+		InvRow = 16   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 16   InvCol = 6   Cellule = W69   et Valeur = 0
+		InvRow = 16   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 16   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 16   InvCol = 9   Cellule = W73   et Valeur = 0
+		InvRow = 16   InvCol = 10   Cellule = W74   et Valeur = 0
+		InvRow = 16   InvCol = 11   Cellule = W76   et Valeur = 0
+		InvRow = 16   InvCol = 12   Cellule = W78   et Valeur = 0
+		Total de la facture (avant taxes) =  0,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList()
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 16   B21 (Next Invoice #) = 14   et InvRow = 16
+		InvRow = 16   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 16   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 16   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 16   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 16   InvCol = 6   Cellule = W69   et Valeur = 0
+		InvRow = 16   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 16   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 16   InvCol = 9   Cellule = W73   et Valeur = 0
+		InvRow = 16   InvCol = 10   Cellule = W74   et Valeur = 0
+		InvRow = 16   InvCol = 11   Cellule = W76   et Valeur = 0
+		InvRow = 16   InvCol = 12   Cellule = W78   et Valeur = 0
+		Total de la facture (avant taxes) =  0,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+	
+AJUSTEMENT MANUEL B20 & B21...
+
+CLIC DANS CLIENT ET REVIENT AU PREMIER SERVICE:
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $J$4:$K$4
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $K$10
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+AJOUT D'UN PREMIER SERVICE (2 heures @ 350 $):
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $L$10
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $M$10
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $N$10
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $O$10
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+SAUVEGARDE DE LA FACTURE (# 14, ligne 17 dans InvList):
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 600
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 30
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 59,85
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 689,85
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+			 C38 = 2   D38 = 350   E38 = 700
+		Total de la facture (avant taxes) =  700,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+AJOUT D'UN DEUXIÈME SERVICE (1 heures @ 250 $) et SAUVEGARDE:
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $K$11
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $L$11
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $M$11
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $N$11
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 750
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 37,5
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 74,81
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 862,31
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+			 C39 = 0,5   D39 = 350   E39 = 175
+		Total de la facture (avant taxes) =  875,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+SAUVEGARDE:
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $P$20
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 750
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 37,5
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 74,81
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 862,31
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+		Total de la facture (avant taxes) =  875,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+AJUSTEMENT MANUEL DE LA CELLULE $V$66 (Taux horaire):
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $V$66
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $V$67
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 875
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 43,75
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 87,28
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 1006,03
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+		Total de la facture (avant taxes) =  875,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+AJOUT D'UN TROISIÈME SERVICE (10 heures @ 350 $) sans la SAUVEGARDE:
+	
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $K$12
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $L$12
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $M$12
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $N$12
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $V$66
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+		Target Address = $V$67
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 875
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 43,75
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 87,28
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 1006,03
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+		Total de la facture (avant taxes) =  875,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+SAUVEGARDE DE LA FACTURE:
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $V$66
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+    B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+    InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+    InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+    InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+    InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+    InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+    InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+    InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+    InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+    InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+    InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+    InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+         C38 = 2   D38 = 350   E38 = 700
+         C39 = 0,5   D39 = 350   E39 = 175
+Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+         C40 = 10   D40 = 350   E40 = 3500
+    Total de la facture (avant taxes) = 4 375,00 $
+Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $K$12
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $L$12
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $M$12
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $N$12
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $V$66
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Target Address = $V$67
+Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+    B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+    InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+    InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+    InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+    InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+    InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 875
+    InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+    InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+    InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 43,75
+    InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 87,28
+    InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 1006,03
+    InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+         C38 = 2   D38 = 350   E38 = 700
+         C39 = 0,5   D39 = 350   E39 = 175
+    Total de la facture (avant taxes) =  875,00 $
+Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+CORRECTION, DANS INVITEMS du INVROW...
+
+SAUVEGARDE DE LA FACTURE:
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+			 C40 = 10   D40 = 350   E40 = 3500
+		Total de la facture (avant taxes) = 4 375,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+10:00 - SAUVEGARDE DU FICHIER EXCEL 'GCF_Professional_Invoice_v0.1.9.Debug.Print'
+
+10:10 - SAUVEGARDE DE LA FACTURE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+			 C40 = 10   D40 = 350   E40 = 3500
+		Total de la facture (avant taxes) = 4 375,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+10:18 - SAUVEGARDE DE LA FACTURE APRÈS AVOIR AJUSTÉ LES MESSAGES (Debug.Print):
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 30/sept/2023
+		B18 = 4   B20 = 17
+			 B - InvRow = 17
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+		InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+		InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+		InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+		InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+		InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+		InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+		InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+		InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+		InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+		InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+		InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+			 C40 = 10   D40 = 350   E40 = 3500
+		Total de la facture (avant taxes) = 4 375,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+10:20 - SAUVEGARDE DE LA FACTURE APRÈS AVOIR AJUSTÉ LES MESSAGES (Debug.Print):
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 10:20:44
+		B18 = 4   B20 = 17
+			 B - InvRow = 17
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+			 InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+			 InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+			 InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+			 InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+			 InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+			 InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+			 InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+			 InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+			 InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+			 InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+			 InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+			 C38 = 2   D38 = 350   E38 = 700
+			 C39 = 0,5   D39 = 350   E39 = 175
+			 C40 = 10   D40 = 350   E40 = 3500
+		Total de la facture (avant taxes) = 4 375,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+	
+10:23 - AJUSTEMENTS MINEURS AUX MESSAGES (Debug.Print):
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 10:23:32
+		B18 = 4   B20 = 17
+			 Cas B: InvRow = 17
+		B20 = 17   B21 (Next Invoice #) = 15   et InvRow = 17
+			 InvRow = 17   InvCol = 2   Cellule = N3   et Valeur = 30/sept/2023
+			 InvRow = 17   InvCol = 3   Cellule = B18   et Valeur = 4
+			 InvRow = 17   InvCol = 4   Cellule = J4   et Valeur = Robert M. Vigneault
+			 InvRow = 17   InvCol = 5   Cellule = N4   et Valeur = 30/oct/2023
+			 InvRow = 17   InvCol = 6   Cellule = W69   et Valeur = 4375
+			 InvRow = 17   InvCol = 7   Cellule = W70   et Valeur = 0
+			 InvRow = 17   InvCol = 8   Cellule = W71   et Valeur = 0
+			 InvRow = 17   InvCol = 9   Cellule = W73   et Valeur = 218,75
+			 InvRow = 17   InvCol = 10   Cellule = W74   et Valeur = 436,41
+			 InvRow = 17   InvCol = 11   Cellule = W76   et Valeur = 5030,16
+			 InvRow = 17   InvCol = 12   Cellule = W78   et Valeur = 0
+				  C38 = 2   D38 = 350   E38 = 700
+				  C39 = 0,5   D39 = 350   E39 = 175
+				  C40 = 10   D40 = 350   E40 = 3500
+		Total de la facture (avant taxes) = 4 375,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+	
+10:32 - AJOUT DE L'HEURE DANS LES MESSAGES (Debug.Print)
+
+10:33 - NOUVELLE FACTURE:
+
+	BUG - Correction de la commande .ClearContents sur une cellule fusionnée
+	
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:33:01
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:35:00
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:35:00
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:35:00
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:35:00
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 15 - Le 30 septembre 2023
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:36:09
+		Target.Address = $N$3   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:36:15
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:36:15
+		Target.Address = $N$4   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:36:23
+		Target.Address = $J$3   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:36:29
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:36:29
+		Target.Address = $K$3   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:36:31
+		Target.Address = $J$3   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+	
+10:39 - AJUSTMENT MANUEL AUX CELLULES B20 & B21
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:38:51
+		Target.Address = $B$20   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:38:55
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:38:55
+		Target.Address = $B$21   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+	
+10:44 - TEST EN CLIQUANT À PLUSIEURS REPRISES SUR LE BOUTON 'Nouvelle Facture':
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:44:31
+		Target.Address = $B$20   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	'Effacer manuellement les cellules K10:K12 (pas effacés)
+	
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:44:47
+		Target.Address = $K$10:$K$12   Target.CountLarge = 3
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:44:48
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:44:50
+		Target.Address = $L$10:$M$12   Target.CountLarge = 6
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:44:51
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:44:54
+		Target.Address = $O$10:$O$12   Target.CountLarge = 3
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:44:54
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:45:01
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:45:01
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:01
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:45:02
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:45:02
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:02
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:45:03
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:45:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+10:47 - AJUSTEMENT MANUEL DE B20=18 & B21=17 & SAUVEGARDE DE LA FACTURE (SANS NOM DE CLIENT)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:47:51
+		Target.Address = $B$21   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:47:54
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:47:54
+		Target.Address = $B$22   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 10:48:25
+		B18 =    B20 = 18
+
+10:51 - AJOUT D'UN MESSAGE SI LA FACTURE NE PEUT PAS ÊTRE SAUVEGARDÉE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 10:51:37
+    B18 =    B20 = 18
+    Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine
+	
+10:52 - SAISIE DU NOM DE CLIENT & SAUVEGARDE DE LA FACTURE:
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:53:24
+		Target.Address = $K$5   Target.CountLarge = 1 (Sélection de K5 - Erreur)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:53:25
+		Target.Address = $J$4:$K$4   Target.CountLarge = 2 (Sélection de J4:K4)
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 10:53:31
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:53:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:53:59
+		Target.Address = $E$23   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:20
+		Target.Address = $K$10   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:27
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:28
+		Target.Address = $L$10   Target.CountLarge = 1 (Saisie de la description # 1)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:31
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:31
+		Target.Address = $M$10   Target.CountLarge = 1 (Saisie des heures # 1)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:33
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:33
+		Target.Address = $N$10   Target.CountLarge = 1 (Saisie du taux horaire # 1)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:38
+		Target.Address = $K$11   Target.CountLarge = 1 (Saisie de la description # 2)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:52
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:53
+		Target.Address = $L$11   Target.CountLarge = 1 (Saisie des heures # 2)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:55
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:55
+		Target.Address = $M$11   Target.CountLarge = 1 (Saisie du taux horaire # 2)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:54:57
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:57
+		Target.Address = $N$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 10:54:58
+		Target.Address = $O$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+10:55 - SAUVEGARDE DE LA FACTURE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 10:55:03
+		B18 = 2   B20 = 18
+			 Cas B: InvRow = 18
+		B20 = 18   B21 (Next Invoice #) = 17   et InvRow = 18
+			 InvRow = 18   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 18   InvCol = 3   From Cell  = B18   et Valeur = 2
+			 InvRow = 18   InvCol = 4   From Cell  = J4   et Valeur = CANPLEX INC.
+			 InvRow = 18   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 18   InvCol = 6   From Cell  = W69   et Valeur = 1575
+			 InvRow = 18   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 18   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 18   InvCol = 9   From Cell  = W73   et Valeur = 78,75
+			 InvRow = 18   InvCol = 10   From Cell  = W74   et Valeur = 157,11
+			 InvRow = 18   InvCol = 11   From Cell  = W76   et Valeur = 1810,86
+			 InvRow = 18   InvCol = 12   From Cell  = W78   et Valeur = 0
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:55:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+				  C41 = 1,75   D41 = 350   E41 = 612,5
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 10:55:03
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+				  C42 = 2,75   D42 = 350   E42 = 962,5
+		Total de la facture (avant taxes) = 1 575,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+11:11:55 - AJUSTEMENT MANUEL DES CELLULES B20=18, B21=16, N6=00015 & AJOUT D'UN NOUVEAU BOUTON POUR SAUVEGARDER LA FACTURE (Près de facture)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:12:00
+		Target.Address = $B$21   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 11:12:01
+		Target.Address = $B$21   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:12:01
+		Target.Address = $B$22   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:12:03
+		Target.Address = $N$6   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 11:12:04
+		Target.Address = $N$6   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:12:04
+		Target.Address = $N$7   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:16:46
+		Target.Address = $N$52   Target.CountLarge = 1 (Saisie du montant du dépôt)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 11:16:49
+		Target.Address = $N$52   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:16:49
+		Target.Address = $O$52   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_Print() @ 11:16:57
+	Now exiting  - [Invoice_Macros] - Sub Invoice_Print()
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:17:17
+		Target.Address = $Z$69   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:17:32
+		Target.Address = $AD$73   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:17:43
+		Target.Address = $AE$72   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:18:00
+		Target.Address = $AE$73   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:18:16
+		Target.Address = $AE$76   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:18:42
+		Target.Address = $AD$69   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 11:18:43
+		B18 = 2   B20 = 18
+			 Cas B: InvRow = 18
+		B20 = 18   B21 (Next Invoice #) = 16   et InvRow = 18
+			 InvRow = 18   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 18   InvCol = 3   From Cell  = B18   et Valeur = 2
+			 InvRow = 18   InvCol = 4   From Cell  = J4   et Valeur = CANPLEX INC.
+			 InvRow = 18   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 18   InvCol = 6   From Cell  = W69   et Valeur = 1575
+			 InvRow = 18   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 18   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 18   InvCol = 9   From Cell  = W73   et Valeur = 78,75
+			 InvRow = 18   InvCol = 10   From Cell  = W74   et Valeur = 157,11
+			 InvRow = 18   InvCol = 11   From Cell  = W76   et Valeur = 1810,86
+			 InvRow = 18   InvCol = 12   From Cell  = W78   et Valeur = 499,99
+				  C41 = 1,75   D41 = 350   E41 = 612,5
+				  C42 = 2,75   D42 = 350   E42 = 962,5
+		Total de la facture (avant taxes) = 1 575,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 11:20:50
+		Target.Address = $AE$65   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+	
+12:07:39 - Ouverture du fichier 'GCF_Professional_Invoice_v0.1.10.Debug.Print'
+
+12:12:40 - CRÉATION D'UNE NOUVELLE FACTURE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_New() @ 12:12:50
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $J$4:$K$4   Target.CountLarge = 2 (Initialisation de certaines cellules)
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $J$5,$J$6   Target.CountLarge = 2 (Initialisation de certaines cellules)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 12:12:50
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $B$17,$C$12:$H$9999   Target.CountLarge = 59929 (Initialisation de certaines cellules)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $N$6,$I$10:$M$46,$O$10:$O$35,$N$48,$N$49,$N$52   Target.CountLarge = 215 (Initialisation de certaines cellules)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $N$6   Target.CountLarge = 1 (Initialisation de certaines cellules)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $B$21   Target.CountLarge = 1 (Incrémentation du prochain numéro de facture)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $B$20   Target.CountLarge = 1 (Initialisation de la cellule B20)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $N$3   Target.CountLarge = 1 (Date de facture)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $N$4   Target.CountLarge = 1 (Date due)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:12:50
+		Target.Address = $J$3   Target.CountLarge = 1 (Date formatée)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # 16 - Le 30 septembre 2023
+
+12:17:05 - TENTATIVE DE SAUVEGARDER LA FACTURE SANS AVOIR SAISI DE CLIENT
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:17:39
+		B18 =    B20 = 
+		Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine
+
+12:18:00 - SAISIE DU NOM DE CLIENT (Marie Guay) & SAUVEGARDE DE LA FACTURE
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:18:06
+		Target.Address = $J$4:$K$4   Target.CountLarge = 2
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:18:10
+		Target.Address = $J$4   Target.CountLarge = 1
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:18:10
+		Target.Address = $J$5   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:18:10
+		Target.Address = $J$6   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ 12:18:10
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:18:10
+		Target.Address = $B$17,$C$12:$H$9999   Target.CountLarge = 59929
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+12:21 - SAUVEGARDE DE LA FACTURE (Rien de changé)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:21:12
+		B18 = 5   B20 = 
+			 Cas A: InvRow = 19
+		B20 =    B21 (Next Invoice #) = 17   et InvRow = 19
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et Valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et Valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et Valeur = 0
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et Valeur = 0
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et Valeur = 0
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et Valeur = 0
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et Valeur = 0
+		Total de la facture (avant taxes) =  0,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+12:24:00 - SAISIE DU PREMIER SERVICE (6 @ 325,00 $)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:24:03
+		Target.Address = $K$10   Target.CountLarge = 1 (Description)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:24:04
+		Target.Address = $L$10   Target.CountLarge = 1 (6 heures)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:24:06
+		Target.Address = $L$10   Target.CountLarge = 1 (Taux horaire @ 325,00 $)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:24:06
+		Target.Address = $M$10   Target.CountLarge = 1 ???
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:24:08
+		Target.Address = $M$10   Target.CountLarge = 1 ???
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:24:08
+		Target.Address = $N$10   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:24:12
+		Target.Address = $K$11   Target.CountLarge = 1 (Prêt pour le prochain service)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	'SAUVEGARDE DE LA FACTURE - BUG - InvRow aurait du être 19
+	
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:24:15
+		B18 = 5   B20 = 
+			 Cas A (B20 = ""): InvRow = 20
+		B20 =    B21 (Next Invoice #) = 17   et InvRow = 20
+			 InvRow = 20   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 20   InvCol = 3   From Cell  = B18   et Valeur = 5
+			 InvRow = 20   InvCol = 4   From Cell  = J4   et Valeur = Marie Guay
+			 InvRow = 20   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 20   InvCol = 6   From Cell  = W69   et Valeur = 2100
+			 InvRow = 20   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 20   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 20   InvCol = 9   From Cell  = W73   et Valeur = 105
+			 InvRow = 20   InvCol = 10   From Cell  = W74   et Valeur = 209,48
+			 InvRow = 20   InvCol = 11   From Cell  = W76   et Valeur = 2414,48
+			 InvRow = 20   InvCol = 12   From Cell  = W78   et Valeur = 0
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:24:15
+		Target.Address = $O$10   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+				  C43 = 6   D43 = 325   E43 = 1950
+		Total de la facture (avant taxes) = 1 950,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+	'CORRECTION DU CHAMPS B20 à 19 !!!
+	
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:27:56
+    Target.Address = $B$20   Target.CountLarge = 1 (Ajustement manuel à 19)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:28:04
+		Target.Address = $B$20   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:28:04
+		Target.Address = $E$22   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+12:36:15 - SAUVEGARDE DE LA FACTURE:
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:36:29
+		B18 = 5   B20 = 19
+			 Cas B (B20 <> ") alors B20 est utilisé: InvRow = 19
+		B20 = 19   B21 (Next Invoice #) = 17   et InvRow = 19
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et Valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et Valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et Valeur = 2100
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et Valeur = 105
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et Valeur = 209,48
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et Valeur = 2414,48
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et Valeur = 0
+				  C43 = 6   D43 = 325   E43 = 1950
+		Total de la facture (avant taxes) = 1 950,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:37:01
+		Target.Address = $V$66   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:37:02
+		Target.Address = $V$66   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:37:02
+		Target.Address = $V$67   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:37:19
+		Target.Address = $U$71   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	'À CAUSE DU PROBLÈME DU TAUX HORAIRE SUR LA BELLE FACTURE, LE TOTAL N'EST PAS CONFORME À LA FEUILLE DE TRAVAIL !!!
+	
+12:42:00 - SAUVEGARDE DE LA FACTURE (après avoir changé le taux horaire à la case )
+
+	Now entering - [Invoice_Macros] - Sub Retour_Gauche() @ 12:41:56
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:41:56
+		Target.Address = $C$1:$H$1   Target.CountLarge = 6
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:41:56
+		Target.Address = $P$15   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now exiting  - [Invoice_Macros] - Sub Retour_Gauche()
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:42:21
+		B18 = 5   B20 = 19
+			 Cas B (B20 <> ") alors B20 est utilisé: InvRow = 19
+		B20 = 19   B21 (Next Invoice #) = 17   et InvRow = 19
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et Valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et Valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et Valeur = 1950
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et Valeur = 97,5
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et Valeur = 194,51
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et Valeur = 2242,01
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et Valeur = 0
+				  C43 = 6   D43 = 325   E43 = 1950
+		Total de la facture '00016' (avant taxes) est de 1 950,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+	'InvoiceList & InvoiceItems sont OK
+	
+12:45:00 - AJOUT DU DEUXIÈME SERVICE (2 heures @ 325,00 $)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:45:16
+		Target.Address = $K$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:45:22
+		Target.Address = $K$11   Target.CountLarge = 1 (Saisie de la description # 2)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:45:24
+		Target.Address = $L$11   Target.CountLarge = 1 (Saisie des heures # 2 = 2,00 heures)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:45:25
+		Target.Address = $L$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:45:25
+		Target.Address = $M$11   Target.CountLarge = 1 (Saisie du taux horaire # 2 = 325,00 $)
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:45:27
+		Target.Address = $M$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:45:27
+		Target.Address = $N$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ 12:45:28
+		Target.Address = $O$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:45:31
+		B18 = 5   B20 = 19
+			 Cas B (B20 <> '"') alors B20 est utilisé: InvRow = 19
+		B20 = 19   B21 (Next Invoice #) = 17   et InvRow = 19
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et Valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et Valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et Valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et Valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et Valeur = 2600
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et Valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et Valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et Valeur = 130
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et Valeur = 259,35
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et Valeur = 2989,35
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et Valeur = 0
+				  C43 = 6   D43 = 325   E43 = 1950
+	Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ 12:45:31
+		Target.Address = $O$11   Target.CountLarge = 1
+	Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)
+
+				  C44 = 2   D44 = 325   E44 = 650
+		Total de la facture '00016' (avant taxes) est de 2 600,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+	
+12:52:10 - AUTRE SAUVEGARDE DE LA FACTURE
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 12:52:31
+		B18 = 5   B20 = 19
+			 Cas B (B20 <> '"') alors B20 est utilisé: InvRow = 19
+		B20 = 19   B21 (Next Invoice #) = 17
+		Facture # = 00016 et InvRow = 19 - Posting; dans; InvoiceListing; "
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et la valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et la valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et la valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et la valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et la valeur = 2600
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et la valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et la valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et la valeur = 130
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et la valeur = 259,35
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et la valeur = 2989,35
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et la valeur = 0
+				  C43 = 6   D43 = 325   E43 = 1950
+				  C44 = 2   D44 = 325   E44 = 650
+		Total de la facture '00016' (avant taxes) est de 2 600,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+14:39:00 - AUTRE SAUVEGARDE DE LA FACTURE (sans avoir effectué de changement)
+
+	Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ 14:39:09
+		B18 = 5   B20 = 19
+			 Cas B (B20 <> '"') alors B20 est utilisé: InvRow = 19
+		B20 = 19   B21 (Next Invoice #) = 17
+		Facture # = 00016 et InvRow = 19 - Posting; dans; InvoiceListing; "
+			 InvRow = 19   InvCol = 2   From Cell  = N3   et la valeur = 30/sept/2023
+			 InvRow = 19   InvCol = 3   From Cell  = B18   et la valeur = 5
+			 InvRow = 19   InvCol = 4   From Cell  = J4   et la valeur = Marie Guay
+			 InvRow = 19   InvCol = 5   From Cell  = N4   et la valeur = 30/oct/2023
+			 InvRow = 19   InvCol = 6   From Cell  = W69   et la valeur = 2600
+			 InvRow = 19   InvCol = 7   From Cell  = W70   et la valeur = 0
+			 InvRow = 19   InvCol = 8   From Cell  = W71   et la valeur = 0
+			 InvRow = 19   InvCol = 9   From Cell  = W73   et la valeur = 130
+			 InvRow = 19   InvCol = 10   From Cell  = W74   et la valeur = 259,35
+			 InvRow = 19   InvCol = 11   From Cell  = W76   et la valeur = 2989,35
+			 InvRow = 19   InvCol = 12   From Cell  = W78   et la valeur = 0
+				  C43 = 6   D43 = 325   E43 = 1950
+				  C44 = 2   D44 = 325   E44 = 650
+		Total de la facture '00016' (avant taxes) est de 2 600,00 $
+	Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()
+
+14:40:00 - CRÉATION DU FICHIER 'GCF_Professional_Invoice_v0.1.11.Debug.Print'
+

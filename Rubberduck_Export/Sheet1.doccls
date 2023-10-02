@@ -37,14 +37,14 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Application.EnableEvents = True
     End If
     
-    If Not Intersect(Target, Range("D8:I9999")) Is Nothing Then
+    If Not Intersect(Target, Range("D8:I999999")) Is Nothing Then
        If Target.Row Mod 2 = 0 Then Range("B2").Value = Target.Row Else Range("B2").Value = Target.Row - 1
        If Range("D" & Range("B2").Value).Value <> Empty Then Range("B6").Value = False 'Set New Trans To False
        Else: Shapes("SaveBtn").Visible = msoFalse
     End If
 
 If Target.CountLarge > 1 Then Exit Sub
-    If Not Intersect(Target, Range("G4,H4,D8:D99999")) Is Nothing Then 'Change this to any cell (or cells) you would like to have the Pop-Up Calendar Appear
+    If Not Intersect(Target, Range("G4,H4,D8:D999999")) Is Nothing Then 'Change this to any cell (or cells) you would like to have the Pop-Up Calendar Appear
         If Target.Row Mod 2 = 1 Then Exit Sub
         CheckForSheet
         CalendarShow
