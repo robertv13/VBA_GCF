@@ -20,34 +20,28 @@ Sub Invoice_New()
             .Range("B27").Value = True  'Brand new invoice
         End With
     Else
-        MsgBox "La facture actuelle n'a pas été sauvegardée. Il est inutile d'en créer une nouvelle !"
+        MsgBox "La facture actuelle n'a pas ï¿½tï¿½ sauvegardï¿½e. Il est inutile d'en crï¿½er une nouvelle !"
     End If
     If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_New() - Facture # " & shInvoice.Range("N6").Value & " - " & shInvoice.Range("J3").Value & vbNewLine
 End Sub
 
 Sub Invoice_SaveUpdate()
-    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ " & Time
-    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "B18 = " & shInvoice.Range("B18").Value & "   B20 = " & shInvoice.Range("B20").Value
     With shInvoice
         'Check For Mandatory Fields
         If .Range("B18").Value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
             Exit Sub
         End If
         If .Range("N3").Value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir une date de facture avant de sauvegarder la facture"
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture n'est pas encore saisie, sortie de la routine"
             Exit Sub
         End If
         If .Range("N4").Value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir une date due avant de sauvegarder la facture"
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date due n'est pas encore saisie, sortie de la routine"
             Exit Sub
         End If
         If .Range("N5").Value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir un taux horaire avant de sauvegarder la facture"
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le taux horaire n'est pas encore saisi, sortie de la routine"
             Exit Sub
         End If
         
@@ -56,10 +50,10 @@ Sub Invoice_SaveUpdate()
             InvRow = InvList.Range("A99999").End(xlUp).Row + 1 'First available row
             shInvoice.Range("B20").Value = InvRow 'RMV - 2023-10-02 @ 14:39
             InvList.Range("A" & InvRow).Value = shInvoice.Range("N6").Value 'Invoice #
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est établi avec les lignes existantes: InvRow = " & InvRow
+            If shInvoice.Range("B28").Value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est ï¿½tabli avec les lignes existantes: InvRow = " & InvRow
         Else 'Existing Invoice
             InvRow = .Range("B20").Value 'Set Existing Invoice Row
-             If shInvoice.Range("B28").Value Then Debug.Print Tab(10); "Cas B (B20 <> '""') alors B20 est utilisé: InvRow = " & InvRow
+             If shInvoice.Range("B28").Value Then Debug.Print Tab(10); "Cas B (B20 <> '""') alors B20 est utilisï¿½: InvRow = " & InvRow
         End If
         If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "B20 = " & .Range("B20").Value & "   B21 (Next Invoice #) = " & .Range("B21").Value
         'Load data into InvList (Invoice Header)
@@ -83,22 +77,21 @@ Sub Invoice_SaveUpdate()
             End If
             'Paste 4 columns with one instruction - Columns B, C, D & E
             InvItems.Range("B" & ItemDBRow & ":E" & ItemDBRow).Value = .Range("K" & InvItemRow & ":N" & InvItemRow).Value 'Save Invoice Item Details
-            If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "Détail (InvItems) - B" & ItemDBRow & " = " & InvItems.Range("B" & ItemDBRow).Value
+            If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "Dï¿½tail (InvItems) - B" & ItemDBRow & " = " & InvItems.Range("B" & ItemDBRow).Value
             If shInvoice.Range("B28").Value Then Debug.Print Tab(20); "  C" & ItemDBRow & " = " & InvItems.Range("C" & ItemDBRow).Value & "   D" & ItemDBRow & " = " & InvItems.Range("D" & ItemDBRow).Value & "   E" & ItemDBRow & " = " & InvItems.Range("E" & ItemDBRow).Value
         Next InvItemRow
 NoItems:
         .Range("B27").Value = False
-        MsgBox "La facture '" & Format(.Range("N6").Value, "00000") & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N50").Value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+        MsgBox "La facture '" & Format(.Range("N6").Value, "00000") & "' est enregistrï¿½e." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N50").Value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     End With
     If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").Value, "00000") & "' (avant taxes) est de " & Format(shInvoice.Range("N50").Value, "### ##0.00 $")
-    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
 End Sub
 
 Sub Invoice_Load()
     If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Load() @ " & Time
     With shInvoice
         If .Range("B20").Value = Empty Then
-            MsgBox "Veuillez saisir un numéro de facture"
+            MsgBox "Veuillez saisir un numï¿½ro de facture"
             Exit Sub
         End If
         .Range("B24").Value = True 'Set Invoice Load to true
@@ -114,7 +107,7 @@ Sub Invoice_Load()
         With InvItems
             LastRow = .Range("A9999").End(xlUp).Row
             If LastRow < 4 Then Exit Sub
-            If shInvoice.Range("B28").Value Then Debug.Print "LastRow = " & LastRow & "   Copie de '" & "A3:G" & LastRow & "   Critère: " & .Range("L3").Value
+            If shInvoice.Range("B28").Value Then Debug.Print "LastRow = " & LastRow & "   Copie de '" & "A3:G" & LastRow & "   Critï¿½re: " & .Range("L3").Value
             .Range("A3:G" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L2:L3"), CopyToRange:=.Range("N2:S2"), Unique:=True
             LastResultRow = .Range("V9999").End(xlUp).Row
             If shInvoice.Range("B28").Value Then Debug.Print "Based on column 'V' (InvItems), LastResultRow = " & LastResultRow
