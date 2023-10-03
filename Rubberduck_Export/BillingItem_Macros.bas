@@ -5,7 +5,7 @@ Const BillingRate As Long = 350
 Dim ServItem As String
 
 Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ " & Time
     Dim LineFrom_Copy As Long
     Dim LineTo_Copy As Long
     Dim BilledCriteria As String
@@ -38,21 +38,21 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
         shInvoice.Range("B17").Value = shInvoice.Range("C12:C9999").Find(shInvoice.Range("B2").Value, , xlFormulas, xlWhole).Row 'Set Selected Row (if applicable)
         On Error GoTo 0
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()" & vbNewLine
 End Sub
 
 Sub BillingEntry_New()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_New() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_New() @ " & Time
     With shInvoice
         .Range("B2,B17,E4:F7,H4:H7").ClearContents
         .Range("H4").Value = Date 'Set Current Date as default
         .Range("H7").Value = "No" 'Set Default billed to No
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_New()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_New()" & vbNewLine
 End Sub
 
 Sub BillingEntry_SaveUpdate()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate() @ " & Time
     With shInvoice
         'Check For Required Fields
         If .Range("B14").Value < 4 Then
@@ -73,11 +73,11 @@ Sub BillingEntry_SaveUpdate()
         BillingEntry_LoadList
         MsgBox "Billing Entry Saved"
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate()" & vbNewLine
 End Sub
 
 Sub BillingEntry_Load()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Load() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Load() @ " & Time
     With shInvoice
         If .Range("B3").Value = "" Then
             MsgBox "Veuillez sélectionner une charge valide"
@@ -92,11 +92,11 @@ NextCol:
         Next EntryCol
         .Range("B23").Value = False 'Set Load to false
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_Load()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_Load()" & vbNewLine
 End Sub
 
 Sub BillingEntry_Delete()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - Sub BillingEntry_Delete() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - Sub BillingEntry_Delete() @ " & Time
     If MsgBox("Are you sure you want to delete this Billing Item?", vbYesNo, "Delete Billing Item") = vbNo Then Exit Sub
     With shInvoice
         If .Range("B3").Value = "" Then GoTo NotSaved
@@ -106,11 +106,11 @@ NotSaved:
         BillingEntry_New
         BillingEntry_LoadList
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Delete()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Delete()" & vbNewLine
 End Sub
 
 Sub BillingEntry_AddToInvoice()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice() @ " & Time
     With shInvoice
         If .Range("B17").Value = Empty Then
             MsgBox "Vous devez sélectionner une charge pour l'ajouter à la facture"
@@ -165,12 +165,12 @@ ItemAdded:
         .Shapes("AddItemBtn").Visible = msoFalse
         BillingEntry_LoadList 'Run Macro to Refresh list
     End With
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice()" & vbNewLine
 End Sub
 
 Sub BillingEntry_AddAllItems()
-    If shInvoice.Range("B26").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddAllItems() @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddAllItems() @ " & Time
     MsgBox "This feature will be add for our Patreon members. We would love to have you join here https://www.patreon.com/ExcelForFreelancers"
-    If shInvoice.Range("B26").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddAllItems()" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddAllItems()" & vbNewLine
 End Sub
 
