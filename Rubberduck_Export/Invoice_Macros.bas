@@ -67,8 +67,15 @@ Sub Invoice_SaveUpdate()
 NoItems:
         MsgBox "La facture '" & Format(.Range("N6").Value, "00000") & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N50").Value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     End With
+<<<<<<< Updated upstream
     If shInvoice.Range("B27").Value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").Value, "00000") & "' (avant taxes) est de " & Format(shInvoice.Range("N50").Value, "### ##0.00 $")
     If shInvoice.Range("B27").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
+=======
+    shInvoice.Range("B27").Value = False
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").Value, "00000") & "' (avant taxes) est de " & Format(shInvoice.Range("N50").Value, "### ##0.00 $")
+Fast_Exit_Sub:
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
+>>>>>>> Stashed changes
 End Sub
 
 Sub Invoice_Load()
@@ -154,12 +161,104 @@ NotSaved:
     If shInvoice.Range("B27").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Delete()" & vbNewLine
 End Sub
 
+<<<<<<< Updated upstream
 Sub Invoice_Print() 'RMV_IMPRESSION
     If shInvoice.Range("B27").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Print() @ " & Time
     shInvoice.PrintOut , , , True, True, , , , False
     If shInvoice.Range("B27").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Print()" & vbNewLine
 End Sub
 
+=======
+Sub Create_PDF() 'RMV - 2023-10-04 @ 15:45
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Create_PDF() @ " & Time
+    shInvoice.PrintOut , , , True, True, , , , False
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Create_PDF()" & vbNewLine
+End Sub
+
+Sub Invoice_PDF_Email() 'RMV - 2023-10-04 @ 15:46
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_PDF_Email() @ " & Time
+    Create_PDF_Email shInvoice.Range("N6").Value
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_PDF_Email()" & vbNewLine
+End Sub
+
+Sub Create_PDF_Email(NoFacture As Long)
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Create_PDF_Email(NoFacture As Long) @ " & Time
+    'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
+    Dim Result As Boolean
+    Result = Create_PDF_Email_Function(NoFacture, "CreateEmail")
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email(NoFacture As Long)" & vbNewLine
+End Sub
+
+Function Create_PDF_Email_Function(NoFacture As Long, Optional action As String = "SaveOnly") As Boolean
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Function Create_PDF_Email_Function" & _
+        "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
+    Dim NoFactFormate As String, PathName As String, SaveAs As String
+
+    Application.ScreenUpdating = False
+
+    'Construct the SaveAs filename
+    NoFactFormate = Format(NoFacture, "00000")
+    PathName = ActiveWorkbook.Path & "\" & "Factures_PDF"
+    SaveAs = PathName & "\" & NoFactFormate & ".pdf"
+
+    'Set Print Quality
+    On Error Resume Next
+    ActiveSheet.PageSetup.PrintQuality = 600
+    Err.Clear
+    On Error GoTo 0
+
+    'Create the PDF file and Save It
+    On Error GoTo RefLibError
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:=SaveAs, Quality:=xlQualityStandard, _
+        IncludeDocProperties:=False, IgnorePrintAreas:=False, OpenAfterPublish:=True
+    On Error GoTo 0
+    
+    'Construct & Displat the Email, allowing the user to modify the Email
+    If action = "CreateEmail" Then
+        On Error GoTo SaveOnly
+        
+        Dim outlookApp As Outlook.Application
+        Dim myMail As Outlook.MailItem
+        
+        Set outlookApp = New Outlook.Application
+        Set myMail = outlookApp.CreateItem(olMailItem)
+
+        Dim source_file As String
+        source_file = "C:\VBA\GC_FISCALITÉ\Factures_PDF\" & NoFactFormate & ".pdf"
+        
+        With myMail
+            .To = "gcharron@groupegc.ca"
+            .CC = "robertv13@me.com"
+            .BCC = "robertv13@gmail.com; marie.guay@outlook.com"
+            .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"
+            .Body = "Bonjour à tous," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires" & _
+                vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "Guillaume Charron, CPA, CA, M. Fisc." & _
+                vbNewLine & "Président"
+            .Attachments.Add source_file
+           
+            .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
+            'myMail.Send
+        End With
+        
+        Set outlookApp = Nothing
+        Set myMail = Nothing
+
+    End If
+    
+SaveOnly:
+    Create_PDF_Email_Function = True 'Return value
+    GoTo EndMacro
+    
+RefLibError:
+    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
+    Create_PDF_Email_Function = False 'Return value
+
+EndMacro:
+    Application.ScreenUpdating = True
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
+End Function
+
+>>>>>>> Stashed changes
 Sub Prev_Invoice()
     If shInvoice.Range("B27").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Prev_Invoice() @ " & Time
     With shInvoice
