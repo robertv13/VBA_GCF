@@ -167,9 +167,156 @@ End Sub
 
 Sub Invoice_Print() 'RMV_IMPRESSION
     If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Print() @ " & Time
-    shInvoice.PrintOut , , , True, True, , , , False
+    'shInvoice.PrintOut , , , True, True, , , , False
+    'SimplePrintToPDF shInvoice.Range("N6").Value
+    'PrintPDF shInvoice.Range("N6").Value
+    Test_Save_PDF shInvoice.Range("N6").Value
     If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Print()" & vbNewLine
 End Sub
+
+Sub SimplePrintToPDF(NoFacture As Long)
+    'Création du fichier (NoFacture).PDF dans le répertoire Documents...
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:=Format(NoFacture, "00000") & ".pdf", Quality:=xlQualityStandard, _
+        IncludeDocProperties:=False, IgnorePrintAreas:=False, OpenAfterPublish:=True
+End Sub
+
+Sub PrintPDF(NoFacture As Long)
+    'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
+    Save_PDF NoFacture
+End Sub
+
+Function Save_PDF(NoFacture As Long) As Boolean  ' Copies sheets into new PDF file for e-mailing
+    Dim NoFactFormate As String, ThisFile As String, PathName As String
+    Dim SvAs As String
+
+    Application.ScreenUpdating = False
+
+    'Construire le non du document à créer
+    NoFactFormate = Format(NoFacture, "00000")
+    ThisFile = ActiveWorkbook.Name
+    PathName = ActiveWorkbook.Path & "\" & "Factures_PDF"
+    SvAs = PathName & "\" & NoFactFormate & ".pdf"
+    
+    'Set Print Quality
+    On Error Resume Next
+    ActiveSheet.PageSetup.PrintQuality = 600
+    Err.Clear
+    On Error GoTo 0
+    
+    ' Instruct user how to send
+    On Error GoTo RefLibError
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:=SvAs, Quality:=xlQualityStandard, IncludeDocProperties:=False, IgnorePrintAreas:=False, OpenAfterPublish:=True
+    On Error GoTo 0
+        
+SaveOnly:
+    Save_PDF = True
+    GoTo EndMacro
+    
+RefLibError:
+    MsgBox "Impossible de créer le fichier PDF. La librairie n'est pas accessible."
+    Save_PDF = False
+
+EndMacro:
+
+End Function
+Sub Test_Save_PDF(NoFacture As Long)
+    'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et envoi par courriel
+    Send_PDF NoFacture, "SendEmail"
+End Sub
+
+Function Send_PDF(NoFacture As Long, Optional action As String = "SaveOnly") As Boolean  ' Copies sheets into new PDF file for e-mailing
+    Dim NoFactFormate As String, PathName As String, SaveAs As String
+
+    Application.ScreenUpdating = False
+
+    'Construct the SaveAs filename
+    NoFactFormate = Format(NoFacture, "00000")
+    PathName = ActiveWorkbook.Path & "\" & "Factures_PDF"
+    SaveAs = PathName & "\" & NoFactFormate & ".pdf"
+
+    'Set Print Quality
+    On Error Resume Next
+    ActiveSheet.PageSetup.PrintQuality = 600
+    Err.Clear
+    On Error GoTo 0
+
+    ' Instruct user how to send
+    On Error GoTo RefLibError
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:=SaveAs, Quality:=xlQualityStandard, _
+        IncludeDocProperties:=False, IgnorePrintAreas:=False, OpenAfterPublish:=True
+    On Error GoTo 0
+    
+    ' Send Email
+    If action = "SendEmail" Then
+        On Error GoTo SaveOnly
+'        Dim olApp As Object
+'        Dim elEmail As Object
+        Dim OutlookApp As Outlook.Application
+        Dim OutlookMail As Outlook.MailItem
+'        Set olApp = CreateObject("Outlook.Application")
+'        Set olEmail = olApp.CreateItem(olMailItem)
+        Set OutlookApp = New Outlook.Application
+        Set OutlookMail = OutlookApp.CreateItem(olMailItem)
+
+'        With olMailItem
+'            .Subject = NoFactFormate & ".pdf"
+'            .Attachments.Add SaveAs
+'            .Display
+'        End With
+        With OutlookMail
+            .BodyFormat = olFormatHTML
+            .Display
+            .HTMLBody = "Cher client, vous trouverez ci-joint votre facture numéro '" & NoFactFormate & "'" & .HTMLBody
+            'last .HTMLBody includes signature from the outlook.
+            '<br> includes line breaks b/w two lines
+            .To = "robertv13@me.com"
+            .CC = "robertv13@gmail.com"
+            .BCC = "robertv13@hotmail.com; marie.guay@outlook.com"
+            .Subject = "Envoi de la facture # '" & NoFactFormate & "'"
+            .Attachments = SaveAs
+            .Send
+        End With
+        On Error GoTo 0
+        GoTo EndMacro
+    End If
+    
+SaveOnly:
+    Send_PDF = True
+    GoTo EndMacro
+    
+RefLibError:
+    MsgBox "Unable to save as PDF. Reference library not found."
+    Send_PDF = False
+
+EndMacro:
+
+End Function
+Sub Send_Emails()
+'This code is early binding i.e in Tools > Reference >You have check "MICROSOFT OUTLOOK 14.0 OBJECT LIBRARY"
+
+    Dim OutlookApp As Outlook.Application
+    Dim OutlookMail As Outlook.MailItem
+    
+    Set OutlookApp = New Outlook.Application
+    Set OutlookMail = OutlookApp.CreateItem(olMailItem)
+    
+    With OutlookMail
+        .BodyFormat = olFormatHTML
+        .Display
+        .HTMLBody = "Dear ABC" & "<br>" & "<br>" & "Please find the attached file" & .HTMLBody
+        'last .HTMLBody includes signature from the outlook.
+                                                   '<br> includes line breaks b/w two lines
+        .To = "abc@gmail.com"
+        .CC = "sdf@gamil.com"
+        .BCC = "hello@gamil.com;hi@gmail.com"
+        .Subject = "Test mail"
+        .Attachments = ThisWorkbook
+        .Send
+    End With
+    
+End Sub
+
+
 
 Sub Prev_Invoice()
     If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Prev_Invoice() @ " & Time
