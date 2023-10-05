@@ -1,13 +1,13 @@
 ﻿Option Explicit
 
 Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CATCH ALL
-    If shInvoice.Range("B27").Value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ " & Time
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ " & Time
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
     Dim ProjRow As Long, CustRow As Long, ServItemDBRow As Long
     
-    'On WIP Customer Change, load Customer Projects & Check For new Customer
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_01 - Not Intersect(Target, Range('E4')) Is Nothing And Range('E4').Value <> Empty = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").Value <> Empty
+    '??? - On WIP Customer Change, load Customer Projects & Check For new Customer
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_01 - Not Intersect(Target, shInvoice.Range('E4')) Is Nothing And Range('E4').Value <> Empty = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").Value <> Empty
     If Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").Value <> Empty Then
         If Range("B5").Value = Empty Then 'New Customer
             If MsgBox(Range("E4").Value & " n'est pas sur votre liste de client. Désirez-vous ajouter ce client ?", vbYesNo, "Nouveau client") = vbNo Then
@@ -15,8 +15,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
                 Exit Sub
             End If
             CustRow = Customers.Range("A9999").End(xlUp).Row + 1  'First Avail Customer Row
-            Customers.Range("A" & CustRow).Value = Range("B7").Value  'Next Customer ID
-            Customers.Range("B" & CustRow).Value = Range("E4").Value  'Customer Name
+            Customers.Range("A" & CustRow).Value = shInvoice.Range("B7").Value  'Next Customer ID
+            Customers.Range("B" & CustRow).Value = shInvoice.Range("E4").Value  'Customer Name
         End If
         With Projects
             ProjRow = .Range("A9999").End(xlUp).Row
@@ -25,87 +25,125 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
         End With
     End If
     
-    'Invoice Customer has changed ... Load Customer Address & Billing Items
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_02 - Not Intersect(Target, Range('J4:K4')) Is Nothing = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("J4:K4")) Is Nothing
-    If Not Intersect(Target, Range("J4:K4")) Is Nothing Then
-        If Range("B19").Value <> "" Then
+    'Customer has changed ... Load Customer Address & Billing Items
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_02 - Not Intersect(Target, Range('J4:K4')) Is Nothing = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("J4:K4")) Is Nothing
+    'Customer has changed - Update fileds on both invoices
+    If Not Intersect(Target, shInvoice.Range("J4:K4")) Is Nothing Then
+        If shInvoice.Range("B19").Value <> "" Then
             CustRow = Range("B19").Value  'Customer Row
-            Range("J5").Value = Customers.Range("C" & CustRow).Value 'Address 1
-            Range("J6").Value = Customers.Range("D" & CustRow).Value & ", " & Customers.Range("E" & CustRow).Value & ", " & Customers.Range("F" & CustRow).Value
-        Else 'Clear Address Fields
-            Range("J5,J6").ClearContents
+            'shInvoice
+            shInvoice.Range("J3").Value = Customers.Range("H" & CustRow).Value
+            shInvoice.Range("J5").Value = Customers.Range("C" & CustRow).Value 'Address 1
+            shInvoice.Range("J6").Value = Customers.Range("D" & CustRow).Value & ", " & Customers.Range("E" & CustRow).Value & ", " & Customers.Range("F" & CustRow).Value
+            'shFactureFinale
+            shFactureFinale.Range("B21").Value = "Le " & shInvoice.Range("N3").Value
+            shFactureFinale.Range("B24").Value = Customers.Range("H" & CustRow).Value 'Address 1
+            shFactureFinale.Range("B25").Value = shInvoice.Range("J4").Value
+            shFactureFinale.Range("B26").Value = Customers.Range("C" & CustRow).Value & vbLf & _
+                Customers.Range("D" & CustRow).Value & ", " & Customers.Range("E" & CustRow).Value & ", " & Customers.Range("F" & CustRow).Value
+        Else 'No Customer - Clear Address Fields
+            shInvoice.Range("J5,J6").ClearContents
+            shFactureFinale.Range("B24").ClearContents
+            shFactureFinale.Range("B25,B26").ClearContents
         End If
         BillingEntry_LoadList 'Run Macro to reload WIP list
     End If
     
-'    'On Invoice Service Change, but not on Invoice Load or Item Load - Validation is at CELL level (Data Validation)
-'    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_03 - Not Intersect(Target, Range('K10:K35')) Is Nothing And Range('B24').Value = False And Range('B25').Value = False = "
-'    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("K10:K35")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False
-'    If Not Intersect(Target, Range("K10:K35")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
-'        If Range("K" & Target.Row).Value <> Empty Then
-'            On Error Resume Next
-'            ServItemDBRow = ServItems.Range("ServItem_Name").Find(Target.Value, , xlValues, xlWhole).Row
-'            On Error GoTo 0
-'            If ServItemDBRow = 0 Then
-'                MsgBox "Service Item Not Found"
-'                Exit Sub
-'            End If
-'            Range("K" & Target.Row).Value = ServItems.Range("C" & ServItemDBRow).Value 'Description
-'            Range("M" & Target.Row).Value = ServItems.Range("D" & ServItemDBRow).Value 'Hourly Rate
-'        Else 'Clear Line Out
-'                If Target.Row > 8 Then Range("K" & Target.Row & ":M" & Target.Row).ClearContents 'Clear Item On Delete
-'        End If
-'    End If
+    'Invoice Date has changed
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_02.1 - Not Intersect(Target, Range('N3')) Is Nothing = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N3")) Is Nothing
+    'Customer has changed - Update fileds on both invoices
+    If Not Intersect(Target, shInvoice.Range("N3")) Is Nothing Then
+            shFactureFinale.Range("B21").Value = "Le " & Format(shInvoice.Range("N3").Value, "d mmmm yyyy")
+    End If
+    
+    'On Service Entry, but not on Invoice Load or Item Load
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('K10:K45')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("K10:K45")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
+    If Not Intersect(Target, Range("K10:K45")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
+    MsgBox "Target.Row = " & Target.Row
+    shFactureFinale.Range("B" & Target.Row + 23).Value = shInvoice.Range("K" & Target.Row).Value
+    End If
     
     'On Rate Entry, but not on Invoice Load or Item Load
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And Range('B24').Value = False And Range('B25').Value = False = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("N5")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N5")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
     If Not Intersect(Target, Range("N5")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
-        If shInvoice.Range("N5").Value <> 0 Then
-            shInvoice.Range("V66").Value = shInvoice.Range("N5").Value
-        End If
+    If shInvoice.Range("N5").Value <> 0 Then
+        shFactureFinale.Range("D65").Value = shInvoice.Range("N5").Value
+    End If
     End If
     
     'On Hours Change, but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, Range('L10:L46')) Is Nothing And Range('B24').Value = False And Range('B25').Value = False = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("L10:L46")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, shInvoice.Range('L10:L46')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("L10:L46")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
     If Not Intersect(Target, Range("L10:L46")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
-        If Range("L" & Target.Row).Value = 0 Then
+        If shInvoice.Range("L" & Target.Row).Value = 0 Then
             MsgBox "Vouz devez saisir un nombre d'heures !"
             Exit Sub
         Else
-            Range("M" & Target.Row).Value = shInvoice.Range("N5").Value
+            shInvoice.Range("M" & Target.Row).Value = shInvoice.Range("N5").Value
+            shInvoice.Range("N" & Target.Row).Value = shInvoice.Range("L" & Target.Row).Value * shInvoice.Range("M" & Target.Row).Value
+            shFactureFinale.Range("E68").Value = shInvoice.Range("N47").Value
         End If
     End If
     
+    'On Frais Change (3 cells), but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, shInvoice.Range('N48:N50')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N48:N50")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
+    If Not Intersect(Target, Range("N48:N50")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
+        shFactureFinale.Range("E68").Value = shInvoice.Range("N47").Value
+        shFactureFinale.Range("E69").Value = shInvoice.Range("N48").Value
+        shFactureFinale.Range("E70").Value = shInvoice.Range("N49").Value
+        shFactureFinale.Range("E71").Value = shInvoice.Range("N50").Value
+    End If
+    
+    'On Total Change, but not on Invoice Load or Item Load
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_05.1 - Not Intersect(Target, shInvoice.Range('N51')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N51")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(30); shInvoice.Range("B24").Value & " " & shInvoice.Range("B25").Value = False
+    If Not Intersect(Target, shInvoice.Range("N51")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False Then
+        shFactureFinale.Range("E68").Value = shInvoice.Range("N47").Value
+        shFactureFinale.Range("E69").Value = shInvoice.Range("N48").Value
+        shFactureFinale.Range("E70").Value = shInvoice.Range("N49").Value
+        shFactureFinale.Range("E71").Value = shInvoice.Range("N50").Value
+    End If
+    
+    'On Deposit Change, but not on Invoice Load or Item Load
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_05.2 - Not Intersect(Target, shInvoice.Range('N53')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N53")) Is Nothing And shInvoice.Range("B24").Value = False And shInvoice.Range("B25").Value = False
+    If Not Intersect(Target, Range("N53")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
+        shFactureFinale.Range("E78").Value = shInvoice.Range("N53").Value
+    End If
+    
     'On Invoice Search Change
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('R2')) Is Nothing And Range('R2').Value <> Empty = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("R2")) Is Nothing And Range("R2").Value <> Empty
-    If Not Intersect(Target, Range("R2")) Is Nothing And Range("R2").Value <> Empty Then
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").Value <> Empty
+    If Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").Value <> Empty Then
         If Range("B22").Value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture valide"
             Exit Sub
         End If
-        Range("N3").Value = Range("R2").Value 'Set Invoice #
-        Range("R2").ClearContents
+        Range("N3").Value = Range("Q2").Value 'Set Invoice #
+        Range("Q2").ClearContents
         Invoice_Load 'Load Invoice
     End If
     
     'On Change of Billing Service Item, but not on Billing Item Load
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
-    If shInvoice.Range("B27").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").Value = False And Range("B12").Value <> ""
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").Value = False And Range("B12").Value <> ""
     If Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").Value = False And Range("B12").Value <> "" Then
         ServItemDBRow = Range("B12").Value ' Service Item DB Row
         Range("E7").Value = ServItems.Range("C" & ServItemDBRow).Value 'Set Default Description
         Range("H6").Value = ServItems.Range("D" & ServItemDBRow).Value 'Set Default Rate
     End If
-    If shInvoice.Range("B27").Value Then Debug.Print "Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)" & vbNewLine
+    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range)" & vbNewLine
 End Sub
 
 'Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-'    If shInvoice.Range("B27").Value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ " & Time
-'    If shInvoice.Range("B27").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+'    If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ " & Time
+'    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
 ''    If Target.CountLarge > 1 Then Exit Sub
 '
 '    'On Selection Of Billing item
@@ -119,5 +157,13 @@ End Sub
 ''            .Visible = msoCTrue
 ''        End With
 ''    End If
-'    If shInvoice.Range("B27").Value Then Debug.Print "Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
+'    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
 'End Sub
+
+Private Sub Worksheet_Calculate()
+
+    'MsgBox "Worksheet_Calculate() - N47 = " & shInvoice.Range("N47").Value & vbNewLine & "N48 = " & shInvoice.Range("N48").Value & _
+        vbNewLine & "N49 = " & shInvoice.Range("N49").Value & vbNewLine & "N50 = " & shInvoice.Range("N50").Value
+    
+End Sub
+
