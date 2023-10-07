@@ -1,0 +1,16 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    'On Service Entry, but not on Invoice Load or Item Load
+    If Not Intersect(Target, Range("G9:G22")) Is Nothing Then
+    'MsgBox "Target.Row = " & Target.Row
+    'MsgBox Format(-(wshJE.Range("G24").Value + wshJE.Range("H24").Value), "# ##0,00 $")
+    wshJE.Range("H" & (Target.Row + 1)).Value = wshJE.Range("G24").Value + wshJE.Range("H24").Value
+    End If
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+End Sub
