@@ -2,15 +2,73 @@
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    'On Service Entry, but not on Invoice Load or Item Load
-    If Not Intersect(Target, Range("G9:G22")) Is Nothing Then
-    'MsgBox "Target.Row = " & Target.Row
-    'MsgBox Format(-(wshJE.Range("G24").Value + wshJE.Range("H24").Value), "# ##0,00 $")
-    wshJE.Range("H" & (Target.Row + 1)).Value = wshJE.Range("G24").Value + wshJE.Range("H24").Value
+    'Si la cellule de la date change, alors on essaie de construire une date
+    If Not Intersect(Target, Range("J4")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim cell As String
+        cell = Trim(Range("J4").Value)
+        Call BuildDate(cell)
+        Application.EnableEvents = True
     End If
-
+    
+    'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
+    If Not Intersect(Target, Range("G9:H23")) Is Nothing And (wshJE.Range("G" & Target.Row).Value < 0 Or wshJE.Range("H" & Target.Row).Value < 0) Then
+        MsgBox "Montant INVALIDE", vbInformation, "Montant négatif saisi"
+        Application.Undo
+    End If
+    
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+'    'Pour chaque montant (Débit ou Crédit), sélection la cellule si elle contient un $$$
+'    If Not Intersect(Target, Range("G9:H23")) Is Nothing And wshJE.Range("B2").Value <> 0 Then
+'        If wshJE.Range("B2").Value < 0 Then
+'            wshJE.Range("H" & Target.Row).Value = -wshJE.Range("B2").Value
+'            wshJE.Range("H" & Target.Row).Select
+'        Else
+'            wshJE.Range("G" & Target.Row).Value = wshJE.Range("B2").Value
+'            wshJE.Range("G" & Target.Row).Select
+'        End If
+'    End If
+
+End Sub
+
+Sub BuildDate(cell As String)
+        Dim d, m, y As Integer
+        Dim strDateJour, strDateConsruite As String
+        Dim dateValide As Boolean
+        dateValide = True
+
+        cell = Replace(cell, "/", "")
+        cell = Replace(cell, "-", "")
+
+        'Utilisation de la date du jour
+        strDateJour = Now
+        d = Day(strDateJour)
+        m = Month(strDateJour)
+        y = Year(strDateJour)
+
+        Select Case Len(cell)
+            Case 0
+                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 1, 2
+                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 3
+                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+            Case 4
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+            Case 6
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+            Case Else
+                dateValide = False
+        End Select
+        If IsDate(strDateConsruite) = False Then dateValide = False
+
+    If dateValide Then
+        Range("J4").Value = strDateConsruite
+    Else
+        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
+    End If
 
 End Sub

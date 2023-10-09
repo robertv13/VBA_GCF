@@ -1,1 +1,53 @@
 ﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    'Si la cellule de la date change, alors on essaie de construire une date
+    If Not Intersect(Target, Range("B1")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim cell As String
+        cell = Trim(Range("B1").Value)
+        BuildDate cell
+        Application.EnableEvents = True
+    End If
+End Sub
+      
+Sub BuildDate(cell As String)
+        Dim d, m, y As Integer
+        Dim strDateJour, strDateConsruite As String
+        Dim dateValide As Boolean
+        dateValide = True
+
+        cell = Replace(cell, "/", "")
+        cell = Replace(cell, "-", "")
+
+        'Utilisation de la date du jour
+        strDateJour = Now
+        d = day(strDateJour)
+        m = month(strDateJour)
+        y = year(strDateJour)
+
+        Select Case Len(cell)
+            Case 0
+                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 1, 2
+                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 3
+                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+            Case 4
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+            Case 6
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+            Case Else
+                dateValide = False
+        End Select
+
+        If IsDate(strDateConsruite) = False Then dateValide = False
+
+    If dateValide Then
+        Range("B1").Value = strDateConsruite
+    Else
+        MsgBox "La saisie est invalide...", vbInformation, "Impossible de construire une date"
+    End If
+
+End Sub

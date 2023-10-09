@@ -57,7 +57,7 @@ Sub Invoice_SaveUpdate()
         End If
         If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").Value & "   B21 (Next Invoice #) = " & .Range("B21").Value
         'Load data into InvList (Invoice Header)
-        If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Facture # = " & Format(shInvoice.Range("N6").Value, "00000") & " et Current Inv. Row = " & InvRow & " - Posting; dans; InvoiceListing; """
+        If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Facture # = " & Format(shInvoice.Range("N6").Value, "000000") & " et Current Inv. Row = " & InvRow & " - Posting; dans; InvoiceListing; """
         'shInvoice
         For InvCol = 2 To 5
             InvList.Cells(InvRow, InvCol).Value = .Range(InvList.Cells(1, InvCol).Value).Value 'Save data into Invoice List
@@ -87,10 +87,10 @@ Sub Invoice_SaveUpdate()
             If shInvoice.Range("B28").Value Then Debug.Print Tab(20); "  C" & ItemDBRow & " = " & InvItems.Range("C" & ItemDBRow).Value & "   D" & ItemDBRow & " = " & InvItems.Range("D" & ItemDBRow).Value & "   E" & ItemDBRow & " = " & InvItems.Range("E" & ItemDBRow).Value
         Next InvItemRow
 NoItems:
-        MsgBox "La facture '" & Format(.Range("N6").Value, "00000") & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N51").Value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+        MsgBox "La facture '" & Format(.Range("N6").Value, "000000") & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N51").Value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     End With
     shInvoice.Range("B27").Value = False
-    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").Value, "00000") & "' (avant taxes) est de " & Format(shInvoice.Range("N51").Value, "### ##0.00 $")
+    If shInvoice.Range("B28").Value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").Value, "000000") & "' (avant taxes) est de " & Format(shInvoice.Range("N51").Value, "### ##0.00 $")
 Fast_Exit_Sub:
     If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
 End Sub
@@ -206,7 +206,7 @@ Function Create_PDF_Email_Function(NoFacture As Long, Optional action As String 
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    NoFactFormate = Format(NoFacture, "00000")
+    NoFactFormate = Format(NoFacture, "000000")
     PathName = ActiveWorkbook.Path & "\" & "Factures_PDF"
     SaveAs = PathName & "\" & NoFactFormate & ".pdf"
 
