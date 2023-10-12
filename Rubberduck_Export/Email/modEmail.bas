@@ -215,8 +215,7 @@ Function GetBoiler(ByVal sFile As String) As String
     ts.Close
 End Function
 
-Sub Email_FromTemplate() '2023-10-10 @ 11h12
-
+Sub Email_FromTemplate() '2023-10-10 @ 11h39
     'Create/Send an Email from a Outlook Template, with specific signature
     Dim adrBCC As String
     Dim adrCC As String

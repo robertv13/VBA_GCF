@@ -15,7 +15,7 @@ Sub Post_JE()
 
     Dim LastEJRow As Long
     'Détermine la dernière ligne utilisée dans l'entrée de journal
-    LastEJRow = wshJE.Range("D99999").End(xlUp).Row  'Last Used Row in wshJE
+    LastEJRow = wshJE.Range("D99999").End(xlUp).row  'Last Used Row in wshJE
     If LastEJRow < 10 Or LastEJRow > 23 Then
         MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
@@ -24,7 +24,7 @@ Sub Post_JE()
     
     Dim TransRow, FirstTransRow As Long
     'Détermine la prochaine ligne disponible
-    TransRow = wshGL.Range("C99999").End(xlUp).Row + 1  'First Empty Row in wshGL
+    TransRow = wshGL.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
     FirstTransRow = TransRow
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
@@ -36,16 +36,17 @@ Sub Post_JE()
             .Range("E" & TransRow).Value = wshJE.Range("B1").Value
             .Range("F" & TransRow).Value = wshJE.Range("E4").Value
             If Ligne <= LastEJRow Then
-                .Range("G" & TransRow).Value = wshJE.Range("D" & Ligne).Value
-                .Range("H" & TransRow).Value = wshJE.Range("G" & Ligne).Value
-                .Range("I" & TransRow).Value = wshJE.Range("H" & Ligne).Value
-                .Range("J" & TransRow).Value = wshJE.Range("I" & Ligne).Value
+                .Range("G" & TransRow).Value = "1000"
+                .Range("H" & TransRow).Value = wshJE.Range("D" & Ligne).Value
+                .Range("I" & TransRow).Value = wshJE.Range("G" & Ligne).Value
+                .Range("J" & TransRow).Value = wshJE.Range("H" & Ligne).Value
+                .Range("K" & TransRow).Value = wshJE.Range("I" & Ligne).Value
             Else
                 If Ligne = LastEJRow + 1 Then
-                    .Range("G" & TransRow).Value = wshJE.Range("E6").Value
+                    .Range("H" & TransRow).Value = wshJE.Range("E6").Value
                 End If
             End If
-            .Range("K" & TransRow).Value = "=ROW()"
+            .Range("L" & TransRow).Value = "=ROW()"
             TransRow = TransRow + 1
         Next Ligne
     End With
@@ -56,7 +57,7 @@ Sub Post_JE()
     
     'Ajoute des bordures à l'entrée de journal (extérieur)
     Dim r1 As Range
-    Set r1 = wshGL.Range("D" & FirstTransRow & ":J" & (TransRow - 2))
+    Set r1 = wshGL.Range("D" & FirstTransRow & ":K" & (TransRow - 2))
     r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
     
     With wshJE
@@ -68,42 +69,3 @@ Sub Post_JE()
     End With
     
 End Sub
-
-'Sub SetUpFrame(R As Range)
-'
-'    With R
-'        .Select
-'        Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-'        Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-'        With Selection.Borders(xlEdgeLeft)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = vbBlack
-'            .TintAndShade = -1
-'            .Weight = xlMedium
-'        End With
-'        With Selection.Borders(xlEdgeTop)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = vbBlack
-'            .TintAndShade = 0.5
-'            .Weight = xlMedium
-'        End With
-'        With Selection.Borders(xlEdgeBottom)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = xlAutomatic
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        With Selection.Borders(xlEdgeRight)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = xlAutomatic
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        With Selection.Borders(xlInsideVertical)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = xlAutomatic
-'            .TintAndShade = 0
-'            .Weight = xlHairline
-'        End With
-'    End With
-'End Sub

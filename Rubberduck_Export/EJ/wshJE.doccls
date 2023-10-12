@@ -11,27 +11,38 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = True
     End If
     
-    'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
-    If Not Intersect(Target, Range("G9:H23")) Is Nothing And (wshJE.Range("G" & Target.Row).Value < 0 Or wshJE.Range("H" & Target.Row).Value < 0) Then
-        MsgBox "Montant INVALIDE", vbInformation, "Montant négatif saisi"
-        Application.Undo
+    'Modification de la description du compte, suggestion du montant résiduel
+    If Not Intersect(Target, Range("D9:D23")) Is Nothing And (Range("H25").Value - Range("G25").Value) <> 0 Then
+        If (Range("H25").Value - Range("G25").Value) > 0 Then
+            Range("G" & Target.row).Value = Range("H25").Value - Range("G25").Value
+        Else
+            Range("H" & Target.row).Value = -(Range("H25").Value - Range("G25").Value)
+        End If
     End If
     
-End Sub
-
-Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-
-'    'Pour chaque montant (Débit ou Crédit), sélection la cellule si elle contient un $$$
-'    If Not Intersect(Target, Range("G9:H23")) Is Nothing And wshJE.Range("B2").Value <> 0 Then
-'        If wshJE.Range("B2").Value < 0 Then
-'            wshJE.Range("H" & Target.Row).Value = -wshJE.Range("B2").Value
-'            wshJE.Range("H" & Target.Row).Select
-'        Else
-'            wshJE.Range("G" & Target.Row).Value = wshJE.Range("B2").Value
-'            wshJE.Range("G" & Target.Row).Select
-'        End If
-'    End If
-
+    'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
+    If Not Intersect(Target, Range("G9:H23")) Is Nothing Then
+        If (wshJE.Range("G" & Target.row).Value < 0 Or wshJE.Range("H" & Target.row).Value < 0) Then
+            MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
+            Exit Sub
+        End If
+        If Range("H25").Value <> Range("G25").Value Then
+            With Range("G25:H25").Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .Color = 65535
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+            End With
+        Else
+            With Range("G25:H25").Interior
+                .Pattern = xlNone
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+            End With
+        End If
+    End If
+    
 End Sub
 
 Sub BuildDate(cell As String)

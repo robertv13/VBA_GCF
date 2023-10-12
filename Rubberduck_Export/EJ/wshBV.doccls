@@ -1,0 +1,78 @@
+﻿Option Explicit
+
+Sub UpdateBV()
+
+    Dim dateCutOff As String
+    Dim row, rowUsed As Long
+    Dim LastRow, startRow, MyRow As Long
+    Dim solde As Currency
+    
+    LastRow = wshPlanComptable.Cells(Rows.Count, "E").End(xlUp).row
+    startRow = 3  'your first row of actual data in Plan Comptable
+    row = 4       'Première ligne dans la Balance de Vérification
+    
+    wshBV.Range("D" & row & ":G" & LastRow + 4).ClearContents
+    wshBV.Range("D" & row & ":G" & LastRow + 4).ClearFormats
+   
+    dateCutOff = Format(wshBV.Range("J2").Value, "yyyymmdd")
+    
+    For MyRow = startRow To LastRow
+        solde = GetBalance(wshPlanComptable.Cells(MyRow, 5), dateCutOff)
+        If solde <> 0 Then
+            wshBV.Range("D" & row).Value = wshPlanComptable.Cells(MyRow, 5)
+            wshBV.Range("E" & row).Value = wshPlanComptable.Cells(MyRow, 6)
+            If solde > 0 Then
+                wshBV.Range("F" & row).Value = solde
+            Else
+                wshBV.Range("G" & row).Value = -solde
+            End If
+            row = row + 1
+            rowUsed = rowUsed + 1
+        End If
+    Next
+
+    setTotals row + 1, 6
+    setTotals row + 1, 7
+  
+End Sub
+
+Sub setTotals(r As Long, c As Long)
+
+    With wshBV.Cells(r, c).Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With wshBV.Cells(r, c).Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    wshBV.Cells(r, c).Font.Bold = True
+    
+    'Ajoute la formule SUM() aux colonnes Débit et Crédit
+    wshBV.Range("F" & r).Formula = "=SUM(F4:F" & r - 1 & ")"
+    wshBV.Range("G" & r).Formula = "=SUM(G4:G" & r - 1 & ")"
+    
+    'Force le format de la colonne F & G
+    wshBV.Range("F" & r).NumberFormat = "#,##0.00 $"
+    wshBV.Range("G" & r).NumberFormat = "#,##0.00 $"
+
+End Sub
+Function GetBalance(gl As String, d As String) As Currency
+
+    Dim lastRowTrans, startRow, rowTrans As Long
+    Dim solde As Currency
+    
+    lastRowTrans = wshGL.Cells(Rows.Count, "D").End(xlUp).row
+    startRow = 2
+
+    For rowTrans = startRow To lastRowTrans
+        If wshGL.Range("G" & rowTrans).Value = gl And Format(wshGL.Range("D" & rowTrans).Value, "yyyymmdd") <= d Then
+            GetBalance = GetBalance + wshGL.Range("I" & rowTrans).Value - wshGL.Range("J" & rowTrans).Value
+        End If
+    Next
+    
+End Function
