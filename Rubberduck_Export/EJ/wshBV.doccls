@@ -1,7 +1,20 @@
 ﻿Option Explicit
 
-Sub UpdateBV()
+Private Sub Worksheet_Change(ByVal Target As Range)
 
+    If Not Intersect(Target, Range("J2")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim cell As String
+        cell = Trim(Range("J2").Value)
+        Dim r As Range
+        Set r = Range("J2")
+        Call BuildDate(cell, r)
+        Application.EnableEvents = True
+    End If
+
+End Sub
+
+Sub UpdateBV()
     Dim dateCutOff As String
     Dim row, rowUsed As Long
     Dim LastRow, startRow, MyRow As Long
@@ -61,6 +74,7 @@ Sub setTotals(r As Long, c As Long)
     wshBV.Range("G" & r).NumberFormat = "#,##0.00 $"
 
 End Sub
+
 Function GetBalance(gl As String, d As String) As Currency
 
     Dim lastRowTrans, startRow, rowTrans As Long
