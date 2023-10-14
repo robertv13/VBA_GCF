@@ -3,6 +3,8 @@ Option Explicit
 
 Sub JE_Post()
 
+    If IsDateValide = False Then Exit Sub
+    
     If IsEcritureBalance = False Then Exit Sub
     
     Dim RowEJLast As Long
@@ -47,11 +49,9 @@ Sub JE_Post()
     With wshJE
         'Increment Next JE number
         .Range("B1").Value = .Range("B1").Value + 1
-        .Range("E4,J4,E6:J6").ClearContents
-        .Range("D9:F22,G9:G22,H9:H22,I9:J22,K9:K22").ClearContents
+        Call wshJEClearAllCells
         .Range("E4").Activate
     End With
-    wshJE.ckbRecurrente = False
     
 End Sub
 
@@ -113,6 +113,12 @@ Sub SaveEJRecurrente(ll As Long)
     wshJERecurrente.Range("I" & rowEJAuto).Value = "=ROW()"
     rowEJAuto = rowEJAuto + 1
     
+    'Ajoute la description dans la liste des E/J automatiques (K1:L99999)
+    Dim rowEJAutoDesc As Long
+    rowEJAutoDesc = wshJERecurrente.Range("K99999").End(xlUp).row + 1 'First available Row in wshJERecurrente
+    wshJERecurrente.Range("K" & rowEJAutoDesc).Value = wshJE.Range("E6").Value
+    wshJERecurrente.Range("L" & rowEJAutoDesc).Value = EJAutoNo
+
     'Ajoute des bordures à l'entrée de journal récurrente
     Dim r1 As Range
     Set r1 = wshJERecurrente.Range("D" & rowEJAutoSave & ":H" & (rowEJAuto - 2))
@@ -122,24 +128,38 @@ End Sub
 
 Sub LoadJEAutoIntoJE(EJAutoDesc As String, NoEJAuto As Long)
 
-    MsgBox "LoadJEAutoIntoJE ---> " & EJAutoDesc & " - " & NoEJAuto
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
     rowJEAuto = wshJERecurrente.Range("C99999").End(xlUp).row  'Last Row used in wshJERecuurente
+    
+    Call wshJEClearAllCells
     rowJE = 9
     
     Dim r As Long
     For r = 2 To rowJEAuto
-        If wshJERecurrente.Range("C" & rowJE).Value = NoEJAuto And wshJERecurrente.Range("D" & rowJE).Value <> "" Then
-            wshJE.Range("D" & rowJE).Value = wshJERecurrente.Range("K" & r).Value
+        If wshJERecurrente.Range("C" & r).Value = NoEJAuto And wshJERecurrente.Range("D" & r).Value <> "" Then
+            wshJE.Range("D" & rowJE).Value = wshJERecurrente.Range("E" & r).Value
             wshJE.Range("G" & rowJE).Value = wshJERecurrente.Range("F" & r).Value
             wshJE.Range("H" & rowJE).Value = wshJERecurrente.Range("G" & r).Value
             wshJE.Range("I" & rowJE).Value = wshJERecurrente.Range("H" & r).Value
+            wshJE.Range("K" & rowJE).Value = wshJERecurrente.Range("D" & r).Value
             rowJE = rowJE + 1
         End If
     Next r
-    wshJE.Range("E6").Value = EJAutoDesc
-    
+    wshJE.Range("E6").Value = "Auto - " & EJAutoDesc
+    wshJE.Range("J4").Activate
+
+End Sub
+
+Sub wshJEClearAllCells()
+
+    'Efface toutes les cellules de la feuille
+    With wshJE
+        .Range("E4,J4,E6:J6").ClearContents
+        .Range("D9:F22,G9:G22,H9:H22,I9:J22,K9:K22").ClearContents
+        .ckbRecurrente = False
+    End With
+
 End Sub
 
 Sub BuildDate(cell As String, r As Range)
@@ -182,6 +202,18 @@ Sub BuildDate(cell As String, r As Range)
     End If
 
 End Sub
+
+Function IsDateValide() As Boolean
+
+    IsDateValide = False
+    If wshJE.Range("J4").Value = "" Or IsDate(wshJE.Range("J4").Value) = False Then
+        MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
+            "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
+    Else
+        IsDateValide = True
+    End If
+
+End Function
 
 Function IsEcritureBalance() As Boolean
 

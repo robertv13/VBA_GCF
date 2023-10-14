@@ -12,6 +12,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         Unload usfListeEJAuto
         Application.EnableEvents = True
+        wshJE.Range("J4").Activate
     End If
     
     'Si la cellule de la date change, alors on essaie de construire une date
@@ -27,29 +28,29 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Modification de la description du compte, sauvegarde du no de compte & suggestion du montant résiduel
     If Not Intersect(Target, Range("D9:F23")) Is Nothing Then
-        If (Range("H25").Value - Range("G25").Value) <> 0 Then
-            If (Range("H25").Value - Range("G25").Value) > 0 Then
-                Range("G" & Target.row).Value = Range("H25").Value - Range("G25").Value
+        If (Me.Range("H25").Value - Me.Range("G25").Value) <> 0 Then
+            If (Me.Range("H25").Value - Me.Range("G25").Value) > 0 Then
+                Me.Range("G" & Target.row).Value = Me.Range("H25").Value - Me.Range("G25").Value
             Else
-                Range("H" & Target.row).Value = -(Range("H25").Value - Range("G25").Value)
+                Me.Range("H" & Target.row).Value = -(Me.Range("H25").Value - Me.Range("G25").Value)
             End If
         End If
         'Obtenir le numéro de compte à partir de la commande VLOOKUP
-        If wshJE.Range("D" & Target.row).Value <> "" Then
-            wshJE.Range("K" & Target.row).Value = WorksheetFunction.Vlookup(wshJE.Range("D" & Target.row).Value, wshPlanComptable.Range("$A$3:$B$62"), 2, False)
+        If Me.Range("D" & Target.row).Value <> "" Then
+            Me.Range("K" & Target.row).Value = WorksheetFunction.Vlookup(wshJE.Range("D" & Target.row).Value, wshPlanComptable.Range("$A$3:$B$62"), 2, False)
         Else
-            wshJE.Range("K" & Target.row).Value = ""
+            Me.Range("K" & Target.row).Value = ""
         End If
     End If
     
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
     If Not Intersect(Target, Range("G9:H23")) Is Nothing Then
-        If (wshJE.Range("G" & Target.row).Value < 0 Or wshJE.Range("H" & Target.row).Value < 0) Then
+        If (Me.Range("G" & Target.row).Value < 0 Or Me.Range("H" & Target.row).Value < 0) Then
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
-        If Range("H25").Value <> Range("G25").Value Then
-            With Range("G25:H25").Interior
+        If Me.Range("H25").Value <> Me.Range("G25").Value Then
+            With Me.Range("G25:H25").Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
@@ -57,7 +58,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 .PatternTintAndShade = 0
             End With
         Else
-            With Range("G25:H25").Interior
+            With Me.Range("G25:H25").Interior
                 .Pattern = xlNone
                 .TintAndShade = 0
                 .PatternTintAndShade = 0

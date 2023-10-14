@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} usfListeEJAuto 
    Caption         =   "Description des E/J récurrentes"
-   ClientHeight    =   3105
+   ClientHeight    =   2325
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   5085
+   ClientWidth     =   5745
    OleObjectBlob   =   "usfListeEJAuto.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -24,7 +24,7 @@ Private Sub lsbDescEJAuto_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Dim DescEJAuto As String
     Dim NoEJAuto As Long
     DescEJAuto = lsbDescEJAuto.List(RowSelected, 0)
-    NoEJAuto = lsbDescEJAuto.List(RowSelected, 1) + 1
+    NoEJAuto = lsbDescEJAuto.List(RowSelected, 1)
     usfListeEJAuto.Hide
     Call LoadJEAutoIntoJE(DescEJAuto, NoEJAuto)
 

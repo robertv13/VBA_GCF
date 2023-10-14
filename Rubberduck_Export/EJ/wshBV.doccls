@@ -20,8 +20,8 @@ Sub UpdateBV()
     Dim LastRow, startRow, MyRow As Long
     Dim solde As Currency
     
-    LastRow = wshPlanComptable.Cells(Rows.Count, "E").End(xlUp).row
     startRow = 3  'your first row of actual data in Plan Comptable
+    LastRow = wshPlanComptable.Cells(Rows.Count, "E").End(xlUp).row
     row = 4       'Première ligne dans la Balance de Vérification
     
     wshBV.Range("D" & row & ":G" & LastRow + 4).ClearContents
@@ -83,10 +83,11 @@ Function GetBalance(gl As String, d As String) As Currency
     lastRowTrans = wshGL.Cells(Rows.Count, "D").End(xlUp).row
     startRow = 2
 
+    If gl = "5007a" Then MsgBox "Calcul du solde du compte " & gl
     For rowTrans = startRow To lastRowTrans
         If wshGL.Range("G" & rowTrans).Value = gl And Format(wshGL.Range("D" & rowTrans).Value, "yyyymmdd") <= d Then
             GetBalance = GetBalance + wshGL.Range("I" & rowTrans).Value - wshGL.Range("J" & rowTrans).Value
         End If
     Next
-    
+    If gl = "5007a" Then MsgBox "Le solde du compte est " & GetBalance
 End Function
