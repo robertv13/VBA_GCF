@@ -36,7 +36,7 @@ Private Sub UserForm_Initialize()
     Set MyListBoxClass = New cListBoxAlign 'declare the class
     
     lsbDescEJAuto.ColumnCount = 2
-    rowJEAutoDesc = wshJERecurrente.Range("K9999").End(xlUp).row + 1  'First Empty Row in wshEJRecurrente (Description Section)
+    rowJEAutoDesc = wshJERecurrente.Range("K9999").End(xlUp).Row + 1  'First Empty Row in wshEJRecurrente (Description Section)
 
     Dim r As Integer
     For r = 2 To rowJEAutoDesc

@@ -8,12 +8,12 @@ Sub JE_Post()
     If IsEcritureBalance = False Then Exit Sub
     
     Dim RowEJLast As Long
-    RowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
+    RowEJLast = wshJE.Range("D99").End(xlUp).Row  'Last Used Row in wshJE
     If IsEcritureValide(RowEJLast) = False Then Exit Sub
     
     Dim rowGLTrans, rowGLTransFirst As Long
     'Détermine la prochaine ligne disponible
-    rowGLTrans = wshGL.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
+    rowGLTrans = wshGL.Range("C99999").End(xlUp).Row + 1  'First Empty Row in wshGL
     rowGLTransFirst = rowGLTrans
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
@@ -61,7 +61,7 @@ Sub FromJE2GL(rEJLast As Long, ByRef rGLTrans)
     With wshGL
         For l = 9 To rEJLast + 2
             .Range("C" & rGLTrans).Value = wshJE.Range("B1").Value
-            .Range("D" & rGLTrans).Value = Format(wshJE.Range("J4").Value, "dd/mm/yyyy")
+            .Range("D" & rGLTrans).Value = Format(CDate(wshJE.Range("J4").Value), "dd/mm/yyyy")
             .Range("E" & rGLTrans).Value = wshJE.Range("B1").Value
             .Range("F" & rGLTrans).Value = wshJE.Range("E4").Value
             If l <= rEJLast Then
@@ -89,7 +89,7 @@ Sub SaveEJRecurrente(ll As Long)
     wshJERecurrente.Range("B1").Value = wshJERecurrente.Range("B1").Value + 1
     
     Dim rowEJAuto, rowEJAutoSave As Long
-    rowEJAuto = wshJERecurrente.Range("D99999").End(xlUp).row + 3 'First available Row in wshJERecurrente
+    rowEJAuto = wshJERecurrente.Range("D99999").End(xlUp).Row + 3 'First available Row in wshJERecurrente
     rowEJAutoSave = rowEJAuto
     
     Dim r As Integer
@@ -115,7 +115,7 @@ Sub SaveEJRecurrente(ll As Long)
     
     'Ajoute la description dans la liste des E/J automatiques (K1:L99999)
     Dim rowEJAutoDesc As Long
-    rowEJAutoDesc = wshJERecurrente.Range("K99999").End(xlUp).row + 1 'First available Row in wshJERecurrente
+    rowEJAutoDesc = wshJERecurrente.Range("K99999").End(xlUp).Row + 1 'First available Row in wshJERecurrente
     wshJERecurrente.Range("K" & rowEJAutoDesc).Value = wshJE.Range("E6").Value
     wshJERecurrente.Range("L" & rowEJAutoDesc).Value = EJAutoNo
 
@@ -130,7 +130,7 @@ Sub LoadJEAutoIntoJE(EJAutoDesc As String, NoEJAuto As Long)
 
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
-    rowJEAuto = wshJERecurrente.Range("C99999").End(xlUp).row  'Last Row used in wshJERecuurente
+    rowJEAuto = wshJERecurrente.Range("C99999").End(xlUp).Row  'Last Row used in wshJERecuurente
     
     Call wshJEClearAllCells
     rowJE = 9

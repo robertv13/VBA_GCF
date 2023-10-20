@@ -3,43 +3,23 @@ Option Explicit
 
 Sub Macro1()
 Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
-    Range("D140:J142").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .Color = vbRed
+'
+' Macro1 Macro
+'
+
+'
+    Range("P16").Select
+    With Selection.Interior
+        .Pattern = xlNone
         .TintAndShade = 0
-        .Weight = xlMedium
+        .PatternTintAndShade = 0
     End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .Color = vbRed
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .Color = vbGreen
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .Color = vbGreen
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlInsideVertical)
-        .LineStyle = xlContinuous
-        .Color = vbBlack
-        .TintAndShade = 0
-        .Weight = xlHairline
-    End With
-    With Selection.Borders(xlInsideHorizontal)
-        .LineStyle = xlContinuous
-        .Color = vbBlack
-        .TintAndShade = 0
-        .Weight = xlHairline
+    Range("R16").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = -4.99893185216834E-02
+        .PatternTintAndShade = 0
     End With
 End Sub
