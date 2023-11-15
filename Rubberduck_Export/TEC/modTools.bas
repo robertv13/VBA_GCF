@@ -3,7 +3,7 @@ Option Explicit
 
 Sub GetAllShapes()
 
-Dim shp As Shape
+    Dim shp As Shape
 
     'Loop through each shape on ActiveSheet
     For Each shp In ActiveSheet.Shapes
@@ -23,7 +23,7 @@ Sub getShapeNames()
 
     For Each sh In ActiveSheet.Shapes
         ActiveSheet.Range("C" + Trim(Str(x + 1))).value = x & _
-            " - " & sh.Name & " - " & sh.Left
+                                                          " - " & sh.Name & " - " & sh.Left
         sh.Delete
         x = x + 1
     Next
@@ -59,3 +59,5 @@ Sub SetOnACtionProperties()
     Next
 
 End Sub
+
+

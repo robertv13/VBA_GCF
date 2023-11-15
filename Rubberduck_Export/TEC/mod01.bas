@@ -14,13 +14,62 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.0.0"
+Global Const gAppVersion As String = "v2.1.0"
+
+Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
+    
+    'Clear all cells, but the headers, in the worksheet
+    wshClientDB.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import Clients List from 'GCF_Clients.xlsx. In order to always have the LATEST version
+    Dim sourceWorkbook As String, sourceWorksheet As String
+    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
+                     "DataFiles" & Application.PathSeparator & _
+                     "GCF_Clients.xlsx"
+    sourceWorksheet = "Clients"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
+    recSet.Open
+    
+    'Copy to wshClientDB workbook
+    wshClientDB.Range("A2").CopyFromRecordset recSet
+    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    MsgBox _
+        Prompt:="J'ai importé un total de " & _
+            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
+            "## ##0") & " clients", _
+        Title:="Vérification du nombre de clients", _
+        Buttons:=vbInformation
+        
+    'RefreshListBox
+
+End Sub
 
 Sub FilterProfDate()
 
     'Minimum - Professionnel + Date
     If Trim(frmSaisieHeures.cmbProfessionnel.value) = "" Or _
-        Trim(frmSaisieHeures.txtDate.value) = "" Then
+       Trim(frmSaisieHeures.txtDate.value) = "" Then
         Exit Sub
     End If
     
@@ -28,7 +77,7 @@ Sub FilterProfDate()
     Dim dateFormated As String
     dateFormated = Format(CDate(frmSaisieHeures.txtDate.value), "dd/mm/yyyy")
     
-    'Base worksheet (Heures) contains all entries
+    'BaseHours worksheet (Heures) contains all entries
     Dim wsBH As Worksheet
     Set wsBH = wsBaseHours
     wsBH.AutoFilterMode = False
@@ -41,14 +90,18 @@ Sub FilterProfDate()
     'Apply filters to wsBaseHours
     wsBH.Activate
     With wsBH.UsedRange
-        .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
-        .AutoFilter Field:=3, Operator:=xlFilterValues, _
+        .AutoFilter Field:=2, _
+                    Criteria1:=frmSaisieHeures.cmbProfessionnel.value
+        .AutoFilter Field:=3, _
+                    Operator:=xlFilterValues, _
                     Criteria1:=Array(2, dateFormated)
-        .AutoFilter Field:=12, Criteria1:="FAUX"
+        .AutoFilter Field:=12, _
+                    Criteria1:="FAUX"
     End With
     
     'Copy from wsBaseHours to wsFilteredHours
     wsBH.UsedRange.Select
+    wsBH.Activate
     wsBH.UsedRange.Copy wsFH.Range("A1")
     
     wsBH.Activate
@@ -57,54 +110,6 @@ Sub FilterProfDate()
 
     wsFH.Activate
 
-End Sub
-
-Sub ImportClientsList() '---------------------------- 'v1.0 - 2023-03-23 @ 07:40
-
-    'Delete all cells, but the headers in the current worksheet
-    wsImportedClients.Range("A1").CurrentRegion.Offset(1, 0).Clear
-    
-    'Source workbook (closed Excel file) - MUST BE IN THE SAME DIRECTORY
-    Dim sourceWorkbook As String
-    Dim sourceWorksheet As String
-    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
-        "GCF_Clients.xlsx"
-    sourceWorksheet = "Clients"
-    
-    'ADODB connection
-    Dim connStr As ADODB.Connection
-    Set connStr = New ADODB.Connection
-    
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = _
-        "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-        "Data Source = " & sourceWorkbook & ";" & _
-        "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset
-    Set recSet = New ADODB.Recordset
-    
-    recSet.ActiveConnection = connStr
-    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
-    recSet.Open
-    
-    'Copy to destination workbook (actual) into the 'Top2000' worksheet
-    wsImportedClients.Range("A2").CopyFromRecordset recSet
-    wsImportedClients.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    
-    'Close resource
-    recSet.Close
-    connStr.Close
-    
-    MsgBox _
-        Prompt:="J'ai un total de " & _
-        Format(wsImportedClients.Range("A1").CurrentRegion.Rows.count - 1, _
-        "## ##0") & " clients", _
-        Title:="Vérification du nombre de clients", _
-        Buttons:=vbInformation
-    
 End Sub
 
 '************************************************************** EffaceFormulaire
@@ -139,39 +144,35 @@ Sub AjouteLigneDetail()
 
     'Validations first (one field at a time)
     If frmSaisieHeures.cmbProfessionnel.value = "" Then
-        MsgBox _
-            Prompt:="Le professionnel est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
         frmSaisieHeures.cmbProfessionnel.SetFocus
         Exit Sub
     End If
 
     If frmSaisieHeures.txtDate.value = "" Or _
         IsDate(frmSaisieHeures.txtDate.value) = False Then
-        MsgBox _
-            Prompt:="La date est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
-        frmSaisieHeures.txtDate.SetFocus
-        Exit Sub
+            MsgBox Prompt:="La date est OBLIGATOIRE !", _
+                   Title:="Vérification", _
+                   Buttons:=vbCritical
+            frmSaisieHeures.txtDate.SetFocus
+            Exit Sub
     End If
 
     If frmSaisieHeures.txtClient.value = "" Then
-        MsgBox _
-            Prompt:="Le client est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        MsgBox Prompt:="Le client est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
         frmSaisieHeures.txtClient.SetFocus
-    Exit Sub
+        Exit Sub
     End If
     
     If frmSaisieHeures.txtHeures.value = "" Or _
-        IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
-        MsgBox _
-            Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+       IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
+        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
         frmSaisieHeures.txtHeures.SetFocus
         Exit Sub
     End If
@@ -229,10 +230,10 @@ Sub RemoveTotalRow()
     End If
     
     'Resize
-'    With tbl.Range
-'        tbl.Resize .Resize(.CurrentRegion.Rows.count + 1)
-'        .Cells(.CurrentRegion.Rows.count + 1, 1).value = ""
-'    End With
+    '    With tbl.Range
+    '        tbl.Resize .Resize(.CurrentRegion.Rows.count + 1)
+    '        .Cells(.CurrentRegion.Rows.count + 1, 1).value = ""
+    '    End With
 
 End Sub
 
@@ -241,47 +242,47 @@ Sub ModifieLigneDetail()
 
     If frmSaisieHeures.txtID.value = "" Then
         MsgBox _
-            Prompt:="Vous devez choisir un enregistrement à modifier !", _
-            Title:="", _
-            Buttons:=vbCritical
+        Prompt:="Vous devez choisir un enregistrement à modifier !", _
+        Title:="", _
+        Buttons:=vbCritical
         Exit Sub
     End If
     
     'Validations first (one field at a time)
     If frmSaisieHeures.cmbProfessionnel.value = "" Then
         MsgBox _
-            Prompt:="Le professionnel est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        Prompt:="Le professionnel est OBLIGATOIRE !", _
+        Title:="Vérification", _
+        Buttons:=vbCritical
         frmSaisieHeures.cmbProfessionnel.SetFocus
         Exit Sub
     End If
 
     If frmSaisieHeures.txtDate.value = "" Or _
-        IsDate(frmSaisieHeures.txtDate.value) = False Then
+       IsDate(frmSaisieHeures.txtDate.value) = False Then
         MsgBox _
-            Prompt:="La date est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        Prompt:="La date est OBLIGATOIRE !", _
+        Title:="Vérification", _
+        Buttons:=vbCritical
         frmSaisieHeures.txtDate.SetFocus
         Exit Sub
     End If
 
     If frmSaisieHeures.txtClient.value = "" Then
         MsgBox _
-            Prompt:="Le client est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        Prompt:="Le client est OBLIGATOIRE !", _
+        Title:="Vérification", _
+        Buttons:=vbCritical
         frmSaisieHeures.txtClient.SetFocus
-    Exit Sub
+        Exit Sub
     End If
     
     If frmSaisieHeures.txtHeures.value = "" Or _
-        IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
+       IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
         MsgBox _
-            Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
-            Title:="Vérification", _
-            Buttons:=vbCritical
+        Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+        Title:="Vérification", _
+        Buttons:=vbCritical
         frmSaisieHeures.txtHeures.SetFocus
         Exit Sub
     End If
@@ -291,7 +292,7 @@ Sub ModifieLigneDetail()
 
     Dim selectedRow As Long
     selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
-                    sh.Range("A:A"), 0)
+                                                      sh.Range("A:A"), 0)
     
     With frmSaisieHeures
         sh.Range("B" & selectedRow).value = .cmbProfessionnel.value
@@ -328,20 +329,20 @@ Sub EffaceLigneDetail()
 
     If frmSaisieHeures.txtID.value = "" Then
         MsgBox _
-            Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
-            Title:="", _
-            Buttons:=vbCritical
+        Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        Title:="", _
+        Buttons:=vbCritical
         Exit Sub
     End If
     
     Dim answerYesNo As Integer
     answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
-                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
+                         vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
         MsgBox _
-            Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
-            Title:="Confirmation", _
-            Buttons:=vbCritical
+        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
+        Title:="Confirmation", _
+        Buttons:=vbCritical
         Exit Sub
     End If
     
@@ -350,7 +351,7 @@ Sub EffaceLigneDetail()
     
     Dim selectedRow As Long
     selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
-                              sh.Range("A:A"), 0)
+                                                      sh.Range("A:A"), 0)
     
     'Assign 'VRAI' to colomn 12, since it is deleted
     sh.Range("I" & selectedRow).value = Now
@@ -384,7 +385,7 @@ End Sub
 Sub RefreshListBox()
 
     If Trim(frmSaisieHeures.cmbProfessionnel) = "" _
-            Or Trim(frmSaisieHeures.txtDate) = "" Then
+       Or Trim(frmSaisieHeures.txtDate) = "" Then
         GoTo EndOfProcedure
     End If
     
@@ -431,4 +432,5 @@ EndOfProcedure:
     'frmSaisieHeures.txtClient.SetFocus
     
 End Sub
+
 

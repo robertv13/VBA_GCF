@@ -10,7 +10,7 @@ Private Sub cmdSaisieHeures_Click()
 
     Load frmSaisieHeures
     
-    frmSaisieHeures.show vbModal
+    frmSaisieHeures.show 'vbModal
     
 End Sub
 
@@ -18,6 +18,6 @@ Private Sub cmdExportHeures_Click()
 
     Load frmExportHeures
     
-    frmExportHeures.show vbModal
+    frmExportHeures.show 'vbModal
 
 End Sub

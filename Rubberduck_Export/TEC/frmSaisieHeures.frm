@@ -30,9 +30,31 @@ Private Sub UserForm_Initialize()
 
 End Sub
 
+'******************************************* Execute when UserForm is displayed
+Sub UserForm_Activate()
+
+    Call ImportClientList
+    
+    Dim LastUsedRow As Long
+    LastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
+    frmSaisieHeures.ListData = wshClientDB.Range("B1:B" & LastUsedRow)
+    
+    With oEventHandler
+        Set .SearchListBox = lstNomClient
+        Set .SearchTextBox = txtClient
+        .MaxRows = 10
+        .ShowAllMatches = False
+        .CompareMethod = vbTextCompare
+    End With
+
+    rmv_state = rmv_modeInitial
+    
+    'cmbProfessionnel.SetFocus
+      
+End Sub
+
 Private Sub UserForm_Terminate()
     
-    'MsgBox "frmSaisieHeures - UserForm_Terminate"
     ThisWorkbook.Save
     
     'Clean up
@@ -45,46 +67,22 @@ Private Sub UserForm_Terminate()
 
 End Sub
 
-'******************************************* Execute when UserForm is displayed
-Sub UserForm_Activate()
-
-    'Import Clients List to always have the latest version
-    Call ImportClientsList
-    frmSaisieHeures.ListData = wsImportedClients.Range("A1").CurrentRegion
-    
-    rmv_state = rmv_modeInitial
-
-    Call RefreshListBox
-    
-    With oEventHandler
-        Set .SearchListBox = lstNomClient
-        Set .SearchTextBox = txtClient
-        
-        .MaxRows = 10
-        .ShowAllMatches = False
-        .CompareMethod = vbTextCompare
-    End With
-    
-    'cmbProfessionnel.SetFocus
-      
-End Sub
-
 Public Sub cmbProfessionnel_AfterUpdate()
 
-'    If Me.cmbProfessionnel.value = "" Then
-'        Me.cmbProfessionnel.SetFocus
-'        Exit Sub
-'    End If
+    '    If Me.cmbProfessionnel.value = "" Then
+    '        Me.cmbProfessionnel.SetFocus
+    '        Exit Sub
+    '    End If
     
     Call FilterProfDate
     Call RefreshListBox
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> "" And _
-        Trim(Me.txtDate.value) <> "" And _
-        Trim(Me.txtClient.value) <> "" And _
-        Trim(Me.txtHeures.value) <> "" Then
-            cmdAdd.Enabled = True
+       Trim(Me.txtDate.value) <> "" And _
+       Trim(Me.txtClient.value) <> "" And _
+       Trim(Me.txtHeures.value) <> "" Then
+        cmdAdd.Enabled = True
     End If
     
 End Sub
@@ -116,7 +114,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
     If Len(strDate) <= 2 Then
         strDate = Format(strDate, "00") & separateur & currentMonth & _
-            separateur & currentYear
+                  separateur & currentYear
     ElseIf Len(strDate) = 5 Then
         strDate = strDate & separateur & currentYear
     End If
@@ -124,9 +122,9 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     'Validation de la date
     If IsDate(strDate) = False Then
         MsgBox _
-            Prompt:="La valeur saisie ne peut être utilisée comme une date valide!", _
-            Title:="Validation de la date", _
-            Buttons:=vbCritical
+        Prompt:="La valeur saisie ne peut être utilisée comme une date valide!", _
+        Title:="Validation de la date", _
+        Buttons:=vbCritical
         txtDate.SelStart = 0
         txtDate.SelLength = Len(txtDate.value)
         Exit Sub
@@ -167,10 +165,10 @@ Private Sub txtDate_AfterUpdate()
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
-        Trim(Me.txtDate.value) <> vbNullString And _
-        Trim(Me.txtClient.value) <> vbNullString And _
-        Trim(Me.txtHeures.value) <> vbNullString Then
-            cmdAdd.Enabled = True
+       Trim(Me.txtDate.value) <> vbNullString And _
+       Trim(Me.txtClient.value) <> vbNullString And _
+       Trim(Me.txtHeures.value) <> vbNullString Then
+        cmdAdd.Enabled = True
     End If
     
 End Sub
@@ -188,20 +186,20 @@ Private Sub txtClient_AfterUpdate()
     'Enabled the ADD button if the minimum fields are non empty
     If rmv_state = rmv_modeCreation Then
         If Trim(Me.cmbProfessionnel.value) <> "" And _
-            Trim(Me.txtDate.value) <> "" And _
-            Trim(Me.txtClient.value) <> "" And _
-            Trim(Me.txtHeures.value) <> "" Then
-                cmdAdd.Enabled = True
+           Trim(Me.txtDate.value) <> "" And _
+           Trim(Me.txtClient.value) <> "" And _
+           Trim(Me.txtHeures.value) <> "" Then
+            cmdAdd.Enabled = True
         End If
     End If
     
     If rmv_state = rmv_modeAffichage Then
         If savedClient <> Me.txtClient.value Or _
-            savedActivite <> Me.txtActivite.value Or _
-            savedHeures <> Me.txtHeures.value Or _
-            savedCommNote <> Me.txtCommNote Or _
-            savedFacturable <> Me.chbFacturable Then
-                cmdUpdate.Enabled = True
+           savedActivite <> Me.txtActivite.value Or _
+           savedHeures <> Me.txtHeures.value Or _
+           savedCommNote <> Me.txtCommNote Or _
+           savedFacturable <> Me.chbFacturable Then
+            cmdUpdate.Enabled = True
         End If
     End If
     
@@ -238,9 +236,9 @@ Sub txtHeures_AfterUpdate()
     
     If IsNumeric(strHeures) = False Then
         MsgBox _
-            Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
-            Title:="Validation d'une valeur numérique", _
-            Buttons:=vbCritical
+        Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+        Title:="Validation d'une valeur numérique", _
+        Buttons:=vbCritical
         Me.txtHeures.value = ""
         Me.txtHeures.SetFocus
         Exit Sub
@@ -251,10 +249,10 @@ Sub txtHeures_AfterUpdate()
     'Enabled the ADD button if the minimum fields are non empty
     If rmv_state = rmv_modeCreation Then
         If Trim(Me.cmbProfessionnel.value) <> "" And _
-            Trim(Me.txtDate.value) <> "" And _
-            Trim(Me.txtClient.value) <> "" And _
-            Trim(Me.txtHeures.value) <> "" Then
-                cmdAdd.Enabled = True
+           Trim(Me.txtDate.value) <> "" And _
+           Trim(Me.txtClient.value) <> "" And _
+           Trim(Me.txtHeures.value) <> "" Then
+            cmdAdd.Enabled = True
         End If
     End If
 
@@ -288,6 +286,7 @@ Private Sub txtCommNote_AfterUpdate()
     End If
 
 End Sub
+
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
@@ -330,7 +329,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         '.txtDate.Locked = True
         
         .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
-         savedClient = .txtClient.value
+        savedClient = .txtClient.value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
         savedActivite = .txtActivite.value
@@ -356,4 +355,5 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rmv_state = rmv_modeAffichage
     
 End Sub
+
 

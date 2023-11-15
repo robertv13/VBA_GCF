@@ -28,16 +28,16 @@ Option Explicit
 Private Const m_conMaxRows As Long = 10
 
 'Configurable Settings
-Private m_compareMethod As VbCompareMethod  'Determines case sensitivity in the search
-Private m_listOfItems As Variant            'This is the array of items that is filtered
-Private m_maxRows As Long                   'The number of rows to be displayed in the listbox.
-Private m_startText As String               'Start text in the textbox
-Private m_showAllMatches As Boolean         'True: shows all matches. False show the number of rows specified by m_MaxRows
+Private m_compareMethod As VbCompareMethod       'Determines case sensitivity in the search
+Private m_listOfItems As Variant                 'This is the array of items that is filtered
+Private m_maxRows As Long                        'The number of rows to be displayed in the listbox.
+Private m_startText As String                    'Start text in the textbox
+Private m_showAllMatches As Boolean              'True: shows all matches. False show the number of rows specified by m_MaxRows
 
 'This is used to prevent events running when changes are being made
 Private m_UpdateControl As Boolean
 
-Private m_textboxStartingState As Boolean   'Used to decide when to remove the starting text
+Private m_textboxStartingState As Boolean        'Used to decide when to remove the starting text
 
 Private WithEvents myListBox As MSForms.ListBox
 Attribute myListBox.VB_VarHelpID = -1
@@ -112,7 +112,7 @@ Private Sub Class_Initialize()
     m_compareMethod = vbTextCompare
     m_maxRows = m_conMaxRows
     m_startText = "Saisir le nom de la compagnie que vous recherchez"
-    m_showAllMatches = False 'False - 2023-03-01 - RMV
+    m_showAllMatches = False                     'False - 2023-03-01 - RMV
     
 End Sub
 
@@ -179,11 +179,9 @@ End Sub
 Private Sub UpdateListbox(items As Variant)
  
     With myListBox
-  
         'Reload listbox
         .Clear
         .ForeColor = rgbBlack
-        
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
@@ -194,7 +192,6 @@ Private Sub UpdateListbox(items As Variant)
             .List = items
             .ListIndex = 0
         End If
-        
         'Resize the listbox
         Call SetListboxPosition
          
@@ -208,7 +205,6 @@ Private Sub UpdateListbox(items As Variant)
     End With
 
 End Sub
-
 
 Private Sub MakeAllMatchesAvailable()
 
@@ -262,7 +258,7 @@ Private Function SetListboxPosition()
         .Left = myTextBox.Left
         .Top = myTextBox.Top + (myTextBox.Height)
         .Width = myTextBox.Width
-         Call ShowListbox(True)
+        Call ShowListbox(True)
     End With
     
 End Function
@@ -386,7 +382,6 @@ End Function
 
 'Filters the Listbox
 Public Sub FilterListBox()
-
     'In case a setting like MaxRows is used before the range is set
     If IsEmpty(m_listOfItems) Then Exit Sub
 
@@ -395,7 +390,7 @@ Public Sub FilterListBox()
     Dim items As Variant
     items = FilterData
       
-    Call UpdateListbox(items)
+    UpdateListbox (items)
       
     m_UpdateControl = False
     

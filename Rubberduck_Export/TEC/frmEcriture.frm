@@ -22,7 +22,7 @@ Private MyListBoxClass As clsCListboxAlign
 Private Sub UserForm_Initialize()
     Dim lngRow As Long
     Dim lngIndex As Long
-    Set MyListBoxClass = New clsCListboxAlign 'declare the class
+    Set MyListBoxClass = New clsCListboxAlign    'declare the class
     
     'This is just a sample where I add data to a listbox.
     'You'll want to use your own data.
@@ -74,7 +74,6 @@ Private Sub UserForm_Terminate()
     Set MyListBoxClass = Nothing
 
 End Sub
-
 
 'Private Sub UserForm_Initialize()
 '

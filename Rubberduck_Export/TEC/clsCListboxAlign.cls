@@ -20,14 +20,14 @@ Option Explicit
 '-------------------------------------------------------------------------------------
 
 Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
-'
-' PURPOSE: Center align the text in a listbox column
-' HOW TO USE:
-' - First argument is the listbox you want to adjust, the second optional argument is which
-' column in the listbox you want to align.
-' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
-' MyListBoxClass.Center Me.lstEcriture, 1
-'
+    '
+    ' PURPOSE: Center align the text in a listbox column
+    ' HOW TO USE:
+    ' - First argument is the listbox you want to adjust, the second optional argument is which
+    ' column in the listbox you want to align.
+    ' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
+    ' MyListBoxClass.Center Me.lstEcriture, 1
+    '
     Dim labSizer As MSForms.Label
     Dim lngIndex As Long
     Dim intColumn As Integer
@@ -59,7 +59,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
             .Name = LBox.Font.Name
             .Size = LBox.Font.Size
             .Bold = LBox.Font.Bold
-        .Italic = LBox.Font.Italic
+            .Italic = LBox.Font.Italic
         End With
         .WordWrap = False
     End With
@@ -89,14 +89,14 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
 End Sub
 
 Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
-'
-' PURPOSE: Left align the text in a listbox column
-' HOW TO USE:
-' - First argument is the listbox you want to adjust, the second optional argument is which
-' column in the listbox you want to align.
-' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
-' MyListBoxClass.Left Me.lstEcriture, 1
-'
+    '
+    ' PURPOSE: Left align the text in a listbox column
+    ' HOW TO USE:
+    ' - First argument is the listbox you want to adjust, the second optional argument is which
+    ' column in the listbox you want to align.
+    ' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
+    ' MyListBoxClass.Left Me.lstEcriture, 1
+    '
     Dim lngIndex As Long
     Dim intColumn As Integer
     Dim lngTopIndex As Long
@@ -132,14 +132,14 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
 End Sub
 
 Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
-'
-' PURPOSE: Right align the text in a listbox column
-' HOW TO USE:
-' - First argument is the listbox you want to adjust, the second optional argument is which
-' column in the listbox you want to align.
-' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
-' MyListBoxClass.Right Me.lstEcriture, 1
-'
+    '
+    ' PURPOSE: Right align the text in a listbox column
+    ' HOW TO USE:
+    ' - First argument is the listbox you want to adjust, the second optional argument is which
+    ' column in the listbox you want to align.
+    ' - To use this procedure, you would place a statement like the following in your UserForm_Initialize routine:
+    ' MyListBoxClass.Right Me.lstEcriture, 1
+    '
     Dim labSizer As MSForms.Label
     Dim lngIndex As Long
     Dim intColumn As Integer
@@ -169,7 +169,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
             .Name = LBox.Font.Name
             .Size = LBox.Font.Size
             .Bold = LBox.Font.Bold
-        .Italic = LBox.Font.Italic
+            .Italic = LBox.Font.Italic
         End With
         .WordWrap = False
     End With

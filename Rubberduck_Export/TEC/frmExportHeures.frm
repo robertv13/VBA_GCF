@@ -15,7 +15,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-
 Private Sub UserForm_Activate()
     
     'MsgBox "frmExportHeures - UserForm_Activate"
@@ -29,7 +28,7 @@ Private Sub UserForm_Initialize()
     'MsgBox "frmExportHeures - UserForm_Initialize"
     
     frmExportHeures.txtDateLimiteExport.value = _
-        Format(ThisWorkbook.Worksheets("Menu").Range("F6"), "dd/mm/yyyy hh:MM:ss")
+                                              Format(ThisWorkbook.Worksheets("Menu").Range("F6"), "dd/mm/yyyy hh:MM:ss")
 
 End Sub
 
@@ -81,8 +80,8 @@ Private Sub cmdExport_Click()
     Dim r As Long
     For r = 2 To rng.Rows.count
         'Debug.Print r & " - " & Cells(r, 1).value & " - " & Cells(r, 2).value & _
-            " - " & Format(Cells(r, 3).value, "dd/mm/yyyy") & _
-            " - " & Cells(r, 4).value
+        " - " & Format(Cells(r, 3).value, "dd/mm/yyyy") & _
+        " - " & Cells(r, 4).value
         ActiveSheet.Cells(currentRow, 1) = rng.Cells(r, 3).value
         ActiveSheet.Cells(currentRow, 2) = rng.Cells(r, 4).value
         ActiveSheet.Cells(currentRow, 3) = rng.Cells(r, 5).value
@@ -114,7 +113,7 @@ Sub FilterTimeAndDate()
     
     'Set the MINIMUM date and time
     strDateTime = Format(CDate(wsMenu.Range("F6")), _
-        "mm/dd/yyyy hh:MM:ss")
+                         "mm/dd/yyyy hh:MM:ss")
 
     'Reference the From Worksheet and Range
     Set ws = wsBaseHours
@@ -157,4 +156,5 @@ Done:
     ws.ShowAllData
     
 End Sub
+
 
