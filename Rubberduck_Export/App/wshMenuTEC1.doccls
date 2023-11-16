@@ -1,0 +1,21 @@
+﻿Option Explicit
+
+Private Sub lblTEC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_Facturation
+    SlideOut_TEC
+End Sub
+
+Private Sub lblFacturation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_TEC
+    SlideIn_Debours
+    SlideOut_Facturation
+End Sub
+
+Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_TEC
+    SlideIn_Facturation
+End Sub
+
+Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    MsgBox "This is mouse move"
+End Sub
