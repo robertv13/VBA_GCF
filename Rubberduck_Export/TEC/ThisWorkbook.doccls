@@ -2,8 +2,8 @@
 
 Private Sub Workbook_Open()
     Application.ScreenUpdating = False
-    'Windows(ThisWorkbook.Name).Visible = False
+    Windows(ThisWorkbook.Name).Visible = False
     'frmSplashScreen.show
-    'Windows(ThisWorkbook.Name).Visible = True
+    Windows(ThisWorkbook.Name).Visible = True
     Application.ScreenUpdating = True
 End Sub

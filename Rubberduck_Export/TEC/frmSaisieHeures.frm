@@ -63,7 +63,7 @@ Private Sub UserForm_Terminate()
     Me.Hide
     Unload Me
     
-    wsMenu.Select
+    wshMenu.Select
 
 End Sub
 

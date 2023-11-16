@@ -17,15 +17,15 @@ End Sub
 Sub getShapeNames()
 
     Dim sh As Shape
-    Dim x As Double
-    x = 1
+    Dim X As Double
+    X = 1
     ActiveSheet.Select
 
     For Each sh In ActiveSheet.Shapes
-        ActiveSheet.Range("C" + Trim(Str(x + 1))).value = x & _
+        ActiveSheet.Range("C" + Trim(Str(X + 1))).value = X & _
                                                           " - " & sh.Name & " - " & sh.Left
         sh.Delete
-        x = x + 1
+        X = X + 1
     Next
 
 End Sub

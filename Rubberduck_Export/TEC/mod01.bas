@@ -90,13 +90,10 @@ Sub FilterProfDate()
     'Apply filters to wsBaseHours
     wsBH.Activate
     With wsBH.UsedRange
-        .AutoFilter Field:=2, _
-                    Criteria1:=frmSaisieHeures.cmbProfessionnel.value
-        .AutoFilter Field:=3, _
-                    Operator:=xlFilterValues, _
+        .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
+        .AutoFilter Field:=3, Operator:=xlFilterValues, _
                     Criteria1:=Array(2, dateFormated)
-        .AutoFilter Field:=12, _
-                    Criteria1:="FAUX"
+        .AutoFilter Field:=12, Criteria1:="FAUX"
     End With
     
     'Copy from wsBaseHours to wsFilteredHours
