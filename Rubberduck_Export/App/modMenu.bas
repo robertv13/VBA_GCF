@@ -107,6 +107,7 @@ Sub SlideIn_Parametres()
     End With
 End Sub
 
+'Second level (sub-menu) ---------------------------------------------------------------------------
 Sub SlideOut_SaisieHeures()
     With ActiveSheet.Shapes("btnSaisieHeures")
         For Wdth = 32 To maxWidth
@@ -233,38 +234,158 @@ Sub SlideIn_Regularisation()
     End With
 End Sub
 
+Sub SlideOut_Paiement()
+    With ActiveSheet.Shapes("btnPaiement")
+        For Wdth = 32 To maxWidth
+            .Height = Wdth
+            ActiveSheet.Shapes("icoPaiement").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "Paiement"
+    End With
+End Sub
+
+Sub SlideIn_Paiement()
+    With ActiveSheet.Shapes("btnPaiement")
+        For Wdth = maxWidth To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoPaiement").Left = Wdth - 32
+        Next Wdth
+        ActiveSheet.Shapes("btnPaiement").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
+Sub SlideOut_EJ()
+    With ActiveSheet.Shapes("btnEJ")
+        For Wdth = 32 To maxWidth
+            .Height = Wdth
+            ActiveSheet.Shapes("icoEJ").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
+    End With
+End Sub
+
+Sub SlideIn_EJ()
+    With ActiveSheet.Shapes("btnEJ")
+        For Wdth = maxWidth To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoEJ").Left = Wdth - 32
+        Next Wdth
+        ActiveSheet.Shapes("btnEJ").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
+Sub SlideOut_GL()
+    With ActiveSheet.Shapes("btnGL")
+        For Wdth = 32 To maxWidth
+            .Height = Wdth
+            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "Grand Livre"
+    End With
+End Sub
+
+Sub SlideIn_GL()
+    With ActiveSheet.Shapes("btnGL")
+        For Wdth = maxWidth To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
+        Next Wdth
+        ActiveSheet.Shapes("btnGL").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
+Sub SlideOut_BV()
+    With ActiveSheet.Shapes("btnBV")
+        For Wdth = 32 To 182
+            .Height = Wdth
+            ActiveSheet.Shapes("icoBV").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
+    End With
+End Sub
+
+Sub SlideIn_BV()
+    With ActiveSheet.Shapes("btnBV")
+        For Wdth = 182 To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoBV").Left = Wdth - 32
+        Next Wdth
+        ActiveSheet.Shapes("btnBV").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
+Sub SlideOut_EF()
+    With ActiveSheet.Shapes("btnEF")
+        For Wdth = 32 To maxWidth
+            .Height = Wdth
+            ActiveSheet.Shapes("icoEF").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "États financiers"
+    End With
+End Sub
+
+Sub SlideIn_EF()
+    With ActiveSheet.Shapes("btnEF")
+        For Wdth = maxWidth To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoEF").Left = Wdth - 32
+        Next Wdth
+        ActiveSheet.Shapes("btnEF").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
 Sub TEC_Click()
     SlideIn_TEC
-    With wshMenuTEC
-        .Visible = xlSheetVisible
-        .Select
-    End With
-'    Load frmSaisieHeures
-'    frmSaisieHeures.show vbModal
+    
+    wshMenuTEC.Visible = xlSheetVisible
+    wshBaseHours.Visible = xlSheetVisible
+    wshFilteredHours.Visible = xlSheetVisible
+    wshClientDB.Visible = xlSheetVisible
+    wshHoursToExport.Visible = xlSheetVisible
+    
+    wshMenuTEC.Select
 End Sub
 
 Sub Facturation_Click()
     SlideIn_Facturation
-    With wshMenuFACT
-        .Visible = xlSheetVisible
-        .Select
-    End With
+    
+    wshMenuFACT.Visible = xlSheetVisible
+    wshFACshInvoice.Visible = xlSheetVisible
+    wshFACInvList.Visible = xlSheetVisible
+    wshFACInvItems.Visible = xlSheetVisible
+    wshFACshBillEntries.Visible = xlSheetVisible
+    wshFACServItems.Visible = xlSheetVisible
+    wshFACProjects.Visible = xlSheetVisible
+    wshFACCustomers.Visible = xlSheetVisible
+    wshFACshFactureFinale.Visible = xlSheetVisible
+    
+    wshMenuFACT.Select
 End Sub
 
 Sub Debours_Click()
     SlideIn_Debours
-    With wshMenuDEBOURS
-        .Visible = xlSheetVisible
-        .Select
-    End With
+    
+    wshMenuDEBOURS.Visible = xlSheetVisible
+    wshPaiement.Visible = xlSheetVisible
+    
+    wshMenuDEBOURS.Select
 End Sub
 
 Sub Comptabilite_Click()
     SlideIn_Comptabilite
-    With wshMenuCOMPTA
-        .Visible = xlSheetVisible
-        .Select
-    End With
+    
+    wshMenuCOMPTA.Visible = xlSheetVisible
+    wshJE.Visible = xlSheetVisible
+    wshGL.Visible = xlSheetVisible
+    wshEJRecurrente.Visible = xlSheetVisible
+    wshBV.Visible = xlSheetVisible
+        
+    wshMenuCOMPTA.Select
 End Sub
 
 Sub Parametres_Click()
@@ -275,3 +396,38 @@ Sub Parametres_Click()
     End With
 End Sub
 
+Sub SaisieHeures_Click()
+    SlideIn_SaisieHeures
+    Load frmSaisieHeures
+    frmSaisieHeures.show vbModal
+End Sub
+
+Sub ExportHeures_Click()
+    SlideIn_ExportHeures
+    MsgBox "Activer la fonction 'Export des heures'"
+End Sub
+
+Sub PreparationFacture_Click()
+    SlideIn_ExportHeures
+    MsgBox "Activer la fonction 'Préparation de Facture'"
+End Sub
+
+Sub SuiviCC_Click()
+    SlideIn_SuiviCC
+    MsgBox "Activer la fonction 'Suivi des C/C'"
+End Sub
+
+Sub Encaissement_Click()
+    SlideIn_Encaissement
+    MsgBox "Activer la fonction 'Encaissement'"
+End Sub
+
+Sub Regularisation_Click()
+    SlideIn_Régularisation
+    MsgBox "Activer la fonction 'Régularisation'"
+End Sub
+
+Sub Paiement_Click()
+    SlideIn_Paiement
+    MsgBox "Activer la fonction 'Paiement'"
+End Sub

@@ -36,7 +36,7 @@ Sub UserForm_Activate()
     Call ImportClientList
     
     Dim LastUsedRow As Long
-    LastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
+    LastUsedRow = wshClientDB.Range("A999999").End(xlUp).Row
     frmSaisieHeures.ListData = wshClientDB.Range("B1:B" & LastUsedRow)
     
     With oEventHandler
@@ -63,7 +63,7 @@ Private Sub UserForm_Terminate()
     Me.Hide
     Unload Me
     
-    wshMenu.Select
+    'wshMenu.Select
 
 End Sub
 

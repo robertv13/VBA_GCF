@@ -62,7 +62,7 @@ Private Sub cmdExport_Click()
     'MsgBox "Exportation des heures vers le fichier principal"
     
     Dim wsHTE As Worksheet
-    Set wsHTE = wsHoursToExport
+    Set wsHTE = wshHoursToExport
     wsHTE.Activate
     
     'Setup the destination workbook/worksheet
@@ -72,7 +72,7 @@ Private Sub cmdExport_Click()
     
     'Setup the row to use
     Dim currentRow As Long
-    currentRow = ActiveSheet.Cells(Rows.count, 1).End(xlUp).row + 1
+    currentRow = ActiveSheet.Cells(Rows.count, 1).End(xlUp).Row + 1
     
     Dim rng As Range
     Set rng = wsHTE.Range("A1").CurrentRegion
@@ -116,7 +116,7 @@ Sub FilterTimeAndDate()
                          "mm/dd/yyyy hh:MM:ss")
 
     'Reference the From Worksheet and Range
-    Set ws = wsBaseHours
+    Set ws = wshBaseHours
     Set rng = ws.Range("A1").CurrentRegion
     
     'Turn OFF Autofilter Mode
@@ -139,10 +139,10 @@ Sub FilterTimeAndDate()
     Else
         'Once filtered, worksheet should only show the filtered records
         Dim shHTE As Worksheet
-        Set shHTE = wsHoursToExport
+        Set shHTE = wshHoursToExport
         shHTE.UsedRange.Clear
         
-        'Copy to destination worksheet (wsHoursToExport)
+        'Copy to destination worksheet (wshHoursToExport)
         rng.Copy shHTE.Range("A1")
         
         shHTE.Activate

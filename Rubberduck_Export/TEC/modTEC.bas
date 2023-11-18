@@ -79,7 +79,7 @@ Sub FilterProfDate()
     
     'BaseHours worksheet (Heures) contains all entries
     Dim wsBH As Worksheet
-    Set wsBH = wshBaseHours
+    Set wsBH = wsBaseHours
     wsBH.AutoFilterMode = False
     
     'Prepare Worksheet to receive Filtered Hours
@@ -87,7 +87,7 @@ Sub FilterProfDate()
     Set wsFH = ThisWorkbook.Sheets("HeuresFiltrées")
     wsFH.UsedRange.Clear
 
-    'Apply filters to wshBaseHours
+    'Apply filters to wsBaseHours
     wsBH.Activate
     With wsBH.UsedRange
         .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
@@ -96,7 +96,7 @@ Sub FilterProfDate()
         .AutoFilter Field:=12, Criteria1:="FAUX"
     End With
     
-    'Copy from wshBaseHours to wshFilteredHours
+    'Copy from wsBaseHours to wsFilteredHours
     wsBH.UsedRange.Select
     wsBH.Activate
     wsBH.UsedRange.Copy wsFH.Range("A1")
@@ -175,28 +175,28 @@ Sub AjouteLigneDetail()
     End If
 
     Dim sh As Worksheet
-    Set sh = wshBaseHours
+    Set sh = wsBaseHours
     sh.Activate
     Call RemoveTotalRow
     
-    Dim LastRow As Long
-    LastRow = Application.WorksheetFunction.CountA(sh.Range("B:B"))
+    Dim lastRow As Long
+    lastRow = Application.WorksheetFunction.CountA(sh.Range("B:B"))
 
     'Load the cmb & txt into the 'Heures' worksheet
     With sh
-        .Range("A" & LastRow + 1).value = "=row()-1"
-        .Range("B" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
-        .Range("C" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
-        .Range("D" & LastRow + 1).value = frmSaisieHeures.txtClient.value
-        .Range("E" & LastRow + 1).value = frmSaisieHeures.txtActivite.value
-        .Range("F" & LastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-        .Range("G" & LastRow + 1).value = frmSaisieHeures.txtCommNote.value
-        .Range("H" & LastRow + 1).value = frmSaisieHeures.chbFacturable.value
-        .Range("I" & LastRow + 1).value = Now
-        .Range("J" & LastRow + 1).value = False
-        .Range("K" & LastRow + 1).value = ""
-        .Range("L" & LastRow + 1).value = False
-        .Range("M" & LastRow + 1).value = gAppVersion
+        .Range("A" & lastRow + 1).value = "=row()-1"
+        .Range("B" & lastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
+        .Range("C" & lastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
+        .Range("D" & lastRow + 1).value = frmSaisieHeures.txtClient.value
+        .Range("E" & lastRow + 1).value = frmSaisieHeures.txtActivite.value
+        .Range("F" & lastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+        .Range("G" & lastRow + 1).value = frmSaisieHeures.txtCommNote.value
+        .Range("H" & lastRow + 1).value = frmSaisieHeures.chbFacturable.value
+        .Range("I" & lastRow + 1).value = Now
+        .Range("J" & lastRow + 1).value = False
+        .Range("K" & lastRow + 1).value = ""
+        .Range("L" & lastRow + 1).value = False
+        .Range("M" & lastRow + 1).value = gAppVersion
     End With
 
     'Empty the fields after saving
@@ -221,7 +221,7 @@ End Sub
 Sub RemoveTotalRow()
     
     Dim tbl As ListObject
-    Set tbl = wshBaseHours.ListObjects("tCharges")
+    Set tbl = wsBaseHours.ListObjects("tCharges")
     If tbl.ShowTotals = True Then
         tbl.TotalsRowRange.Delete
     End If
@@ -393,18 +393,18 @@ Sub RefreshListBox()
     shFiltered.Activate
     
     'Last Row used in column A
-    Dim LastRow As Long
-    LastRow = Application.WorksheetFunction.CountA(shFiltered.Range("A:A"))
+    Dim lastRow As Long
+    lastRow = Application.WorksheetFunction.CountA(shFiltered.Range("A:A"))
         
     With frmSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "22; 28; 52; 120; 190; 35; 80; 30; 75"
         
-        If LastRow = 1 Then
+        If lastRow = 1 Then
             .RowSource = "HeuresFiltrées!A2:K2"
         Else
-            .RowSource = "HeuresFiltrées!A2:K" & LastRow
+            .RowSource = "HeuresFiltrées!A2:K" & lastRow
         End If
     End With
 

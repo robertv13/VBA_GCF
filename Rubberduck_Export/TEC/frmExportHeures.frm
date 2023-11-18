@@ -50,7 +50,7 @@ Private Sub cmdAnnulerExport_Click()
     Me.Hide
     Unload Me
     
-    wsMenu.Select
+    wshMenu.Select
 
 End Sub
 
@@ -98,7 +98,7 @@ Private Sub cmdExport_Click()
     
     'Update Date of last export (frmExportHeures & wsMenu)
     frmExportHeures.txtNextExportDate.value = Format(CDate(Now), "dd/mm/yyyy hh:MM:ss")
-    wsMenu.Range("F6").value = frmExportHeures.txtNextExportDate.value
+    wshMenu.Range("F6").value = frmExportHeures.txtNextExportDate.value
 
     MsgBox "Félicitations - L'exportation des données s'est bien déroulée", vbInformation
     
@@ -112,7 +112,7 @@ Sub FilterTimeAndDate()
     Dim strDateTime As String
     
     'Set the MINIMUM date and time
-    strDateTime = Format(CDate(wsMenu.Range("F6")), _
+    strDateTime = Format(CDate(wshMenu.Range("F6")), _
                          "mm/dd/yyyy hh:MM:ss")
 
     'Reference the From Worksheet and Range

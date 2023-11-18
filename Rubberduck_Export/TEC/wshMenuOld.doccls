@@ -1,11 +1,5 @@
 ﻿Option Explicit
 
-Private Sub cmdEcriture_Click()
-
-    frmEcriture.show
-
-End Sub
-
 Private Sub cmdSaisieHeures_Click()
 
     Load frmSaisieHeures
