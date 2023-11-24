@@ -33,6 +33,12 @@ Private Sub cmdClearPicture_Click()
 
 End Sub
 
+Private Sub cmdDeleteContact_Click()
+    
+    Contact_Delete
+    
+End Sub
+
 Private Sub cmdNewContact_Click()
 
     Contact_New
@@ -63,3 +69,6 @@ Private Sub ContactSearch_Change()
 
 End Sub
 
+Private Sub UserForm_Click()
+
+End Sub

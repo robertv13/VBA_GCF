@@ -1,4 +1,3 @@
-Attribute VB_Name = "ContactMacros"
 Option Explicit
 
 Dim LastRow As Long, LastResultRow As Long, SelRow As Long
@@ -155,4 +154,3 @@ NotSaved:
         ContactListLoad 'Reload Contact List
     End With
 End Sub
-
