@@ -1,0 +1,41 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    If Not Intersect(Target, Range("D5:K17")) Is Nothing Then
+        If Target.Count > 1 Then
+            'Application.ScreenUpdating = False
+            Application.EnableEvents = False
+            Application.Undo
+            Application.EnableEvents = True
+            'Application.ScreenUpdating = True
+            End
+        End If
+        If Sheet2.Range("B3").Value = False Then
+            If Sheet1.Range("SharedFolder").Value = Empty Then End
+                Dim UserRow As Long
+                Dim CurrentUser As String
+                Dim SharedFolder As String
+                Dim Username As String
+                Dim FileName As String
+                Dim fso As Object
+                Dim oFile As Object
+                Set fso = CreateObject("Scripting.FileSystemObject")
+                CurrentUser = Sheet2.Range("CurrentUser").Value 'Current User
+                SharedFolder = Sheet1.Range("SharedFolder").Value
+                For UserRow = 5 To 19
+                    If Sheet2.Range("D" & UserRow).Value = Empty Then GoTo NoUser
+                    Username = Sheet2.Range("D" & UserRow).Value
+                    If CurrentUser = Username Then GoTo NextUser
+                    If Dir(SharedFolder & "\" & Username & "\", vbDirectory) = "" Then fso.createfolder (SharedFolder & "\" & Username & "\")
+                    FileName = SharedFolder & "\" & Username & "\" & Target.Worksheet.Name & Target.Address & ".txt"
+                    Set oFile = fso.CreateTextFile(FileName)
+                    oFile.writeline Target.Worksheet.Name & "," & Target.Address & ":" & Target.Value
+                    oFile.Close
+NextUser:
+                Next UserRow
+         Set fso = Nothing
+         Set oFile = Nothing
+NoUser:
+        End If
+    End If
+End Sub
