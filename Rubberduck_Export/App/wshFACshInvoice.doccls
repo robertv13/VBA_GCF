@@ -160,10 +160,4 @@ End Sub
 '    If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [shInvoice] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
 'End Sub
 
-Private Sub Worksheet_Calculate()
-
-    'MsgBox "Worksheet_Calculate() - N47 = " & shInvoice.Range("N47").Value & vbNewLine & "N48 = " & shInvoice.Range("N48").Value & _
-        vbNewLine & "N49 = " & shInvoice.Range("N49").Value & vbNewLine & "N50 = " & shInvoice.Range("N50").Value
-    
-End Sub
 

@@ -24,12 +24,6 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub UserForm_Initialize()
-
-    'MsgBox "frmSaisieHeures - UserForm_Initialize"
-
-End Sub
-
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
@@ -69,13 +63,14 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    '    If Me.cmbProfessionnel.value = "" Then
-    '        Me.cmbProfessionnel.SetFocus
-    '        Exit Sub
-    '    End If
+    Dim ID As Long
+    ID = GetID_FromInitials(Me.cmbProfessionnel.value)
     
-    Call FilterProfDate
-    Call RefreshListBox
+    wshAdmin.Range("Initials").value = Me.cmbProfessionnel.value
+    wshAdmin.Range("Prof_ID").value = ID
+    
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> "" And _
@@ -121,12 +116,11 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
     'Validation de la date
     If IsDate(strDate) = False Then
-        MsgBox _
-        Prompt:="La valeur saisie ne peut être utilisée comme une date valide!", _
-        Title:="Validation de la date", _
-        Buttons:=vbCritical
-        txtDate.SelStart = 0
-        txtDate.SelLength = Len(txtDate.value)
+        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide!", _
+            Title:="Validation de la date", _
+            Buttons:=vbCritical
+            txtDate.SelStart = 0
+            txtDate.SelLength = Len(txtDate.value)
         Exit Sub
     End If
 
@@ -156,12 +150,14 @@ End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    txtDate.BackColor = rgbWhite
-    lblDate.Caption = "Date *"
-    lblDate.ForeColor = Me.ForeColor
+'    txtDate.BackColor = rgbWhite
+'    lblDate.Caption = "Date *"
+'    lblDate.ForeColor = Me.ForeColor
     
-    Call FilterProfDate
-    Call RefreshListBox
+    wshAdmin.Range("TECDate").value = Me.txtDate.value
+
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
@@ -204,6 +200,9 @@ Private Sub txtClient_AfterUpdate()
     End If
     
     'Debug.Print rmv_state
+    Dim ID As Long
+    ID = RMV_TEST_GetID_FromClientName(Me.txtClient.value)
+    wshAdmin.Range("Client_ID_Admin").value = ID
     
     If rmv_state = rmv_modeAffichage Then
         If Me.txtClient.value <> savedClient Then

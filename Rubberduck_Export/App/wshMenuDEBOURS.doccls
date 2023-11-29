@@ -1,11 +1,11 @@
 ﻿Option Explicit
 
-Private Sub lblDebours_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideOut_Debours
+Private Sub lblPaiement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideOut_Paiement
 End Sub
 
 Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Debours
+    SlideIn_Paiement
 End Sub
 
 Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)

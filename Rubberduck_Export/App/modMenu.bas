@@ -408,7 +408,7 @@ Sub ExportHeures_Click()
 End Sub
 
 Sub PreparationFacture_Click()
-    SlideIn_ExportHeures
+    SlideIn_PrepFact
     MsgBox "Activer la fonction 'Préparation de Facture'"
 End Sub
 
@@ -423,11 +423,31 @@ Sub Encaissement_Click()
 End Sub
 
 Sub Regularisation_Click()
-    SlideIn_Régularisation
+    SlideIn_Regularisation
     MsgBox "Activer la fonction 'Régularisation'"
 End Sub
 
 Sub Paiement_Click()
     SlideIn_Paiement
     MsgBox "Activer la fonction 'Paiement'"
+End Sub
+
+Sub EJ_Click()
+    SlideIn_EJ
+    MsgBox "Activer la fonction 'Entrée de Journal'"
+End Sub
+
+Sub GL_Click()
+    SlideIn_GL
+    MsgBox "Activer la fonction 'Grand Livre'"
+End Sub
+
+Sub BV_Click()
+    SlideIn_BV
+    MsgBox "Activer la fonction 'Balance de vérification'"
+End Sub
+
+Sub EF_Click()
+    SlideIn_EF
+    MsgBox "Activer la fonction 'États Financiers'"
 End Sub

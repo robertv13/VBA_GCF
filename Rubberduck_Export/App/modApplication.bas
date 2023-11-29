@@ -16,7 +16,7 @@ Sub GetShapeProperties() 'List Properties of all the shapes
 
     Dim sShapes As Shape, lLoop As Long
     'Add headings for our lists. Expand as needed
-    ActiveSheet.Range("E2:J2") = Array("Type", "Name", "Height", "Width", "Left", "Top")
+    ActiveSheet.Range("E2:K2") = Array("Type", "Name", "Macro", "Height", "Width", "Left", "Top")
     lLoop = 1
     'Loop through all shapes on active sheet
     For Each sShapes In ActiveSheet.Shapes
@@ -26,10 +26,11 @@ Sub GetShapeProperties() 'List Properties of all the shapes
             'Add shape properties
             ActiveSheet.Cells(lLoop + 1, 5) = .Type
             ActiveSheet.Cells(lLoop + 1, 6) = .Name
-            ActiveSheet.Cells(lLoop + 1, 7) = .Height
-            ActiveSheet.Cells(lLoop + 1, 8) = .Width
-            ActiveSheet.Cells(lLoop + 1, 9) = .Left
-            ActiveSheet.Cells(lLoop + 1, 10) = .Top
+            ActiveSheet.Cells(lLoop + 1, 7) = .OnAction
+            ActiveSheet.Cells(lLoop + 1, 8) = .Height
+            ActiveSheet.Cells(lLoop + 1, 9) = .Width
+            ActiveSheet.Cells(lLoop + 1, 10) = .Left
+            ActiveSheet.Cells(lLoop + 1, 11) = .Top
             'Follow the same pattern for more
         End With
     Next sShapes

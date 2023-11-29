@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.1.0"
+Global Const gAppVersion As String = "v0.1.3"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -48,7 +48,7 @@ Sub ImportClientList()                                          '---------------
     
     'Copy to wshClientDB workbook
     wshClientDB.Range("A2").CopyFromRecordset recSet
-    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    wshClientDB.Range("A:B").CurrentRegion.EntireColumn.AutoFit
     
     'Close resource
     recSet.Close
@@ -61,56 +61,94 @@ Sub ImportClientList()                                          '---------------
         Title:="Vérification du nombre de clients", _
         Buttons:=vbInformation
         
-    'RefreshListBox
-
 End Sub
 
-Sub FilterProfDate()
-
-    'Minimum - Professionnel + Date
-    If Trim(frmSaisieHeures.cmbProfessionnel.value) = "" Or _
-       Trim(frmSaisieHeures.txtDate.value) = "" Then
+Sub TEC_FilterAndSort()
+    'You need the two Non Null Values to Filter
+    If wshAdmin.Range("Prof_ID").value = "" Or _
+        wshAdmin.Range("TECDate").value = "" Then
         Exit Sub
     End If
     
-    'Date converted to the appropriate format to filter date
-    Dim dateFormated As String
-    dateFormated = Format(CDate(frmSaisieHeures.txtDate.value), "dd/mm/yyyy")
-    
-    'BaseHours worksheet (Heures) contains all entries
-    Dim wsBH As Worksheet
-    Set wsBH = wshBaseHours
-    wsBH.AutoFilterMode = False
-    
-    'Prepare Worksheet to receive Filtered Hours
-    Dim wsFH As Worksheet
-    Set wsFH = ThisWorkbook.Sheets("HeuresFiltrées")
-    wsFH.UsedRange.Clear
-
-    'Apply filters to wshBaseHours
-    wsBH.Activate
-    With wsBH.UsedRange
-        .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
-        .AutoFilter Field:=3, Operator:=xlFilterValues, _
-                    Criteria1:=Array(2, dateFormated)
-        .AutoFilter Field:=12, Criteria1:="FAUX"
+    With wshBaseHours
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
+        If LastRow < 2 Then Exit Sub 'Nothing to filter
+        Application.ScreenUpdating = False
+        .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("R2:S3"), _
+            CopyToRange:=.Range("U2:AG2"), _
+            Unique:=True
+        LastResultRow = .Range("U99999").End(xlUp).Row
+        If LastResultRow < 3 Then
+            Application.ScreenUpdating = True
+            Exit Sub
+        End If
+        If LastResultRow < 4 Then GoTo NoSort
+        With .Sort
+            .SortFields.Clear
+            .SortFields.Add Key:=wshBaseHours.Range("V3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.Add Key:=wshBaseHours.Range("U3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+            .SetRange wshBaseHours.Range("U3:AF" & LastResultRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+NoSort:
     End With
-    
-    'Copy from wshBaseHours to wshFilteredHours
-    wsBH.UsedRange.Select
-    wsBH.Activate
-    wsBH.UsedRange.Copy wsFH.Range("A1")
-    
-    wsBH.Activate
-    wsBH.AutoFilterMode = False
-    wsBH.ShowAllData
-
-    wsFH.Activate
-
+    Application.ScreenUpdating = True
 End Sub
 
+'Sub TEC_FilterAndSort()
+'
+'    'Minimum - Professionnel + Date
+'    If Trim(frmSaisieHeures.cmbProfessionnel.value) = "" Or _
+'       Trim(frmSaisieHeures.txtDate.value) = "" Then
+'        Exit Sub
+'    End If
+'
+'    'Date converted to the appropriate format to filter date
+'    Dim dateFormated As String
+'    dateFormated = Format(CDate(frmSaisieHeures.txtDate.value), "dd/mm/yyyy")
+'
+'    'BaseHours worksheet (Heures) contains all entries
+'    Dim wsBH As Worksheet
+'    Set wsBH = wshBaseHours
+'    wsBH.AutoFilterMode = False
+'
+'    'Prepare Worksheet to receive Filtered Hours
+'    Dim wsFH As Worksheet
+'    Set wsFH = ThisWorkbook.Sheets("HeuresFiltrées")
+'    wsFH.UsedRange.Clear
+'
+'    'Apply filters to wshBaseHours
+'    wsBH.Activate
+'    With wsBH.UsedRange
+'        .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
+'        .AutoFilter Field:=3, Operator:=xlFilterValues, _
+'                    Criteria1:=Array(2, dateFormated)
+'        .AutoFilter Field:=12, Criteria1:="FAUX"
+'    End With
+'
+'    'Copy from wshBaseHours to wshFilteredHours
+'    wsBH.UsedRange.Select
+'    wsBH.Activate
+'    wsBH.UsedRange.Copy wsFH.Range("A1")
+'
+'    wsBH.Activate
+'    wsBH.AutoFilterMode = False
+'    wsBH.ShowAllData
+'
+'    wsFH.Activate
+'
+'End Sub
+
 '************************************************************** EffaceFormulaire
-Sub EffaceFormulaire()
+Sub EffaceFormulaire() 'RMV-ICI
 
     'Empty the dynamic fields after reseting the form
     With frmSaisieHeures
@@ -122,8 +160,8 @@ Sub EffaceFormulaire()
         .txtDate.Enabled = True
     End With
     
-    Call FilterProfDate
-    Call RefreshListBox
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
     
     With frmSaisieHeures
         .cmdClear.Enabled = False
@@ -174,29 +212,27 @@ Sub AjouteLigneDetail()
         Exit Sub
     End If
 
-    Dim sh As Worksheet
-    Set sh = wshBaseHours
-    sh.Activate
-    Call RemoveTotalRow
-    
     Dim LastRow As Long
-    LastRow = Application.WorksheetFunction.CountA(sh.Range("B:B"))
+    LastRow = wshBaseHours.Range("A999999").End(xlUp).Row
 
-    'Load the cmb & txt into the 'Heures' worksheet
-    With sh
+    'Load the cmb & txt into the 'HeuresBase' worksheet
+    With wshBaseHours
         .Range("A" & LastRow + 1).value = "=row()-1"
-        .Range("B" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
-        .Range("C" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
-        .Range("D" & LastRow + 1).value = frmSaisieHeures.txtClient.value
-        .Range("E" & LastRow + 1).value = frmSaisieHeures.txtActivite.value
-        .Range("F" & LastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-        .Range("G" & LastRow + 1).value = frmSaisieHeures.txtCommNote.value
-        .Range("H" & LastRow + 1).value = frmSaisieHeures.chbFacturable.value
-        .Range("I" & LastRow + 1).value = Now
-        .Range("J" & LastRow + 1).value = False
-        .Range("K" & LastRow + 1).value = ""
+        .Range("B" & LastRow + 1).value = wshAdmin.Range("Prof_ID")
+        .Range("C" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
+        .Range("D" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
+        .Range("E" & LastRow + 1).value = wshAdmin.Range("Client_ID_Admin")
+        .Range("F" & LastRow + 1).value = frmSaisieHeures.txtClient.value
+        .Range("G" & LastRow + 1).value = frmSaisieHeures.txtActivite.value
+        .Range("H" & LastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+        .Range("I" & LastRow + 1).value = frmSaisieHeures.txtCommNote.value
+        .Range("J" & LastRow + 1).value = frmSaisieHeures.chbFacturable.value
+        .Range("K" & LastRow + 1).value = Now
         .Range("L" & LastRow + 1).value = False
-        .Range("M" & LastRow + 1).value = gAppVersion
+        .Range("M" & LastRow + 1).value = ""
+        .Range("N" & LastRow + 1).value = False
+        .Range("O" & LastRow + 1).value = gAppVersion
+        .Range("P" & LastRow + 1).value = ""
     End With
 
     'Empty the fields after saving
@@ -205,8 +241,8 @@ Sub AjouteLigneDetail()
     frmSaisieHeures.txtHeures.value = ""
     frmSaisieHeures.txtCommNote.value = ""
         
-    Call FilterProfDate
-    Call RefreshListBox
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
     
     With frmSaisieHeures
         .cmdClear.Enabled = False
@@ -218,21 +254,21 @@ Sub AjouteLigneDetail()
     
 End Sub
 
-Sub RemoveTotalRow()
-    
-    Dim tbl As ListObject
-    Set tbl = wshBaseHours.ListObjects("tCharges")
-    If tbl.ShowTotals = True Then
-        tbl.TotalsRowRange.Delete
-    End If
-    
-    'Resize
-    '    With tbl.Range
-    '        tbl.Resize .Resize(.CurrentRegion.Rows.count + 1)
-    '        .Cells(.CurrentRegion.Rows.count + 1, 1).value = ""
-    '    End With
-
-End Sub
+'Sub RemoveTotalRow()
+'
+'    Dim tbl As ListObject
+'    Set tbl = wshBaseHours.ListObjects("tCharges")
+'    If tbl.ShowTotals = True Then
+'        tbl.TotalsRowRange.Delete
+'    End If
+'
+'    'Resize
+'    '    With tbl.Range
+'    '        tbl.Resize .Resize(.CurrentRegion.Rows.count + 1)
+'    '        .Cells(.CurrentRegion.Rows.count + 1, 1).value = ""
+'    '    End With
+'
+'End Sub
 
 '************************************************************ ModifieLigneDetail
 Sub ModifieLigneDetail()
@@ -314,8 +350,8 @@ Sub ModifieLigneDetail()
     frmSaisieHeures.txtDate.Enabled = True
     rmv_state = rmv_modeCreation
 
-    Call FilterProfDate
-    Call RefreshListBox
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
     
     frmSaisieHeures.txtClient.SetFocus
 
@@ -371,30 +407,30 @@ Sub EffaceLigneDetail()
     frmSaisieHeures.txtDate.Enabled = True
     rmv_state = rmv_modeCreation
     
-    Call FilterProfDate
-    Call RefreshListBox
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHoursAndAddHours
     
     frmSaisieHeures.txtClient.SetFocus
 
 End Sub
 
 '********************* Reload listBox from HeuresFiltered and reset the buttons
-Sub RefreshListBox()
+Sub RefreshListBoxAndAddHours()
 
-    If Trim(frmSaisieHeures.cmbProfessionnel) = "" _
-       Or Trim(frmSaisieHeures.txtDate) = "" Then
+    If wshAdmin.Range("B4").value = "" Or wshAdmin.Range("B5").value = "" Then
         GoTo EndOfProcedure
     End If
     
     frmSaisieHeures.txtTotalHeures.value = ""
     
     Dim shFiltered As Worksheet
-    Set shFiltered = ThisWorkbook.Sheets("HeuresFiltrées")
+    Set shFiltered = ThisWorkbook.Sheets("HeuresBase")
     shFiltered.Activate
     
     'Last Row used in column A
     Dim LastRow As Long
-    LastRow = Application.WorksheetFunction.CountA(shFiltered.Range("A:A"))
+    LastRow = wshBaseHours.Range("T2:T9999").End(xlUp).Row - 1
+    If LastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
         .ColumnHeads = True
@@ -402,20 +438,20 @@ Sub RefreshListBox()
         .ColumnWidths = "22; 28; 52; 120; 190; 35; 80; 30; 75"
         
         If LastRow = 1 Then
-            .RowSource = "HeuresFiltrées!A2:K2"
+            .RowSource = "HeuresBase!T3:Z3"
         Else
-            .RowSource = "HeuresFiltrées!A2:K" & LastRow
+            .RowSource = "HeuresBase!T3:Z" & LastRow + 1
         End If
     End With
 
     'Add hours to totalHeures
-    Dim nbrRows, i As Integer
+    Dim nbrRows, I As Integer
     nbrRows = frmSaisieHeures.lstData.ListCount
     Dim totalHeures As Double
     
     If nbrRows > 0 Then
-        For i = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(i, 5))
+        For I = 0 To nbrRows - 1
+            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(I, 3))
         Next
         frmSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
     End If
