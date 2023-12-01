@@ -409,12 +409,12 @@ Private Function FilterData() As Variant
     ReDim filteredItems(0 To m_maxRows - 1)
 
     'Read through all the items in the full list
-    Dim I As Long
+    Dim i As Long
     Dim count As Long: count = 0
-    For I = LBound(m_listOfItems) To UBound(m_listOfItems)
+    For i = LBound(m_listOfItems) To UBound(m_listOfItems)
         'Using Instr instead of Like so we can set the case sensitivity
-        If InStr(1, m_listOfItems(I, 1), textPattern, m_compareMethod) > 0 Then
-            filteredItems(count) = m_listOfItems(I, 1)
+        If InStr(1, m_listOfItems(i, 1), textPattern, m_compareMethod) > 0 Then
+            filteredItems(count) = m_listOfItems(i, 1)
             count = count + 1
             If m_showAllMatches = False Then
                 'Only show the max number of rows
@@ -427,9 +427,9 @@ Private Function FilterData() As Variant
     Dim finalItems As Variant
     If count > 0 Then
         ReDim finalItems(0 To count - 1)
-        For I = 0 To count - 1
-            finalItems(I) = filteredItems(I)
-        Next I
+        For i = 0 To count - 1
+            finalItems(i) = filteredItems(i)
+        Next i
     End If
     
     FilterData = finalItems

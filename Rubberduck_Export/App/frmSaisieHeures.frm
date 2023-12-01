@@ -24,6 +24,21 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean) 'RMV_001
+
+    Dim i As Long
+    With Me.lstNomClient
+        For i = 0 To .ListCount - 1
+            If .Selected(i) Then
+                Me.txtClient.value = .List(i, 0)
+                wshAdmin.Range("Client_ID_Admin").value = RMV_TEST_GetID_FromClientName(Me.txtClient.value)
+                Exit For
+            End If
+        Next i
+    End With
+
+End Sub
+
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
@@ -41,10 +56,11 @@ Sub UserForm_Activate()
         .CompareMethod = vbTextCompare
     End With
 
+    cmbProfessionnel.value = ""
+    cmbProfessionnel.SetFocus
+   
     rmv_state = rmv_modeInitial
-    
-    'cmbProfessionnel.SetFocus
-      
+   
 End Sub
 
 Private Sub UserForm_Terminate()
@@ -63,11 +79,8 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    Dim ID As Long
-    ID = GetID_FromInitials(Me.cmbProfessionnel.value)
-    
     wshAdmin.Range("Initials").value = Me.cmbProfessionnel.value
-    wshAdmin.Range("Prof_ID").value = ID
+    wshAdmin.Range("Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
@@ -150,11 +163,11 @@ End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-'    txtDate.BackColor = rgbWhite
-'    lblDate.Caption = "Date *"
-'    lblDate.ForeColor = Me.ForeColor
+    txtDate.BackColor = rgbWhite
+    lblDate.Caption = "Date *"
+    lblDate.ForeColor = Me.ForeColor
     
-    wshAdmin.Range("TECDate").value = Me.txtDate.value
+    wshAdmin.Range("TECDate").value = CDate(Me.txtDate.value)
 
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
@@ -177,32 +190,29 @@ Private Sub txtClient_Enter()
 
 End Sub
 
-Private Sub txtClient_AfterUpdate()
+Sub txtClient_AfterUpdate()
     
     'Enabled the ADD button if the minimum fields are non empty
     If rmv_state = rmv_modeCreation Then
         If Trim(Me.cmbProfessionnel.value) <> "" And _
-           Trim(Me.txtDate.value) <> "" And _
-           Trim(Me.txtClient.value) <> "" And _
-           Trim(Me.txtHeures.value) <> "" Then
+            Trim(Me.txtDate.value) <> "" And _
+            Trim(Me.txtClient.value) <> "" And _
+            Trim(Me.txtHeures.value) <> "" Then
             cmdAdd.Enabled = True
         End If
     End If
     
     If rmv_state = rmv_modeAffichage Then
         If savedClient <> Me.txtClient.value Or _
-           savedActivite <> Me.txtActivite.value Or _
-           savedHeures <> Me.txtHeures.value Or _
-           savedCommNote <> Me.txtCommNote Or _
-           savedFacturable <> Me.chbFacturable Then
+            savedActivite <> Me.txtActivite.value Or _
+            savedHeures <> Me.txtHeures.value Or _
+            savedCommNote <> Me.txtCommNote Or _
+            savedFacturable <> Me.chbFacturable Then
             cmdUpdate.Enabled = True
         End If
     End If
     
     'Debug.Print rmv_state
-    Dim ID As Long
-    ID = RMV_TEST_GetID_FromClientName(Me.txtClient.value)
-    wshAdmin.Range("Client_ID_Admin").value = ID
     
     If rmv_state = rmv_modeAffichage Then
         If Me.txtClient.value <> savedClient Then

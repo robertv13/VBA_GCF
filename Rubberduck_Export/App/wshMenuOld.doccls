@@ -4,7 +4,7 @@ Private Sub cmdSaisieHeures_Click()
 
     Load frmSaisieHeures
     
-    frmSaisieHeures.show 'vbModal
+    frmSaisieHeures.show False 'vbModal
     
 End Sub
 

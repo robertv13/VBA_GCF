@@ -344,7 +344,7 @@ Sub TEC_Click()
     
     wshMenuTEC.Visible = xlSheetVisible
     wshBaseHours.Visible = xlSheetVisible
-    wshFilteredHours.Visible = xlSheetVisible
+    'wshFilteredHours.Visible = xlSheetVisible
     wshClientDB.Visible = xlSheetVisible
     wshHoursToExport.Visible = xlSheetVisible
     

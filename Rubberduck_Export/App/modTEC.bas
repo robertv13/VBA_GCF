@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v0.1.3"
+Global Const gAppVersion As String = "v0.1.4"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -65,8 +65,8 @@ End Sub
 
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
-    If wshAdmin.Range("Prof_ID").value = "" Or _
-        wshAdmin.Range("TECDate").value = "" Then
+    If wshBaseHours.Range("R3").value = "" Or _
+        wshBaseHours.Range("S3").value = "" Then
         Exit Sub
     End If
     
@@ -74,10 +74,13 @@ Sub TEC_FilterAndSort()
         Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
         LastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
         If LastRow < 2 Then Exit Sub 'Nothing to filter
-        Application.ScreenUpdating = False
+        'Application.ScreenUpdating = False
+        On Error Resume Next
+        .Names("Criterial").Delete
+        On Error GoTo 0
         .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
             CriteriaRange:=.Range("R2:S3"), _
-            CopyToRange:=.Range("U2:AG2"), _
+            CopyToRange:=.Range("U2:AJ2"), _
             Unique:=True
         LastResultRow = .Range("U99999").End(xlUp).Row
         If LastResultRow < 3 Then
@@ -87,7 +90,7 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("V3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
@@ -100,55 +103,11 @@ Sub TEC_FilterAndSort()
          End With
 NoSort:
     End With
-    Application.ScreenUpdating = True
+    'Application.ScreenUpdating = True
 End Sub
 
-'Sub TEC_FilterAndSort()
-'
-'    'Minimum - Professionnel + Date
-'    If Trim(frmSaisieHeures.cmbProfessionnel.value) = "" Or _
-'       Trim(frmSaisieHeures.txtDate.value) = "" Then
-'        Exit Sub
-'    End If
-'
-'    'Date converted to the appropriate format to filter date
-'    Dim dateFormated As String
-'    dateFormated = Format(CDate(frmSaisieHeures.txtDate.value), "dd/mm/yyyy")
-'
-'    'BaseHours worksheet (Heures) contains all entries
-'    Dim wsBH As Worksheet
-'    Set wsBH = wshBaseHours
-'    wsBH.AutoFilterMode = False
-'
-'    'Prepare Worksheet to receive Filtered Hours
-'    Dim wsFH As Worksheet
-'    Set wsFH = ThisWorkbook.Sheets("HeuresFiltrées")
-'    wsFH.UsedRange.Clear
-'
-'    'Apply filters to wshBaseHours
-'    wsBH.Activate
-'    With wsBH.UsedRange
-'        .AutoFilter Field:=2, Criteria1:=frmSaisieHeures.cmbProfessionnel.value
-'        .AutoFilter Field:=3, Operator:=xlFilterValues, _
-'                    Criteria1:=Array(2, dateFormated)
-'        .AutoFilter Field:=12, Criteria1:="FAUX"
-'    End With
-'
-'    'Copy from wshBaseHours to wshFilteredHours
-'    wsBH.UsedRange.Select
-'    wsBH.Activate
-'    wsBH.UsedRange.Copy wsFH.Range("A1")
-'
-'    wsBH.Activate
-'    wsBH.AutoFilterMode = False
-'    wsBH.ShowAllData
-'
-'    wsFH.Activate
-'
-'End Sub
-
 '************************************************************** EffaceFormulaire
-Sub EffaceFormulaire() 'RMV-ICI
+Sub EffaceFormulaire()
 
     'Empty the dynamic fields after reseting the form
     With frmSaisieHeures
@@ -217,7 +176,7 @@ Sub AjouteLigneDetail()
 
     'Load the cmb & txt into the 'HeuresBase' worksheet
     With wshBaseHours
-        .Range("A" & LastRow + 1).value = "=row()-1"
+        .Range("A" & LastRow + 1).value = LastRow
         .Range("B" & LastRow + 1).value = wshAdmin.Range("Prof_ID")
         .Range("C" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
         .Range("D" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
@@ -445,13 +404,13 @@ Sub RefreshListBoxAndAddHours()
     End With
 
     'Add hours to totalHeures
-    Dim nbrRows, I As Integer
+    Dim nbrRows, i As Integer
     nbrRows = frmSaisieHeures.lstData.ListCount
     Dim totalHeures As Double
     
     If nbrRows > 0 Then
-        For I = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(I, 3))
+        For i = 0 To nbrRows - 1
+            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(i, 3))
         Next
         frmSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
     End If

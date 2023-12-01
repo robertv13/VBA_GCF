@@ -1,0 +1,6 @@
+﻿Option Explicit
+
+'Private Sub Worksheet_BeforeDelete()
+'    ThisWorkbook.Unprotect "Jenny"
+'    MsgBox "This sheet cannot be deleted.", vbExclamation
+'End Sub
