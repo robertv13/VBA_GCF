@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v0.1.4"
+Global Const gAppVersion As String = "v0.1.5"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -74,13 +74,13 @@ Sub TEC_FilterAndSort()
         Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
         LastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
         If LastRow < 2 Then Exit Sub 'Nothing to filter
-        'Application.ScreenUpdating = False
+        Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
             CriteriaRange:=.Range("R2:S3"), _
-            CopyToRange:=.Range("U2:AJ2"), _
+            CopyToRange:=.Range("U2:AH2"), _
             Unique:=True
         LastResultRow = .Range("U99999").End(xlUp).Row
         If LastResultRow < 3 Then
@@ -90,7 +90,7 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("W3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
@@ -98,12 +98,12 @@ Sub TEC_FilterAndSort()
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("U3:AF" & LastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("U3:AH" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
     End With
-    'Application.ScreenUpdating = True
+    Application.ScreenUpdating = True
 End Sub
 
 '************************************************************** EffaceFormulaire
@@ -199,6 +199,7 @@ Sub AjouteLigneDetail()
     frmSaisieHeures.txtActivite.value = ""
     frmSaisieHeures.txtHeures.value = ""
     frmSaisieHeures.txtCommNote.value = ""
+    wshAdmin.Range("TECDate").value = ""
         
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
@@ -287,17 +288,21 @@ Sub ModifieLigneDetail()
                                                       sh.Range("A:A"), 0)
     
     With frmSaisieHeures
-        sh.Range("B" & selectedRow).value = .cmbProfessionnel.value
-        sh.Range("C" & selectedRow).value = CDate(.txtDate.value)
-        sh.Range("D" & selectedRow).value = .txtClient.value
-        sh.Range("E" & selectedRow).value = .txtActivite.value
-        sh.Range("F" & selectedRow).value = Format(.txtHeures.value, "#0.00")
-        sh.Range("G" & selectedRow).value = .txtCommNote.value
-        sh.Range("H" & selectedRow).value = .chbFacturable.value
-        sh.Range("I" & selectedRow).value = Now
-        sh.Range("J" & selectedRow).value = False
-        sh.Range("K" & selectedRow).value = ""
+        sh.Range("B" & selectedRow).value = wshAdmin.Range("Prof_ID")
+        sh.Range("C" & selectedRow).value = .cmbProfessionnel.value
+        sh.Range("D" & selectedRow).value = CDate(.txtDate.value)
+        sh.Range("E" & selectedRow).value = wshAdmin.Range("Client_ID_Admin")
+        sh.Range("F" & selectedRow).value = .txtClient.value
+        sh.Range("G" & selectedRow).value = .txtActivite.value
+        sh.Range("H" & selectedRow).value = Format(.txtHeures.value, "#0.00")
+        sh.Range("I" & selectedRow).value = .txtCommNote.value
+        sh.Range("J" & selectedRow).value = .chbFacturable.value
+        sh.Range("K" & selectedRow).value = Now
         sh.Range("L" & selectedRow).value = False
+        sh.Range("M" & selectedRow).value = ""
+        sh.Range("N" & selectedRow).value = False
+        sh.Range("O" & selectedRow).value = gAppVersion
+        sh.Range("P" & selectedRow).value = ""
         
         frmSaisieHeures.txtClient.value = ""
         frmSaisieHeures.txtActivite.value = ""
@@ -376,7 +381,7 @@ End Sub
 '********************* Reload listBox from HeuresFiltered and reset the buttons
 Sub RefreshListBoxAndAddHours()
 
-    If wshAdmin.Range("B4").value = "" Or wshAdmin.Range("B5").value = "" Then
+    If wshAdmin.Range("Prof_ID").value = "" Or wshAdmin.Range("TECDate").value = "" Then
         GoTo EndOfProcedure
     End If
     
@@ -384,22 +389,22 @@ Sub RefreshListBoxAndAddHours()
     
     Dim shFiltered As Worksheet
     Set shFiltered = ThisWorkbook.Sheets("HeuresBase")
-    shFiltered.Activate
+    'shFiltered.Activate
     
     'Last Row used in column A
     Dim LastRow As Long
-    LastRow = wshBaseHours.Range("T2:T9999").End(xlUp).Row - 1
+    LastRow = wshBaseHours.Range("U9999").End(xlUp).Row - 1
     If LastRow = 0 Then Exit Sub
         
-    With frmSaisieHeures.lstData
+    With frmSaisieHeures.lstData 'RMV_001
         .ColumnHeads = True
         .ColumnCount = 9
-        .ColumnWidths = "22; 28; 52; 120; 190; 35; 80; 30; 75"
+        .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
         If LastRow = 1 Then
-            .RowSource = "HeuresBase!T3:Z3"
+            .RowSource = "HeuresBase!U3:AC3"
         Else
-            .RowSource = "HeuresBase!T3:Z" & LastRow + 1
+            .RowSource = "HeuresBase!U3:AC" & LastRow + 1
         End If
     End With
 
@@ -410,7 +415,7 @@ Sub RefreshListBoxAndAddHours()
     
     If nbrRows > 0 Then
         For i = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(i, 3))
+            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(i, 5))
         Next
         frmSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
     End If
