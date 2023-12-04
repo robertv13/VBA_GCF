@@ -65,6 +65,9 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
+    'Clear the admin control cells
+    wshAdmin.Range("B3:B6").ClearContents
+    
     ThisWorkbook.Save
     
     'Clean up
@@ -73,7 +76,7 @@ Private Sub UserForm_Terminate()
     Me.Hide
     Unload Me
     
-    'wshMenu.Select
+    wshMenu.Select
 
 End Sub
 
@@ -364,5 +367,4 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rmv_state = rmv_modeAffichage
     
 End Sub
-
 

@@ -32,16 +32,16 @@ End Sub
 Sub UpdateBV() 'Forme 'Actualiser'
     Dim dateCutOff As String
     Dim Row As Long, rowUsed As Long
-    Dim LastRow As Long, startRow As Long, MyRow As Long
+    Dim lastRow As Long, startRow As Long, MyRow As Long
     Dim Solde As Currency
     
     startRow = 3  'your first row of actual data in Plan Comptable
-    LastRow = wshPlanComptable.Cells(Rows.count, "E").End(xlUp).Row
+    lastRow = wshPlanComptable.Cells(Rows.count, "E").End(xlUp).Row
     Row = 4       'Première ligne dans la Balance de Vérification
     
     'Efface la BV + Détail du GL
-    wshBV.Range("D" & Row & ":G" & LastRow + 4).ClearContents
-    wshBV.Range("D" & Row & ":G" & LastRow + 4).ClearFormats
+    wshBV.Range("D" & Row & ":G" & lastRow + 4).ClearContents
+    wshBV.Range("D" & Row & ":G" & lastRow + 4).ClearFormats
     Dim rowGLDetailLast As Long
     rowGLDetailLast = wshBV.Range("M99999").End(xlUp).Row 'Dernière ligne utilisée
     If rowGLDetailLast < 4 Then rowGLDetailLast = 4
@@ -55,7 +55,7 @@ Sub UpdateBV() 'Forme 'Actualiser'
     
     dateCutOff = Format(wshBV.Range("J1").value, "yyyymmdd")
     
-    For MyRow = startRow To LastRow
+    For MyRow = startRow To lastRow
         Solde = GetBalance(wshPlanComptable.Cells(MyRow, 5), dateCutOff)
         If Solde <> 0 Then
             wshBV.Range("D" & Row).value = wshPlanComptable.Cells(MyRow, 5)
