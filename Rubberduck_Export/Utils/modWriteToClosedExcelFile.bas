@@ -1,7 +1,12 @@
 Attribute VB_Name = "modWriteToClosedExcelFile"
 Option Explicit
 
-Sub AddRecordToDB() 'GCF_BD_Test, Feuil1, 3 colonnes
+Sub AddRecordToDB()
+
+    '3 Steps
+    'Locate the file
+    'Open the file and do something with it
+    'Close the workbook
 
     Dim fileLocation As String
     Dim fileToOpen As Workbook
@@ -9,8 +14,8 @@ Sub AddRecordToDB() 'GCF_BD_Test, Feuil1, 3 colonnes
     Application.ScreenUpdating = False
     
     fileLocation = ThisWorkbook.Path & Application.PathSeparator & _
-                     "DataFiles" & Application.PathSeparator & _
-                     "GCF_BD_Test.xlsx"
+                   "DataFiles" & Application.PathSeparator & _
+                   "GCF_DB.xlsx"
  
     'Open the file
     Set fileToOpen = Workbooks.Open(fileLocation)
@@ -36,8 +41,8 @@ Sub GetNumberOfRecordsFromDB()
     Application.ScreenUpdating = False
     
     fileLocation = ThisWorkbook.Path & Application.PathSeparator & _
-                     "DataFiles" & Application.PathSeparator & _
-                     "GCF_BD_Test.xlsx"
+                   "DataFiles" & Application.PathSeparator & _
+                   "GCF_DB.xlsx"
  
     'Open the closed file
     Set fileToOpen = Workbooks.Open(fileLocation)
@@ -45,7 +50,7 @@ Sub GetNumberOfRecordsFromDB()
     'Code to determine how many records are used
     Dim rowLast As Long
     rowLast = fileToOpen.Worksheets(1).Range("A999999").End(xlUp).Row
-    wshCode.Range("RecordsUsed").Value = rowLast - 1
+    wshCode.Range("G6").Value = rowLast - 1
     
     'Close the file without saving any changes
     fileToOpen.Close False
@@ -54,7 +59,7 @@ Sub GetNumberOfRecordsFromDB()
 
 End Sub
 
-Sub ChatGPT_AddRecordToEndOfWorksheet() 'Write to a closed -OR- open .xlsx file
+Sub ChatGPT_AddRecordToEndOfWorksheet()          'Write to a closed -OR- open .xlsx file
     Dim filePath As String
     Dim sheetName As String
     Dim conn As Object
@@ -62,16 +67,13 @@ Sub ChatGPT_AddRecordToEndOfWorksheet() 'Write to a closed -OR- open .xlsx file
     Dim strConn As String
     Dim strSQL As String
     Dim nextID As Long
-    Dim userName As String
 
     Application.ScreenUpdating = False
     
-    userName = Environ("USERNAME")
-    
     'Set the file full path and worksheet name, assuming the same directory -OR- underneath
     filePath = ThisWorkbook.Path & Application.PathSeparator & _
-                    "DataFiles" & Application.PathSeparator & _
-                    "GCF_BD_Test.xlsx"
+               "DataFiles" & Application.PathSeparator & _
+               "GCF_DB.xlsx"
     sheetName = "Feuil1"
 
     'Initialize connection, connection string & open the connection
@@ -82,25 +84,23 @@ Sub ChatGPT_AddRecordToEndOfWorksheet() 'Write to a closed -OR- open .xlsx file
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
-    'SQL select command to find the next available ID, then close the recordset
+    'SQL select command to find the next available ID
     strSQL = "SELECT MAX(ID) AS MaxID FROM [" & sheetName & "$];"
-    rs.Open strSQL, conn, 2, 3
-    If rs.Fields("MaxID").Value <> "" Then
-        Debug.Print rs.Fields("MaxID").Value + 1
-        nextID = rs.Fields("MaxID").Value + 1
-    Else
-        nextID = 1
-    End If
-    rs.Close
 
-    'Build a new empty recordset
+    'Open the recordset with the select command
+    rs.Open strSQL, conn, 2, 3
+
+    'Get the next available ID
+    nextID = rs.Fields("MaxID").Value + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     rs.AddNew
     
     'Add fields to the record, before updating it
     rs.Fields("ID").Value = nextID
-    rs.Fields("timeStamp").Value = Format(Now, "dd/mm/yyyy hh:mm:ss")
-    rs.Fields("userName").Value = userName
+    rs.Fields("Timestamp").Value = Format(Now, "dd-mm-yyyy hh:mm:ss")
     
     'Update the recordset (create the record)
     rs.Update
@@ -133,23 +133,23 @@ Sub AddRecordToEndOfWorksheet(filePath As String, sheetName As String) 'Write to
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
-    'SQL select command to find the next available ID, then close the recordset
+    'SQL select command to find the next available ID
     strSQL = "SELECT MAX(ID) AS MaxID FROM [" & sheetName & "$];"
+
+    'Open the recordset with the select command
     rs.Open strSQL, conn, 2, 3
-    If rs.Fields("MaxID").Value <> "" Then
-        nextID = rs.Fields("MaxID").Value + 1
-    Else
-        nextID = 1
-    End If
+
+    'Get the next available ID
+    nextID = rs.Fields("MaxID").Value + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    
-    'Build a new empty recordset
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     rs.AddNew
     
     'Add fields to the record, before updating it
     rs.Fields("ID").Value = nextID
-    rs.Fields("timeStamp").Value = Format(Now, "dd/mm/yyyy hh:mm:ss")
+    rs.Fields("Timestamp").Value = Format(Now, "dd-mm-yyyy hh:mm:ss")
     rs.Fields("userName").Value = userName
     
     'Update the recordset (create the record)
@@ -185,17 +185,17 @@ Sub AddXRecordToEndOfWorksheet(filePath As String, sheetName As String, numberRe
 
     Dim i As Integer
     For i = 1 To numberRecords
-        'SQL select command to find the next available ID, then close the recordset
+        'SQL select command to find the next available ID
         strSQL = "SELECT MAX(ID) AS MaxID FROM [" & sheetName & "$];"
+    
+        'Open the recordset with the select command
         rs.Open strSQL, conn, 2, 3
-        If rs.Fields("MaxID").Value <> "" Then
-            nextID = rs.Fields("MaxID").Value + 1
-        Else
-            nextID = 1
-        End If
+    
+        'Get the next available ID
+        nextID = rs.Fields("MaxID").Value + 1
+    
+        'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
-        
-        'Build a new empty recordset
         rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
         rs.AddNew
         
@@ -211,7 +211,7 @@ Sub AddXRecordToEndOfWorksheet(filePath As String, sheetName As String, numberRe
     
     'Close recordset and connection
     On Error Resume Next
-        rs.Close
+    rs.Close
     On Error GoTo 0
     conn.Close
     
@@ -225,8 +225,8 @@ Sub Write10RecordUsingADO()
     Dim sheetName As String
 
     filePath = ThisWorkbook.Path & Application.PathSeparator & _
-                    "DataFiles" & Application.PathSeparator & _
-                    "GCF_BD_Test.xlsx"
+               "DataFiles" & Application.PathSeparator & _
+               "GCF_DB.xlsx"
     sheetName = "Feuil1"
 
     Dim i As Integer
@@ -242,12 +242,12 @@ Sub WriteRecordsUsingADO()
     Dim sheetName As String
 
     filePath = ThisWorkbook.Path & Application.PathSeparator & _
-                    "DataFiles" & Application.PathSeparator & _
-                    "GCF_BD_Test.xlsx"
+               "DataFiles" & Application.PathSeparator & _
+               "GCF_DB.xlsx"
     sheetName = "Feuil1"
 
     'Sub AddXRecordToEndOfWorksheet Nom complet du fichier, Nom de la feuille, Nombre d'enregistrements à créer
-    AddXRecordToEndOfWorksheet filePath, sheetName, 100
+    AddXRecordToEndOfWorksheet filePath, sheetName, 1000
     
 End Sub
 
