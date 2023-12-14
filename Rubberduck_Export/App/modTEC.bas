@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.0.0"
+Global Const gAppVersion As String = "v1.0.1"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -65,8 +65,7 @@ End Sub
 
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
-    If wshBaseHours.Range("R3").value = "" Or _
-        wshBaseHours.Range("S3").value = "" Then
+    If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
         Exit Sub
     End If
     
@@ -79,10 +78,10 @@ Sub TEC_FilterAndSort()
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("A2:P" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("R2:S3"), _
-            CopyToRange:=.Range("U2:AH2"), _
+            CriteriaRange:=.Range("R2:T3"), _
+            CopyToRange:=.Range("V2:AI2"), _
             Unique:=True
-        LastResultRow = .Range("U99999").End(xlUp).Row
+        LastResultRow = .Range("U999999").End(xlUp).Row
         If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -199,7 +198,7 @@ Sub AjouteLigneDetail()
     frmSaisieHeures.txtActivite.value = ""
     frmSaisieHeures.txtHeures.value = ""
     frmSaisieHeures.txtCommNote.value = ""
-    wshAdmin.Range("TECDate").value = ""
+    'wshAdmin.Range("TECDate").value = "" '2023-12-14 @ 11h47
         
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
@@ -350,9 +349,10 @@ Sub EffaceLigneDetail()
     selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
                                                       sh.Range("A:A"), 0)
     
-    'Assign 'VRAI' to colomn 12, since it is deleted
-    sh.Range("I" & selectedRow).value = Now
-    sh.Range("L" & selectedRow).value = True
+    'Assign 'VRAI' to colomn 14, since it is deleted
+    sh.Range("K" & selectedRow).value = Now '2023-12-14 @ 12h05
+    sh.Range("N" & selectedRow).value = True '2023-12-14 @ 12h05
+    sh.Range("O" & selectedRow).value = gAppVersion '2023-12-14 @ 12h05
     
     'Empty the dynamic fields after deleting
     With frmSaisieHeures
@@ -372,7 +372,7 @@ Sub EffaceLigneDetail()
     rmv_state = rmv_modeCreation
     
     Call TEC_FilterAndSort
-    Call RefreshListBoxAndAddHoursAndAddHours
+    Call RefreshListBoxAndAddHours
     
     frmSaisieHeures.txtClient.SetFocus
 
@@ -393,7 +393,7 @@ Sub RefreshListBoxAndAddHours()
     
     'Last Row used in column A
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("U9999").End(xlUp).Row - 1
+    lastRow = wshBaseHours.Range("V99999").End(xlUp).Row - 1
     If lastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData 'RMV_001
@@ -402,9 +402,9 @@ Sub RefreshListBoxAndAddHours()
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
         If lastRow = 1 Then
-            .RowSource = "HeuresBase!U3:AC3"
+            .RowSource = "HeuresBase!V3:AD3"
         Else
-            .RowSource = "HeuresBase!U3:AC" & lastRow + 1
+            .RowSource = "HeuresBase!V3:AD" & lastRow + 1
         End If
     End With
 

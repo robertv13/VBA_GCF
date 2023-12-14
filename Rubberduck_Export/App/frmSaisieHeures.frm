@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmSaisieHeures
    ClientHeight    =   9270.001
    ClientLeft      =   105
    ClientTop       =   450
-   ClientWidth     =   13215
+   ClientWidth     =   13275
    OleObjectBlob   =   "frmSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -85,14 +85,16 @@ Public Sub cmbProfessionnel_AfterUpdate()
     wshAdmin.Range("Initials").value = Me.cmbProfessionnel.value
     wshAdmin.Range("Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
-    Call TEC_FilterAndSort
-    Call RefreshListBoxAndAddHours
+    If wshAdmin.Range("TECDate").value <> "" Then '2023-12-14 @ 11h40
+        Call TEC_FilterAndSort
+        Call RefreshListBoxAndAddHours
+    End If
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> "" And _
-       Trim(Me.txtDate.value) <> "" And _
-       Trim(Me.txtClient.value) <> "" And _
-       Trim(Me.txtHeures.value) <> "" Then
+        Trim(Me.txtDate.value) <> "" And _
+        Trim(Me.txtClient.value) <> "" And _
+        Trim(Me.txtHeures.value) <> "" Then
         cmdAdd.Enabled = True
     End If
     
@@ -172,14 +174,16 @@ Private Sub txtDate_AfterUpdate()
     
     wshAdmin.Range("TECDate").value = CDate(Me.txtDate.value)
 
-    Call TEC_FilterAndSort
-    Call RefreshListBoxAndAddHours
+    If wshAdmin.Range("Prof_ID").value <> "" Then
+        Call TEC_FilterAndSort
+        Call RefreshListBoxAndAddHours
+    End If
     
     'Enabled the ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
-       Trim(Me.txtDate.value) <> vbNullString And _
-       Trim(Me.txtClient.value) <> vbNullString And _
-       Trim(Me.txtHeures.value) <> vbNullString Then
+        Trim(Me.txtDate.value) <> vbNullString And _
+        Trim(Me.txtClient.value) <> vbNullString And _
+        Trim(Me.txtHeures.value) <> vbNullString Then
         cmdAdd.Enabled = True
     End If
     
