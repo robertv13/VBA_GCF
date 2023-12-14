@@ -1,7 +1,7 @@
 Attribute VB_Name = "Invoice_Macros"
 Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
-Dim lastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
+Dim LastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
 
 Sub Invoice_New()
     If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_New() @ " & Time
@@ -113,10 +113,10 @@ Sub Invoice_Load()
         Next InvCol
         'Load Invoice Items
         With InvItems
-            lastRow = .Range("A9999").End(xlUp).Row
-            If lastRow < 4 Then Exit Sub
-            If shInvoice.Range("B28").value Then Debug.Print "LastRow = " & lastRow & "   Copie de '" & "A3:G" & lastRow & "   Critère: " & .Range("L3").value
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L2:L3"), CopyToRange:=.Range("N2:S2"), Unique:=True
+            LastRow = .Range("A9999").End(xlUp).Row
+            If LastRow < 4 Then Exit Sub
+            If shInvoice.Range("B28").value Then Debug.Print "LastRow = " & LastRow & "   Copie de '" & "A3:G" & LastRow & "   Critère: " & .Range("L3").value
+            .Range("A3:G" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L2:L3"), CopyToRange:=.Range("N2:S2"), Unique:=True
             LastResultRow = .Range("V9999").End(xlUp).Row
             If shInvoice.Range("B28").value Then Debug.Print "Based on column 'V' (InvItems), LastResultRow = " & LastResultRow
             If LastResultRow < 3 Then GoTo NoItems
@@ -145,9 +145,9 @@ Sub Invoice_Delete()
         InvRow = .Range("B20").value 'Set Invoice Row
         InvList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         With InvItems
-            lastRow = .Range("A99999").End(xlUp).Row
-            If lastRow < 4 Then Exit Sub
-            .Range("A3:J" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
+            LastRow = .Range("A99999").End(xlUp).Row
+            If LastRow < 4 Then Exit Sub
+            .Range("A3:J" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
             LastResultRow = .Range("V99999").End(xlUp).Row
             If LastResultRow < 3 Then GoTo NoItems
     '        If LastResultRow < 4 Then GoTo SkipSort
@@ -193,8 +193,8 @@ End Sub
 Sub Create_PDF_Email_Sub(NoFacture As Long)
     If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long) @ " & Time
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
-    Dim Result As Boolean
-    Result = Create_PDF_Email_Function(NoFacture, "CreateEmail")
+    Dim result As Boolean
+    result = Create_PDF_Email_Function(NoFacture, "CreateEmail")
     If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long)" & vbNewLine
 End Sub
 
@@ -244,7 +244,7 @@ Function Create_PDF_Email_Function(NoFacture As Long, Optional action As String 
         source_file = "C:\VBA\GC_FISCALITÉ\Factures_PDF\" & NoFactFormate & ".pdf"
         
         With myMail
-            .To = "robertv13@hotmail.com"
+            .to = "robertv13@hotmail.com"
             .CC = "robertv13@me.com"
             .BCC = "robertv13@gmail.com"
             .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"

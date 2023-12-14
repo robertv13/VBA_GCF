@@ -112,7 +112,7 @@ Private Sub Class_Initialize()
     m_compareMethod = vbTextCompare
     m_maxRows = m_conMaxRows
     m_startText = "Saisir le nom de la compagnie que vous recherchez"
-    m_showAllMatches = False                     'False - 2023-03-01 - RMV
+    m_showAllMatches = False
     
 End Sub
 

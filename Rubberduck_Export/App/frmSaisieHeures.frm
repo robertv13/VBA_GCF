@@ -85,7 +85,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
     wshAdmin.Range("Initials").value = Me.cmbProfessionnel.value
     wshAdmin.Range("Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
-    If wshAdmin.Range("TECDate").value <> "" Then '2023-12-14 @ 11h40
+    If wshAdmin.Range("TECDate").value <> "" Then
         Call TEC_FilterAndSort
         Call RefreshListBoxAndAddHours
     End If

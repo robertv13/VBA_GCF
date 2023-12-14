@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.0.1"
+Global Const gAppVersion As String = "v1.0.2"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -70,14 +70,14 @@ Sub TEC_FilterAndSort()
     End If
     
     With wshBaseHours
-        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
-        If lastRow < 2 Then Exit Sub 'Nothing to filter
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
+        If LastRow < 2 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
-        .Range("A2:P" & lastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
             CriteriaRange:=.Range("R2:T3"), _
             CopyToRange:=.Range("V2:AI2"), _
             Unique:=True
@@ -170,27 +170,27 @@ Sub AjouteLigneDetail()
         Exit Sub
     End If
 
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A999999").End(xlUp).Row
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("A999999").End(xlUp).Row
 
     'Load the cmb & txt into the 'HeuresBase' worksheet
     With wshBaseHours
-        .Range("A" & lastRow + 1).value = lastRow
-        .Range("B" & lastRow + 1).value = wshAdmin.Range("Prof_ID")
-        .Range("C" & lastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
-        .Range("D" & lastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
-        .Range("E" & lastRow + 1).value = wshAdmin.Range("Client_ID_Admin")
-        .Range("F" & lastRow + 1).value = frmSaisieHeures.txtClient.value
-        .Range("G" & lastRow + 1).value = frmSaisieHeures.txtActivite.value
-        .Range("H" & lastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-        .Range("I" & lastRow + 1).value = frmSaisieHeures.txtCommNote.value
-        .Range("J" & lastRow + 1).value = frmSaisieHeures.chbFacturable.value
-        .Range("K" & lastRow + 1).value = Now
-        .Range("L" & lastRow + 1).value = False
-        .Range("M" & lastRow + 1).value = ""
-        .Range("N" & lastRow + 1).value = False
-        .Range("O" & lastRow + 1).value = gAppVersion
-        .Range("P" & lastRow + 1).value = ""
+        .Range("A" & LastRow + 1).value = LastRow
+        .Range("B" & LastRow + 1).value = wshAdmin.Range("Prof_ID")
+        .Range("C" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
+        .Range("D" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
+        .Range("E" & LastRow + 1).value = wshAdmin.Range("Client_ID_Admin")
+        .Range("F" & LastRow + 1).value = frmSaisieHeures.txtClient.value
+        .Range("G" & LastRow + 1).value = frmSaisieHeures.txtActivite.value
+        .Range("H" & LastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+        .Range("I" & LastRow + 1).value = frmSaisieHeures.txtCommNote.value
+        .Range("J" & LastRow + 1).value = frmSaisieHeures.chbFacturable.value
+        .Range("K" & LastRow + 1).value = Now
+        .Range("L" & LastRow + 1).value = False
+        .Range("M" & LastRow + 1).value = ""
+        .Range("N" & LastRow + 1).value = False
+        .Range("O" & LastRow + 1).value = gAppVersion
+        .Range("P" & LastRow + 1).value = ""
     End With
 
     'Empty the fields after saving
@@ -198,7 +198,7 @@ Sub AjouteLigneDetail()
     frmSaisieHeures.txtActivite.value = ""
     frmSaisieHeures.txtHeures.value = ""
     frmSaisieHeures.txtCommNote.value = ""
-    'wshAdmin.Range("TECDate").value = "" '2023-12-14 @ 11h47
+    'wshAdmin.Range("TECDate").value = ""
         
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
@@ -350,9 +350,9 @@ Sub EffaceLigneDetail()
                                                       sh.Range("A:A"), 0)
     
     'Assign 'VRAI' to colomn 14, since it is deleted
-    sh.Range("K" & selectedRow).value = Now '2023-12-14 @ 12h05
-    sh.Range("N" & selectedRow).value = True '2023-12-14 @ 12h05
-    sh.Range("O" & selectedRow).value = gAppVersion '2023-12-14 @ 12h05
+    sh.Range("K" & selectedRow).value = Now
+    sh.Range("N" & selectedRow).value = True
+    sh.Range("O" & selectedRow).value = gAppVersion
     
     'Empty the dynamic fields after deleting
     With frmSaisieHeures
@@ -392,19 +392,19 @@ Sub RefreshListBoxAndAddHours()
     'shFiltered.Activate
     
     'Last Row used in column A
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("V99999").End(xlUp).Row - 1
-    If lastRow = 0 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("V99999").End(xlUp).Row - 1
+    If LastRow = 0 Then Exit Sub
         
-    With frmSaisieHeures.lstData 'RMV_001
+    With frmSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
-        If lastRow = 1 Then
+        If LastRow = 1 Then
             .RowSource = "HeuresBase!V3:AD3"
         Else
-            .RowSource = "HeuresBase!V3:AD" & lastRow + 1
+            .RowSource = "HeuresBase!V3:AD" & LastRow + 1
         End If
     End With
 
