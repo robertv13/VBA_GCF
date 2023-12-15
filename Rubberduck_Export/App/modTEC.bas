@@ -138,76 +138,24 @@ End Sub
 '************************************************************* AjouteLigneDetail
 Sub AjouteLigneDetail()
 
-    'Validations first (one field at a time)
-    If frmSaisieHeures.cmbProfessionnel.value = "" Then
-        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.cmbProfessionnel.SetFocus
-        Exit Sub
-    End If
-
-    If frmSaisieHeures.txtDate.value = "" Or _
-        IsDate(frmSaisieHeures.txtDate.value) = False Then
-            MsgBox Prompt:="La date est OBLIGATOIRE !", _
-                   Title:="Vérification", _
-                   Buttons:=vbCritical
-            frmSaisieHeures.txtDate.SetFocus
-            Exit Sub
-    End If
-
-    If frmSaisieHeures.txtClient.value = "" Then
-        MsgBox Prompt:="Le client est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.txtClient.SetFocus
-        Exit Sub
-    End If
+    If IsDataValid() = False Then Exit Sub
     
-    If frmSaisieHeures.txtHeures.value = "" Or _
-       IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
-        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.txtHeures.SetFocus
-        Exit Sub
-    End If
-
     Dim LastRow As Long
-    LastRow = wshBaseHours.Range("A999999").End(xlUp).Row
+    LastRow = wshBaseHours.Range("A999999").End(xlUp).Row + 1
 
-    'Load the cmb & txt into the 'HeuresBase' worksheet
-    With wshBaseHours
-        .Range("A" & LastRow + 1).value = LastRow
-        .Range("B" & LastRow + 1).value = wshAdmin.Range("Prof_ID")
-        .Range("C" & LastRow + 1).value = frmSaisieHeures.cmbProfessionnel.value
-        .Range("D" & LastRow + 1).value = CDate(frmSaisieHeures.txtDate.value)
-        .Range("E" & LastRow + 1).value = wshAdmin.Range("Client_ID_Admin")
-        .Range("F" & LastRow + 1).value = frmSaisieHeures.txtClient.value
-        .Range("G" & LastRow + 1).value = frmSaisieHeures.txtActivite.value
-        .Range("H" & LastRow + 1).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-        .Range("I" & LastRow + 1).value = frmSaisieHeures.txtCommNote.value
-        .Range("J" & LastRow + 1).value = frmSaisieHeures.chbFacturable.value
-        .Range("K" & LastRow + 1).value = Now
-        .Range("L" & LastRow + 1).value = False
-        .Range("M" & LastRow + 1).value = ""
-        .Range("N" & LastRow + 1).value = False
-        .Range("O" & LastRow + 1).value = gAppVersion
-        .Range("P" & LastRow + 1).value = ""
-    End With
-
-    AddTECRecordToDBTest 'Write to external XLSX file - 2023-12-15 @ 12:05
+    WriteToWorksheet (LastRow) 'Write to wshBaseHours (current Workbook) '2023-12-15 @ 13:31
+    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 13:33
 
     'Empty the fields after saving
     frmSaisieHeures.txtClient.value = ""
     frmSaisieHeures.txtActivite.value = ""
     frmSaisieHeures.txtHeures.value = ""
     frmSaisieHeures.txtCommNote.value = ""
-    'wshAdmin.Range("TECDate").value = ""
         
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
     
+    'Change buttons status
     With frmSaisieHeures
         .cmdClear.Enabled = False
         .cmdAdd.Enabled = False
@@ -218,7 +166,7 @@ Sub AjouteLigneDetail()
     
 End Sub
 
-Sub AddTECRecordToDBTest() '2023-12-15 @ 12:06
+Sub AddTECRecordToDB() '2023-12-15 @ 13:33
     Dim FullFileName As String
     Dim SheetName As String
     Dim conn As Object
@@ -301,51 +249,13 @@ End Sub
 Sub ModifieLigneDetail()
 
     If frmSaisieHeures.txtID.value = "" Then
-        MsgBox _
-        Prompt:="Vous devez choisir un enregistrement à modifier !", _
-        Title:="", _
-        Buttons:=vbCritical
+        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
+               Title:="", _
+               Buttons:=vbCritical
         Exit Sub
     End If
     
-    'Validations first (one field at a time)
-    If frmSaisieHeures.cmbProfessionnel.value = "" Then
-        MsgBox _
-        Prompt:="Le professionnel est OBLIGATOIRE !", _
-        Title:="Vérification", _
-        Buttons:=vbCritical
-        frmSaisieHeures.cmbProfessionnel.SetFocus
-        Exit Sub
-    End If
-
-    If frmSaisieHeures.txtDate.value = "" Or _
-       IsDate(frmSaisieHeures.txtDate.value) = False Then
-        MsgBox _
-        Prompt:="La date est OBLIGATOIRE !", _
-        Title:="Vérification", _
-        Buttons:=vbCritical
-        frmSaisieHeures.txtDate.SetFocus
-        Exit Sub
-    End If
-
-    If frmSaisieHeures.txtClient.value = "" Then
-        MsgBox _
-        Prompt:="Le client est OBLIGATOIRE !", _
-        Title:="Vérification", _
-        Buttons:=vbCritical
-        frmSaisieHeures.txtClient.SetFocus
-        Exit Sub
-    End If
-    
-    If frmSaisieHeures.txtHeures.value = "" Or _
-       IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
-        MsgBox _
-        Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
-        Title:="Vérification", _
-        Buttons:=vbCritical
-        frmSaisieHeures.txtHeures.SetFocus
-        Exit Sub
-    End If
+    If IsDataValid() = False Then Exit Sub
 
     Dim sh As Worksheet
     Set sh = ThisWorkbook.Sheets("HeuresBase")
@@ -354,29 +264,32 @@ Sub ModifieLigneDetail()
     selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
                                                       sh.Range("A:A"), 0)
     
-    With frmSaisieHeures
-        sh.Range("B" & selectedRow).value = wshAdmin.Range("Prof_ID")
-        sh.Range("C" & selectedRow).value = .cmbProfessionnel.value
-        sh.Range("D" & selectedRow).value = CDate(.txtDate.value)
-        sh.Range("E" & selectedRow).value = wshAdmin.Range("Client_ID_Admin")
-        sh.Range("F" & selectedRow).value = .txtClient.value
-        sh.Range("G" & selectedRow).value = .txtActivite.value
-        sh.Range("H" & selectedRow).value = Format(.txtHeures.value, "#0.00")
-        sh.Range("I" & selectedRow).value = .txtCommNote.value
-        sh.Range("J" & selectedRow).value = .chbFacturable.value
-        sh.Range("K" & selectedRow).value = Now
-        sh.Range("L" & selectedRow).value = False
-        sh.Range("M" & selectedRow).value = ""
-        sh.Range("N" & selectedRow).value = False
-        sh.Range("O" & selectedRow).value = gAppVersion
-        sh.Range("P" & selectedRow).value = ""
-        
-        frmSaisieHeures.txtClient.value = ""
-        frmSaisieHeures.txtActivite.value = ""
-        frmSaisieHeures.txtHeures.value = ""
-        frmSaisieHeures.txtCommNote.value = ""
-    End With
-   
+    WriteToWorksheet (selectedRow)
+    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 13:33
+ 
+'    With wshBaseHours
+'        .Range("B" & r).value = wshAdmin.Range("Prof_ID")
+'        .Range("C" & r).value = frmSaisieHeures.cmbProfessionnel.value
+'        .Range("D" & r).value = CDate(frmSaisieHeures.txtDate.value)
+'        .Range("E" & r).value = wshAdmin.Range("Client_ID_Admin")
+'        .Range("F" & r).value = frmSaisieHeures.txtClient.value
+'        .Range("G" & r).value = frmSaisieHeures.txtActivite.value
+'        .Range("H" & r).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+'        .Range("I" & r).value = frmSaisieHeures.txtCommNote.value
+'        .Range("J" & r).value = frmSaisieHeures.chbFacturable.value
+'        .Range("K" & r).value = Now
+'        .Range("L" & r).value = False
+'        .Range("M" & r).value = ""
+'        .Range("N" & r).value = False
+'        .Range("O" & r).value = gAppVersion
+'        .Range("P" & r).value = ""
+'    End With
+    
+    frmSaisieHeures.txtClient.value = ""
+    frmSaisieHeures.txtActivite.value = ""
+    frmSaisieHeures.txtHeures.value = ""
+    frmSaisieHeures.txtCommNote.value = ""
+
     frmSaisieHeures.cmbProfessionnel.Enabled = True
     frmSaisieHeures.txtDate.Enabled = True
     rmv_state = rmv_modeCreation
@@ -444,6 +357,73 @@ Sub EffaceLigneDetail()
     
     frmSaisieHeures.txtClient.SetFocus
 
+End Sub
+
+Function IsDataValid() As Boolean
+
+    IsDataValid = False
+    
+    'Validations first (one field at a time)
+    If frmSaisieHeures.cmbProfessionnel.value = "" Then
+        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
+        frmSaisieHeures.cmbProfessionnel.SetFocus
+        Exit Function
+    End If
+
+    If frmSaisieHeures.txtDate.value = "" Or IsDate(frmSaisieHeures.txtDate.value) = False Then
+        MsgBox Prompt:="La date est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
+        frmSaisieHeures.txtDate.SetFocus
+        Exit Function
+    End If
+
+    If frmSaisieHeures.txtClient.value = "" Then
+        MsgBox Prompt:="Le client est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
+        frmSaisieHeures.txtClient.SetFocus
+        Exit Function
+    End If
+    
+    If frmSaisieHeures.txtHeures.value = "" Or IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
+        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+               Title:="Vérification", _
+               Buttons:=vbCritical
+        frmSaisieHeures.txtHeures.SetFocus
+        Exit Function
+    End If
+
+    IsDataValid = True
+
+End Function
+
+Sub WriteToWorksheet(r As Long)
+
+    'Load the cmb & txt into the 'HeuresBase' worksheet
+    With wshBaseHours
+        .Range("A" & r).value = LastRow
+        .Range("B" & r).value = wshAdmin.Range("Prof_ID")
+        .Range("C" & r).value = frmSaisieHeures.cmbProfessionnel.value
+        .Range("D" & r).value = CDate(frmSaisieHeures.txtDate.value)
+        .Range("E" & r).value = wshAdmin.Range("Client_ID_Admin")
+        .Range("F" & r).value = frmSaisieHeures.txtClient.value
+        .Range("G" & r).value = frmSaisieHeures.txtActivite.value
+        .Range("H" & r).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+        .Range("I" & r).value = frmSaisieHeures.txtCommNote.value
+        .Range("J" & r).value = frmSaisieHeures.chbFacturable.value
+        .Range("K" & r).value = Now
+        .Range("L" & r).value = False
+        .Range("M" & r).value = ""
+        .Range("N" & r).value = False
+        .Range("O" & r).value = gAppVersion
+        .Range("P" & r).value = ""
+    End With
+
+    MsgBox "Record has been added to wshBaseHours - " & LastRow
+    
 End Sub
 
 '********************* Reload listBox from HeuresFiltered and reset the buttons
