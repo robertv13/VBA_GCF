@@ -15,6 +15,7 @@ End Function
 
 Function RMV_TEST_GetID_FromClientName(ClientNom As String)
 
+    Debug.Print "Nom de client à trouver - '" & ClientNom & "'"
     Dim BenchMark As Double
     BenchMark = Timer
 
@@ -24,11 +25,9 @@ Function RMV_TEST_GetID_FromClientName(ClientNom As String)
     Dim i As Long
     For i = 1 To LastRow
         If wshClientDB.Cells(i, 2) = ClientNom Then
+            Debug.Print "ID du client - '" & wshClientDB.Cells(i, 1).value & "'"
             RMV_TEST_GetID_FromClientName = wshClientDB.Cells(i, 1).value
         End If
     Next i
-    
-    Debug.Print Format(Timer - BenchMark, "###.0000") & " seconds"
-
 
 End Function

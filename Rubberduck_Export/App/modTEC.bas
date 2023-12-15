@@ -111,6 +111,7 @@ Sub EffaceFormulaire()
     'Empty the dynamic fields after reseting the form
     With frmSaisieHeures
         .txtClient.value = ""
+        wshAdmin.Range("Client_ID_Admin").value = 0
         .txtActivite.value = ""
         .txtHeures.value = ""
         .txtCommNote.value = ""

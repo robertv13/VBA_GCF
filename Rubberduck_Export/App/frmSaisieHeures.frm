@@ -346,6 +346,9 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
         .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
         savedClient = .txtClient.value
+        'Debug.Print "Double click on a entry - " & savedClient
+        wshAdmin.Range("Client_ID_Admin").value = RMV_TEST_GetID_FromClientName(savedClient)
+        'Debug.Print "Client_ID - " & wshAdmin.Range("Client_ID_Admin").value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
         savedActivite = .txtActivite.value
