@@ -244,7 +244,7 @@ Function Create_PDF_Email_Function(NoFacture As Long, Optional action As String 
         source_file = "C:\VBA\GC_FISCALITÉ\Factures_PDF\" & NoFactFormate & ".pdf"
         
         With myMail
-            .to = "robertv13@hotmail.com"
+            .To = "robertv13@hotmail.com"
             .CC = "robertv13@me.com"
             .BCC = "robertv13@gmail.com"
             .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"

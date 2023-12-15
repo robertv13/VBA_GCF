@@ -10,11 +10,11 @@ Sub BrowseForMainSharedFolder()
         .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show <> -1 Then GoTo NotSelected
-        If InStr(.SelectedItems(1), "Dropbox") = 0 Then
-            MsgBox "Veuillez vous assurer de choisir un répertoire à l'intérieur de Dropbox."
-            Exit Sub
-        End If
-        wshAdmin.Range("E3").value = .SelectedItems(1) 'Full Folder Path
+'        If InStr(.SelectedItems(1), "Dropbox") = 0 Then '2023-12-15 @ 07:28
+'            MsgBox "Veuillez vous assurer de choisir un répertoire à l'intérieur de Dropbox."
+'            Exit Sub
+'        End If
+        wshAdmin.Range("F3").value = .SelectedItems(1) 'Full Folder Path
 NotSelected:
     End With
 End Sub
