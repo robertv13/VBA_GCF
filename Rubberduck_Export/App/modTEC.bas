@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.0.3"
+Global Const gAppVersion As String = "v1.0.5"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -65,11 +65,62 @@ Sub ImportClientList()                                          '---------------
         
 End Sub
 
+Sub ImportTEC() '2023-12-15 @ 17:19
+
+    'Clear all cells, but the headers, in the worksheet
+    Debug.Print "Plage à effacer = " & wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).Address
+    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+
+    'Import TEC from 'GCF_DB_Sortie.xlsx. In order to always have all the TEC
+    Dim sourceWorkbook As String
+    Dim sourceWorksheet As String
+    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 16:49
+    sourceWorksheet = "TEC"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
+    recSet.Open
+    Debug.Print "Nombre de records dans le recSet = " & recSet.RecordCount
+    
+    'Copy to wshClientDB workbook
+    wshBaseHours.Range("A1").CopyFromRecordset recSet
+    wshBaseHours.Range("A:P").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resources
+    recSet.Close
+    connStr.Close
+    
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshBaseHours.Range("A1").CurrentRegion.Rows.count - 1, _
+'            "## ##0") & " lignes de TEC", _
+'        Title:="", _
+'        Buttons:=vbInformation
+        
+End Sub
+
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
     If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
         Exit Sub
     End If
+    
+    ImportTEC '2023-12-15 @ 17:02
     
     With wshBaseHours
         Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
@@ -91,15 +142,11 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("W3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("U3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("V3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("U3:AH" & LastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("V3:AI" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -140,11 +187,7 @@ Sub AjouteLigneDetail()
 
     If IsDataValid() = False Then Exit Sub
     
-    Dim LastRow As Long
-    LastRow = wshBaseHours.Range("A999999").End(xlUp).Row + 1
-
-    WriteToWorksheet (LastRow) 'Write to wshBaseHours (current Workbook) '2023-12-15 @ 13:31
-    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 13:33
+    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 17:09
 
     'Empty the fields after saving
     frmSaisieHeures.txtClient.value = ""
@@ -180,7 +223,7 @@ Sub AddTECRecordToDB() '2023-12-15 @ 13:33
     Application.ScreenUpdating = False
     
     FullFileName = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
-                   "GCF_DB_Sortie.xlsx"
+                   "GCF_BD_Sortie.xlsx"
     SheetName = "TEC"
     
     'Initialize connection, connection string & open the connection
