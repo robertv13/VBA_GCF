@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.0.5"
+Global Const gAppVersion As String = "v1.0.7"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -23,9 +23,6 @@ Sub ImportClientList()                                          '---------------
 
     'Import Clients List from 'GCF_Clients.xlsx. In order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-'    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
-'                     "DataFiles" & Application.PathSeparator & _
-'                     "GCF_BD_Entrée.xlsx"
     sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2023-12-15 @ 07:23
     sourceWorksheet = "Clients"
@@ -79,7 +76,7 @@ Sub ImportTEC()
     'Set up source and destination ranges
     Dim sourceRange As Range
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("TEC").UsedRange
-    Debug.Print "Le Range de la source = " & sourceRange.Address
+    Debug.Print "Je vais copier toutes les cellules du Range = " & sourceRange.Address & " dans BaseHours!"
 
     Dim destinationRange As Range
     Set destinationRange = wshBaseHours.Range("A2")
@@ -97,82 +94,9 @@ Sub ImportTEC()
     
 End Sub
 
-'Sub ImportTECA()
-'    'Clear all cells, but the headers, in the worksheet
-'    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
-'
-'    'Import TEC from 'GCF_DB_Sortie.xlsx.
-'    Dim sourceWorkbook As String
-'    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
-'                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 18:07
-'
-'    'Set up QueryTable
-'    Dim ws As Worksheet
-'    Set ws = wshBaseHours 'Change to the appropriate worksheet
-'
-'    With ws.QueryTables.Add(Connection:="OLEDB;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & sourceWorkbook & ";Extended Properties=""Excel 12.0 Xml;HDR=YES""", _
-'        Destination:=ws.Range("A2"))
-'        .Sql = "SELECT * FROM [TEC$]"
-'        .Refresh BackgroundQuery:=False
-'    End With
-'
-'    'Autofit columns
-'    ws.Range("A:P").CurrentRegion.EntireColumn.AutoFit
-'
-'End Sub
-
-'Sub ImportTEC() '2023-12-15 @ 17:19
-'
-'    'Clear all cells, but the headers, in the worksheet
-'    Debug.Print "Plage à effacer = " & wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).Address
-'    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
-'
-'    'Import TEC from 'GCF_DB_Sortie.xlsx. In order to always have all the TEC
-'    Dim sourceWorkbook As String
-'    Dim sourceWorksheet As String
-'    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
-'                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 16:49
-'    sourceWorksheet = "TEC"
-'
-'    'ADODB connection
-'    Dim connStr As ADODB.Connection
-'    Set connStr = New ADODB.Connection
-'
-'    'Connection String specific to EXCEL
-'    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-'                               "Data Source = " & sourceWorkbook & ";" & _
-'                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-'    connStr.Open
-'
-'    'Recordset
-'    Dim recSet As ADODB.Recordset
-'    Set recSet = New ADODB.Recordset
-'
-'    recSet.ActiveConnection = connStr
-'    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
-'    recSet.Open
-'    Debug.Print "Nombre de records dans le recSet = " & recSet.RecordCount
-'
-'    'Copy to wshClientDB workbook
-'    wshBaseHours.Range("A1").CopyFromRecordset recSet
-'    wshBaseHours.Range("A:P").CurrentRegion.EntireColumn.AutoFit
-'
-'    'Close resources
-'    recSet.Close
-'    connStr.Close
-'
-''    MsgBox _
-''        Prompt:="J'ai importé un total de " & _
-''            Format(wshBaseHours.Range("A1").CurrentRegion.Rows.count - 1, _
-''            "## ##0") & " lignes de TEC", _
-''        Title:="", _
-''        Buttons:=vbInformation
-'
-'End Sub
-
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
-    If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
+    If wshBaseHours.Range("S3").value = "" Or wshBaseHours.Range("T3").value = "" Then
         Exit Sub
     End If
     
@@ -186,11 +110,11 @@ Sub TEC_FilterAndSort()
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
-        .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("R2:T3"), _
-            CopyToRange:=.Range("V2:AI2"), _
+        .Range("A2:Q" & LastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("S2:U3"), _
+            CopyToRange:=.Range("W2:AJ2"), _
             Unique:=True
-        LastResultRow = .Range("U999999").End(xlUp).Row
+        LastResultRow = .Range("W999999").End(xlUp).Row
         If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -198,15 +122,15 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("V3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("W3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("V3:AI" & LastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("W3:AJ" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -247,7 +171,7 @@ Sub AjouteLigneDetail()
 
     If IsDataValid() = False Then Exit Sub
     
-    AddTECRecordToDB (0) 'Write to external XLSX file - 2023-12-15 @ 17:09
+    AddOrUpdateTECRecordToDB (0) 'Write to external XLSX file - 2023-12-15 @ 17:09
 
     'Empty the fields after saving
     frmSaisieHeures.txtClient.value = ""
@@ -269,7 +193,7 @@ Sub AjouteLigneDetail()
     
 End Sub
 
-Sub AddTECRecordToDB(r As Long) '2023-12-15 @ 13:33
+Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     Dim FullFileName As String
     Dim SheetName As String
     Dim conn As Object
@@ -281,7 +205,7 @@ Sub AddTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     
     Application.ScreenUpdating = False
     
-    Debug.Print "Dans AddTECRecordToDB, r vaut " & r
+    Debug.Print "Dans AddOrUpdateTECRecordToDB, r vaut " & r
     
     FullFileName = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
@@ -294,47 +218,80 @@ Sub AddTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
+    'If r is 0, add a new record; otherwise, update an existing record
+    If r = 0 Then
     'SQL select command to find the next available ID
-    strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
-
-    'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
+        strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
     
-    'Get the last used row
-    If IsNull(rs.Fields("MaxID").value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        LastRow = 1
+        'Open recordset to find out the MaxID
+        rs.Open strSQL, conn
+        
+        'Get the last used row
+        If IsNull(rs.Fields("MaxID").value) Then
+            ' Handle empty table (assign a default value, e.g., 1)
+            LastRow = 1
+        Else
+            LastRow = rs.Fields("MaxID").value
+        End If
+        
+        'Calculate the new ID
+        nextID = LastRow + 1
+    
+        'Close the previous recordset, no longer needed and open an empty recordset
+        rs.Close
+        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+        rs.AddNew
+        
+        'Add fields to the recordset before updating it
+        rs.Fields("TEC_ID").value = nextID
+        rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
+        rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
+        rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
+        rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
+        rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
+        rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
+        rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+        rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
+        rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+        rs.Fields("DateSaisie").value = Now
+        rs.Fields("EstFacturee").value = False
+        rs.Fields("DateFacturee").value = ""
+        rs.Fields("EstDetruit").value = False
+        rs.Fields("VersionApp").value = gAppVersion
+        rs.Fields("NoFacture").value = ""
+        rs.Fields("BD_Row").value = 0 'TO-DO - Remove that column, no longer required - 2023-12-16
     Else
-        LastRow = rs.Fields("MaxID").value
+        'If r is not 0, update an existing record (Only fields that can be different)
+        'Open the recordset for the specified ID
+        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+        If Not rs.EOF Then
+            'Update fields for the existing record
+'            rs.Fields("TEC_ID").value = nextID
+'            rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
+'            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
+'            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
+            rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
+            rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
+            rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
+            rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+            rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
+            rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+            rs.Fields("DateSaisie").value = Now
+'            rs.Fields("EstFacturee").value = False
+'            rs.Fields("DateFacturee").value = ""
+'            rs.Fields("EstDetruit").value = False
+            rs.Fields("VersionApp").value = gAppVersion
+'            rs.Fields("NoFacture").value = ""
+'            rs.Fields("BD_Row").value = 0 'TO-DO - Remove that column, no longer required - 2023-12-16
+        Else
+            'Handle the case where the specified ID is not found
+            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+            rs.Close
+            conn.Close
+            Exit Sub
+        End If
     End If
-    
-    'Calculate the new ID
-    nextID = LastRow + 1
 
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
-    rs.AddNew
-    
-    'Add fields to the recordset before updating it
-    rs.Fields("TEC_ID").value = nextID
-    Debug.Print wshAdmin.Range("Prof_ID") & " - " & wshAdmin.Range("B4").value
-    rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
-    rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
-    rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
-    rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
-    rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-    rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-    rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-    rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-    rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
-    rs.Fields("DateSaisie").value = Now
-    rs.Fields("EstFacturee").value = False
-    rs.Fields("DateFacturee").value = ""
-    rs.Fields("EstDetruit").value = False
-    rs.Fields("VersionApp").value = gAppVersion
-    rs.Fields("NoFacture").value = ""
-    
     'Update the recordset (create the record)
     rs.Update
     rs.Close
@@ -352,7 +309,7 @@ End Sub
 '************************************************************ ModifieLigneDetail
 Sub ModifieLigneDetail()
 
-    If frmSaisieHeures.txtID.value = "" Then
+    If wshAdmin.Range("TEC_Current_ID").value = "" Then
         MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:="", _
                Buttons:=vbCritical
@@ -362,33 +319,16 @@ Sub ModifieLigneDetail()
     If IsDataValid() = False Then Exit Sub
 
     Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("HeuresBase")
+    Set sh = wshBaseHours
 
     Dim selectedRow As Long
-    selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
-                                                      sh.Range("A:A"), 0)
+    Debug.Print "Le ID du record à réécrire, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
+    selectedRow = wshAdmin.Range("TEC_Current_ID").value
+    Debug.Print "Le ID du record à réécrire est '" & selectedRow & "'"
     
     'WriteToWorksheet (selectedRow)
-    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 13:33
+    AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
  
-'    With wshBaseHours
-'        .Range("B" & r).value = wshAdmin.Range("Prof_ID")
-'        .Range("C" & r).value = frmSaisieHeures.cmbProfessionnel.value
-'        .Range("D" & r).value = CDate(frmSaisieHeures.txtDate.value)
-'        .Range("E" & r).value = wshAdmin.Range("Client_ID_Admin")
-'        .Range("F" & r).value = frmSaisieHeures.txtClient.value
-'        .Range("G" & r).value = frmSaisieHeures.txtActivite.value
-'        .Range("H" & r).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-'        .Range("I" & r).value = frmSaisieHeures.txtCommNote.value
-'        .Range("J" & r).value = frmSaisieHeures.chbFacturable.value
-'        .Range("K" & r).value = Now
-'        .Range("L" & r).value = False
-'        .Range("M" & r).value = ""
-'        .Range("N" & r).value = False
-'        .Range("O" & r).value = gAppVersion
-'        .Range("P" & r).value = ""
-'    End With
-    
     frmSaisieHeures.txtClient.value = ""
     frmSaisieHeures.txtActivite.value = ""
     frmSaisieHeures.txtHeures.value = ""
@@ -545,7 +485,7 @@ Sub RefreshListBoxAndAddHours()
     
     'Last Row used in column A
     Dim LastRow As Long
-    LastRow = wshBaseHours.Range("V99999").End(xlUp).Row - 1
+    LastRow = wshBaseHours.Range("W99999").End(xlUp).Row - 1
     If LastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
@@ -554,9 +494,9 @@ Sub RefreshListBoxAndAddHours()
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
         If LastRow = 1 Then
-            .RowSource = "HeuresBase!V3:AD3"
+            .RowSource = "HeuresBase!W3:AE3"
         Else
-            .RowSource = "HeuresBase!V3:AD" & LastRow + 1
+            .RowSource = "HeuresBase!W3:AE" & LastRow + 1
         End If
     End With
 
