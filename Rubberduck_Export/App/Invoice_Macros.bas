@@ -4,9 +4,9 @@ Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNu
 Dim lastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
 
 Sub Invoice_New()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_New() @ " & Time
-    If shInvoice.Range("B27").value = False Then
-        With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_New() @ " & Time
+    If wshFACPrep.Range("B27").value = False Then
+        With wshFACPrep
             .Range("B24").value = True
             .Range("J3,J4:K4,J5,J6,N3,N5").ClearContents 'Clear cells for a new Invoice
             .Range("I10:N46,O10:O46,N48,N49,N50,N53").ClearContents
@@ -17,56 +17,56 @@ Sub Invoice_New()
             .Range("B27").value = True
             .Range("B24").value = False
         End With
-        With shFactureFinale
+        With wshFACFinale
             .Range("B21,B24:B26").ClearContents
             .Range("A33:F63").ClearContents
             .Range("C65,D65").ClearContents
             .Range("E68:E71,E78").value = 0
-            .Range("E28").value = shInvoice.Range("N6").value
+            .Range("E28").value = wshFACPrep.Range("N6").value
         End With
     End If
-    If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Le numéro de facture '" & shInvoice.Range("N6").value & "' a été assignée"
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_New()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Le numéro de facture '" & wshFACPrep.Range("N6").value & "' a été assignée"
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_New()" & vbNewLine
 End Sub
 
 Sub Invoice_SaveUpdate()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ " & Time
-    If shInvoice.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & shInvoice.Range("B18").value & "   B20 (Current Inv. Row) = " & shInvoice.Range("B20").value
-    With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ " & Time
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value & "   B20 (Current Inv. Row) = " & wshFACPrep.Range("B20").value
+    With wshFACPrep
         'Check For Mandatory Fields - Client
         If .Range("B18").value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
-            If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
         'Check For Mandatory Fields - Date de facture, Date due & Taux horaire
         If .Range("N3").value = Empty Or .Range("N5").value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture et le taux horaire avant de sauvegarder la facture"
-            If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et le taux horaire n'ont pas encore été saisi, sortie de la routine"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et le taux horaire n'ont pas encore été saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
         'Determine the row number (InvRow) for InvList
         If .Range("B20").value = Empty Then 'New Invoice
             InvRow = InvList.Range("A99999").End(xlUp).Row + 1 'First available row
-            shInvoice.Range("B20").value = InvRow 'RMV - 2023-10-02 @ 14:39
-            InvList.Range("A" & InvRow).value = shInvoice.Range("N6").value 'Invoice #
-            If shInvoice.Range("B28").value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est établi avec les lignes existantes: InvRow = " & InvRow
+            wshFACPrep.Range("B20").value = InvRow 'RMV - 2023-10-02 @ 14:39
+            InvList.Range("A" & InvRow).value = wshFACPrep.Range("N6").value 'Invoice #
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est établi avec les lignes existantes: InvRow = " & InvRow
         Else 'Existing Invoice
             InvRow = .Range("B20").value 'Set Existing Invoice Row
-             If shInvoice.Range("B28").value Then Debug.Print Tab(10); "Cas B (B20 <> '""') alors B20 est utilisé: InvRow = " & InvRow
+             If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Cas B (B20 <> '""') alors B20 est utilisé: InvRow = " & InvRow
         End If
-        If shInvoice.Range("B28").value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").value & "   B21 (Next Invoice #) = " & .Range("B21").value
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").value & "   B21 (Next Invoice #) = " & .Range("B21").value
         'Load data into InvList (Invoice Header)
-        If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & Format(shInvoice.Range("N6").value, "000000") & " et Current Inv. Row = " & InvRow & " - Posting; dans; InvoiceListing; """
-        'shInvoice
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & Format(wshFACPrep.Range("N6").value, "000000") & " et Current Inv. Row = " & InvRow & " - Posting; dans; InvoiceListing; """
+        'wshFACPrep
         For InvCol = 2 To 5
             InvList.Cells(InvRow, InvCol).value = .Range(InvList.Cells(1, InvCol).value).value 'Save data into Invoice List
-            If shInvoice.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from shInvoice.Cell  = " & InvList.Cells(1, InvCol).value & "   et la valeur = " & .Range(InvList.Cells(1, InvCol).value).value
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from wshFACPrep.Cell  = " & InvList.Cells(1, InvCol).value & "   et la valeur = " & .Range(InvList.Cells(1, InvCol).value).value
         Next InvCol
-        'shInvoice
+        'wshFACPrep
         For InvCol = 6 To 13
-            InvList.Cells(InvRow, InvCol).value = shFactureFinale.Range(InvList.Cells(1, InvCol).value).value 'Save data into Invoice List
-            If shInvoice.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from shInvoice.Cell  = " & InvList.Cells(1, InvCol).value & "   et la valeur = " & shFactureFinale.Range(InvList.Cells(1, InvCol).value).value
+            InvList.Cells(InvRow, InvCol).value = wshFACFinale.Range(InvList.Cells(1, InvCol).value).value 'Save data into Invoice List
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from wshFACPrep.Cell  = " & InvList.Cells(1, InvCol).value & "   et la valeur = " & wshFACFinale.Range(InvList.Cells(1, InvCol).value).value
         Next InvCol
         'Load data into InvItems (Save/Update Invoice Items) - Columns A, F & G
         LastItemRow = .Range("K46").End(xlUp).Row
@@ -83,21 +83,21 @@ Sub Invoice_SaveUpdate()
             End If
             'Paste 4 columns with one instruction - Columns B, C, D & E
             InvItems.Range("B" & ItemDBRow & ":E" & ItemDBRow).value = .Range("K" & InvItemRow & ":N" & InvItemRow).value 'Save Invoice Item Details
-            If shInvoice.Range("B28").value Then Debug.Print Tab(15); "Détail (InvItems) - B" & ItemDBRow & " = " & InvItems.Range("B" & ItemDBRow).value
-            If shInvoice.Range("B28").value Then Debug.Print Tab(20); "  C" & ItemDBRow & " = " & InvItems.Range("C" & ItemDBRow).value & "   D" & ItemDBRow & " = " & InvItems.Range("D" & ItemDBRow).value & "   E" & ItemDBRow & " = " & InvItems.Range("E" & ItemDBRow).value
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "Détail (InvItems) - B" & ItemDBRow & " = " & InvItems.Range("B" & ItemDBRow).value
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); "  C" & ItemDBRow & " = " & InvItems.Range("C" & ItemDBRow).value & "   D" & ItemDBRow & " = " & InvItems.Range("D" & ItemDBRow).value & "   E" & ItemDBRow & " = " & InvItems.Range("E" & ItemDBRow).value
         Next InvItemRow
 NoItems:
         MsgBox "La facture '" & Format(.Range("N6").value, "000000") & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("N51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     End With
-    shInvoice.Range("B27").value = False
-    If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '" & Format(shInvoice.Range("N6").value, "000000") & "' (avant taxes) est de " & Format(shInvoice.Range("N51").value, "### ##0.00 $")
+    wshFACPrep.Range("B27").value = False
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '" & Format(wshFACPrep.Range("N6").value, "000000") & "' (avant taxes) est de " & Format(wshFACPrep.Range("N51").value, "### ##0.00 $")
 Fast_Exit_Sub:
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
 End Sub
 
 Sub Invoice_Load()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Load() @ " & Time
-    With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Load() @ " & Time
+    With wshFACPrep
         If .Range("B20").value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture"
             Exit Sub
@@ -108,38 +108,38 @@ Sub Invoice_Load()
        
         'Assign values from InvList to Invoice worksheet
         For InvCol = 2 To 11 'RMV - 2023-10-01
-            If shInvoice.Range("B28").value And InvCol <> 3 Then Debug.Print "InvRow = " & InvRow & "   InvCol = " & InvCol & " - " & .Range(InvList.Cells(1, InvCol).value) & " <-- " & InvList.Cells(InvRow, InvCol).value
+            If wshFACPrep.Range("B28").value And InvCol <> 3 Then Debug.Print "InvRow = " & InvRow & "   InvCol = " & InvCol & " - " & .Range(InvList.Cells(1, InvCol).value) & " <-- " & InvList.Cells(InvRow, InvCol).value
             If InvCol <> 3 Then .Range(InvList.Cells(1, InvCol).value).value = InvList.Cells(InvRow, InvCol).value 'Load Invoice List Data
         Next InvCol
         'Load Invoice Items
         With InvItems
             lastRow = .Range("A9999").End(xlUp).Row
             If lastRow < 4 Then Exit Sub
-            If shInvoice.Range("B28").value Then Debug.Print "LastRow = " & lastRow & "   Copie de '" & "A3:G" & lastRow & "   Critère: " & .Range("L3").value
+            If wshFACPrep.Range("B28").value Then Debug.Print "LastRow = " & lastRow & "   Copie de '" & "A3:G" & lastRow & "   Critère: " & .Range("L3").value
             .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L2:L3"), CopyToRange:=.Range("N2:S2"), Unique:=True
             LastResultRow = .Range("V9999").End(xlUp).Row
-            If shInvoice.Range("B28").value Then Debug.Print "Based on column 'V' (InvItems), LastResultRow = " & LastResultRow
+            If wshFACPrep.Range("B28").value Then Debug.Print "Based on column 'V' (InvItems), LastResultRow = " & LastResultRow
             If LastResultRow < 3 Then GoTo NoItems
             For ResultRow = 3 To LastResultRow
                 InvItemRow = .Range("R" & ResultRow).value 'Set Invoice Row
-                If shInvoice.Range("B28").value Then Debug.Print Tab(20); "Invoice Item Row (InvItemRow) = " & InvItemRow & _
-                    "   shInvoice.Range('K'" & InvItemRow & ")=" & shInvoice.Range("K" & InvItemRow).value & " devient " & "InvItems.Range('N'" & ResultRow & ") = " & .Range("N" & ResultRow).value & _
-                    "   shInvoice.Range('L'" & InvItemRow & ")=" & shInvoice.Range("L" & InvItemRow).value & " devient " & "InvItems.Range('O'" & ResultRow & ") = " & .Range("O" & ResultRow).value & _
-                    "   shInvoice.Range('M'" & InvItemRow & ")=" & shInvoice.Range("M" & InvItemRow).value & " devient " & "InvItems.Range('P'" & ResultRow & ") = " & .Range("P" & ResultRow).value & _
-                shInvoice.Range("K" & InvItemRow & ":M" & InvItemRow).value = .Range("N" & ResultRow & ":P" & ResultRow).value 'Item details
-                If shInvoice.Range("B28").value Then Debug.Print Tab(30); "shInvoice.Range('O'" & InvItemRow & ")=" & shInvoice.Range("O" & InvItemRow).value & " devient " & "InvItems.Range('S'" & ResultRow & ") = " & .Range("S" & ResultRow).value
-                shInvoice.Range("O" & InvItemRow).value = .Range("S" & ResultRow).value  'Set Item DB Row
+                If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); "Invoice Item Row (InvItemRow) = " & InvItemRow & _
+                    "   wshFACPrep.Range('K'" & InvItemRow & ")=" & wshFACPrep.Range("K" & InvItemRow).value & " devient " & "InvItems.Range('N'" & ResultRow & ") = " & .Range("N" & ResultRow).value & _
+                    "   wshFACPrep.Range('L'" & InvItemRow & ")=" & wshFACPrep.Range("L" & InvItemRow).value & " devient " & "InvItems.Range('O'" & ResultRow & ") = " & .Range("O" & ResultRow).value & _
+                    "   wshFACPrep.Range('M'" & InvItemRow & ")=" & wshFACPrep.Range("M" & InvItemRow).value & " devient " & "InvItems.Range('P'" & ResultRow & ") = " & .Range("P" & ResultRow).value & _
+                wshFACPrep.Range("K" & InvItemRow & ":M" & InvItemRow).value = .Range("N" & ResultRow & ":P" & ResultRow).value 'Item details
+                If wshFACPrep.Range("B28").value Then Debug.Print Tab(30); "wshFACPrep.Range('O'" & InvItemRow & ")=" & wshFACPrep.Range("O" & InvItemRow).value & " devient " & "InvItems.Range('S'" & ResultRow & ") = " & .Range("S" & ResultRow).value
+                wshFACPrep.Range("O" & InvItemRow).value = .Range("S" & ResultRow).value  'Set Item DB Row
             Next ResultRow
 NoItems:
         End With
         .Range("B24").value = False 'Set Invoice Load To false
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Load()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Load()" & vbNewLine
 End Sub
 
 Sub Invoice_Delete()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Delete() @ " & Time
-    With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_Delete() @ " & Time
+    With wshFACPrep
         If MsgBox("Are you sure you want to delete this Invoice?", vbYesNo, "Delete Invoice") = vbNo Then Exit Sub
         If .Range("B20").value = Empty Then GoTo NotSaved
         InvRow = .Range("B20").value 'Set Invoice Row
@@ -175,31 +175,31 @@ NoItems:
 NotSaved:
     Invoice_New 'Add New Invoice
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Delete()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_Delete()" & vbNewLine
 End Sub
 
 Sub Previsualisation_PDF() 'RMV - 2023-10-04 @ 15:45
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Previsualisation_PDF() @ " & Time
-    shFactureFinale.PrintOut , , , True, True, , , , False
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Previsualisation_PDF()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Previsualisation_PDF() @ " & Time
+    wshFACFinale.PrintOut , , , True, True, , , , False
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Previsualisation_PDF()" & vbNewLine
 End Sub
 
 Sub Creation_PDF_Email() 'RMV - 2023-10-04 @ 15:46
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Creation_PDF_Email() @ " & Time
-    Create_PDF_Email_Sub shInvoice.Range("N6").value
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Creation_PDF_Email()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Creation_PDF_Email() @ " & Time
+    Create_PDF_Email_Sub wshFACPrep.Range("N6").value
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Creation_PDF_Email()" & vbNewLine
 End Sub
 
 Sub Create_PDF_Email_Sub(NoFacture As Long)
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long) @ " & Time
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long) @ " & Time
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
     Dim result As Boolean
     result = Create_PDF_Email_Function(NoFacture, "CreateEmail")
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long)" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Sub(NoFacture As Long)" & vbNewLine
 End Sub
 
 Function Create_PDF_Email_Function(NoFacture As Long, Optional action As String = "SaveOnly") As Boolean
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Function Create_PDF_Email_Function" & _
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Function Create_PDF_Email_Function" & _
         "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
     Dim NoFactFormate As String, PathName As String, SaveAs As String
 
@@ -272,12 +272,12 @@ RefLibError:
 
 EndMacro:
     Application.ScreenUpdating = True
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
 End Function
 
 Sub Prev_Invoice()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Prev_Invoice() @ " & Time
-    With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Prev_Invoice() @ " & Time
+    With wshFACPrep
         Dim MinInvNumb As Long
         On Error Resume Next
         MinInvNumb = Application.WorksheetFunction.Min(InvList.Range("Inv_ID"))
@@ -299,12 +299,12 @@ Sub Prev_Invoice()
         .Range("N3").value = InvList.Range("A" & InvRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Prev_Invoice()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Prev_Invoice()" & vbNewLine
 End Sub
 
 Sub Next_Invoice()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Next_Invoice() @ " & Time
-    With shInvoice
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Next_Invoice() @ " & Time
+    With wshFACPrep
         Dim MaxInvNumb As Long
         On Error Resume Next
         MaxInvNumb = Application.WorksheetFunction.Max(InvList.Range("Inv_ID"))
@@ -326,35 +326,35 @@ Sub Next_Invoice()
         .Range("N3").value = InvList.Range("A" & InvRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Next_Invoice()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Next_Invoice()" & vbNewLine
 End Sub
 
 Sub Cacher_Heures()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - Sub Cacher_Heures() @ " & Time
-    shFactureFinale.Range("C64:D65").Select
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - Sub Cacher_Heures() @ " & Time
+    wshFACFinale.Range("C64:D65").Select
     With Selection.Font
         .ThemeColor = xlThemeColorDark1
         .TintAndShade = 0
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Cacher_Heures()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Cacher_Heures()" & vbNewLine
 End Sub
 
 Sub Montrer_Heures()
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Montrer_Heures() @ " & Time
-    shFactureFinale.Range("C64:D65").Select
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Montrer_Heures() @ " & Time
+    wshFACFinale.Range("C64:D65").Select
     With Selection.Font
         .ThemeColor = xlThemeColorLight1
         .TintAndShade = 0
     End With
-    If shInvoice.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Montrer_Heures()" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Montrer_Heures()" & vbNewLine
 End Sub
 
 Sub Goto_Onglet_Preparation_Facture()
-    shInvoice.Select
-    shInvoice.Range("C1").Select
+    wshFACPrep.Select
+    wshFACPrep.Range("C1").Select
 End Sub
 
 Sub Goto_Onglet_Facture_Finale()
-    shFactureFinale.Select
+    wshFACFinale.Select
 End Sub
 

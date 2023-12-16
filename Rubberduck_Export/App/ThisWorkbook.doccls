@@ -6,7 +6,7 @@ Private Sub Workbook_Open()
     'frmSplashScreen.show
     Worksheets("Menu").Activate
     Range("B1").Select
-    HideAllExcepActiveSheet
+    'HideAllExcepActiveSheet
     Windows(ThisWorkbook.Name).Visible = True
     Application.ScreenUpdating = True
 End Sub

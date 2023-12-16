@@ -344,25 +344,20 @@ Sub TEC_Click()
     
     wshMenuTEC.Visible = xlSheetVisible
     wshBaseHours.Visible = xlSheetVisible
-    'wshFilteredHours.Visible = xlSheetVisible
     wshClientDB.Visible = xlSheetVisible
-    wshHoursToExport.Visible = xlSheetVisible
     
     wshMenuTEC.Select
 End Sub
 
-Sub Facturation_Click()
+Sub Facturation_Click() 'RMV_2023-12-16 @ 15:53
     SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
-    wshFACshInvoice.Visible = xlSheetVisible
+    wshFACPrep.Visible = xlSheetVisible
+    wshClientDB.Visible = xlSheetVisible
     wshFACInvList.Visible = xlSheetVisible
     wshFACInvItems.Visible = xlSheetVisible
-    wshFACshBillEntries.Visible = xlSheetVisible
-    wshFACServItems.Visible = xlSheetVisible
-    wshFACProjects.Visible = xlSheetVisible
-    wshFACCustomers.Visible = xlSheetVisible
-    wshFACshFactureFinale.Visible = xlSheetVisible
+    wshFACFinale.Visible = xlSheetVisible
     
     wshMenuFACT.Select
 End Sub

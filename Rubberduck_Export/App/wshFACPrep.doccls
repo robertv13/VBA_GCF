@@ -1,0 +1,246 @@
+﻿Option Explicit
+
+Public Sub Worksheet_Change(ByVal Target As Range)
+
+    Debug.Print Target.Address
+    Application.EnableEvents = False
+    If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
+        Debug.Print "Le client saisie est '" & Range("E4").value & "'"
+        wshFACPrep.Range("J4").value = wshFACPrep.Range("E4").value
+        InitializeFacPrep
+        LoadTec
+    End If
+    Application.EnableEvents = True
+
+End Sub
+
+Public Sub InitializeFacPrep()
+
+    wshFACPrep.Range("B16").value = False
+    wshFACPrep.Range("G4, J3, J5, J6, N3, N5, N6").ClearContents
+    
+    'Clear TEC data
+    Dim lastRow As Long
+    lastRow = wshFACPrep.Range("D99999").End(xlUp).Row
+    If lastRow < 10 Then lastRow = 10
+    wshFACPrep.Range("C10:H" & lastRow).ClearContents
+    
+    'Clear Invoiced Items
+    wshFACPrep.Range("K10:O46").ClearContents
+
+End Sub
+
+Sub LoadTec()
+
+    'Determine the ID of the client
+    wshFACPrep.Range("B18").value = GetID_FromClientName(wshFACPrep.Range("E4").value)
+    wshBaseHours.Range("T3").value = wshFACPrep.Range("B18").value
+    Debug.Print "Le ID du client est '" & wshFACPrep.Range("B18").value & "'"
+    TECByClient_FilterAndSort (wshFACPrep.Range("B18").value)
+    CopyFromResultToFACPrep
+    
+End Sub
+
+Sub TECByClient_FilterAndSort(id As Long)
+    
+    TEC_Import '2023-12-15 @ 17:02
+    
+    With wshBaseHours
+        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
+        lastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
+        If lastRow < 2 Then Exit Sub 'Nothing to filter
+        Application.ScreenUpdating = False
+        On Error Resume Next
+        .Names("Criterial").Delete
+        On Error GoTo 0
+        .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("T2:W3"), _
+            CopyToRange:=.Range("Y2:AL2"), _
+            Unique:=True
+        LastResultRow = .Range("Y999999").End(xlUp).Row
+        If LastResultRow < 3 Then
+            Application.ScreenUpdating = True
+            Exit Sub
+        End If
+        If LastResultRow < 4 Then GoTo NoSort
+        With .Sort
+            .SortFields.Clear
+            .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+            .SetRange wshBaseHours.Range("Y3:AL" & LastResultRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+NoSort:
+    End With
+    Application.ScreenUpdating = True
+End Sub
+
+Sub CopyFromResultToFACPrep()
+
+    Dim lastRow As Long
+    lastRow = wshBaseHours.Range("Y99999").End(xlUp).Row
+    
+    Dim i As Integer
+    For i = 3 To lastRow
+        Debug.Print "Result = '" & wshBaseHours.Range("AA" & i).value & "'"
+    Next i
+
+End Sub
+
+
+
+'Public Sub Worksheet_Change(ByVal Target As Range)
+''    If wwshFACPrep.Range("B28").value Then Debug.Print "Now entering - [wshFACPrep] - Private Sub Worksheet_Change(ByVal Target As Range) @ " & Time
+''    If wwshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+'    Dim CustRow As Long, ServItemDBRow As Long
+'    Debug.Print Target.Address
+'    '??? - On WIP Customer Change, load Customer Projects & Check For new Customer
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_01 - Not Intersect(Target, wshFACPrep.Range('E4')) Is Nothing And Range('E4').Value <> Empty = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").value <> Empty
+'    If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And Range("E4").value <> Empty Then
+'        Debug.Print "Le client saisie est '" & Range("E4").value & "'"
+'        wshFACPrep.Range("J4").value = wshFACPrep.Range("E4").value
+'    End If
+'
+'    'Customer has changed ... Load Customer Address & Billing Items
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_02 - Not Intersect(Target, Range('J4:K4')) Is Nothing = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("J4:K4")) Is Nothing
+'    'Customer has changed - Update fileds on both invoices
+'    If Not Intersect(Target, wshFACPrep.Range("J4:K4")) Is Nothing Then
+'        If wshFACPrep.Range("B19").value <> "" Then
+'            CustRow = Range("B19").value  'Customer Row
+'            'wshFACPrep
+'            'wshFACPrep.Range("J3").value = wshClientDB.Range("H" & CustRow).value
+'            'wshFACPrep.Range("J5").value = wshClientDB.Range("C" & CustRow).value 'Address 1
+'            'wshFACPrep.Range("J6").value = wshClientDB.Range("D" & CustRow).value & ", " & wshClientDB.Range("E" & CustRow).value & ", " & wshClientDB.Range("F" & CustRow).value
+'            'wshFACFinale
+'            wshFACFinale.Range("B21").value = "Le " & wshFACPrep.Range("N3").value
+'            wshFACFinale.Range("B24").value = wshClientDB.Range("H" & CustRow).value 'Address 1
+'            wshFACFinale.Range("B25").value = wshFACPrep.Range("J4").value
+'            wshFACFinale.Range("B26").value = wshClientDB.Range("C" & CustRow).value & vbLf & _
+'                wshClientDB.Range("D" & CustRow).value & ", " & wshClientDB.Range("E" & CustRow).value & ", " & wshClientDB.Range("F" & CustRow).value
+'        Else 'No Customer - Clear Address Fields
+'            wshFACPrep.Range("J5,J6").ClearContents
+'            wshFACFinale.Range("B24").ClearContents
+'            wshFACFinale.Range("B25,B26").ClearContents
+'        End If
+'        BillingEntry_LoadList 'Run Macro to reload WIP list
+'    End If
+'
+'    'Invoice Date has changed
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_02.1 - Not Intersect(Target, Range('N3')) Is Nothing = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N3")) Is Nothing
+'    'Customer has changed - Update fileds on both invoices
+'    If Not Intersect(Target, wshFACPrep.Range("N3")) Is Nothing Then
+'            wshFACFinale.Range("B21").value = "Le " & Format(wshFACPrep.Range("N3").value, "d mmmm yyyy")
+'    End If
+'
+'    'On Service Entry, but not on Invoice Load or Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('K10:K45')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("K10:K45")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, Range("K10:K45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+'    MsgBox "Target.Row = " & Target.Row
+'    wshFACFinale.Range("B" & Target.Row + 23).value = wshFACPrep.Range("K" & Target.Row).value
+'    End If
+'
+'    'On Rate Entry, but not on Invoice Load or Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N5")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, Range("N5")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+'    If wshFACPrep.Range("N5").value <> 0 Then
+'        wshFACFinale.Range("D65").value = wshFACPrep.Range("N5").value
+'    End If
+'    End If
+'
+'    'On Hours Change, but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, wshFACPrep.Range('L10:L46')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("L10:L46")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, Range("L10:L46")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+'        If wshFACPrep.Range("L" & Target.Row).value = 0 Then
+'            MsgBox "Vouz devez saisir un nombre d'heures !"
+'            Exit Sub
+'        Else
+'            wshFACPrep.Range("M" & Target.Row).value = wshFACPrep.Range("N5").value
+'            wshFACPrep.Range("N" & Target.Row).value = wshFACPrep.Range("L" & Target.Row).value * wshFACPrep.Range("M" & Target.Row).value
+'            wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
+'        End If
+'    End If
+'
+'    'On Frais Change (3 cells), but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, wshFACPrep.Range('N48:N50')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N48:N50")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, Range("N48:N50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+'        wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
+'        wshFACFinale.Range("E69").value = wshFACPrep.Range("N48").value
+'        wshFACFinale.Range("E70").value = wshFACPrep.Range("N49").value
+'        wshFACFinale.Range("E71").value = wshFACPrep.Range("N50").value
+'    End If
+'
+'    'On Total Change, but not on Invoice Load or Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.1 - Not Intersect(Target, wshFACPrep.Range('N51')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N51")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(30); wshFACPrep.Range("B24").value & " " & wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, wshFACPrep.Range("N51")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False Then
+'        wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
+'        wshFACFinale.Range("E69").value = wshFACPrep.Range("N48").value
+'        wshFACFinale.Range("E70").value = wshFACPrep.Range("N49").value
+'        wshFACFinale.Range("E71").value = wshFACPrep.Range("N50").value
+'    End If
+'
+'    'On Deposit Change, but not on Invoice Load or Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.2 - Not Intersect(Target, wshFACPrep.Range('N53')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N53")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
+'    If Not Intersect(Target, Range("N53")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+'        wshFACFinale.Range("E78").value = wshFACPrep.Range("N53").value
+'    End If
+'
+'    'On Invoice Search Change
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
+'    If Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty Then
+'        If Range("B22").value = Empty Then
+'            MsgBox "Veuillez saisir un numéro de facture valide"
+'            Exit Sub
+'        End If
+'        Range("N3").value = Range("Q2").value 'Set Invoice #
+'        Range("Q2").ClearContents
+'        Invoice_Load 'Load Invoice
+'    End If
+'
+'    'On Change of Billing Service Item, but not on Billing Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> ""
+'    If Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> "" Then
+'        ServItemDBRow = Range("B12").value ' Service Item DB Row
+'        Range("E7").value = ServItems.Range("C" & ServItemDBRow).value 'Set Default Description
+'        Range("H6").value = ServItems.Range("D" & ServItemDBRow).value 'Set Default Rate
+'    End If
+'    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_Change(ByVal Target As Range)" & vbNewLine
+'End Sub
+
+'Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ " & Time
+'    If wshFACPrep.Range("B28").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+''    If Target.CountLarge > 1 Then Exit Sub
+'
+'    'On Selection Of Billing item
+''    If Not Intersect(Target, Range("D12:H9999")) Is Nothing And Range("C" & Target.Row).Value <> Empty Then
+''        Range("B2").Value = Range("C" & Target.Row).Value 'Set Billing ID
+''        Range("B17").Value = Target.Row 'Set Selected Row
+''        BillingEntry_Load 'Run Macro To load Item
+''        With Shapes("AddItemBtn")
+''            .Left = Range("I" & Target.Row).Left
+''            .Top = Range("I" & Target.Row).Top
+''            .Visible = msoCTrue
+''        End With
+''    End If
+'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
+'End Sub
+
+

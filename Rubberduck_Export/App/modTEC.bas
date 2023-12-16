@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.1.1"
+Global Const gAppVersion As String = "v1.1.2"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -123,10 +123,10 @@ Sub TEC_FilterAndSort()
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("R2:V3"), _
-            CopyToRange:=.Range("X2:AK2"), _
+            CriteriaRange:=.Range("R2:W3"), _
+            CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
-        LastResultRow = .Range("X999999").End(xlUp).Row
+        LastResultRow = .Range("Y999999").End(xlUp).Row
         If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -138,7 +138,7 @@ Sub TEC_FilterAndSort()
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
+            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -414,7 +414,6 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
 
 End Sub
 
-'********************* Reload listBox from HeuresFiltered and reset the buttons
 Sub RefreshListBoxAndAddHours()
 
     If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
@@ -423,13 +422,9 @@ Sub RefreshListBoxAndAddHours()
     
     frmSaisieHeures.txtTotalHeures.value = ""
     
-    Dim shFiltered As Worksheet
-    Set shFiltered = ThisWorkbook.Sheets("HeuresBase")
-    'shFiltered.Activate
-    
-    'Last Row used in column A
+    'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("X99999").End(xlUp).Row - 1
+    lastRow = wshBaseHours.Range("Y99999").End(xlUp).Row - 1
     If lastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
@@ -438,9 +433,9 @@ Sub RefreshListBoxAndAddHours()
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
         If lastRow = 1 Then
-            .RowSource = "HeuresBase!X3:AF3"
+            .RowSource = "HeuresBase!Y3:AG3"
         Else
-            .RowSource = "HeuresBase!X3:AF" & lastRow + 1
+            .RowSource = "HeuresBase!Y3:AG" & lastRow + 1
         End If
     End With
 
