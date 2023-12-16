@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.0.7"
+Global Const gAppVersion As String = "v1.0.8"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -76,7 +76,7 @@ Sub ImportTEC()
     'Set up source and destination ranges
     Dim sourceRange As Range
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("TEC").UsedRange
-    Debug.Print "Je vais copier toutes les cellules du Range = " & sourceRange.Address & " dans BaseHours!"
+    Debug.Print vbNewLine & "Je vais importer toutes les cellules du Range = " & sourceRange.Address & " dans BaseHours!"
 
     Dim destinationRange As Range
     Set destinationRange = wshBaseHours.Range("A2")
@@ -218,58 +218,53 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
-    'If r is 0, add a new record; otherwise, update an existing record
-    If r = 0 Then
-    'SQL select command to find the next available ID
-        strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
-    
-        'Open recordset to find out the MaxID
-        rs.Open strSQL, conn
-        
-        'Get the last used row
-        If IsNull(rs.Fields("MaxID").value) Then
-            ' Handle empty table (assign a default value, e.g., 1)
-            LastRow = 1
-        Else
-            LastRow = rs.Fields("MaxID").value
-        End If
-        
-        'Calculate the new ID
-        nextID = LastRow + 1
-    
-        'Close the previous recordset, no longer needed and open an empty recordset
-        rs.Close
-        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
-        rs.AddNew
-        
-        'Add fields to the recordset before updating it
-        rs.Fields("TEC_ID").value = nextID
-        rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
-        rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
-        rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
-        rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
-        rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-        rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-        rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-        rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-        rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
-        rs.Fields("DateSaisie").value = Now
-        rs.Fields("EstFacturee").value = False
-        rs.Fields("DateFacturee").value = ""
-        rs.Fields("EstDetruit").value = False
-        rs.Fields("VersionApp").value = gAppVersion
-        rs.Fields("NoFacture").value = ""
-        rs.Fields("BD_Row").value = 0 'TO-DO - Remove that column, no longer required - 2023-12-16
-    Else
-        'If r is not 0, update an existing record (Only fields that can be different)
+    'If r is negative, soft delete the record
+    If r < 0 Then
         'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & Abs(r), conn, 2, 3
         If Not rs.EOF Then
-            'Update fields for the existing record
-'            rs.Fields("TEC_ID").value = nextID
-'            rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
-'            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
-'            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
+            'Update the "IsDeleted" field to mark the record as deleted
+            rs.Fields("DateSaisie").value = Now
+            rs.Fields("EstDetruit").value = True
+            rs.Fields("VersionApp").value = gAppVersion
+            rs.Update
+        Else
+            ' Handle the case where the specified ID is not found
+            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+            rs.Close
+            conn.Close
+            Exit Sub
+        End If
+    Else
+        'If r is 0, add a new record; otherwise, update an existing record
+        If r = 0 Then
+        'SQL select command to find the next available ID
+            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
+        
+            'Open recordset to find out the MaxID
+            rs.Open strSQL, conn
+            
+            'Get the last used row
+            If IsNull(rs.Fields("MaxID").value) Then
+                ' Handle empty table (assign a default value, e.g., 1)
+                LastRow = 1
+            Else
+                LastRow = rs.Fields("MaxID").value
+            End If
+            
+            'Calculate the new ID
+            nextID = LastRow + 1
+        
+            'Close the previous recordset, no longer needed and open an empty recordset
+            rs.Close
+            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+            rs.AddNew
+            
+            'Add fields to the recordset before updating it
+            rs.Fields("TEC_ID").value = nextID
+            rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
+            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
+            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
             rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
             rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
             rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
@@ -277,18 +272,33 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
             rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
             rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
             rs.Fields("DateSaisie").value = Now
-'            rs.Fields("EstFacturee").value = False
-'            rs.Fields("DateFacturee").value = ""
-'            rs.Fields("EstDetruit").value = False
+            rs.Fields("EstFacturee").value = False
+            rs.Fields("DateFacturee").value = ""
+            rs.Fields("EstDetruit").value = False
             rs.Fields("VersionApp").value = gAppVersion
-'            rs.Fields("NoFacture").value = ""
-'            rs.Fields("BD_Row").value = 0 'TO-DO - Remove that column, no longer required - 2023-12-16
+            rs.Fields("NoFacture").value = ""
+            rs.Fields("BD_Row").value = 0 'TO-DO - Remove that column, no longer required - 2023-12-16
         Else
-            'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
-            rs.Close
-            conn.Close
-            Exit Sub
+            'If r is not 0, update an existing record (Only fields that can be different)
+            'Open the recordset for the specified ID
+            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+            If Not rs.EOF Then
+                'Update fields for the existing record
+                rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
+                rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
+                rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
+                rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+                rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
+                rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+                rs.Fields("DateSaisie").value = Now
+                rs.Fields("VersionApp").value = gAppVersion
+            Else
+                'Handle the case where the specified ID is not found
+                MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+                rs.Close
+                conn.Close
+                Exit Sub
+            End If
         End If
     End If
 
@@ -322,9 +332,9 @@ Sub ModifieLigneDetail()
     Set sh = wshBaseHours
 
     Dim selectedRow As Long
-    Debug.Print "Le ID du record à réécrire, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
+    'Debug.Print "Le ID du record à réécrire, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
     selectedRow = wshAdmin.Range("TEC_Current_ID").value
-    Debug.Print "Le ID du record à réécrire est '" & selectedRow & "'"
+    'Debug.Print "Le ID du record à réécrire est '" & selectedRow & "'"
     
     'WriteToWorksheet (selectedRow)
     AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
@@ -348,10 +358,9 @@ End Sub
 '************************************************************* EffaceLigneDetail
 Sub EffaceLigneDetail()
 
-    If frmSaisieHeures.txtID.value = "" Then
+    If wshAdmin.Range("TEC_Current_ID").value = "" Then
         MsgBox _
         Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
-        Title:="", _
         Buttons:=vbCritical
         Exit Sub
     End If
@@ -371,13 +380,12 @@ Sub EffaceLigneDetail()
     Set sh = ThisWorkbook.Sheets("HeuresBase")
     
     Dim selectedRow As Long
-    selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
-                                                      sh.Range("A:A"), 0)
-    
-    'Assign 'VRAI' to colomn 14, since it is deleted
-    sh.Range("K" & selectedRow).value = Now
-    sh.Range("N" & selectedRow).value = True
-    sh.Range("O" & selectedRow).value = gAppVersion
+    'Debug.Print "Le ID du record à DÉTRUIRE, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
+    selectedRow = -wshAdmin.Range("TEC_Current_ID").value
+    'Debug.Print "Le ID du record à DÉTRUIRE est '" & selectedRow & "'"
+        
+    'WriteToWorksheet (selectedRow)
+    AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
     
     'Empty the dynamic fields after deleting
     With frmSaisieHeures

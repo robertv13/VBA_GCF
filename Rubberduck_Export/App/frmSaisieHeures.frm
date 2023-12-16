@@ -24,6 +24,10 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub lblDate_Click()
+
+End Sub
+
 Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean) 'RMV_001
 
     Dim i As Long
@@ -335,7 +339,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     With frmSaisieHeures
         wshAdmin.Range("TEC_Current_ID").value = .lstData.List(.lstData.ListIndex, 0)
-        Debug.Print "Sauvegarde de l'ID de l'enregistrement à modifier - " & _
+        'Debug.Print "Sauvegarde de l'ID de l'enregistrement à modifier - " & _
             wshAdmin.Range("TEC_Current_ID").value
         
         .cmbProfessionnel.value = .lstData.List(.lstData.ListIndex, 1)
