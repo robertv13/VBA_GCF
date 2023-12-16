@@ -1,13 +1,13 @@
 ﻿Option Explicit
 
 Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CATCH ALL
-    If shInvoice.Range("B28").value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ " & Time
-    If shInvoice.Range("B28").value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+'    If wshInvoice.Range("B28").value Then Debug.Print "Now entering - [shInvoice] - Private Sub Worksheet_Change(ByVal Target As Range) @ " & Time
+'    If wshInvoice.Range("B28").value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
     Dim ProjRow As Long, CustRow As Long, ServItemDBRow As Long
     
     '??? - On WIP Customer Change, load Customer Projects & Check For new Customer
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_01 - Not Intersect(Target, shInvoice.Range('E4')) Is Nothing And Range('E4').Value <> Empty = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").value <> Empty
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_01 - Not Intersect(Target, shInvoice.Range('E4')) Is Nothing And Range('E4').Value <> Empty = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").value <> Empty
     If Not Intersect(Target, Range("E4")) Is Nothing And Range("E4").value <> Empty Then
         If Range("B5").value = Empty Then 'New Customer
             If MsgBox(Range("E4").value & " n'est pas sur votre liste de client. Désirez-vous ajouter ce client ?", vbYesNo, "Nouveau client") = vbNo Then
@@ -26,8 +26,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'Customer has changed ... Load Customer Address & Billing Items
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_02 - Not Intersect(Target, Range('J4:K4')) Is Nothing = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("J4:K4")) Is Nothing
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_02 - Not Intersect(Target, Range('J4:K4')) Is Nothing = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("J4:K4")) Is Nothing
     'Customer has changed - Update fileds on both invoices
     If Not Intersect(Target, shInvoice.Range("J4:K4")) Is Nothing Then
         If shInvoice.Range("B19").value <> "" Then
@@ -51,24 +51,24 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'Invoice Date has changed
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_02.1 - Not Intersect(Target, Range('N3')) Is Nothing = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N3")) Is Nothing
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_02.1 - Not Intersect(Target, Range('N3')) Is Nothing = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N3")) Is Nothing
     'Customer has changed - Update fileds on both invoices
     If Not Intersect(Target, shInvoice.Range("N3")) Is Nothing Then
             shFactureFinale.Range("B21").value = "Le " & Format(shInvoice.Range("N3").value, "d mmmm yyyy")
     End If
     
     'On Service Entry, but not on Invoice Load or Item Load
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('K10:K45')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("K10:K45")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('K10:K45')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("K10:K45")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
     If Not Intersect(Target, Range("K10:K45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
     MsgBox "Target.Row = " & Target.Row
     shFactureFinale.Range("B" & Target.Row + 23).value = shInvoice.Range("K" & Target.Row).value
     End If
     
     'On Rate Entry, but not on Invoice Load or Item Load
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N5")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N5")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
     If Not Intersect(Target, Range("N5")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
     If shInvoice.Range("N5").value <> 0 Then
         shFactureFinale.Range("D65").value = shInvoice.Range("N5").value
@@ -76,8 +76,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'On Hours Change, but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, shInvoice.Range('L10:L46')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("L10:L46")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, shInvoice.Range('L10:L46')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("L10:L46")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
     If Not Intersect(Target, Range("L10:L46")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         If shInvoice.Range("L" & Target.Row).value = 0 Then
             MsgBox "Vouz devez saisir un nombre d'heures !"
@@ -90,8 +90,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'On Frais Change (3 cells), but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, shInvoice.Range('N48:N50')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N48:N50")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, shInvoice.Range('N48:N50')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N48:N50")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
     If Not Intersect(Target, Range("N48:N50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         shFactureFinale.Range("E68").value = shInvoice.Range("N47").value
         shFactureFinale.Range("E69").value = shInvoice.Range("N48").value
@@ -100,9 +100,9 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'On Total Change, but not on Invoice Load or Item Load
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.1 - Not Intersect(Target, shInvoice.Range('N51')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N51")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
-    If shInvoice.Range("B28").value Then Debug.Print Tab(30); shInvoice.Range("B24").value & " " & shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.1 - Not Intersect(Target, shInvoice.Range('N51')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N51")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(30); shInvoice.Range("B24").value & " " & shInvoice.Range("B25").value = False
     If Not Intersect(Target, shInvoice.Range("N51")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False Then
         shFactureFinale.Range("E68").value = shInvoice.Range("N47").value
         shFactureFinale.Range("E69").value = shInvoice.Range("N48").value
@@ -111,15 +111,15 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'On Deposit Change, but not on Invoice Load or Item Load
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.2 - Not Intersect(Target, shInvoice.Range('N53')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N53")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_05.2 - Not Intersect(Target, shInvoice.Range('N53')) Is Nothing And shInvoice.Range('B24').Value = False And shInvoice.Range('B25').Value = False = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, shInvoice.Range("N53")) Is Nothing And shInvoice.Range("B24").value = False And shInvoice.Range("B25").value = False
     If Not Intersect(Target, Range("N53")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         shFactureFinale.Range("E78").value = shInvoice.Range("N53").value
     End If
     
     'On Invoice Search Change
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
     If Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty Then
         If Range("B22").value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture valide"
@@ -131,8 +131,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'RMV_WorkSheet_Change or CAT
     End If
     
     'On Change of Billing Service Item, but not on Billing Item Load
-    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
-    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> ""
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
+'    If shInvoice.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> ""
     If Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> "" Then
         ServItemDBRow = Range("B12").value ' Service Item DB Row
         Range("E7").value = ServItems.Range("C" & ServItemDBRow).value 'Set Default Description

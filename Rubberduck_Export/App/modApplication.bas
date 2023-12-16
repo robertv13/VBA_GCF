@@ -4,10 +4,10 @@ Option Explicit
 Sub BackToMainMenu()
 
     wshMenu.Activate
-    Dim ws As Worksheet
-    For Each ws In ActiveWorkbook.Worksheets
-        If ws.Name <> ActiveSheet.Name Then ws.Visible = xlSheetHidden
-    Next ws
+'    Dim ws As Worksheet 'TO-DO - Remove comments, hide all worksheets
+'    For Each ws In ActiveWorkbook.Worksheets
+'        If ws.Name <> ActiveSheet.Name Then ws.Visible = xlSheetHidden
+'    Next ws
     wshMenu.Range("B1").Select
 
 End Sub

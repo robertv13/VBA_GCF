@@ -25,7 +25,7 @@ Option Explicit
 '   You can use this code free in any of your software applications and distribute as you wish.
 '   Please do not alter or remove the authors name or website.
 
-Private Const m_conMaxRows As Long = 10
+Private Const m_conMaxRows As Long = 12
 
 'Configurable Settings
 Private m_compareMethod As VbCompareMethod       'Determines case sensitivity in the search
@@ -81,8 +81,7 @@ Public Property Let StartText(ByVal text As String)
 
 End Property
 
-'If true include all matches in the listbox. If false only show the rows
-'specified by m_MaxRows
+'If true include all matches in the listbox. If false only show the rows specified by m_MaxRows
 Public Property Let ShowAllMatches(ByVal state As Boolean)
     
     m_showAllMatches = state
@@ -209,19 +208,15 @@ End Sub
 Private Sub MakeAllMatchesAvailable()
 
     With myListBox
-     
-        'To get the scrollbar working correctly it is necessary to
-        'turn IntegralHeight off and on
+        'To get the scrollbar working correctly it is necessary to turn IntegralHeight off and on
         .IntegralHeight = False
         .Height = ResizeListbox(myListBox, myTextBox.Font.Size)
         .IntegralHeight = True
 
         'List index will not highlight to first unless the second one is
-        'highlighted first. It might be to do with the resizing from the
-        'Integral height
+        'highlighted first. It might be to do with the resizing from the Integral height
         If .ListCount > 1 Then .ListIndex = 1
         .ListIndex = 0
-
     End With
 
 End Sub
@@ -280,7 +275,6 @@ Private Function ResizeListbox(myListBox As MSForms.ListBox, fontSize As Double)
 End Function
 
 '---------------------------------------------------------------- TEXTBOX EVENTS
-
 Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
@@ -377,8 +371,6 @@ Private Function SelectTextBox()
     End With
 
 End Function
-
-'------------------------------------------------------------------ GENERAL SUBS
 
 'Filters the Listbox
 Public Sub FilterListBox()

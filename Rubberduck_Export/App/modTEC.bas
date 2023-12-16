@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.1.0"
+Global Const gAppVersion As String = "v1.1.1"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -77,7 +77,7 @@ Sub TEC_Import()
     'Set up source and destination ranges
     Dim sourceRange As Range
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("TEC").UsedRange
-    Debug.Print vbNewLine & "Je vais importer toutes les cellules du Range = " & sourceRange.Address & " dans BaseHours!"
+    'Debug.Print vbNewLine & "Je vais importer toutes les cellules du Range = " & sourceRange.Address & " dans BaseHours!"
 
     Dim destinationRange As Range
     Set destinationRange = wshBaseHours.Range("A2")
@@ -92,15 +92,8 @@ Sub TEC_Import()
     lastRow = wshBaseHours.Range("A999999").End(xlUp).Row
     
     With wshBaseHours
-        With .Range("A3" & ":Q" & lastRow)
+        With .Range("A3" & ":P" & lastRow)
             .HorizontalAlignment = xlCenter
-'            .WrapText = False
-'            .Orientation = 0
-'            .AddIndent = False
-'            .IndentLevel = 0
-'            .ShrinkToFit = False
-'            .ReadingOrder = xlContext
-'            .MergeCells = False
         End With
         With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
             .HorizontalAlignment = xlLeft
@@ -115,7 +108,7 @@ End Sub
 
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
-    If wshBaseHours.Range("S3").value = "" Or wshBaseHours.Range("T3").value = "" Then
+    If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
         Exit Sub
     End If
     
@@ -130,10 +123,10 @@ Sub TEC_FilterAndSort()
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("S2:U3"), _
-            CopyToRange:=.Range("W2:AJ2"), _
+            CriteriaRange:=.Range("R2:V3"), _
+            CopyToRange:=.Range("X2:AK2"), _
             Unique:=True
-        LastResultRow = .Range("W999999").End(xlUp).Row
+        LastResultRow = .Range("X999999").End(xlUp).Row
         If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -141,11 +134,11 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("W3"), _
+'            .SortFields.Add Key:=wshBaseHours.Range("Z3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -163,7 +156,7 @@ Sub EffaceFormulaire()
     'Empty the dynamic fields after reseting the form
     With frmSaisieHeures
         .txtClient.value = ""
-        wshAdmin.Range("Client_ID_Admin").value = 0
+        wshAdmin.Range("TEC_Client_ID").value = 0
         .txtActivite.value = ""
         .txtHeures.value = ""
         .txtCommNote.value = ""
@@ -193,15 +186,20 @@ Sub AjouteLigneDetail()
     AddOrUpdateTECRecordToDB (0) 'Write to external XLSX file - 2023-12-15 @ 17:09
 
     'Empty the fields after saving
-    frmSaisieHeures.txtClient.value = ""
-    frmSaisieHeures.txtActivite.value = ""
-    frmSaisieHeures.txtHeures.value = ""
-    frmSaisieHeures.txtCommNote.value = ""
-        
+    With frmSaisieHeures
+'        .cmbProfessionnel.Enabled = True
+'        .txtDate.Enabled = True
+        .txtClient.value = ""
+        .txtActivite.value = ""
+        .txtHeures.value = ""
+        .txtCommNote.value = ""
+        .chbFacturable = True
+    End With
+
     Call TEC_FilterAndSort
     Call RefreshListBoxAndAddHours
     
-    'Change buttons status
+    'Reset buttons
     With frmSaisieHeures
         .cmdClear.Enabled = False
         .cmdAdd.Enabled = False
@@ -211,6 +209,88 @@ Sub AjouteLigneDetail()
     frmSaisieHeures.txtClient.SetFocus
     
 End Sub
+
+Sub ModifieLigneDetail()
+
+    If IsDataValid() = False Then Exit Sub
+
+    AddOrUpdateTECRecordToDB (wshAdmin.Range("TEC_Current_ID").value) 'Write to external XLSX file - 2023-12-16 @ 14:10
+ 
+    'Initialize dynamic variables
+    With frmSaisieHeures
+        .cmbProfessionnel.Enabled = True
+        .txtDate.Enabled = True
+        .txtClient.value = ""
+        .txtActivite.value = ""
+        .txtHeures.value = ""
+        .txtCommNote.value = ""
+        .chbFacturable = True
+    End With
+
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
+    
+    rmv_state = rmv_modeCreation
+    
+    frmSaisieHeures.txtClient.SetFocus
+
+End Sub
+
+Sub EffaceLigneDetail()
+
+    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+        MsgBox _
+        Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        Buttons:=vbCritical
+        Exit Sub
+    End If
+    
+    Dim answerYesNo As Integer
+    answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
+                         vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
+    If answerYesNo = vbNo Then
+        MsgBox _
+        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
+        Title:="Confirmation", _
+        Buttons:=vbCritical
+        Exit Sub
+    End If
+    
+    Dim sh As Worksheet
+    Set sh = ThisWorkbook.Sheets("HeuresBase")
+    
+    Dim selectedRow As Long
+    'Debug.Print "Le ID du record à DÉTRUIRE, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
+    selectedRow = -wshAdmin.Range("TEC_Current_ID").value
+    'Debug.Print "Le ID du record à DÉTRUIRE est '" & selectedRow & "'"
+        
+    AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
+    
+    'Empty the dynamic fields after deleting
+    With frmSaisieHeures
+        .txtClient.value = ""
+        .txtActivite.value = ""
+        .txtHeures.value = ""
+        .txtCommNote.value = ""
+        .chbFacturable = True
+    End With
+    
+    MsgBox _
+        Prompt:="L'enregistrement a été DÉTRUIT !", _
+        Title:="Confirmation", _
+        Buttons:=vbCritical
+        
+    frmSaisieHeures.cmbProfessionnel.Enabled = True
+    frmSaisieHeures.txtDate.Enabled = True
+    rmv_state = rmv_modeCreation
+    
+    Call TEC_FilterAndSort
+    Call RefreshListBoxAndAddHours
+    
+    frmSaisieHeures.txtClient.SetFocus
+
+End Sub
+
 
 Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     Dim FullFileName As String
@@ -224,7 +304,7 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     
     Application.ScreenUpdating = False
     
-    Debug.Print "Dans AddOrUpdateTECRecordToDB, r vaut " & r
+    'Debug.Print "Dans AddOrUpdateTECRecordToDB, r vaut " & r
     
     FullFileName = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
@@ -281,10 +361,10 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
             
             'Add fields to the recordset before updating it
             rs.Fields("TEC_ID").value = nextID
-            rs.Fields("Prof_ID").value = wshAdmin.Range("Prof_ID")
+            rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
             rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
             rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
-            rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
+            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
             rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
             rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
             rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
@@ -302,7 +382,7 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
             rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
-                rs.Fields("Client_ID").value = wshAdmin.Range("Client_ID_Admin")
+                rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
                 rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
                 rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
                 rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
@@ -334,170 +414,10 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
 
 End Sub
 
-'************************************************************ ModifieLigneDetail
-Sub ModifieLigneDetail()
-
-    If wshAdmin.Range("TEC_Current_ID").value = "" Then
-        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
-               Title:="", _
-               Buttons:=vbCritical
-        Exit Sub
-    End If
-    
-    If IsDataValid() = False Then Exit Sub
-
-    Dim sh As Worksheet
-    Set sh = wshBaseHours
-
-    Dim selectedRow As Long
-    'Debug.Print "Le ID du record à réécrire, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
-    selectedRow = wshAdmin.Range("TEC_Current_ID").value
-    'Debug.Print "Le ID du record à réécrire est '" & selectedRow & "'"
-    
-    AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
- 
-    frmSaisieHeures.txtClient.value = ""
-    frmSaisieHeures.txtActivite.value = ""
-    frmSaisieHeures.txtHeures.value = ""
-    frmSaisieHeures.txtCommNote.value = ""
-
-    frmSaisieHeures.cmbProfessionnel.Enabled = True
-    frmSaisieHeures.txtDate.Enabled = True
-    rmv_state = rmv_modeCreation
-
-    Call TEC_FilterAndSort
-    Call RefreshListBoxAndAddHours
-    
-    frmSaisieHeures.txtClient.SetFocus
-
-End Sub
-
-'************************************************************* EffaceLigneDetail
-Sub EffaceLigneDetail()
-
-    If wshAdmin.Range("TEC_Current_ID").value = "" Then
-        MsgBox _
-        Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
-        Buttons:=vbCritical
-        Exit Sub
-    End If
-    
-    Dim answerYesNo As Integer
-    answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
-                         vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
-    If answerYesNo = vbNo Then
-        MsgBox _
-        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
-        Title:="Confirmation", _
-        Buttons:=vbCritical
-        Exit Sub
-    End If
-    
-    Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("HeuresBase")
-    
-    Dim selectedRow As Long
-    'Debug.Print "Le ID du record à DÉTRUIRE, selon Admin est '" & wshAdmin.Range("TEC_Current_ID").value & "'"
-    selectedRow = -wshAdmin.Range("TEC_Current_ID").value
-    'Debug.Print "Le ID du record à DÉTRUIRE est '" & selectedRow & "'"
-        
-    AddOrUpdateTECRecordToDB (selectedRow) 'Write to external XLSX file - 2023-12-15 @ 13:33
-    
-    'Empty the dynamic fields after deleting
-    With frmSaisieHeures
-        .txtClient.value = ""
-        .txtActivite.value = ""
-        .txtHeures.value = ""
-        .txtCommNote.value = ""
-    End With
-    
-    MsgBox _
-        Prompt:="L'enregistrement a été DÉTRUIT !", _
-        Title:="Confirmation", _
-        Buttons:=vbCritical
-        
-    frmSaisieHeures.cmbProfessionnel.Enabled = True
-    frmSaisieHeures.txtDate.Enabled = True
-    rmv_state = rmv_modeCreation
-    
-    Call TEC_FilterAndSort
-    Call RefreshListBoxAndAddHours
-    
-    frmSaisieHeures.txtClient.SetFocus
-
-End Sub
-
-Function IsDataValid() As Boolean
-
-    IsDataValid = False
-    
-    'Validations first (one field at a time)
-    If frmSaisieHeures.cmbProfessionnel.value = "" Then
-        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.cmbProfessionnel.SetFocus
-        Exit Function
-    End If
-
-    If frmSaisieHeures.txtDate.value = "" Or IsDate(frmSaisieHeures.txtDate.value) = False Then
-        MsgBox Prompt:="La date est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.txtDate.SetFocus
-        Exit Function
-    End If
-
-    If frmSaisieHeures.txtClient.value = "" Then
-        MsgBox Prompt:="Le client est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.txtClient.SetFocus
-        Exit Function
-    End If
-    
-    If frmSaisieHeures.txtHeures.value = "" Or IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
-        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
-               Title:="Vérification", _
-               Buttons:=vbCritical
-        frmSaisieHeures.txtHeures.SetFocus
-        Exit Function
-    End If
-
-    IsDataValid = True
-
-End Function
-
-'Sub WriteToWorksheet(r As Long)
-'
-'    'Load the cmb & txt into the 'HeuresBase' worksheet
-'    With wshBaseHours
-'        .Range("A" & r).value = lastRow
-'        .Range("B" & r).value = wshAdmin.Range("Prof_ID")
-'        .Range("C" & r).value = frmSaisieHeures.cmbProfessionnel.value
-'        .Range("D" & r).value = CDate(frmSaisieHeures.txtDate.value)
-'        .Range("E" & r).value = wshAdmin.Range("Client_ID_Admin")
-'        .Range("F" & r).value = frmSaisieHeures.txtClient.value
-'        .Range("G" & r).value = frmSaisieHeures.txtActivite.value
-'        .Range("H" & r).value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-'        .Range("I" & r).value = frmSaisieHeures.txtCommNote.value
-'        .Range("J" & r).value = frmSaisieHeures.chbFacturable.value
-'        .Range("K" & r).value = Now
-'        .Range("L" & r).value = False
-'        .Range("M" & r).value = ""
-'        .Range("N" & r).value = False
-'        .Range("O" & r).value = gAppVersion
-'        .Range("P" & r).value = ""
-'    End With
-'
-'    MsgBox "Record has been added to wshBaseHours - " & lastRow
-'
-'End Sub
-
 '********************* Reload listBox from HeuresFiltered and reset the buttons
 Sub RefreshListBoxAndAddHours()
 
-    If wshAdmin.Range("Prof_ID").value = "" Or wshAdmin.Range("TECDate").value = "" Then
+    If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
         GoTo EndOfProcedure
     End If
     
@@ -509,7 +429,7 @@ Sub RefreshListBoxAndAddHours()
     
     'Last Row used in column A
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("W99999").End(xlUp).Row - 1
+    lastRow = wshBaseHours.Range("X99999").End(xlUp).Row - 1
     If lastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
@@ -518,9 +438,9 @@ Sub RefreshListBoxAndAddHours()
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
         If lastRow = 1 Then
-            .RowSource = "HeuresBase!W3:AE3"
+            .RowSource = "HeuresBase!X3:AF3"
         Else
-            .RowSource = "HeuresBase!W3:AE" & lastRow + 1
+            .RowSource = "HeuresBase!X3:AF" & lastRow + 1
         End If
     End With
 

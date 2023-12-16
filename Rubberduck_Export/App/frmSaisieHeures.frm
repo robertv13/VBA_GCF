@@ -24,18 +24,14 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub lblDate_Click()
-
-End Sub
-
-Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean) 'RMV_001
+Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim i As Long
     With Me.lstNomClient
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("Client_ID_Admin").value = GetID_FromClientName(Me.txtClient.value)
+                wshAdmin.Range("TEC_Client_ID").value = GetID_FromClientName(Me.txtClient.value)
                 Exit For
             End If
         Next i
@@ -81,19 +77,25 @@ Private Sub UserForm_Terminate()
     Unload Me
     
     If Me.Name = "frmSaisieHeures" Then
+        On Error GoTo MenuSelect
         wshMenuTEC.Select
+        On Error GoTo 0
     Else
         wshMenu.Select
     End If
+    Exit Sub
+    
+MenuSelect:
+    wshMenu.Select
     
 End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    wshAdmin.Range("Initials").value = Me.cmbProfessionnel.value
-    wshAdmin.Range("Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
+    wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
+    wshAdmin.Range("TEC_Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
-    If wshAdmin.Range("TECDate").value <> "" Then
+    If wshAdmin.Range("TEC_Date").value <> "" Then
         Call TEC_FilterAndSort
         Call RefreshListBoxAndAddHours
     End If
@@ -180,9 +182,9 @@ Private Sub txtDate_AfterUpdate()
     lblDate.Caption = "Date *"
     lblDate.ForeColor = Me.ForeColor
     
-    wshAdmin.Range("TECDate").value = CDate(Me.txtDate.value)
+    wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
 
-    If wshAdmin.Range("Prof_ID").value <> "" Then
+    If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
         Call TEC_FilterAndSort
         Call RefreshListBoxAndAddHours
     End If
@@ -326,12 +328,26 @@ End Sub
 
 Private Sub cmdUpdate_Click()
 
+    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
+               Title:="", _
+               Buttons:=vbCritical
+        Exit Sub
+    End If
+
     ModifieLigneDetail
 
 End Sub
 
 Private Sub cmdDelete_Click()
 
+    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+               Title:="", _
+               Buttons:=vbCritical
+        Exit Sub
+    End If
+    
     EffaceLigneDetail
 
 End Sub
@@ -357,8 +373,8 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
         savedClient = .txtClient.value
         'Debug.Print "Double click on a entry - " & savedClient
-        wshAdmin.Range("Client_ID_Admin").value = GetID_FromClientName(savedClient)
-        'Debug.Print "Client_ID - " & wshAdmin.Range("Client_ID_Admin").value
+        wshAdmin.Range("TEC_Client_ID").value = GetID_FromClientName(savedClient)
+        'Debug.Print "Client_ID - " & wshAdmin.Range("TEC_Client_ID").value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
         savedActivite = .txtActivite.value

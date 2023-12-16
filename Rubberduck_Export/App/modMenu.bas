@@ -404,7 +404,7 @@ End Sub
 
 Sub ExportHeures_Click()
     SlideIn_ExportHeures
-    MsgBox "Activer la fonction 'Export des heures'"
+    'MsgBox "Activer la fonction 'Export des heures'"
 End Sub
 
 Sub PreparationFacture_Click()
