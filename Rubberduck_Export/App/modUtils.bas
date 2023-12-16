@@ -75,7 +75,7 @@ Sub GetAllRecordsFromAClosedWorkbook()
     Dim sourceWorkbook As Workbook
     Dim outputSheet As Worksheet
     Dim ws As Worksheet
-    Dim LastRow As Long
+    Dim lastRow As Long
     Dim lastCol As Long
     Dim targetRow As Long
     Dim targetCol As Long
@@ -93,15 +93,15 @@ Sub GetAllRecordsFromAClosedWorkbook()
     'Loop through all worksheets in the source workbook
     For Each ws In sourceWorkbook.Sheets
         'Find the last row and last column in the current worksheet
-        LastRow = WorksheetFunction.Min(ws.Cells(ws.Rows.count, "A").End(xlUp).Row, 25)
+        lastRow = WorksheetFunction.Min(ws.Cells(ws.Rows.count, "A").End(xlUp).Row, 25)
         lastCol = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
 
         'Copy data to the output sheet
 '        ws.Range(ws.Cells(1, 1)).value = ws.Name
-        ws.Range(ws.Cells(1, 1), ws.Cells(LastRow, lastCol)).Copy outputSheet.Cells(targetRow, 1)
+        ws.Range(ws.Cells(1, 1), ws.Cells(lastRow, lastCol)).Copy outputSheet.Cells(targetRow, 1)
 
         'Update target row for the next worksheet
-        targetRow = targetRow + LastRow + 1
+        targetRow = targetRow + lastRow + 1
     Next ws
 
     'Close the source workbook without saving changes

@@ -13,20 +13,17 @@ Function GetID_FromInitials(i As String)
 
 End Function
 
-Function RMV_TEST_GetID_FromClientName(ClientNom As String)
+Function GetID_FromClientName(ClientNom As String)
 
-    'Debug.Print "Nom de client à trouver - '" & ClientNom & "'"
-    Dim BenchMark As Double
-    BenchMark = Timer
-
-    Dim LastRow As Long
-    LastRow = wshClientDB.Range("A99999").End(xlUp).Row
+    Dim lastRow As Long
+    lastRow = wshClientDB.Range("A99999").End(xlUp).Row
     
     Dim i As Long
-    For i = 1 To LastRow
+    For i = 1 To lastRow
         If wshClientDB.Cells(i, 2) = ClientNom Then
             'Debug.Print "ID du client - '" & wshClientDB.Cells(i, 1).value & "'"
-            RMV_TEST_GetID_FromClientName = wshClientDB.Cells(i, 1).value
+            GetID_FromClientName = wshClientDB.Cells(i, 1).value
+            Exit Function
         End If
     Next i
 

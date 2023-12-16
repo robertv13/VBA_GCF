@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   9270.001
+   ClientHeight    =   9525.001
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   13275
@@ -35,7 +35,7 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean) 'RMV_00
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("Client_ID_Admin").value = RMV_TEST_GetID_FromClientName(Me.txtClient.value)
+                wshAdmin.Range("Client_ID_Admin").value = GetID_FromClientName(Me.txtClient.value)
                 Exit For
             End If
         Next i
@@ -70,7 +70,7 @@ End Sub
 Private Sub UserForm_Terminate()
     
     'Clear the admin control cells
-    wshAdmin.Range("B3:B6").ClearContents
+    wshAdmin.Range("B3:B7").ClearContents
     
     ThisWorkbook.Save
     
@@ -80,8 +80,12 @@ Private Sub UserForm_Terminate()
     Me.Hide
     Unload Me
     
-    wshMenu.Select
-
+    If Me.Name = "frmSaisieHeures" Then
+        wshMenuTEC.Select
+    Else
+        wshMenu.Select
+    End If
+    
 End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
@@ -353,7 +357,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
         savedClient = .txtClient.value
         'Debug.Print "Double click on a entry - " & savedClient
-        wshAdmin.Range("Client_ID_Admin").value = RMV_TEST_GetID_FromClientName(savedClient)
+        wshAdmin.Range("Client_ID_Admin").value = GetID_FromClientName(savedClient)
         'Debug.Print "Client_ID - " & wshAdmin.Range("Client_ID_Admin").value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
