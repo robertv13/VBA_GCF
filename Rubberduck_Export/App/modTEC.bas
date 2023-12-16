@@ -56,12 +56,12 @@ Sub ImportClientList()                                          '---------------
     recSet.Close
     connStr.Close
     
-    MsgBox _
-        Prompt:="J'ai importé un total de " & _
-            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
-            "## ##0") & " clients", _
-        Title:="Vérification du nombre de clients", _
-        Buttons:=vbInformation
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
+'            "## ##0") & " clients", _
+'        Title:="Vérification du nombre de clients", _
+'        Buttons:=vbInformation
         
 End Sub
 
@@ -142,6 +142,10 @@ Sub TEC_FilterAndSort()
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
+            .SortFields.Add Key:=wshBaseHours.Range("X3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
             .SortFields.Add Key:=wshBaseHours.Range("V3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
