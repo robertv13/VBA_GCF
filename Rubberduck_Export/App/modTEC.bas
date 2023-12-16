@@ -65,54 +65,110 @@ Sub ImportClientList()                                          '---------------
         
 End Sub
 
-Sub ImportTEC() '2023-12-15 @ 17:19
-
+Sub ImportTEC()
+    
+    Application.ScreenUpdating = False
+    
     'Clear all cells, but the headers, in the worksheet
-    Debug.Print "Plage à effacer = " & wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).Address
     wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
-    'Import TEC from 'GCF_DB_Sortie.xlsx. In order to always have all the TEC
+    'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String
-    Dim sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
-                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 16:49
-    sourceWorksheet = "TEC"
+    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & "GCF_BD_Sortie.xlsx" '2023-12-15 @ 19:15
+
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("TEC").UsedRange
+    Debug.Print "Le Range de la source = " & sourceRange.Address
+
+    Dim destinationRange As Range
+    Set destinationRange = wshBaseHours.Range("A2")
+
+    'Copy data
+    sourceRange.Copy destinationRange
+
+    'Close the source workbook
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    'Autofit columns
+    'wshBaseHours.Range("A:P").CurrentRegion.EntireColumn.AutoFit
     
-    'ADODB connection
-    Dim connStr As ADODB.Connection
-    Set connStr = New ADODB.Connection
+    Application.ScreenUpdating = True
     
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset
-    Set recSet = New ADODB.Recordset
-    
-    recSet.ActiveConnection = connStr
-    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
-    recSet.Open
-    Debug.Print "Nombre de records dans le recSet = " & recSet.RecordCount
-    
-    'Copy to wshClientDB workbook
-    wshBaseHours.Range("A1").CopyFromRecordset recSet
-    wshBaseHours.Range("A:P").CurrentRegion.EntireColumn.AutoFit
-    
-    'Close resources
-    recSet.Close
-    connStr.Close
-    
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshBaseHours.Range("A1").CurrentRegion.Rows.count - 1, _
-'            "## ##0") & " lignes de TEC", _
-'        Title:="", _
-'        Buttons:=vbInformation
-        
 End Sub
+
+'Sub ImportTECA()
+'    'Clear all cells, but the headers, in the worksheet
+'    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+'
+'    'Import TEC from 'GCF_DB_Sortie.xlsx.
+'    Dim sourceWorkbook As String
+'    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
+'                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 18:07
+'
+'    'Set up QueryTable
+'    Dim ws As Worksheet
+'    Set ws = wshBaseHours 'Change to the appropriate worksheet
+'
+'    With ws.QueryTables.Add(Connection:="OLEDB;Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & sourceWorkbook & ";Extended Properties=""Excel 12.0 Xml;HDR=YES""", _
+'        Destination:=ws.Range("A2"))
+'        .Sql = "SELECT * FROM [TEC$]"
+'        .Refresh BackgroundQuery:=False
+'    End With
+'
+'    'Autofit columns
+'    ws.Range("A:P").CurrentRegion.EntireColumn.AutoFit
+'
+'End Sub
+
+'Sub ImportTEC() '2023-12-15 @ 17:19
+'
+'    'Clear all cells, but the headers, in the worksheet
+'    Debug.Print "Plage à effacer = " & wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).Address
+'    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+'
+'    'Import TEC from 'GCF_DB_Sortie.xlsx. In order to always have all the TEC
+'    Dim sourceWorkbook As String
+'    Dim sourceWorksheet As String
+'    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
+'                     "GCF_BD_Sortie.xlsx" '2023-12-15 @ 16:49
+'    sourceWorksheet = "TEC"
+'
+'    'ADODB connection
+'    Dim connStr As ADODB.Connection
+'    Set connStr = New ADODB.Connection
+'
+'    'Connection String specific to EXCEL
+'    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+'                               "Data Source = " & sourceWorkbook & ";" & _
+'                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+'    connStr.Open
+'
+'    'Recordset
+'    Dim recSet As ADODB.Recordset
+'    Set recSet = New ADODB.Recordset
+'
+'    recSet.ActiveConnection = connStr
+'    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
+'    recSet.Open
+'    Debug.Print "Nombre de records dans le recSet = " & recSet.RecordCount
+'
+'    'Copy to wshClientDB workbook
+'    wshBaseHours.Range("A1").CopyFromRecordset recSet
+'    wshBaseHours.Range("A:P").CurrentRegion.EntireColumn.AutoFit
+'
+'    'Close resources
+'    recSet.Close
+'    connStr.Close
+'
+''    MsgBox _
+''        Prompt:="J'ai importé un total de " & _
+''            Format(wshBaseHours.Range("A1").CurrentRegion.Rows.count - 1, _
+''            "## ##0") & " lignes de TEC", _
+''        Title:="", _
+''        Buttons:=vbInformation
+'
+'End Sub
 
 Sub TEC_FilterAndSort()
     'You need the two Non Null Values to Filter
@@ -191,7 +247,7 @@ Sub AjouteLigneDetail()
 
     If IsDataValid() = False Then Exit Sub
     
-    AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 17:09
+    AddTECRecordToDB (0) 'Write to external XLSX file - 2023-12-15 @ 17:09
 
     'Empty the fields after saving
     frmSaisieHeures.txtClient.value = ""
@@ -213,18 +269,19 @@ Sub AjouteLigneDetail()
     
 End Sub
 
-Sub AddTECRecordToDB() '2023-12-15 @ 13:33
+Sub AddTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     Dim FullFileName As String
     Dim SheetName As String
     Dim conn As Object
     Dim rs As Object
-    'Dim strConn As String
     Dim strSQL As String
     Dim MaxID As Long
     Dim LastRow As Long
     Dim nextID As Long
     
     Application.ScreenUpdating = False
+    
+    Debug.Print "Dans AddTECRecordToDB, r vaut " & r
     
     FullFileName = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
@@ -311,7 +368,7 @@ Sub ModifieLigneDetail()
     selectedRow = Application.WorksheetFunction.Match(CLng(frmSaisieHeures.txtID.value), _
                                                       sh.Range("A:A"), 0)
     
-    WriteToWorksheet (selectedRow)
+    'WriteToWorksheet (selectedRow)
     AddTECRecordToDB 'Write to external XLSX file - 2023-12-15 @ 13:33
  
 '    With wshBaseHours
