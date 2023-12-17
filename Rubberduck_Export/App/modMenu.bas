@@ -356,7 +356,7 @@ Sub Facturation_Click() 'RMV_2023-12-16 @ 15:53
     wshFACPrep.Visible = xlSheetVisible
     wshClientDB.Visible = xlSheetVisible
     wshFACInvList.Visible = xlSheetVisible
-    wshFACwshFACInvItems.Visible = xlSheetVisible
+    wshFACInvItems.Visible = xlSheetVisible
     wshFACFinale.Visible = xlSheetVisible
     
     wshMenuFACT.Select

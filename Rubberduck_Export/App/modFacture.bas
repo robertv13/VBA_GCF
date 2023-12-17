@@ -56,7 +56,7 @@ Sub Invoice_SaveUpdate()
         If .Range("B20").value = Empty Then
             InvRow = wshFACInvList.Range("A99999").End(xlUp).row + 1 'First available row
             wshFACPrep.Range("B20").value = InvRow
-            wshFACInvList.Range("A" & InvRow).value = wshFACPrep.Range("N6").value 'Invoice #
+            wshFACInvList.Range("A" & InvRow).value = wshFACPrep.Range("O6").value 'Invoice #
             If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est établi selon les lignes existantes: InvRow = " & InvRow
         Else 'Existing Invoice
             InvRow = .Range("B20").value 'Set Existing Invoice Row

@@ -1,5 +1,12 @@
 ﻿Option Explicit
 
+Private Sub Worksheet_Activate()
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+End Sub
+
 Public Sub Worksheet_Change(ByVal Target As Range)
 
     'Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " B24 = " & Range("B24").value & " B25 = " & Range("B25").value
@@ -41,10 +48,19 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         With wshFACFinale
             'Final Invoice - Sub-total
             wshFACFinale.Range("E68").value = wshFACPrep.Range("O47").value
-            'Final Invoice - Misc charges
-            wshFACFinale.Range("E69").value = wshFACPrep.Range("O48").value
-            wshFACFinale.Range("E70").value = wshFACPrep.Range("O49").value
-            wshFACFinale.Range("E71").value = wshFACPrep.Range("O50").value
+            'Final Invoice - Misc charges AND move on to next field
+            If Target.row = 48 Then
+                wshFACFinale.Range("E69").value = wshFACPrep.Range("O48").value
+                wshFACPrep.Range("O49").Select
+            End If
+            If Target.row = 49 Then
+                wshFACFinale.Range("E70").value = wshFACPrep.Range("O49").value
+                wshFACPrep.Range("O50").Select
+            End If
+            If Target.row = 50 Then
+                wshFACFinale.Range("E71").value = wshFACPrep.Range("O50").value
+                wshFACPrep.Range("O53").Select
+            End If
         End With
     End If
 
@@ -54,12 +70,15 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         With wshFACFinale
             'Final Invoice - Deposit
             wshFACFinale.Range("E78").value = wshFACPrep.Range("O53").value
+            ActiveWindow.SmallScroll Up:=18
         End With
     End If
 
     Application.EnableEvents = True
   
 End Sub
+
+
 
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Service Entry, but not on Invoice Load or Item Load
