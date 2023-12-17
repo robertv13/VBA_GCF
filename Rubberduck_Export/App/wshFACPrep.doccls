@@ -2,7 +2,7 @@
 
 Public Sub Worksheet_Change(ByVal Target As Range)
 
-    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " B24 = " & Range("B24").value & " B25 = " & Range("B25").value
+    'Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " B24 = " & Range("B24").value & " B25 = " & Range("B25").value
     
     Application.EnableEvents = False
     
@@ -61,50 +61,12 @@ Public Sub Worksheet_Change(ByVal Target As Range)
   
 End Sub
 
-
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Service Entry, but not on Invoice Load or Item Load
 '
 '    'On Rate Entry, but not on Invoice Load or Item Load
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N5")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'    If Not Intersect(Target, Range("N5")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-'    If wshFACPrep.Range("N5").value <> 0 Then
-'        wshFACFinale.Range("D65").value = wshFACPrep.Range("N5").value
-'    End If
-'    End If
-'
-'    'On Hours Change, but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, wshFACPrep.Range('L10:L46')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("L10:L46")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'
-'    'On Frais Change (3 cells), but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, wshFACPrep.Range('N48:N50')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N48:N50")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'    If Not Intersect(Target, Range("N48:N50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-'        wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
-'        wshFACFinale.Range("E69").value = wshFACPrep.Range("N48").value
-'        wshFACFinale.Range("E70").value = wshFACPrep.Range("N49").value
-'        wshFACFinale.Range("E71").value = wshFACPrep.Range("N50").value
-'    End If
-'
-'    'On Total Change, but not on Invoice Load or Item Load
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.1 - Not Intersect(Target, wshFACPrep.Range('N51')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N51")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(30); wshFACPrep.Range("B24").value & " " & wshFACPrep.Range("B25").value = False
-'    If Not Intersect(Target, wshFACPrep.Range("N51")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False Then
-'        wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
-'        wshFACFinale.Range("E69").value = wshFACPrep.Range("N48").value
-'        wshFACFinale.Range("E70").value = wshFACPrep.Range("N49").value
-'        wshFACFinale.Range("E71").value = wshFACPrep.Range("N50").value
-'    End If
-'
-'    'On Deposit Change, but not on Invoice Load or Item Load
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.2 - Not Intersect(Target, wshFACPrep.Range('N53')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N53")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'    If Not Intersect(Target, Range("N53")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-'        wshFACFinale.Range("E78").value = wshFACPrep.Range("N53").value
-'    End If
 '
 '    'On Invoice Search Change
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
