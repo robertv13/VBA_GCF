@@ -16,7 +16,7 @@ End Function
 Function GetID_FromClientName(ClientNom As String)
 
     Dim lastRow As Long
-    lastRow = wshClientDB.Range("A99999").End(xlUp).Row
+    lastRow = wshClientDB.Range("A99999").End(xlUp).row
     
     Dim i As Long
     For i = 1 To lastRow

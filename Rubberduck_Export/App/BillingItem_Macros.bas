@@ -13,7 +13,7 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
     With shBillEntries
         'Clear destination area
         .Range("U3:Z9999").ClearContents
-        lastRow = .Range("A9999").End(xlUp).Row
+        lastRow = .Range("A9999").End(xlUp).row
         If lastRow < 4 Then Exit Sub 'No WIP rows at all
         'Copy line per line, cell per cell
         LineTo_Copy = 3
@@ -31,11 +31,11 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
             End If
         Next LineFrom_Copy
         '.Range("A3:M" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("Q2:R3"), CopyToRange:=.Range("U2:AA2"), Unique:=True
-        LastResultRow = .Range("U99999").End(xlUp).Row
+        LastResultRow = .Range("U99999").End(xlUp).row
         If LastResultRow < 3 Then Exit Sub
         wshFACPrep.Range("C12:I" & LastResultRow + 9).value = .Range("U3:AA" & LastResultRow).value 'Bring Over Billing Item Results
         On Error Resume Next
-        wshFACPrep.Range("B17").value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").value, , xlFormulas, xlWhole).Row 'Set Selected Row (if applicable)
+        wshFACPrep.Range("B17").value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").value, , xlFormulas, xlWhole).row 'Set Selected Row (if applicable)
         On Error GoTo 0
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()" & vbNewLine
@@ -61,7 +61,7 @@ Sub BillingEntry_SaveUpdate()
         End If
         If .Range("B3").value = Empty Then 'New Billing entry
             .Range("B2").value = .Range("B4").value 'Set Entry ID
-            EntryRow = shBillEntries.Range("A99999").End(xlUp).Row + 1  'First avail row
+            EntryRow = shBillEntries.Range("A99999").End(xlUp).row + 1  'First avail row
             shBillEntries.Range("A" & EntryRow).value = .Range("B2").value 'Set Billing entry ID
             shBillEntries.Range("M" & EntryRow).value = "=Row()"
         Else 'Existing Entry
@@ -142,7 +142,7 @@ Sub BillingEntry_AddToInvoice()
 '            End If
 '        Else 'Create New rows, even for like service items
 NewRow:
-            InvRow = .Range("K36").End(xlUp).Row + 1
+            InvRow = .Range("K36").End(xlUp).row + 1
             InvRow = 10
             'MsgBox InvRow
             If InvRow = 36 Then 'Max Items

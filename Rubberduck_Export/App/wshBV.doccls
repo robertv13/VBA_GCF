@@ -20,8 +20,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If Not Intersect(Target, wshBV.Range("D4:G" & Range("B2").value)) Is Nothing Then
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, DateLimite As String
-        GLAcct = CStr(Range("D" & Target.Row).value)
-        GLDescription = Range("E" & Target.Row).value
+        GLAcct = CStr(Range("D" & Target.row).value)
+        GLDescription = Range("E" & Target.row).value
         DateLimite = Format(Range("B1").value, "yyyymmdd")
         GLTransDisplay GLAcct, GLDescription, DateLimite
         Application.EnableEvents = True
@@ -31,19 +31,19 @@ End Sub
 
 Sub UpdateBV() 'Forme 'Actualiser'
     Dim dateCutOff As String
-    Dim Row As Long, rowUsed As Long
+    Dim row As Long, rowUsed As Long
     Dim lastRow As Long, startRow As Long, MyRow As Long
     Dim Solde As Currency
     
     startRow = 3  'your first row of actual data in Plan Comptable
-    lastRow = wshPlanComptable.Cells(Rows.count, "E").End(xlUp).Row
-    Row = 4       'Première ligne dans la Balance de Vérification
+    lastRow = wshPlanComptable.Cells(Rows.count, "E").End(xlUp).row
+    row = 4       'Première ligne dans la Balance de Vérification
     
     'Efface la BV + Détail du GL
-    wshBV.Range("D" & Row & ":G" & lastRow + 4).ClearContents
-    wshBV.Range("D" & Row & ":G" & lastRow + 4).ClearFormats
+    wshBV.Range("D" & row & ":G" & lastRow + 4).ClearContents
+    wshBV.Range("D" & row & ":G" & lastRow + 4).ClearFormats
     Dim rowGLDetailLast As Long
-    rowGLDetailLast = wshBV.Range("M99999").End(xlUp).Row 'Dernière ligne utilisée
+    rowGLDetailLast = wshBV.Range("M99999").End(xlUp).row 'Dernière ligne utilisée
     If rowGLDetailLast < 4 Then rowGLDetailLast = 4
     wshBV.Range("L4:T" & rowGLDetailLast).ClearContents
     wshBV.Range("R" & rowGLDetailLast & ":R" & rowGLDetailLast).Font.Bold = False
@@ -58,20 +58,20 @@ Sub UpdateBV() 'Forme 'Actualiser'
     For MyRow = startRow To lastRow
         Solde = GetBalance(wshPlanComptable.Cells(MyRow, 5), dateCutOff)
         If Solde <> 0 Then
-            wshBV.Range("D" & Row).value = wshPlanComptable.Cells(MyRow, 5)
-            wshBV.Range("E" & Row).value = wshPlanComptable.Cells(MyRow, 6)
+            wshBV.Range("D" & row).value = wshPlanComptable.Cells(MyRow, 5)
+            wshBV.Range("E" & row).value = wshPlanComptable.Cells(MyRow, 6)
             If Solde > 0 Then
-                wshBV.Range("F" & Row).value = Solde
+                wshBV.Range("F" & row).value = Solde
             Else
-                wshBV.Range("G" & Row).value = -Solde
+                wshBV.Range("G" & row).value = -Solde
             End If
-            Row = Row + 1
+            row = row + 1
             rowUsed = rowUsed + 1
         End If
     Next
 
-    setTotals Row + 1, 6
-    setTotals Row + 1, 7
+    setTotals row + 1, 6
+    setTotals row + 1, 7
   
 End Sub
 
@@ -107,7 +107,7 @@ Function GetBalance(GL As String, d As String) As Currency
     Dim lastRowTrans, startRow, rowTrans As Long
     Dim Solde As Currency
     
-    lastRowTrans = wshGL.Cells(Rows.count, "D").End(xlUp).Row
+    lastRowTrans = wshGL.Cells(Rows.count, "D").End(xlUp).row
     startRow = 2
 
     For rowTrans = startRow To lastRowTrans
@@ -122,7 +122,7 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, d As String)
     'Efface le tableau
     Dim rowGLDetail As Long, rowGLDetailMax As Long
     rowGLDetail = 4
-    rowGLDetailMax = wshBV.Range("M99999").End(xlUp).Row
+    rowGLDetailMax = wshBV.Range("M99999").End(xlUp).row
     If rowGLDetailMax < 4 Then rowGLDetailMax = 4
     wshBV.Range("L" & rowGLDetail & ":T" & rowGLDetailMax).ClearContents
     wshBV.Range("R" & rowGLDetailMax & ":R" & rowGLDetailMax).Font.Bold = False
@@ -139,7 +139,7 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, d As String)
     'Analyse des transactions détaillées
     Dim r As Long, RowGLFirst As Long, RowGLMax As Long
     RowGLFirst = 2
-    RowGLMax = wshGL.Range("C999999").End(xlUp).Row  'Last Row used in wshGL (Transactions)
+    RowGLMax = wshGL.Range("C999999").End(xlUp).row  'Last Row used in wshGL (Transactions)
     
     For r = RowGLFirst To RowGLMax
         If wshGL.Range("G" & r).value = GLAcct And Format(wshGL.Range("D" & r).value, "yyyymmdd") <= d Then
@@ -166,7 +166,7 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, d As String)
         Key3:=[T5], order3:=xlAscending
 
     wshBV.Range("R4").value = 0
-    rowGLDetailMax = wshBV.Range("M99999").End(xlUp).Row
+    rowGLDetailMax = wshBV.Range("M99999").End(xlUp).row
     For r = 5 To rowGLDetailMax
         wshBV.Range("R" & r).value = wshBV.Range("R" & r - 1).value + wshBV.Range("P" & r).value - wshBV.Range("Q" & r).value
         If r = 5 Or r <> rowGLDetailMax Then

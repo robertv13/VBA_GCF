@@ -72,7 +72,7 @@ Private Sub cmdExport_Click()
     
     'Setup the row to use
     Dim currentRow As Long
-    currentRow = ActiveSheet.Cells(Rows.count, 1).End(xlUp).Row + 1
+    currentRow = ActiveSheet.Cells(Rows.count, 1).End(xlUp).row + 1
     
     Dim rng As Range
     Set rng = wsHTE.Range("A1").CurrentRegion

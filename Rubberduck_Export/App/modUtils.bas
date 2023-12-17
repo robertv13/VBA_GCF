@@ -93,7 +93,7 @@ Sub GetAllRecordsFromAClosedWorkbook()
     'Loop through all worksheets in the source workbook
     For Each ws In sourceWorkbook.Sheets
         'Find the last row and last column in the current worksheet
-        lastRow = WorksheetFunction.Min(ws.Cells(ws.Rows.count, "A").End(xlUp).Row, 25)
+        lastRow = WorksheetFunction.Min(ws.Cells(ws.Rows.count, "A").End(xlUp).row, 25)
         lastCol = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
 
         'Copy data to the output sheet

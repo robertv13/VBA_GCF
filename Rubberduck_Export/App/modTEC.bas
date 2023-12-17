@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.1.2"
+Global Const gAppVersion As String = "v1.1.3"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -89,7 +89,7 @@ Sub TEC_Import()
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A999999").End(xlUp).Row
+    lastRow = wshBaseHours.Range("A999999").End(xlUp).row
     
     With wshBaseHours
         With .Range("A3" & ":P" & lastRow)
@@ -116,7 +116,7 @@ Sub TEC_FilterAndSort()
     
     With wshBaseHours
         Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).Row 'Last BaseHours Row
+        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
         If lastRow < 2 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
@@ -126,7 +126,7 @@ Sub TEC_FilterAndSort()
             CriteriaRange:=.Range("R2:W3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
-        LastResultRow = .Range("Y999999").End(xlUp).Row
+        LastResultRow = .Range("Y999999").End(xlUp).row
         If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -424,7 +424,7 @@ Sub RefreshListBoxAndAddHours()
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y99999").End(xlUp).Row - 1
+    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
     If lastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData

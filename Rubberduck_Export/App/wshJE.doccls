@@ -30,22 +30,22 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("D9:F23")) Is Nothing Then
         If (Me.Range("H25").value - Me.Range("G25").value) <> 0 Then
             If (Me.Range("H25").value - Me.Range("G25").value) > 0 Then
-                Me.Range("G" & Target.Row).value = Me.Range("H25").value - Me.Range("G25").value
+                Me.Range("G" & Target.row).value = Me.Range("H25").value - Me.Range("G25").value
             Else
-                Me.Range("H" & Target.Row).value = -(Me.Range("H25").value - Me.Range("G25").value)
+                Me.Range("H" & Target.row).value = -(Me.Range("H25").value - Me.Range("G25").value)
             End If
         End If
         'Obtenir le numéro de compte à partir de la commande VLOOKUP
-        If Me.Range("D" & Target.Row).value <> "" Then
-            Me.Range("K" & Target.Row).value = WorksheetFunction.Vlookup(wshJE.Range("D" & Target.Row).value, wshPlanComptable.Range("$A$3:$B$62"), 2, False)
+        If Me.Range("D" & Target.row).value <> "" Then
+            Me.Range("K" & Target.row).value = WorksheetFunction.Vlookup(wshJE.Range("D" & Target.row).value, wshPlanComptable.Range("$A$3:$B$62"), 2, False)
         Else
-            Me.Range("K" & Target.Row).value = ""
+            Me.Range("K" & Target.row).value = ""
         End If
     End If
     
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
     If Not Intersect(Target, Range("G9:H23")) Is Nothing Then
-        If (Me.Range("G" & Target.Row).value < 0 Or Me.Range("H" & Target.Row).value < 0) Then
+        If (Me.Range("G" & Target.row).value < 0 Or Me.Range("H" & Target.row).value < 0) Then
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
