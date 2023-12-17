@@ -2,7 +2,7 @@
 
 Public Sub Worksheet_Change(ByVal Target As Range)
 
-    'Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address
+    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " B24 = " & Range("B24").value & " B25 = " & Range("B25").value
     
     Application.EnableEvents = False
     
@@ -19,47 +19,48 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     'Services entry
     If Not Intersect(Target, Range("L10:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACFinale.Range("B" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
+        wshFACPrep.Range("M" & Target.row).Select
     End If
   
+    'Hours per service
+    If Not Intersect(Target, Range("M10:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFACPrep.Range("N" & Target.row).value = 300
+        wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
+        wshFACFinale.Range("E68").value = wshFACPrep.Range("O47").value
+        'MAXIMUM of 36 services lines per Invoice
+        If Target.row < 45 Then
+            wshFACPrep.Range("L" & Target.row + 1).Select
+        Else
+            wshFACPrep.Range("O48").Select
+        End If
+    End If
+    
+    'Miscellaneous Amounts
+    If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        'Debug.Print "Frais divers - '" & Target.Address & "'"
+        With wshFACFinale
+            'Final Invoice - Sub-total
+            wshFACFinale.Range("E68").value = wshFACPrep.Range("O47").value
+            'Final Invoice - Misc charges
+            wshFACFinale.Range("E69").value = wshFACPrep.Range("O48").value
+            wshFACFinale.Range("E70").value = wshFACPrep.Range("O49").value
+            wshFACFinale.Range("E71").value = wshFACPrep.Range("O50").value
+        End With
+    End If
+
+    'Deposit Amount
+    If Not Intersect(Target, Range("O53")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        'Debug.Print "Dépôt - '" & Target.Address & "'"
+        With wshFACFinale
+            'Final Invoice - Deposit
+            wshFACFinale.Range("E78").value = wshFACPrep.Range("O53").value
+        End With
+    End If
+
     Application.EnableEvents = True
   
 End Sub
 
-Sub ClientChange(ClientName As String)
-
-    wshFACPrep.Range("B18").value = GetID_FromClientName(ClientName)
-    Debug.Print "Le ID du client est '" & wshFACPrep.Range("B18").value & "'"
-    
-    With wshFACPrep
-        .Range("K3").value = "Monsieur Robert M. Vigneault"
-        .Range("K4").value = ClientName
-        .Range("K5").value = "15 chemin des Mésanges" 'Address 1
-        .Range("K6").value = "Mansonville, QC  J0E 1X0" 'Ville, Province & Code postal
-    End With
-    With wshFACFinale
-        .Range("B21").value = "Le " & wshFACPrep.Range("O3").value
-        .Range("B23").value = wshFACPrep.Range("K3").value 'Contact from wshFACPrep
-        .Range("B24").value = wshFACPrep.Range("K4").value 'Client from wshFACPrep
-        .Range("B25").value = wshFACPrep.Range("K5").value 'Address 1 from wshFACPrep
-        .Range("B26").value = wshFACPrep.Range("K6").value
-    End With
-    
-    TEC_Load
-
-End Sub
-
-Sub DateChange(d As String)
-
-    Dim y As String
-    y = Year(d)
-    y = Right(y, 2)
-    If InStr(1, wshFACPrep.Range("O6").value, "-") = 0 Then
-        wshFACPrep.Range("O6").value = y & "-" & wshFACPrep.Range("O6").value
-        wshFACFinale.Range("E28").value = wshFACPrep.Range("O6").value
-    End If
-    wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
-
-End Sub
 
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Service Entry, but not on Invoice Load or Item Load
@@ -76,16 +77,6 @@ End Sub
 '    'On Hours Change, but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05 - Not Intersect(Target, wshFACPrep.Range('L10:L46')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("L10:L46")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'    If Not Intersect(Target, Range("L10:L46")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-'        If wshFACPrep.Range("L" & Target.Row).value = 0 Then
-'            MsgBox "Vouz devez saisir un nombre d'heures !"
-'            Exit Sub
-'        Else
-'            wshFACPrep.Range("M" & Target.Row).value = wshFACPrep.Range("N5").value
-'            wshFACPrep.Range("N" & Target.Row).value = wshFACPrep.Range("L" & Target.Row).value * wshFACPrep.Range("M" & Target.Row).value
-'            wshFACFinale.Range("E68").value = wshFACPrep.Range("N47").value
-'        End If
-'    End If
 '
 '    'On Frais Change (3 cells), but not on Invoice Load or Item Load - Hourly rate = Header's Hourly Rate
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_05.0 - Not Intersect(Target, wshFACPrep.Range('N48:N50')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "

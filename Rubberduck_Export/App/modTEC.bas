@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.1.3"
+Global Const gAppVersion As String = "v1.1.4"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     

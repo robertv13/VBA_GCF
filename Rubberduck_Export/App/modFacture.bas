@@ -30,6 +30,11 @@ Sub Invoice_New()
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
 End Sub
 
+Sub MiscCharges()
+
+    ActiveWindow.SmallScroll Down:=14
+    
+End Sub
 Sub Invoice_SaveUpdate()
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [Invoice_Macros] - Sub Invoice_SaveUpdate() @ " & Time
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value & "   B20 (Current Inv. Row) = " & wshFACPrep.Range("B20").value
@@ -94,6 +99,45 @@ NoItems:
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '" & Format(wshFACPrep.Range("N6").value, "000000") & "' (avant taxes) est de " & Format(wshFACPrep.Range("N51").value, "### ##0.00 $")
 Fast_Exit_Sub:
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [Invoice_Macros] - Sub Invoice_SaveUpdate()" & vbNewLine
+End Sub
+
+Sub ClientChange(ClientName As String)
+
+    wshFACPrep.Range("B18").value = GetID_FromClientName(ClientName)
+    Debug.Print "Le ID du client est '" & wshFACPrep.Range("B18").value & "'"
+    
+    With wshFACPrep
+        .Range("K3").value = "Monsieur Robert M. Vigneault"
+        .Range("K4").value = ClientName
+        .Range("K5").value = "15 chemin des Mésanges" 'Address 1
+        .Range("K6").value = "Mansonville, QC  J0E 1X0" 'Ville, Province & Code postal
+    End With
+    With wshFACFinale
+        .Range("B21").value = "Le " & wshFACPrep.Range("O3").value
+        .Range("B23").value = wshFACPrep.Range("K3").value 'Contact from wshFACPrep
+        .Range("B24").value = wshFACPrep.Range("K4").value 'Client from wshFACPrep
+        .Range("B25").value = wshFACPrep.Range("K5").value 'Address 1 from wshFACPrep
+        .Range("B26").value = wshFACPrep.Range("K6").value
+    End With
+    
+    TEC_Load
+    
+    wshFACPrep.Range("O3").Select 'Move on to Invoice Date
+
+End Sub
+
+Sub DateChange(d As String)
+
+    If InStr(1, wshFACPrep.Range("O6").value, "-") = 0 Then
+        Dim y As String
+        y = Right(Year(d), 2)
+        wshFACPrep.Range("O6").value = y & "-" & wshFACPrep.Range("O6").value
+        wshFACFinale.Range("E28").value = wshFACPrep.Range("O6").value
+    End If
+    wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
+    
+    wshFACPrep.Range("L10").Select 'Move on to Services Entry
+
 End Sub
 
 Sub TEC_Clear()
