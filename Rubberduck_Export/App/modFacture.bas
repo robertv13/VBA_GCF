@@ -8,9 +8,10 @@ Sub Invoice_New()
         With wshFACPrep
             .Range("B24").value = True
             .Range("K3:L6,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("J10:P46,O48,O49,O50,O53").ClearContents
-            .Range("O6").value = .Range("FACNextInvoiceNUmber").value 'Paste Invoice ID
-            .Range("FACNextInvoiceNUmber").value = .Range("FACNextInvoiceNUmber").value + 1 'Increment Next Invoice ID
+            .Range("J10:P46").ClearContents
+            .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
+            .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
+            Call ClearAndFixTotalsFormulaFACPrep
             .Range("B20").value = ""
             .Range("B24").value = False
             .Range("B26").value = False
@@ -20,32 +21,101 @@ Sub Invoice_New()
             .Range("B21,B23:C26,F28").ClearContents
             .Range("A33:G62, D65, E65").ClearContents
             .Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
-            .Range("F68:F80").value = 0
-            'Fix formulas to calculate amounts & Copy cells from FAC_Préparation
-            .Range("F68").value = "=SUM(R[-35]C:R[-6]C)" 'Fees Sub-Total
-            .Range("C69").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 1 - Description
-            .Range("F69").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 1
-            .Range("C70").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 2 - Description
-            .Range("F70").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 2
-            .Range("C71").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 3 - Description
-            .Range("F71").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 3
-            .Range("F72").value = "=F68+F69+F70+F71" 'Sub-Total
-            .Range("D73").value = "=FAC_Préparation!R[-20]C[9]" 'GST Rate
-            .Range("F73").value = "=FAC_Préparation!R[-20]C[9]" 'GST Amount
-            .Range("D74").value = "=FAC_Préparation!R[-20]C[9]" 'PST Rate
-            .Range("F74").value = "=FAC_Préparation!R[-20]C[9]" 'PST Amount
-            .Range("F76").value = "=F72+F73+F74" 'Total including taxes
-            .Range("F78").value = "=FAC_Préparation!R[-20]C[9]" 'Deposit Amount
-            .Range("F80").value = "=F76-F78" 'Total due on that invoice
-            
+            .Range("B68:F80").ClearContents
+            Call ClearAndFixTotalsFormulaFACFinale
         End With
         Call TEC_Clear
         wshFACPrep.Range("E4:F4").ClearContents
         wshFACPrep.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
-    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
+    If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
 End Sub
 
+Sub ClearAndFixTotalsFormulaFACPrep()
+
+    Application.EnableEvents = False
+    
+    With wshFACPrep
+        .Range("J46:P59").ClearContents
+        
+        Call SetLabels(.Range("K47"), "FAC_Label_SubTotal_1")
+        Call SetLabels(.Range("K51"), "FAC_Label_SubTotal_2")
+        Call SetLabels(.Range("K52"), "FAC_Label_TPS")
+        Call SetLabels(.Range("K53"), "FAC_Label_TVQ")
+        Call SetLabels(.Range("K55"), "FAC_Label_GrandTotal")
+        Call SetLabels(.Range("K57"), "FAC_Label_Deposit")
+        Call SetLabels(.Range("K59"), "FAC_Label_AmountDue")
+        
+        .Range("O47").Formula = "=SUM(O11:O45)" 'Fees sub-total
+        .Range("O47").Font.Bold = True
+        
+        .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value 'Misc. # 1 - Descr.
+        .Range("O48").value = "" 'Misc. # 1 - Amount
+        .Range("M49").value = wshAdmin.Range("FAC_Label_Frais_2").value 'Misc. # 2 - Descr.
+        .Range("O49").value = "" 'Misc. # 2 - Amount
+        .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value 'Misc. # 3 - Descr.
+        .Range("O50").value = "" 'Misc. # 3 - Amount
+        
+        .Range("O51").Formula = "=sum(O47:O50)" 'Sub-total
+        .Range("O51").Font.Bold = True
+        
+        .Range("N52").value = wshFACPrep.Range("B29").value 'GST Rate
+        .Range("N52").NumberFormat = "0.00%"
+        .Range("O52").Formula = "=round(o51*n52,2)" 'GST Amnt
+        .Range("N53").value = wshFACPrep.Range("B30").value 'PST Rate
+        .Range("N53").NumberFormat = "0.000%"
+        .Range("O53").Formula = "=round(o51*n53,2)" 'GST Amnt
+        .Range("O55").Formula = "=sum(o51:o54)" 'Grand Total"
+        .Range("O57").value = "" 'Deposit Amount
+        .Range("O59").Formula = "=O55-O57" 'Deposit Amount
+        
+    End With
+    
+    Application.EnableEvents = True
+
+End Sub
+
+Sub ClearAndFixTotalsFormulaFACFinale()
+
+    Application.EnableEvents = False
+    
+    With wshFACFinale
+        Call SetLabels(.Range("B68"), "FAC_Label_SubTotal_1")
+        Call SetLabels(.Range("B72"), "FAC_Label_SubTotal_2")
+        Call SetLabels(.Range("B73"), "FAC_Label_TPS")
+        Call SetLabels(.Range("B74"), "FAC_Label_TVQ")
+        Call SetLabels(.Range("B76"), "FAC_Label_GrandTotal")
+        Call SetLabels(.Range("B78"), "FAC_Label_Deposit")
+        Call SetLabels(.Range("B80"), "FAC_Label_AmountDue")
+
+        'Fix formulas to calculate amounts & Copy cells from FAC_Préparation
+        .Range("F68").Formula = "=SUM(F33:F62)" 'Fees Sub-Total
+        .Range("C69").Formula = "='" & wshFACPrep.Name & "'!M48" 'Misc. Amount # 1 - Description
+        .Range("F69").Formula = "='" & wshFACPrep.Name & "'!O48" 'Misc. Amount # 1
+        .Range("C70").Formula = "='" & wshFACPrep.Name & "'!M49" 'Misc. Amount # 2 - Description
+        .Range("F70").Formula = "='" & wshFACPrep.Name & "'!O49" 'Misc. Amount # 2
+        .Range("C71").Formula = "='" & wshFACPrep.Name & "'!M50" 'Misc. Amount # 3 - Description
+        .Range("F71").Formula = "='" & wshFACPrep.Name & "'!O50" 'Misc. Amount # 3
+        .Range("F72").Formula = "=F68+F69+F70+F71" 'Sub-Total
+        .Range("D73").Formula = "='" & wshFACPrep.Name & "'!N52" 'GST Rate
+        .Range("F73").Formula = "='" & wshFACPrep.Name & "'!O52" 'GST Amount
+        .Range("D74").Formula = "='" & wshFACPrep.Name & "'!N53" 'PST Rate
+        .Range("F74").Formula = "='" & wshFACPrep.Name & "'!O53" 'PST Amount
+        .Range("F76").Formula = "=F72+F73+F74" 'Total including taxes
+        .Range("F78").Formula = "='" & wshFACPrep.Name & "'!O57" 'Deposit Amount
+        .Range("F80").Formula = "=F76-F78" 'Total due on that invoice
+    End With
+    
+    Application.EnableEvents = True
+    
+End Sub
+
+Sub SetLabels(r As Range, l As String)
+
+    r.value = wshAdmin.Range(l).value
+    If wshAdmin.Range(l & "_Bold").value = "OUI" Then r.Font.Bold = True
+
+End Sub
 Sub MiscCharges()
 
     ActiveWindow.SmallScroll Down:=14
@@ -96,14 +166,14 @@ Sub Invoice_SaveUpdate()
         LastItemRow = .Range("L46").End(xlUp).row
         If LastItemRow < 10 Then GoTo NoItems
         For InvItemRow = 10 To LastItemRow
-            If .Range("P" & InvItemRow).value = "" Then
+            If .Range("Q" & InvItemRow).value = "" Then
                 ItemDBRow = wshFACInvItems.Range("A99999").End(xlUp).row + 1
-                .Range("P" & InvItemRow).value = ItemDBRow 'Set Item DB Row
+                .Range("Q" & InvItemRow).value = ItemDBRow 'Set Item DB Row
                 wshFACInvItems.Range("A" & ItemDBRow).value = .Range("O6").value 'Invoice #
                 wshFACInvItems.Range("F" & ItemDBRow).value = InvItemRow 'Set Invoice Row
                 wshFACInvItems.Range("G" & ItemDBRow).value = "=Row()"
             Else 'Existing Item
-                ItemDBRow = .Range("P" & InvItemRow).value  'Invoice Item Row
+                ItemDBRow = .Range("Q" & InvItemRow).value  'Invoice Item Row
             End If
             'Paste 4 columns with one instruction - Columns B, C, D & E
             wshFACInvItems.Range("B" & ItemDBRow & ":E" & ItemDBRow).value = .Range("L" & InvItemRow & ":O" & InvItemRow).value 'Save Invoice Item Details
@@ -156,11 +226,17 @@ Sub DateChange(d As String)
         Dim y As String
         y = Right(Year(d), 2)
         wshFACPrep.Range("O6").value = y & "-" & wshFACPrep.Range("O6").value
-        wshFACFinale.Range("E28").value = wshFACPrep.Range("O6").value
+        wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value
     End If
     wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
     
     wshFACPrep.Range("L10").Select 'Move on to Services Entry
+    
+    'Must Get GST & PST rates and store them in wshFACPrep 'B' column
+    Dim DateTaxRates As Date
+    DateTaxRates = d
+    wshFACPrep.Range("B29").value = GetTaxRate(DateTaxRates, "F")
+    wshFACPrep.Range("B30").value = GetTaxRate(DateTaxRates, "P")
 
 End Sub
 
@@ -250,7 +326,7 @@ Sub CopyFromFilteredEntriesToFACPrep()
     End With
 End Sub
 
-Sub Invoice_Load() 'Retrieve an existing invoice
+Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-19 @ 11:10
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_Load() @ " & Time
     With wshFACPrep
         If .Range("B20").value = Empty Then
@@ -281,7 +357,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice
             For ResultRow = 3 To lastResultRow
                 InvItemRow = .Range("O" & ResultRow).value
                 wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
-                wshFACPrep.Range("P" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
+                wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
             Next ResultRow
         End With
         'Proceed with trailer data (Misc. charges & Taxes)
@@ -492,24 +568,18 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Next_Invoice()" & vbNewLine
 End Sub
 
-Sub Cacher_Heures() 'TO-DO-RMV 2023-12-17
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - Sub Cacher_Heures() @ " & Time
-    wshFACFinale.Range("C64:D65").Select
-    With Selection.Font
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = 0
+Sub Cacher_Heures()
+    With wshFACFinale.Range("D64:E65")
+        .Font.ThemeColor = xlThemeColorDark1
+        .Font.TintAndShade = 0
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Cacher_Heures()" & vbNewLine
 End Sub
 
-Sub Montrer_Heures() 'TO-DO-RMV 2023-12-17
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Montrer_Heures() @ " & Time
-    wshFACFinale.Range("C64:D65").Select
-    With Selection.Font
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
+Sub Montrer_Heures()
+    With wshFACFinale.Range("D64:E65")
+        .Font.ThemeColor = xlThemeColorLight1
+        .Font.TintAndShade = 0
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Montrer_Heures()" & vbNewLine
 End Sub
 
 Sub Goto_Onglet_Preparation_Facture()

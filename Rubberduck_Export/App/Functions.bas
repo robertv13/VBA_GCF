@@ -70,4 +70,18 @@ Public Function IsDataValid() As Boolean
 
 End Function
 
+Public Function GetTaxRate(d As Date, taxType As String) As Double
 
+    Dim row As Integer
+    With wshAdmin
+    For row = 18 To 11 Step -1
+        If .Range("L" & row).value = taxType Then
+            If d >= .Range("M" & row).value Then
+                GetTaxRate = .Range("N" & row).value
+                Exit For
+            End If
+        End If
+    Next row
+    End With
+    
+End Function

@@ -40,7 +40,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         Else
             wshFACPrep.Range("O48").Select
         End If
-    End If
+      End If
     
     'Miscellaneous Amounts
     If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
