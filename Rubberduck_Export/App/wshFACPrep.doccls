@@ -24,17 +24,17 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     'Services entry
-    If Not Intersect(Target, Range("L10:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-        wshFACFinale.Range("B" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
+    If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFACFinale.Range("C" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
         wshFACPrep.Range("M" & Target.row).Select
     End If
   
     'Hours per service
-    If Not Intersect(Target, Range("M10:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+    If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACPrep.Range("N" & Target.row).value = 300
         wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
-        wshFACFinale.Range("E68").value = wshFACPrep.Range("O47").value
-        'MAXIMUM of 36 services lines per Invoice
+        wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
+        'MAXIMUM of 35 services lines per Invoice
         If Target.row < 45 Then
             wshFACPrep.Range("L" & Target.row + 1).Select
         Else
@@ -47,19 +47,19 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         'Debug.Print "Frais divers - '" & Target.Address & "'"
         With wshFACFinale
             'Final Invoice - Sub-total
-            wshFACFinale.Range("E68").value = wshFACPrep.Range("O47").value
+            wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
             'Final Invoice - Misc charges AND move on to next field
             If Target.row = 48 Then
-                wshFACFinale.Range("E69").value = wshFACPrep.Range("O48").value
+                wshFACFinale.Range("F69").value = wshFACPrep.Range("O48").value
                 wshFACPrep.Range("O49").Select
             End If
             If Target.row = 49 Then
-                wshFACFinale.Range("E70").value = wshFACPrep.Range("O49").value
+                wshFACFinale.Range("F70").value = wshFACPrep.Range("O49").value
                 wshFACPrep.Range("O50").Select
             End If
             If Target.row = 50 Then
-                wshFACFinale.Range("E71").value = wshFACPrep.Range("O50").value
-                wshFACPrep.Range("O53").Select
+                wshFACFinale.Range("F71").value = wshFACPrep.Range("O50").value
+                wshFACPrep.Range("O57").Select
             End If
         End With
     End If

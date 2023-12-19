@@ -122,7 +122,7 @@ Sub MiscCharges()
     wshFACPrep.Range("O48").Select 'Misc Amount 1
     
 End Sub
-Sub Invoice_SaveUpdate()
+Sub Invoice_SaveUpdate() '2023-12-19 @ 16:38
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_SaveUpdate() @ " & Time
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value
     With wshFACPrep
@@ -151,21 +151,32 @@ Sub Invoice_SaveUpdate()
         If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").value & "   B21 (Next Invoice #) = " & .Range("B21").value
         'Load data into wshFACInvList (Invoice Header)
         If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & wshFACPrep.Range("O6").value & " et Current Inv. Row = " & InvRow & " - pour posting dans InvoiceListing"
-        'wshFACPrep
-        For InvCol = 2 To 5
-            wshFACInvList.Cells(InvRow, InvCol).value = .Range(wshFACInvList.Cells(1, InvCol).value).value 'Save data into Invoice List
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from wshFACPrep.Cell  = " & wshFACInvList.Cells(1, InvCol).value & "   et la valeur = " & .Range(wshFACInvList.Cells(1, InvCol).value).value
-        Next InvCol
-        'wshFACPrep
-        For InvCol = 6 To 13
-            wshFACInvList.Cells(InvRow, InvCol).value = wshFACFinale.Range(wshFACInvList.Cells(1, InvCol).value).value 'Save data into Invoice List
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "InvListCol = " & InvCol & "   from wshFACPrep.Cell  = " & wshFACInvList.Cells(1, InvCol).value & "   et la valeur = " & wshFACFinale.Range(wshFACInvList.Cells(1, InvCol).value).value
-        Next InvCol
+        
+        wshFACInvList.Range("B" & InvRow).value = .Range("O3").value 'Date
+        wshFACInvList.Range("C" & InvRow).value = .Range("B18").value 'Client_ID
+        wshFACInvList.Range("D" & InvRow).value = .Range("K3").value 'Care of
+        wshFACInvList.Range("E" & InvRow).value = .Range("K4").value 'Client Name
+        wshFACInvList.Range("F" & InvRow).value = .Range("K5").value 'Client Address
+        wshFACInvList.Range("G" & InvRow).value = .Range("K6").value 'City, Prov & Postal Code
+
+        wshFACInvList.Range("H" & InvRow).value = wshFACFinale.Range("F68").value 'Fees sub-total
+        wshFACInvList.Range("I" & InvRow).value = wshFACFinale.Range("C69").value 'Misc. # 1 - Desc
+        wshFACInvList.Range("J" & InvRow).value = wshFACFinale.Range("F69").value 'Misc. # 1
+        wshFACInvList.Range("K" & InvRow).value = wshFACFinale.Range("C70").value 'Misc. # 2 - Desc
+        wshFACInvList.Range("L" & InvRow).value = wshFACFinale.Range("F70").value 'Misc. # 2
+        wshFACInvList.Range("M" & InvRow).value = wshFACFinale.Range("C71").value 'Misc. # 3 - Desc
+        wshFACInvList.Range("N" & InvRow).value = wshFACFinale.Range("F71").value 'Misc. # 3
+        
+        wshFACInvList.Range("O" & InvRow).value = wshFACFinale.Range("D73").value 'GST Rate
+        wshFACInvList.Range("P" & InvRow).value = wshFACFinale.Range("F73").value 'GST        wshFACInvList.Range("Q" & InvRow).value = wshFACFinale.Range("D74").value 'PST Rate
+        wshFACInvList.Range("R" & InvRow).value = wshFACFinale.Range("F74").value 'GST
+        wshFACInvList.Range("S" & InvRow).value = wshFACFinale.Range("F76").value 'Grand Total
+        wshFACInvList.Range("T" & InvRow).value = wshFACFinale.Range("F78").value 'Deposit received
         
         'Load data into wshInvItems (Save/Update Invoice Items) - Columns A, F & G - TO-DO_RMV - 2023-12-17 @ 15:38 - Duplicate entries !!!
         LastItemRow = .Range("L46").End(xlUp).row
-        If LastItemRow < 10 Then GoTo NoItems
-        For InvItemRow = 10 To LastItemRow
+        If LastItemRow < 11 Then GoTo NoItems
+        For InvItemRow = 11 To LastItemRow
             If .Range("Q" & InvItemRow).value = "" Then
                 ItemDBRow = wshFACInvItems.Range("A99999").End(xlUp).row + 1
                 .Range("Q" & InvItemRow).value = ItemDBRow 'Set Item DB Row
@@ -177,8 +188,6 @@ Sub Invoice_SaveUpdate()
             End If
             'Paste 4 columns with one instruction - Columns B, C, D & E
             wshFACInvItems.Range("B" & ItemDBRow & ":E" & ItemDBRow).value = .Range("L" & InvItemRow & ":O" & InvItemRow).value 'Save Invoice Item Details
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "Détail (InvItems) - B" & ItemDBRow & " = " & wshFACInvItems.Range("B" & ItemDBRow).value
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); "  C" & ItemDBRow & " = " & wshFACInvItems.Range("C" & ItemDBRow).value & "   D" & ItemDBRow & " = " & wshFACInvItems.Range("D" & ItemDBRow).value & "   E" & ItemDBRow & " = " & wshFACInvItems.Range("E" & ItemDBRow).value
         Next InvItemRow
 NoItems:
         MsgBox "La facture '" & .Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
@@ -191,7 +200,7 @@ Fast_Exit_Sub:
     Dim myShape As Shape
     Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
-    myShape.OLEFormat.Object.Enabled = False
+    'myShape.OLEFormat.Object.Enabled = False
     
 End Sub
 
@@ -230,14 +239,14 @@ Sub DateChange(d As String)
     End If
     wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
     
-    wshFACPrep.Range("L10").Select 'Move on to Services Entry
-    
     'Must Get GST & PST rates and store them in wshFACPrep 'B' column
     Dim DateTaxRates As Date
     DateTaxRates = d
     wshFACPrep.Range("B29").value = GetTaxRate(DateTaxRates, "F")
     wshFACPrep.Range("B30").value = GetTaxRate(DateTaxRates, "P")
-
+        
+    wshFACPrep.Range("L11").Select 'Move on to Services Entry
+    
 End Sub
 
 Sub TEC_Clear()
@@ -480,7 +489,7 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
 
         Dim source_file As String
         source_file = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
-                      NoFactFormate & ".pdf" '2023-12-19 @ 07:22
+                      NoFacture & ".pdf" '2023-12-19 @ 07:22
         
         With myMail
             .To = "robertv13@hotmail.com"
