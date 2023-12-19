@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFacture"
 Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
-Dim lastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
+Dim lastRow As Long, LastItemRow As Long, lastResultRow As Long, ResultRow As Long
 
 Sub Invoice_New()
     If wshFACPrep.Range("B27").value = False Then
@@ -17,11 +17,27 @@ Sub Invoice_New()
             .Range("B27").value = True 'Set the value to TRUE
         End With
         With wshFACFinale
-            .Range("B21,B24:B26").ClearContents
-            .Range("A33:F63").ClearContents
-            .Range("C65,D65").ClearContents
-            .Range("E69:E71,E78").value = 0
-            .Range("E28").value = wshFACPrep.Range("O6").value
+            .Range("B21,B23:C26,F28").ClearContents
+            .Range("A33:G62, D65, E65").ClearContents
+            .Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
+            .Range("F68:F80").value = 0
+            'Fix formulas to calculate amounts & Copy cells from FAC_Préparation
+            .Range("F68").value = "=SUM(R[-35]C:R[-6]C)" 'Fees Sub-Total
+            .Range("C69").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 1 - Description
+            .Range("F69").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 1
+            .Range("C70").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 2 - Description
+            .Range("F70").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 2
+            .Range("C71").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 3 - Description
+            .Range("F71").value = "=FAC_Préparation!R[-21]C[10]" 'Misc. Amount # 3
+            .Range("F72").value = "=F68+F69+F70+F71" 'Sub-Total
+            .Range("D73").value = "=FAC_Préparation!R[-20]C[9]" 'GST Rate
+            .Range("F73").value = "=FAC_Préparation!R[-20]C[9]" 'GST Amount
+            .Range("D74").value = "=FAC_Préparation!R[-20]C[9]" 'PST Rate
+            .Range("F74").value = "=FAC_Préparation!R[-20]C[9]" 'PST Amount
+            .Range("F76").value = "=F72+F73+F74" 'Total including taxes
+            .Range("F78").value = "=FAC_Préparation!R[-20]C[9]" 'Deposit Amount
+            .Range("F80").value = "=F76-F78" 'Total due on that invoice
+            
         End With
         Call TEC_Clear
         wshFACPrep.Range("E4:F4").ClearContents
@@ -101,6 +117,12 @@ NoItems:
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '"; wshFACPrep.Range("O6") & "' (avant taxes) est de " & Format(wshFACPrep.Range("O51").value, "### ##0.00 $")
 Fast_Exit_Sub:
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Invoice_SaveUpdate()" & vbNewLine
+    
+    Dim myShape As Shape
+    Set myShape = ActiveSheet.Shapes("Rectangle 18")
+    'Deactivate the shape
+    myShape.OLEFormat.Object.Enabled = False
+    
 End Sub
 
 Sub ClientChange(ClientName As String)
@@ -170,7 +192,7 @@ Sub TECByClient_FilterAndSort(id As Long)
     TEC_Import '2023-12-15 @ 17:02
     
     With wshBaseHours
-        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
+        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
         lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
         If lastRow < 2 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
@@ -181,12 +203,12 @@ Sub TECByClient_FilterAndSort(id As Long)
             CriteriaRange:=.Range("T2:W3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
-        LastResultRow = .Range("Y999999").End(xlUp).row
-        If LastResultRow < 3 Then
+        lastResultRow = .Range("Y999999").End(xlUp).row
+        If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
         End If
-        If LastResultRow < 4 Then GoTo NoSort
+        If lastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
@@ -197,7 +219,7 @@ Sub TECByClient_FilterAndSort(id As Long)
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("Y3:AL" & LastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -228,44 +250,51 @@ Sub CopyFromFilteredEntriesToFACPrep()
     End With
 End Sub
 
-Sub Invoice_Load()
+Sub Invoice_Load() 'Retrieve an existing invoice
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_Load() @ " & Time
     With wshFACPrep
         If .Range("B20").value = Empty Then
-            MsgBox "Veuillez saisir un numéro de facture"
+            MsgBox "Veuillez saisir un numéro de facture pour votre recherche"
             Exit Sub
         End If
         .Range("B24").value = True 'Set Invoice Load to true
-        .Range("Q2,J4:J6,N3:N4,M6:N6,I10:M35,O10:O35").ClearContents
+        .Range("R2,K4:L6,N3,L10:O35").ClearContents
         InvRow = .Range("B20").value
        
-        'Assign values from InvList to Invoice worksheet
-        For InvCol = 2 To 11 'RMV - 2023-10-01
-            If wshFACPrep.Range("B28").value And InvCol <> 3 Then Debug.Print "InvRow = " & InvRow & "   InvCol = " & InvCol & " - " & .Range(wshFACInvList.Cells(1, InvCol).value) & " <-- " & wshFACInvList.Cells(InvRow, InvCol).value
-            If InvCol <> 3 Then .Range(wshFACInvList.Cells(1, InvCol).value).value = wshFACInvList.Cells(InvRow, InvCol).value 'Load Invoice List Data
-        Next InvCol
+        'Get values from wshFACInvList (header) and enter them in the wshFACPrep - 2023-12-19 @ 08:29
+        .Range("O3").value = wshFACInvList.Range("B" & InvRow).value
+        .Range("K3").value = wshFACInvList.Range("D" & InvRow).value
+        .Range("K4").value = wshFACInvList.Range("E" & InvRow).value
+        .Range("K5").value = wshFACInvList.Range("F" & InvRow).value
+        .Range("K6").value = wshFACInvList.Range("G" & InvRow).value
         'Load Invoice Items
-        With InvItems
-            lastRow = .Range("A9999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub
-            If wshFACPrep.Range("B28").value Then Debug.Print "LastRow = " & lastRow & "   Copie de '" & "A3:G" & lastRow & "   Critère: " & .Range("L3").value
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L2:L3"), CopyToRange:=.Range("N2:S2"), Unique:=True
-            LastResultRow = .Range("V9999").End(xlUp).row
-            If wshFACPrep.Range("B28").value Then Debug.Print "Based on column 'V' (InvItems), LastResultRow = " & LastResultRow
-            If LastResultRow < 3 Then GoTo NoItems
-            For ResultRow = 3 To LastResultRow
-                InvItemRow = .Range("R" & ResultRow).value 'Set Invoice Row
-                If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); "Invoice Item Row (InvItemRow) = " & InvItemRow & _
-                    "   wshFACPrep.Range('K'" & InvItemRow & ")=" & wshFACPrep.Range("K" & InvItemRow).value & " devient " & "wshFACInvItems.Range('N'" & ResultRow & ") = " & .Range("N" & ResultRow).value & _
-                    "   wshFACPrep.Range('L'" & InvItemRow & ")=" & wshFACPrep.Range("L" & InvItemRow).value & " devient " & "wshFACInvItems.Range('O'" & ResultRow & ") = " & .Range("O" & ResultRow).value & _
-                    "   wshFACPrep.Range('M'" & InvItemRow & ")=" & wshFACPrep.Range("M" & InvItemRow).value & " devient " & "wshFACInvItems.Range('P'" & ResultRow & ") = " & .Range("P" & ResultRow).value & _
-                wshFACPrep.Range("K" & InvItemRow & ":M" & InvItemRow).value = .Range("N" & ResultRow & ":P" & ResultRow).value 'Item details
-                If wshFACPrep.Range("B28").value Then Debug.Print Tab(30); "wshFACPrep.Range('O'" & InvItemRow & ")=" & wshFACPrep.Range("O" & InvItemRow).value & " devient " & "wshFACInvItems.Range('S'" & ResultRow & ") = " & .Range("S" & ResultRow).value
-                wshFACPrep.Range("O" & InvItemRow).value = .Range("S" & ResultRow).value  'Set Item DB Row
+        With wshFACInvItems
+            Dim lastRow As Long, lastResultRow As Long
+            lastRow = .Range("A999999").End(xlUp).row
+            If lastRow < 4 Then Exit Sub 'No Item Lines
+            If wshFACPrep.Range("B28").value Then Debug.Print "Invoice Items - LastRow = " & lastRow & " from Range '" & "A3:G" & lastRow & "', Critère = " & .Range("L3").value
+            'Advanced Filter to get items specific to ONE invoice
+            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+            lastResultRow = .Range("O999").End(xlUp).row
+            If wshFACPrep.Range("B28").value Then Debug.Print "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
+            If lastResultRow < 3 Then GoTo NoItems
+            For ResultRow = 3 To lastResultRow
+                InvItemRow = .Range("O" & ResultRow).value
+                wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
+                wshFACPrep.Range("P" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
             Next ResultRow
-NoItems:
         End With
-        .Range("B24").value = False 'Set Invoice Load To false
+        'Proceed with trailer data (Misc. charges & Taxes)
+        .Range("M48").value = wshFACInvList.Range("I" & InvRow).value
+        .Range("O48").value = wshFACInvList.Range("J" & InvRow).value
+        .Range("M49").value = wshFACInvList.Range("K" & InvRow).value
+        .Range("O49").value = wshFACInvList.Range("L" & InvRow).value
+        .Range("M50").value = wshFACInvList.Range("M" & InvRow).value
+        .Range("O50").value = wshFACInvList.Range("N" & InvRow).value
+        .Range("O53").value = wshFACInvList.Range("R" & InvRow).value
+        
+NoItems:
+    .Range("B24").value = False 'Set Invoice Load To false
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Invoice_Load()" & vbNewLine
 End Sub
@@ -281,8 +310,8 @@ Sub Invoice_Delete()
             lastRow = .Range("A99999").End(xlUp).row
             If lastRow < 4 Then Exit Sub
             .Range("A3:J" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
-            LastResultRow = .Range("V99999").End(xlUp).row
-            If LastResultRow < 3 Then GoTo NoItems
+            lastResultRow = .Range("V99999").End(xlUp).row
+            If lastResultRow < 3 Then GoTo NoItems
     '        If LastResultRow < 4 Then GoTo SkipSort
     '        'Sort Rows Descending
     '         With .Sort
@@ -292,7 +321,7 @@ Sub Invoice_Delete()
     '         .Apply 'Apply Sort
     '         End With
 SkipSort:
-            For ResultRow = 3 To LastResultRow
+            For ResultRow = 3 To lastResultRow
                 ItemDBRow = .Range("V" & ResultRow).value 'Set Invoice Database Row
                 .Range("A" & ItemDBRow & ":J" & ItemDBRow).ClearContents 'Clear Fields (deleting creates issues with results
             Next ResultRow
@@ -300,13 +329,13 @@ SkipSort:
             With .Sort
                 .SortFields.Clear
                 .SortFields.Add Key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
-                .SetRange wshFACInvItems.Range("A4:J" & LastResultRow) 'Set Range
+                .SetRange wshFACInvItems.Range("A4:J" & lastResultRow) 'Set Range
                 .Apply 'Apply Sort
             End With
         End With
 NoItems:
 NotSaved:
-    Invoice_New 'Add New Invoice
+    Call Invoice_New 'Add New Invoice
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Invoice_Delete()" & vbNewLine
 End Sub
@@ -334,14 +363,14 @@ End Sub
 Function Create_PDF_Email_Function(NoFacture As String, Optional action As String = "SaveOnly") As Boolean
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Function Create_PDF_Email_Function" & _
         "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
-    Dim NoFactFormate As String, PathName As String, SaveAs As String
+    Dim SaveAs As String
 
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    NoFactFormate = Format(NoFacture, "000000")
-    PathName = ActiveWorkbook.Path & "\" & "Factures_PDF"
-    SaveAs = PathName & "\" & NoFactFormate & ".pdf"
+    'NoFactFormate = Format(NoFacture, "000000")
+    SaveAs = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
+                     NoFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Set Print Quality
     On Error Resume Next
@@ -363,7 +392,7 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
         IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:=True
     On Error GoTo 0
     
-    'Construct & Displat the Email, allowing the user to modify the Email
+    'Construct & Display the Email, allowing the user to modify the Email
     If action = "CreateEmail" Then
         On Error GoTo SaveOnly
         
@@ -374,7 +403,8 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
         Set myMail = outlookApp.CreateItem(olMailItem)
 
         Dim source_file As String
-        source_file = "C:\VBA\GC_FISCALITÉ\Factures_PDF\" & NoFactFormate & ".pdf"
+        source_file = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
+                      NoFactFormate & ".pdf" '2023-12-19 @ 07:22
         
         With myMail
             .To = "robertv13@hotmail.com"

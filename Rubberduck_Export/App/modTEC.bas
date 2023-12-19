@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.1.6"
+Global Const gAppVersion As String = "v1.1.8"
 
 Sub ImportClientList()                                          '---------------- 2023-11-12 @ 07:28
     
@@ -23,7 +23,7 @@ Sub ImportClientList()                                          '---------------
 
     'Import Clients List from 'GCF_Clients.xlsx. In order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2023-12-15 @ 07:23
     sourceWorksheet = "Clients"
     
@@ -72,7 +72,8 @@ Sub TEC_Import()
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String
-    sourceWorkbook = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & "GCF_BD_Sortie.xlsx" '2023-12-15 @ 19:15
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2023-12-19 @ 07:21
 
     'Set up source and destination ranges
     Dim sourceRange As Range
@@ -115,7 +116,7 @@ Sub TEC_FilterAndSort()
     TEC_Import '2023-12-15 @ 17:02
     
     With wshBaseHours
-        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
+        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
         lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
         If lastRow < 2 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
@@ -126,12 +127,12 @@ Sub TEC_FilterAndSort()
             CriteriaRange:=.Range("R2:W3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
-        LastResultRow = .Range("Y999999").End(xlUp).row
-        If LastResultRow < 3 Then
+        lastResultRow = .Range("Y999999").End(xlUp).row
+        If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
         End If
-        If LastResultRow < 4 Then GoTo NoSort
+        If lastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
 '            .SortFields.Add Key:=wshBaseHours.Range("Z3"), _
@@ -142,7 +143,7 @@ Sub TEC_FilterAndSort()
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("W3:AJ" & LastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("W3:AJ" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -306,7 +307,7 @@ Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     
     'Debug.Print "Dans AddOrUpdateTECRecordToDB, r vaut " & r
     
-    FullFileName = wshAdmin.Range("SharedFolder").value & Application.PathSeparator & _
+    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
     SheetName = "TEC"
     

@@ -73,32 +73,25 @@ Public Sub Worksheet_Change(ByVal Target As Range)
             ActiveWindow.SmallScroll Up:=18
         End With
     End If
+    
+    If Not Intersect(Target, Range("R2")) Is Nothing And Range("R2").value <> Empty Then
+        If Range("B22").value = Empty Then
+            MsgBox "Veuillez saisir un numéro de facture valide pour rechercher"
+            Exit Sub
+        End If
+        Range("O6").value = Range("R2").value 'Set Invoice #
+        Range("R2").ClearContents
+        Call Invoice_Load 'Load Invoice
+    End If
 
     Application.EnableEvents = True
   
 End Sub
 
-
-
 'Public Sub Worksheet_Change(ByVal Target As Range)
-'    'On Service Entry, but not on Invoice Load or Item Load
-'
-'    'On Rate Entry, but not on Invoice Load or Item Load
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_04 - Not Intersect(Target, Range('N5')) Is Nothing And wshFACPrep.Range('B24').Value = False And wshFACPrep.Range('B25').Value = False = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, wshFACPrep.Range("N5")) Is Nothing And wshFACPrep.Range("B24").value = False And wshFACPrep.Range("B25").value = False
-'
 '    'On Invoice Search Change
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
-'    If Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty Then
-'        If Range("B22").value = Empty Then
-'            MsgBox "Veuillez saisir un numéro de facture valide"
-'            Exit Sub
-'        End If
-'        Range("N3").value = Range("Q2").value 'Set Invoice #
-'        Range("Q2").ClearContents
-'        Invoice_Load 'Load Invoice
-'    End If
 '
 '    'On Change of Billing Service Item, but not on Billing Item Load
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "

@@ -1,8 +1,6 @@
 Attribute VB_Name = "modAdmin"
 Option Explicit
 
-Dim PicFolder As FileDialog
-
 Sub BrowseForMainSharedFolder()
     Dim SharedFolder As FileDialog
     Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
@@ -19,13 +17,14 @@ NotSelected:
     End With
 End Sub
 
-Sub BrowseForEmployeePicFolder()
-    Set PicFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    With PicFolder
-        .Title = "Browse Product Picture Folder"
+Sub BrowseForFacturesPDFFolder()
+    Dim PDFFolder As FileDialog
+    Set PDFFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    With PDFFolder
+        .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show <> -1 Then GoTo NoSelection
-        wshAdmin.Range("C4").value = .SelectedItems(1)
+        wshAdmin.Range("F4").value = .SelectedItems(1)
     End With
 NoSelection:
 End Sub

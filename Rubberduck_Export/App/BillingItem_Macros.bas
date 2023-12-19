@@ -1,6 +1,6 @@
 Attribute VB_Name = "BillingItem_Macros"
 Option Explicit
-Dim EntryRow As Long, EntryCol As Long, lastRow As Long, LastResultRow As Long, SelRow As Long, InvRow As Long
+Dim EntryRow As Long, EntryCol As Long, lastRow As Long, lastResultRow As Long, SelRow As Long, InvRow As Long
 Const BillingRate As Long = 350
 Dim ServItem As String
 
@@ -31,9 +31,9 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
             End If
         Next LineFrom_Copy
         '.Range("A3:M" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("Q2:R3"), CopyToRange:=.Range("U2:AA2"), Unique:=True
-        LastResultRow = .Range("U99999").End(xlUp).row
-        If LastResultRow < 3 Then Exit Sub
-        wshFACPrep.Range("C12:I" & LastResultRow + 9).value = .Range("U3:AA" & LastResultRow).value 'Bring Over Billing Item Results
+        lastResultRow = .Range("U99999").End(xlUp).row
+        If lastResultRow < 3 Then Exit Sub
+        wshFACPrep.Range("C12:I" & lastResultRow + 9).value = .Range("U3:AA" & lastResultRow).value 'Bring Over Billing Item Results
         On Error Resume Next
         wshFACPrep.Range("B17").value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").value, , xlFormulas, xlWhole).row 'Set Selected Row (if applicable)
         On Error GoTo 0

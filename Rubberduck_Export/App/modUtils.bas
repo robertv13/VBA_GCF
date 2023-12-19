@@ -81,7 +81,8 @@ Sub GetAllRecordsFromAClosedWorkbook()
     Dim targetCol As Long
 
     'Set the source workbook (change the path as needed)
-    Set sourceWorkbook = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+    Set sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                        "GCF_BD_Entrée.xlsx" '2023-12-19 @ 07:21
 
     'Set the output sheet
     Set outputSheet = ThisWorkbook.Sheets.Add
