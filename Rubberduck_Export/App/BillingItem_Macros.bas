@@ -1,8 +1,8 @@
 Attribute VB_Name = "BillingItem_Macros"
 Option Explicit
+
 Dim EntryRow As Long, EntryCol As Long, lastRow As Long, lastResultRow As Long, SelRow As Long, InvRow As Long
-Const BillingRate As Long = 350
-Dim ServItem As String
+Dim InvListRow As Long
 
 Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ " & Time

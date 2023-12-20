@@ -3,7 +3,7 @@ Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
 Dim lastRow As Long, LastItemRow As Long, lastResultRow As Long, ResultRow As Long
 
-Sub Invoice_New()
+Sub Invoice_New() 'Clear contents
     If wshFACPrep.Range("B27").value = False Then
         With wshFACPrep
             .Range("B24").value = True
@@ -11,8 +11,8 @@ Sub Invoice_New()
             .Range("J10:Q46").ClearContents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
-            Call TEC_Clear
             
+            Call TEC_Clear
             Call ClearAndFixTotalsFormulaFACPrep
             
             .Range("B20").value = ""
@@ -34,6 +34,69 @@ Sub Invoice_New()
         wshFACPrep.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
+End Sub
+
+Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-20 @ 16:59
+    If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "[modFacture] - Now entering Sub Invoice_Load() @ " & Time
+    With wshFACPrep
+        If wshFACPrep.Range("B20").value = Empty Then
+            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+            Exit Sub
+        End If
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Loading info from InvList with row # = " & .Range("B20").value
+        .Range("B24").value = True 'Set Invoice Load to true
+        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
+        wshFACFinale.Range("C34:F63").ClearContents
+        Dim InvListRow As Long
+        InvListRow = wshFACPrep.Range("B20").value 'InvListRow = Row associated with the invoice
+        'Get values from wshFACInvList (header) and enter them in the wshFACPrep - 2023-12-19 @ 08:29
+        .Range("O3").value = wshFACInvList.Range("B" & InvListRow).value
+        .Range("K3").value = wshFACInvList.Range("D" & InvListRow).value
+        .Range("K4").value = wshFACInvList.Range("E" & InvListRow).value
+        .Range("K5").value = wshFACInvList.Range("F" & InvListRow).value
+        .Range("K6").value = wshFACInvList.Range("G" & InvListRow).value
+        'Get values from wshFACInvList (header) and enter them in the wshFACPrep - 2023-12-19 @ 08:29
+        wshFACFinale.Range("B21").value = "Le " & Format(wshFACInvList.Range("B" & InvListRow).value, "d mmmm yyyy")
+        wshFACFinale.Range("B23").value = wshFACInvList.Range("D" & InvListRow).value
+        wshFACFinale.Range("B24").value = wshFACInvList.Range("E" & InvListRow).value
+        wshFACFinale.Range("B25").value = wshFACInvList.Range("F" & InvListRow).value
+        wshFACFinale.Range("B26").value = wshFACInvList.Range("G" & InvListRow).value
+        'Load Invoice Detail Items
+        With wshFACInvItems
+            Dim lastRow As Long, lastResultRow As Long
+            lastRow = .Range("A999999").End(xlUp).row
+            If lastRow < 4 Then Exit Sub 'No Item Lines
+            .Range("I3").value = wshFACPrep.Range("O6").value
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = '" & .Range("I3").value & "'"
+            wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
+            'Advanced Filter to get items specific to ONE invoice
+            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+            lastResultRow = .Range("O999").End(xlUp).row
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
+            If lastResultRow < 3 Then GoTo NoItems
+            For ResultRow = 3 To lastResultRow
+                InvItemRow = .Range("O" & ResultRow).value
+                If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & ResultRow & " - Desc = " & .Range("K" & ResultRow).value & " - Hrs = " & .Range("L" & ResultRow).value
+                wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
+                wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
+                wshFACFinale.Range("C" & InvItemRow + 23 & ":F" & InvItemRow + 23).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
+            Next ResultRow
+        End With
+        'Proceed with trailer data (Misc. charges & Taxes)
+        .Range("M48").value = wshFACInvList.Range("I" & InvListRow).value
+        .Range("O48").value = wshFACInvList.Range("J" & InvListRow).value
+        .Range("M49").value = wshFACInvList.Range("K" & InvListRow).value
+        .Range("O49").value = wshFACInvList.Range("L" & InvListRow).value
+        .Range("M50").value = wshFACInvList.Range("M" & InvListRow).value
+        .Range("O50").value = wshFACInvList.Range("N" & InvListRow).value
+        .Range("O52").value = wshFACInvList.Range("P" & InvListRow).value
+        .Range("O53").value = wshFACInvList.Range("R" & InvListRow).value
+        .Range("O57").value = wshFACInvList.Range("T" & InvListRow).value
+        
+NoItems:
+    .Range("B24").value = False 'Set Invoice Load To false
+    End With
+    If wshFACPrep.Range("B28").value Then Debug.Print "[modFacture] - Now exiting Sub Invoice_Load()" & vbNewLine
 End Sub
 
 Sub ClearAndFixTotalsFormulaFACPrep()
@@ -143,43 +206,44 @@ Sub Invoice_SaveUpdate() '2023-12-20 @ 11:31
             If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et/ou le numéro de facture n'ont pas encore été saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
-        'Determine the row number (InvRow) for InvList
-        If .Range("B20").value = Empty Then
-            InvRow = wshFACInvList.Range("A99999").End(xlUp).row + 1 'First available row
-            wshFACPrep.Range("B20").value = InvRow
-            wshFACInvList.Range("A" & InvRow).value = wshFACPrep.Range("O6").value 'Invoice #
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas A (B20 = '' ) alors InvRow est établi selon les lignes existantes: InvRow = " & InvRow
+        'Determine the row number (InvListRow) for InvList
+        If wshFACPrep.Range("B20").value = Empty Then 'New Invoice
+            Dim InvListRow As Long
+            InvListRow = wshFACInvList.Range("A99999").End(xlUp).row + 1 'First available row
+            wshFACPrep.Range("B20").value = InvListRow
+            wshFACInvList.Range("A" & InvListRow).value = wshFACPrep.Range("O6").value 'Invoice #
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas A (B20 = '' ) alors InvListRow est établi selon les lignes existantes: InvListRow = " & InvListRow
         Else 'Existing Invoice
-            InvRow = .Range("B20").value 'Set Existing Invoice Row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas B (B20 <> '') alors B20 est utilisé - InvRow = " & InvRow
+            InvListRow = .Range("B20").value 'Set Existing Invoice Row
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas B (B20 <> '') alors B20 est utilisé - InvListRow = " & InvListRow
         End If
-        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").value & "   B21 (Next Invoice #) = " & .Range("B21").value
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current InvListRow) = " & .Range("B20").value & "   B22 (Search InvListRow) = " & .Range("B22").value
         'Load data into wshFACInvList (Invoice Header)
-        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & wshFACPrep.Range("O6").value & " et Current Inv. Row = " & InvRow & " - pour posting dans InvoiceListing"
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & wshFACPrep.Range("O6").value & " et Current Inv. Row = " & InvListRow & " - pour posting dans InvoiceListing"
         
-        wshFACInvList.Range("B" & InvRow).value = .Range("O3").value 'Date
-        wshFACInvList.Range("C" & InvRow).value = .Range("B18").value 'Client_ID
-        wshFACInvList.Range("D" & InvRow).value = .Range("K3").value 'Care of
-        wshFACInvList.Range("E" & InvRow).value = .Range("K4").value 'Client Name
-        wshFACInvList.Range("F" & InvRow).value = .Range("K5").value 'Client Address
-        wshFACInvList.Range("G" & InvRow).value = .Range("K6").value 'City, Prov & Postal Code
+        wshFACInvList.Range("B" & InvListRow).value = .Range("O3").value 'Date
+        wshFACInvList.Range("C" & InvListRow).value = .Range("B18").value 'Client_ID
+        wshFACInvList.Range("D" & InvListRow).value = .Range("K3").value 'Care of
+        wshFACInvList.Range("E" & InvListRow).value = .Range("K4").value 'Client Name
+        wshFACInvList.Range("F" & InvListRow).value = .Range("K5").value 'Client Address
+        wshFACInvList.Range("G" & InvListRow).value = .Range("K6").value 'City, Prov & Postal Code
 
-        wshFACInvList.Range("H" & InvRow).value = wshFACFinale.Range("F68").value 'Fees sub-total
-        wshFACInvList.Range("I" & InvRow).value = wshFACFinale.Range("C69").value 'Misc. # 1 - Desc
-        wshFACInvList.Range("J" & InvRow).value = wshFACFinale.Range("F69").value 'Misc. # 1
-        wshFACInvList.Range("K" & InvRow).value = wshFACFinale.Range("C70").value 'Misc. # 2 - Desc
-        wshFACInvList.Range("L" & InvRow).value = wshFACFinale.Range("F70").value 'Misc. # 2
-        wshFACInvList.Range("M" & InvRow).value = wshFACFinale.Range("C71").value 'Misc. # 3 - Desc
-        wshFACInvList.Range("N" & InvRow).value = wshFACFinale.Range("F71").value 'Misc. # 3
+        wshFACInvList.Range("H" & InvListRow).value = wshFACFinale.Range("F68").value 'Fees sub-total
+        wshFACInvList.Range("I" & InvListRow).value = wshFACFinale.Range("C69").value 'Misc. # 1 - Desc
+        wshFACInvList.Range("J" & InvListRow).value = wshFACFinale.Range("F69").value 'Misc. # 1
+        wshFACInvList.Range("K" & InvListRow).value = wshFACFinale.Range("C70").value 'Misc. # 2 - Desc
+        wshFACInvList.Range("L" & InvListRow).value = wshFACFinale.Range("F70").value 'Misc. # 2
+        wshFACInvList.Range("M" & InvListRow).value = wshFACFinale.Range("C71").value 'Misc. # 3 - Desc
+        wshFACInvList.Range("N" & InvListRow).value = wshFACFinale.Range("F71").value 'Misc. # 3
         
-        wshFACInvList.Range("O" & InvRow).value = wshFACFinale.Range("D73").value 'GST Rate
-        wshFACInvList.Range("O" & InvRow).NumberFormat = "0.00%"
-        wshFACInvList.Range("P" & InvRow).value = wshFACFinale.Range("F73").value 'GST $
-        wshFACInvList.Range("Q" & InvRow).value = wshFACFinale.Range("D74").value 'PST Rate
-        wshFACInvList.Range("Q" & InvRow).NumberFormat = "0.000%"
-        wshFACInvList.Range("R" & InvRow).value = wshFACFinale.Range("F74").value 'GST $
-        wshFACInvList.Range("S" & InvRow).value = wshFACFinale.Range("F76").value 'Grand Total
-        wshFACInvList.Range("T" & InvRow).value = wshFACFinale.Range("F78").value 'Deposit received
+        wshFACInvList.Range("O" & InvListRow).value = wshFACFinale.Range("D73").value 'GST Rate
+        wshFACInvList.Range("O" & InvListRow).NumberFormat = "0.00%"
+        wshFACInvList.Range("P" & InvListRow).value = wshFACFinale.Range("F73").value 'GST $
+        wshFACInvList.Range("Q" & InvListRow).value = wshFACFinale.Range("D74").value 'PST Rate
+        wshFACInvList.Range("Q" & InvListRow).NumberFormat = "0.000%"
+        wshFACInvList.Range("R" & InvListRow).value = wshFACFinale.Range("F74").value 'GST $
+        wshFACInvList.Range("S" & InvListRow).value = wshFACFinale.Range("F76").value 'Grand Total
+        wshFACInvList.Range("T" & InvListRow).value = wshFACFinale.Range("F78").value 'Deposit received
         
         'Load data into wshInvItems (Save/Update Invoice Items) - Columns A, F & G - TO-DO_RMV - 2023-12-17 @ 15:38 - Duplicate entries !!!
         LastItemRow = .Range("L46").End(xlUp).row
@@ -223,7 +287,7 @@ Sub ClientChange(ClientName As String)
         .Range("K6").value = "Mansonville, QC  J0E 1X0" 'Ville, Province & Code postal
     End With
     With wshFACFinale
-        .Range("B21").value = "Le " & wshFACPrep.Range("O3").value
+        .Range("B21").value = "Le " & Format(wshFACPrep.Range("O3").value, "d mmmm yyyy")
         .Range("B23").value = wshFACPrep.Range("K3").value 'Contact from wshFACPrep
         .Range("B24").value = wshFACPrep.Range("K4").value 'Client from wshFACPrep
         .Range("B25").value = wshFACPrep.Range("K5").value 'Address 1 from wshFACPrep
@@ -342,58 +406,7 @@ Sub CopyFromFilteredEntriesToFACPrep()
     End With
 End Sub
 
-Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-20 @ 06:56
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_Load() @ " & Time
-    With wshFACPrep
-        If .Range("B20").value = Empty Then
-            MsgBox "Veuillez saisir un numéro de facture pour votre recherche"
-            Exit Sub
-        End If
-        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Loading InvList, with row  # = " & .Range("B20").value
-        .Range("B24").value = True 'Set Invoice Load to true
-        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
-        InvRow = .Range("B20").value
-       
-        'Get values from wshFACInvList (header) and enter them in the wshFACPrep - 2023-12-19 @ 08:29
-        .Range("O3").value = wshFACInvList.Range("B" & InvRow).value
-        .Range("K3").value = wshFACInvList.Range("D" & InvRow).value
-        .Range("K4").value = wshFACInvList.Range("E" & InvRow).value
-        .Range("K5").value = wshFACInvList.Range("F" & InvRow).value
-        .Range("K6").value = wshFACInvList.Range("G" & InvRow).value
-        'Load Invoice Items
-        With wshFACInvItems
-            Dim lastRow As Long, lastResultRow As Long
-            lastRow = .Range("A999999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub 'No Item Lines
-            .Range("I3").value = wshFACPrep.Range("O6").value
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = " & .Range("I3").value
-            'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
-            lastResultRow = .Range("O999").End(xlUp).row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
-            If lastResultRow < 3 Then GoTo NoItems
-            For ResultRow = 3 To lastResultRow
-                InvItemRow = .Range("O" & ResultRow).value
-                If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & ResultRow & ", Desc = " & .Range("K" & ResultRow).value
-                wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
-                wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
-            Next ResultRow
-        End With
-        'Proceed with trailer data (Misc. charges & Taxes)
-        .Range("M48").value = wshFACInvList.Range("I" & InvRow).value
-        .Range("O48").value = wshFACInvList.Range("J" & InvRow).value
-        .Range("M49").value = wshFACInvList.Range("K" & InvRow).value
-        .Range("O49").value = wshFACInvList.Range("L" & InvRow).value
-        .Range("M50").value = wshFACInvList.Range("M" & InvRow).value
-        .Range("O50").value = wshFACInvList.Range("N" & InvRow).value
-        .Range("O52").value = wshFACInvList.Range("P" & InvRow).value
-        .Range("O53").value = wshFACInvList.Range("R" & InvRow).value
-        
-NoItems:
-    .Range("B24").value = False 'Set Invoice Load To false
-    End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Invoice_Load()" & vbNewLine
-End Sub
+
 
 Sub Invoice_Delete()
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_Delete() @ " & Time
@@ -589,14 +602,14 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
 End Sub
 
 Sub Cacher_Heures()
-    With wshFACFinale.Range("D64:E65")
+    With wshFACFinale.Range("D34:F66")
         .Font.ThemeColor = xlThemeColorDark1
         .Font.TintAndShade = 0
     End With
 End Sub
 
 Sub Montrer_Heures()
-    With wshFACFinale.Range("D64:E65")
+    With wshFACFinale.Range("D34:F66")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With

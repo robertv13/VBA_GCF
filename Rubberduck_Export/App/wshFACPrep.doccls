@@ -3,9 +3,8 @@
 Private Sub Worksheet_Activate()
 
     'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 90
-    
-    '
+    ActiveWindow.Zoom = 85
+
 End Sub
 
 Public Sub Worksheet_Change(ByVal Target As Range)
@@ -37,7 +36,6 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACPrep.Range("N" & Target.row).value = 300
         wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
-        wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
         wshFACFinale.Range("D" & Target.row + 23).value = wshFACPrep.Range("M" & Target.row).value
         wshFACFinale.Range("E" & Target.row + 23).value = wshFACPrep.Range("N" & Target.row).value
         wshFACFinale.Range("F" & Target.row + 23).value = wshFACPrep.Range("O" & Target.row).value
@@ -102,7 +100,19 @@ ExitSub:
   
 End Sub
 
-sub
+Sub ProtectUnprotectWorksheet()
+    Dim password As String
+    password = "GCmfp"
+
+    'Unprotect the worksheet with the password
+    ActiveSheet.Unprotect password:=password
+
+    'Your code to modify cells goes here
+
+    'Protect the worksheet again with the password
+    ActiveSheet.Protect password:=password
+End Sub
+
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Invoice Search Change
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
