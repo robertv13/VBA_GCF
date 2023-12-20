@@ -1,0 +1,134 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+End Sub
+
+Public Sub Worksheet_Change(ByVal Target As Range)
+
+    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " (B24=" & Range("B24").value & " et B25=" & Range("B25").value
+    
+    Application.EnableEvents = False
+    
+    'Client Name has changed
+    If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
+        Call ClientChange(wshFACPrep.Range("E4").value)
+        GoTo ExitSub
+    End If
+    
+    'Invoice Date has changed
+    If Not Intersect(Target, wshFACPrep.Range("O3")) Is Nothing And IsDate(wshFACPrep.Range("O3").value) = True Then
+        Call DateChange(wshFACPrep.Range("O3").value)
+        GoTo ExitSub
+    End If
+    
+    'Services entry
+    If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFACFinale.Range("C" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
+        wshFACPrep.Range("M" & Target.row).Select
+        GoTo ExitSub
+    End If
+  
+    'Hours per service
+    If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFACPrep.Range("N" & Target.row).value = 300
+        wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
+        wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
+        'MAXIMUM of 35 services lines per Invoice
+        If Target.row < 45 Then
+            wshFACPrep.Range("L" & Target.row + 1).Select
+        Else
+            wshFACPrep.Range("O48").Select
+        End If
+        GoTo ExitSub
+      End If
+    
+    'Miscellaneous Amounts
+    If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        'Debug.Print "Frais divers - '" & Target.Address & "'"
+        With wshFACFinale
+            'Final Invoice - Sub-total
+            wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
+            'Final Invoice - Misc charges AND move on to next field
+            If Target.row = 48 Then
+                wshFACFinale.Range("F69").value = wshFACPrep.Range("O48").value
+                wshFACPrep.Range("O49").Select
+            End If
+            If Target.row = 49 Then
+                wshFACFinale.Range("F70").value = wshFACPrep.Range("O49").value
+                wshFACPrep.Range("O50").Select
+            End If
+            If Target.row = 50 Then
+                wshFACFinale.Range("F71").value = wshFACPrep.Range("O50").value
+                wshFACPrep.Range("O57").Select
+            End If
+        End With
+        GoTo ExitSub
+    End If
+
+    'Deposit Amount
+    If Not Intersect(Target, Range("O53")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        'Debug.Print "Dépôt - '" & Target.Address & "'"
+        With wshFACFinale
+            'Final Invoice - Deposit
+            wshFACFinale.Range("E78").value = wshFACPrep.Range("O53").value
+            ActiveWindow.SmallScroll Up:=18
+        End With
+        GoTo ExitSub
+    End If
+    
+    If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
+        If Range("B22").value = Empty Then
+            MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
+            GoTo ExitSub
+        End If
+        Range("O6").value = Range("S2").value 'Set Invoice #
+        Range("S2").ClearContents
+        Call Invoice_Load 'Load Invoice
+    End If
+
+ExitSub:
+
+    Application.EnableEvents = True
+  
+End Sub
+
+'Public Sub Worksheet_Change(ByVal Target As Range)
+'    'On Invoice Search Change
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
+'
+'    'On Change of Billing Service Item, but not on Billing Item Load
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
+''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> ""
+'    If Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> "" Then
+'        ServItemDBRow = Range("B12").value ' Service Item DB Row
+'        Range("E7").value = ServItems.Range("C" & ServItemDBRow).value 'Set Default Description
+'        Range("H6").value = ServItems.Range("D" & ServItemDBRow).value 'Set Default Rate
+'    End If
+'    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_Change(ByVal Target As Range)" & vbNewLine
+'End Sub
+
+'Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ " & Time
+'    If wshFACPrep.Range("B28").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
+''    If Target.CountLarge > 1 Then Exit Sub
+'
+'    'On Selection Of Billing item
+''    If Not Intersect(Target, Range("D12:H9999")) Is Nothing And Range("C" & Target.Row).Value <> Empty Then
+''        Range("B2").Value = Range("C" & Target.Row).Value 'Set Billing ID
+''        Range("B17").Value = Target.Row 'Set Selected Row
+''        BillingEntry_Load 'Run Macro To load Item
+''        With Shapes("AddItemBtn")
+''            .Left = Range("I" & Target.Row).Left
+''            .Top = Range("I" & Target.Row).Top
+''            .Visible = msoCTrue
+''        End With
+''    End If
+'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
+'End Sub
+
+

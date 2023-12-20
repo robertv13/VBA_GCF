@@ -1,0 +1,47 @@
+﻿Option Explicit
+
+Private Sub lblEJ_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideIn_GL
+    SlideOut_EJ
+End Sub
+
+Private Sub lblGL_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideIn_EJ
+    SlideOut_GL
+End Sub
+
+Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideIn_GL
+    SlideIn_EF
+    SlideOut_BV
+End Sub
+
+Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideIn_BV
+    SlideOut_EF
+End Sub
+
+Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    SlideIn_EJ
+    SlideIn_GL
+    SlideIn_BV
+    SlideIn_EF
+End Sub
+
+Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    MsgBox "This is mouse move"
+End Sub
+
+Sub ModifyAllShapes()
+
+    Dim shp As Shape
+    'Loop through each shape on ActiveSheet
+    For Each shp In ActiveSheet.Shapes
+        If shp.Name = "lblComptabilite_Hover" Then shp.Name = "lblEF_Hover"
+        If shp.Name = "lblDebours_Hover" Then shp.Name = "lblBV_Hover"
+        If shp.Name = "lblFacturation_Hover" Then shp.Name = "lblGL_Hover"
+        If shp.Name = "lblTEC_Hover" Then shp.Name = "lblEJ_Hover"
+        Debug.Print "Après - " & shp.Name & " est [" & shp.Left & "," & shp.Top & "] - " & shp.Type
+    Next shp
+
+End Sub
