@@ -127,7 +127,7 @@ Sub MiscCharges()
     wshFACPrep.Range("O48").Select 'Misc Amount 1
     
 End Sub
-Sub Invoice_SaveUpdate() '2023-12-19 @ 16:38
+Sub Invoice_SaveUpdate() '2023-12-20 @ 11:31
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_SaveUpdate() @ " & Time
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value
     With wshFACPrep
@@ -148,10 +148,10 @@ Sub Invoice_SaveUpdate() '2023-12-19 @ 16:38
             InvRow = wshFACInvList.Range("A99999").End(xlUp).row + 1 'First available row
             wshFACPrep.Range("B20").value = InvRow
             wshFACInvList.Range("A" & InvRow).value = wshFACPrep.Range("O6").value 'Invoice #
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Cas A (B20 = '""' ) alors InvRow est établi selon les lignes existantes: InvRow = " & InvRow
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas A (B20 = '' ) alors InvRow est établi selon les lignes existantes: InvRow = " & InvRow
         Else 'Existing Invoice
             InvRow = .Range("B20").value 'Set Existing Invoice Row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Cas B (B20 <> '""') alors B20 est utilisé - InvRow = " & InvRow
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas B (B20 <> '') alors B20 est utilisé - InvRow = " & InvRow
         End If
         If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current Inv. Row) = " & .Range("B20").value & "   B21 (Next Invoice #) = " & .Range("B21").value
         'Load data into wshFACInvList (Invoice Header)
@@ -173,8 +173,11 @@ Sub Invoice_SaveUpdate() '2023-12-19 @ 16:38
         wshFACInvList.Range("N" & InvRow).value = wshFACFinale.Range("F71").value 'Misc. # 3
         
         wshFACInvList.Range("O" & InvRow).value = wshFACFinale.Range("D73").value 'GST Rate
-        wshFACInvList.Range("P" & InvRow).value = wshFACFinale.Range("F73").value 'GST        wshFACInvList.Range("Q" & InvRow).value = wshFACFinale.Range("D74").value 'PST Rate
-        wshFACInvList.Range("R" & InvRow).value = wshFACFinale.Range("F74").value 'GST
+        wshFACInvList.Range("O" & InvRow).NumberFormat = "0.00%"
+        wshFACInvList.Range("P" & InvRow).value = wshFACFinale.Range("F73").value 'GST $
+        wshFACInvList.Range("Q" & InvRow).value = wshFACFinale.Range("D74").value 'PST Rate
+        wshFACInvList.Range("Q" & InvRow).NumberFormat = "0.000%"
+        wshFACInvList.Range("R" & InvRow).value = wshFACFinale.Range("F74").value 'GST $
         wshFACInvList.Range("S" & InvRow).value = wshFACFinale.Range("F76").value 'Grand Total
         wshFACInvList.Range("T" & InvRow).value = wshFACFinale.Range("F78").value 'Deposit received
         
@@ -212,7 +215,6 @@ End Sub
 Sub ClientChange(ClientName As String)
 
     wshFACPrep.Range("B18").value = GetID_FromClientName(ClientName)
-    Debug.Print "Le ID du client est '" & wshFACPrep.Range("B18").value & "'"
     
     With wshFACPrep
         .Range("K3").value = "Monsieur Robert M. Vigneault"
@@ -258,7 +260,7 @@ Sub TEC_Clear()
 
     Dim lastRow As Long
     lastRow = wshFACPrep.Range("D999").End(xlUp).row
-    wshFACPrep.Range("D8:I" & lastRow).ClearContents
+    If lastRow > 7 Then wshFACPrep.Range("D8:I" & lastRow).ClearContents
     
 End Sub
 
@@ -455,7 +457,7 @@ Sub Create_PDF_Email_Sub(NoFacture As String)
 End Sub
 
 Function Create_PDF_Email_Function(NoFacture As String, Optional action As String = "SaveOnly") As Boolean
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Function Create_PDF_Email_Function" & _
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Now entering - [modFacture] - Function Create_PDF_Email_Function" & _
         "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
     Dim SaveAs As String
 
@@ -529,7 +531,7 @@ RefLibError:
 
 EndMacro:
     Application.ScreenUpdating = True
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Now exiting  - [modFacture] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
 End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17

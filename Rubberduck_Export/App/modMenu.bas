@@ -350,7 +350,7 @@ Sub TEC_Click()
 End Sub
 
 Sub Facturation_Click() 'RMV_2023-12-16 @ 15:53
-    SlideIn_Facturation
+    'SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
     wshFACPrep.Visible = xlSheetVisible
@@ -404,7 +404,8 @@ End Sub
 
 Sub PreparationFacture_Click()
     SlideIn_PrepFact
-    MsgBox "Activer la fonction 'Préparation de Facture'"
+    'MsgBox "Activer la fonction 'Préparation de Facture'"
+    wshFACPrep.Activate
 End Sub
 
 Sub SuiviCC_Click()

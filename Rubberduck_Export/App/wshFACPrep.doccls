@@ -3,13 +3,14 @@
 Private Sub Worksheet_Activate()
 
     'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    ActiveWindow.Zoom = 90
     
+    '
 End Sub
 
 Public Sub Worksheet_Change(ByVal Target As Range)
 
-    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " (B24=" & Range("B24").value & " et B25=" & Range("B25").value
+    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " (B24=" & Range("B24").value & " et B25=" & Range("B25").value & ")"
     
     Application.EnableEvents = False
     
