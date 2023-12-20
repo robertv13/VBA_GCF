@@ -8,9 +8,10 @@ Sub Invoice_New()
         With wshFACPrep
             .Range("B24").value = True
             .Range("K3:L6,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("J10:P46").ClearContents
+            .Range("J10:Q46").ClearContents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
+            Call TEC_Clear
             
             Call ClearAndFixTotalsFormulaFACPrep
             
@@ -139,7 +140,7 @@ Sub Invoice_SaveUpdate() '2023-12-19 @ 16:38
         'Check For Mandatory Fields - Date de facture
         If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et le taux horaire n'ont pas encore été saisi, sortie de la routine"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et/ou le numéro de facture n'ont pas encore été saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
         'Determine the row number (InvRow) for InvList
@@ -201,8 +202,8 @@ NoItems:
 Fast_Exit_Sub:
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFacture] - Sub Invoice_SaveUpdate()" & vbNewLine
     
-    Dim myShape As Shape
-    Set myShape = ActiveSheet.Shapes("Rectangle 18")
+'    Dim myShape As Shape
+'    Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
     'myShape.OLEFormat.Object.Enabled = False
     
@@ -339,15 +340,16 @@ Sub CopyFromFilteredEntriesToFACPrep()
     End With
 End Sub
 
-Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-19 @ 11:10
+Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-20 @ 06:56
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFacture] - Sub Invoice_Load() @ " & Time
     With wshFACPrep
         If .Range("B20").value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture pour votre recherche"
             Exit Sub
         End If
+        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Loading InvList, with row  # = " & .Range("B20").value
         .Range("B24").value = True 'Set Invoice Load to true
-        .Range("R2,K4:L6,N3,L10:O35").ClearContents
+        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
         InvRow = .Range("B20").value
        
         'Get values from wshFACInvList (header) and enter them in the wshFACPrep - 2023-12-19 @ 08:29
@@ -361,14 +363,16 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-19 @ 11:10
             Dim lastRow As Long, lastResultRow As Long
             lastRow = .Range("A999999").End(xlUp).row
             If lastRow < 4 Then Exit Sub 'No Item Lines
-            If wshFACPrep.Range("B28").value Then Debug.Print "Invoice Items - LastRow = " & lastRow & " from Range '" & "A3:G" & lastRow & "', Critère = " & .Range("L3").value
+            .Range("I3").value = wshFACPrep.Range("O6").value
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = " & .Range("I3").value
             'Advanced Filter to get items specific to ONE invoice
             .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
             lastResultRow = .Range("O999").End(xlUp).row
-            If wshFACPrep.Range("B28").value Then Debug.Print "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
             If lastResultRow < 3 Then GoTo NoItems
             For ResultRow = 3 To lastResultRow
                 InvItemRow = .Range("O" & ResultRow).value
+                If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & ResultRow & ", Desc = " & .Range("K" & ResultRow).value
                 wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
                 wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
             Next ResultRow
@@ -380,6 +384,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-19 @ 11:10
         .Range("O49").value = wshFACInvList.Range("L" & InvRow).value
         .Range("M50").value = wshFACInvList.Range("M" & InvRow).value
         .Range("O50").value = wshFACInvList.Range("N" & InvRow).value
+        .Range("O52").value = wshFACInvList.Range("P" & InvRow).value
         .Range("O53").value = wshFACInvList.Range("R" & InvRow).value
         
 NoItems:

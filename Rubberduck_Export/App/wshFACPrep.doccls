@@ -9,24 +9,27 @@ End Sub
 
 Public Sub Worksheet_Change(ByVal Target As Range)
 
-    'Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " B24 = " & Range("B24").value & " B25 = " & Range("B25").value
+    Debug.Print "wshFacPrep - Worksheet_Change Event - for " & Target.Address & " (B24=" & Range("B24").value & " et B25=" & Range("B25").value
     
     Application.EnableEvents = False
     
     'Client Name has changed
     If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
         Call ClientChange(wshFACPrep.Range("E4").value)
+        GoTo ExitSub
     End If
     
     'Invoice Date has changed
     If Not Intersect(Target, wshFACPrep.Range("O3")) Is Nothing And IsDate(wshFACPrep.Range("O3").value) = True Then
         Call DateChange(wshFACPrep.Range("O3").value)
+        GoTo ExitSub
     End If
     
     'Services entry
     If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACFinale.Range("C" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
         wshFACPrep.Range("M" & Target.row).Select
+        GoTo ExitSub
     End If
   
     'Hours per service
@@ -40,6 +43,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         Else
             wshFACPrep.Range("O48").Select
         End If
+        GoTo ExitSub
       End If
     
     'Miscellaneous Amounts
@@ -62,6 +66,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
                 wshFACPrep.Range("O57").Select
             End If
         End With
+        GoTo ExitSub
     End If
 
     'Deposit Amount
@@ -72,17 +77,20 @@ Public Sub Worksheet_Change(ByVal Target As Range)
             wshFACFinale.Range("E78").value = wshFACPrep.Range("O53").value
             ActiveWindow.SmallScroll Up:=18
         End With
+        GoTo ExitSub
     End If
     
-    If Not Intersect(Target, Range("R2")) Is Nothing And Range("R2").value <> Empty Then
+    If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
         If Range("B22").value = Empty Then
-            MsgBox "Veuillez saisir un numéro de facture valide pour rechercher"
-            Exit Sub
+            MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
+            GoTo ExitSub
         End If
-        Range("O6").value = Range("R2").value 'Set Invoice #
-        Range("R2").ClearContents
+        Range("O6").value = Range("S2").value 'Set Invoice #
+        Range("S2").ClearContents
         Call Invoice_Load 'Load Invoice
     End If
+
+ExitSub:
 
     Application.EnableEvents = True
   
