@@ -11,7 +11,9 @@ Sub Invoice_New()
             .Range("J10:P46").ClearContents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
+            
             Call ClearAndFixTotalsFormulaFACPrep
+            
             .Range("B20").value = ""
             .Range("B24").value = False
             .Range("B26").value = False
@@ -22,7 +24,9 @@ Sub Invoice_New()
             .Range("A33:G62, D65, E65").ClearContents
             .Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
             .Range("B68:F80").ClearContents
+            
             Call ClearAndFixTotalsFormulaFACFinale
+        
         End With
         Call TEC_Clear
         wshFACPrep.Range("E4:F4").ClearContents
