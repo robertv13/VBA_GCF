@@ -38,6 +38,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         wshFACPrep.Range("N" & Target.row).value = 300
         wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
         wshFACFinale.Range("F68").value = wshFACPrep.Range("O47").value
+        wshFACFinale.Range("D" & Target.row + 23).value = wshFACPrep.Range("M" & Target.row).value
+        wshFACFinale.Range("E" & Target.row + 23).value = wshFACPrep.Range("N" & Target.row).value
+        wshFACFinale.Range("F" & Target.row + 23).value = wshFACPrep.Range("O" & Target.row).value
+
         'MAXIMUM of 35 services lines per Invoice
         If Target.row < 45 Then
             wshFACPrep.Range("L" & Target.row + 1).Select
@@ -81,6 +85,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         GoTo ExitSub
     End If
     
+    'Invoice reload
     If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
         If Range("B22").value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
@@ -97,6 +102,7 @@ ExitSub:
   
 End Sub
 
+sub
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Invoice Search Change
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
