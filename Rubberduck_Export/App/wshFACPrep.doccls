@@ -83,7 +83,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         GoTo ExitSub
     End If
     
-    'Invoice reload
+    'Invoice search
     If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
         If Range("B22").value = Empty Then
             MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
@@ -91,7 +91,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         End If
         Range("O6").value = Range("S2").value 'Set Invoice #
         Range("S2").ClearContents
-        Call Invoice_Load 'Load Invoice
+        Call Invoice_Load 'Load Invoice from file
     End If
 
 ExitSub:

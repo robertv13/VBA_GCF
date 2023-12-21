@@ -36,12 +36,25 @@ Sub Invoice_New() 'Clear contents
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
 End Sub
 
-Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-20 @ 16:59
+Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "[modFacture] - Now entering Sub Invoice_Load() @ " & Time
     With wshFACPrep
         If wshFACPrep.Range("B20").value = Empty Then
             MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
-            Exit Sub
+            GoTo NoItems
+        End If
+        'Could that invoice been cancelled (more than 1 row) ?
+        Call InvoiceGetAllTrans(wshFACPrep.Range("O6").value)
+        Dim NbTrans As Integer
+        NbTrans = .Range("B31").value
+        If NbTrans = 0 Then
+            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+            GoTo NoItems
+        Else
+            If NbTrans > 1 Then
+                MsgBox "Cette facture a été annulée! Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+                GoTo NoItems
+            End If
         End If
         If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Loading info from InvList with row # = " & .Range("B20").value
         .Range("B24").value = True 'Set Invoice Load to true
@@ -97,6 +110,49 @@ NoItems:
     .Range("B24").value = False 'Set Invoice Load To false
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "[modFacture] - Now exiting Sub Invoice_Load()" & vbNewLine
+End Sub
+
+Sub InvoiceGetAllTrans(inv As String)
+
+    Application.ScreenUpdating = False
+
+    wshFACPrep.Range("B31").value = 0
+   
+    With wshFACInvList
+        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
+        lastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
+        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+        On Error Resume Next
+        .Names("Criterial").Delete
+        On Error GoTo 0
+        .Range("V3").value = wshFACPrep.Range("O6").value
+        'Advanced Filter setup
+        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("V2:V3"), _
+            CopyToRange:=.Range("X2:AQ2"), _
+            Unique:=True
+        lastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
+        If lastResultRow < 3 Then
+            GoTo Done
+        End If
+'        With .Sort
+'            .SortFields.Clear
+'            .SortFields.Add Key:=wshFACInvList.Range("X2"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based Invoice Number
+'            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+'            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
+'            .Apply 'Apply Sort
+'         End With
+         wshFACPrep.Range("B31").value = lastResultRow - 2 'Remove Header rows from row count
+Done:
+    End With
+    Application.ScreenUpdating = True
+
 End Sub
 
 Sub ClearAndFixTotalsFormulaFACPrep()
@@ -343,14 +399,16 @@ Sub TEC_Load()
     
 End Sub
 
-Sub TECByClient_FilterAndSort(id As Long)
+Sub TECByClient_FilterAndSort(id As Long) 'RMV-2023-12-21 @ 11:00
     
-    TEC_Import '2023-12-15 @ 17:02
+    Application.ScreenUpdating = False
+
+    Call TEC_Import '2023-12-15 @ 17:02
     
     With wshBaseHours
         Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
         lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If lastRow < 2 Then Exit Sub 'Nothing to filter
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
