@@ -44,9 +44,9 @@ Sub UserForm_Activate()
 
     Call ImportClientList
     
-    Dim LastUsedRow As Long
-    LastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
-    frmSaisieHeures.ListData = wshClientDB.Range("B1:B" & LastUsedRow)
+    Dim lastUsedRow As Long
+    lastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
+    frmSaisieHeures.ListData = wshClientDB.Range("B1:B" & lastUsedRow)
     
     With oEventHandler
         Set .SearchListBox = lstNomClient

@@ -329,6 +329,7 @@ Fast_Exit_Sub:
 '    Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
     'myShape.OLEFormat.Object.Enabled = False
+    Call FromFAC2GL(InvListRow)
     
 End Sub
 
@@ -678,7 +679,122 @@ Sub Goto_Onglet_Preparation_Facture()
     wshFACPrep.Range("C1").Select
 End Sub
 
-Sub Goto_Onglet_Facture_Finale()
-    wshFACFinale.Select
+Sub ExportAllFacInvList() '2023-12-21 @ 14:36
+    Dim wb As Workbook
+    Dim wsSource As Worksheet
+    Dim wsTarget As Worksheet
+    Dim sourceRange As Range
+
+    Application.ScreenUpdating = False
+    
+    'Work with the source range
+    Set wsSource = wshFACInvList
+    Dim lastUsedRow As Long
+    lastUsedRow = wsSource.Range("A99999").End(xlUp).row
+    wsSource.Range("A4:T" & lastUsedRow).Copy
+
+    'Open the target workbook
+    Workbooks.Open Filename:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+
+    'Set references to the target workbook and target worksheet
+    Set wb = Workbooks("GCF_BD_Sortie.xlsx")
+    Set wsTarget = wb.Sheets("FACTURES")
+
+    'PasteSpecial directly to the target range
+    wsTarget.Range("A2").PasteSpecial Paste:=xlPasteValuesAndNumberFormats
+    Application.CutCopyMode = False
+
+    wb.Close SaveChanges:=True
+    
+    Application.ScreenUpdating = True
+    
 End Sub
+
+Sub FromFAC2GL(r As Long) '2023-12-21 @ 15:37
+
+    Dim Montant As Double
+    Dim DateFact As Date
+    Dim NoFacture As String
+    Dim nomClient As String
+    
+    NoFacture = wshFACInvList.Range("A" & r).value
+    DateFact = wshFACInvList.Range("B" & r).value
+    nomClient = wshFACInvList.Range("E" & r).value
+    
+    Dim Rng As Range
+    Dim maxID As Long, newID As Long
+    Set Rng = wshGLFACTrans.Range("C2:C999999")
+    maxID = WorksheetFunction.Max(Rng)
+    newID = maxID + 1
+
+    'AR amount
+    Montant = wshFACInvList.Range("S" & r).value
+    If Montant Then Call GLPost(Montant, newID, "1100", "Comptes Clients", DateFact)
+    
+    'Professionnal Fees
+    Montant = -wshFACInvList.Range("H" & r).value
+    If Montant Then Call GLPost(Montant, newID, "4000", "Revenus", DateFact)
+    
+    'Miscellaneous Amount # 1
+    Montant = -wshFACInvList.Range("J" & r).value
+    If Montant Then Call GLPost(Montant, newID, "5009", "Frais divers # 1", DateFact)
+    
+    'Miscellaneous Amount # 2
+    Montant = -wshFACInvList.Range("L" & r).value
+    If Montant Then Call GLPost(Montant, newID, "5008", "Frais divers # 2", DateFact)
+    
+    'Miscellaneous Amount # 3
+    Montant = -wshFACInvList.Range("N" & r).value
+    If Montant Then Call GLPost(Montant, newID, "5002", "Frais divers # 3", DateFact)
+    
+    'TPS à payer
+    Montant = -wshFACInvList.Range("P" & r).value
+    If Montant Then Call GLPost(Montant, newID, "2200", "TPS à payer", DateFact)
+    
+    'TVQ à payer
+    Montant = -wshFACInvList.Range("R" & r).value
+    If Montant Then Call GLPost(Montant, newID, "2201", "TVQ à payer", DateFact)
+    
+    'Post the last line (Entry description)
+    Dim rowGLTrans As Long
+    'Détermine la prochaine ligne disponible dans la table
+    rowGLTrans = wshGLFACTrans.Range("C999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
+    
+    wshGLFACTrans.Range("C" & rowGLTrans).value = newID
+    wshGLFACTrans.Range("D" & rowGLTrans).value = DateFact
+    wshGLFACTrans.Range("E" & rowGLTrans).value = newID
+    wshGLFACTrans.Range("H" & rowGLTrans).value = NoFacture & " - " & nomClient
+    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
+    rowGLTrans = rowGLTrans + 1
+    wshGLFACTrans.Range("C" & rowGLTrans).value = newID
+    wshGLFACTrans.Range("D" & rowGLTrans).value = DateFact
+    wshGLFACTrans.Range("E" & rowGLTrans).value = newID
+    wshGLFACTrans.Range("H" & rowGLTrans).value = ""
+    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
+    
+End Sub
+
+Sub GLPost(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
+
+    Dim rowGLTrans As Long, maxID As Double, newID As Long
+    'Détermine la prochaine ligne disponible dans la table
+    rowGLTrans = wshGLFACTrans.Range("C999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
+
+    wshGLFACTrans.Range("C" & rowGLTrans).value = noEJ
+    wshGLFACTrans.Range("D" & rowGLTrans).value = d
+    wshGLFACTrans.Range("E" & rowGLTrans).value = noEJ
+    wshGLFACTrans.Range("F" & rowGLTrans).value = "Facturation"
+    wshGLFACTrans.Range("G" & rowGLTrans).value = GL
+    wshGLFACTrans.Range("H" & rowGLTrans).value = GLDesc
+    If m > 0 Then
+        wshGLFACTrans.Range("I" & rowGLTrans).value = m
+    ElseIf m < 0 Then
+        wshGLFACTrans.Range("J" & rowGLTrans).value = -m
+    End If
+    wshGLFACTrans.Range("K" & rowGLTrans).value = ""
+    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
+
+End Sub
+
 

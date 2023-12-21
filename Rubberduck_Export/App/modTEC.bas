@@ -292,14 +292,13 @@ Sub EffaceLigneDetail()
 
 End Sub
 
-
 Sub AddOrUpdateTECRecordToDB(r As Long) '2023-12-15 @ 13:33
     Dim FullFileName As String
     Dim SheetName As String
     Dim conn As Object
     Dim rs As Object
     Dim strSQL As String
-    Dim MaxID As Long
+    Dim maxID As Long
     Dim lastRow As Long
     Dim nextID As Long
     

@@ -113,6 +113,8 @@ Sub ProtectUnprotectWorksheet()
     ActiveSheet.Protect password:=password
 End Sub
 
+
+
 'Public Sub Worksheet_Change(ByVal Target As Range)
 '    'On Invoice Search Change
 ''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
