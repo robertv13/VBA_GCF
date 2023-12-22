@@ -711,7 +711,7 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
 End Sub
 
-Sub FromFAC2GL(r As Long) '2023-12-21 @ 15:37
+Sub FromFAC2GL(r As Long) '2023-12-21 @ 22:33
 
     Dim Montant As Double
     Dim DateFact As Date
@@ -723,10 +723,9 @@ Sub FromFAC2GL(r As Long) '2023-12-21 @ 15:37
     nomClient = wshFACInvList.Range("E" & r).value
     
     Dim Rng As Range
-    Dim maxID As Long, newID As Long
     Set Rng = wshGLFACTrans.Range("C2:C999999")
-    maxID = WorksheetFunction.Max(Rng)
-    newID = maxID + 1
+    Dim newID As Long
+    newID = WorksheetFunction.Max(Rng) + 1
 
     'AR amount
     Montant = wshFACInvList.Range("S" & r).value
@@ -756,22 +755,10 @@ Sub FromFAC2GL(r As Long) '2023-12-21 @ 15:37
     Montant = -wshFACInvList.Range("R" & r).value
     If Montant Then Call GLPost(Montant, newID, "2201", "TVQ à payer", DateFact)
     
-    'Post the last line (Entry description)
-    Dim rowGLTrans As Long
-    'Détermine la prochaine ligne disponible dans la table
-    rowGLTrans = wshGLFACTrans.Range("C999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
+    Call GLPost(0, newID, "", NoFacture + "-" & nomClient, DateFact)
+    Call GLPost(0, newID, "", "", DateFact)
     
-    wshGLFACTrans.Range("C" & rowGLTrans).value = newID
-    wshGLFACTrans.Range("D" & rowGLTrans).value = DateFact
-    wshGLFACTrans.Range("E" & rowGLTrans).value = newID
-    wshGLFACTrans.Range("H" & rowGLTrans).value = NoFacture & " - " & nomClient
-    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
-    rowGLTrans = rowGLTrans + 1
-    wshGLFACTrans.Range("C" & rowGLTrans).value = newID
-    wshGLFACTrans.Range("D" & rowGLTrans).value = DateFact
-    wshGLFACTrans.Range("E" & rowGLTrans).value = newID
-    wshGLFACTrans.Range("H" & rowGLTrans).value = ""
-    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
+    Call AdjustJETrans(newID)
     
 End Sub
 
@@ -795,6 +782,75 @@ Sub GLPost(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
     wshGLFACTrans.Range("K" & rowGLTrans).value = ""
     wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
 
+End Sub
+
+Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
+    
+    Dim firstRow As Long, lastRow As Long, r As Long
+    Dim nrJE_All As Range
+    Set nrJE_All = Range("nrJE_All")
+    firstRow = Application.WorksheetFunction.Match(JENumber, nrJE_All, 0) + 1
+    r = firstRow
+    
+    'Determine the last row for a given Journal Entry
+    Do While wshGLFACTrans.Cells(r, 3).value = JENumber
+        r = r + 1
+    Loop
+    lastRow = r - 1
+    
+    With wshGLFACTrans
+        'Les lignes subséquentes sont en police blanche...
+        .Range("D" & (firstRow + 1) & ":F" & lastRow).Font.Color = vbWhite
+        
+        'We adjust Numeric Formats for the amounts
+        .Range("I" & firstRow & ":J" & (lastRow - 2)).NumberFormat = "#,###,##0.00 $"
+        
+        'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
+        Dim r1 As Range
+        Set r1 = .Range("D" & firstRow & ":K" & (lastRow - 1))
+        r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
+        
+        With .Range("H" & (lastRow - 1) & ":K" & (lastRow - 1))
+            .Merge
+            .HorizontalAlignment = xlLeft
+            .Font.Italic = True
+            .Font.Bold = True
+            With .Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorDark1
+                .TintAndShade = -0.149998474074526
+                .PatternTintAndShade = 0
+            End With
+            .Borders(xlInsideVertical).LineStyle = xlNone
+        End With
+    End With
+End Sub
+
+Sub LoopUntilColumnChange()
+    Dim ws As Worksheet
+    Dim currentRow As Long
+    Dim targetColumn As Long
+    Dim targetValue As Variant
+    
+    ' Set your worksheet
+    Set ws = ThisWorkbook.Sheets("YourSheetName") ' Replace with your actual sheet name
+    
+    ' Set the target column and value
+    targetColumn = 3 ' Change this to your target column number (e.g., column C)
+    targetValue = "YourTargetValue" ' Change this to your target value
+    
+    ' Initialize the starting row
+    currentRow = 1
+    
+    ' Loop until the target column changes its value
+    Do While ws.Cells(currentRow, targetColumn).value <> targetValue
+        ' Your code for each row goes here
+        ' You can access cell values using ws.Cells(currentRow, ColumnNumber)
+        
+        ' Move to the next row
+        currentRow = currentRow + 1
+    Loop
 End Sub
 
 
