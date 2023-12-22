@@ -162,14 +162,14 @@ Sub wshJEClearAllCells()
 
 End Sub
 
-Sub BuildDate(cell As String, r As Range)
+Sub BuildDate(Cell As String, r As Range)
         Dim d, m, y As Integer
         Dim strDateJour, strDateConsruite As String
         Dim dateValide As Boolean
         dateValide = True
 
-        cell = Replace(cell, "/", "")
-        cell = Replace(cell, "-", "")
+        Cell = Replace(Cell, "/", "")
+        Cell = Replace(Cell, "-", "")
 
         'Utilisation de la date du jour
         strDateJour = Now
@@ -177,19 +177,19 @@ Sub BuildDate(cell As String, r As Range)
         m = Month(strDateJour)
         y = Year(strDateJour)
 
-        Select Case Len(cell)
+        Select Case Len(Cell)
             Case 0
                 strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
             Case 1, 2
-                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
             Case 3
-                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(Cell, 1), "00") & "/" & Format(Mid(Cell, 2, 2), "00") & "/" & Format(y, "0000")
             Case 4
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(y, "0000")
             Case 6
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & "20" & Format(Mid(Cell, 5, 2), "00")
             Case 8
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
+                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(Mid(Cell, 5, 4), "0000")
             Case Else
                 dateValide = False
         End Select

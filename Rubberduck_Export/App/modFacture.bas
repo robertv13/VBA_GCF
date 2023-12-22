@@ -711,7 +711,7 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
 End Sub
 
-Sub FromFAC2GL(r As Long) '2023-12-21 @ 22:33
+Sub FromFAC2GL(r As Long) '2023-12-22 @ 10:53
 
     Dim Montant As Double
     Dim DateFact As Date
@@ -826,31 +826,4 @@ Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
         End With
     End With
 End Sub
-
-Sub LoopUntilColumnChange()
-    Dim ws As Worksheet
-    Dim currentRow As Long
-    Dim targetColumn As Long
-    Dim targetValue As Variant
-    
-    ' Set your worksheet
-    Set ws = ThisWorkbook.Sheets("YourSheetName") ' Replace with your actual sheet name
-    
-    ' Set the target column and value
-    targetColumn = 3 ' Change this to your target column number (e.g., column C)
-    targetValue = "YourTargetValue" ' Change this to your target value
-    
-    ' Initialize the starting row
-    currentRow = 1
-    
-    ' Loop until the target column changes its value
-    Do While ws.Cells(currentRow, targetColumn).value <> targetValue
-        ' Your code for each row goes here
-        ' You can access cell values using ws.Cells(currentRow, ColumnNumber)
-        
-        ' Move to the next row
-        currentRow = currentRow + 1
-    Loop
-End Sub
-
 

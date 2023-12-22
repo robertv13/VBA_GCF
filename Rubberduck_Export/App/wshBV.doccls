@@ -4,11 +4,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     If Not Intersect(Target, Range("J1")) Is Nothing Then
         Application.EnableEvents = False
-        Dim cell As String
-        cell = Trim(Range("J1").value)
+        Dim Cell As String
+        Cell = Trim(Range("J1").value)
         Dim r As Range
         Set r = Range("J1")
-        Call BuildDate(cell, r)
+        Call BuildDate(Cell, r)
         wshBV.Range("B1").value = wshBV.Range("J1").value 'Mise à jour des contrôles
         Application.EnableEvents = True
     End If
@@ -23,7 +23,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         GLAcct = CStr(Range("D" & Target.row).value)
         GLDescription = Range("E" & Target.row).value
         DateLimite = Format(Range("B1").value, "yyyymmdd")
-        GLTransDisplay GLAcct, GLDescription, DateLimite
+        Call GLTransDisplay(GLAcct, GLDescription, DateLimite)
         Application.EnableEvents = True
     End If
 
@@ -31,20 +31,19 @@ End Sub
 
 Sub UpdateBV() 'Forme 'Actualiser'
     Dim dateCutOff As String
-    Dim row As Long, rowUsed As Long
-    Dim lastRow As Long, startRow As Long, MyRow As Long
+    Dim lastRow As Long
     Dim Solde As Currency
+    Dim nrPlanComptable As Range
+    Set nrPlanComptable = wshAdmin.Range("nrPlanComptable")
     
-    startRow = 3  'your first row of actual data in Plan Comptable
-    lastRow = wshPlanComptable.Cells(Rows.count, "E").End(xlUp).row
-    row = 4       'Première ligne dans la Balance de Vérification
-    
-    'Efface la BV + Détail du GL
-    wshBV.Range("D" & row & ":G" & lastRow + 4).ClearContents
-    wshBV.Range("D" & row & ":G" & lastRow + 4).ClearFormats
+    'Efface la BV
+    lastRow = wshBV.Range("D99999").End(xlUp).row
+    wshBV.Range("D4" & ":G" & lastRow + 2).ClearContents
+    wshBV.Range("D4" & ":G" & lastRow + 2).ClearFormats
+
     Dim rowGLDetailLast As Long
     rowGLDetailLast = wshBV.Range("M99999").End(xlUp).row 'Dernière ligne utilisée
-    If rowGLDetailLast < 4 Then rowGLDetailLast = 4
+    If rowGLDetailLast < 5 Then rowGLDetailLast = 5
     wshBV.Range("L4:T" & rowGLDetailLast).ClearContents
     wshBV.Range("R" & rowGLDetailLast & ":R" & rowGLDetailLast).Font.Bold = False
     With wshBV.Range("R5:R99999").Interior
@@ -52,26 +51,29 @@ Sub UpdateBV() 'Forme 'Actualiser'
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
-    
-    dateCutOff = Format(wshBV.Range("J1").value, "yyyymmdd")
-    
-    For MyRow = startRow To lastRow
-        Solde = GetBalance(wshPlanComptable.Cells(MyRow, 5), dateCutOff)
-        If Solde <> 0 Then
-            wshBV.Range("D" & row).value = wshPlanComptable.Cells(MyRow, 5)
-            wshBV.Range("E" & row).value = wshPlanComptable.Cells(MyRow, 6)
-            If Solde > 0 Then
-                wshBV.Range("F" & row).value = Solde
-            Else
-                wshBV.Range("G" & row).value = -Solde
-            End If
-            row = row + 1
-            rowUsed = rowUsed + 1
-        End If
-    Next
 
-    setTotals row + 1, 6
-    setTotals row + 1, 7
+    dateCutOff = Format(wshBV.Range("J1").value, "yyyymmdd")
+
+    Dim Cells As Range
+    For Each Cells In nrPlanComptable.Rows
+        Solde = GetBalance(GL, dateCutOff)
+    Next Cell
+'    For MyRow = startRow To lastRow
+'        If Solde <> 0 Then
+'            wshBV.Range("D" & row).value = nrPlanComptable.Cells(MyRow, 5)
+'            wshBV.Range("E" & row).value = nrPlanComptable.Cells(MyRow, 6)
+'            If Solde > 0 Then
+'                wshBV.Range("F" & row).value = Solde
+'            Else
+'                wshBV.Range("G" & row).value = -Solde
+'            End If
+'            row = row + 1
+'            rowUsed = rowUsed + 1
+'        End If
+'    Next
+'
+'    setTotals row + 1, 6
+'    setTotals row + 1, 7
   
 End Sub
 
