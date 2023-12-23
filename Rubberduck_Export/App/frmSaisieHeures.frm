@@ -24,6 +24,12 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub icoGraph_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+
+    MsgBox "Affichage des statistiques à compléter"
+
+End Sub
+
 Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim i As Long
@@ -360,7 +366,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     With frmSaisieHeures
         wshAdmin.Range("TEC_Current_ID").value = .lstData.List(.lstData.ListIndex, 0)
         'Debug.Print "Sauvegarde de l'ID de l'enregistrement à modifier - " & _
-            wshAdmin.Range("TEC_Current_ID").value
+            wshADMIN.Range("TEC_Current_ID").value
         
         .cmbProfessionnel.value = .lstData.List(.lstData.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
@@ -374,7 +380,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         savedClient = .txtClient.value
         'Debug.Print "Double click on a entry - " & savedClient
         wshAdmin.Range("TEC_Client_ID").value = GetID_FromClientName(savedClient)
-        'Debug.Print "Client_ID - " & wshAdmin.Range("TEC_Client_ID").value
+        'Debug.Print "Client_ID - " & wshADMIN.Range("TEC_Client_ID").value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
         savedActivite = .txtActivite.value

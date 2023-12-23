@@ -8,11 +8,7 @@ Sub BrowseForMainSharedFolder()
         .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show <> -1 Then GoTo NotSelected
-'        If InStr(.SelectedItems(1), "Dropbox") = 0 Then '2023-12-15 @ 07:28
-'            MsgBox "Veuillez vous assurer de choisir un répertoire à l'intérieur de Dropbox."
-'            Exit Sub
-'        End If
-        wshAdmin.Range("F3").value = .SelectedItems(1) 'Full Folder Path
+        wshAdmin.Range("F3").value = .SelectedItems(1) 'Full path for shared data files
 NotSelected:
     End With
 End Sub
@@ -24,29 +20,7 @@ Sub BrowseForFacturesPDFFolder()
         .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show <> -1 Then GoTo NoSelection
-        wshAdmin.Range("F4").value = .SelectedItems(1)
-    End With
-NoSelection:
-End Sub
-
-Sub BrowseForProductPicFolder()
-    Set PicFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    With PicFolder
-        .Title = "Browse Product Picture Folder"
-        .AllowMultiSelect = False
-        If .show <> -1 Then GoTo NoSelection
-        wshAdmin.Range("C5").value = .SelectedItems(1)
-    End With
-NoSelection:
-End Sub
-
-Sub BrowseForUserPicFolder()
-    Set PicFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    With PicFolder
-        .Title = "Browse User Picture Folder"
-        .AllowMultiSelect = False
-        If .show <> -1 Then GoTo NoSelection
-        wshAdmin.Range("C6").value = .SelectedItems(1)
+        wshAdmin.Range("F4").value = .SelectedItems(1) 'Full path for Invoice PDF directory
     End With
 NoSelection:
 End Sub

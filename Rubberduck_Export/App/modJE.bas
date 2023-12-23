@@ -163,7 +163,7 @@ Sub wshJEClearAllCells()
 End Sub
 
 Sub BuildDate(Cell As String, r As Range)
-        Dim d, m, y As Integer
+        Dim d, m, Y As Integer
         Dim strDateJour, strDateConsruite As String
         Dim dateValide As Boolean
         dateValide = True
@@ -175,17 +175,17 @@ Sub BuildDate(Cell As String, r As Range)
         strDateJour = Now
         d = Day(strDateJour)
         m = Month(strDateJour)
-        y = Year(strDateJour)
+        Y = Year(strDateJour)
 
         Select Case Len(Cell)
             Case 0
-                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
             Case 1, 2
-                strDateConsruite = Format(Cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Cell, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
             Case 3
-                strDateConsruite = Format(Left(Cell, 1), "00") & "/" & Format(Mid(Cell, 2, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(Cell, 1), "00") & "/" & Format(Mid(Cell, 2, 2), "00") & "/" & Format(Y, "0000")
             Case 4
-                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(Y, "0000")
             Case 6
                 strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & "20" & Format(Mid(Cell, 5, 2), "00")
             Case 8
