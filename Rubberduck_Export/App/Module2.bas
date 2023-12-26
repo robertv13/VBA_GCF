@@ -8,7 +8,7 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Range("H392:K392").Select
+    Range("D21").Select
     With Selection
         .HorizontalAlignment = xlCenter
         .VerticalAlignment = xlBottom
@@ -19,17 +19,5 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
         .ShrinkToFit = False
         .ReadingOrder = xlContext
         .MergeCells = False
-    End With
-    Selection.Merge
-    With Selection
-        .HorizontalAlignment = xlLeft
-        .VerticalAlignment = xlBottom
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = True
     End With
 End Sub
