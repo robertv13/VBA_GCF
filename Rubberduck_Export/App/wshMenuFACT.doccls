@@ -1,35 +1,35 @@
 ﻿Option Explicit
 
-Private Sub lblPrepFact_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblPrepFact_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_SuiviCC
     SlideOut_PrepFact
 End Sub
 
-Private Sub lblSuiviCC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblSuiviCC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_PrepFact
     SlideIn_Encaissement
     SlideOut_SuiviCC
 End Sub
 
-Private Sub lblEncaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblEncaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_SuiviCC
     SlideIn_Regularisation
     SlideOut_Encaissement
 End Sub
 
-Private Sub lblRegularisation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblRegularisation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Encaissement
     SlideOut_Regularisation
 End Sub
 
-Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_PrepFact
     SlideIn_SuiviCC
     SlideIn_Encaissement
     SlideIn_Regularisation
 End Sub
 
-Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     MsgBox "This is mouse move"
 End Sub
 

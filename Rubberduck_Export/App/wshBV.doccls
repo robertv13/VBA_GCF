@@ -114,48 +114,41 @@ Function GetBalance(GL As String, d As String) As Currency
     Next
 End Function
 
-Sub GLTransDisplay(GLAcct As String, GLDesc As String, d As String)
+Sub GLTransDisplay(GLAcct As String, GLDesc As String, MaxDate As String)
 
     'Efface le tableau
-    Dim rowGLDetail As Long, rowGLDetailMax As Long
     wshBV.Range("M5").CurrentRegion.ClearContents
     wshBV.Range("M5").CurrentRegion.ClearFormats
     
     'Affiche le compte et la description
-    wshBV.Range("L" & rowGLDetail).Font.Bold = True
-    wshBV.Range("L" & rowGLDetail).value = GLAcct & " - " & GLDesc
-    rowGLDetail = rowGLDetail + 1
+    wshBV.Range("L4").Font.Bold = True
+    wshBV.Range("L4").value = GLAcct & " - " & GLDesc
     
-    'Analyse des transactions détaillées
-    Dim r As Long, RowGLFirst As Long, RowGLMax As Long
-    RowGLFirst = 2
-    RowGLMax = wshGLFACTrans.Range("C999999").End(xlUp).row  'Last Row used in wshGLFACTrans (Transactions)
+    Dim minD As Date, maxD As Date
+    minD = CDate(Format("01-01-2023", "dd-mm-yyyy"))
+    maxD = DateSerial(Left(MaxDate, 4), Mid(MaxDate, 5, 2), Right(MaxDate, 2))
+    Call AdvancedFilterTest(GLAcct, minD, maxD)
     
-    For r = RowGLFirst To RowGLMax
-        If wshGL.Range("G" & r).value = GLAcct And Format(wshGL.Range("D" & r).value, "yyyymmdd") <= d Then
-            wshBV.Range("M" & rowGLDetail).value = wshGL.Range("D" & r).value
-            wshBV.Range("N" & rowGLDetail).value = wshGL.Range("E" & r).value
-            wshBV.Range("O" & rowGLDetail).value = wshGL.Range("F" & r).value
-            wshBV.Range("P" & rowGLDetail).value = wshGL.Range("I" & r).value
-            wshBV.Range("Q" & rowGLDetail).value = wshGL.Range("J" & r).value
-            wshBV.Range("S" & rowGLDetail).value = wshGL.Range("K" & r).value
-            wshBV.Range("T" & rowGLDetail).value = wshGL.Range("L" & r).value
-            rowGLDetail = rowGLDetail + 1
-        End If
-    Next
-    
-    Dim rowGLDetailLast As Long
-    rowGLDetailLast = rowGLDetail - 1
-    
-    'Tri des données affichées, s'il y a des données...
-    If rowGLDetailLast < 5 Then Exit Sub
-    
-    wshBV.Range("M5:T" & rowGLDetailLast).Sort _
-        key1:=[M5], order1:=xlAscending, _
-        key2:=[N5], order2:=xlAscending, _
-        Key3:=[T5], order3:=xlAscending
+    With wshGLFACTrans
+        'Analyse des transactions détaillées
+        Dim r As Long, RowGLFirst As Long, RowGLMax As Long, rowGLDetail As Long
+        RowGLFirst = 2
+        RowGLMax = wshGLFACTrans.Range("R999999").End(xlUp).row  'Last Row used in wshGLFACTrans (Transactions)
+        rowGLDetail = 5
 
+        For r = RowGLFirst To RowGLMax
+            wshBV.Range("M" & rowGLDetail).value = .Range("R" & r).value
+            wshBV.Range("N" & rowGLDetail).value = .Range("S" & r).value
+            wshBV.Range("O" & rowGLDetail).value = .Range("T" & r).value
+            wshBV.Range("P" & rowGLDetail).value = .Range("W" & r).value
+            wshBV.Range("Q" & rowGLDetail).value = .Range("X" & r).value
+            wshBV.Range("S" & rowGLDetail).value = .Range("S" & r).value
+            rowGLDetail = rowGLDetail + 1
+        Next
+        
+    End With
     wshBV.Range("R4").value = 0
+    Dim rowGLDetailMax As Long
     rowGLDetailMax = wshBV.Range("M99999").End(xlUp).row
     For r = 5 To rowGLDetailMax
         wshBV.Range("R" & r).value = wshBV.Range("R" & r - 1).value + wshBV.Range("P" & r).value - wshBV.Range("Q" & r).value
@@ -171,5 +164,37 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, d As String)
         .TintAndShade = -4.99893185216834E-02
         .PatternTintAndShade = 0
     End With
+
+End Sub
+
+Sub AdvancedFilterTest(GLNo As String, minD As Date, maxD As Date)
+
+    Application.EnableEvents = False
+    
+    With wshGLFACTrans
+    
+        Dim rgData As Range, rgCriteria As Range, rgCopyToRange As Range
+        .Range("R1").CurrentRegion.Offset(1, 0).ClearContents
+        Set rgData = .Range("C1").CurrentRegion
+        Set rgCriteria = .Range("N2:P3")
+        .Range("N3").value = GLNo
+        '.Range("O3").value = minD
+        '.Range("P3").value = maxD
+        Set rgCopyToRange = .Range("R1").CurrentRegion.Rows(1)
+        
+        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
+        
+        With .Range("R2").CurrentRegion
+            .Borders(xlEdgeTop).LineStyle = xlNone
+            .Borders(xlEdgeRight).LineStyle = xlNone
+            .Borders(xlEdgeBottom).LineStyle = xlNone
+            .Borders(xlEdgeLeft).LineStyle = xlNone
+            .Borders(xlInsideVertical).LineStyle = xlNone
+            .Borders(xlInsideHorizontal).LineStyle = xlNone
+        End With
+    
+    End With
+
+    Application.EnableEvents = True
 
 End Sub
