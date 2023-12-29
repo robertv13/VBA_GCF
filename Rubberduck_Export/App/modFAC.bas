@@ -465,8 +465,6 @@ Sub CopyFromFilteredEntriesToFACPrep()
     End With
 End Sub
 
-
-
 Sub Invoice_Delete()
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Invoice_Delete() @ " & Time
     With wshFACPrep

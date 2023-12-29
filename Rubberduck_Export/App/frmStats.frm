@@ -15,10 +15,3 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub TextBox1_Change()
-
-End Sub
-
-Private Sub TextBox3_Change()
-
-End Sub

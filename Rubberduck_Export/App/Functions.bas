@@ -85,3 +85,17 @@ Public Function GetTaxRate(d As Date, taxType As String) As Double
     End With
     
 End Function
+
+Public Function ClearRangeBorders(r As Range)
+
+    MsgBox "Range to clear = " & r.Address
+    With r
+        .Borders(xlEdgeTop).LineStyle = xlNone
+        .Borders(xlEdgeRight).LineStyle = xlNone
+        .Borders(xlEdgeBottom).LineStyle = xlNone
+        .Borders(xlEdgeLeft).LineStyle = xlNone
+        .Borders(xlInsideVertical).LineStyle = xlNone
+        .Borders(xlInsideHorizontal).LineStyle = xlNone
+    End With
+
+End Function

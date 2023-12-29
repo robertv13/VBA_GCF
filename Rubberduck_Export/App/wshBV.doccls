@@ -9,7 +9,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Dim r As Range
         Set r = Range("J1")
         Call BuildDate(Cell, r)
-        wshBV.Range("B1").value = wshBV.Range("J1").value 'Mise à jour des contrôles
+        'wshBV.Range("B1").value = wshBV.Range("J1").value 'Mise à jour des contrôles
         Application.EnableEvents = True
     End If
 
@@ -22,7 +22,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim GLAcct As String, GLDescription As String, DateLimite As String
         GLAcct = CStr(Range("D" & Target.row).value)
         GLDescription = Range("E" & Target.row).value
-        DateLimite = Format(Range("B1").value, "yyyymmdd")
+        DateLimite = Range("J1").value
         Call GLTransDisplay(GLAcct, GLDescription, DateLimite)
         Application.EnableEvents = True
     End If
@@ -44,13 +44,19 @@ Sub UpdateBV() 'Forme 'Actualiser'
     wshBV.Range("L4").CurrentRegion.ClearContents
     wshBV.Range("M4").CurrentRegion.ClearFormats
 
-    dateCutOff = Format(wshBV.Range("J1").value, "yyyymmdd")
-
+    'wshBV.Range("B1").value = wshBV.Range("J1").value
+'    dateCutOff = Format(wshBV.Range("J1").value, "yyyymmdd")
+    dateCutOff = CDate(wshBV.Range("J1").value)
+    
+    'Scan chart of accounts to process all valid accounts
     Dim currentRow As Range
     Dim row As Long, rowUsed As Long
     row = 4
     For Each currentRow In PlanComptable.Rows
+        'Debug.Print "Update BV - ", currentRow.Cells(1, 2).value, "CutOff Date = " & dateCutOff
+        
         Solde = GetBalance(currentRow.Cells(1, 2).value, dateCutOff)
+        
         If Solde <> 0 Then
             wshBV.Range("D" & row).HorizontalAlignment = xlCenter
             wshBV.Range("D" & row).value = currentRow.Cells(1, 2).value
@@ -65,14 +71,16 @@ Sub UpdateBV() 'Forme 'Actualiser'
         End If
     Next currentRow
 
-    setTotals row + 1, 6
-    setTotals row + 1, 7
+    row = row + 1
     
-    Range("B2").value = rowUsed + 3
+    setBVTotals row, 6
+    setBVTotals row, 7
+    
+    wshBV.Range("B2").value = rowUsed + 3
   
 End Sub
 
-Sub setTotals(r As Long, c As Long)
+Sub setBVTotals(r As Long, c As Long)
 
     With wshBV.Cells(r, c).Borders(xlEdgeTop)
         .LineStyle = xlContinuous
@@ -99,16 +107,20 @@ Sub setTotals(r As Long, c As Long)
 
 End Sub
 
-Function GetBalance(GL As String, d As String) As Currency
+Function GetBalance(GL As String, d As Date) As Currency
 
-    Dim lastRowTrans, startRow, rowTrans As Long
+    Dim lastRowTrans, startRow, rowTrans As Long, dd As Date
     Dim Solde As Currency
     
     lastRowTrans = wshGLFACTrans.Cells(Rows.count, "D").End(xlUp).row
     startRow = 2
-
+    
+    dd = d
+    Call SetGLTransAdvancedFilter(GL, "01-01-2023", dd)
+    
     For rowTrans = startRow To lastRowTrans
         If wshGL.Range("G" & rowTrans).value = GL And Format(wshGL.Range("D" & rowTrans).value, "yyyymmdd") <= d Then
+            Debug.Print Tab(5); "Sub GetBalance - ", wshGL.Range("G" & rowTrans).value, wshGL.Range("D" & rowTrans).value
             GetBalance = GetBalance + wshGL.Range("I" & rowTrans).value - wshGL.Range("J" & rowTrans).value
         End If
     Next
@@ -116,18 +128,21 @@ End Function
 
 Sub GLTransDisplay(GLAcct As String, GLDesc As String, MaxDate As String)
 
-    'Efface le tableau
+    'Clear the display area & display the account number & description
+    
     wshBV.Range("M5").CurrentRegion.ClearContents
     wshBV.Range("M5").CurrentRegion.ClearFormats
     
-    'Affiche le compte et la description
     wshBV.Range("L4").Font.Bold = True
     wshBV.Range("L4").value = GLAcct & " - " & GLDesc
     
+    'Prepare starting date & cut-off date
     Dim minD As Date, maxD As Date
-    minD = CDate(Format("01-01-2023", "dd-mm-yyyy"))
-    maxD = DateSerial(Left(MaxDate, 4), Mid(MaxDate, 5, 2), Right(MaxDate, 2))
-    Call AdvancedFilterTest(GLAcct, minD, maxD)
+    minD = CDate(Format("01-01-2023", "mm-dd-yyyy"))
+    maxD = CDate(Format(MaxDate, "mm-dd-yyyy"))
+    MsgBox "MinDate = " & minD & " - MaxDate = " & maxD
+    
+    Call SetGLTransAdvancedFilter(GLAcct, minD, maxD)
     
     With wshGLFACTrans
         'Analyse des transactions détaillées
@@ -137,6 +152,7 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, MaxDate As String)
         rowGLDetail = 5
 
         For r = RowGLFirst To RowGLMax
+            'Debug.Print Tab(10); "GLTransDisplay - ", .Range("R" & r).value, .Range("S" & r).value, .Range("T" & r).value, .Range("W" & r).value, .Range("X" & r).value, .Range("S" & r).value
             wshBV.Range("M" & rowGLDetail).value = .Range("R" & r).value
             wshBV.Range("N" & rowGLDetail).value = .Range("S" & r).value
             wshBV.Range("O" & rowGLDetail).value = .Range("T" & r).value
@@ -167,34 +183,84 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, MaxDate As String)
 
 End Sub
 
-Sub AdvancedFilterTest(GLNo As String, minD As Date, maxD As Date)
+Sub SetGLTransAdvancedFilter(GLNo As String, minD As Date, maxD As Date)
 
     Application.EnableEvents = False
     
+    Debug.Print "GetGLTrans - ", GLNo, minD, maxD
+    
     With wshGLFACTrans
     
-        Dim rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-        .Range("R1").CurrentRegion.Offset(1, 0).ClearContents
+        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
+        rgResult = .Range("R2:Z99999")
+        Call ClearRangeBorders(rgResult)
+        rgResult.ClearContents
         Set rgData = .Range("C1").CurrentRegion
-        Set rgCriteria = .Range("N2:P3")
         .Range("N3").value = GLNo
-        '.Range("O3").value = minD
-        '.Range("P3").value = maxD
+        '.Range("O3").value = ">=" & minD
+        .Range("O3").value = ">=" & "01-01-2023"
+        '.Range("P3").value = "<=" & maxD
+        .Range("P3").value = "<=" & "06-30-2023"
+        
+        Set rgCriteria = .Range("N2:P3")
         Set rgCopyToRange = .Range("R1").CurrentRegion.Rows(1)
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
-        With .Range("R2").CurrentRegion
-            .Borders(xlEdgeTop).LineStyle = xlNone
-            .Borders(xlEdgeRight).LineStyle = xlNone
-            .Borders(xlEdgeBottom).LineStyle = xlNone
-            .Borders(xlEdgeLeft).LineStyle = xlNone
-            .Borders(xlInsideVertical).LineStyle = xlNone
-            .Borders(xlInsideHorizontal).LineStyle = xlNone
-        End With
-    
+        Dim lastResultRow
+        lastResultRow = .Range("M999999").End(xlUp).row
+        If lastResultRow < 6 Then GoTo NoSort
+        With .Sort
+            .SortFields.Clear
+            .SortFields.Add Key:=wshGLFACTrans.Range("M5"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.Add Key:=wshGLFACTrans.Range("N5"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On JE Number
+            .SetRange wshGLFACTrans.Range("M5:T" & lastResultRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
     End With
+
+NoSort:
 
     Application.EnableEvents = True
 
+End Sub
+
+Sub TESTEST()
+
+    With wshBaseHours
+        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
+        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Application.ScreenUpdating = False
+        On Error Resume Next
+        .Names("Criterial").Delete
+        On Error GoTo 0
+        'Advanced Filter applied to BaseHours
+        .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("R2:W3"), _
+            CopyToRange:=.Range("Y2:AL2"), _
+            Unique:=True
+        lastResultRow = .Range("Y999999").End(xlUp).row
+        If lastResultRow < 4 Then GoTo NoSort
+        With .Sort
+            .SortFields.Clear
+            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+            .SortFields.Add Key:=wshBaseHours.Range("Z3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+NoSort:
+    End With
 End Sub
