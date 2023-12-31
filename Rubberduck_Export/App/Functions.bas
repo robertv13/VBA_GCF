@@ -88,7 +88,7 @@ End Function
 
 Public Function ClearRangeBorders(r As Range)
 
-    MsgBox "Range to clear = " & r.Address
+    'MsgBox "Range to clear = " & r.Address
     With r
         .Borders(xlEdgeTop).LineStyle = xlNone
         .Borders(xlEdgeRight).LineStyle = xlNone
