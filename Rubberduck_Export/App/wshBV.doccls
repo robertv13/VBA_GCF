@@ -1,7 +1,6 @@
 ﻿Option Explicit
 
-'Worksheet wshBV - 2023-12-29
-Private Sub Worksheet_Change(ByVal Target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-31
 
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
@@ -10,7 +9,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Dim r As Range
         Set r = Range("J1")
         Call BuildDate(Cell, r)
-        'wshBV.Range("B1").value = wshBV.Range("J1").value 'Mise à jour des contrôles
+        
+        Call UpdateBV 'Automatically recalculate Trial Balance
+        
         Application.EnableEvents = True
     End If
 
@@ -20,23 +21,28 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If Not Intersect(Target, wshBV.Range("D4:G" & Range("B2").value)) Is Nothing Then
         Application.EnableEvents = False
-'        Dim GLAcct As String, GLDescription As String, DateLimite As String
-'        GLAcct = CStr(Range("D" & Target.row).value)
-'        GLDescription = Range("E" & Target.row).value
-'        DateLimite = Range("J1").value
-'        MsgBox "La date limite (J1) est = " & DateLimite
-'
-'        Call GLTransDisplay(GLAcct, GLDescription, DateLimite)
-'
+        Dim GLAcct As String, GLDescription As String, DateLimite As String
+        GLAcct = CStr(Range("D" & Target.row).value)
+        GLDescription = Range("E" & Target.row).value
+        DateLimite = Range("J1").value
+
+        Call GLTransDisplay(GLAcct, GLDescription, DateLimite)
+        
         Application.EnableEvents = True
     End If
 
 End Sub
 
 Sub UpdateBV() 'Button 'Actualiser'
+    
+    Application.EnableEvents = False
+    
     Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
     Set planComptable = wshAdmin.Range("tbPlanComptable")
+    
+    'Clear Detail transaction section
+    wshBV.Range("L4:S99999").ClearContents
     
     'Clear contents & formats for TB cells
     lastRow = wshBV.Range("D99999").End(xlUp).row
@@ -44,6 +50,9 @@ Sub UpdateBV() 'Button 'Actualiser'
         .ClearContents
         .ClearFormats
     End With
+    
+    'Add the cut-off date in the header (printing purposes)
+    wshBV.Range("C2").value = "au " & wshBV.Range("J1").value
 
     minDate = CDate("01/01/2023")
     dateCutOff = CDate(wshBV.Range("J1").value)
@@ -61,24 +70,38 @@ Sub UpdateBV() 'Button 'Actualiser'
         If wshGLFACTrans.Range("V" & r).value <> BreakGLNo Then
             Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
             BreakGLNo = wshGLFACTrans.Range("V" & r).value
-           oldDesc = wshGLFACTrans.Range("W2").value
+           oldDesc = wshGLFACTrans.Range("W" & r).value
             solde = 0
         End If
         solde = solde + wshGLFACTrans.Range("X" & r).value - wshGLFACTrans.Range("Y" & r).value
     Next r
-    Debug.Print "BV est complétée !"
+    
     Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
     
-    r = wshBV.Range("B3").value + 3
+    r = wshBV.Range("B3").value + 1
     
-    setBVTotals r, 6
-    setBVTotals r, 7
+    setBVTotals r, 6 'Débit
+    setBVTotals r, 7 'Crédit
+    
+    Dim CenterHeaderTxt As String
+    CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
+    With ActiveSheet.PageSetup
+        .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
+        .PrintArea = "$D$1:$G$" & r
+        .Orientation = xlPortrait
+        .FitToPagesWide = 1
+        .FitToPagesTall = 1
+    End With
 
-    wshBV.Range("B2").value = wshBV.Range("B3").value + 3
+    wshBV.Range("B2").value = r - 2
+  
+    Application.EnableEvents = True
   
 End Sub
 
 Sub setBVTotals(r As Long, c As Long)
+
+    Dim sumRange As Range
 
     With wshBV.Cells(r, c).Borders(xlEdgeTop)
         .LineStyle = xlContinuous
@@ -92,43 +115,20 @@ Sub setBVTotals(r As Long, c As Long)
         .TintAndShade = 0
         .Weight = xlMedium
     End With
+    
     wshBV.Cells(r, c).Font.Bold = True
+    wshBV.Cells(r, c).NumberFormat = "#,##0.00 $"
+    Set sumRange = Range(Cells(4, c), Cells(r - 1, c))
     
-    'Ajoute la formule SUM() aux colonnes Débit et Crédit
-    wshBV.Range("F" & r).Formula = "=SUM(F4:F" & r - 1 & ")"
-    wshBV.Range("G" & r).Formula = "=SUM(G4:G" & r - 1 & ")"
-    
-    'Force le format de la colonne F & G
-    wshBV.Range("F" & r).NumberFormat = "#,##0.00 $"
-    wshBV.Range("G" & r).NumberFormat = "#,##0.00 $"
+    wshBV.Cells(r, c).value = Application.WorksheetFunction.Sum(sumRange)
 
 End Sub
-
-'Function GetBalance(GL As String, d As Date) As Currency
-'
-'    Dim lastRowTrans, startRow, rowTrans As Long, dd As Date
-'    Dim solde As Currency
-'
-'    lastRowTrans = wshGLFACTrans.Cells(Rows.count, "D").End(xlUp).row
-'    startRow = 2
-'
-'    dd = d
-'    Call SetGLTransAdvancedFilter(GL, "01-01-2023", dd)
-'
-'    For rowTrans = startRow To lastRowTrans
-'        If wshGL.Range("G" & rowTrans).value = GL And Format(wshGL.Range("D" & rowTrans).value, "yyyymmdd") <= d Then
-'            Debug.Print Tab(5); "Sub GetBalance - ", wshGL.Range("G" & rowTrans).value, wshGL.Range("D" & rowTrans).value
-'            GetBalance = GetBalance + wshGL.Range("I" & rowTrans).value - wshGL.Range("J" & rowTrans).value
-'        End If
-'    Next
-'End Function
 
 Sub GLTransDisplay(GLAcct As String, GLDesc As String, maxDate As String) 'Display GL Trans for a specific account
 
     'Clear the display area & display the account number & description
-    
-    wshBV.Range("M5").CurrentRegion.ClearContents
-    wshBV.Range("M5").CurrentRegion.ClearFormats
+    wshBV.Range("R5:R99999").ClearFormats
+    wshBV.Range("M5:S99999").ClearContents
     
     wshBV.Range("L4").Font.Bold = True
     wshBV.Range("L4").value = GLAcct & " - " & GLDesc
@@ -137,103 +137,58 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, maxDate As String) 'Displ
     Dim minD As Date, maxD As Date
     minD = CDate(Format("01-01-2023", "mm-dd-yyyy"))
     maxD = CDate(Format(maxDate, "mm-dd-yyyy"))
-    MsgBox "MinDate = " & minD & " - MaxDate = " & maxD
     
-    Call SetGLTransAdvancedFilter(GLAcct, minD, maxD)
+'    Call AdvancedFilterGLTrans(GLAcct, minD, maxD)
+    'Use the Advanced Filter Result already prepard for TB
+    Dim foundRow As Long, lastResultRow As Long
+    lastResultRow = wshGLFACTrans.Range("S99999").End(xlUp).row
+    foundRow = 0
     
-    With wshGLFACTrans
-        'Analyse des transactions détaillées
-        Dim r As Long, RowGLFirst As Long, RowGLMax As Long, rowGLDetail As Long
-        RowGLFirst = 2
-        RowGLMax = wshGLFACTrans.Range("R999999").End(xlUp).row  'Last Row used in wshGLFACTrans (Transactions)
-        rowGLDetail = 5
-
-        For r = RowGLFirst To RowGLMax
-            'Debug.Print Tab(10); "GLTransDisplay - ", .Range("R" & r).value, .Range("S" & r).value, .Range("T" & r).value, .Range("W" & r).value, .Range("X" & r).value, .Range("S" & r).value
-            wshBV.Range("M" & rowGLDetail).value = .Range("R" & r).value
-            wshBV.Range("N" & rowGLDetail).value = .Range("S" & r).value
-            wshBV.Range("O" & rowGLDetail).value = .Range("T" & r).value
-            wshBV.Range("P" & rowGLDetail).value = .Range("W" & r).value
-            wshBV.Range("Q" & rowGLDetail).value = .Range("X" & r).value
-            wshBV.Range("S" & rowGLDetail).value = .Range("S" & r).value
-            rowGLDetail = rowGLDetail + 1
-        Next
-        
-    End With
-    wshBV.Range("R4").value = 0
-    Dim rowGLDetailMax As Long
-    rowGLDetailMax = wshBV.Range("M99999").End(xlUp).row
-    For r = 5 To rowGLDetailMax
-        wshBV.Range("R" & r).value = wshBV.Range("R" & r - 1).value + wshBV.Range("P" & r).value - wshBV.Range("Q" & r).value
-        If r = 5 Or r <> rowGLDetailMax Then
-        wshBV.Range("R" & r).Font.Bold = False
+    ' Loop through each row in the search range
+    For Each row In wshGLFACTrans.Range("V2:V" & lastResultRow).Rows
+        If row.Cells(1, 1).value = GLAcct Then
+            'Store the row number and exit the loop
+            foundRow = row.row
+            Exit For
         End If
-    Next r
-    wshBV.Range("R" & r - 1).Font.Bold = True
-    With wshBV.Range("R" & r - 1).Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -4.99893185216834E-02
-        .PatternTintAndShade = 0
-    End With
+    Next row
+    
+    ' Check if the target value was found
+    If foundRow = 0 Then
+        MsgBox "Target value not found in the specified range."
+        Exit Sub
+    End If
+    
+    Dim rowGLDetail As Long
+    rowGLDetail = 5
+    wshBV.Range("R4").value = 0
+    
+    Do Until wshGLFACTrans.Range("V" & foundRow).value <> GLAcct
+        'Traitement des transactions détaillées
+        wshBV.Range("M" & rowGLDetail).value = wshGLFACTrans.Range("S" & foundRow).value
+        wshBV.Range("N" & rowGLDetail).value = wshGLFACTrans.Range("T" & foundRow).value
+        wshBV.Range("O" & rowGLDetail).value = wshGLFACTrans.Range("U" & foundRow).value
+        wshBV.Range("P" & rowGLDetail).value = wshGLFACTrans.Range("X" & foundRow).value
+        wshBV.Range("Q" & rowGLDetail).value = wshGLFACTrans.Range("Y" & foundRow).value
+        wshBV.Range("R" & rowGLDetail).value = wshBV.Range("R" & rowGLDetail - 1).value + _
+            wshGLFACTrans.Range("X" & foundRow).value - wshGLFACTrans.Range("Y" & foundRow).value
+        wshBV.Range("S" & rowGLDetail).value = wshGLFACTrans.Range("Z" & foundRow).value
+        foundRow = foundRow + 1
+        rowGLDetail = rowGLDetail + 1
+    Loop
+        wshBV.Range("R" & rowGLDetail - 1).Font.Bold = True
+        With wshBV.Range("R" & rowGLDetail - 1).Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorDark1
+            .TintAndShade = -4.99893185216834E-02
+            .PatternTintAndShade = 0
+        End With
 
 End Sub
 
-'Sub SetGLTransAdvancedFilter(GLNo As String, minD As Date, maxD As Date)
-'
-'    Application.EnableEvents = False
-'
-'    Debug.Print "GetGLTrans - ", GLNo, minD, maxD
-'
-'    With wshGLFACTrans
-'
-'        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-'        rgResult = .Range("R2:Z99999")
-'        Call ClearRangeBorders(rgResult)
-'        rgResult.ClearContents
-'        Set rgData = .Range("C1").CurrentRegion
-'        .Range("N3").value = GLNo
-'        .Range("O3").value = ">=" & minD
-'        '.Range("O3").value = ">=" & "01-01-2023"
-'        .Range("P3").value = "<=" & maxD
-'        '.Range("P3").value = "<=" & "06-30-2023"
-'
-'        Set rgCriteria = .Range("N2:P3")
-'        Set rgCopyToRange = .Range("R1").CurrentRegion.Rows(1)
-'
-'        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
-'
-'        Dim lastResultRow
-'        lastResultRow = .Range("M999999").End(xlUp).row
-'        If lastResultRow < 6 Then GoTo NoSort
-'        With .Sort
-'            .SortFields.Clear
-'            .SortFields.Add Key:=wshGLFACTrans.Range("M5"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based On Date
-'            .SortFields.Add Key:=wshGLFACTrans.Range("N5"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based On JE Number
-'            .SetRange wshGLFACTrans.Range("M5:T" & lastResultRow) 'Set Range
-'            .Apply 'Apply Sort
-'         End With
-'    End With
-'
-'NoSort:
-'
-'    Application.EnableEvents = True
-'
-'End Sub
-
 Sub AdvancedFilterGLTrans(GLNo As String, minDate As Date, maxDate As Date)
 
-    Debug.Print "AdvancedFilterGlTrans - GLNo = '" & GLNo & "' - MinDate=" & minDate & " MaxDate=" & maxDate
-    
-    Application.EnableEvents = False
-    
     With wshGLFACTrans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("R2").CurrentRegion
@@ -242,12 +197,10 @@ Sub AdvancedFilterGLTrans(GLNo As String, minDate As Date, maxDate As Date)
         Set rgData = .Range("C1").CurrentRegion
         .Range("N3").value = GLNo
         .Range("O3").value = ">=" & Format(minDate, "mm-dd-yyyy")
-'        .Range("O3").value = ">=" & "01-01-2023"
         .Range("P3").value = "<=" & Format(maxDate, "mm-dd-yyyy")
-'        .Range("P3").value = "<=" & "12-31-2023"
         
         Set rgCriteria = .Range("N2:P3")
-        Set rgCopyToRange = .Range("R1").CurrentRegion.Offset(1, 0).Rows(1)
+        Set rgCopyToRange = .Range("R1")
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
@@ -268,14 +221,12 @@ Sub AdvancedFilterGLTrans(GLNo As String, minDate As Date, maxDate As Date)
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On JE Number
-            .SetRange wshGLFACTrans.Range("R1:AA" & lastResultRow) 'Set Range
+            .SetRange wshGLFACTrans.Range("R2:AA" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
     End With
 
 NoSort:
-
-    Application.EnableEvents = True
 
 End Sub
 
