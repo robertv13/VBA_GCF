@@ -1,14 +1,14 @@
 ﻿Option Explicit
 
-Private Sub lblPaiement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblPaiement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     SlideOut_Paiement
 End Sub
 
-Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     SlideIn_Paiement
 End Sub
 
-Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     MsgBox "This is mouse move"
 End Sub
 

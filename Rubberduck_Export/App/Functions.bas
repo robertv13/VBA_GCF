@@ -3,13 +3,13 @@ Option Explicit
 
 Function GetID_FromInitials(i As String)
 
-    Dim Cell As Range
+    Dim cell As Range
     
-    For Each Cell In wshAdmin.Range("Prof_Initiales")
-        If Cell.Value2 = i Then
-            GetID_FromInitials = Cell.Offset(0, 1).value
+    For Each cell In wshAdmin.Range("Prof_Initiales")
+        If cell.Value2 = i Then
+            GetID_FromInitials = cell.Offset(0, 1).value
         End If
-    Next Cell
+    Next cell
 
 End Function
 

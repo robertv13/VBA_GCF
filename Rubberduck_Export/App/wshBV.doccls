@@ -4,11 +4,11 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
 
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
-        Dim Cell As String
-        Cell = Trim(Range("J1").value)
+        Dim cell As String
+        cell = Trim(Range("J1").value)
         Dim r As Range
         Set r = Range("J1")
-        Call BuildDate(Cell, r)
+        Call BuildDate(cell, r)
         
         Call UpdateBV 'Automatically recalculate Trial Balance
         
@@ -80,9 +80,10 @@ Sub UpdateBV() 'Button 'Actualiser'
     
     r = wshBV.Range("B3").value + 1
     
-    setBVTotals r, 6 'Débit
-    setBVTotals r, 7 'Crédit
+    DisplayTBTotals r, 6 'Débit
+    DisplayTBTotals r, 7 'Crédit
     
+    'Setup page for printing purposes
     Dim CenterHeaderTxt As String
     CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
     With ActiveSheet.PageSetup
@@ -99,7 +100,7 @@ Sub UpdateBV() 'Button 'Actualiser'
   
 End Sub
 
-Sub setBVTotals(r As Long, c As Long)
+Sub DisplayTBTotals(r As Long, c As Long)
 
     Dim sumRange As Range
 

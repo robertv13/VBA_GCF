@@ -141,7 +141,7 @@ Sub InvoiceGetAllTrans(inv As String)
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+'            .SortFields.Add Key:=wshGLFACTrans.Range("Y3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On TEC_ID

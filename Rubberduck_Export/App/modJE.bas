@@ -19,28 +19,28 @@ Sub JE_Post()
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
     FromJE2GL RowEJLast, rowGLTrans
 
-    'Les lignes subséquentes sont en police blanche...
-    With wshGL.Range("D" & (rowGLTransFirst + 1) & ":F" & (rowGLTrans - 1)).Font
-        .Color = vbWhite
-    End With
+'    'Les lignes subséquentes sont en police blanche...
+'    With wshGL.Range("D" & (rowGLTransFirst + 1) & ":F" & (rowGLTrans - 1)).Font
+'        .Color = vbWhite
+'    End With
     
-    'Ajoute des bordures à l'entrée de journal (extérieur)
-    Dim r1 As Range
-    Set r1 = wshGL.Range("D" & rowGLTransFirst & ":K" & (rowGLTrans - 2))
-    r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
-    
-    With wshGL.Range("H" & (rowGLTrans - 2) & ":K" & (rowGLTrans - 2))
-        .Font.Italic = True
-        .Font.Bold = True
-        With .Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorDark1
-            .TintAndShade = -0.149998474074526
-            .PatternTintAndShade = 0
-        End With
-        .Borders(xlInsideVertical).LineStyle = xlNone
-    End With
+'    'Ajoute des bordures à l'entrée de journal (extérieur)
+'    Dim r1 As Range
+'    Set r1 = wshGL.Range("D" & rowGLTransFirst & ":K" & (rowGLTrans - 2))
+'    r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
+'
+'    With wshGL.Range("H" & (rowGLTrans - 2) & ":K" & (rowGLTrans - 2))
+'        .Font.Italic = True
+'        .Font.Bold = True
+'        With .Interior
+'            .Pattern = xlSolid
+'            .PatternColorIndex = xlAutomatic
+'            .ThemeColor = xlThemeColorDark1
+'            .TintAndShade = -0.149998474074526
+'            .PatternTintAndShade = 0
+'        End With
+'        .Borders(xlInsideVertical).LineStyle = xlNone
+'    End With
     
     If wshJE.ckbRecurrente = True Then
         SaveEJRecurrente RowEJLast
@@ -162,14 +162,14 @@ Sub wshJEClearAllCells()
 
 End Sub
 
-Sub BuildDate(Cell As String, r As Range)
+Sub BuildDate(cell As String, r As Range)
         Dim d, m, y As Integer
         Dim strDateJour, strDateConsruite As String
         Dim dateValide As Boolean
         dateValide = True
 
-        Cell = Replace(Cell, "/", "")
-        Cell = Replace(Cell, "-", "")
+        cell = Replace(cell, "/", "")
+        cell = Replace(cell, "-", "")
 
         'Utilisation de la date du jour
         strDateJour = Now
@@ -177,19 +177,19 @@ Sub BuildDate(Cell As String, r As Range)
         m = Month(strDateJour)
         y = Year(strDateJour)
 
-        Select Case Len(Cell)
+        Select Case Len(cell)
             Case 0
                 strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
             Case 1, 2
-                strDateConsruite = Format(Cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
             Case 3
-                strDateConsruite = Format(Left(Cell, 1), "00") & "/" & Format(Mid(Cell, 2, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
             Case 4
-                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
             Case 6
-                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & "20" & Format(Mid(Cell, 5, 2), "00")
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
             Case 8
-                strDateConsruite = Format(Left(Cell, 2), "00") & "/" & Format(Mid(Cell, 3, 2), "00") & "/" & Format(Mid(Cell, 5, 4), "0000")
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
             Case Else
                 dateValide = False
         End Select
@@ -240,3 +240,168 @@ Function IsEcritureValide(rmax As Long) As Boolean
     End If
 
 End Function
+
+Sub GLTrans_Import() '2024-01-01 @ 09:30
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshGLFACTrans.Range("C1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-01-01 @ 08:30
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("GLTrans").UsedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshGLFACTrans.Range("C1")
+
+    'Copy data, using Range to Range
+    sourceRange.Copy destinationRange
+    wshGLFACTrans.Range("C1").CurrentRegion.EntireColumn.AutoFit
+
+    'Close the source workbook, without saving it
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshGLFACTrans.Range("C999999").End(xlUp).row
+    
+    With wshGLFACTrans
+        With .Range("C2" & ":L" & lastRow)
+            .HorizontalAlignment = xlCenter
+        End With
+        With .Range("F2:F" & lastRow & ", H2:H" & lastRow & ", K2:K" & lastRow)
+            .HorizontalAlignment = xlLeft
+        End With
+        With .Range("I2:I" & lastRow & ", J2:J" & lastRow)
+            .HorizontalAlignment = xlRight
+        End With
+        .Range("I2:I" & lastRow & ", J2:J" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("D2:D" & lastRow).NumberFormat = "dd/mm/yyyy"
+    End With
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub AddGLTransToDB(r As Long) 'Write/Update a record to external .xlsx file
+    Dim FullFileName As String
+    Dim SheetName As String
+    Dim conn As Object
+    Dim rs As Object
+    Dim strSQL As String
+    Dim maxID As Long
+    Dim lastRow As Long
+    Dim nextID As Long
+    
+    Application.ScreenUpdating = False
+    
+    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    SheetName = "GLTrans"
+    
+    'Initialize connection, connection string & open the connection
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Initialize recordset
+    Set rs = CreateObject("ADODB.Recordset")
+
+    If r < 0 Then 'Soft delete
+        'Open the recordset for the specified ID
+        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & Abs(r), conn, 2, 3
+        If Not rs.EOF Then
+            'Update the "IsDeleted" field to mark the record as deleted
+            rs.Fields("DateSaisie").value = Now
+            rs.Fields("EstDetruit").value = True
+            rs.Fields("VersionApp").value = gAppVersion
+            rs.Update
+        Else
+            ' Handle the case where the specified ID is not found
+            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+            rs.Close
+            conn.Close
+            Exit Sub
+        End If
+    Else
+        'If r is 0, add a new record; otherwise, update an existing record
+        If r = 0 Then 'Add a record
+        'SQL select command to find the next available ID
+            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
+        
+            'Open recordset to find out the MaxID
+            rs.Open strSQL, conn
+            
+            'Get the last used row
+            If IsNull(rs.Fields("MaxID").value) Then
+                ' Handle empty table (assign a default value, e.g., 1)
+                lastRow = 1
+            Else
+                lastRow = rs.Fields("MaxID").value
+            End If
+            
+            'Calculate the new ID
+            nextID = lastRow + 1
+        
+            'Close the previous recordset, no longer needed and open an empty recordset
+            rs.Close
+            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+            rs.AddNew
+            
+            'Add fields to the recordset before updating it
+            rs.Fields("TEC_ID").value = nextID
+            rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
+            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
+            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
+            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
+            rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
+            rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
+            rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+            rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
+            rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+            rs.Fields("DateSaisie").value = Now
+            rs.Fields("EstFacturee").value = False
+            rs.Fields("DateFacturee").value = ""
+            rs.Fields("EstDetruit").value = False
+            rs.Fields("VersionApp").value = gAppVersion
+            rs.Fields("NoFacture").value = ""
+        Else 'Update an existing record
+            'Open the recordset for the specified ID
+            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+            If Not rs.EOF Then
+                'Update fields for the existing record
+                rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
+                rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
+                rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
+                rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
+                rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
+                rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+                rs.Fields("DateSaisie").value = Now
+                rs.Fields("VersionApp").value = gAppVersion
+            Else
+                'Handle the case where the specified ID is not found
+                MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+                rs.Close
+                conn.Close
+                Exit Sub
+            End If
+        End If
+    End If
+
+    'Update the recordset (create the record)
+    rs.Update
+    rs.Close
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+End Sub

@@ -112,6 +112,34 @@ Sub GetAllRecordsFromAClosedWorkbook()
     
 End Sub
 
+Sub ListAllProceduresAndAllFunctions()
+    Dim vbComp As Object
+    Dim vbCodeMod As Object
+    Dim lineNum As Long
+    Dim procName As String
+    
+    'Loop through all components (modules, forms, etc.) in the workbook
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        'Debug.Print vbComp.Name
+        'Check if the component is a code module
+        If vbComp.Type = 1 Then
+            ' Get the code module for the component
+            Set vbCodeMod = vbComp.CodeModule
+            
+            'Loop through all lines in the code module
+            For lineNum = 1 To vbCodeMod.CountOfLines
+                'Check if the line contains a procedure or function
+                If Left(Trim(vbCodeMod.Lines(lineNum, 1)), 1) = "Sub" Or Left(Trim(vbCodeMod.Lines(lineNum, 1)), 3) = "Function" Then
+                    'Extract the procedure or function name
+                    procName = Mid(Trim(vbCodeMod.Lines(lineNum, 1)), 4)
+                    
+                    'Print the name to the Immediate Window
+                    Debug.Print vbComp.Name & ": " & Trim(procName)
+                End If
+            Next lineNum
+        End If
+    Next vbComp
+End Sub
 
 
 
