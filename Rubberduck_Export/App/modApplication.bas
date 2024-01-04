@@ -35,3 +35,11 @@ Sub GetShapeProperties() 'List Properties of all the shapes
         End With
     Next sShapes
 End Sub
+
+Public Sub ClearImmediateWindow()
+    Dim i As Integer
+    For i = 1 To 5 ' Adjust the number of lines based on your preference
+        Debug.Print ""
+    Next i
+End Sub
+

@@ -137,18 +137,17 @@ End Sub
 
 Sub BuildDate(cell As String, r As Range)
         Dim d, m, y As Integer
-        Dim strDateJour, strDateConsruite As String
+        Dim strDateConsruite As String
         Dim dateValide As Boolean
         dateValide = True
 
         cell = Replace(cell, "/", "")
         cell = Replace(cell, "-", "")
 
-        'Utilisation de la date du jour
-        strDateJour = Now
-        d = Day(strDateJour)
-        m = Month(strDateJour)
-        y = Year(strDateJour)
+        'Utilisation de la date du jour pour valuer par défaut
+        d = Day(Now())
+        m = Month(Now())
+        y = Year(Now())
 
         Select Case Len(cell)
             Case 0

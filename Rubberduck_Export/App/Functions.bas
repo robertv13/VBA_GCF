@@ -99,3 +99,5 @@ Public Function ClearRangeBorders(r As Range)
     End With
 
 End Function
+
+
