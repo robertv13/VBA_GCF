@@ -15,6 +15,19 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = True
     End If
 
+    If Not Intersect(Target, Range("S4")) Is Nothing Then 'Dates have changed
+        Application.EnableEvents = False
+        
+        Call DetermineFromAndToDate(Range("S4").value)
+                
+        'Automatically redisplay GL Transactions details
+'        MsgBox "Date de : " & Range("B6").value & " " & Range("B6").Value2
+'        MsgBox "Date à : " & Range("B7").value & " " & Range("B7").Value2
+        Call GLTransDisplay(Range("B4").value, Range("B5").value, CDate(Range("B6").value), CDate(Range("B7").value))
+        
+        Application.EnableEvents = True
+    End If
+
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
@@ -26,7 +39,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         GLDescription = Range("E" & Target.row).value
         DateLimite = Range("J1").value
 
-        Call GLTransDisplay(GLAcct, GLDescription, DateLimite)
+        Call GLTransDisplay(GLAcct, GLDescription, "01-01-2023", DateLimite)
         
         Application.EnableEvents = True
     End If
@@ -36,6 +49,8 @@ End Sub
 Sub UpdateBV() 'Button 'Actualiser'
     
     Application.EnableEvents = False
+    
+    Call GLTrans_Import
     
     Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
@@ -125,27 +140,30 @@ Sub DisplayTBTotals(r As Long, c As Long)
 
 End Sub
 
-Sub GLTransDisplay(GLAcct As String, GLDesc As String, maxDate As String) 'Display GL Trans for a specific account
+Sub GLTransDisplay(GLAcct As String, GLDesc As String, minDate As Date, maxDate As String) 'Display GL Trans for a specific account
 
     'Clear the display area & display the account number & description
     wshBV.Range("R5:R99999").ClearFormats
     wshBV.Range("M5:S99999").ClearContents
+    wshBV.Range("L2").value = minDate & " au " & maxDate
     
     wshBV.Range("L4").Font.Bold = True
     wshBV.Range("L4").value = GLAcct & " - " & GLDesc
+    wshBV.Range("B4").value = GLAcct
+    wshBV.Range("B5").value = GLDesc
     
     'Prepare starting date & cut-off date
     Dim minD As Date, maxD As Date
-    minD = CDate(Format("01-01-2023", "mm-dd-yyyy"))
-    maxD = CDate(Format(maxDate, "mm-dd-yyyy"))
+'    minD = CDate(Format(minDate, "mm-dd-yyyy"))
+'    maxD = CDate(Format(maxDate, "mm-dd-yyyy"))
+    MsgBox "Date minimum = " & minDate & " et Date Maximum = " & maxDate
     
-'    Call AdvancedFilterGLTrans(GLAcct, minD, maxD)
-    'Use the Advanced Filter Result already prepard for TB
-    Dim foundRow As Long, lastResultRow As Long
+    'Use the Advanced Filter Result already prepared for TB
+    Dim row As Range, foundRow As Long, lastResultRow As Long
     lastResultRow = wshGLFACTrans.Range("S99999").End(xlUp).row
     foundRow = 0
     
-    ' Loop through each row in the search range
+    'Loop through each row in the search range
     For Each row In wshGLFACTrans.Range("V2:V" & lastResultRow).Rows
         If row.Cells(1, 1).value = GLAcct Then
             'Store the row number and exit the loop
@@ -164,18 +182,26 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, maxDate As String) 'Displ
     rowGLDetail = 5
     wshBV.Range("R4").value = 0
     
+    MsgBox "Date minimum = " & minDate & " et Date Maximum = " & maxDate
+    
     Do Until wshGLFACTrans.Range("V" & foundRow).value <> GLAcct
         'Traitement des transactions détaillées
-        wshBV.Range("M" & rowGLDetail).value = wshGLFACTrans.Range("S" & foundRow).value
-        wshBV.Range("N" & rowGLDetail).value = wshGLFACTrans.Range("T" & foundRow).value
-        wshBV.Range("O" & rowGLDetail).value = wshGLFACTrans.Range("U" & foundRow).value
-        wshBV.Range("P" & rowGLDetail).value = wshGLFACTrans.Range("X" & foundRow).value
-        wshBV.Range("Q" & rowGLDetail).value = wshGLFACTrans.Range("Y" & foundRow).value
-        wshBV.Range("R" & rowGLDetail).value = wshBV.Range("R" & rowGLDetail - 1).value + _
-            wshGLFACTrans.Range("X" & foundRow).value - wshGLFACTrans.Range("Y" & foundRow).value
-        wshBV.Range("S" & rowGLDetail).value = wshGLFACTrans.Range("Z" & foundRow).value
-        foundRow = foundRow + 1
-        rowGLDetail = rowGLDetail + 1
+        If wshGLFACTrans.Range("S" & foundRow).value >= minDate And _
+            wshGLFACTrans.Range("S" & foundRow).value <= maxDate Then
+            wshBV.Range("M" & rowGLDetail).value = wshGLFACTrans.Range("S" & foundRow).value
+            wshBV.Range("N" & rowGLDetail).value = wshGLFACTrans.Range("T" & foundRow).value
+            wshBV.Range("O" & rowGLDetail).value = wshGLFACTrans.Range("U" & foundRow).value
+            wshBV.Range("P" & rowGLDetail).value = wshGLFACTrans.Range("X" & foundRow).value
+            wshBV.Range("Q" & rowGLDetail).value = wshGLFACTrans.Range("Y" & foundRow).value
+            wshBV.Range("R" & rowGLDetail).value = wshBV.Range("R" & rowGLDetail - 1).value + _
+                wshGLFACTrans.Range("X" & foundRow).value - wshGLFACTrans.Range("Y" & foundRow).value
+            wshBV.Range("S" & rowGLDetail).value = wshGLFACTrans.Range("Z" & foundRow).value
+            foundRow = foundRow + 1
+            rowGLDetail = rowGLDetail + 1
+        Else
+            foundRow = foundRow + 1
+            Debug.Print wshGLFACTrans.Range("S" & foundRow).value & " min " & minDate & " max " & maxDate
+        End If
     Loop
         wshBV.Range("R" & rowGLDetail - 1).Font.Bold = True
         With wshBV.Range("R" & rowGLDetail - 1).Interior
@@ -244,5 +270,79 @@ Sub GLTransSubTotal(GLNo As String, GLDesc As String, s As Currency)
         wshBV.Range("G" & r).value = -s
     End If
     wshBV.Range("B3").value = wshBV.Range("B3").value + 1
+    
+End Sub
+Sub GLTrans_Import() '2024-01-01 @ 09:30
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshGLFACTrans.Range("C1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-01-01 @ 08:30
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("GLTrans").UsedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshGLFACTrans.Range("C1")
+
+    'Copy data, using Range to Range
+    sourceRange.Copy destinationRange
+    wshGLFACTrans.Range("C1").CurrentRegion.EntireColumn.AutoFit
+
+    'Close the source workbook, without saving it
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshGLFACTrans.Range("C999999").End(xlUp).row
+    
+    With wshGLFACTrans
+        With .Range("C2" & ":L" & lastRow)
+            .HorizontalAlignment = xlCenter
+        End With
+        With .Range("F2:F" & lastRow & ", H2:H" & lastRow & ", K2:K" & lastRow)
+            .HorizontalAlignment = xlLeft
+        End With
+        With .Range("I2:I" & lastRow & ", J2:J" & lastRow)
+            .HorizontalAlignment = xlRight
+        End With
+        .Range("I2:I" & lastRow & ", J2:J" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("D2:D" & lastRow).NumberFormat = "dd/mm/yyyy"
+    End With
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub DetermineFromAndToDate(period As String)
+
+    Select Case period
+        Case "Mois"
+            wshBV.Range("B6").value = wshAdmin.Range("MoisDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("MoisA").value
+        Case "Mois dernier"
+            wshBV.Range("B6").value = wshAdmin.Range("MoisPrecDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("MoisPrecA").value
+        Case "Trimestre"
+            wshBV.Range("B6").value = wshAdmin.Range("TrimDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("TrimA").value
+        Case "Trimestre dernier"
+            wshBV.Range("B6").value = wshAdmin.Range("TrimPrecDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("TrimPrecA").value
+        Case "Année"
+            wshBV.Range("B6").value = wshAdmin.Range("AnneeDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("AnneeA").value
+        Case "Année dernière"
+            wshBV.Range("B6").value = wshAdmin.Range("AnneePrecDe").value
+            wshBV.Range("B7").value = wshAdmin.Range("AnneePrecA").value
+        Case "Dates manuelles"
+            wshBV.Range("B6").value = CDate("01-01-2023")
+            wshBV.Range("B7").value = CDate("12-31-2023")
+    End Select
     
 End Sub

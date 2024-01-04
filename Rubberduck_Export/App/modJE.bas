@@ -7,17 +7,17 @@ Sub JE_Post()
     
     If IsEcritureBalance = False Then Exit Sub
     
-    Dim RowEJLast As Long
-    RowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
-    If IsEcritureValide(RowEJLast) = False Then Exit Sub
+    Dim rowEJLast As Long
+    rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
+    If IsEcritureValide(rowEJLast) = False Then Exit Sub
     
     Dim rowGLTrans, rowGLTransFirst As Long
     'Détermine la prochaine ligne disponible
-    rowGLTrans = wshGL.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
+    rowGLTrans = wshGLFACTrans.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
     rowGLTransFirst = rowGLTrans
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
-    FromJE2GL RowEJLast, rowGLTrans
+    Call AddGLTransRecordToDB(rowEJLast)
 
 '    'Les lignes subséquentes sont en police blanche...
 '    With wshGL.Range("D" & (rowGLTransFirst + 1) & ":F" & (rowGLTrans - 1)).Font
@@ -43,7 +43,7 @@ Sub JE_Post()
 '    End With
     
     If wshJE.ckbRecurrente = True Then
-        SaveEJRecurrente RowEJLast
+        SaveEJRecurrente rowEJLast
     End If
     
     With wshJE
@@ -53,33 +53,6 @@ Sub JE_Post()
         .Range("E4").Activate
     End With
     
-End Sub
-
-Sub FromJE2GL(rEJLast As Long, ByRef rGLTrans)
-
-    Dim l As Long
-    With wshGL
-        For l = 9 To rEJLast + 2
-            .Range("C" & rGLTrans).value = wshJE.Range("B1").value
-            .Range("D" & rGLTrans).value = Format(CDate(wshJE.Range("J4").value), "dd/mm/yyyy")
-            .Range("E" & rGLTrans).value = wshJE.Range("B1").value
-            .Range("F" & rGLTrans).value = wshJE.Range("E4").value
-            If l <= rEJLast Then
-                .Range("G" & rGLTrans).value = wshJE.Range("K" & l).value
-                .Range("H" & rGLTrans).value = wshJE.Range("D" & l).value
-                .Range("I" & rGLTrans).value = wshJE.Range("G" & l).value
-                .Range("J" & rGLTrans).value = wshJE.Range("H" & l).value
-                .Range("K" & rGLTrans).value = wshJE.Range("I" & l).value
-            Else
-                If l = rEJLast + 1 Then
-                    .Range("H" & rGLTrans).value = wshJE.Range("E6").value
-                End If
-            End If
-            .Range("L" & rGLTrans).value = "=ROW()"
-            rGLTrans = rGLTrans + 1
-        Next l
-    End With
-
 End Sub
 
 Sub SaveEJRecurrente(ll As Long)
@@ -241,62 +214,13 @@ Function IsEcritureValide(rmax As Long) As Boolean
 
 End Function
 
-Sub GLTrans_Import() '2024-01-01 @ 09:30
-    
-    Application.ScreenUpdating = False
-    
-    'Clear all cells, but the headers, in the target worksheet
-    wshGLFACTrans.Range("C1").CurrentRegion.Offset(1, 0).ClearContents
-
-    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
-    Dim sourceWorkbook As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                     "GCF_BD_Sortie.xlsx" '2024-01-01 @ 08:30
-                     
-    'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("GLTrans").UsedRange
-
-    Dim destinationRange As Range
-    Set destinationRange = wshGLFACTrans.Range("C1")
-
-    'Copy data, using Range to Range
-    sourceRange.Copy destinationRange
-    wshGLFACTrans.Range("C1").CurrentRegion.EntireColumn.AutoFit
-
-    'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
-    Dim lastRow As Long
-    lastRow = wshGLFACTrans.Range("C999999").End(xlUp).row
-    
-    With wshGLFACTrans
-        With .Range("C2" & ":L" & lastRow)
-            .HorizontalAlignment = xlCenter
-        End With
-        With .Range("F2:F" & lastRow & ", H2:H" & lastRow & ", K2:K" & lastRow)
-            .HorizontalAlignment = xlLeft
-        End With
-        With .Range("I2:I" & lastRow & ", J2:J" & lastRow)
-            .HorizontalAlignment = xlRight
-        End With
-        .Range("I2:I" & lastRow & ", J2:J" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("D2:D" & lastRow).NumberFormat = "dd/mm/yyyy"
-    End With
-    
-    Application.ScreenUpdating = True
-    
-End Sub
-
-Sub AddGLTransToDB(r As Long) 'Write/Update a record to external .xlsx file
+Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
     Dim FullFileName As String
     Dim SheetName As String
     Dim conn As Object
     Dim rs As Object
     Dim strSQL As String
-    Dim maxID As Long
-    Dim lastRow As Long
-    Dim nextID As Long
+    Dim maxEJNo As Long, lastRow As Long, nextJENo As Long
     
     Application.ScreenUpdating = False
     
@@ -311,89 +235,51 @@ Sub AddGLTransToDB(r As Long) 'Write/Update a record to external .xlsx file
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
-    If r < 0 Then 'Soft delete
-        'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & Abs(r), conn, 2, 3
-        If Not rs.EOF Then
-            'Update the "IsDeleted" field to mark the record as deleted
-            rs.Fields("DateSaisie").value = Now
-            rs.Fields("EstDetruit").value = True
-            rs.Fields("VersionApp").value = gAppVersion
-            rs.Update
-        Else
-            ' Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
-            rs.Close
-            conn.Close
-            Exit Sub
-        End If
-    Else
-        'If r is 0, add a new record; otherwise, update an existing record
-        If r = 0 Then 'Add a record
-        'SQL select command to find the next available ID
-            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & SheetName & "$]"
-        
-            'Open recordset to find out the MaxID
-            rs.Open strSQL, conn
-            
-            'Get the last used row
-            If IsNull(rs.Fields("MaxID").value) Then
-                ' Handle empty table (assign a default value, e.g., 1)
-                lastRow = 1
-            Else
-                lastRow = rs.Fields("MaxID").value
-            End If
-            
-            'Calculate the new ID
-            nextID = lastRow + 1
-        
-            'Close the previous recordset, no longer needed and open an empty recordset
-            rs.Close
-            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
-            rs.AddNew
-            
-            'Add fields to the recordset before updating it
-            rs.Fields("TEC_ID").value = nextID
-            rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
-            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
-            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
-            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-            rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-            rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-            rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-            rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-            rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
-            rs.Fields("DateSaisie").value = Now
-            rs.Fields("EstFacturee").value = False
-            rs.Fields("DateFacturee").value = ""
-            rs.Fields("EstDetruit").value = False
-            rs.Fields("VersionApp").value = gAppVersion
-            rs.Fields("NoFacture").value = ""
-        Else 'Update an existing record
-            'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & SheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
-            If Not rs.EOF Then
-                'Update fields for the existing record
-                rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-                rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-                rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-                rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-                rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-                rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
-                rs.Fields("DateSaisie").value = Now
-                rs.Fields("VersionApp").value = gAppVersion
-            Else
-                'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
-                rs.Close
-                conn.Close
-                Exit Sub
-            End If
-        End If
-    End If
+    'SQL select command to find the next available ID
+    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & SheetName & "$]"
 
-    'Update the recordset (create the record)
-    rs.Update
+    'Open recordset to find out the MaxID
+    rs.Open strSQL, conn
+    
+    'Get the last used row
+    If IsNull(rs.Fields("MaxEJNo").value) Then
+        ' Handle empty table (assign a default value, e.g., 1)
+        lastRow = 1
+    Else
+        lastRow = rs.Fields("MaxEJNo").value
+    End If
+    
+    'Calculate the new ID
+    nextJENo = lastRow + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim l As Long
+    
+    For l = 9 To r + 2
+        rs.AddNew
+        'Add fields to the recordset before updating it
+        rs.Fields("No_EJ").value = nextJENo
+        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
+        rs.Fields("Numéro Écriture").value = nextJENo
+        rs.Fields("Source").value = wshJE.Range("E4").value
+        If l <= r Then
+            rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
+            rs.Fields("Compte").value = wshJE.Range("D" & l).value
+            rs.Fields("Débit").value = wshJE.Range("G" & l).value
+            rs.Fields("Crédit").value = wshJE.Range("H" & l).value
+            rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
+        Else
+            If l = r + 1 Then
+                rs.Fields("Compte").value = wshJE.Range("E6").value
+            End If
+        End If
+        rs.Fields("No.Ligne").Formula = "=LIGNE()"
+        rs.Update
+    Next l
+    
     rs.Close
     
     'Close recordset and connection
@@ -405,3 +291,4 @@ Sub AddGLTransToDB(r As Long) 'Write/Update a record to external .xlsx file
     Application.ScreenUpdating = True
 
 End Sub
+
