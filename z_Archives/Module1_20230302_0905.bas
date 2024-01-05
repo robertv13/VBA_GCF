@@ -1,0 +1,155 @@
+Attribute VB_Name = "Module1"
+Option Explicit
+
+Sub ImportMovies()
+
+    'Start the timer
+    Dim timer As New clsTimer
+    timer.start
+
+    'Delete all cells, but the headers in the destination worksheet
+    shImpMovies.Range("A1").CurrentRegion.Offset(1, 0).Clear
+    
+    'Source workbook (closed Excel file) - MUST BE IN THE SAME DIRECTORY
+    Dim sourceWorkbook As String
+    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
+        "Movies.xlsx"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = _
+        "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+        "Data Source = " & sourceWorkbook & ";" & _
+        "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.Source = "SELECT * FROM [Sheet1$]"
+        
+    recSet.Open
+    
+    'Copy to destination workbook (actual) into the 'sheet1' worksheet
+    shImpMovies.Range("A2").CopyFromRecordset recSet
+    shImpMovies.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    'Print elapsed time
+    timer.PrintTime " to import Movies (1,200 rows, 14 columns)"
+    Debug.Print
+
+End Sub
+
+Sub GetDataFromMoviesSelectedRows()
+
+    'Start the timer
+    Dim timer As New clsTimer
+    timer.start
+
+    'Delete all cells, but the headers in the destination worksheet
+    shImpMoviesFilter.Range("A1").CurrentRegion.Offset(1, 0).Clear
+    
+    'Source workbook (closed Excel file) - MUST BE IN THE SAME DIRECTORY
+    Dim sourceWorkbook As String
+    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
+        "Movies.xlsx"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = _
+        "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+        "Data Source = " & sourceWorkbook & ";" & _
+        "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.Source = "SELECT * FROM [Sheet1$] WHERE [Oscar Wins] >= 5 " & _
+        "ORDER BY [Oscar Wins] Desc"
+        
+    recSet.Open
+    
+    'Copy to destination workbook (actual) into the 'sheet1' worksheet
+    shImpMoviesFilter.Range("A2").CopyFromRecordset recSet
+    
+    shImpMoviesFilter.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    'Print elapsed time
+    timer.PrintTime " to import/filter Movies (1,200 rows, 14 columns)"
+    Debug.Print
+    
+End Sub
+
+Sub GetDataFromTop2000()
+    
+    'Start the timer
+    Dim timer As New clsTimer
+    timer.start
+
+    'Delete all cells, but the headers in the destination worksheet
+    shTop2000.Range("A1").CurrentRegion.Offset(1, 0).Clear
+    
+    'Source workbook (closed Excel file) - MUST BE IN THE SAME DIRECTORY
+    Dim sourceWorkbook, sourceWorksheet As String
+    sourceWorkbook = ThisWorkbook.Path & Application.PathSeparator & _
+        "Top_2000_companies.xlsx"
+    sourceWorksheet = "Top2000"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = _
+        "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+        "Data Source = " & sourceWorkbook & ";" & _
+        "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
+        
+    recSet.Open
+    
+    'Copy to destination workbook (actual) into the 'Top2000' worksheet
+    shTop2000.Range("A2").CopyFromRecordset recSet
+    
+    shTop2000.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    'Print elapsed time
+    timer.PrintTime " to import Top2000 (2,000 rows, 3 columns)"
+    Debug.Print
+    
+End Sub
+
+
