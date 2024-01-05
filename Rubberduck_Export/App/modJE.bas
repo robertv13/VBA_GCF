@@ -219,7 +219,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     Dim conn As Object
     Dim rs As Object
     Dim strSQL As String
-    Dim maxEJNo As Long, lastRow As Long, nextJENo As Long
+    Dim maxEJNo As Long, lastJE As Long, nextJENo As Long
     
     Application.ScreenUpdating = False
     
@@ -243,13 +243,13 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     'Get the last used row
     If IsNull(rs.Fields("MaxEJNo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
-        lastRow = 1
+        lastJE = 1
     Else
-        lastRow = rs.Fields("MaxEJNo").value
+        lastJE = rs.Fields("MaxEJNo").value
     End If
     
     'Calculate the new ID
-    nextJENo = lastRow + 1
+    nextJENo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -275,7 +275,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
                 rs.Fields("Compte").value = wshJE.Range("E6").value
             End If
         End If
-        rs.Fields("No.Ligne").Formula = "=LIGNE()"
+        'rs.Fields("No.Ligne").Formula = "=ROW()"
         rs.Update
     Next l
     

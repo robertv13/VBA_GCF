@@ -61,7 +61,7 @@ Sub UpdateBV() 'Button 'Actualiser'
     Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
     Set planComptable = wshAdmin.Range("tbPlanComptable")
-    Debug.Print planComptable.Address
+    'Debug.Print planComptable.Address
     
     'Clear Detail transaction section
     wshBV.Range("L4:S99999").ClearContents

@@ -1,6 +1,6 @@
 ﻿Option Explicit
 
-Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Public Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     SlideIn_ExportHeures
     SlideOut_SaisieHeures
 End Sub
@@ -19,17 +19,6 @@ Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer
     MsgBox "This is mouse move"
 End Sub
 
-'Sub ModifyAllShapes()
-'
-'    Dim shp As Shape
-'    'Loop through each shape on ActiveSheet
-'    For Each shp In ActiveSheet.Shapes
-'        Debug.Print "Avant - " & shp.Name & " est [" & shp.Left & "," & shp.Top & "] - " & shp.Type
-'        If shp.Name = "btnTEC" Then shp.Name = "btnSaisieHeures"
-'        If shp.Name = "btnFacturation" Then shp.Name = "btnExportHeures"
-'        If shp.Name = "icoTEC" Then shp.Name = "icoSaisieHeures"
-'        If shp.Name = "icoFacturation" Then shp.Name = "icoExportHeures"
-'        Debug.Print "Après - " & shp.Name & " est [" & shp.Left & "," & shp.Top & "] - " & shp.Type
-'    Next shp
-'
-'End Sub
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    Debug.Print Target.Address
+End Sub

@@ -28,7 +28,7 @@ Private Sub lblParametres_Hover_MouseMove(ByVal Button As Integer, ByVal Shift A
     SlideOut_Parametres
 End Sub
 
-Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Public Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     SlideIn_TEC
     SlideIn_Facturation
     SlideIn_Debours
@@ -38,4 +38,21 @@ End Sub
 
 Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     MsgBox "This is mouse move"
+End Sub
+
+Sub AddColumnsToWorksheet()
+    Dim ws As Worksheet
+    Dim lastColumn As Integer
+    
+    ' Set the worksheet (change "Sheet1" to your sheet's name)
+    Set ws = ActiveSheet
+    
+    ' Find the last column with data
+    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
+    
+    ' Add 5 columns to the right of the last column
+    ws.Columns(lastColumn + 1).Resize(, 7).Insert Shift:=xlToRight
+    
+    ' Print a message to the Immediate Window
+    Debug.Print "Seven columns added to the worksheet."
 End Sub
