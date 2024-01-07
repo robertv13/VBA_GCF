@@ -4,11 +4,9 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
 
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
-        Dim cell As String
-        cell = Trim(Range("J1").value)
         Dim r As Range
         Set r = Range("J1")
-        Call BuildDate(cell, r)
+        Call BuildDate(r)
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
         Range("L2").value = ""
         
@@ -17,10 +15,10 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = True
     End If
 
-    If Not Intersect(Target, Range("S4")) Is Nothing Then 'Dates have changed
+    If Not Intersect(Target, Range("T4")) Is Nothing Then 'Dates have changed
         Application.EnableEvents = False
         
-        Call DetermineFromAndToDate(Range("S4").value)
+        Call DetermineFromAndToDate(Range("T4").value)
                 
         'Force redisplay of GL Transactions details
         Call GLTransDisplay(Range("B6").value, Range("B7").value, _
@@ -35,6 +33,7 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If Not Intersect(Target, wshBV.Range("D4:G" & Range("B2").value)) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
         GLAcct = CStr(Range("D" & Target.row).value)
@@ -64,8 +63,8 @@ Sub UpdateBV() 'Button 'Actualiser'
     'Debug.Print planComptable.Address
     
     'Clear Detail transaction section
-    wshBV.Range("L4:S99999").ClearContents
-    wshBV.Range("L4:S99999").ClearComments
+    wshBV.Range("L4:T99999").ClearContents
+    wshBV.Range("L4:T99999").ClearComments
     
     'Clear contents & formats for TB cells
     lastRow = wshBV.Range("D99999").End(xlUp).row
@@ -101,7 +100,7 @@ Sub UpdateBV() 'Button 'Actualiser'
     
     Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
     
-    r = wshBV.Range("B2").value + 1
+    r = wshBV.Range("B2").value
     
     DisplayTBTotals r, 6 'Débit
     DisplayTBTotals r, 7 'Crédit

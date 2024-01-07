@@ -5,9 +5,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la date change, alors on essaie de construire une date
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
-        Dim cell As String
-        cell = Trim(Range("J4").value)
-        Call BuildDate(cell)
+'        Dim cell As String
+'        cell = Range("J4").value
+        Dim r As Range
+        Set r = Range("J4")
+        Call BuildDate(r)
         Application.EnableEvents = True
     End If
     
@@ -17,12 +19,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             If wshJE.Range("D" & Target.row).value <> "" Then
             wshJE.Range("K" & Target.row).value = Application.WorksheetFunction.Vlookup(wshJE.Range("D" & Target.row).value, wshAdmin.Range("T11:W71"), 2, False)
         End If
-        If Range("H25").value <> 0 Or Range("G25").value <> 0 Then
-            If Range("H25").value > 0 Or Range("G25").value > 0 Then
-                Range("G" & Target.row).value = Range("H25").value - Range("G25").value
-            Else
-                Range("H" & Target.row).value = -(Range("H25").value - Range("G25").value)
-            End If
+        If Target.row > 9 And _
+            (Range("G25").value <> 0 Or Range("H25").value <> 0) And _
+            Range("G25").value <> Range("H25").value Then
+                If Range("G25").value > Range("H25").value Then
+                    Range("H" & Target.row).value = Range("G25").value - Range("H25").value
+                    Range("H" & Target.row).Select
+                Else
+                    Range("G" & Target.row).value = Range("H25").value - Range("G25").value
+                    Range("G" & Target.row).Select
+                End If
         End If
         Application.EnableEvents = True
     End If
@@ -50,43 +56,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
     
-End Sub
-
-Sub BuildDate(cell As String)
-        Dim d, m, y As Integer
-        Dim strDateJour, strDateConsruite As String
-        Dim dateValide As Boolean
-        dateValide = True
-
-        cell = Replace(cell, "/", "")
-        cell = Replace(cell, "-", "")
-
-        'Utilisation de la date du jour
-        strDateJour = Now
-        d = Day(strDateJour)
-        m = Month(strDateJour)
-        y = Year(strDateJour)
-
-        Select Case Len(cell)
-            Case 0
-                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-            Case 1, 2
-                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-            Case 3
-                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
-            Case 4
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
-            Case 6
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
-            Case Else
-                dateValide = False
-        End Select
-        dateValide = IsDate(strDateConsruite)
-
-    If dateValide Then
-        Range("J4").value = CDate(strDateConsruite)
-    Else
-        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
-    End If
-
 End Sub

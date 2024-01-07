@@ -11,10 +11,10 @@ Sub JE_Post()
     rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
     If IsEcritureValide(rowEJLast) = False Then Exit Sub
     
-    Dim rowGLTrans, rowGLTransFirst As Long
-    'Détermine la prochaine ligne disponible
-    rowGLTrans = wshGLFACTrans.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
-    rowGLTransFirst = rowGLTrans
+'    Dim rowGLTrans, rowGLTransFirst As Long
+'    'Détermine la prochaine ligne disponible
+'    rowGLTrans = wshGLFACTrans.Range("C99999").End(xlUp).row + 1  'First Empty Row in wshGL
+'    rowGLTransFirst = rowGLTrans
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
     Call AddGLTransRecordToDB(rowEJLast)
@@ -135,45 +135,45 @@ Sub wshJEClearAllCells()
 
 End Sub
 
-Sub BuildDate(cell As String, r As Range)
-        Dim d, m, y As Integer
-        Dim strDateConsruite As String
-        Dim dateValide As Boolean
-        dateValide = True
-
-        cell = Replace(cell, "/", "")
-        cell = Replace(cell, "-", "")
-
-        'Utilisation de la date du jour pour valuer par défaut
-        d = Day(Now())
-        m = Month(Now())
-        y = Year(Now())
-
-        Select Case Len(cell)
-            Case 0
-                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-            Case 1, 2
-                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-            Case 3
-                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
-            Case 4
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
-            Case 6
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
-            Case 8
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
-            Case Else
-                dateValide = False
-        End Select
-        dateValide = IsDate(strDateConsruite)
-
-    If dateValide Then
-        r.value = Format(strDateConsruite, "dd/mm/yyyy")
-    Else
-        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
-    End If
-
-End Sub
+'Sub BuildDate(cell As String, r As Range)
+'        Dim d, m, y As Integer
+'        Dim strDateConsruite As String
+'        Dim dateValide As Boolean
+'        dateValide = True
+'
+'        cell = Replace(cell, "/", "")
+'        cell = Replace(cell, "-", "")
+'
+'        'Utilisation de la date du jour pour valeur par défaut
+'        d = Day(Now())
+'        m = Month(Now())
+'        y = Year(Now())
+'
+'        Select Case Len(cell)
+'            Case 0
+'                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+'            Case 1, 2
+'                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+'            Case 3
+'                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+'            Case 4
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+'            Case 6
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+'            Case 8
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
+'            Case Else
+'                dateValide = False
+'        End Select
+'        dateValide = IsDate(strDateConsruite)
+'
+'    If dateValide Then
+'        r.value = Format(strDateConsruite, "dd/mm/yyyy")
+'    Else
+'        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
+'    End If
+'
+'End Sub
 
 Function IsDateValide() As Boolean
 
@@ -257,24 +257,19 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     
     Dim l As Long
     
-    For l = 9 To r + 2
+    For l = 9 To r + 1
         rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("No_EJ").value = nextJENo
         rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
         rs.Fields("Numéro Écriture").value = nextJENo
         rs.Fields("Source").value = wshJE.Range("E4").value
-        If l <= r Then
-            rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
-            rs.Fields("Compte").value = wshJE.Range("D" & l).value
-            rs.Fields("Débit").value = wshJE.Range("G" & l).value
-            rs.Fields("Crédit").value = wshJE.Range("H" & l).value
-            rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
-        Else
-            If l = r + 1 Then
-                rs.Fields("Compte").value = wshJE.Range("E6").value
-            End If
-        End If
+        rs.Fields("Description").value = wshJE.Range("E6").value
+        rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
+        rs.Fields("Compte").value = wshJE.Range("D" & l).value
+        rs.Fields("Débit").value = wshJE.Range("G" & l).value
+        rs.Fields("Crédit").value = wshJE.Range("H" & l).value
+        rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
         'rs.Fields("No.Ligne").Formula = "=ROW()"
         rs.Update
     Next l

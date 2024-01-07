@@ -19,6 +19,47 @@ Public Sub ClearImmediateWindow()
     Next i
 End Sub
 
+Sub BuildDate(r As Range) '2024-01-06 @ 18:29
+        Dim d, m, y As Integer
+        Dim strDateConsruite As String, cell As String
+        Dim dateValide As Boolean
+        cell = Trim(r.value)
+        dateValide = True
+
+        cell = Replace(cell, "/", "")
+        cell = Replace(cell, "-", "")
+
+        'Utilisation de la date du jour
+        d = Day(Now())
+        m = Month(Now())
+        y = Year(Now())
+
+        Select Case Len(cell)
+            Case 0
+                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 1, 2
+                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+            Case 3
+                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+            Case 4
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+            Case 6
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+            Case 8
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
+            Case Else
+                dateValide = False
+        End Select
+        dateValide = IsDate(strDateConsruite)
+
+    If dateValide Then
+        r.value = Format(strDateConsruite, "dd/mm/yyyy")
+    Else
+        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
+    End If
+
+End Sub
+
 Sub GetShapeProperties() 'List Properties of all the shapes
 
     Dim sShapes As Shape, lLoop As Long

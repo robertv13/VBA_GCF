@@ -18,11 +18,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la date change, alors on essaie de construire une date
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
-        Dim DateCell As String
-        DateCell = Trim(Range("J4").value)
+'        Dim DateCell As String
+'        DateCell = Range("J4").value
         Dim r As Range
         Set r = Range("J4")
-        Call BuildDate(DateCell, r)
+        Call BuildDate(r)
         Application.EnableEvents = True
     End If
     
