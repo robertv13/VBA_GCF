@@ -29,37 +29,11 @@ End Sub
 
 Sub SaveEJRecurrente(ll As Long)
 
-    Dim EJAutoNo As Long
-    EJAutoNo = wshJERecurrente.Range("B1").value
-    wshJERecurrente.Range("B1").value = wshJERecurrente.Range("B1").value + 1
+    Dim rowEJLast As Long
+    rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
     
-    Dim rowEJAuto, rowEJAutoSave As Long
-    rowEJAuto = wshJERecurrente.Range("C99999").End(xlUp).row + 2 'First available Row in wshJERecurrente
-    rowEJAutoSave = rowEJAuto
+    Call AddEJAutoRecordToDB(ll)
     
-    Dim r As Integer
-    For r = 9 To ll
-        wshJERecurrente.Range("C" & rowEJAuto).value = EJAutoNo
-        wshJERecurrente.Range("D" & rowEJAuto).value = wshJE.Range("E6").value
-        wshJERecurrente.Range("E" & rowEJAuto).value = wshJE.Range("K" & r).value
-        wshJERecurrente.Range("F" & rowEJAuto).value = wshJE.Range("D" & r).value
-        wshJERecurrente.Range("G" & rowEJAuto).value = wshJE.Range("G" & r).value
-        wshJERecurrente.Range("H" & rowEJAuto).value = wshJE.Range("H" & r).value
-        wshJERecurrente.Range("I" & rowEJAuto).value = wshJE.Range("I" & r).value
-        wshJERecurrente.Range("J" & rowEJAuto).value = "=ROW()"
-        rowEJAuto = rowEJAuto + 1
-    Next
-    'Ligne vide
-    wshJERecurrente.Range("C" & rowEJAuto).value = EJAutoNo
-    wshJERecurrente.Range("J" & rowEJAuto).value = "=ROW()"
-    rowEJAuto = rowEJAuto + 1
-    
-    'Ajoute la description dans la liste des E/J automatiques (K1:L99999)
-    Dim rowEJAutoDesc As Long
-    rowEJAutoDesc = wshJERecurrente.Range("L99999").End(xlUp).row + 1 'First available Row in wshJERecurrente
-    wshJERecurrente.Range("L" & rowEJAutoDesc).value = wshJE.Range("E6").value
-    wshJERecurrente.Range("M" & rowEJAutoDesc).value = EJAutoNo
-
     'r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
 
 End Sub
@@ -190,7 +164,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     
     Dim l As Long
     
-    For l = 9 To r + 1
+    For l = 9 To r
         rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("No_EJ").value = nextJENo
@@ -203,11 +177,17 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
         rs.Fields("Débit").value = wshJE.Range("G" & l).value
         rs.Fields("Crédit").value = wshJE.Range("H" & l).value
         rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
-        'rs.Fields("No.Ligne").Formula = "=ROW()"
         rs.Update
     Next l
     
-    rs.Close
+    'Separation line at the en of the Entry
+    rs.AddNew
+        rs.Fields("No_EJ").value = nextJENo
+        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
+        rs.Fields("Numéro Écriture").value = nextJENo
+        rs.Fields("Source").value = wshJE.Range("E4").value
+        rs.Fields("Description").value = wshJE.Range("E6").value
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next
@@ -218,4 +198,184 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     Application.ScreenUpdating = True
 
 End Sub
+
+Sub AddEJAutoRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
+    Dim FullFileName As String
+    Dim SheetName As String
+    Dim conn As Object
+    Dim rs As Object
+    Dim strSQL As String
+    Dim maxEJANo As Long, lastJEA As Long, nextJEANo As Long
+    
+    Application.ScreenUpdating = False
+    
+    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    SheetName = "EJAuto"
+    
+    'Initialize connection, connection string & open the connection
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Initialize recordset
+    Set rs = CreateObject("ADODB.Recordset")
+
+    'SQL select command to find the next available ID
+    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & SheetName & "$]"
+
+    'Open recordset to find out the MaxID
+    rs.Open strSQL, conn
+    
+    'Get the last used row
+    If IsNull(rs.Fields("MaxEJANo").value) Then
+        ' Handle empty table (assign a default value, e.g., 1)
+        lastJEA = 1
+    Else
+        lastJEA = rs.Fields("MaxEJANo").value
+    End If
+    
+    'Calculate the new ID
+    nextJEANo = lastJEA + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim l As Long
+    
+    For l = 9 To r
+        rs.AddNew
+        'Add fields to the recordset before updating it
+        rs.Fields("No_EJA").value = nextJEANo
+        rs.Fields("Description").value = wshJE.Range("E6").value
+        rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
+        rs.Fields("Compte").value = wshJE.Range("D" & l).value
+        rs.Fields("Débit").value = wshJE.Range("G" & l).value
+        rs.Fields("Crédit").value = wshJE.Range("H" & l).value
+        rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
+        rs.Update
+    Next l
+    
+    'Empty Line at the end
+    rs.AddNew
+        rs.Fields("No_EJA").value = nextJEANo
+    rs.Update
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+End Sub
+
+Sub UpdateJEAuto()
+    
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    Call GLJEAuto_Import
+    
+    Application.ScreenUpdating = True
+    
+'    Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
+'    Dim planComptable As Range
+'    Set planComptable = wshAdmin.Range("tbPlanComptable")
+'    'Debug.Print planComptable.Address
+'
+'    'Clear Detail transaction section
+'    wshBV.Range("L4:T99999").ClearContents
+'    wshBV.Range("L4:T99999").ClearComments
+'
+'    'Clear contents & formats for TB cells
+'    lastRow = wshBV.Range("D99999").End(xlUp).row
+'    With wshBV.Range("D4" & ":G" & lastRow + 2)
+'        .ClearContents
+'        .ClearFormats
+'    End With
+'
+'    'Add the cut-off date in the header (printing purposes)
+'    wshBV.Range("C2").value = "Au " & CDate(Format(wshBV.Range("B4").value, "dd-mm-yyyy"))
+'
+'    minDate = CDate("01/01/2023")
+'    dateCutOff = CDate(wshBV.Range("J1").value)
+'    wshBV.Range("B2").value = 4
+'
+'    Call AdvancedFilterGLTrans("", minDate, dateCutOff)
+'
+'    lastRow = wshGLFACTrans.Range("V99999").End(xlUp).row
+'    If lastRow < 2 Then Exit Sub
+'    Dim r As Long, BreakGLNo As String, oldDesc As String
+'    BreakGLNo = wshGLFACTrans.Range("X2").value
+'    oldDesc = wshGLFACTrans.Range("Y2").value
+'
+'    For r = 2 To lastRow
+'        If wshGLFACTrans.Range("X" & r).value <> BreakGLNo Then
+'            Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
+'            BreakGLNo = wshGLFACTrans.Range("X" & r).value
+'            oldDesc = wshGLFACTrans.Range("Y" & r).value
+'            solde = 0
+'        End If
+'        solde = solde + wshGLFACTrans.Range("Z" & r).value - wshGLFACTrans.Range("AA" & r).value
+'    Next r
+'
+'    Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
+'
+'    r = wshBV.Range("B2").value
+'
+'    DisplayTBTotals r, 6 'Débit
+'    DisplayTBTotals r, 7 'Crédit
+'
+'    'Setup page for printing purposes
+'    Dim CenterHeaderTxt As String
+'    CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
+'    With ActiveSheet.PageSetup
+'        .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
+'        .PrintArea = "$D$1:$G$" & r
+'        .Orientation = xlPortrait
+'        .FitToPagesWide = 1
+'        .FitToPagesTall = 1
+'    End With
+'
+'    wshBV.Range("B2").value = r - 2
+  
+    Application.EnableEvents = True
+  
+End Sub
+
+Sub GLJEAuto_Import() '2024-01-07 @ 14:45
+    
+    Application.ScreenUpdating = False
+    
+    Dim saveLastRow As Long
+    saveLastRow = wshEJRecurrente.Range("C999999").End(xlUp).row + 1
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshEJRecurrente.Range("C1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import JEAuto from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-01-07
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("EJAuto").UsedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshEJRecurrente.Range("C1")
+
+    'Copy data, using Range to Range
+    sourceRange.Copy destinationRange
+    wshEJRecurrente.Range("C1").CurrentRegion.EntireColumn.AutoFit
+
+    'Close the source workbook, without saving it
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Application.ScreenUpdating = True
+    
+End Sub
+
 

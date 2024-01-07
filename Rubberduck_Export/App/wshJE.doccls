@@ -9,6 +9,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Dim Source As String
         Source = UCase(Trim(Range("E4").value))
         If Source = "AUTO" Then
+            Call UpdateJEAuto
             usfListeEJAuto.show vbModal
         End If
         Unload usfListeEJAuto
