@@ -2,13 +2,24 @@
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
+    'Si la cellule de la source change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
+    If Not Intersect(Target, Range("E4")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        Application.EnableEvents = False
+        Dim Source As String
+        Source = UCase(Trim(Range("E4").value))
+        If Source = "AUTO" Then
+            usfListeEJAuto.show vbModal
+        End If
+        Unload usfListeEJAuto
+        Application.EnableEvents = True
+        wshJE.Range("J4").Activate
+    End If
+    
     'Si la cellule de la date change, alors on essaie de construire une date
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
-'        Dim cell As String
-'        cell = Range("J4").value
-        Dim r As Range
-        Set r = Range("J4")
+        Dim r As Range: Set r = Range("J4")
         Call BuildDate(r)
         Application.EnableEvents = True
     End If
@@ -55,5 +66,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End With
         End If
     End If
-    
 End Sub

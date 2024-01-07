@@ -1,0 +1,18 @@
+﻿'Option Explicit
+'
+'Private Sub cmdSaisieHeures_Click()
+'
+'    Load frmSaisieHeures
+'
+'    frmSaisieHeures.show False 'vbModal
+'
+'End Sub
+'
+'Private Sub cmdExportHeures_Click()
+'
+'    Load frmExportHeures
+'
+'    frmExportHeures.show 'vbModal
+'
+'End Sub
+'
