@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} usfListeEJAuto 
    Caption         =   "Description des E/J récurrentes"
-   ClientHeight    =   1920
+   ClientHeight    =   2910
    ClientLeft      =   7125
    ClientTop       =   6465
-   ClientWidth     =   4500
+   ClientWidth     =   5355
    OleObjectBlob   =   "usfListeEJAuto.frx":0000
 End
 Attribute VB_Name = "usfListeEJAuto"
@@ -18,13 +18,12 @@ Private MyListBoxClass As clsCListboxAlign
 
 Private Sub lsbDescEJAuto_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim RowSelected As Integer
+    Dim RowSelected As Integer, DescEJAuto As String, NoEJAuto As Long
     RowSelected = lsbDescEJAuto.ListIndex
-    Dim DescEJAuto As String
-    Dim NoEJAuto As Long
     DescEJAuto = lsbDescEJAuto.List(RowSelected, 0)
     NoEJAuto = lsbDescEJAuto.List(RowSelected, 1)
-    usfListeEJAuto.Hide
+    wshJE.Range("B2").value = RowSelected '2024-01-08 @ 13:58
+    Unload usfListeEJAuto
     Call LoadJEAutoIntoJE(DescEJAuto, NoEJAuto)
 
 End Sub
@@ -53,7 +52,8 @@ Private Sub UserForm_Initialize()
 End Sub
 
 Private Sub UserForm_Terminate()
-    'clear the class declaration
+    Unload Me
+    'Clear the class declaration
     Set MyListBoxClass = Nothing
 End Sub
 

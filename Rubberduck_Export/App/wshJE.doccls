@@ -10,11 +10,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Source = UCase(Trim(Range("E4").value))
         If Source = "AUTO" Then
             Call UpdateJEAuto
+            wshJE.Range("B2").value = -1
             usfListeEJAuto.show vbModal
+            If wshJE.Range("B2").value >= 0 Then
+                wshJE.Range("J4").Activate
+            Else
+                Call wshJEClearAllCells
+                wshJE.Range("E4").Activate 'Nothing was selected
+            End If
         End If
-        Unload usfListeEJAuto
         Application.EnableEvents = True
-        wshJE.Range("J4").Activate
     End If
     
     'Si la cellule de la date change, alors on essaie de construire une date
@@ -28,20 +33,24 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Modification de la description du compte, sauvegarde du no de compte & suggestion du montant résiduel
     If Not Intersect(Target, Range("D9:F23")) Is Nothing Then
         Application.EnableEvents = False
-            If wshJE.Range("D" & Target.row).value <> "" Then
-            wshJE.Range("K" & Target.row).value = Application.WorksheetFunction.Vlookup(wshJE.Range("D" & Target.row).value, wshAdmin.Range("T11:W71"), 2, False)
-        End If
-        If Target.row > 9 And _
-            (Range("G25").value <> 0 Or Range("H25").value <> 0) And _
-            Range("G25").value <> Range("H25").value Then
-                If Range("G25").value > Range("H25").value Then
-                    Range("H" & Target.row).value = Range("G25").value - Range("H25").value
-                    Range("H" & Target.row).Select
-                Else
-                    Range("G" & Target.row).value = Range("H25").value - Range("G25").value
-                    Range("G" & Target.row).Select
-                End If
-        End If
+        With wshJE
+            If .Range("D" & Target.row).value <> "" Then
+                .Range("K" & Target.row).value = _
+                    Application.WorksheetFunction.Vlookup(.Range("D" & Target.row).value, _
+                    wshAdmin.Range("T11:W71"), 2, False)
+            End If
+            If Target.row > 9 And _
+                (.Range("G25").value <> 0 Or .Range("H25").value <> 0) And _
+                .Range("G25").value <> .Range("H25").value Then
+                    If .Range("G25").value > .Range("H25").value Then
+                        .Range("H" & Target.row).value = .Range("G25").value - .Range("H25").value
+                        .Range("H" & Target.row).Select
+                    Else
+                        .Range("G" & Target.row).value = .Range("H25").value - .Range("G25").value
+                        .Range("G" & Target.row).Select
+                    End If
+            End If
+        End With
         Application.EnableEvents = True
     End If
     
@@ -67,4 +76,30 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End With
         End If
     End If
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range) 'To force TAB order
+
+    Debug.Print Target.Address
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        wshJE.Range("J4").Activate
+    End If
+    
+    If Not Intersect(Target, Range("K4")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        wshJE.Range("E6").Activate
+    End If
+    
+    If Not Intersect(Target, Range("K6")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        wshJE.Range("D9").Activate
+    End If
+    
+    If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        Debug.Print Target.row, Target.Column
+        If Target.row < 23 Then wshJE.Range("D" & Target.row + 1).Activate
+    End If
+
 End Sub

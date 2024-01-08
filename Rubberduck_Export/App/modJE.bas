@@ -21,9 +21,13 @@ Sub JE_Post()
     With wshJE
         'Increment Next JE number
         .Range("B1").value = .Range("B1").value + 1
+        
         Call wshJEClearAllCells
+        
         .Range("E4").Activate
     End With
+    
+    MsgBox "L'écriture a été reporté avec succès"
     
 End Sub
 
@@ -180,7 +184,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
         rs.Update
     Next l
     
-    'Separation line at the en of the Entry
+    'Separation line at the end of the Entry
     rs.AddNew
         rs.Fields("No_EJ").value = nextJENo
         rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
@@ -354,6 +358,7 @@ Sub GLJEAuto_Import() '2024-01-07 @ 14:45
     
     'Clear all cells, but the headers, in the target worksheet
     wshEJRecurrente.Range("C1").CurrentRegion.Offset(1, 0).ClearContents
+    wshEJRecurrente.Range("L1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import JEAuto from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String
@@ -373,7 +378,21 @@ Sub GLJEAuto_Import() '2024-01-07 @ 14:45
 
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
+    
+    'Fill the list of Automatic J/E (same worksheet)
+    With wshEJRecurrente
+        Dim i As Long, rsomm As Long, oldNOEJA As String
+        rsomm = 2
+        For i = 2 To .Range("C9999").End(xlUp).row
+            If .Range("C" & i).value <> oldNOEJA Then
+                .Range("L" & rsomm).value = .Range("D" & i).value
+                .Range("M" & rsomm).value = .Range("C" & i).value
+                oldNOEJA = .Range("C" & i).value
+                rsomm = rsomm + 1
+            End If
+        Next i
+    End With
+    
     Application.ScreenUpdating = True
     
 End Sub
