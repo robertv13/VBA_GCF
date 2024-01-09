@@ -338,18 +338,16 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
     
     'Adjust Formats for all new rows
     With wshGLFACTrans
-        With .Range("C" & saveLastRow & ":M" & lastRow)
-            .HorizontalAlignment = xlCenter
-        End With
+        .Range("C" & saveLastRow & ":M" & lastRow).HorizontalAlignment = xlCenter
         .Range("D" & saveLastRow & ":D" & lastRow).NumberFormat = "dd/mm/yyyy"
-        With .Range("F" & saveLastRow & ":F" & lastRow & _
+        .Range("F" & saveLastRow & ":F" & lastRow & _
             ", G" & saveLastRow & ":G" & lastRow & _
+            ", H" & saveLastRow & ":H" & lastRow & _
             ", I" & saveLastRow & ":I" & lastRow & _
-            ", L" & saveLastRow & ":L" & lastRow)
-            .HorizontalAlignment = xlLeft
-        End With
-        With .Range("J" & saveLastRow & ":I" & lastRow & _
-            ", K" & saveLastRow & ":J" & lastRow)
+            ", L" & saveLastRow & ":L" & lastRow) _
+                .HorizontalAlignment = xlLeft
+        With .Range("J" & saveLastRow & ":J" & lastRow & _
+            ", K" & saveLastRow & ":K" & lastRow)
             .HorizontalAlignment = xlRight
             .NumberFormat = "#,##0.00 $"
         End With
@@ -360,7 +358,7 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
             .TintAndShade = 0.799981688894314
             .PatternTintAndShade = 0
         End With
-        With .Range("M" & saveLastRow & ":L" & lastRow).Interior
+        With .Range("M" & saveLastRow & ":M" & lastRow).Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorAccent5
@@ -369,7 +367,7 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
         End With
     End With
     
-    wshGLFACTrans.Range("C" & saveLastRow & ":L" & lastRow).Cells.Borders.LineStyle = xlNone
+    'wshGLFACTrans.Range("C" & saveLastRow & ":L" & lastRow).Cells.Borders.LineStyle = xlNone
     
     Dim firstRowJE As Long, lastRowJE As Long
     Dim r As Long, l As Long
@@ -377,41 +375,14 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
     
     For r = saveLastRow To lastRow 'RMV - 2024-01-05
         If l <> 1 Then
-            With wshGLFACTrans.Range("D" & r & ":F" & r)
+            With wshGLFACTrans.Range("D" & r & ":G" & r)
                 .Font.ThemeColor = xlThemeColorDark1
                 .Font.TintAndShade = 0
             End With
         End If
         l = l + 1
-        wshGLFACTrans.Range("M" & r).Formula = "=LIGNE()"
+        wshGLFACTrans.Range("M" & r).Formula = "=ROW()"
     Next r
-    
-    With wshGLFACTrans.Range("D" & saveLastRow & ":D" & lastRow - 1).Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .Color = -16777216
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    
-    With wshGLFACTrans.Range("D" & saveLastRow & ":L" & lastRow - 1).Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .Color = -16777216
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    
-    With wshGLFACTrans.Range("D" & saveLastRow & ":L" & lastRow - 1).Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .Color = -16777216
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With wshGLFACTrans.Range("L" & saveLastRow & ":L" & lastRow - 1).Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .Color = -16777216
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
     
     Application.ScreenUpdating = True
     

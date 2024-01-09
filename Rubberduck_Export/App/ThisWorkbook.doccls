@@ -1,5 +1,12 @@
 ﻿Option Explicit
 
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+
+    Worksheets("Menu").Activate
+    HideAllExcepActiveSheet
+
+End Sub
+
 Private Sub Workbook_Open()
     Application.ScreenUpdating = False
     Windows(ThisWorkbook.Name).Visible = False
