@@ -283,68 +283,6 @@ Sub UpdateJEAuto()
     Call GLJEAuto_Import
     
     Application.ScreenUpdating = True
-    
-'    Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
-'    Dim planComptable As Range
-'    Set planComptable = wshAdmin.Range("tbPlanComptable")
-'    'Debug.Print planComptable.Address
-'
-'    'Clear Detail transaction section
-'    wshBV.Range("L4:T99999").ClearContents
-'    wshBV.Range("L4:T99999").ClearComments
-'
-'    'Clear contents & formats for TB cells
-'    lastRow = wshBV.Range("D99999").End(xlUp).row
-'    With wshBV.Range("D4" & ":G" & lastRow + 2)
-'        .ClearContents
-'        .ClearFormats
-'    End With
-'
-'    'Add the cut-off date in the header (printing purposes)
-'    wshBV.Range("C2").value = "Au " & CDate(Format(wshBV.Range("B4").value, "dd-mm-yyyy"))
-'
-'    minDate = CDate("01/01/2023")
-'    dateCutOff = CDate(wshBV.Range("J1").value)
-'    wshBV.Range("B2").value = 4
-'
-'    Call AdvancedFilterGLTrans("", minDate, dateCutOff)
-'
-'    lastRow = wshGLFACTrans.Range("V99999").End(xlUp).row
-'    If lastRow < 2 Then Exit Sub
-'    Dim r As Long, BreakGLNo As String, oldDesc As String
-'    BreakGLNo = wshGLFACTrans.Range("X2").value
-'    oldDesc = wshGLFACTrans.Range("Y2").value
-'
-'    For r = 2 To lastRow
-'        If wshGLFACTrans.Range("X" & r).value <> BreakGLNo Then
-'            Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
-'            BreakGLNo = wshGLFACTrans.Range("X" & r).value
-'            oldDesc = wshGLFACTrans.Range("Y" & r).value
-'            solde = 0
-'        End If
-'        solde = solde + wshGLFACTrans.Range("Z" & r).value - wshGLFACTrans.Range("AA" & r).value
-'    Next r
-'
-'    Call GLTransSubTotal(BreakGLNo, oldDesc, solde)
-'
-'    r = wshBV.Range("B2").value
-'
-'    DisplayTBTotals r, 6 'Débit
-'    DisplayTBTotals r, 7 'Crédit
-'
-'    'Setup page for printing purposes
-'    Dim CenterHeaderTxt As String
-'    CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
-'    With ActiveSheet.PageSetup
-'        .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
-'        .PrintArea = "$D$1:$G$" & r
-'        .Orientation = xlPortrait
-'        .FitToPagesWide = 1
-'        .FitToPagesTall = 1
-'    End With
-'
-'    wshBV.Range("B2").value = r - 2
-  
     Application.EnableEvents = True
   
 End Sub

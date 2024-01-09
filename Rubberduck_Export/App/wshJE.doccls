@@ -35,10 +35,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         With wshJE
             If .Range("D" & Target.row).value <> "" Then
-                .Range("K" & Target.row).value = _
-                    Application.WorksheetFunction.Vlookup(.Range("D" & Target.row).value, _
-                    wshAdmin.Range("T11:W71"), 2, False)
+                .Range("K" & Target.row).value = GetAccountNoFromDescription(.Range("D" & Target.row).value)
             End If
+            
             If Target.row > 9 And _
                 (.Range("G25").value <> 0 Or .Range("H25").value <> 0) And _
                 .Range("G25").value <> .Range("H25").value Then

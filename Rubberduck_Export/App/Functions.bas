@@ -29,6 +29,38 @@ Function GetID_FromClientName(ClientNom As String)
 
 End Function
 
+Public Function GetAccountNoFromDescription(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+
+    Dim dynamicRange As Range
+    Dim result As Variant
+    Dim ws As Worksheet
+    
+    ' Replace "YourDynamicRangeName" with the name of your dynamic named range
+    ' Replace "OtherWorksheet" with the name of the worksheet where the dynamic named range is located
+    On Error Resume Next
+    Set ws = ThisWorkbook.Sheets("Admin")
+    Set dynamicRange = ws.Range("dnrPlanComptable")
+    On Error GoTo 0
+    
+    If ws Is Nothing Or dynamicRange Is Nothing Then
+        MsgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
+            vbExclamation
+        Exit Function
+    End If
+    
+    'Using XLOOKUP to find the result directly
+    result = Application.WorksheetFunction.XLookup(GLDescr, _
+        dynamicRange.Columns(1), dynamicRange.Columns(2), _
+        "Not Found", 0, 1)
+    
+    If result <> "Not Found" Then
+        GetAccountNoFromDescription = result
+    Else
+        MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
+    End If
+
+End Function
+
 Public Function IsDataValid() As Boolean
 
     IsDataValid = False
