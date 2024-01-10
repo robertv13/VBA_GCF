@@ -360,9 +360,9 @@ End Sub
 Sub DateChange(d As String)
 
     If InStr(1, wshFACPrep.Range("O6").value, "-") = 0 Then
-        Dim y As String
-        y = Right(Year(d), 2)
-        wshFACPrep.Range("O6").value = y & "-" & wshFACPrep.Range("O6").value
+        Dim Y As String
+        Y = Right(Year(d), 2)
+        wshFACPrep.Range("O6").value = Y & "-" & wshFACPrep.Range("O6").value
         wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value
     End If
     wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")

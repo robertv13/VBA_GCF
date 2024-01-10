@@ -1,10 +1,11 @@
 ﻿Option Explicit
 
-Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-08 @ 20:09
-
-    Worksheets("Menu").Activate
-    HideAllExcepActiveSheet
-
+Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
+    ' Your code here
+    MsgBox "Workbook can not be close like that !"
+    
+    Cancel = False
+    
 End Sub
 
 Private Sub Workbook_Open()
@@ -21,7 +22,7 @@ Private Sub Workbook_Open()
     Application.ScreenUpdating = True
 End Sub
 
-Private Sub HideAllExcepActiveSheet()
+Public Sub HideAllExceptActiveSheet()
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
@@ -82,14 +83,14 @@ Sub RedefineDynamicRange() 'Redefine DynamicNameRange - 2024-01-09 @ 10:21
     
     'Delete existing dynamic named range (assuming it exists)
     On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable").Delete
+    ThisWorkbook.Names("dnrPlanComptableDescription").Delete
     On Error GoTo 0
     
     'Define a new dynamic named range
     Dim newRangeFormula As String
-    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create a new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptable", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add Name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
     
 End Sub

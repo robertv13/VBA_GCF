@@ -58,7 +58,7 @@ Sub UpdateBV() 'Button 'Actualiser'
     
     Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
-    Set planComptable = wshAdmin.Range("tbPlanComptable")
+    Set planComptable = wshAdmin.Range("dnrPlanComptable")
     'Debug.Print planComptable.Address
     
     'Clear Detail transaction section
@@ -304,7 +304,7 @@ Sub GLTransSubTotal(GLNo As String, GLDesc As String, s As Currency)
     wshBV.Range("B2").value = wshBV.Range("B2").value + 1
     
 End Sub
-Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
+Sub GLTrans_Import() '2024-01-10 @ 07:00
     
     Application.ScreenUpdating = False
     
@@ -342,23 +342,15 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
         .Range("D" & saveLastRow & ":D" & lastRow).NumberFormat = "dd/mm/yyyy"
         .Range("F" & saveLastRow & ":F" & lastRow & _
             ", G" & saveLastRow & ":G" & lastRow & _
-            ", H" & saveLastRow & ":H" & lastRow & _
             ", I" & saveLastRow & ":I" & lastRow & _
             ", L" & saveLastRow & ":L" & lastRow) _
                 .HorizontalAlignment = xlLeft
-        With .Range("J" & saveLastRow & ":J" & lastRow & _
-            ", K" & saveLastRow & ":K" & lastRow)
+        With .Range("J" & saveLastRow & ":K" & lastRow)
             .HorizontalAlignment = xlRight
             .NumberFormat = "#,##0.00 $"
         End With
-        With .Range("C" & saveLastRow & ":C" & lastRow).Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorAccent5
-            .TintAndShade = 0.799981688894314
-            .PatternTintAndShade = 0
-        End With
-        With .Range("M" & saveLastRow & ":M" & lastRow).Interior
+        With .Range("C" & saveLastRow & ":C" & lastRow) _
+            .Range("M" & saveLastRow & ":M" & lastRow).Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorAccent5
@@ -377,11 +369,14 @@ Sub GLTrans_Import() '2024-01-05 @ 15:52 - Nouveau format
         If l <> 1 Then
             With wshGLFACTrans.Range("D" & r & ":G" & r)
                 .Font.ThemeColor = xlThemeColorDark1
-                .Font.TintAndShade = 0
+                .Font.TintAndShade = -4.99893185216834E-02
+                .Interior.Pattern = xlNone
+                .Interior.TintAndShade = 0
+                .Interior.PatternTintAndShade = 0
             End With
         End If
-        l = l + 1
         wshGLFACTrans.Range("M" & r).Formula = "=ROW()"
+        l = l + 1
     Next r
     
     Application.ScreenUpdating = True

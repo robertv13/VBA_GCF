@@ -1,24 +1,20 @@
 ﻿Option Explicit
 
-Public Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Public Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_ExportHeures
     SlideOut_SaisieHeures
 End Sub
 
-Private Sub lblExportHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Private Sub lblExportHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_SaisieHeures
     SlideOut_ExportHeures
 End Sub
 
-Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_SaisieHeures
     SlideIn_ExportHeures
 End Sub
 
-Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     MsgBox "This is mouse move"
-End Sub
-
-Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-    Debug.Print Target.Address
 End Sub

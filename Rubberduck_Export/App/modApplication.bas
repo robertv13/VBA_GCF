@@ -20,7 +20,7 @@ Public Sub ClearImmediateWindow()
 End Sub
 
 Sub BuildDate(r As Range) '2024-01-06 @ 18:29
-        Dim d, m, y As Integer
+        Dim d, m, Y As Integer
         Dim strDateConsruite As String, cell As String
         Dim dateValide As Boolean
         cell = Trim(r.value)
@@ -32,17 +32,17 @@ Sub BuildDate(r As Range) '2024-01-06 @ 18:29
         'Utilisation de la date du jour
         d = Day(Now())
         m = Month(Now())
-        y = Year(Now())
+        Y = Year(Now())
 
         Select Case Len(cell)
             Case 0
-                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
             Case 1, 2
-                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
             Case 3
-                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(Y, "0000")
             Case 4
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Y, "0000")
             Case 6
                 strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
             Case 8
@@ -64,22 +64,39 @@ Sub GetShapeProperties() 'List Properties of all the shapes
 
     Dim sShapes As Shape, lLoop As Long
     'Add headings for our lists. Expand as needed
-    ActiveSheet.Range("E2:K2") = Array("Type", "Name", "Macro", "Height", "Width", "Left", "Top")
-    lLoop = 1
+    ActiveSheet.Range("G2:M2") = Array("Type", "Name", "Macro", "Left", "Top", "Height", "Width")
+    lLoop = 3
     'Loop through all shapes on active sheet
     For Each sShapes In ActiveSheet.Shapes
         'Increment Variable lLoop for row numbers
-        lLoop = lLoop + 1
         With sShapes
             'Add shape properties
-            ActiveSheet.Cells(lLoop + 1, 5) = .Type
-            ActiveSheet.Cells(lLoop + 1, 6) = .Name
-            ActiveSheet.Cells(lLoop + 1, 7) = .OnAction
-            ActiveSheet.Cells(lLoop + 1, 8) = .Height
-            ActiveSheet.Cells(lLoop + 1, 9) = .Width
-            ActiveSheet.Cells(lLoop + 1, 10) = .Left
-            ActiveSheet.Cells(lLoop + 1, 11) = .Top
+            ActiveSheet.Cells(lLoop, 7) = .Type
+            ActiveSheet.Cells(lLoop, 8) = .Name
+            ActiveSheet.Cells(lLoop, 9) = .OnAction
+            ActiveSheet.Cells(lLoop, 10) = .Left
+            ActiveSheet.Cells(lLoop, 11) = .Top
+            ActiveSheet.Cells(lLoop, 12) = .Height
+            ActiveSheet.Cells(lLoop, 13) = .Width
+            lLoop = lLoop + 1
             'Follow the same pattern for more
         End With
     Next sShapes
+    ActiveSheet.Cells(lLoop + 1, 8) = Now()
 End Sub
+
+Sub AdjustShape()
+
+    Dim sShapes As Shape, lLoop As Long
+    'Loop through all shapes on active sheet
+    For Each sShapes In ActiveSheet.Shapes
+        Debug.Print sShapes.Name
+        If sShapes.Name = "icoParametres" Then
+            If sShapes.Left = 2.5 Then
+                Debug.Print Tab(5); "The shape '" & sShapes.Name & "' as been adjusted !"
+                sShapes.Name = "icoEXIT"
+            End If
+        End If
+    Next sShapes
+End Sub
+

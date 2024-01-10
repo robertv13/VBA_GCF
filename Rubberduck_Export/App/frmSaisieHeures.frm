@@ -24,7 +24,7 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub icoGraph_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Private Sub icoGraph_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
 
     MsgBox "Affichage des statistiques à compléter"
 

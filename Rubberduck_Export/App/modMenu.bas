@@ -107,6 +107,27 @@ Sub SlideIn_Parametres()
     End With
 End Sub
 
+Sub SlideOut_Exit()
+    With ActiveSheet.Shapes("btnEXIT")
+        For Wdth = 32 To maxWidth
+            .Height = Wdth
+            ActiveSheet.Shapes("icoEXIT").Left = Wdth - 32
+        Next Wdth
+        .TextFrame2.TextRange.Characters.text = "Sortie"
+    End With
+End Sub
+
+Sub SlideIn_Exit()
+    With ActiveSheet.Shapes("btnEXIT")
+        For Wdth = maxWidth To 32 Step -1
+            .Height = Wdth
+            .Left = Wdth - 32
+            ActiveSheet.Shapes("icoEXIT").Left = Wdth - 32
+        Next Wdth
+            ActiveSheet.Shapes("btnExit").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
 'Second level (sub-menu) ---------------------------------------------------------------------------
 Sub SlideOut_SaisieHeures()
     With ActiveSheet.Shapes("btnSaisieHeures")
@@ -389,6 +410,18 @@ Sub Parametres_Click()
         .Visible = xlSheetVisible
         .Select
     End With
+End Sub
+
+Sub EXIT_Click() '2024-01-10 @ 11:43
+    SlideIn_Exit
+    
+    Dim wsh As Worksheet
+    For Each wsh In ThisWorkbook.Worksheets
+        If wsh.Name <> "Menu" Then wsh.Visible = xlSheetHidden
+    Next wsh
+
+    ThisWorkbook.Close
+    
 End Sub
 
 Sub SaisieHeures_Click()
