@@ -41,20 +41,3 @@ Private Sub MinAll_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, By
     SlideIn_Parametres
     SlideIn_Exit
 End Sub
-
-Sub AddColumnsToWorksheet()
-    Dim ws As Worksheet
-    Dim lastColumn As Integer
-    
-    ' Set the worksheet (change "Sheet1" to your sheet's name)
-    Set ws = ActiveSheet
-    
-    ' Find the last column with data
-    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
-    
-    ' Add 5 columns to the right of the last column
-    ws.Columns(lastColumn + 1).Resize(, 7).Insert Shift:=xlToRight
-    
-    ' Print a message to the Immediate Window
-    Debug.Print "Seven columns added to the worksheet."
-End Sub

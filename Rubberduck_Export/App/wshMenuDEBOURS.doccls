@@ -11,16 +11,3 @@ End Sub
 Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     MsgBox "This is mouse move"
 End Sub
-
-Sub ModifyAllShapes()
-
-    Dim shp As Shape
-    'Loop through each shape on ActiveSheet
-    For Each shp In ActiveSheet.Shapes
-        If shp.Name = "btnDebours" Then shp.Name = "btnPaiement"
-        If shp.Name = "lblDebours_Hover" Then shp.Name = "lblPaiement_Hover"
-        If shp.Name = "icoDebours" Then shp.Name = "icoPaiement"
-        Debug.Print "Après - " & shp.Name & " est [" & shp.Left & "," & shp.Top & "] - " & shp.Type
-    Next shp
-
-End Sub

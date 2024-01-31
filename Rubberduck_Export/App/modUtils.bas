@@ -102,6 +102,60 @@ Sub ListAllProceduresAndAllFunctions()
     Next VBComp
 End Sub
 
+Sub GetShapeProperties()
+    Dim ws As Worksheet
+    Dim shp As Shape
+    
+    ' Set the worksheet (change "Sheet1" to your sheet's name)
+    Set ws = ActiveSheet
+    
+    ' Loop through all shapes on the worksheet
+    For Each shp In ws.Shapes
+        ' Print shape name and properties to the Immediate Window
+        Debug.Print "Shape Name: " & shp.Name
+        Debug.Print "Top: " & shp.Top
+        Debug.Print "Left: " & shp.Left
+        Debug.Print "Width: " & shp.Width
+        Debug.Print "Height: " & shp.Height
+        Debug.Print "Type: " & shp.Type
+        ' Add more properties as needed
+        
+        ' Separate each shape's information
+        Debug.Print "------------------"
+    Next shp
+End Sub
+
+Sub ProtectUnprotectWorksheet()
+    Dim password As String
+    password = "GCmfp"
+
+    'Unprotect the worksheet with the password
+    ActiveSheet.Unprotect password:=password
+
+    'Your code to modify cells goes here
+
+    'Protect the worksheet again with the password
+    ActiveSheet.Protect password:=password
+End Sub
+
+Sub AddColumnsToWorksheet()
+    Dim ws As Worksheet
+    Dim lastColumn As Integer
+    
+    ' Set the worksheet (change "Sheet1" to your sheet's name)
+    Set ws = ActiveSheet
+    
+    ' Find the last column with data
+    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
+    
+    ' Add 5 columns to the right of the last column
+    ws.Columns(lastColumn + 1).Resize(, 7).Insert Shift:=xlToRight
+    
+    ' Print a message to the Immediate Window
+    Debug.Print "Seven columns added to the worksheet."
+End Sub
+
+
 
 
 
