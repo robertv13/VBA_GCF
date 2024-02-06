@@ -102,26 +102,34 @@ Sub ListAllProceduresAndAllFunctions()
     Next VBComp
 End Sub
 
-Sub GetShapeProperties()
+Sub GetAllShapeProperties()
     Dim ws As Worksheet
     Dim shp As Shape
     
     ' Set the worksheet (change "Sheet1" to your sheet's name)
     Set ws = ActiveSheet
     
-    ' Loop through all shapes on the worksheet
+    Dim r As Integer
+    r = 2
+    ws.Range("D" & r).value = "Type"
+    ws.Range("E" & r).value = "Shape Name"
+    ws.Range("F" & r).value = "ZOrder"
+    ws.Range("G" & r).value = "Top"
+    ws.Range("H" & r).value = "Left"
+    ws.Range("I" & r).value = "Width"
+    ws.Range("J" & r).value = "Height"
+    
+    r = 3
+    'Loop through all shapes on the worksheet
     For Each shp In ws.Shapes
-        ' Print shape name and properties to the Immediate Window
-        Debug.Print "Shape Name: " & shp.Name
-        Debug.Print "Top: " & shp.Top
-        Debug.Print "Left: " & shp.Left
-        Debug.Print "Width: " & shp.Width
-        Debug.Print "Height: " & shp.Height
-        Debug.Print "Type: " & shp.Type
-        ' Add more properties as needed
-        
-        ' Separate each shape's information
-        Debug.Print "------------------"
+        ws.Range("D" & r).value = shp.Type
+        ws.Range("E" & r).value = shp.Name
+        ws.Range("F" & r).value = shp.ZOrderPosition
+        ws.Range("G" & r).value = shp.Top
+        ws.Range("H" & r).value = shp.Left
+        ws.Range("I" & r).value = shp.Width
+        ws.Range("J" & r).value = shp.Height
+        r = r + 1
     Next shp
 End Sub
 

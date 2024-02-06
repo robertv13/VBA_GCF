@@ -298,23 +298,23 @@ Sub SlideIn_EJ()
 End Sub
 
 Sub SlideOut_GL()
-    With ActiveSheet.Shapes("btnGL")
+    With ActiveSheet.Shapes("btnComptabilite")
         For Wdth = 32 To maxWidth
             .Height = Wdth
-            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
+            ActiveSheet.Shapes("icoComptabilite").Left = Wdth - 32
         Next Wdth
         .TextFrame2.TextRange.Characters.text = "Grand Livre"
     End With
 End Sub
 
 Sub SlideIn_GL()
-    With ActiveSheet.Shapes("btnGL")
+    With ActiveSheet.Shapes("btnComptabilite")
         For Wdth = maxWidth To 32 Step -1
             .Height = Wdth
             .Left = Wdth - 32
-            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
+            ActiveSheet.Shapes("icoComptabilite").Left = Wdth - 32
         Next Wdth
-        ActiveSheet.Shapes("btnGL").TextFrame2.TextRange.Characters.text = ""
+        ActiveSheet.Shapes("btnComptabilite").TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -360,18 +360,19 @@ Sub SlideIn_EF()
     End With
 End Sub
 
-Sub TEC_Click()
+Sub menuTEC_Click() 'RMV_2024-02-06 @ 17:11
     SlideIn_TEC
     
     wshMenuTEC.Visible = xlSheetVisible
     wshBaseHours.Visible = xlSheetVisible
     wshClientDB.Visible = xlSheetVisible
     
-    wshMenuTEC.Select
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
 End Sub
 
-Sub Facturation_Click() 'RMV_2023-12-16 @ 15:53
-    'SlideIn_Facturation
+Sub menuFacturation_Click() 'RMV_2024-02-06 @ 17:11
+    SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
     wshFACPrep.Visible = xlSheetVisible
@@ -380,19 +381,21 @@ Sub Facturation_Click() 'RMV_2023-12-16 @ 15:53
     wshFACInvItems.Visible = xlSheetVisible
     wshFACFinale.Visible = xlSheetVisible
     
-    wshMenuFACT.Select
+    wshMenuFACT.Activate
+    wshMenuFACT.Range("A1").Select
 End Sub
 
-Sub Debours_Click()
+Sub menuDebours_Click() 'RMV_2024-02-06 @ 17:12
     SlideIn_Debours
     
     wshMenuDEBOURS.Visible = xlSheetVisible
     wshPaiement.Visible = xlSheetVisible
     
-    wshMenuDEBOURS.Select
+    wshMenuDEBOURS.Activate
+    wshMenuDEBOURS.Range("A1").Select
 End Sub
 
-Sub Comptabilite_Click()
+Sub menuComptabilite_Click() 'RMV_2024-02-06 @ 17:12
     SlideIn_Comptabilite
     
     wshMenuCOMPTA.Visible = xlSheetVisible
@@ -401,10 +404,11 @@ Sub Comptabilite_Click()
     wshEJRecurrente.Visible = xlSheetVisible
     wshBV.Visible = xlSheetVisible
         
-    wshMenuCOMPTA.Select
+    wshMenuCOMPTA.Activate
+    wshMenuCOMPTA.Range("A1").Select
 End Sub
 
-Sub Parametres_Click()
+Sub menuParametres_Click() 'RMV_2024-02-06 @ 17:12
     SlideIn_Parametres
     With wshAdmin
         .Visible = xlSheetVisible

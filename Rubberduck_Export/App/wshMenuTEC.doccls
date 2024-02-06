@@ -5,14 +5,8 @@ Public Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift 
     SlideOut_SaisieHeures
 End Sub
 
-Private Sub lblExportHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    SlideIn_SaisieHeures
-    SlideOut_ExportHeures
-End Sub
-
 Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_SaisieHeures
-    SlideIn_ExportHeures
 End Sub
 
 Private Sub ThisIsName_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
