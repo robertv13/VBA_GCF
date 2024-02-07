@@ -5,7 +5,7 @@ Function GetID_FromInitials(i As String)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("Prof_Initiales")
+    For Each cell In wshAdmin.Range("dnrProf")
         If cell.Value2 = i Then
             GetID_FromInitials = cell.Offset(0, 1).value
         End If

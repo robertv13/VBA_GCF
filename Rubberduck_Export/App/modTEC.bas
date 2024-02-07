@@ -53,12 +53,12 @@ Sub ImportClientList() '2023-11-23 @ 06:51
     recSet.Close
     connStr.Close
     
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
-'            "## ##0") & " clients", _
-'        Title:="Vérification du nombre de clients", _
-'        Buttons:=vbInformation
+    MsgBox _
+        Prompt:="J'ai importé un total de " & _
+            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
+            "## ##0") & " clients", _
+        Title:="Vérification du nombre de clients", _
+        Buttons:=vbInformation
         
 End Sub
 

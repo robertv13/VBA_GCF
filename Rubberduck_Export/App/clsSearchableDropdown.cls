@@ -178,6 +178,7 @@ End Sub
 Private Sub UpdateListbox(items As Variant)
  
     With myListBox
+        Debug.Print "RMV - " & myListBox.ListCount
         'Reload listbox
         .Clear
         .ForeColor = rgbBlack

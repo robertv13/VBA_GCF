@@ -52,7 +52,7 @@ Sub UserForm_Activate()
     
     Dim lastUsedRow As Long
     lastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
-    frmSaisieHeures.ListData = wshClientDB.Range("B1:B" & lastUsedRow)
+    frmSaisieHeures.ListData = wshClientDB.Range("A1:B" & lastUsedRow) 'RMV =
     
     With oEventHandler
         Set .SearchListBox = lstNomClient
