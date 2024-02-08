@@ -4,7 +4,7 @@ Dim LastRow As Long, LastResultRow As Long, PayRow As Long, PayCol As Long
 Dim ResultRow As Long, LastPayItemRow As Long, PayItemRow As Long, PayItemDBRow As Long
 
 Sub Payments_LoadOpenInvoices() '2024-02-07 @ 11:50
-    Payments.Range("D11:K35").ClearContents 'Clear the invoices before loading it
+    Payments.Range("D13:K42").ClearContents 'Clear the invoices before loading it
     With InvoiceList
         LastResultRow = .Range("A999999").End(xlUp).Row 'Last row
         If LastResultRow < 3 Then Exit Sub
@@ -18,7 +18,7 @@ Sub Payments_LoadOpenInvoices() '2024-02-07 @ 11:50
         Payments.Range("B2").Value = True 'Set PaymentLoad to True
         .Range("S3:S" & LastResultRow).Formula = .Range("S1").Formula 'Total Payments Formula
         'Bring the Result data into our Payments List of Invoices
-        Payments.Range("E11:I" & LastResultRow + 8).Value = .Range("P3:T" & LastResultRow).Value
+        Payments.Range("E13:I" & LastResultRow + 10).Value = .Range("P3:T" & LastResultRow).Value
     End With
     Payments.Range("B2").Value = False 'Set PaymentLoad to False
 End Sub
@@ -33,7 +33,7 @@ Sub Payments_SaveUpdate() '2024-02-07 @ 12:27
             Exit Sub
         End If
         'Check to make sure Payment Amount = Applied Amount
-        If .Range("J5").Value <> .Range("J9").Value Then
+        If .Range("J5").Value <> .Range("J10").Value Then
             MsgBox "Please make sure Payment Amount is equal to Applied Amount"
             Exit Sub
         End If
@@ -51,7 +51,7 @@ Sub Payments_SaveUpdate() '2024-02-07 @ 12:27
         Next PayCol
         'Save Pay Items to Payment Items
         LastPayItemRow = .Range("E999999").End(xlUp).Row 'Last Pay Item
-        For PayItemRow = 11 To LastPayItemRow
+        For PayItemRow = 13 To LastPayItemRow
             If .Range("D" & PayItemRow).Value = Chr(252) Then 'The row has been applied
                 If .Range("K" & PayItemRow).Value = Empty Then 'New Pay Item row
                     PayItemDBRow = PayItems.Range("A999999").End(xlUp).Row + 1 'First Avail Pay Items Row
@@ -67,11 +67,14 @@ Sub Payments_SaveUpdate() '2024-02-07 @ 12:27
                 PayItems.Range("E" & PayItemDBRow).Value = .Range("J" & PayItemRow).Value 'Amount paid
             End If
         Next PayItemRow
+        MsgBox "Le paiement a été renregistré"
+        Call Payments_AddNew 'Reset the form
+        .Range("F3").Select
     End With
 End Sub
 
 Sub Payments_AddNew() '2024-02-07 @ 12:39
-    Payments.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D11:K35").ClearContents 'Clear Fields
+    Payments.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents 'Clear Fields
     Payments.Range("J3").Value = Date 'Set Default Date
 End Sub
 
@@ -83,7 +86,7 @@ Sub Payments_Load() '2024-02-07 @ 15:09
         End If
         PayRow = .Range("B4").Value 'Payment Row
         .Range("B2").Value = True
-        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D11:K35").ClearContents
+        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents
         'Using mapping (first row of the Payment List)
         For PayCol = 2 To 6
             .Range(PaymentList.Cells(1, PayCol).Value).Value = PaymentList.Cells(PayRow, PayCol).Value
@@ -103,7 +106,7 @@ Sub Payments_Load() '2024-02-07 @ 15:09
             'Bring down the formulas into results
             .Range("M4:N" & LastResultRow).Formula = .Range("M1:N1").Formula 'Bring Apply and Invoice Date Formulas
             .Range("P4:R" & LastResultRow).Formula = .Range("P1:R1").Formula 'Inv. Amount, Prev. payments & Balance formulas
-            Payments.Range("D11:K" & LastResultRow + 7).Value = .Range("M4:T" & LastResultRow).Value 'Bring over Pay Items
+            Payments.Range("D13:K" & LastResultRow + 9).Value = .Range("M4:T" & LastResultRow).Value 'Bring over Pay Items
 NoData:
         .Range("B2").Value = False 'Payment Load to False
         End With
