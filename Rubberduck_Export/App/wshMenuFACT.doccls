@@ -5,13 +5,13 @@ Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As 
     SlideOut_PrepFact
 End Sub
 
-Private Sub lblSuiviCC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_PrepFact
     SlideIn_Encaissement
     SlideOut_SuiviCC
 End Sub
 
-Private Sub lblEncaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_SuiviCC
     SlideOut_Encaissement
 End Sub

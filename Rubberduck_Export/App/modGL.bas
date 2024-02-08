@@ -258,6 +258,7 @@ Sub GLTransSubTotal(GLNo As String, GLDesc As String, s As Currency)
     wshBV.Range("B2").value = wshBV.Range("B2").value + 1
     
 End Sub
+
 Sub GLTrans_Import() '2024-01-10 @ 07:00
     
     Application.ScreenUpdating = False

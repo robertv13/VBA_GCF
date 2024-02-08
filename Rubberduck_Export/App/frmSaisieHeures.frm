@@ -48,7 +48,7 @@ End Sub
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
-    Call ImportClientList
+    Call ClientList_Import
     
     Dim lastUsedRow As Long
     lastUsedRow = wshClientDB.Range("A999999").End(xlUp).row

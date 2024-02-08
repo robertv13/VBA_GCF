@@ -125,33 +125,33 @@ Function IsEcritureValide(rmax As Long) As Boolean
 End Function
 
 Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
-    Dim FullFileName As String
-    Dim SheetName As String
-    Dim conn As Object
-    Dim rs As Object
-    Dim strSQL As String
-    Dim maxEJNo As Long, lastJE As Long, nextJENo As Long
     
     Application.ScreenUpdating = False
     
+    Dim FullFileName As String
+    Dim SheetName As String
     FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
     SheetName = "GLTrans"
     
     'Initialize connection, connection string & open the connection
+    Dim conn As Object
     Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Initialize recordset
+    Dim rs As Object
     Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
+    Dim strSQL As String
     strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & SheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
     
     'Get the last used row
+    Dim maxEJNo As Long, lastJE As Long
     If IsNull(rs.Fields("MaxEJNo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 1
@@ -160,6 +160,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     End If
     
     'Calculate the new ID
+    Dim nextJENo As Long
     nextJENo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset

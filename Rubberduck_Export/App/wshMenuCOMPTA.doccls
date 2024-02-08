@@ -1,29 +1,30 @@
 ﻿Option Explicit
 
-Private Sub lblEJ_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    SlideIn_GL
+Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_BV
     SlideOut_EJ
 End Sub
 
-Private Sub lblGL_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    SlideIn_EJ
-    SlideOut_GL
-End Sub
-
 Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    SlideIn_GL
-    SlideIn_EF
+    SlideIn_EJ
+    SlideIn_GL_Report
     SlideOut_BV
 End Sub
 
-Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_BV
+    SlideIn_EF
+    SlideOut_GL_Report
+End Sub
+
+Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_GL_Report
     SlideOut_EF
 End Sub
 
-Private Sub lblMinimizeAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_EJ
-    SlideIn_GL
     SlideIn_BV
+    SlideIn_GL_Report
     SlideIn_EF
 End Sub

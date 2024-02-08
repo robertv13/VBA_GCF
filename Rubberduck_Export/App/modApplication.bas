@@ -100,7 +100,7 @@ Sub AdjustShape()
     Next sShapes
 End Sub
 
-Sub ImportChartOfAccount() '2024-01-09 @ 09:22
+Sub ChartOfAccount_Import() '2024-01-09 @ 09:22
     
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents

@@ -16,7 +16,7 @@ Global savedCommNote As String
 
 Global Const gAppVersion As String = "v1.6" '2024-02-07 @ 07:18
 
-Sub ImportClientList() '2023-11-23 @ 06:51
+Sub ClientList_Import() '2024-02-08 @ 15:49
     
     'Clear all cells, but the headers, in the target worksheet
     wshClientDB.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
@@ -53,12 +53,12 @@ Sub ImportClientList() '2023-11-23 @ 06:51
     recSet.Close
     connStr.Close
     
-    MsgBox _
-        Prompt:="J'ai importé un total de " & _
-            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
-            "## ##0") & " clients", _
-        Title:="Vérification du nombre de clients", _
-        Buttons:=vbInformation
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
+'            "## ##0") & " clients", _
+'        Title:="Vérification du nombre de clients", _
+'        Buttons:=vbInformation
         
 End Sub
 

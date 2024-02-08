@@ -329,7 +329,7 @@ Fast_Exit_Sub:
 '    Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
     'myShape.OLEFormat.Object.Enabled = False
-    Call FromFAC2GL(InvListRow)
+    Call FAC_GL_Posting(InvListRow)
     
 End Sub
 
@@ -709,7 +709,7 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
 End Sub
 
-Sub FromFAC2GL(r As Long) '2023-12-22 @ 10:53
+Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
 
     Dim Montant As Double
     Dim DateFact As Date
@@ -727,40 +727,40 @@ Sub FromFAC2GL(r As Long) '2023-12-22 @ 10:53
 
     'AR amount
     Montant = wshFACInvList.Range("S" & r).value
-    If Montant Then Call GLPost(Montant, newID, "1100", "Comptes Clients", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "1100", "Comptes Clients", DateFact)
     
     'Professionnal Fees
     Montant = -wshFACInvList.Range("H" & r).value
-    If Montant Then Call GLPost(Montant, newID, "4000", "Revenus", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "4000", "Revenus", DateFact)
     
     'Miscellaneous Amount # 1
     Montant = -wshFACInvList.Range("J" & r).value
-    If Montant Then Call GLPost(Montant, newID, "5009", "Frais divers # 1", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "5009", "Frais divers # 1", DateFact)
     
     'Miscellaneous Amount # 2
     Montant = -wshFACInvList.Range("L" & r).value
-    If Montant Then Call GLPost(Montant, newID, "5008", "Frais divers # 2", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "5008", "Frais divers # 2", DateFact)
     
     'Miscellaneous Amount # 3
     Montant = -wshFACInvList.Range("N" & r).value
-    If Montant Then Call GLPost(Montant, newID, "5002", "Frais divers # 3", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "5002", "Frais divers # 3", DateFact)
     
     'TPS à payer
     Montant = -wshFACInvList.Range("P" & r).value
-    If Montant Then Call GLPost(Montant, newID, "2200", "TPS à payer", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "2200", "TPS à payer", DateFact)
     
     'TVQ à payer
     Montant = -wshFACInvList.Range("R" & r).value
-    If Montant Then Call GLPost(Montant, newID, "2201", "TVQ à payer", DateFact)
+    If Montant Then Call GL_Trans_Posting(Montant, newID, "2201", "TVQ à payer", DateFact)
     
-    Call GLPost(0, newID, "", NoFacture + "-" & nomClient, DateFact)
-    Call GLPost(0, newID, "", "", DateFact)
+    Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
+    Call GL_Trans_Posting(0, newID, "", "", DateFact)
     
     Call AdjustJETrans(newID)
     
 End Sub
 
-Sub GLPost(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
+Sub GL_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
 
     Dim rowGLTrans As Long, maxID As Double, newID As Long
     'Détermine la prochaine ligne disponible dans la table

@@ -8,7 +8,7 @@ Private Sub Workbook_Open()
     Range("B1").Select
     'HideAllExcepActiveSheet
     
-    Call ImportChartOfAccount
+    Call ChartOfAccount_Import
     
     Windows(ThisWorkbook.Name).Visible = True
     Application.ScreenUpdating = True

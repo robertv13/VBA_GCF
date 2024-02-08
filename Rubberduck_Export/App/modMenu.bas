@@ -297,24 +297,24 @@ Sub SlideIn_EJ()
     End With
 End Sub
 
-Sub SlideOut_GL()
-    With ActiveSheet.Shapes("btnComptabilite")
+Sub SlideOut_GL_Report()
+    With ActiveSheet.Shapes("btnGL")
         For Wdth = 32 To maxWidth
             .Height = Wdth
-            ActiveSheet.Shapes("icoComptabilite").Left = Wdth - 32
+            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
         Next Wdth
-        .TextFrame2.TextRange.Characters.text = "Grand Livre"
+        .TextFrame2.TextRange.Characters.text = "Rapport - GL"
     End With
 End Sub
 
-Sub SlideIn_GL()
-    With ActiveSheet.Shapes("btnComptabilite")
+Sub SlideIn_GL_Report()
+    With ActiveSheet.Shapes("btnGL")
         For Wdth = maxWidth To 32 Step -1
             .Height = Wdth
             .Left = Wdth - 32
-            ActiveSheet.Shapes("icoComptabilite").Left = Wdth - 32
+            ActiveSheet.Shapes("icoGL").Left = Wdth - 32
         Next Wdth
-        ActiveSheet.Shapes("btnComptabilite").TextFrame2.TextRange.Characters.text = ""
+        ActiveSheet.Shapes("btnGL").TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -475,9 +475,9 @@ Sub BV_Click()
     End With
 End Sub
 
-Sub GL_Click()
-    SlideIn_GL
-    MsgBox "Ajouter la fonction 'Grand Livre'"
+Sub GL_Report_Click()
+    SlideIn_GL_Report
+    MsgBox "Ajouter la fonction 'Rapport du G/L'"
 End Sub
 
 Sub EF_Click()

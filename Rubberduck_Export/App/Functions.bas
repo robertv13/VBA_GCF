@@ -35,8 +35,6 @@ Public Function GetAccountNoFromDescription(GLDescr As String) 'XLOOKUP - 2024-0
     Dim result As Variant
     Dim ws As Worksheet
     
-    ' Replace "YourDynamicRangeName" with the name of your dynamic named range
-    ' Replace "OtherWorksheet" with the name of the worksheet where the dynamic named range is located
     On Error Resume Next
     Set ws = ThisWorkbook.Sheets("Admin")
     Set dynamicRange = ws.Range("dnrPlanComptable")
