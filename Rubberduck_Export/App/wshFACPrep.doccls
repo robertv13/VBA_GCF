@@ -2,8 +2,8 @@
 
 Private Sub Worksheet_Activate()
 
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 85
+    'Set the zoom factor to 87% when this worksheet is activated
+    ActiveWindow.Zoom = 87
 
 End Sub
 

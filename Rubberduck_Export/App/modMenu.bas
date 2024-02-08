@@ -434,53 +434,53 @@ Sub SaisieHeures_Click()
     frmSaisieHeures.show vbModal
 End Sub
 
-Sub ExportHeures_Click()
-    SlideIn_ExportHeures
-    'MsgBox "Activer la fonction 'Export des heures'"
-End Sub
-
 Sub PreparationFacture_Click()
     SlideIn_PrepFact
-    'MsgBox "Activer la fonction 'Préparation de Facture'"
     wshFACPrep.Activate
 End Sub
 
 Sub SuiviCC_Click()
     SlideIn_SuiviCC
-    MsgBox "Activer la fonction 'Suivi des C/C'"
+    MsgBox "Ajouter la fonction 'Suivi des C/C'"
 End Sub
 
 Sub Encaissement_Click()
     SlideIn_Encaissement
-    MsgBox "Activer la fonction 'Encaissement'"
+    MsgBox "Ajouter la fonction 'Encaissement'"
 End Sub
 
 Sub Regularisation_Click()
     SlideIn_Regularisation
-    MsgBox "Activer la fonction 'Régularisation'"
+    MsgBox "Ajouter la fonction 'Régularisation'"
 End Sub
 
 Sub Paiement_Click()
     SlideIn_Paiement
-    MsgBox "Activer la fonction 'Paiement'"
+    MsgBox "Ajouter la fonction 'Déboursé'"
 End Sub
 
 Sub EJ_Click()
     SlideIn_EJ
-    MsgBox "Activer la fonction 'Entrée de Journal'"
-End Sub
-
-Sub GL_Click()
-    SlideIn_GL
-    MsgBox "Activer la fonction 'Grand Livre'"
+    With wshJE
+        .Visible = xlSheetVisible
+        .Select
+    End With
 End Sub
 
 Sub BV_Click()
     SlideIn_BV
-    MsgBox "Activer la fonction 'Balance de vérification'"
+    With wshBV
+        .Visible = xlSheetVisible
+        .Select
+    End With
+End Sub
+
+Sub GL_Click()
+    SlideIn_GL
+    MsgBox "Ajouter la fonction 'Grand Livre'"
 End Sub
 
 Sub EF_Click()
     SlideIn_EF
-    MsgBox "Activer la fonction 'États Financiers'"
+    MsgBox "Ajouter la fonction 'États Financiers'"
 End Sub
