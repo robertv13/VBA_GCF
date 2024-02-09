@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v1.6" '2024-02-07 @ 07:18
+Global Const gAppVersion As String = "v2.0.0" '2024-02-09 @ 06:40
 
 Sub ClientList_Import() '2024-02-08 @ 15:49
     
@@ -89,18 +89,18 @@ Sub TEC_Import()
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A999999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("A999999").End(xlUp).row
     
     With wshBaseHours
-        With .Range("A3" & ":P" & lastRow)
+        With .Range("A3" & ":P" & LastRow)
             .HorizontalAlignment = xlCenter
         End With
-        With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
+        With .Range("F3:F" & LastRow & ",G3:G" & LastRow & ",I3:I" & LastRow & ",O3:O" & LastRow)
             .HorizontalAlignment = xlLeft
         End With
-        .Range("H3:H" & lastRow).NumberFormat = "#0.00"
-        .Range("K3:K" & lastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        .Range("H3:H" & LastRow).NumberFormat = "#0.00"
+        .Range("K3:K" & LastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
     End With
     
     Application.ScreenUpdating = True
@@ -116,20 +116,20 @@ Sub TEC_FilterAndSort()
     TEC_Import '2023-12-23 @ 06:58
     
     With wshBaseHours
-        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If LastRow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         'Advanced Filter applied to BaseHours
-        .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("R2:W3"), _
-            CopyToRange:=.Range("Y2:AL2"), _
+        .Range("A2:Q" & LastRow).AdvancedFilter xlFilterCopy, _
+            criteriaRange:=.Range("R2:W3"), _
+            copytorange:=.Range("Y2:AL2"), _
             Unique:=True
-        lastResultRow = .Range("Y999999").End(xlUp).row
-        If lastResultRow < 4 Then GoTo NoSort
+        LastResultRow = .Range("Y999999").End(xlUp).row
+        If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
@@ -140,7 +140,7 @@ Sub TEC_FilterAndSort()
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("Y3:AL" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -291,7 +291,7 @@ Sub AddOrUpdateTECRecordToDB(r As Long) 'Write/Update a record to external .xlsx
     Dim rs As Object
     Dim strSQL As String
     Dim maxID As Long
-    Dim lastRow As Long
+    Dim LastRow As Long
     Dim nextID As Long
     
     Application.ScreenUpdating = False
@@ -335,13 +335,13 @@ Sub AddOrUpdateTECRecordToDB(r As Long) 'Write/Update a record to external .xlsx
             'Get the last used row
             If IsNull(rs.Fields("MaxID").value) Then
                 ' Handle empty table (assign a default value, e.g., 1)
-                lastRow = 1
+                LastRow = 1
             Else
-                lastRow = rs.Fields("MaxID").value
+                LastRow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
-            nextID = lastRow + 1
+            nextID = LastRow + 1
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
@@ -411,19 +411,19 @@ Sub RefreshListBoxAndAddHours() 'Load the listBox with the appropriate records
     frmSaisieHeures.txtTotalHeures.value = ""
     
     'Last Row used in first column of result
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
-    If lastRow = 0 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
+    If LastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
-        If lastRow = 1 Then
+        If LastRow = 1 Then
             .RowSource = "HeuresBase!Y3:AG3"
         Else
-            .RowSource = "HeuresBase!Y3:AG" & lastRow + 1
+            .RowSource = "HeuresBase!Y3:AG" & LastRow + 1
         End If
     End With
 

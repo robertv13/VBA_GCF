@@ -1,7 +1,7 @@
 Attribute VB_Name = "zzzBillingItem_Macros"
 Option Explicit
 
-Dim EntryRow As Long, EntryCol As Long, lastRow As Long, lastResultRow As Long, SelRow As Long, InvRow As Long
+Dim EntryRow As Long, EntryCol As Long, LastRow As Long, LastResultRow As Long, SelRow As Long, InvRow As Long
 Dim InvListRow As Long
 
 Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
@@ -13,11 +13,11 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
     With shBillEntries
         'Clear destination area
         .Range("U3:Z9999").ClearContents
-        lastRow = .Range("A9999").End(xlUp).row
-        If lastRow < 4 Then Exit Sub 'No WIP rows at all
+        LastRow = .Range("A9999").End(xlUp).row
+        If LastRow < 4 Then Exit Sub 'No WIP rows at all
         'Copy line per line, cell per cell
         LineTo_Copy = 3
-        For LineFrom_Copy = 4 To lastRow
+        For LineFrom_Copy = 4 To LastRow
             If .Cells(LineFrom_Copy, 2).value = .Range("Q3").value Then
                 If .Range("R3").value = "<>" Or .Cells(LineFrom_Copy, 12) = "No" Then
                     .Cells(LineTo_Copy, 21).value = .Cells(LineFrom_Copy, 1).value 'Bill Entry ID
@@ -31,9 +31,9 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
             End If
         Next LineFrom_Copy
         '.Range("A3:M" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("Q2:R3"), CopyToRange:=.Range("U2:AA2"), Unique:=True
-        lastResultRow = .Range("U99999").End(xlUp).row
-        If lastResultRow < 3 Then Exit Sub
-        wshFACPrep.Range("C12:I" & lastResultRow + 9).value = .Range("U3:AA" & lastResultRow).value 'Bring Over Billing Item Results
+        LastResultRow = .Range("U99999").End(xlUp).row
+        If LastResultRow < 3 Then Exit Sub
+        wshFACPrep.Range("C12:I" & LastResultRow + 9).value = .Range("U3:AA" & LastResultRow).value 'Bring Over Billing Item Results
         On Error Resume Next
         wshFACPrep.Range("B17").value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").value, , xlFormulas, xlWhole).row 'Set Selected Row (if applicable)
         On Error GoTo 0

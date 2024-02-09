@@ -15,11 +15,11 @@ End Function
 
 Function GetID_FromClientName(ClientNom As String)
 
-    Dim lastRow As Long
-    lastRow = wshClientDB.Range("A99999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshClientDB.Range("A99999").End(xlUp).row
     
     Dim i As Long
-    For i = 1 To lastRow
+    For i = 1 To LastRow
         If wshClientDB.Cells(i, 2) = ClientNom Then
             'Debug.Print "ID du client - '" & wshClientDB.Cells(i, 1).value & "'"
             GetID_FromClientName = wshClientDB.Cells(i, 1).value

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFAC"
 Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
-Dim lastRow As Long, LastItemRow As Long, lastResultRow As Long, ResultRow As Long
+Dim LastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
 
 Sub Invoice_New() 'Clear contents
     If wshFACPrep.Range("B27").value = False Then
@@ -76,18 +76,18 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         wshFACFinale.Range("B26").value = wshFACInvList.Range("G" & InvListRow).value
         'Load Invoice Detail Items
         With wshFACInvItems
-            Dim lastRow As Long, lastResultRow As Long
-            lastRow = .Range("A999999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub 'No Item Lines
+            Dim LastRow As Long, LastResultRow As Long
+            LastRow = .Range("A999999").End(xlUp).row
+            If LastRow < 4 Then Exit Sub 'No Item Lines
             .Range("I3").value = wshFACPrep.Range("O6").value
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = '" & .Range("I3").value & "'"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & LastRow & "', Critère = '" & .Range("I3").value & "'"
             wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
-            lastResultRow = .Range("O999").End(xlUp).row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
-            If lastResultRow < 3 Then GoTo NoItems
-            For ResultRow = 3 To lastResultRow
+            .Range("A3:G" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), copytorange:=.Range("K2:P2"), Unique:=True
+            LastResultRow = .Range("O999").End(xlUp).row
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & LastResultRow
+            If LastResultRow < 3 Then GoTo NoItems
+            For ResultRow = 3 To LastResultRow
                 InvItemRow = .Range("O" & ResultRow).value
                 If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & ResultRow & " - Desc = " & .Range("K" & ResultRow).value & " - Hrs = " & .Range("L" & ResultRow).value
                 wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
@@ -119,20 +119,20 @@ Sub InvoiceGetAllTrans(inv As String)
     wshFACPrep.Range("B31").value = 0
    
     With wshFACInvList
-        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
-        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
+        If LastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("V3").value = wshFACPrep.Range("O6").value
         'Advanced Filter setup
-        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("V2:V3"), _
-            CopyToRange:=.Range("X2:AQ2"), _
+        .Range("A3:T" & LastRow).AdvancedFilter xlFilterCopy, _
+            criteriaRange:=.Range("V2:V3"), _
+            copytorange:=.Range("X2:AQ2"), _
             Unique:=True
-        lastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
-        If lastResultRow < 3 Then
+        LastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
+        If LastResultRow < 3 Then
             GoTo Done
         End If
 '        With .Sort
@@ -148,7 +148,7 @@ Sub InvoiceGetAllTrans(inv As String)
 '            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
 '            .Apply 'Apply Sort
 '         End With
-         wshFACPrep.Range("B31").value = lastResultRow - 2 'Remove Header rows from row count
+         wshFACPrep.Range("B31").value = LastResultRow - 2 'Remove Header rows from row count
 Done:
     End With
     Application.ScreenUpdating = True
@@ -170,7 +170,7 @@ Sub ClearAndFixTotalsFormulaFACPrep()
         Call SetLabels(.Range("K57"), "FAC_Label_Deposit")
         Call SetLabels(.Range("K59"), "FAC_Label_AmountDue")
         
-        .Range("O47").Formula = "=SUM(O11:O45)" 'Fees sub-total
+        .Range("O47").formula = "=SUM(O11:O45)" 'Fees sub-total
         .Range("O47").Font.Bold = True
         
         .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value 'Misc. # 1 - Descr.
@@ -180,18 +180,18 @@ Sub ClearAndFixTotalsFormulaFACPrep()
         .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value 'Misc. # 3 - Descr.
         .Range("O50").value = "" 'Misc. # 3 - Amount
         
-        .Range("O51").Formula = "=sum(O47:O50)" 'Sub-total
+        .Range("O51").formula = "=sum(O47:O50)" 'Sub-total
         .Range("O51").Font.Bold = True
         
         .Range("N52").value = wshFACPrep.Range("B29").value 'GST Rate
         .Range("N52").NumberFormat = "0.00%"
-        .Range("O52").Formula = "=round(o51*n52,2)" 'GST Amnt
+        .Range("O52").formula = "=round(o51*n52,2)" 'GST Amnt
         .Range("N53").value = wshFACPrep.Range("B30").value 'PST Rate
         .Range("N53").NumberFormat = "0.000%"
-        .Range("O53").Formula = "=round(o51*n53,2)" 'GST Amnt
-        .Range("O55").Formula = "=sum(o51:o54)" 'Grand Total"
+        .Range("O53").formula = "=round(o51*n53,2)" 'GST Amnt
+        .Range("O55").formula = "=sum(o51:o54)" 'Grand Total"
         .Range("O57").value = "" 'Deposit Amount
-        .Range("O59").Formula = "=O55-O57" 'Deposit Amount
+        .Range("O59").formula = "=O55-O57" 'Deposit Amount
         
     End With
     
@@ -213,21 +213,21 @@ Sub ClearAndFixTotalsFormulaFACFinale()
         Call SetLabels(.Range("B80"), "FAC_Label_AmountDue")
 
         'Fix formulas to calculate amounts & Copy cells from FAC_Préparation
-        .Range("F68").Formula = "=SUM(F33:F62)" 'Fees Sub-Total
-        .Range("C69").Formula = "='" & wshFACPrep.Name & "'!M48" 'Misc. Amount # 1 - Description
-        .Range("F69").Formula = "='" & wshFACPrep.Name & "'!O48" 'Misc. Amount # 1
-        .Range("C70").Formula = "='" & wshFACPrep.Name & "'!M49" 'Misc. Amount # 2 - Description
-        .Range("F70").Formula = "='" & wshFACPrep.Name & "'!O49" 'Misc. Amount # 2
-        .Range("C71").Formula = "='" & wshFACPrep.Name & "'!M50" 'Misc. Amount # 3 - Description
-        .Range("F71").Formula = "='" & wshFACPrep.Name & "'!O50" 'Misc. Amount # 3
-        .Range("F72").Formula = "=F68+F69+F70+F71" 'Sub-Total
-        .Range("D73").Formula = "='" & wshFACPrep.Name & "'!N52" 'GST Rate
-        .Range("F73").Formula = "='" & wshFACPrep.Name & "'!O52" 'GST Amount
-        .Range("D74").Formula = "='" & wshFACPrep.Name & "'!N53" 'PST Rate
-        .Range("F74").Formula = "='" & wshFACPrep.Name & "'!O53" 'PST Amount
-        .Range("F76").Formula = "=F72+F73+F74" 'Total including taxes
-        .Range("F78").Formula = "='" & wshFACPrep.Name & "'!O57" 'Deposit Amount
-        .Range("F80").Formula = "=F76-F78" 'Total due on that invoice
+        .Range("F68").formula = "=SUM(F33:F62)" 'Fees Sub-Total
+        .Range("C69").formula = "='" & wshFACPrep.Name & "'!M48" 'Misc. Amount # 1 - Description
+        .Range("F69").formula = "='" & wshFACPrep.Name & "'!O48" 'Misc. Amount # 1
+        .Range("C70").formula = "='" & wshFACPrep.Name & "'!M49" 'Misc. Amount # 2 - Description
+        .Range("F70").formula = "='" & wshFACPrep.Name & "'!O49" 'Misc. Amount # 2
+        .Range("C71").formula = "='" & wshFACPrep.Name & "'!M50" 'Misc. Amount # 3 - Description
+        .Range("F71").formula = "='" & wshFACPrep.Name & "'!O50" 'Misc. Amount # 3
+        .Range("F72").formula = "=F68+F69+F70+F71" 'Sub-Total
+        .Range("D73").formula = "='" & wshFACPrep.Name & "'!N52" 'GST Rate
+        .Range("F73").formula = "='" & wshFACPrep.Name & "'!O52" 'GST Amount
+        .Range("D74").formula = "='" & wshFACPrep.Name & "'!N53" 'PST Rate
+        .Range("F74").formula = "='" & wshFACPrep.Name & "'!O53" 'PST Amount
+        .Range("F76").formula = "=F72+F73+F74" 'Total including taxes
+        .Range("F78").formula = "='" & wshFACPrep.Name & "'!O57" 'Deposit Amount
+        .Range("F80").formula = "=F76-F78" 'Total due on that invoice
     End With
     
     Application.EnableEvents = True
@@ -379,9 +379,9 @@ End Sub
 
 Sub TEC_Clear()
 
-    Dim lastRow As Long
-    lastRow = wshFACPrep.Range("D999").End(xlUp).row
-    If lastRow > 7 Then wshFACPrep.Range("D8:I" & lastRow).ClearContents
+    Dim LastRow As Long
+    LastRow = wshFACPrep.Range("D999").End(xlUp).row
+    If LastRow > 7 Then wshFACPrep.Range("D8:I" & LastRow).ClearContents
     
 End Sub
 
@@ -407,23 +407,23 @@ Sub TECByClient_FilterAndSort(id As Long) 'RMV-2023-12-21 @ 11:00
     Call TEC_Import '2023-12-15 @ 17:02
     
     With wshBaseHours
-        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If LastRow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
-        .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("T2:W3"), _
-            CopyToRange:=.Range("Y2:AL2"), _
+        .Range("A2:Q" & LastRow).AdvancedFilter xlFilterCopy, _
+            criteriaRange:=.Range("T2:W3"), _
+            copytorange:=.Range("Y2:AL2"), _
             Unique:=True
-        lastResultRow = .Range("Y999999").End(xlUp).row
-        If lastResultRow < 3 Then
+        LastResultRow = .Range("Y999999").End(xlUp).row
+        If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
         End If
-        If lastResultRow < 4 Then GoTo NoSort
+        If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
@@ -434,7 +434,7 @@ Sub TECByClient_FilterAndSort(id As Long) 'RMV-2023-12-21 @ 11:00
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("Y3:AL" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 NoSort:
@@ -444,14 +444,14 @@ End Sub
 
 Sub CopyFromFilteredEntriesToFACPrep()
 
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("Y99999").End(xlUp).row
     Dim row As Long
     row = 8
     
     Dim i As Integer
     With wshBaseHours
-        For i = 3 To lastRow
+        For i = 3 To LastRow
             If .Range("AH" & i).value = False And .Range("AJ" & i).value = False Then
                 wshFACPrep.Range("D" & row).value = .Range("AA" & i).value 'Date
                 wshFACPrep.Range("E" & row).value = .Range("Z" & i).value 'Date
@@ -473,11 +473,11 @@ Sub Invoice_Delete()
         InvRow = .Range("B20").value 'Set Invoice Row
         wshFACInvList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         With InvItems
-            lastRow = .Range("A99999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub
-            .Range("A3:J" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
-            lastResultRow = .Range("V99999").End(xlUp).row
-            If lastResultRow < 3 Then GoTo NoItems
+            LastRow = .Range("A99999").End(xlUp).row
+            If LastRow < 4 Then Exit Sub
+            .Range("A3:J" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("N2:N3"), copytorange:=.Range("P2:W2"), Unique:=True
+            LastResultRow = .Range("V99999").End(xlUp).row
+            If LastResultRow < 3 Then GoTo NoItems
     '        If LastResultRow < 4 Then GoTo SkipSort
     '        'Sort Rows Descending
     '         With .Sort
@@ -487,7 +487,7 @@ Sub Invoice_Delete()
     '         .Apply 'Apply Sort
     '         End With
 SkipSort:
-            For ResultRow = 3 To lastResultRow
+            For ResultRow = 3 To LastResultRow
                 ItemDBRow = .Range("V" & ResultRow).value 'Set Invoice Database Row
                 .Range("A" & ItemDBRow & ":J" & ItemDBRow).ClearContents 'Clear Fields (deleting creates issues with results
             Next ResultRow
@@ -495,7 +495,7 @@ SkipSort:
             With .Sort
                 .SortFields.Clear
                 .SortFields.Add Key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
-                .SetRange wshFACInvItems.Range("A4:J" & lastResultRow) 'Set Range
+                .SetRange wshFACInvItems.Range("A4:J" & LastResultRow) 'Set Range
                 .Apply 'Apply Sort
             End With
         End With
@@ -711,7 +711,7 @@ End Sub
 
 Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
 
-    Dim Montant As Double
+    Dim montant As Double
     Dim DateFact As Date
     Dim NoFacture As String
     Dim nomClient As String
@@ -726,32 +726,32 @@ Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
     newID = WorksheetFunction.Max(Rng) + 1
 
     'AR amount
-    Montant = wshFACInvList.Range("S" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "1100", "Comptes Clients", DateFact)
+    montant = wshFACInvList.Range("S" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "1100", "Comptes Clients", DateFact)
     
     'Professionnal Fees
-    Montant = -wshFACInvList.Range("H" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "4000", "Revenus", DateFact)
+    montant = -wshFACInvList.Range("H" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "4000", "Revenus", DateFact)
     
     'Miscellaneous Amount # 1
-    Montant = -wshFACInvList.Range("J" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "5009", "Frais divers # 1", DateFact)
+    montant = -wshFACInvList.Range("J" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "5009", "Frais divers # 1", DateFact)
     
     'Miscellaneous Amount # 2
-    Montant = -wshFACInvList.Range("L" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "5008", "Frais divers # 2", DateFact)
+    montant = -wshFACInvList.Range("L" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "5008", "Frais divers # 2", DateFact)
     
     'Miscellaneous Amount # 3
-    Montant = -wshFACInvList.Range("N" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "5002", "Frais divers # 3", DateFact)
+    montant = -wshFACInvList.Range("N" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "5002", "Frais divers # 3", DateFact)
     
     'TPS à payer
-    Montant = -wshFACInvList.Range("P" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "2200", "TPS à payer", DateFact)
+    montant = -wshFACInvList.Range("P" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "2200", "TPS à payer", DateFact)
     
     'TVQ à payer
-    Montant = -wshFACInvList.Range("R" & r).value
-    If Montant Then Call GL_Trans_Posting(Montant, newID, "2201", "TVQ à payer", DateFact)
+    montant = -wshFACInvList.Range("R" & r).value
+    If montant Then Call GL_Trans_Posting(montant, newID, "2201", "TVQ à payer", DateFact)
     
     Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
     Call GL_Trans_Posting(0, newID, "", "", DateFact)
@@ -778,13 +778,13 @@ Sub GL_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
         wshGLFACTrans.Range("J" & rowGLTrans).value = -m
     End If
     wshGLFACTrans.Range("K" & rowGLTrans).value = ""
-    wshGLFACTrans.Range("L" & rowGLTrans).Formula = "=ROW()"
+    wshGLFACTrans.Range("L" & rowGLTrans).formula = "=ROW()"
 
 End Sub
 
 Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
     
-    Dim firstRow As Long, lastRow As Long, r As Long
+    Dim firstRow As Long, LastRow As Long, r As Long
     Dim nrJE_All As Range
     Set nrJE_All = Range("nrJE_All")
     firstRow = Application.WorksheetFunction.Match(JENumber, nrJE_All, 0) + 1
@@ -794,21 +794,21 @@ Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
     Do While wshGLFACTrans.Cells(r, 3).value = JENumber
         r = r + 1
     Loop
-    lastRow = r - 1
+    LastRow = r - 1
     
     With wshGLFACTrans
         'Les lignes subséquentes sont en police blanche...
-        .Range("D" & (firstRow + 1) & ":F" & lastRow).Font.Color = vbWhite
+        .Range("D" & (firstRow + 1) & ":F" & LastRow).Font.Color = vbWhite
         
         'We adjust Numeric Formats for the amounts
-        .Range("I" & firstRow & ":J" & (lastRow - 2)).NumberFormat = "#,###,##0.00 $"
+        .Range("I" & firstRow & ":J" & (LastRow - 2)).NumberFormat = "#,###,##0.00 $"
         
         'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
         Dim r1 As Range
-        Set r1 = .Range("D" & firstRow & ":K" & (lastRow - 1))
+        Set r1 = .Range("D" & firstRow & ":K" & (LastRow - 1))
         r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
         
-        With .Range("H" & (lastRow - 1) & ":K" & (lastRow - 1))
+        With .Range("H" & (LastRow - 1) & ":K" & (LastRow - 1))
             .Merge
             .HorizontalAlignment = xlLeft
             .Font.Italic = True

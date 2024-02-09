@@ -163,7 +163,3 @@ Sub AddColumnsToWorksheet()
     Debug.Print "Seven columns added to the worksheet."
 End Sub
 
-
-
-
-
