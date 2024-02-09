@@ -13,7 +13,6 @@ Sub UpdateBV() 'Button 'Actualiser'
     Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
     Set planComptable = wshAdmin.Range("dnrPlanComptable")
-    'Debug.Print planComptable.Address
     
     'Clear Detail transaction section
     wshBV.Range("L4:T99999").ClearContents
@@ -144,7 +143,6 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, minDate As Date, maxDate 
         .PatternTintAndShade = 0
     End With
     
-    Debug.Print vbNewLine & "Date minimum = " & minDate & "   et   Date Maximum = " & maxDate
     Dim d As Date, OK As Integer
     
     With wshBV
@@ -170,20 +168,11 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, minDate As Date, maxDate 
             OK = OK + 1
         Else
             foundRow = foundRow + 1
-            If d < minDate Then Debug.Print Tab(5); d & " < " & minDate
-            If d > maxDate Then Debug.Print Tab(5); d & " > " & maxDate
+'            If d < minDate Then Debug.Print Tab(5); d & " < " & minDate
+'            If d > maxDate Then Debug.Print Tab(5); d & " > " & maxDate
         End If
     Loop
     End With
-        Debug.Print OK & " transactions valides !"
-'        Selection.Font.Bold = True
-'        With Selection.Interior
-'            .Pattern = xlSolid
-'            .PatternColorIndex = xlAutomatic
-'            .ThemeColor = xlThemeColorDark1
-'            .TintAndShade = -0.149998474074526
-'            .PatternTintAndShade = 0
-'        End With
 
         wshBV.Range("S" & rowGLDetail - 1).Font.Bold = True
         With wshBV.Range("S" & rowGLDetail - 1).Interior
@@ -314,8 +303,6 @@ Sub GLTrans_Import() '2024-01-10 @ 07:00
         End With
     End With
     
-    'wshGLFACTrans.Range("C" & saveLastRow & ":L" & lastRow).Cells.Borders.LineStyle = xlNone
-    
     Dim firstRowJE As Long, lastRowJE As Long
     Dim r As Long, l As Long
     l = 1
@@ -439,7 +426,7 @@ Sub SetUpAndPrintDocument(myPrintRange As Range, pagesTall As Integer)
         .PrintHeadings = False
         .PrintGridlines = False
         .PrintComments = xlPrintInPlace
-        .PrintQuality = -3
+'        .PrintQuality = -3
         .Draft = False
         .FirstPageNumber = xlAutomatic
         .Order = xlDownThenOver
@@ -451,10 +438,12 @@ Sub SetUpAndPrintDocument(myPrintRange As Range, pagesTall As Integer)
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
     End With
-    
+
     Application.Dialogs(xlDialogPrint).show
     ActiveSheet.PageSetup.PrintArea = ""
-    
+ 
+'    wshBV.PrintOut , , , True, True, , , , False
+ 
 End Sub
 
 

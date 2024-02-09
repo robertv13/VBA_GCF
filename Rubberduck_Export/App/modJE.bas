@@ -128,8 +128,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     
     Application.ScreenUpdating = False
     
-    Dim FullFileName As String
-    Dim SheetName As String
+    Dim FullFileName As String, SheetName As String
     FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
     SheetName = "GLTrans"
@@ -171,17 +170,17 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     
     For l = 9 To r
         rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields("No_EJ").value = nextJENo
-        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
-        rs.Fields("Numéro Écriture").value = nextJENo
-        rs.Fields("Source").value = wshJE.Range("E4").value
-        rs.Fields("Description").value = wshJE.Range("E6").value
-        rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
-        rs.Fields("Compte").value = wshJE.Range("D" & l).value
-        rs.Fields("Débit").value = wshJE.Range("G" & l).value
-        rs.Fields("Crédit").value = wshJE.Range("H" & l).value
-        rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
+            'Add fields to the recordset before updating it
+            rs.Fields("No_EJ").value = nextJENo
+            rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
+            rs.Fields("Numéro Écriture").value = nextJENo
+            rs.Fields("Source").value = wshJE.Range("E4").value
+            rs.Fields("Description").value = wshJE.Range("E6").value
+            rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
+            rs.Fields("Compte").value = wshJE.Range("D" & l).value
+            rs.Fields("Débit").value = wshJE.Range("G" & l).value
+            rs.Fields("Crédit").value = wshJE.Range("H" & l).value
+            rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
         rs.Update
     Next l
     
