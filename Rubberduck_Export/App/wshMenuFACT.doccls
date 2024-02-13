@@ -21,3 +21,23 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     SlideIn_SuiviCC
     SlideIn_Encaissement
 End Sub
+
+Sub PreparationFacture_Click()
+    SlideIn_PrepFact
+    
+    wshFACPrep.Visible = xlSheetVisible
+    wshFACPrep.Activate
+
+End Sub
+
+Sub SuiviCC_Click()
+    SlideIn_SuiviCC
+    MsgBox "Ajouter la fonction 'Suivi des C/C'"
+End Sub
+
+Sub Encaissement_Click()
+    SlideIn_Encaissement
+    MsgBox "Ajouter la fonction 'Encaissement'"
+End Sub
+
+

@@ -7,3 +7,10 @@ End Sub
 Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideOut_SaisieHeures
 End Sub
+
+Sub SaisieHeures_Click()
+    SlideIn_SaisieHeures
+    Load frmSaisieHeures
+    frmSaisieHeures.show vbModal
+
+End Sub

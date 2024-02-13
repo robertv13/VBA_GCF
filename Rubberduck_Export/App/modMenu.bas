@@ -360,63 +360,67 @@ Sub SlideIn_EF()
     End With
 End Sub
 
-Sub menuTEC_Click() 'RMV_2024-02-06 @ 17:11
+Sub menuTEC_Click() '2024-02-13 @ 13:48
     SlideIn_TEC
     
     wshMenuTEC.Visible = xlSheetVisible
-    wshBaseHours.Visible = xlSheetVisible
-    wshClientDB.Visible = xlSheetVisible
+'    wshBaseHours.Visible = xlSheetVisible
+'    wshClientDB.Visible = xlSheetVisible
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
+
 End Sub
 
-Sub menuFacturation_Click() 'RMV_2024-02-06 @ 17:11
+Sub menuFacturation_Click() '2024-02-13 @ 13:48
     SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
-    wshFACPrep.Visible = xlSheetVisible
-    wshClientDB.Visible = xlSheetVisible
-    wshFACInvList.Visible = xlSheetVisible
-    wshFACInvItems.Visible = xlSheetVisible
-    wshFACFinale.Visible = xlSheetVisible
+'    wshFACPrep.Visible = xlSheetVisible
+'    wshClientDB.Visible = xlSheetVisible
+'    wshFACInvList.Visible = xlSheetVisible
+'    wshFACInvItems.Visible = xlSheetVisible
+'    wshFACFinale.Visible = xlSheetVisible
     
     wshMenuFACT.Activate
     wshMenuFACT.Range("A1").Select
+
 End Sub
 
-Sub menuDebours_Click() 'RMV_2024-02-06 @ 17:12
+Sub menuDebours_Click() '2024-02-13 @ 13:48
     SlideIn_Debours
     
     wshMenuDEBOURS.Visible = xlSheetVisible
-    wshPaiement.Visible = xlSheetVisible
+'    wshPaiement.Visible = xlSheetVisible
     
     wshMenuDEBOURS.Activate
     wshMenuDEBOURS.Range("A1").Select
+
 End Sub
 
-Sub menuComptabilite_Click() 'RMV_2024-02-06 @ 17:12
+Sub menuComptabilite_Click() '2024-02-13 @ 13:48
     SlideIn_Comptabilite
     
     wshMenuCOMPTA.Visible = xlSheetVisible
-    wshJE.Visible = xlSheetVisible
-    wshGL.Visible = xlSheetVisible
-    wshEJRecurrente.Visible = xlSheetVisible
-    wshBV.Visible = xlSheetVisible
+'    wshJE.Visible = xlSheetVisible
+'    wshGL.Visible = xlSheetVisible
+'    wshEJRecurrente.Visible = xlSheetVisible
+'    wshBV.Visible = xlSheetVisible
         
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select
+
 End Sub
 
-Sub menuParametres_Click() 'RMV_2024-02-06 @ 17:12
+Sub menuParametres_Click() '2024-02-13 @ 13:48
     SlideIn_Parametres
-    With wshAdmin
-        .Visible = xlSheetVisible
-        .Select
-    End With
+    
+    wshAdmin.Visible = xlSheetVisible
+    wshAdmin.Select
+    
 End Sub
 
-Sub EXIT_Click() '2024-01-10 @ 11:43
+Sub EXIT_Click() '2024-02-13 @ 13:48
     SlideIn_Exit
     
     Dim wsh As Worksheet
@@ -428,59 +432,3 @@ Sub EXIT_Click() '2024-01-10 @ 11:43
     
 End Sub
 
-Sub SaisieHeures_Click()
-    SlideIn_SaisieHeures
-    Load frmSaisieHeures
-    frmSaisieHeures.show vbModal
-End Sub
-
-Sub PreparationFacture_Click()
-    SlideIn_PrepFact
-    wshFACPrep.Activate
-End Sub
-
-Sub SuiviCC_Click()
-    SlideIn_SuiviCC
-    MsgBox "Ajouter la fonction 'Suivi des C/C'"
-End Sub
-
-Sub Encaissement_Click()
-    SlideIn_Encaissement
-    MsgBox "Ajouter la fonction 'Encaissement'"
-End Sub
-
-Sub Regularisation_Click()
-    SlideIn_Regularisation
-    MsgBox "Ajouter la fonction 'Régularisation'"
-End Sub
-
-Sub Paiement_Click()
-    SlideIn_Paiement
-    MsgBox "Ajouter la fonction 'Déboursé'"
-End Sub
-
-Sub EJ_Click()
-    SlideIn_EJ
-    With wshJE
-        .Visible = xlSheetVisible
-        .Select
-    End With
-End Sub
-
-Sub BV_Click()
-    SlideIn_BV
-    With wshBV
-        .Visible = xlSheetVisible
-        .Select
-    End With
-End Sub
-
-Sub GL_Report_Click()
-    SlideIn_GL_Report
-    MsgBox "Ajouter la fonction 'Rapport du G/L'"
-End Sub
-
-Sub EF_Click()
-    SlideIn_EF
-    MsgBox "Ajouter la fonction 'États Financiers'"
-End Sub

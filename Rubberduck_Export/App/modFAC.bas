@@ -673,7 +673,8 @@ Sub Montrer_Heures()
 End Sub
 
 Sub Goto_Onglet_Preparation_Facture()
-    wshFACPrep.Select
+    wshFACPrep.Visible = xlSheetVisible
+    wshFACPrep.Activate
     wshFACPrep.Range("C1").Select
 End Sub
 

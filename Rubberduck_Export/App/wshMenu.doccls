@@ -33,7 +33,7 @@ Private Sub EXITHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer,
     SlideOut_Exit
 End Sub
 
-Private Sub MinAll_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideIn_TEC
     SlideIn_Facturation
     SlideIn_Debours
@@ -41,3 +41,4 @@ Private Sub MinAll_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, By
     SlideIn_Parametres
     SlideIn_Exit
 End Sub
+

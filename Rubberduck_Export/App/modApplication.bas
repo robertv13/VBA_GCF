@@ -3,20 +3,13 @@ Option Explicit
 
 Sub BackToMainMenu()
 
-'    Dim ws As Worksheet 'TO-DO - Remove comments, hide all worksheets
-'    For Each ws In ActiveWorkbook.Worksheets
-'        If ws.Name <> ActiveSheet.Name Then ws.Visible = xlSheetHidden
-'    Next ws
+    Dim ws As Worksheet
+    For Each ws In ActiveWorkbook.Worksheets
+        If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
+    Next ws
     wshMenu.Activate
     wshMenu.Range("A1").Select
 
-End Sub
-
-Public Sub ClearImmediateWindow()
-    Dim i As Integer
-    For i = 1 To 5 ' Adjust the number of lines based on your preference
-        Debug.Print ""
-    Next i
 End Sub
 
 Sub BuildDate(r As Range) '2024-01-06 @ 18:29
@@ -60,47 +53,7 @@ Sub BuildDate(r As Range) '2024-01-06 @ 18:29
 
 End Sub
 
-Sub GetShapeProperties() 'List Properties of all the shapes
-
-    Dim sShapes As Shape, lLoop As Long
-    'Add headings for our lists. Expand as needed
-    ActiveSheet.Range("G2:M2") = Array("Type", "Name", "Macro", "Left", "Top", "Height", "Width")
-    lLoop = 3
-    'Loop through all shapes on active sheet
-    For Each sShapes In ActiveSheet.Shapes
-        'Increment Variable lLoop for row numbers
-        With sShapes
-            'Add shape properties
-            ActiveSheet.Cells(lLoop, 7) = .Type
-            ActiveSheet.Cells(lLoop, 8) = .Name
-            ActiveSheet.Cells(lLoop, 9) = .OnAction
-            ActiveSheet.Cells(lLoop, 10) = .Left
-            ActiveSheet.Cells(lLoop, 11) = .Top
-            ActiveSheet.Cells(lLoop, 12) = .Height
-            ActiveSheet.Cells(lLoop, 13) = .Width
-            lLoop = lLoop + 1
-            'Follow the same pattern for more
-        End With
-    Next sShapes
-    ActiveSheet.Cells(lLoop + 1, 8) = Now()
-End Sub
-
-Sub AdjustShape()
-
-    Dim sShapes As Shape, lLoop As Long
-    'Loop through all shapes on active sheet
-    For Each sShapes In ActiveSheet.Shapes
-        Debug.Print sShapes.Name
-        If sShapes.Name = "icoParametres" Then
-            If sShapes.Left = 2.5 Then
-                Debug.Print Tab(5); "The shape '" & sShapes.Name & "' as been adjusted !"
-                sShapes.Name = "icoEXIT"
-            End If
-        End If
-    Next sShapes
-End Sub
-
-Sub ChartOfAccount_Import() '2024-01-09 @ 09:22
+Sub ChartOfAccount_Import() '2024-02-13 @ 13:27
     
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
@@ -139,16 +92,16 @@ Sub ChartOfAccount_Import() '2024-01-09 @ 09:22
     
     Call RedefineDynamicRange
     
-    MsgBox _
-        Prompt:="J'ai importé un total de " & _
-            Format(wshAdmin.Range("T10").CurrentRegion.Rows.count - 1, _
-            "## ##0") & " comptes du Grand Livre", _
-        Title:="Vérification du nombre de comptes", _
-        Buttons:=vbInformation
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshAdmin.Range("T10").CurrentRegion.Rows.count - 1, _
+'            "## ##0") & " comptes du Grand Livre", _
+'        Title:="Vérification du nombre de comptes", _
+'        Buttons:=vbInformation
         
 End Sub
 
-Sub RedefineDynamicRange() 'Redefine DynamicNameRange - 2024-01-09 @ 10:21
+Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     
     'Delete existing dynamic named range (assuming it exists)
     On Error Resume Next
@@ -164,7 +117,7 @@ Sub RedefineDynamicRange() 'Redefine DynamicNameRange - 2024-01-09 @ 10:21
     
 End Sub
 
-Sub HideAllExceptActiveSheet()
+Sub HideAllExceptActiveSheet() '2024-02-13 @ 13:23
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets

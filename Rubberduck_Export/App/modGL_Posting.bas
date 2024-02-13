@@ -54,7 +54,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("No_Compte").value = "1000" 'Hardcoded
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
-        rs.Fields("Crédit").value = ""
+        rs.Fields("Crédit").value = 0
         rs.Fields("AutreRemarque").value = desc
     rs.Update
     
@@ -68,19 +68,19 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("Description").value = nom
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
         rs.Fields("Compte").value = "Comptes-Clients" 'Hardcoded
-        rs.Fields("Débit").value = ""
+        rs.Fields("Débit").value = 0
         rs.Fields("Crédit").value = montant
         rs.Fields("AutreRemarque").value = desc
     rs.Update
 
     'Separation line at the end of the Entry
-    rs.AddNew
-        rs.Fields("No_EJ").value = nextJENo
-        rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Numéro Écriture").value = nextJENo
-        rs.Fields("Source").value = "Encaissement"
-        rs.Fields("Description").value = nom
-    rs.Update
+'    rs.AddNew
+'        rs.Fields("No_EJ").value = nextJENo
+'        rs.Fields("Date").value = CDate(dt)
+'        rs.Fields("Numéro Écriture").value = nextJENo
+'        rs.Fields("Source").value = "Encaissement"
+'        rs.Fields("Description").value = nom
+'    rs.Update
     
     'Close recordset and connection
     On Error Resume Next

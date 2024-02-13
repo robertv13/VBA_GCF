@@ -28,3 +28,35 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     SlideIn_GL_Report
     SlideIn_EF
 End Sub
+
+Sub EJ_Click()
+    SlideIn_BV
+    SlideIn_EJ
+    With wshJE
+        .Visible = xlSheetVisible
+        .Select
+    End With
+End Sub
+
+Sub BV_Click()
+    SlideIn_EJ
+    SlideIn_BV
+    SlideIn_GL_Report
+    With wshBV
+        .Visible = xlSheetVisible
+        .Select
+    End With
+End Sub
+
+Sub GL_Report_Click()
+    SlideIn_BV
+    SlideIn_GL_Report
+    SlideIn_EF
+    MsgBox "Ajouter la fonction 'Rapport du G/L'"
+End Sub
+
+Sub EF_Click()
+    SlideIn_GL_Report
+    SlideIn_EF
+    MsgBox "Ajouter la fonction 'États Financiers'"
+End Sub

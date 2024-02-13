@@ -184,14 +184,14 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
         rs.Update
     Next l
     
-    'Separation line at the end of the Entry
-    rs.AddNew
-        rs.Fields("No_EJ").value = nextJENo
-        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
-        rs.Fields("Numéro Écriture").value = nextJENo
-        rs.Fields("Source").value = wshJE.Range("E4").value
-        rs.Fields("Description").value = wshJE.Range("E6").value
-    rs.Update
+'    'Separation line at the end of the Entry
+'    rs.AddNew
+'        rs.Fields("No_EJ").value = nextJENo
+'        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
+'        rs.Fields("Numéro Écriture").value = nextJENo
+'        rs.Fields("Source").value = wshJE.Range("E4").value
+'        rs.Fields("Description").value = wshJE.Range("E6").value
+'    rs.Update
     
     'Close recordset and connection
     On Error Resume Next

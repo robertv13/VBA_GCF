@@ -4,18 +4,21 @@ Private Sub Workbook_Open()
     Application.ScreenUpdating = False
     Windows(ThisWorkbook.Name).Visible = False
     'frmSplashScreen.show
-    Worksheets("Menu").Activate
-    Range("B1").Select
-    'HideAllExcepActiveSheet
+    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    wshMenu.Activate
+'    Range("A1").Select
+    
+    Call HideAllExceptActiveSheet
     
     Call ChartOfAccount_Import
     
     Windows(ThisWorkbook.Name).Visible = True
+
     Application.ScreenUpdating = True
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
-    ' Your code here
+    'Your code here
     MsgBox "Workbook can not be close like that !"
     
     Cancel = False
