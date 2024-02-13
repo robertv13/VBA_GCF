@@ -1,16 +1,16 @@
 Attribute VB_Name = "Module2"
 Option Explicit
 
-Sub Macro2()
-Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub Macro1()
+Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
-' Macro2 Macro
+' Macro1 Macro
 '
 
 '
-    Range("D419:F419").Select
+    Range("C6").Select
     With Selection.Font
-        .ThemeColor = xlThemeColorDark1
+        .ThemeColor = xlThemeColorLight1
         .TintAndShade = 0
     End With
 End Sub

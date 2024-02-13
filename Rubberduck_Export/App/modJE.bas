@@ -131,7 +131,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     Dim FullFileName As String, SheetName As String
     FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
-    SheetName = "GLTrans"
+    SheetName = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object
@@ -174,8 +174,8 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
             rs.Fields("No_EJ").value = nextJENo
             rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
             rs.Fields("Numéro Écriture").value = nextJENo
-            rs.Fields("Source").value = wshJE.Range("E4").value
             rs.Fields("Description").value = wshJE.Range("E6").value
+            rs.Fields("Source").value = wshJE.Range("E4").value
             rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
             rs.Fields("Compte").value = wshJE.Range("D" & l).value
             rs.Fields("Débit").value = wshJE.Range("G" & l).value
@@ -183,15 +183,6 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
             rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
         rs.Update
     Next l
-    
-'    'Separation line at the end of the Entry
-'    rs.AddNew
-'        rs.Fields("No_EJ").value = nextJENo
-'        rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
-'        rs.Fields("Numéro Écriture").value = nextJENo
-'        rs.Fields("Source").value = wshJE.Range("E4").value
-'        rs.Fields("Description").value = wshJE.Range("E6").value
-'    rs.Update
     
     'Close recordset and connection
     On Error Resume Next

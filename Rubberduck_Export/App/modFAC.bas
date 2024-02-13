@@ -141,7 +141,7 @@ Sub InvoiceGetAllTrans(inv As String)
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshGLFACTrans.Range("Y3"), _
+'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -722,10 +722,11 @@ Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
     nomClient = wshFACInvList.Range("E" & r).value
     
     Dim Rng As Range
-    Set Rng = wshGLFACTrans.Range("C2:C999999")
+    Set Rng = wshGL_Trans.Range("A2:C999999")
     Dim newID As Long
     newID = WorksheetFunction.Max(Rng) + 1
 
+    'RMV - O/S - 2024-02-13
     'AR amount
     montant = wshFACInvList.Range("S" & r).value
     If montant Then Call GL_Trans_Posting(montant, newID, "1100", "Comptes Clients", DateFact)
@@ -754,32 +755,31 @@ Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
     montant = -wshFACInvList.Range("R" & r).value
     If montant Then Call GL_Trans_Posting(montant, newID, "2201", "TVQ à payer", DateFact)
     
-    Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
-    Call GL_Trans_Posting(0, newID, "", "", DateFact)
+'    Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
+'    Call GL_Trans_Posting(0, newID, "", "", DateFact)
     
     Call AdjustJETrans(newID)
     
 End Sub
 
-Sub GL_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
+Sub GL_Trans_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
 
     Dim rowGLTrans As Long, maxID As Double, newID As Long
     'Détermine la prochaine ligne disponible dans la table
-    rowGLTrans = wshGLFACTrans.Range("C999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
+    rowGLTrans = wshGL_Trans.Range("A999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
 
-    wshGLFACTrans.Range("C" & rowGLTrans).value = noEJ
-    wshGLFACTrans.Range("D" & rowGLTrans).value = d
-    wshGLFACTrans.Range("E" & rowGLTrans).value = noEJ
-    wshGLFACTrans.Range("F" & rowGLTrans).value = "Facturation"
-    wshGLFACTrans.Range("G" & rowGLTrans).value = GL
-    wshGLFACTrans.Range("H" & rowGLTrans).value = GLDesc
+    wshGL_Trans.Range("A" & rowGLTrans).value = noEJ
+    wshGL_Trans.Range("B" & rowGLTrans).value = d
+    wshGL_Trans.Range("C" & rowGLTrans).value = "Facturation"
+    wshGL_Trans.Range("E" & rowGLTrans).value = GL
+    wshGL_Trans.Range("F" & rowGLTrans).value = GLDesc
     If m > 0 Then
-        wshGLFACTrans.Range("I" & rowGLTrans).value = m
+        wshGL_Trans.Range("G" & rowGLTrans).value = m
     ElseIf m < 0 Then
-        wshGLFACTrans.Range("J" & rowGLTrans).value = -m
+        wshGL_Trans.Range("H" & rowGLTrans).value = -m
     End If
-    wshGLFACTrans.Range("K" & rowGLTrans).value = ""
-    wshGLFACTrans.Range("L" & rowGLTrans).formula = "=ROW()"
+    wshGL_Trans.Range("I" & rowGLTrans).value = ""
+    wshGL_Trans.Range("J" & rowGLTrans).formula = "=ROW()"
 
 End Sub
 
@@ -792,37 +792,37 @@ Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
     r = firstRow
     
     'Determine the last row for a given Journal Entry
-    Do While wshGLFACTrans.Cells(r, 3).value = JENumber
+    Do While wshGL_Trans.Cells(r, 1).value = JENumber
         r = r + 1
     Loop
     LastRow = r - 1
     
-    With wshGLFACTrans
+    With wshGL_Trans
         'Les lignes subséquentes sont en police blanche...
-        .Range("D" & (firstRow + 1) & ":F" & LastRow).Font.Color = vbWhite
+        .Range("B" & (firstRow + 1) & ":D" & LastRow).Font.Color = vbWhite
         
         'We adjust Numeric Formats for the amounts
-        .Range("I" & firstRow & ":J" & (LastRow - 2)).NumberFormat = "#,###,##0.00 $"
+        .Range("G" & firstRow & ":H" & (LastRow - 2)).NumberFormat = "#,###,##0.00 $"
         
-        'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
-        Dim r1 As Range
-        Set r1 = .Range("D" & firstRow & ":K" & (LastRow - 1))
-        r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
-        
-        With .Range("H" & (LastRow - 1) & ":K" & (LastRow - 1))
-            .Merge
-            .HorizontalAlignment = xlLeft
-            .Font.Italic = True
-            .Font.Bold = True
-            With .Interior
-                .Pattern = xlSolid
-                .PatternColorIndex = xlAutomatic
-                .ThemeColor = xlThemeColorDark1
-                .TintAndShade = -0.149998474074526
-                .PatternTintAndShade = 0
-            End With
-            .Borders(xlInsideVertical).LineStyle = xlNone
-        End With
+'        'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
+'        Dim r1 As Range
+'        Set r1 = .Range("D" & firstRow & ":K" & (LastRow - 1))
+'        r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
+'
+'        With .Range("H" & (LastRow - 1) & ":K" & (LastRow - 1))
+'            .Merge
+'            .HorizontalAlignment = xlLeft
+'            .Font.Italic = True
+'            .Font.Bold = True
+'            With .Interior
+'                .Pattern = xlSolid
+'                .PatternColorIndex = xlAutomatic
+'                .ThemeColor = xlThemeColorDark1
+'                .TintAndShade = -0.149998474074526
+'                .PatternTintAndShade = 0
+'            End With
+'            .Borders(xlInsideVertical).LineStyle = xlNone
+'        End With
     End With
 End Sub
 

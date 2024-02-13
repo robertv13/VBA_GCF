@@ -1,14 +1,14 @@
 Attribute VB_Name = "modGL_Posting"
 Option Explicit
 
-Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_Sortie.xlsx / GLTrans
+Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_Sortie.xlsx / GL_Trans
     
     Application.ScreenUpdating = False
     
     Dim FullFileName As String, SheetName As String
     FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
-    SheetName = "GLTrans"
+    SheetName = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object
@@ -48,9 +48,8 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         'Add fields to the recordset before updating it
         rs.Fields("No_EJ").value = nextJENo
         rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Numéro Écriture").value = nextJENo
-        rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("Description").value = nom
+        rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("No_Compte").value = "1000" 'Hardcoded
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
@@ -64,8 +63,8 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("No_EJ").value = nextJENo
         rs.Fields("Date").value = CDate(dt)
         rs.Fields("Numéro Écriture").value = nextJENo
-        rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("Description").value = nom
+        rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
         rs.Fields("Compte").value = "Comptes-Clients" 'Hardcoded
         rs.Fields("Débit").value = 0
@@ -73,15 +72,6 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("AutreRemarque").value = desc
     rs.Update
 
-    'Separation line at the end of the Entry
-'    rs.AddNew
-'        rs.Fields("No_EJ").value = nextJENo
-'        rs.Fields("Date").value = CDate(dt)
-'        rs.Fields("Numéro Écriture").value = nextJENo
-'        rs.Fields("Source").value = "Encaissement"
-'        rs.Fields("Description").value = nom
-'    rs.Update
-    
     'Close recordset and connection
     On Error Resume Next
     rs.Close
