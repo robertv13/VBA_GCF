@@ -12,7 +12,7 @@ Sub BackToMainMenu()
 
 End Sub
 
-Sub BuildDate(r As Range) '2024-01-06 @ 18:29
+Sub Build_Date(r As Range) '2024-01-06 @ 18:29
         Dim d, m, Y As Integer
         Dim strDateConsruite As String, cell As String
         Dim dateValide As Boolean

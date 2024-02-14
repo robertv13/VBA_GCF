@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFAC"
 Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
-Dim LastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
+Dim lastRow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
 
 Sub Invoice_New() 'Clear contents
     If wshFACPrep.Range("B27").value = False Then
@@ -76,14 +76,14 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         wshFACFinale.Range("B26").value = wshFACInvList.Range("G" & InvListRow).value
         'Load Invoice Detail Items
         With wshFACInvItems
-            Dim LastRow As Long, LastResultRow As Long
-            LastRow = .Range("A999999").End(xlUp).row
-            If LastRow < 4 Then Exit Sub 'No Item Lines
+            Dim lastRow As Long, LastResultRow As Long
+            lastRow = .Range("A999999").End(xlUp).row
+            If lastRow < 4 Then Exit Sub 'No Item Lines
             .Range("I3").value = wshFACPrep.Range("O6").value
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & LastRow & "', Critère = '" & .Range("I3").value & "'"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = '" & .Range("I3").value & "'"
             wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), copytorange:=.Range("K2:P2"), Unique:=True
+            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), copytorange:=.Range("K2:P2"), Unique:=True
             LastResultRow = .Range("O999").End(xlUp).row
             If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & LastResultRow
             If LastResultRow < 3 Then GoTo NoItems
@@ -119,15 +119,15 @@ Sub InvoiceGetAllTrans(inv As String)
     wshFACPrep.Range("B31").value = 0
    
     With wshFACInvList
-        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
-        LastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
-        If LastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
+        lastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
+        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         .Range("V3").value = wshFACPrep.Range("O6").value
         'Advanced Filter setup
-        .Range("A3:T" & LastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("V2:V3"), _
             copytorange:=.Range("X2:AQ2"), _
             Unique:=True
@@ -329,13 +329,13 @@ Fast_Exit_Sub:
 '    Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
     'myShape.OLEFormat.Object.Enabled = False
-    Call FAC_GL_Posting(InvListRow)
+    Call FAC_Prepar_GL_Posting(InvListRow)
     
 End Sub
 
-Sub ClientChange(ClientName As String)
+Sub Client_Change(ClientName As String)
 
-    wshFACPrep.Range("B18").value = GetID_FromClientName(ClientName)
+    wshFACPrep.Range("B18").value = GetID_From_Client_Name(ClientName)
     
     With wshFACPrep
         .Range("K3").value = "Monsieur Robert M. Vigneault"
@@ -379,9 +379,9 @@ End Sub
 
 Sub TEC_Clear()
 
-    Dim LastRow As Long
-    LastRow = wshFACPrep.Range("D999").End(xlUp).row
-    If LastRow > 7 Then wshFACPrep.Range("D8:I" & LastRow).ClearContents
+    Dim lastRow As Long
+    lastRow = wshFACPrep.Range("D999").End(xlUp).row
+    If lastRow > 7 Then wshFACPrep.Range("D8:I" & lastRow).ClearContents
     
 End Sub
 
@@ -404,17 +404,17 @@ Sub TECByClient_FilterAndSort(id As Long) 'RMV-2023-12-21 @ 11:00
     
     Application.ScreenUpdating = False
 
-    Call TEC_Import '2023-12-15 @ 17:02
+    Call TEC_Import_All '2024-02-14 @ 06:20
     
     With wshBaseHours
-        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
-        LastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If LastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
+        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
-        .Range("A2:Q" & LastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A2:Q" & lastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("T2:W3"), _
             copytorange:=.Range("Y2:AL2"), _
             Unique:=True
@@ -444,14 +444,14 @@ End Sub
 
 Sub CopyFromFilteredEntriesToFACPrep()
 
-    Dim LastRow As Long
-    LastRow = wshBaseHours.Range("Y99999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row
     Dim row As Long
     row = 8
     
     Dim i As Integer
     With wshBaseHours
-        For i = 3 To LastRow
+        For i = 3 To lastRow
             If .Range("AH" & i).value = False And .Range("AJ" & i).value = False Then
                 wshFACPrep.Range("D" & row).value = .Range("AA" & i).value 'Date
                 wshFACPrep.Range("E" & row).value = .Range("Z" & i).value 'Date
@@ -473,9 +473,9 @@ Sub Invoice_Delete()
         InvRow = .Range("B20").value 'Set Invoice Row
         wshFACInvList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         With InvItems
-            LastRow = .Range("A99999").End(xlUp).row
-            If LastRow < 4 Then Exit Sub
-            .Range("A3:J" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("N2:N3"), copytorange:=.Range("P2:W2"), Unique:=True
+            lastRow = .Range("A99999").End(xlUp).row
+            If lastRow < 4 Then Exit Sub
+            .Range("A3:J" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("N2:N3"), copytorange:=.Range("P2:W2"), Unique:=True
             LastResultRow = .Range("V99999").End(xlUp).row
             If LastResultRow < 3 Then GoTo NoItems
     '        If LastResultRow < 4 Then GoTo SkipSort
@@ -554,7 +554,7 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
     
     'Create the PDF file and Save It
     On Error GoTo RefLibError
-    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, Filename:=SaveAs, Quality:=xlQualityStandard, _
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, fileName:=SaveAs, Quality:=xlQualityStandard, _
         IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:=True
     On Error GoTo 0
     
@@ -693,7 +693,7 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     wsSource.Range("A4:T" & lastUsedRow).Copy
 
     'Open the target workbook
-    Workbooks.Open Filename:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    Workbooks.Open fileName:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
 
     'Set references to the target workbook and target worksheet
@@ -710,19 +710,18 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
 End Sub
 
-Sub FAC_GL_Posting(r As Long) '2023-12-22 @ 10:53
+Sub FAC_Prepare_GL_Posting(r As Long) '2024-02-14 @ 05:56
 
     Dim montant As Double
     Dim DateFact As Date
-    Dim NoFacture As String
-    Dim nomClient As String
+    Dim NoFacture As String, nomCLient As String
     
     NoFacture = wshFACInvList.Range("A" & r).value
     DateFact = wshFACInvList.Range("B" & r).value
-    nomClient = wshFACInvList.Range("E" & r).value
+    nomCLient = wshFACInvList.Range("E" & r).value
     
     Dim Rng As Range
-    Set Rng = wshGL_Trans.Range("A2:C999999")
+    Set Rng = wshGL_Trans.Range("A2:A999999")
     Dim newID As Long
     newID = WorksheetFunction.Max(Rng) + 1
 
@@ -764,7 +763,7 @@ End Sub
 
 Sub GL_Trans_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
 
-    Dim rowGLTrans As Long, maxID As Double, newID As Long
+    Dim rowGLTrans As Long, MaxID As Double, newID As Long
     'Détermine la prochaine ligne disponible dans la table
     rowGLTrans = wshGL_Trans.Range("A999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
 
@@ -785,7 +784,7 @@ End Sub
 
 Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
     
-    Dim firstRow As Long, LastRow As Long, r As Long
+    Dim firstRow As Long, lastRow As Long, r As Long
     Dim nrJE_All As Range
     Set nrJE_All = Range("nrJE_All")
     firstRow = Application.WorksheetFunction.Match(JENumber, nrJE_All, 0) + 1
@@ -795,14 +794,14 @@ Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
     Do While wshGL_Trans.Cells(r, 1).value = JENumber
         r = r + 1
     Loop
-    LastRow = r - 1
+    lastRow = r - 1
     
     With wshGL_Trans
         'Les lignes subséquentes sont en police blanche...
-        .Range("B" & (firstRow + 1) & ":D" & LastRow).Font.Color = vbWhite
+        .Range("B" & (firstRow + 1) & ":D" & lastRow).Font.Color = vbWhite
         
         'We adjust Numeric Formats for the amounts
-        .Range("G" & firstRow & ":H" & (LastRow - 2)).NumberFormat = "#,###,##0.00 $"
+        .Range("G" & firstRow & ":H" & (lastRow - 2)).NumberFormat = "#,###,##0.00 $"
         
 '        'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
 '        Dim r1 As Range

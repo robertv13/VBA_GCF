@@ -5,15 +5,15 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
     
     Application.ScreenUpdating = False
     
-    Dim FullFileName As String, SheetName As String
-    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
-    SheetName = "GL_Trans"
+    sheetName = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Initialize recordset
     Dim rs As Object
@@ -21,7 +21,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & SheetName & "$]"
+    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & sheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -41,7 +41,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
     'Debit side
     rs.AddNew

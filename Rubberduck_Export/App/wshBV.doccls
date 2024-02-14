@@ -5,7 +5,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
         Dim r As Range: Set r = Range("J1")
-        Call BuildDate(r)
+        Call Build_Date(r)
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
         Range("L2").value = ""
         

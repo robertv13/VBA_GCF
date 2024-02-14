@@ -19,7 +19,7 @@
 '    If Not Intersect(Target, Range("J4")) Is Nothing Then
 '        Application.EnableEvents = False
 '        Dim r As Range: Set r = Range("J4")
-'        Call BuildDate(r)
+'        Call Build_Date(r)
 '        Application.EnableEvents = True
 '    End If
 '

@@ -13,23 +13,38 @@ Function GetID_FromInitials(i As String)
 
 End Function
 
-Function GetID_FromClientName(ClientNom As String)
+Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-    Dim LastRow As Long
-    LastRow = wshClientDB.Range("A99999").End(xlUp).row
+'    Dim lastRow As Long
+'    lastRow = wshClientDB.Range("A99999").End(xlUp).row
     
-    Dim i As Long
-    For i = 1 To LastRow
-        If wshClientDB.Cells(i, 2) = ClientNom Then
-            'Debug.Print "ID du client - '" & wshClientDB.Cells(i, 1).value & "'"
-            GetID_FromClientName = wshClientDB.Cells(i, 1).value
-            Exit Function
-        End If
-    Next i
+    Dim ws As Worksheet, dynamicRange As Range
+    On Error Resume Next
+    Set ws = wshClientDB
+    Set dynamicRange = ws.Range("dnrClients_All")
+    On Error GoTo 0
+
+    If ws Is Nothing Or dynamicRange Is Nothing Then
+        MsgBox "La feuille 'Clients' ou le DynamicRange n'a pas été trouvé!", _
+            vbExclamation
+        Exit Function
+    End If
+    
+    'Using XLOOKUP to find the result directly
+    Dim result As Variant
+    result = Application.WorksheetFunction.XLookup(nomCLient, _
+        dynamicRange.Columns(1), dynamicRange.Columns(2), _
+        "Not Found", 0, 1)
+    
+    If result <> "Not Found" Then
+        GetID_From_Client_Name = result
+    Else
+        MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
+    End If
 
 End Function
 
-Public Function GetAccountNoFromDescription(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim dynamicRange As Range
     Dim result As Variant
@@ -52,7 +67,7 @@ Public Function GetAccountNoFromDescription(GLDescr As String) 'XLOOKUP - 2024-0
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
-        GetAccountNoFromDescription = result
+        Get_GL_Code_From_GL_Description = result
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If

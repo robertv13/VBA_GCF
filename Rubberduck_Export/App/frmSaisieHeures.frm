@@ -37,7 +37,7 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("TEC_Client_ID").value = GetID_FromClientName(Me.txtClient.value)
+                wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(Me.txtClient.value)
                 Exit For
             End If
         Next i
@@ -48,11 +48,11 @@ End Sub
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
-    Call ClientList_Import
+    Call Client_List_Import_All
     
     Dim lastUsedRow As Long
     lastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
-    frmSaisieHeures.ListData = wshClientDB.Range("A1:B" & lastUsedRow) 'RMV =
+    frmSaisieHeures.ListData = wshClientDB.Range("A1:J" & lastUsedRow)
     
     With oEventHandler
         Set .SearchListBox = lstNomClient
@@ -102,8 +102,8 @@ Public Sub cmbProfessionnel_AfterUpdate()
     wshAdmin.Range("TEC_Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
     If wshAdmin.Range("TEC_Date").value <> "" Then
-        Call TEC_FilterAndSort
-        Call RefreshListBoxAndAddHours
+        Call TEC_Advanced_Filter_And_Sort
+        Call Refresh_ListBox_And_Add_Hours
     End If
     
     'Enabled the ADD button if the minimum fields are non empty
@@ -191,8 +191,8 @@ Private Sub txtDate_AfterUpdate()
     wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
 
     If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
-        Call TEC_FilterAndSort
-        Call RefreshListBoxAndAddHours
+        Call TEC_Advanced_Filter_And_Sort
+        Call Refresh_ListBox_And_Add_Hours
     End If
     
     'Enabled the ADD button if the minimum fields are non empty
@@ -379,7 +379,7 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
         savedClient = .txtClient.value
         'Debug.Print "Double click on a entry - " & savedClient
-        wshAdmin.Range("TEC_Client_ID").value = GetID_FromClientName(savedClient)
+        wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
         'Debug.Print "Client_ID - " & wshADMIN.Range("TEC_Client_ID").value
          
         .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)

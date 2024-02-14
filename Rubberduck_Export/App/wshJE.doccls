@@ -26,7 +26,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
         Dim r As Range: Set r = Range("J4")
-        Call BuildDate(r)
+        Call Build_Date(r)
         Application.EnableEvents = True
     End If
     
@@ -35,7 +35,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         With wshJE
             If .Range("D" & Target.row).value <> "" Then
-                .Range("K" & Target.row).value = GetAccountNoFromDescription(.Range("D" & Target.row).value)
+                .Range("K" & Target.row).value = Get_GL_Code_From_GL_Description(.Range("D" & Target.row).value)
             End If
             
             If Target.row > 9 And _

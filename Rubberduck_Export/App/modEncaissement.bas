@@ -1,6 +1,6 @@
 Attribute VB_Name = "modEncaissement"
 Option Explicit
-Dim LastRow As Long, LastResultRow As Long
+Dim lastRow As Long, LastResultRow As Long
 Dim PayRow As Long, PayCol As Long
 Dim ResultRow As Long, PayItemRow As Long, LastPayItemRow As Long, PayItemDBRow As Long
 
@@ -78,17 +78,17 @@ Sub Payments_SaveUpdate() '2024-02-07 @ 12:27
         Next PayItemRow
         
         'Prepare G/L posting
-        Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
+        Dim noEnc As String, nomCLient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
         noEnc = wshEncEntete.Cells(PayRow, 1).value
         dateEnc = wshEncEntete.Cells(PayRow, 2).value
-        nomClient = wshEncEntete.Cells(PayRow, 3).value
+        nomCLient = wshEncEntete.Cells(PayRow, 3).value
         typeEnc = wshEncEntete.Cells(PayRow, 4).value
         montantEnc = wshEncEntete.Cells(PayRow, 5).value
         descEnc = wshEncEntete.Cells(PayRow, 6).value
 
-        Call Encaissement_GL_Posting(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
+        Call Encaissement_GL_Posting(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
         
         MsgBox "Le paiement a été renregistré avec succès"
         Call Payments_AddNew 'Reset the form
@@ -119,9 +119,9 @@ Sub Payments_Load() '2024-02-07 @ 15:09
         'Load Pay Items
         With wshEncDetail
             .Range("M4:T999999").ClearContents
-            LastRow = .Range("A99999").End(xlUp).row
-            If LastRow < 4 Then GoTo NoData
-            .Range("A3:G" & LastRow).AdvancedFilter _
+            lastRow = .Range("A99999").End(xlUp).row
+            If lastRow < 4 Then GoTo NoData
+            .Range("A3:G" & lastRow).AdvancedFilter _
                 xlFilterCopy, _
                 criteriaRange:=.Range("J2:J3"), _
                 copytorange:=.Range("O3:T3"), _
@@ -197,9 +197,9 @@ Sub Payments_Delete() '2024-02-07 @ 15:41
         wshEncEntete.Range(PayRow & ":" & PayRow).EntireRow.Delete 'Delete Payment Row
 
         With wshEncDetail
-            LastRow = .Range("A99999").End(xlUp).row
-            If LastRow < 4 Then GoTo NotSaved
-            .Range("A3:G" & LastRow).AdvancedFilter _
+            lastRow = .Range("A99999").End(xlUp).row
+            If lastRow < 4 Then GoTo NotSaved
+            .Range("A3:G" & lastRow).AdvancedFilter _
                 xlFilterCopy, _
                 criteriaRange:=.Range("J2:J3"), _
                 copytorange:=.Range("O3:T3"), _

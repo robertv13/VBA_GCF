@@ -15,7 +15,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     
     'Client Name has changed
     If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
-        Call ClientChange(wshFACPrep.Range("E4").value)
+        Call Client_Change(wshFACPrep.Range("E4").value)
         GoTo ExitSub
     End If
     

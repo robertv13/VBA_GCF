@@ -128,15 +128,15 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     
     Application.ScreenUpdating = False
     
-    Dim FullFileName As String, SheetName As String
-    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
-    SheetName = "GL_Trans"
+    sheetName = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Initialize recordset
     Dim rs As Object
@@ -144,7 +144,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & SheetName & "$]"
+    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & sheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -164,7 +164,7 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     
@@ -195,8 +195,8 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
 End Sub
 
 Sub AddEJAutoRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
-    Dim FullFileName As String
-    Dim SheetName As String
+    Dim fullFileName As String
+    Dim sheetName As String
     Dim conn As Object
     Dim rs As Object
     Dim strSQL As String
@@ -204,19 +204,19 @@ Sub AddEJAutoRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
     
     Application.ScreenUpdating = False
     
-    FullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                    "GCF_BD_Sortie.xlsx"
-    SheetName = "EJAuto"
+    sheetName = "EJAuto"
     
     'Initialize connection, connection string & open the connection
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
-    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & SheetName & "$]"
+    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & sheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -234,7 +234,7 @@ Sub AddEJAutoRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & SheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     
