@@ -329,7 +329,7 @@ Fast_Exit_Sub:
 '    Set myShape = ActiveSheet.Shapes("Rectangle 18")
     'Deactivate the shape
     'myShape.OLEFormat.Object.Enabled = False
-    Call FAC_Prepar_GL_Posting(InvListRow)
+    Call FAC_Prepare_GL_Posting(InvListRow)
     
 End Sub
 

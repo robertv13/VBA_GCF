@@ -442,9 +442,10 @@ Sub SetUpAndPrintDocument(myPrintRange As Range, pagesTall As Integer)
  
 End Sub
 
-Sub BackToGL_Menu()
+Sub Back_To_GL_Menu()
 
     wshMenuCOMPTA.Activate
+    wshMenuCOMPTA.Range("A1").Select
     
 End Sub
 

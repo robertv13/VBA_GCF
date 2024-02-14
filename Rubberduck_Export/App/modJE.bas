@@ -1,7 +1,7 @@
 Attribute VB_Name = "modJE"
 Option Explicit
 
-Sub JE_Post()
+Sub JE_Update()
 
     If IsDateValide = False Then Exit Sub
     
@@ -12,17 +12,17 @@ Sub JE_Post()
     If IsEcritureValide(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
-    Call AddGLTransRecordToDB(rowEJLast)
+    Call Add_GL_Trans_Record_To_DB(rowEJLast)
     
     If wshJE.ckbRecurrente = True Then
-        SaveEJRecurrente rowEJLast
+        Save_EJ_Recurrente rowEJLast
     End If
     
     With wshJE
         'Increment Next JE number
         .Range("B1").value = .Range("B1").value + 1
         
-        Call wshJEClearAllCells
+        Call wshJE_Clear_All_Cells
         
         .Range("E4").Activate
     End With
@@ -31,12 +31,12 @@ Sub JE_Post()
     
 End Sub
 
-Sub SaveEJRecurrente(ll As Long)
+Sub Save_EJ_Recurrente(ll As Long)
 
     Dim rowEJLast As Long
     rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
     
-    Call AddEJAutoRecordToDB(ll)
+    Call Add_JE_Auto_Record_To_DB(ll)
     
     'r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
 
@@ -48,7 +48,7 @@ Sub LoadJEAutoIntoJE(EJAutoDesc As String, NoEJAuto As Long)
     Dim rowJEAuto, rowJE As Long
     rowJEAuto = wshEJRecurrente.Range("C99999").End(xlUp).row  'Last Row used in wshJERecuurente
     
-    Call wshJEClearAllCells
+    Call wshJE_Clear_All_Cells
     rowJE = 9
     
     Dim r As Long
@@ -67,7 +67,7 @@ Sub LoadJEAutoIntoJE(EJAutoDesc As String, NoEJAuto As Long)
 
 End Sub
 
-Sub wshJEClearAllCells()
+Sub wshJE_Clear_All_Cells()
 
     'Efface toutes les cellules de la feuille
     With wshJE
@@ -124,13 +124,13 @@ Function IsEcritureValide(rmax As Long) As Boolean
 
 End Function
 
-Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
+Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
+    fullFileName = wshAdmin.Range("FolderSharedData").value & _
+                   Application.PathSeparator & "GCF_BD_Sortie.xlsx"
     sheetName = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
@@ -166,14 +166,13 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
     rs.Close
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
+    'Read all line from Journal Entry
     Dim l As Long
-    
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields("No_EJ").value = nextJENo
             rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
-            rs.Fields("Numéro Écriture").value = nextJENo
             rs.Fields("Description").value = wshJE.Range("E6").value
             rs.Fields("Source").value = wshJE.Range("E4").value
             rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
@@ -194,66 +193,61 @@ Sub AddGLTransRecordToDB(r As Long) 'Write/Update a record to external .xlsx fil
 
 End Sub
 
-Sub AddEJAutoRecordToDB(r As Long) 'Write/Update a record to external .xlsx file
-    Dim fullFileName As String
-    Dim sheetName As String
-    Dim conn As Object
-    Dim rs As Object
-    Dim strSQL As String
-    Dim maxEJANo As Long, lastJEA As Long, nextJEANo As Long
+Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
     Application.ScreenUpdating = False
     
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "EJAuto"
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & _
+                   Application.PathSeparator & "GCF_BD_Sortie.xlsx"
+    sheetName = "EJ_Auto"
     
     'Initialize connection, connection string & open the connection
+    Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
     Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
+    Dim strSQL As String, MaxEJANo As Long
     strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & sheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
     
     'Get the last used row
+    Dim lastEJA As Long, nextEJANo As Long
     If IsNull(rs.Fields("MaxEJANo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
-        lastJEA = 1
+        lastEJA = 1
     Else
-        lastJEA = rs.Fields("MaxEJANo").value
+        lastEJA = rs.Fields("MaxEJANo").value
     End If
     
     'Calculate the new ID
-    nextJEANo = lastJEA + 1
+    nextEJANo = lastEJA + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
-    
     For l = 9 To r
         rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields("No_EJA").value = nextJEANo
-        rs.Fields("Description").value = wshJE.Range("E6").value
-        rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
-        rs.Fields("Compte").value = wshJE.Range("D" & l).value
-        rs.Fields("Débit").value = wshJE.Range("G" & l).value
-        rs.Fields("Crédit").value = wshJE.Range("H" & l).value
-        rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
+            'Add fields to the recordset before updating it
+            rs.Fields("No_EJA").value = nextEJANo
+            rs.Fields("Description").value = wshJE.Range("E6").value
+            rs.Fields("No_Compte").value = wshJE.Range("K" & l).value
+            rs.Fields("Compte").value = wshJE.Range("D" & l).value
+            rs.Fields("Débit").value = wshJE.Range("G" & l).value
+            rs.Fields("Crédit").value = wshJE.Range("H" & l).value
+            rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
         rs.Update
     Next l
     
     'Empty Line at the end
     rs.AddNew
-        rs.Fields("No_EJA").value = nextJEANo
+        rs.Fields("No_EJA").value = nextEJANo
     rs.Update
     
     'Close recordset and connection
