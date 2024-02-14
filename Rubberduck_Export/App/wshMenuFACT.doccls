@@ -36,8 +36,19 @@ Sub SuiviCC_Click()
 End Sub
 
 Sub Encaissement_Click()
+    SlideIn_PrepFact
+    SlideIn_SuiviCC
     SlideIn_Encaissement
-    MsgBox "Ajouter la fonction 'Encaissement'"
+    
+    Call Encaissement_Import_All
+    
+    wshAR.Visible = xlSheetVisible
+    wshEncDetail.Visible = xlSheetVisible
+    wshEncEntete.Visible = xlSheetVisible
+    With wshEncaissement
+        .Visible = xlSheetVisible
+        .Select
+    End With
 End Sub
 
 

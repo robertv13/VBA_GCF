@@ -62,7 +62,6 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         'Add fields to the recordset before updating it
         rs.Fields("No_EJ").value = nextJENo
         rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Numéro Écriture").value = nextJENo
         rs.Fields("Description").value = nom
         rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
