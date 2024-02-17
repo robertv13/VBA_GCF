@@ -15,7 +15,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             If wshJE.Range("B2").value >= 0 Then
                 wshJE.Range("J4").Activate
             Else
-                Call wshJEClearAllCells
+                Call wshJE_Clear_All_Cells
                 wshJE.Range("E4").Activate 'Nothing was selected
             End If
         End If

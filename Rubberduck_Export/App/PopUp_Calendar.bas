@@ -12,7 +12,7 @@ Sub ShowSettings()
 End Sub
 
 Sub ReplaceCalendar()                            'Shape Deleted
-    ThisWorkbook.Sheets("CalPopUp").Shapes("Calendar").Copy 'Copy From Developers sheet
+    CalPopUp.Shapes("Calendar").Copy             'Copy From Developers sheet
     ActiveCell.Select                            'Select the active Cell
     ActiveSheet.Paste                            'Paste in Calendar
 End Sub
@@ -22,8 +22,8 @@ Sub CalendarHide()
     'Hide Calendar, Reset Day Colors
     On Error GoTo NoCal
     ActiveSheet.Shapes("Calendar").Visible = msoFalse
-    Sheets("CalPopUp").Range("A7").Value = ""
-    If Sheets("CalPopUp").Range("A20").Value <> Empty Then
+    Sheets("CalPopUp").Range("A7").value = ""
+    If Sheets("CalPopUp").Range("A20").value <> Empty Then
         For DayNum = 1 To 42
             DayName = DayNum & "Day"
             With ActiveSheet.Shapes(DayName)
@@ -38,12 +38,12 @@ End Sub
 
 Sub CalendarShow()
     With ActiveSheet
-        Set SelCell = ActiveCell
+        Set SelCell = Selection
         'Check if active cell is a valid date
-        If IsDate(SelCell.Value) = True Then
-            Sheets("CalPopUp").Range("A1").Value = SelCell.Value
+        If IsDate(SelCell.value) = True Then
+            Sheets("CalPopUp").Range("A1").value = SelCell.value
         Else:                                    'If No Date or incorrect Date user current date
-            Sheets("CalPopUp").Range("A1").Value = "=Today()"
+            Sheets("CalPopUp").Range("A1").value = "=Today()"
         End If
         'Clear all shapes to white (if calendar is visible)
         If ActiveSheet.Shapes("Calendar").Visible = True Then
@@ -56,17 +56,16 @@ Sub CalendarShow()
             Next DayNum
         End If
     
-        Sheets("CalPopUp").Range("A3").Value = Month(Sheets("CalPopUp").Range("A1").Value) 'Set Month
-        Sheets("CalPopUp").Range("A2").Value = Year(Sheets("CalPopUp").Range("A1").Value) 'Set Year
-        DayName = Sheets("CalPopUp").Range("A20").Value & "Day"
+        Sheets("CalPopUp").Range("A3").value = Month(Sheets("CalPopUp").Range("A1").value) 'Set Month
+        Sheets("CalPopUp").Range("A2").value = Year(Sheets("CalPopUp").Range("A1").value) 'Set Year
+        DayName = Sheets("CalPopUp").Range("A20").value & "Day"
         ' UnGroupCal
-        If InStr(.Shapes("1Day").DrawingObject.Formula, "]") <> 0 Then 'Run Workbook Link Remover and Cell Link Replacement
+        If InStr(.Shapes("Calendar").GroupItems("NextTri").OnAction, "!") <> 0 Or InStr(.Shapes("1Day").DrawingObject.formula, "]") <> 0 Then 'Run Workbook Link Remover and Cell Link Replacement
             MacroLinkRemover
             CalFormulaReplacement
         End If
         'GroupCal
         On Error GoTo NoCal
-        If DayName = "Day" Then DayName = Day(Date) & "Day" 'Set Default Day
         With ActiveSheet.Shapes(DayName)
             .Fill.ForeColor.RGB = RGB(252, 213, 180)
             .TextFrame2.TextRange.Font.Bold = msoTrue
@@ -77,12 +76,12 @@ Sub CalendarShow()
         .Shapes("Calendar").Left = SelCell.Left
         .Shapes("Calendar").Placement = xlMove
         .Shapes("Calendar").Top = SelCell.Offset(1, 0).Top
-        If Sheets("CalPopUp").Range("A6").Value > 0 Then
+        If Sheets("CalPopUp").Range("A6").value > 0 Then
             .Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = True
         Else:
             .Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = False
         End If
-        Sheets("CalPopUp").Range("A7").Value = SelCell.Address
+        Sheets("CalPopUp").Range("A7").value = SelCell.Address
         ActiveCell.Select
     End With
     Exit Sub
@@ -92,21 +91,21 @@ End Sub
 
 Sub PrevMonth()
     'Previous Month Button
-    If Sheets("CalPopUp").Range("A20").Value <> Empty Then
-        DayName = Sheets("CalPopUp").Range("A20").Value & "Day"
+    If Sheets("CalPopUp").Range("A20").value <> Empty Then
+        DayName = Sheets("CalPopUp").Range("A20").value & "Day"
         With ActiveSheet.Shapes(DayName)
             .Fill.ForeColor.RGB = RGB(255, 255, 255)
             .TextFrame2.TextRange.Font.Bold = msoFalse
         End With
     End If
     With Sheets("CalPopUp")
-        If .Range("A3").Value = 1 Then
-            .Range("A3").Value = 12
-            .Range("A2").Value = .Range("A2").Value - 1
+        If .Range("A3").value = 1 Then
+            .Range("A3").value = 12
+            .Range("A2").value = .Range("A2").value - 1
         Else:
-            .Range("A3").Value = .Range("A3").Value - 1
+            .Range("A3").value = .Range("A3").value - 1
         End If
-        If .Range("A6").Value > 0 Then
+        If .Range("A6").value > 0 Then
             ActiveSheet.Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = True
         Else:
             ActiveSheet.Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = False
@@ -116,21 +115,21 @@ End Sub
 
 Sub NextMonth()
     'Next Month button
-    If Sheets("CalPopUp").Range("A20").Value <> Empty Then
-        DayName = Sheets("CalPopUp").Range("A20").Value & "Day"
+    If Sheets("CalPopUp").Range("A20").value <> Empty Then
+        DayName = Sheets("CalPopUp").Range("A20").value & "Day"
         With ActiveSheet.Shapes(DayName)
             .Fill.ForeColor.RGB = RGB(255, 255, 255)
             .TextFrame2.TextRange.Font.Bold = msoFalse
         End With
     End If
     With Sheets("CalPopUp")
-        If .Range("A3").Value = 12 Then
-            .Range("A3").Value = 1
-            .Range("A2").Value = .Range("A2").Value + 1
+        If .Range("A3").value = 12 Then
+            .Range("A3").value = 1
+            .Range("A2").value = .Range("A2").value + 1
         Else:
-            .Range("A3").Value = .Range("A3").Value + 1
+            .Range("A3").value = .Range("A3").value + 1
         End If
-        If .Range("A6").Value > 0 Then
+        If .Range("A6").value > 0 Then
             ActiveSheet.Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = True
         Else:
             ActiveSheet.Shapes.Range(Array("36Day", "37Day", "38Day", "39Day", "40Day", "41Day", "42Day")).Visible = False
@@ -139,11 +138,11 @@ Sub NextMonth()
 End Sub
 
 Sub PrevYear()
-    ThisWorkbook.Sheets("CalPopUp").Range("A2").Value = ThisWorkbook.Sheets("CalPopUp").Range("A2").Value - 1
+    ThisWorkbook.Sheets("CalPopUp").Range("A2").value = ThisWorkbook.Sheets("CalPopUp").Range("A2").value - 1
 End Sub
 
 Sub NextYear()
-    ThisWorkbook.Sheets("CalPopUp").Range("A2").Value = ThisWorkbook.Sheets("CalPopUp").Range("A2").Value + 1
+    ThisWorkbook.Sheets("CalPopUp").Range("A2").value = ThisWorkbook.Sheets("CalPopUp").Range("A2").value + 1
 End Sub
 
 ''''''''''''''''''''''''''''''''''''''
@@ -156,8 +155,8 @@ Sub SelectDay()
     ColNumb = DayNumb Mod 7 + 1
     If ColNumb = 1 Then ColNumb = 8
     'On Error Resume Next
-    If ThisWorkbook.Sheets("CalPopUp").Range("A7").Value = Empty Then Exit Sub
-    ActiveSheet.Range(ThisWorkbook.Sheets("CalPopUp").Range("A7").Value).Value = ThisWorkbook.Sheets("CalPopUp").Cells(RowNumb, ColNumb).Value
+    If ThisWorkbook.Sheets("CalPopUp").Range("A7").value = Empty Then Exit Sub
+    ActiveSheet.Range(ThisWorkbook.Sheets("CalPopUp").Range("A7").value).value = ThisWorkbook.Sheets("CalPopUp").Cells(RowNumb, ColNumb).value
     ActiveSheet.Shapes("Calendar").Visible = msoFalse
     ActiveCell.Offset(0, 1).Select
 End Sub
@@ -168,7 +167,7 @@ Sub CalCol()
         With Selection.ShapeRange.Fill
             .ForeColor.RGB = ActiveSheet.Shapes(Application.Caller).Fill.ForeColor.RGB
         End With
-        ActiveSheet.Range(Sheets("CalPopUp").Range("A7").Value).Select
+        ActiveSheet.Range(Sheets("CalPopUp").Range("A7").value).Select
     End With
 End Sub
 
@@ -179,7 +178,7 @@ Sub CreateCalSht()
     Set ActSht = ActiveSheet
     'On Error GoTo NoCal
     ActiveSheet.Shapes("Calendar").Copy
-    Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+    Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
     ws.Name = "CalPopUp"
     ActSht.Activate
 
@@ -194,12 +193,12 @@ Sub CreateCalSht()
         .Shapes("PrevRec").OnAction = "'" & ActiveWorkbook.Name & "'!PrevMonth"
         .Shapes("PrevTri").OnAction = "'" & ActiveWorkbook.Name & "'!PrevMonth"
         .Shapes("SetBtn").OnAction = "'" & ActiveWorkbook.Name & "'!ShowSettings"
-        .Shapes("Month").DrawingObject.Formula = "=CalPopUp!A4"
-        .Shapes("Year").DrawingObject.Formula = "=CalPopUp!A2"
+        .Shapes("Month").DrawingObject.formula = "=CalPopUp!A4"
+        .Shapes("Year").DrawingObject.formula = "=CalPopUp!A2"
         DayCnt = 1
         For RowCnt = 1 To 6
             For ColCnt = 2 To 8
-                .Shapes(DayCnt & "Day").DrawingObject.Formula = "=CalPopUp!" & .Cells(RowCnt, ColCnt).Address 'Assigned Linked Cell
+                .Shapes(DayCnt & "Day").DrawingObject.formula = "=CalPopUp!" & .Cells(RowCnt, ColCnt).Address 'Assigned Linked Cell
                 .Shapes(DayCnt & "Day").OnAction = "'" & ActiveWorkbook.Name & "'!SelectDay" 'Assign Macro
                 DayCnt = DayCnt + 1
             Next ColCnt
@@ -216,46 +215,46 @@ Sub CreateCalSht()
         .Visible = xlSheetHidden
     
         'Add in Formulas and Details
-        .Range("A1").Value = Date                'Set Current Date
-        .Range("A2").Value = Year(Date)          'Set Current Year
-        .Range("A3").Value = Month(Date)         'Set Current Month #
-        .Range("A4").Value = "=INDEX(CalMonths,A3,)"
-        .Range("A5").Value = "=A4&" & Chr(34) & " " & Chr(34) & "&CalYear"
-        .Range("A6").Value = "=SUM(B6:H6)"
-        .Range("A8").Value = "January"
+        .Range("A1").value = Date                'Set Current Date
+        .Range("A2").value = Year(Date)          'Set Current Year
+        .Range("A3").value = Month(Date)         'Set Current Month #
+        .Range("A4").value = "=INDEX(CalMonths,A3,)"
+        .Range("A5").value = "=A4&" & Chr(34) & " " & Chr(34) & "&CalYear"
+        .Range("A6").value = "=SUM(B6:H6)"
+        .Range("A8").value = "January"
         .Range("A8").AutoFill Destination:=.Range("A8:A19"), Type:=xlFillDefault
-        .Range("A20").Value = "=IFERROR(INDIRECT(ADDRESS(SUMPRODUCT((B1:H6=A1)*ROW(B1:H6))+6,SUMPRODUCT((B1:H6=A1)*COLUMN(B1:H6)),1,1))," & Chr(34) & Chr(34) & ")"
+        .Range("A20").value = "=IFERROR(INDIRECT(ADDRESS(SUMPRODUCT((B1:H6=A1)*ROW(B1:H6))+6,SUMPRODUCT((B1:H6=A1)*COLUMN(B1:H6)),1,1))," & Chr(34) & Chr(34) & ")"
         'Set Defined Names
         ActiveWorkbook.Names.Add Name:="CalMonths", RefersTo:="=CalPopUp!$A$8:$A$19"
         ActiveWorkbook.Names.Add Name:="CalYear", RefersTo:="=CalPopUp!$A$2"
     
         'Add in Calendar Formulas
       
-        .Range("B1").Value = "=IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=1,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & ")"
-        .Range("C1").Value = "=IF(B1<>" & Chr(34) & Chr(34) & ",B1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=2,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("D1").Value = "=IF(C1<>" & Chr(34) & Chr(34) & ",C1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=3,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("E1").Value = "=IF(D1<>" & Chr(34) & Chr(34) & ",D1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=4,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("F1").Value = "=IF(E1<>" & Chr(34) & Chr(34) & ",E1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=5,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("G1").Value = "=IF(F1<>" & Chr(34) & Chr(34) & ",F1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=6,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("H1").Value = "=IF(G1<>" & Chr(34) & Chr(34) & ",G1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=7,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
-        .Range("B2").Value = "=H1+1"
-        .Range("C2").Value = "=B2+1"
+        .Range("B1").value = "=IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=1,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & ")"
+        .Range("C1").value = "=IF(B1<>" & Chr(34) & Chr(34) & ",B1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=2,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("D1").value = "=IF(C1<>" & Chr(34) & Chr(34) & ",C1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=3,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("E1").value = "=IF(D1<>" & Chr(34) & Chr(34) & ",D1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=4,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("F1").value = "=IF(E1<>" & Chr(34) & Chr(34) & ",E1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=5,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("G1").value = "=IF(F1<>" & Chr(34) & Chr(34) & ",F1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=6,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("H1").value = "=IF(G1<>" & Chr(34) & Chr(34) & ",G1+1,IF(WEEKDAY(DATE(CalYear,MATCH($A$4,CalMonths,0),1))=7,DATE(CalYear,MATCH($A$4,CalMonths,0),1)," & Chr(34) & Chr(34) & "))"
+        .Range("B2").value = "=H1+1"
+        .Range("C2").value = "=B2+1"
         .Range("C2").AutoFill Destination:=.Range("C2:H2"), Type:=xlFillDefault
         .Range("B2:H2").AutoFill Destination:=.Range("B2:H4"), Type:=xlFillDefault
-        .Range("B5").Value = "=IF(OR(H4=" & Chr(34) & Chr(34) & ",MONTH(H4+1)<>$A$3)," & Chr(34) & Chr(34) & ",H4+1)"
-        .Range("C5").Value = "=IFERROR(IF(MONTH(B5+1)<>$A$3," & Chr(34) & Chr(34) & ",B5+1)," & Chr(34) & Chr(34) & ")"
-        .Range("B6").Value = "=IFERROR(IF(OR(H5=" & Chr(34) & Chr(34) & ",MONTH(H5+1)<>$A$3)," & Chr(34) & Chr(34) & ",H5+1)," & Chr(34) & Chr(34) & ")"
-        .Range("C6").Value = "=IFERROR(F(MONTH(I5+1)<>$A$3," & Chr(34) & Chr(34) & ",I5+1)," & Chr(34) & Chr(34) & ")"
+        .Range("B5").value = "=IF(OR(H4=" & Chr(34) & Chr(34) & ",MONTH(H4+1)<>$A$3)," & Chr(34) & Chr(34) & ",H4+1)"
+        .Range("C5").value = "=IFERROR(IF(MONTH(B5+1)<>$A$3," & Chr(34) & Chr(34) & ",B5+1)," & Chr(34) & Chr(34) & ")"
+        .Range("B6").value = "=IFERROR(IF(OR(H5=" & Chr(34) & Chr(34) & ",MONTH(H5+1)<>$A$3)," & Chr(34) & Chr(34) & ",H5+1)," & Chr(34) & Chr(34) & ")"
+        .Range("C6").value = "=IFERROR(F(MONTH(I5+1)<>$A$3," & Chr(34) & Chr(34) & ",I5+1)," & Chr(34) & Chr(34) & ")"
         .Range("C5:C6").AutoFill Destination:=.Range("C5:H6"), Type:=xlFillDefault
         
         'Set format to Single Day
         .Range("B1:H6").NumberFormat = "d"
         
         'Add in relative Day #'s
-        .Range("B7").Value = "1"
-        .Range("C7").Value = "2"
-        .Range("B8").Value = "8"
-        .Range("C8").Value = "9"
+        .Range("B7").value = "1"
+        .Range("C7").value = "2"
+        .Range("B8").value = "8"
+        .Range("C8").value = "9"
         .Range("B7:C8").AutoFill Destination:=.Range("B7:H8"), Type:=xlFillDefault
         .Range("B7:H8").AutoFill Destination:=.Range("B7:H12"), Type:=xlFillDefault
         GroupCal
@@ -315,15 +314,15 @@ Sub CalFormulaReplacement()
         ColNum = 2
         RowNum = 1
         For DayNum = 1 To 42
-            .Shapes(DayNum & "Day").DrawingObject.Formula = "=CalPopUp!" & .Cells(RowNum, ColNum).Address
+            .Shapes(DayNum & "Day").DrawingObject.formula = "=CalPopUp!" & .Cells(RowNum, ColNum).Address
             ColNum = ColNum + 1
             If ColNum = 9 Then
                 ColNum = 2
                 RowNum = RowNum + 1
             End If
         Next DayNum
-        .Shapes("Month").DrawingObject.Formula = "=CalPopUp!$A$4"
-        .Shapes("Year").DrawingObject.Formula = "=CalPopUp!$A$2"
+        .Shapes("Month").DrawingObject.formula = "=CalPopUp!$A$4"
+        .Shapes("Year").DrawingObject.formula = "=CalPopUp!$A$2"
     End With
 End Sub
 

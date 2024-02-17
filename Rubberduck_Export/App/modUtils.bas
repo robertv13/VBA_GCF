@@ -104,7 +104,7 @@ End Sub
 
 Sub GetAllShapeProperties()
     Dim ws As Worksheet
-    Dim shp As Shape
+    Dim Shp As Shape
     
     ' Set the worksheet (change "Sheet1" to your sheet's name)
     Set ws = ActiveSheet
@@ -121,16 +121,16 @@ Sub GetAllShapeProperties()
     
     r = 3
     'Loop through all shapes on the worksheet
-    For Each shp In ws.Shapes
-        ws.Range("D" & r).value = shp.Type
-        ws.Range("E" & r).value = shp.Name
-        ws.Range("F" & r).value = shp.ZOrderPosition
-        ws.Range("G" & r).value = shp.Top
-        ws.Range("H" & r).value = shp.Left
-        ws.Range("I" & r).value = shp.Width
-        ws.Range("J" & r).value = shp.Height
+    For Each Shp In ws.Shapes
+        ws.Range("D" & r).value = Shp.Type
+        ws.Range("E" & r).value = Shp.Name
+        ws.Range("F" & r).value = Shp.ZOrderPosition
+        ws.Range("G" & r).value = Shp.Top
+        ws.Range("H" & r).value = Shp.Left
+        ws.Range("I" & r).value = Shp.Width
+        ws.Range("J" & r).value = Shp.Height
         r = r + 1
-    Next shp
+    Next Shp
 End Sub
 
 Sub ProtectUnprotectWorksheet()

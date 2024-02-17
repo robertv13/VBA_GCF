@@ -161,6 +161,10 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     'Calculate the new ID
     Dim nextJENo As Long
     nextJENo = lastJE + 1
+    
+    'Build formula
+    Dim formula As String
+    formula = "=ROW()"
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -227,6 +231,10 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     'Calculate the new ID
     nextEJANo = lastEJA + 1
 
+    'Define the =ROW() formula
+    Dim formula As String
+    formula = "=ROW()"
+
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
@@ -290,7 +298,7 @@ Sub GLJEAuto_Import() '2024-01-07 @ 14:45
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("EJAuto").UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("EJ_Auto").UsedRange
 
     Dim destinationRange As Range
     Set destinationRange = wshEJRecurrente.Range("C1")

@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.1" '2024-02-14 @ 09:31
+Global Const gAppVersion As String = "v2.2" '2024-02-14 @ 09:31
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     
@@ -95,16 +95,16 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Arrange formats on all rows
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A999999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("A999999").End(xlUp).row
     
     With wshBaseHours
-        .Range("A3" & ":P" & lastRow).HorizontalAlignment = xlCenter
-        With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
+        .Range("A3" & ":P" & LastRow).HorizontalAlignment = xlCenter
+        With .Range("F3:F" & LastRow & ",G3:G" & LastRow & ",I3:I" & LastRow & ",O3:O" & LastRow)
             .HorizontalAlignment = xlLeft
         End With
-        .Range("H3:H" & lastRow).NumberFormat = "#0.00"
-        .Range("K3:K" & lastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        .Range("H3:H" & LastRow).NumberFormat = "#0.00"
+        .Range("K3:K" & LastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
     End With
     
     Application.ScreenUpdating = True
@@ -120,17 +120,17 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
     Call TEC_Import_All '2024-02-14 @ 06:20
     
     With wshBaseHours
-        Dim lastRow As Long, LastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
+        LastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If LastRow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         'Advanced Filter applied to BaseHours
-        .Range("A2:P" & lastRow).AdvancedFilter xlFilterCopy, _
-            criteriaRange:=.Range("R2:W3"), _
-            copytorange:=.Range("Y2:AL2"), _
+        .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("R2:W3"), _
+            CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
         'Analyze Advance Filter Results
         LastResultRow = .Range("Y999999").End(xlUp).row
@@ -334,17 +334,17 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim lastRow As Long
+            Dim LastRow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 ' Handle empty table (assign a default value, e.g., 1)
-                lastRow = 1
+                LastRow = 1
             Else
-                lastRow = rs.Fields("MaxID").value
+                LastRow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = lastRow + 1
+            nextID = LastRow + 1
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
@@ -412,19 +412,19 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     frmSaisieHeures.txtTotalHeures.value = ""
     
     'Last Row used in first column of result
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
-    If lastRow = 0 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
+    If LastRow = 0 Then Exit Sub
         
     With frmSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
-        If lastRow = 1 Then
+        If LastRow = 1 Then
             .RowSource = "HeuresBase!Y3:AG3"
         Else
-            .RowSource = "HeuresBase!Y3:AG" & lastRow + 1
+            .RowSource = "HeuresBase!Y3:AG" & LastRow + 1
         End If
     End With
 

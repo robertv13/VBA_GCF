@@ -9,7 +9,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("F3")) Is Nothing And _
         Range("F3").value <> Empty And Range("B2").value = False And Range("B4").value = Empty Then
         Application.EnableEvents = False
-        Call Encaissements_Load_Open_Invoices
+        Call Encaissement_Load_Open_Invoices
         Application.EnableEvents = True
 '        Range("J3").Select
     End If
