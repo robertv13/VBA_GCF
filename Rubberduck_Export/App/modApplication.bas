@@ -53,8 +53,8 @@ Sub Build_Date(r As Range) '2024-01-06 @ 18:29
 
 End Sub
 
-Sub ChartOfAccount_Import() '2024-02-13 @ 13:27
-    
+Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
+
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
 
@@ -117,7 +117,7 @@ Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     
 End Sub
 
-Sub HideAllExceptActiveSheet() '2024-02-13 @ 13:23
+Sub Hide_All_Worksheet_Except_Active_Sheet() '2024-02-17 @ 07:29
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets

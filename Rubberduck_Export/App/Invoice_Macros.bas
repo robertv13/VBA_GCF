@@ -12,18 +12,18 @@ Sub Invoice_SaveUpdate()
         
         'Deterermine New Invoice/Existing Invoice
         If .Range("B3").value = Empty Then       'new Invoice
-            InvRow = InvoiceList.Range("A99999").End(xlUp).row + 1 'First Avail Row
+            InvRow = wshInvoiceList.Range("A99999").End(xlUp).row + 1 'First Avail Row
             .Range("J1").value = .Range("B5").value 'Next Inv. #
-            InvoiceList.Range("A" & InvRow).value = .Range("B5").value 'Next Inv. #
+            wshInvoiceList.Range("A" & InvRow).value = .Range("B5").value 'Next Inv. #
         Else                                     'Existing Invoice
             InvRow = .Range("B3").value          'Invoice Row
         End If
-        InvoiceList.Range("B" & InvRow).value = .Range("I3").value 'Date
-        InvoiceList.Range("C" & InvRow).value = .Range("G5").value 'Customer
-        InvoiceList.Range("D" & InvRow).value = .Range("I4").value 'Status
-        InvoiceList.Range("E" & InvRow).value = .Range("I5").value 'Terms
-        InvoiceList.Range("F" & InvRow).value = .Range("I6").value 'Due Date
-        InvoiceList.Range("G" & InvRow).value = .Range("J34").value 'Invoice Total
+        wshInvoiceList.Range("B" & InvRow).value = .Range("I3").value 'Date
+        wshInvoiceList.Range("C" & InvRow).value = .Range("G5").value 'Customer
+        wshInvoiceList.Range("D" & InvRow).value = .Range("I4").value 'Status
+        wshInvoiceList.Range("E" & InvRow).value = .Range("I5").value 'Terms
+        wshInvoiceList.Range("F" & InvRow).value = .Range("I6").value 'Due Date
+        wshInvoiceList.Range("G" & InvRow).value = .Range("J34").value 'Invoice Total
             
             
         'Add/Update Invoice Items
@@ -96,11 +96,11 @@ Sub Invoice_Load()
         InvRow = .Range("B3").value              'Invoice Row
         .Range("B6").value = True                'Set Inv. Load to true
         .Range("I3:J6,G5:G7,B9:I31,K9:K31").ClearContents
-        .Range("I3").value = InvoiceList.Range("B" & InvRow).value 'Inv. Date
-        .Range("G5").value = InvoiceList.Range("C" & InvRow).value 'Customer
-        .Range("I4").value = InvoiceList.Range("D" & InvRow).value 'Inv. Status
-        .Range("I5").value = InvoiceList.Range("E" & InvRow).value 'Terms
-        .Range("I6").value = InvoiceList.Range("F" & InvRow).value 'Due Date
+        .Range("I3").value = wshInvoiceList.Range("B" & InvRow).value 'Inv. Date
+        .Range("G5").value = wshInvoiceList.Range("C" & InvRow).value 'Customer
+        .Range("I4").value = wshInvoiceList.Range("D" & InvRow).value 'Inv. Status
+        .Range("I5").value = wshInvoiceList.Range("E" & InvRow).value 'Terms
+        .Range("I6").value = wshInvoiceList.Range("F" & InvRow).value 'Due Date
     
         With InvoiceItems
             LastRow = .Range("A99999").End(xlUp).row
@@ -136,7 +136,7 @@ Sub Invoice_Delete()
     With Invoice
         If .Range("B3").value = Empty Then GoTo NotSaved
         InvRow = .Range("B3").value              'Order Row
-        InvoiceList.Range(InvRow & ":" & InvRow).EntireRow.Delete
+        wshInvoiceList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         'Remove Invoice Items
         With InvoiceItems
             LastRow = .Range("A99999").End(xlUp).row
@@ -148,7 +148,7 @@ Sub Invoice_Delete()
             'Sort based on descending rows
             With .Sort
                 .SortFields.Clear
-                .SortFields.Add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
+                .SortFields.Add key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
                 .SetRange InvoiceItems.Range("P3:Y" & LastResultRow)
                 .Apply
             End With

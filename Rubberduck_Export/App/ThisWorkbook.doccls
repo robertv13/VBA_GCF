@@ -1,25 +1,28 @@
 ﻿Option Explicit
 
 Private Sub Workbook_Open()
+
     Application.ScreenUpdating = False
     Windows(ThisWorkbook.Name).Visible = False
+    
     'frmSplashScreen.show
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     wshMenu.Activate
 '    Range("A1").Select
     
-    Call HideAllExceptActiveSheet
-    
-    Call ChartOfAccount_Import
+    Call Hide_All_Worksheet_Except_Active_Sheet
+'    Call ChartOfAccount_Import_All
     
     Windows(ThisWorkbook.Name).Visible = True
-
     Application.ScreenUpdating = True
+    
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
-    'Your code here
-    MsgBox "Workbook can not be close like that !"
+    
+    wshMenu.Activate
+    
+    Call Hide_All_Worksheet_Except_Active_Sheet
     
     Cancel = False
     

@@ -137,11 +137,11 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
         If LastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
+            .SortFields.Add key:=wshBaseHours.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.Add key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID

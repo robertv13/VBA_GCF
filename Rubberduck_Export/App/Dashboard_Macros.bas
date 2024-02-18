@@ -35,7 +35,7 @@ End Sub
 
 Sub Dashboard_Refresh()
     'Get Current Data
-    With InvoiceList 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
+    With wshInvoiceList 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
         LastRow = .Range("A999999").End(xlUp).row
         .Range("A3:J" & LastRow).ClearContents
         
@@ -43,7 +43,7 @@ Sub Dashboard_Refresh()
         Dim sourceRange As Range, targetRange As Range, maxRow As Long
         LastRow = wshAR.Range("A999999").End(xlUp).row
         Set sourceRange = wshAR.Range("A3:J" & LastRow)
-        Set targetRange = InvoiceList.Range("A3:J" & LastRow)
+        Set targetRange = wshInvoiceList.Range("A3:J" & LastRow)
         'Copy values from source range to target range
         targetRange.value = sourceRange.value
 
@@ -59,7 +59,23 @@ Sub Dashboard_Refresh()
         LastResultRow = .Range("P99999").End(xlUp).row
         If LastResultRow < 3 Then Exit Sub
         .Range("Q3:W" & LastResultRow).formula = .Range("Q1:W1").formula
+        'Define a table - 2024-02-17 @ 08:15
+        Dim ws As Worksheet
+        Dim tbl As ListObject
+        Dim rng As Range
     End With
+    
+        'Set the worksheet where you want to create the table
+        Set ws = wshInvoiceList
+    
+        'Define the range for the table and create the table
+        Set rng = ws.Range("P1:W" & LastResultRow)
+        Set tbl = ws.ListObjects.Add(xlSrcRange, rng, , xlYes)
+    
+        'Define table properties
+        tbl.Name = "AgingSummary"
+'        tbl.TableStyle = "TableStyleMedium2" ' Style of the table
+
 End Sub
 
 Sub Dashboard_SelectAgingDetails()
@@ -70,7 +86,7 @@ End Sub
 
 Sub Aging_Refresh()
     Dashboard.Range("B35:R499").ClearContents    'Clear Previous Results
-    With InvoiceList
+    With wshInvoiceList
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
         LastRow = .Range("A99999").End(xlUp).row
@@ -88,7 +104,7 @@ End Sub
 Sub Aging_ShowCustDetail()
     Dashboard.Range("J34:R499").ClearContents    'Clear Previous Results
     SelRow = Dashboard.Range("AA1").value        'Set Selected Row
-    With InvoiceList
+    With wshInvoiceList
         'Clear Prior Results
         LastRow = .Range("AB9999").End(xlUp).row + 1
         .Range("AB3:AJ" & LastRow).ClearContents
@@ -118,7 +134,7 @@ End Sub
 
 Sub AgingDetail_Refresh()
     Dashboard.Range("B507:J9999").ClearContents  'Clear Existing Data
-    With InvoiceList
+    With wshInvoiceList
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
         LastRow = .Range("A99999").End(xlUp).row

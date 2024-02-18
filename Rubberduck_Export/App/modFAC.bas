@@ -426,11 +426,11 @@ Sub TECByClient_FilterAndSort(id As Long) 'RMV-2023-12-21 @ 11:00
         If LastResultRow < 4 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
+            .SortFields.Add key:=wshBaseHours.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.Add key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -494,7 +494,7 @@ SkipSort:
             'Resort DB to remove spaces
             With .Sort
                 .SortFields.Clear
-                .SortFields.Add Key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
+                .SortFields.Add key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
                 .SetRange wshFACInvItems.Range("A4:J" & LastResultRow) 'Set Range
                 .Apply 'Apply Sort
             End With
@@ -720,10 +720,10 @@ Sub FAC_Prepare_GL_Posting(r As Long) '2024-02-14 @ 05:56
     DateFact = wshFACInvList.Range("B" & r).value
     nomCLient = wshFACInvList.Range("E" & r).value
     
-    Dim Rng As Range
-    Set Rng = wshGL_Trans.Range("A2:A999999")
+    Dim rng As Range
+    Set rng = wshGL_Trans.Range("A2:A999999")
     Dim newID As Long
-    newID = WorksheetFunction.Max(Rng) + 1
+    newID = WorksheetFunction.Max(rng) + 1
 
     'RMV - O/S - 2024-02-13
     'AR amount

@@ -74,20 +74,20 @@ Private Sub cmdExport_Click()
     Dim currentRow As Long
     currentRow = ActiveSheet.Cells(Rows.count, 1).End(xlUp).row + 1
     
-    Dim Rng As Range
-    Set Rng = wsHTE.Range("A1").CurrentRegion
+    Dim rng As Range
+    Set rng = wsHTE.Range("A1").CurrentRegion
     
     Dim r As Long
-    For r = 2 To Rng.Rows.count
+    For r = 2 To rng.Rows.count
         'Debug.Print r & " - " & Cells(r, 1).value & " - " & Cells(r, 2).value & _
         " - " & Format(Cells(r, 3).value, "dd/mm/yyyy") & _
         " - " & Cells(r, 4).value
-        ActiveSheet.Cells(currentRow, 1) = Rng.Cells(r, 3).value
-        ActiveSheet.Cells(currentRow, 2) = Rng.Cells(r, 4).value
-        ActiveSheet.Cells(currentRow, 3) = Rng.Cells(r, 5).value
-        ActiveSheet.Cells(currentRow, 4) = Rng.Cells(r, 6).value
-        ActiveSheet.Cells(currentRow, 5) = Rng.Cells(r, 7).value
-        ActiveSheet.Cells(currentRow, 6) = Rng.Cells(r, 1).value
+        ActiveSheet.Cells(currentRow, 1) = rng.Cells(r, 3).value
+        ActiveSheet.Cells(currentRow, 2) = rng.Cells(r, 4).value
+        ActiveSheet.Cells(currentRow, 3) = rng.Cells(r, 5).value
+        ActiveSheet.Cells(currentRow, 4) = rng.Cells(r, 6).value
+        ActiveSheet.Cells(currentRow, 5) = rng.Cells(r, 7).value
+        ActiveSheet.Cells(currentRow, 6) = rng.Cells(r, 1).value
         
         currentRow = currentRow + 1
         frmExportHeures.txtProgression.value = r - 1
@@ -108,7 +108,7 @@ End Sub
 Sub FilterTimeAndDate()
 
     Dim ws As Worksheet
-    Dim Rng As Range
+    Dim rng As Range
     Dim strDateTime As String
     
     'Set the MINIMUM date and time
@@ -117,19 +117,19 @@ Sub FilterTimeAndDate()
 
     'Reference the From Worksheet and Range
     Set ws = wshBaseHours
-    Set Rng = ws.Range("A1").CurrentRegion
+    Set rng = ws.Range("A1").CurrentRegion
     
     'Turn OFF Autofilter Mode
     ws.AutoFilterMode = False
     
     'Apply AutoFilter magic formula
-    With Rng
-        Rng.AutoFilter Field:=9, Criteria1:=">" & strDateTime
-        Rng.AutoFilter Field:=12, Criteria1:="FAUX"
+    With rng
+        rng.AutoFilter Field:=9, Criteria1:=">" & strDateTime
+        rng.AutoFilter Field:=12, Criteria1:="FAUX"
     End With
     
     Dim rowsToExport As Long
-    rowsToExport = Rng.Columns(1).SpecialCells(xlCellTypeVisible).Cells.count - 1
+    rowsToExport = rng.Columns(1).SpecialCells(xlCellTypeVisible).Cells.count - 1
     
     frmExportHeures.txtNombreEnregistrements.value = rowsToExport
         
@@ -143,7 +143,7 @@ Sub FilterTimeAndDate()
         shHTE.UsedRange.Clear
         
         'Copy to destination worksheet (wshHoursToExport)
-        Rng.Copy shHTE.Range("A1")
+        rng.Copy shHTE.Range("A1")
         
         shHTE.Activate
         
