@@ -9,8 +9,16 @@ Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift
 End Sub
 
 Sub SaisieHeures_Click()
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+    
     SlideIn_SaisieHeures
-    Load frmSaisieHeures
-    frmSaisieHeures.show vbModal
+    Load ufSaisieHeures
+    ufSaisieHeures.show vbModal
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "SaisieHeures_Click() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
 
 End Sub

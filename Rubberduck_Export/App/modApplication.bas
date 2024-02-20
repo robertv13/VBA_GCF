@@ -126,4 +126,48 @@ Sub Hide_All_Worksheet_Except_Active_Sheet() '2024-02-17 @ 07:29
     
 End Sub
 
+Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
+    
+    Dim wsh As Worksheet
+    For Each wsh In ThisWorkbook.Worksheets
+        If wsh.codeName <> "wshMenu" Then wsh.Visible = xlSheetHidden
+    Next wsh
+    
+End Sub
+
+Sub LoopThroughRows()
+    Dim i As Long, lastrow As Long
+    Dim pctdone As Single
+    lastrow = Range("A" & Rows.count).End(xlUp).row
+    lastrow = 30
+
+    '(Step 1) Display your Progress Bar
+    ufProgress.LabelProgress.Width = 0
+    ufProgress.show
+    For i = 1 To lastrow
+        '(Step 2) Periodically update progress bar
+        pctdone = i / lastrow
+        With ufProgress
+            .Caption = "Étape " & i & " of " & lastrow
+            .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+        End With
+        DoEvents
+        Application.Wait Now + TimeValue("00:00:01")
+        '--------------------------------------
+        'the rest of your macro goes below here
+        '
+        '
+        '--------------------------------------
+        '(Step 3) Close the progress bar when you're done
+        If i = lastrow Then Unload ufProgress
+    Next i
+End Sub
+
+Sub FractionComplete(pctdone As Single)
+    With ufProgress
+        .Caption = "Complété à " & pctdone * 100 & "%"
+        .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+    End With
+    DoEvents
+End Sub
 

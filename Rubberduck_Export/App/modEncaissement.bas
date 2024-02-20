@@ -1,26 +1,26 @@
 Attribute VB_Name = "modEncaissement"
 Option Explicit
-Dim LastRow As Long, LastResultRow As Long
+Dim lastrow As Long, LastResultRow As Long
 Dim PayRow As Long, PayCol As Long
 Dim ResultRow As Long, PayItemRow As Long, LastPayItemRow As Long, PayItemDBRow As Long
 
-Sub Encaissement_Load_Open_Invoices() '2024-02-14 @ 10:53
+Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     wshEncaissement.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
     With wshAR
-        LastResultRow = .Range("A999999").End(xlUp).row 'Last row
+        LastResultRow = .Range("A99999").End(xlUp).row 'Last row
         If LastResultRow < 3 Then Exit Sub
         'Cells L3 contains a formula, no need to set it up
-        .Range("A2:I" & LastResultRow).AdvancedFilter _
+        .Range("A2:K" & LastResultRow).AdvancedFilter _
             xlFilterCopy, _
-            CriteriaRange:=.Range("J2:K3"), _
-            CopyToRange:=.Range("M2:R2"), _
+            CriteriaRange:=.Range("L2:M3"), _
+            CopyToRange:=.Range("O2:T2"), _
             Unique:=True
-        LastResultRow = .Range("M999999").End(xlUp).row
+        LastResultRow = .Range("O99999").End(xlUp).row
         If LastResultRow < 3 Then Exit Sub
         wshEncaissement.Range("B2").value = True 'Set PaymentLoad to True
-        .Range("P3:P" & LastResultRow).formula = .Range("P1").formula 'Total Payments Formula
+        .Range("R3:R" & LastResultRow).formula = .Range("R1").formula 'Total Payments Formula
         'Bring the Result data into our Payments List of Invoices
-        wshEncaissement.Range("E13:I" & LastResultRow + 10).value = .Range("M3:Q" & LastResultRow).value
+        wshEncaissement.Range("E13:I" & LastResultRow + 10).value = .Range("O3:S" & LastResultRow).value
     End With
     wshEncaissement.Range("B2").value = False 'Set PaymentLoad to False
 End Sub
@@ -180,9 +180,9 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         'Load Pay Items
         With wshEncDetail
             .Range("M4:T999999").ClearContents
-            LastRow = .Range("A999999").End(xlUp).row
-            If LastRow < 4 Then GoTo NoData
-            .Range("A3:G" & LastRow).AdvancedFilter _
+            lastrow = .Range("A999999").End(xlUp).row
+            If lastrow < 4 Then GoTo NoData
+            .Range("A3:G" & lastrow).AdvancedFilter _
                 xlFilterCopy, _
                 CriteriaRange:=.Range("J2:J3"), _
                 CopyToRange:=.Range("O3:T3"), _
@@ -198,47 +198,6 @@ NoData:
         .Range("B2").value = False 'Payment Load to False
     End With
 End Sub
-
-'Sub Payments_Delete() '2024-02-07 @ 15:41
-'    If MsgBox("Êtes-vous certain de vouloir DÉTRUIRE ce paiement ? ", vbYesNo, _
-'        "Delete Payment") = vbNo Then Exit Sub
-'    With wshEncaissement
-'        If .Range("B4").value = Empty Then GoTo NotSaved
-'        PayRow = .Range("B4").value 'Pay Row
-'        wshEncEntete.Range(PayRow & ":" & PayRow).EntireRow.Delete 'Delete Payment Row
-'
-'        With wshEncDetail
-'            lastRow = .Range("A99999").End(xlUp).row
-'            If lastRow < 4 Then GoTo NotSaved
-'            .Range("A3:G" & lastRow).AdvancedFilter _
-'                xlFilterCopy, _
-'                criteriaRange:=.Range("J2:J3"), _
-'                copytorange:=.Range("O3:T3"), _
-'                Unique:=True
-'            LastResultRow = .Range("O99999").End(xlUp).row
-'            If LastResultRow < 4 Then GoTo NotSaved
-'            If LastResultRow < 5 Then GoTo SkipSort
-'            With .Sort
-'                .SortFields.Clear
-'                .SortFields.Add _
-'                    Key:=wshEncDetail.Range("T4"), _
-'                    SortOn:=xlSortOnValues, _
-'                    Order:=xlDescending, _
-'                    DataOption:=xlSortNormal 'Sort
-'                .SetRange wshEncDetail.Range("O4:T" & LastResultRow) 'Set Range
-'                .Apply 'Apply Sort
-'            End With
-'SkipSort:
-'            On Error Resume Next
-'            For ResultRow = 4 To LastResultRow
-'                PayItemDBRow = .Range("T" & ResultRow).value 'Pay Item DB Row
-'                .Range(PayItemDBRow & ":" & PayItemDBRow).EntireRow.Delete 'Delete Pay Item DB Row
-'            Next ResultRow
-'        End With
-'NotSaved:
-'        Call Encaissement_Add_New
-'    End With
-'End Sub
 
 Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
@@ -276,19 +235,43 @@ Sub AR_Summary_Import_All() '2024-02-14 @ 09:50
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    'Arrange formats on all rows
-    Dim LastRow As Long
-    LastRow = wshAR.Range("A999999").End(xlUp).row
-    
-    With wshAR
-        .Range("A3" & ":F" & LastRow).HorizontalAlignment = xlCenter
-        With .Range("C3:C" & LastRow & ",D3:D" & LastRow & ",E3:E" & LastRow)
-            .HorizontalAlignment = xlLeft
-        End With
-        .Range("G3:G" & LastRow & ",I3:I" & LastRow).HorizontalAlignment = xlRight
-        .Range("G3:I" & LastRow).NumberFormat = "#,##0.00 $"
-        .Range("B3:B" & LastRow & ",F3:F" & LastRow).NumberFormat = "dd/mm/yyyy"
-    End With
+    'Insert Formula in column H
+    Dim lastrow As Long
+    lastrow = wshAR.Range("A99999").End(xlUp).row
+    'Check if there is data in column A
+    If lastrow < 3 Then
+        MsgBox "No data found in column A.", vbExclamation
+        Exit Sub
+    End If
+    wshAR.Range("H3:H" & lastrow).formula = "=SUMIFS(pmnt_Amount,pmnt_InvNumb, $A3)"
+
+'    'Define the named ranges for Pmnt_Amount and Pmnt_InvNumb outside of the loop
+'    Dim pmnt_Amount_Range As Range
+'    Dim Pmnt_InvNumb_Range As Range
+'    With wshEncDetail
+'        Set pmnt_Amount_Range = .Range("Pmnt_Amount")
+'        Set Pmnt_InvNumb_Range = .Range("Pmnt_InvNumb")
+'    End With
+'
+'    Dim cell As Range
+'    'Loop through each cell in the range H3 to H[lastrow]
+'    For Each cell In wshAR.Range("H3:H" & lastrow)
+'        'Assign the formula to each cell individually using the Formula property
+'        cell.formula = "=SUMIFS('" & wshEncDetail.name & "'!" & pmnt_Amount_Range.Address & "," & _
+'                               "'" & wshEncDetail.name & "'!" & Pmnt_InvNumb_Range.Address & "," & _
+'                               "'" & wshAR.name & "'!$A" & cell.row & ")"
+'        Debug.Print cell.Address
+'    Next cell
+
+'    With wshAR
+'        .Range("A3" & ":F" & lastrow).HorizontalAlignment = xlCenter
+'        With .Range("C3:C" & lastrow & ",D3:D" & lastrow & ",E3:E" & lastrow)
+'            .HorizontalAlignment = xlLeft
+'        End With
+'        .Range("G3:G" & lastrow & ",I3:I" & lastrow).HorizontalAlignment = xlRight
+'        .Range("G3:I" & lastrow).NumberFormat = "#,##0.00 $"
+'        .Range("B3:B" & lastrow & ",F3:F" & lastrow).NumberFormat = "dd/mm/yyyy"
+'    End With
     
 End Sub
 
@@ -316,20 +299,20 @@ Sub Enc_Entete_Import_All() '2024-02-14 @ 10:05
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    'Arrange formats on all rows
-    Dim LastRow As Long
-    LastRow = wshEncEntete.Range("A999999").End(xlUp).row
-    
-    With wshEncEntete
-        .Range("A4" & ":B" & LastRow).HorizontalAlignment = xlCenter
-        With .Range("C4:C" & LastRow & ",D4:D" & LastRow & ",F4:F" & LastRow)
-            .HorizontalAlignment = xlLeft
-        End With
-        .Range("E4:E" & LastRow).HorizontalAlignment = xlRight
-        .Range("G4:H" & LastRow).NumberFormat = "#,##0.00 $"
-        .Range("B4:B" & LastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("F4:F" & LastRow).NumberFormat = "dd/mm/yyyy"
-    End With
+'    'Arrange formats on all rows
+'    Dim lastrow As Long
+'    lastrow = wshEncEntete.Range("A999999").End(xlUp).row
+'
+'    With wshEncEntete
+'        .Range("A4" & ":B" & lastrow).HorizontalAlignment = xlCenter
+'        With .Range("C4:C" & lastrow & ",D4:D" & lastrow & ",F4:F" & lastrow)
+'            .HorizontalAlignment = xlLeft
+'        End With
+'        .Range("E4:E" & lastrow).HorizontalAlignment = xlRight
+'        .Range("G4:H" & lastrow).NumberFormat = "#,##0.00 $"
+'        .Range("B4:B" & lastrow).NumberFormat = "dd/mm/yyyy"
+'        .Range("F4:F" & lastrow).NumberFormat = "dd/mm/yyyy"
+'    End With
     
 End Sub
 
@@ -357,17 +340,17 @@ Sub Enc_Detail_Import_All() '2024-02-14 @ 10:14
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    'Arrange formats on all rows
-    Dim LastRow As Long
-    LastRow = wshEncDetail.Range("A999999").End(xlUp).row
-    
-    With wshEncDetail
-        .Range("A4:B" & LastRow & ",D4:D" & LastRow & ",F4:F" & LastRow).HorizontalAlignment = xlCenter
-        .Range("C4:C" & LastRow).HorizontalAlignment = xlLeft
-        .Range("D3:D" & LastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("E3:E" & LastRow).HorizontalAlignment = xlRight
-        .Range("E3:E" & LastRow).NumberFormat = "#,##0.00 $"
-    End With
+'    'Arrange formats on all rows
+'    Dim lastrow As Long
+'    lastrow = wshEncDetail.Range("A999999").End(xlUp).row
+'
+'    With wshEncDetail
+'        .Range("A4:B" & lastrow & ",D4:D" & lastrow & ",F4:F" & lastrow).HorizontalAlignment = xlCenter
+'        .Range("C4:C" & lastrow).HorizontalAlignment = xlLeft
+'        .Range("D3:D" & lastrow).NumberFormat = "dd/mm/yyyy"
+'        .Range("E3:E" & lastrow).HorizontalAlignment = xlRight
+'        .Range("E3:E" & lastrow).NumberFormat = "#,##0.00 $"
+'    End With
     
 End Sub
 
@@ -397,17 +380,17 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim LastRow As Long
+        Dim lastrow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            LastRow = 1
+            lastrow = 1
         Else
-            LastRow = rs.Fields("MaxID").value
+            lastrow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = LastRow + 1
+        nextID = lastrow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
@@ -478,17 +461,17 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim LastRow As Long
+        Dim lastrow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            LastRow = 1
+            lastrow = 1
         Else
-            LastRow = rs.Fields("MaxID").value
+            lastrow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = LastRow + 1
+        nextID = lastrow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close

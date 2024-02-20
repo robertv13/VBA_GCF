@@ -2,27 +2,31 @@
 
 Private Sub Workbook_Open()
 
-    Application.ScreenUpdating = False
-    Windows(ThisWorkbook.name).Visible = False
+    MsgBox "Welcome to this Excel workbook!"
+    Dim timerStart As Double
+    timerStart = Timer
     
-    'frmSplashScreen.show
+'    Application.ScreenUpdating = False
+'    Windows(ThisWorkbook.name).Visible = False
+   
+    Call Hide_All_Worksheet_Except_Menu
+    
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
-    wshMenu.Activate
-'    Range("A1").Select
-    
-    Call Hide_All_Worksheet_Except_Active_Sheet
-'    Call ChartOfAccount_Import_All
-    
-    Windows(ThisWorkbook.name).Visible = True
-    Application.ScreenUpdating = True
-    
+
+'    Windows(ThisWorkbook.name).Visible = True
+'    Application.ScreenUpdating = True
+
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+                "Workbook_Open() - Secondes = " & Timer - timerStart & _
+                vbNewLine & String(45, "*")
+
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     
     wshMenu.Activate
     
-    Call Hide_All_Worksheet_Except_Active_Sheet
+    Call Hide_All_Worksheet_Except_Menu
     
     Cancel = False
     

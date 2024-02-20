@@ -1,6 +1,6 @@
 Attribute VB_Name = "Invoice_Macros"
 Option Explicit
-Dim InvRow As Long, InvItemRow As Long, LastRow As Long, LastItemRow As Long
+Dim InvRow As Long, InvItemRow As Long, lastrow As Long, LastItemRow As Long
 Dim ResultRow As Long, LastResultRow As Long, ItemRow As Long, TermRow As Long, StatusRow As Long
 
 Sub Invoice_SaveUpdate()
@@ -103,9 +103,9 @@ Sub Invoice_Load()
         .Range("I6").value = wshInvoiceList.Range("F" & InvRow).value 'Due Date
     
         With InvoiceItems
-            LastRow = .Range("A99999").End(xlUp).row
-            If LastRow < 3 Then GoTo NoItems
-            .Range("A2:K" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            lastrow = .Range("A99999").End(xlUp).row
+            If lastrow < 3 Then GoTo NoItems
+            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
             LastResultRow = .Range("P99999").End(xlUp).row
             If LastResultRow < 3 Then GoTo NoItems
             For ResultRow = 3 To LastResultRow
@@ -139,9 +139,9 @@ Sub Invoice_Delete()
         wshInvoiceList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         'Remove Invoice Items
         With InvoiceItems
-            LastRow = .Range("A99999").End(xlUp).row
-            If LastRow < 3 Then GoTo NotSaved
-            .Range("A2:K" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            lastrow = .Range("A99999").End(xlUp).row
+            If lastrow < 3 Then GoTo NotSaved
+            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
             LastResultRow = .Range("P99999").End(xlUp).row
             If LastResultRow < 3 Then GoTo NotSaved
             If LastResultRow < 4 Then GoTo SingleRow

@@ -53,7 +53,6 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("No_Compte").value = "1000" 'Hardcoded
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
-        rs.Fields("Crédit").value = 0
         rs.Fields("AutreRemarque").value = desc
     rs.Update
     
@@ -66,7 +65,6 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("Source").value = "Encaissement # " & no
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
         rs.Fields("Compte").value = "Comptes-Clients" 'Hardcoded
-        rs.Fields("Débit").value = 0
         rs.Fields("Crédit").value = montant
         rs.Fields("AutreRemarque").value = desc
     rs.Update

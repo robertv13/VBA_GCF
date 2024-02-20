@@ -79,35 +79,35 @@ Public Function IsDataValid() As Boolean
     IsDataValid = False
     
     'Validations first (one field at a time)
-    If frmSaisieHeures.cmbProfessionnel.value = "" Then
+    If ufSaisieHeures.cmbProfessionnel.value = "" Then
         MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
-        frmSaisieHeures.cmbProfessionnel.SetFocus
+        ufSaisieHeures.cmbProfessionnel.SetFocus
         Exit Function
     End If
 
-    If frmSaisieHeures.txtDate.value = "" Or IsDate(frmSaisieHeures.txtDate.value) = False Then
+    If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
         MsgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
-        frmSaisieHeures.txtDate.SetFocus
+        ufSaisieHeures.txtDate.SetFocus
         Exit Function
     End If
 
-    If frmSaisieHeures.txtClient.value = "" Then
+    If ufSaisieHeures.txtClient.value = "" Then
         MsgBox Prompt:="Le client est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
-        frmSaisieHeures.txtClient.SetFocus
+        ufSaisieHeures.txtClient.SetFocus
         Exit Function
     End If
     
-    If frmSaisieHeures.txtHeures.value = "" Or IsNumeric(frmSaisieHeures.txtHeures.value) = False Then
+    If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
         MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
-        frmSaisieHeures.txtHeures.SetFocus
+        ufSaisieHeures.txtHeures.SetFocus
         Exit Function
     End If
 

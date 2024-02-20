@@ -18,6 +18,9 @@ Global Const gAppVersion As String = "v2.3.1" '2024-02-14 @ 09:31
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
@@ -41,6 +44,10 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
                                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
     connStr.Open
     
+    Debug.Print vbNewLine & String(60, "*") & vbNewLine & _
+        "Client_List_Import_All() - After connStr.Open - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(60, "*")
+    
     'Recordset
     Dim recSet As ADODB.Recordset
     Set recSet = New ADODB.Recordset
@@ -49,8 +56,17 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     recSet.Source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
+    Debug.Print vbNewLine & String(60, "*") & vbNewLine & _
+        "Client_List_Import_All() - After recSet.Open - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(60, "*")
+    
     'Copy to wshClientDB workbook
     wshClientDB.Range("A2").CopyFromRecordset recSet
+    
+    Debug.Print vbNewLine & String(60, "*") & vbNewLine & _
+        "Client_List_Import_All() - After .CopyFromRecordset - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(60, "*")
+
     wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
     'Close resource
@@ -65,10 +81,16 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
 '            "## ##0") & " clients", _
 '        Title:="Vérification du nombre de clients", _
 '        Buttons:=vbInformation
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "Client_List_Import_All() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
         
 End Sub
 
 Sub TEC_Import_All() '2024-02-14 @ 06:19
+    
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
     
     Application.ScreenUpdating = False
     
@@ -95,23 +117,31 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Arrange formats on all rows
-    Dim LastRow As Long
-    LastRow = wshBaseHours.Range("A999999").End(xlUp).row
+    Dim lastrow As Long
+    lastrow = wshBaseHours.Range("A999999").End(xlUp).row
     
     With wshBaseHours
-        .Range("A3" & ":P" & LastRow).HorizontalAlignment = xlCenter
-        With .Range("F3:F" & LastRow & ",G3:G" & LastRow & ",I3:I" & LastRow & ",O3:O" & LastRow)
+        .Range("A3" & ":P" & lastrow).HorizontalAlignment = xlCenter
+        With .Range("F3:F" & lastrow & ",G3:G" & lastrow & ",I3:I" & lastrow & ",O3:O" & lastrow)
             .HorizontalAlignment = xlLeft
         End With
-        .Range("H3:H" & LastRow).NumberFormat = "#0.00"
-        .Range("K3:K" & LastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        .Range("H3:H" & lastrow).NumberFormat = "#0.00"
+        .Range("K3:K" & lastrow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
     End With
     
     Application.ScreenUpdating = True
     
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+                "TEC_Import_All() - Secondes = " & Timer - timerStart & _
+                vbNewLine & String(45, "*")
+    
 End Sub
 
 Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
+    
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+
     'Two Non Null Values are mandatory to Advanced Filter
     If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
         Exit Sub
@@ -119,16 +149,17 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
     
     Call TEC_Import_All '2024-02-14 @ 06:20
     
+    Debug.Print "TEC_Advanced_Filter_And_Sort - After TEC_Import_All() - " & Now()
     With wshBaseHours
-        Dim LastRow As Long, LastResultRow As Long, ResultRow As Long
-        LastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If LastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastrow As Long, LastResultRow As Long, ResultRow As Long
+        lastrow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If lastrow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         'Advanced Filter applied to BaseHours
-        .Range("A2:P" & LastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A2:P" & lastrow).AdvancedFilter xlFilterCopy, _
             CriteriaRange:=.Range("R2:W3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
@@ -151,12 +182,20 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
 No_Sort_Required:
     End With
     Application.ScreenUpdating = True
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+                "TEC_Import_All() - Secondes = " & Timer - timerStart & _
+                vbNewLine & String(45, "*")
+
 End Sub
 
 Sub EffaceFormulaire() 'Clear all fields on the userForm
 
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+
     'Empty the dynamic fields after reseting the form
-    With frmSaisieHeures
+    With ufSaisieHeures
         .txtClient.value = ""
         wshAdmin.Range("TEC_Client_ID").value = 0
         .txtActivite.value = ""
@@ -169,24 +208,31 @@ Sub EffaceFormulaire() 'Clear all fields on the userForm
     Call TEC_Advanced_Filter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
-    With frmSaisieHeures
+    With ufSaisieHeures
         .cmdClear.Enabled = False
         .cmdAdd.Enabled = False
         .cmdDelete.Enabled = False
         .cmdUpdate.Enabled = False
     End With
         
-    frmSaisieHeures.txtClient.SetFocus
+    ufSaisieHeures.txtClient.SetFocus
     
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "EffaceFormulaire() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
 End Sub
 
 Sub AjouteLigneDetail() 'Add an entry to DB
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
 
     If IsDataValid() = False Then Exit Sub
     
     Call Add_Or_Update_TEC_Record_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
     'Clear the fields after saving
-    With frmSaisieHeures
+    With ufSaisieHeures
 '        .cmbProfessionnel.Enabled = True
 '        .txtDate.Enabled = True
         .txtClient.value = ""
@@ -200,25 +246,32 @@ Sub AjouteLigneDetail() 'Add an entry to DB
     Call Refresh_ListBox_And_Add_Hours
     
     'Reset command buttons
-    With frmSaisieHeures
+    With ufSaisieHeures
         .cmdClear.Enabled = False
         .cmdAdd.Enabled = False
         .cmdUpdate.Enabled = False
     End With
     
     'Back to client
-    frmSaisieHeures.txtClient.SetFocus
+    ufSaisieHeures.txtClient.SetFocus
     
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "AjouteLigneDetail() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
 End Sub
 
 Sub ModifieLigneDetail() '2023-12-23 @ 07:04
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
 
     If IsDataValid() = False Then Exit Sub
 
     Add_Or_Update_TEC_Record_To_DB (wshAdmin.Range("TEC_Current_ID").value) 'Write to external XLSX file - 2023-12-16 @ 14:10
  
     'Initialize dynamic variables
-    With frmSaisieHeures
+    With ufSaisieHeures
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
         .txtClient.value = ""
@@ -233,11 +286,18 @@ Sub ModifieLigneDetail() '2023-12-23 @ 07:04
     
     rmv_state = rmv_modeCreation
     
-    frmSaisieHeures.txtClient.SetFocus
+    ufSaisieHeures.txtClient.SetFocus
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "ModifieLigneDetail() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
 
 End Sub
 
 Sub EffaceLigneDetail() '2023-12-23 @ 07:05
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
 
     If wshAdmin.Range("TEC_Current_ID").value = "" Then
         MsgBox _
@@ -266,7 +326,7 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
     Add_Or_Update_TEC_Record_To_DB (selectedRow) 'Write to external XLSX file - 2023-12-23 @ 07:07
     
     'Empty the dynamic fields after deleting
-    With frmSaisieHeures
+    With ufSaisieHeures
         .txtClient.value = ""
         .txtActivite.value = ""
         .txtHeures.value = ""
@@ -279,19 +339,26 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
         Title:="Confirmation", _
         Buttons:=vbCritical
         
-    frmSaisieHeures.cmbProfessionnel.Enabled = True
-    frmSaisieHeures.txtDate.Enabled = True
+    ufSaisieHeures.cmbProfessionnel.Enabled = True
+    ufSaisieHeures.txtDate.Enabled = True
     rmv_state = rmv_modeCreation
     
     Call TEC_Advanced_Filter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
-    frmSaisieHeures.txtClient.SetFocus
+    ufSaisieHeures.txtClient.SetFocus
+
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
 
 End Sub
 
 Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to external .xlsx file
     
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
@@ -334,17 +401,17 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim LastRow As Long
+            Dim lastrow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 ' Handle empty table (assign a default value, e.g., 1)
-                LastRow = 1
+                lastrow = 1
             Else
-                LastRow = rs.Fields("MaxID").value
+                lastrow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = LastRow + 1
+            nextID = lastrow + 1
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
@@ -354,14 +421,14 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.AddNew
             rs.Fields("TEC_ID").value = nextID
             rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
-            rs.Fields("Prof").value = frmSaisieHeures.cmbProfessionnel.value
-            rs.Fields("Date").value = CDate(frmSaisieHeures.txtDate.value)
+            rs.Fields("Prof").value = ufSaisieHeures.cmbProfessionnel.value
+            rs.Fields("Date").value = CDate(ufSaisieHeures.txtDate.value)
             rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-            rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-            rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-            rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-            rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-            rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+            rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
+            rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
+            rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+            rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
+            rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstFacturee").value = False
             rs.Fields("DateFacturee").value = ""
@@ -374,11 +441,11 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             If Not rs.EOF Then
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-                rs.Fields("ClientNom").value = frmSaisieHeures.txtClient.value
-                rs.Fields("Description").value = frmSaisieHeures.txtActivite.value
-                rs.Fields("Heures").value = Format(frmSaisieHeures.txtHeures.value, "#0.00")
-                rs.Fields("CommentaireNote").value = frmSaisieHeures.txtCommNote.value
-                rs.Fields("EstFacturable").value = frmSaisieHeures.chbFacturable.value
+                rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
+                rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
+                rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+                rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
+                rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
                 rs.Fields("DateSaisie").value = Now
                 rs.Fields("VersionApp").value = gAppVersion
             Else
@@ -401,52 +468,63 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
     
     Application.ScreenUpdating = True
 
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
 End Sub
 
 Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
 
     If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
         GoTo EndOfProcedure
     End If
     
-    frmSaisieHeures.txtTotalHeures.value = ""
+    ufSaisieHeures.txtTotalHeures.value = ""
     
     'Last Row used in first column of result
-    Dim LastRow As Long
-    LastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
-    If LastRow = 0 Then Exit Sub
+    Dim lastrow As Long
+    lastrow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
+    If lastrow = 0 Then Exit Sub
         
-    With frmSaisieHeures.lstData
+    With ufSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
-        If LastRow = 1 Then
+        If lastrow = 1 Then
             .RowSource = "HeuresBase!Y3:AG3"
         Else
-            .RowSource = "HeuresBase!Y3:AG" & LastRow + 1
+            .RowSource = "HeuresBase!Y3:AG" & lastrow + 1
         End If
     End With
 
     'Add hours to totalHeures
     Dim nbrRows, i As Integer
-    nbrRows = frmSaisieHeures.lstData.ListCount
+    nbrRows = ufSaisieHeures.lstData.ListCount
     Dim totalHeures As Double
     
     If nbrRows > 0 Then
         For i = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(frmSaisieHeures.lstData.List(i, 5))
+            totalHeures = totalHeures + CCur(ufSaisieHeures.lstData.List(i, 5))
         Next
-        frmSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
+        ufSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
     End If
 
 EndOfProcedure:
-    frmSaisieHeures.cmdClear.Enabled = False
-    frmSaisieHeures.cmdAdd.Enabled = False
-    frmSaisieHeures.cmdUpdate.Enabled = False
-    frmSaisieHeures.cmdDelete.Enabled = False
+    ufSaisieHeures.cmdClear.Enabled = False
+    ufSaisieHeures.cmdAdd.Enabled = False
+    ufSaisieHeures.cmdUpdate.Enabled = False
+    ufSaisieHeures.cmdDelete.Enabled = False
 
-    'frmSaisieHeures.txtClient.SetFocus
+    'ufSaisieHeures.txtClient.SetFocus
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
     
 End Sub
 
