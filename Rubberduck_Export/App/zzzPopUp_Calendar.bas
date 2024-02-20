@@ -179,34 +179,34 @@ Sub CreateCalSht()
     'On Error GoTo NoCal
     ActiveSheet.Shapes("Calendar").Copy
     Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
-    ws.Name = "CalPopUp"
+    ws.name = "CalPopUp"
     ActSht.Activate
 
     'Reassign Shape Links & Macros
     With ActiveSheet
         UnGroupCal
         '.Unprotect
-        .Shapes("PrevYr").OnAction = "'" & ActiveWorkbook.Name & "'!PrevYear"
-        .Shapes("NextYr").OnAction = "'" & ActiveWorkbook.Name & "'!NextYear"
-        .Shapes("NextRec").OnAction = "'" & ActiveWorkbook.Name & "'!NextMonth"
-        .Shapes("NextTri").OnAction = "'" & ActiveWorkbook.Name & "'!NextMonth"
-        .Shapes("PrevRec").OnAction = "'" & ActiveWorkbook.Name & "'!PrevMonth"
-        .Shapes("PrevTri").OnAction = "'" & ActiveWorkbook.Name & "'!PrevMonth"
-        .Shapes("SetBtn").OnAction = "'" & ActiveWorkbook.Name & "'!ShowSettings"
+        .Shapes("PrevYr").OnAction = "'" & ActiveWorkbook.name & "'!PrevYear"
+        .Shapes("NextYr").OnAction = "'" & ActiveWorkbook.name & "'!NextYear"
+        .Shapes("NextRec").OnAction = "'" & ActiveWorkbook.name & "'!NextMonth"
+        .Shapes("NextTri").OnAction = "'" & ActiveWorkbook.name & "'!NextMonth"
+        .Shapes("PrevRec").OnAction = "'" & ActiveWorkbook.name & "'!PrevMonth"
+        .Shapes("PrevTri").OnAction = "'" & ActiveWorkbook.name & "'!PrevMonth"
+        .Shapes("SetBtn").OnAction = "'" & ActiveWorkbook.name & "'!ShowSettings"
         .Shapes("Month").DrawingObject.formula = "=CalPopUp!A4"
         .Shapes("Year").DrawingObject.formula = "=CalPopUp!A2"
         DayCnt = 1
         For RowCnt = 1 To 6
             For ColCnt = 2 To 8
                 .Shapes(DayCnt & "Day").DrawingObject.formula = "=CalPopUp!" & .Cells(RowCnt, ColCnt).Address 'Assigned Linked Cell
-                .Shapes(DayCnt & "Day").OnAction = "'" & ActiveWorkbook.Name & "'!SelectDay" 'Assign Macro
+                .Shapes(DayCnt & "Day").OnAction = "'" & ActiveWorkbook.name & "'!SelectDay" 'Assign Macro
                 DayCnt = DayCnt + 1
             Next ColCnt
         Next RowCnt
     
         'Assign Color Macros
         For CalCol = 1 To 9
-            .Shapes("CalCol" & CalCol).OnAction = "'" & ActiveWorkbook.Name & "'!CalCol" 'Assign Color Macro
+            .Shapes("CalCol" & CalCol).OnAction = "'" & ActiveWorkbook.name & "'!CalCol" 'Assign Color Macro
         Next CalCol
     End With
 
@@ -225,8 +225,8 @@ Sub CreateCalSht()
         .Range("A8").AutoFill Destination:=.Range("A8:A19"), Type:=xlFillDefault
         .Range("A20").value = "=IFERROR(INDIRECT(ADDRESS(SUMPRODUCT((B1:H6=A1)*ROW(B1:H6))+6,SUMPRODUCT((B1:H6=A1)*COLUMN(B1:H6)),1,1))," & Chr(34) & Chr(34) & ")"
         'Set Defined Names
-        ActiveWorkbook.Names.Add Name:="CalMonths", RefersTo:="=CalPopUp!$A$8:$A$19"
-        ActiveWorkbook.Names.Add Name:="CalYear", RefersTo:="=CalPopUp!$A$2"
+        ActiveWorkbook.Names.Add name:="CalMonths", RefersTo:="=CalPopUp!$A$8:$A$19"
+        ActiveWorkbook.Names.Add name:="CalYear", RefersTo:="=CalPopUp!$A$2"
     
         'Add in Calendar Formulas
       
@@ -336,9 +336,9 @@ End Sub
 
 Sub GroupCal()
     ActiveSheet.Shapes.Range(Array("NextTri", "NextRec")).Group.Select
-    Selection.ShapeRange.Name = "NextMonth"
+    Selection.ShapeRange.name = "NextMonth"
     ActiveSheet.Shapes.Range(Array("PrevTri", "PrevRec")).Group.Select
-    Selection.ShapeRange.Name = "PrevMonth"
+    Selection.ShapeRange.name = "PrevMonth"
     ActiveSheet.Shapes.Range(Array("Settings", "40Day", "41Day", "39Day", "38Day" _
                                                                          , "42Day", "37Day", "36Day", "CalBack", "Month", "Year", "CalBorder", "1Day", _
                                    "3Day", "14Day", "7Day", "4Day", "2Day", "5Day", "8Day", "10Day", "6Day", _
@@ -358,8 +358,8 @@ Sub GroupCal()
                                    "CalCol4", "CalCol5", "CalCol6", "CalCol7", "CalCol8", "CalCol9", "PrevMonth", _
                                    "NextMonth", "NextYr", "PrevYr")).Select
     Selection.ShapeRange.Group.Select
-    Selection.ShapeRange.Name = "Calendar"
-    Selection.Name = "Calendar"
+    Selection.ShapeRange.name = "Calendar"
+    Selection.name = "Calendar"
     Selection.Placement = xlMove
     ActiveSheet.Shapes("Calendar").Placement = 2
 End Sub

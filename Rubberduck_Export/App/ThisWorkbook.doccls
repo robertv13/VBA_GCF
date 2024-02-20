@@ -3,7 +3,7 @@
 Private Sub Workbook_Open()
 
     Application.ScreenUpdating = False
-    Windows(ThisWorkbook.Name).Visible = False
+    Windows(ThisWorkbook.name).Visible = False
     
     'frmSplashScreen.show
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
@@ -13,7 +13,7 @@ Private Sub Workbook_Open()
     Call Hide_All_Worksheet_Except_Active_Sheet
 '    Call ChartOfAccount_Import_All
     
-    Windows(ThisWorkbook.Name).Visible = True
+    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
     
 End Sub

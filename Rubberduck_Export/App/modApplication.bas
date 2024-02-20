@@ -5,7 +5,7 @@ Sub BackToMainMenu()
 
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets
-        If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
+        If ws.name <> "Menu" Then ws.Visible = xlSheetHidden
     Next ws
     wshMenu.Activate
     wshMenu.Range("A1").Select
@@ -113,7 +113,7 @@ Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create a new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
     
 End Sub
 
@@ -121,7 +121,7 @@ Sub Hide_All_Worksheet_Except_Active_Sheet() '2024-02-17 @ 07:29
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
-        If wsh.Name <> ActiveSheet.Name Then wsh.Visible = xlSheetHidden
+        If wsh.name <> ActiveSheet.name Then wsh.Visible = xlSheetHidden
     Next wsh
     
 End Sub

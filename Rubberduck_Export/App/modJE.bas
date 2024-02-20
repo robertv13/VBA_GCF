@@ -298,7 +298,7 @@ Sub GLJEAuto_Import() '2024-01-07 @ 14:45
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("EJ_Auto").UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets("EJ_Auto").usedRange
 
     Dim destinationRange As Range
     Set destinationRange = wshEJRecurrente.Range("C1")

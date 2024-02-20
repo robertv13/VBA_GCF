@@ -50,9 +50,9 @@ Sub UserForm_Activate()
 
     Call Client_List_Import_All
     
-    Dim LastUsedRow As Long
-    LastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
-    frmSaisieHeures.ListData = wshClientDB.Range("A1:J" & LastUsedRow)
+    Dim lastUsedRow As Long
+    lastUsedRow = wshClientDB.Range("A999999").End(xlUp).row
+    frmSaisieHeures.ListData = wshClientDB.Range("A1:J" & lastUsedRow)
     
     With oEventHandler
         Set .SearchListBox = lstNomClient
@@ -82,7 +82,7 @@ Private Sub UserForm_Terminate()
     Me.Hide
     Unload Me
     
-    If Me.Name = "frmSaisieHeures" Then
+    If Me.name = "frmSaisieHeures" Then
         On Error GoTo MenuSelect
         wshMenuTEC.Select
         On Error GoTo 0

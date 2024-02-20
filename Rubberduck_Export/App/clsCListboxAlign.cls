@@ -56,7 +56,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     ' generic font attributes
     With labSizer
         With .Font
-            .Name = LBox.Font.Name
+            .name = LBox.Font.name
             .Size = LBox.Font.Size
             .Bold = LBox.Font.Bold
             .Italic = LBox.Font.Italic
@@ -83,7 +83,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     Next intColumn
     LBox.TopIndex = lngTopIndex
     
-    LBox.Parent.Controls.Remove labSizer.Name
+    LBox.Parent.Controls.Remove labSizer.name
     Set labSizer = Nothing
 
 End Sub
@@ -166,7 +166,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
     
     With labSizer
         With .Font
-            .Name = LBox.Font.Name
+            .name = LBox.Font.name
             .Size = LBox.Font.Size
             .Bold = LBox.Font.Bold
             .Italic = LBox.Font.Italic
@@ -191,7 +191,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
         End If
     Next intColumn
     LBox.TopIndex = lngTopIndex
-    LBox.Parent.Controls.Remove labSizer.Name
+    LBox.Parent.Controls.Remove labSizer.name
     Set labSizer = Nothing
 
 End Sub

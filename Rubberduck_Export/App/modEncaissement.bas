@@ -266,7 +266,7 @@ Sub AR_Summary_Import_All() '2024-02-14 @ 09:50
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
     Set destinationRange = wshAR.Range("A2")
 
     'Copy data, using Range to Range and Autofit all columns
@@ -306,7 +306,7 @@ Sub Enc_Entete_Import_All() '2024-02-14 @ 10:05
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
     Set destinationRange = wshEncEntete.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns
@@ -347,7 +347,7 @@ Sub Enc_Detail_Import_All() '2024-02-14 @ 10:14
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
     Set destinationRange = wshEncDetail.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns

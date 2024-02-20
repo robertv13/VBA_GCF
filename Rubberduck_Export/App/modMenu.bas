@@ -425,7 +425,7 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
-        If wsh.Name <> "Menu" Then wsh.Visible = xlSheetHidden
+        If wsh.name <> "Menu" Then wsh.Visible = xlSheetHidden
     Next wsh
 
     ThisWorkbook.Close

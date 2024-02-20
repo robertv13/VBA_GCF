@@ -140,7 +140,7 @@ Sub FilterTimeAndDate()
         'Once filtered, worksheet should only show the filtered records
         Dim shHTE As Worksheet
         Set shHTE = wshHoursToExport
-        shHTE.UsedRange.Clear
+        shHTE.usedRange.Clear
         
         'Copy to destination worksheet (wshHoursToExport)
         rng.Copy shHTE.Range("A1")

@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.2" '2024-02-14 @ 09:31
+Global Const gAppVersion As String = "v2.3.1" '2024-02-14 @ 09:31
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     
@@ -84,7 +84,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
     Set destinationRange = wshBaseHours.Range("A2")
 
     'Copy data, using Range to Range and Autofit all columns

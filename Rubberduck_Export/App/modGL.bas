@@ -243,7 +243,7 @@ Sub GL_Trans_Sub_Total(GLNo As String, GLDesc As String, s As Currency)
         wshBV.Range("G" & r).value = -s
     End If
     With wshBV.Range("D" & r & ":G" & r).Font
-        .Name = "Aptos Narrow"
+        .name = "Aptos Narrow"
         .Size = 11
     End With
     wshBV.Range("B2").value = wshBV.Range("B2").value + 1
@@ -268,7 +268,7 @@ Sub GL_Trans_Import_All() '2024-02-14 @ 06:14
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).UsedRange
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
     Set destinationRange = wshGL_Trans.Range("A1")

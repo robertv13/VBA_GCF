@@ -214,19 +214,19 @@ Sub ClearAndFixTotalsFormulaFACFinale()
 
         'Fix formulas to calculate amounts & Copy cells from FAC_Préparation
         .Range("F68").formula = "=SUM(F33:F62)" 'Fees Sub-Total
-        .Range("C69").formula = "='" & wshFACPrep.Name & "'!M48" 'Misc. Amount # 1 - Description
-        .Range("F69").formula = "='" & wshFACPrep.Name & "'!O48" 'Misc. Amount # 1
-        .Range("C70").formula = "='" & wshFACPrep.Name & "'!M49" 'Misc. Amount # 2 - Description
-        .Range("F70").formula = "='" & wshFACPrep.Name & "'!O49" 'Misc. Amount # 2
-        .Range("C71").formula = "='" & wshFACPrep.Name & "'!M50" 'Misc. Amount # 3 - Description
-        .Range("F71").formula = "='" & wshFACPrep.Name & "'!O50" 'Misc. Amount # 3
+        .Range("C69").formula = "='" & wshFACPrep.name & "'!M48" 'Misc. Amount # 1 - Description
+        .Range("F69").formula = "='" & wshFACPrep.name & "'!O48" 'Misc. Amount # 1
+        .Range("C70").formula = "='" & wshFACPrep.name & "'!M49" 'Misc. Amount # 2 - Description
+        .Range("F70").formula = "='" & wshFACPrep.name & "'!O49" 'Misc. Amount # 2
+        .Range("C71").formula = "='" & wshFACPrep.name & "'!M50" 'Misc. Amount # 3 - Description
+        .Range("F71").formula = "='" & wshFACPrep.name & "'!O50" 'Misc. Amount # 3
         .Range("F72").formula = "=F68+F69+F70+F71" 'Sub-Total
-        .Range("D73").formula = "='" & wshFACPrep.Name & "'!N52" 'GST Rate
-        .Range("F73").formula = "='" & wshFACPrep.Name & "'!O52" 'GST Amount
-        .Range("D74").formula = "='" & wshFACPrep.Name & "'!N53" 'PST Rate
-        .Range("F74").formula = "='" & wshFACPrep.Name & "'!O53" 'PST Amount
+        .Range("D73").formula = "='" & wshFACPrep.name & "'!N52" 'GST Rate
+        .Range("F73").formula = "='" & wshFACPrep.name & "'!O52" 'GST Amount
+        .Range("D74").formula = "='" & wshFACPrep.name & "'!N53" 'PST Rate
+        .Range("F74").formula = "='" & wshFACPrep.name & "'!O53" 'PST Amount
         .Range("F76").formula = "=F72+F73+F74" 'Total including taxes
-        .Range("F78").formula = "='" & wshFACPrep.Name & "'!O57" 'Deposit Amount
+        .Range("F78").formula = "='" & wshFACPrep.name & "'!O57" 'Deposit Amount
         .Range("F80").formula = "=F76-F78" 'Total due on that invoice
     End With
     
@@ -688,9 +688,9 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
     'Work with the source range
     Set wsSource = wshFACInvList
-    Dim LastUsedRow As Long
-    LastUsedRow = wsSource.Range("A99999").End(xlUp).row
-    wsSource.Range("A4:T" & LastUsedRow).Copy
+    Dim lastUsedRow As Long
+    lastUsedRow = wsSource.Range("A99999").End(xlUp).row
+    wsSource.Range("A4:T" & lastUsedRow).Copy
 
     'Open the target workbook
     Workbooks.Open fileName:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _

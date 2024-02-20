@@ -5,7 +5,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Tab Selection
     If Not Intersect(Target, Range("B2:E2")) Is Nothing Then
         Range("AA3").value = Target.Column
-        Dashboard_TabChange                      'Run Macro to switch tabs
+        wshARDashboard_TabChange                      'Run Macro to switch tabs
     End If
 
     If Shapes("ViewInvBtn").Visible = True Then Shapes("ViewInvBtn").Visible = msoFalse 'Hide View Inv. Button if Visible
