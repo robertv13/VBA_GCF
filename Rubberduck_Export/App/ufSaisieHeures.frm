@@ -329,7 +329,7 @@ End Sub
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
-    EffaceFormulaire
+    TEC_Efface_Formulaire
 
 End Sub
 

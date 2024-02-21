@@ -2,8 +2,8 @@
 
 Private Sub Worksheet_Activate()
 
-    'Set the zoom factor to 87% when this worksheet is activated
-    ActiveWindow.Zoom = 87
+    'Set the zoom factor to 93% when this worksheet is activated
+    ActiveWindow.Zoom = 93
 
 End Sub
 
@@ -97,40 +97,3 @@ ExitSub:
     Application.EnableEvents = True
   
 End Sub
-
-'Public Sub Worksheet_Change(ByVal Target As Range)
-'    'On Invoice Search Change
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_06 - Not Intersect(Target, Range('Q2')) Is Nothing And Range('Q2').Value <> Empty = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("Q2")) Is Nothing And Range("Q2").value <> Empty
-'
-'    'On Change of Billing Service Item, but not on Billing Item Load
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(15); "TEST_07 - Not Intersect(Target, Range('E6')) Is Nothing And Range('B23').Value = False And Range('B12').Value <> '' = "
-''    If wshFACPrep.Range("B28").value Then Debug.Print Tab(20); Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> ""
-'    If Not Intersect(Target, Range("E6")) Is Nothing And Range("B23").value = False And Range("B12").value <> "" Then
-'        ServItemDBRow = Range("B12").value ' Service Item DB Row
-'        Range("E7").value = ServItems.Range("C" & ServItemDBRow).value 'Set Default Description
-'        Range("H6").value = ServItems.Range("D" & ServItemDBRow).value 'Set Default Rate
-'    End If
-'    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_Change(ByVal Target As Range)" & vbNewLine
-'End Sub
-
-'Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range) @ " & Time
-'    If wshFACPrep.Range("B28").Value Then Debug.Print Tab(5); "Target.Address = " & Target.Address & "   Target.CountLarge = " & Target.CountLarge
-''    If Target.CountLarge > 1 Then Exit Sub
-'
-'    'On Selection Of Billing item
-''    If Not Intersect(Target, Range("D12:H9999")) Is Nothing And Range("C" & Target.Row).Value <> Empty Then
-''        Range("B2").Value = Range("C" & Target.Row).Value 'Set Billing ID
-''        Range("B17").Value = Target.Row 'Set Selected Row
-''        BillingEntry_Load 'Run Macro To load Item
-''        With Shapes("AddItemBtn")
-''            .Left = Range("I" & Target.Row).Left
-''            .Top = Range("I" & Target.Row).Top
-''            .Visible = msoCTrue
-''        End With
-''    End If
-'    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [wshFACPrep] - Private Sub Worksheet_SelectionChange(ByVal Target As Range)" & vbNewLine
-'End Sub
-
-

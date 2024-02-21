@@ -2,7 +2,6 @@
 
 Private Sub Workbook_Open()
 
-    MsgBox "Welcome to this Excel workbook!"
     Dim timerStart As Double
     timerStart = Timer
     

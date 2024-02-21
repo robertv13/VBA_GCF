@@ -3,7 +3,7 @@ Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
 Dim lastrow As Long, LastItemRow As Long, LastResultRow As Long, ResultRow As Long
 
-Sub Invoice_New() 'Clear contents
+Sub FAC_Prep_Invoice_New() 'Clear contents
     If wshFACPrep.Range("B27").value = False Then
         With wshFACPrep
             .Range("B24").value = True
@@ -12,8 +12,8 @@ Sub Invoice_New() 'Clear contents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
             
-            Call TEC_Clear
-            Call ClearAndFixTotalsFormulaFACPrep
+            Call TEC_Clear_All_Cells
+            Call FAC_Prep_Clear_And_Fix_Totals_Formula
             
             .Range("B20").value = ""
             .Range("B24").value = False
@@ -26,14 +26,244 @@ Sub Invoice_New() 'Clear contents
             .Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
             .Range("B68:F80").ClearContents
             
-            Call ClearAndFixTotalsFormulaFACFinale
+            Call FAC_Prep_Clear_And_Fix_Formula_Finale
         
         End With
-        Call TEC_Clear
+        Call TEC_Clear_All_Cells
+        
+        'Move on to CLient Name
         wshFACPrep.Range("E4:F4").ClearContents
+        With wshFACPrep.Range("E4:F4").Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 65535
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
         wshFACPrep.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
+End Sub
+
+Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub FAC_Prep_Save_And_Update() @ " & Time
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value
+    With wshFACPrep
+        'Check For Mandatory Fields - Client
+        If .Range("B18").value = Empty Then
+            MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
+            GoTo Fast_Exit_Sub
+        End If
+        'Check For Mandatory Fields - Date de facture
+        If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
+            MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et/ou le numéro de facture n'ont pas encore été saisi, sortie de la routine"
+            GoTo Fast_Exit_Sub
+        End If
+        
+        'Valid Invoice - Let's update it
+        'Determine the row number (InvListRow) for New Invoice -OR- use existing one
+        If wshFACPrep.Range("B20").value = Empty Then 'New Invoice
+            Call FAC_Prep_Add_Invoice_Header_to_DB(0)
+            Call FAC_Prep_Add_Invoice_Details_to_DB
+        End If
+    End With
+NoItems:
+    MsgBox "La facture '" & wshFACPrep.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFACPrep.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+    wshFACPrep.Range("B27").value = False
+    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '"; wshFACPrep.Range("O6") & "' (avant taxes) est de " & Format(wshFACPrep.Range("O51").value, "### ##0.00 $")
+Fast_Exit_Sub:
+    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub FAC_Prep_Save_And_Update()" & vbNewLine
+    
+    Call FAC_Prepare_GL_Posting(0)
+    
+End Sub
+
+Sub FAC_Prep_Add_Invoice_Header_to_DB(r As Long)
+
+    Dim timerStart As Double 'Speed tests - 2024-02-21
+    timerStart = Timer
+
+    Application.ScreenUpdating = False
+    
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    sheetName = "Invoice_Header"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object, rs As Object
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Set rs = CreateObject("ADODB.Recordset")
+
+    'r = 0 ---> New record, r > 0 ---> Update an existing record (r)
+    If r = 0 Then
+    
+        'Create an empty recordset
+        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+        
+        'Add fields to the recordset before updating it
+        rs.AddNew
+        With wshFACPrep
+            rs.Fields("InvNo") = wshFACPrep.Range("O6")
+            rs.Fields("DateFacture") = .Range("O3").value
+            rs.Fields("CustID") = .Range("B18").value
+            rs.Fields("Contact") = .Range("K3").value
+            rs.Fields("NomClient") = .Range("K4").value
+            rs.Fields("Adresse") = .Range("K5").value
+            rs.Fields("VilleProvCP") = .Range("K6").value
+        End With
+        With wshFACFinale
+            rs.Fields("Honoraires") = wshFACFinale.Range("F68").value
+            rs.Fields("AF1Desc") = wshFACFinale.Range("C69").value
+            rs.Fields("AutresFrais1") = wshFACFinale.Range("F69").value
+            rs.Fields("AF2Desc") = wshFACFinale.Range("C70").value
+            rs.Fields("AutresFrais2") = wshFACFinale.Range("F70").value
+            rs.Fields("AF3Desc") = wshFACFinale.Range("C71").value
+            rs.Fields("AutresFrais3") = wshFACFinale.Range("F71").value
+            rs.Fields("TauxTPS") = wshFACFinale.Range("D73").value
+            rs.Fields("MntTPS") = wshFACFinale.Range("F73").value
+            rs.Fields("TauxTVQ") = wshFACFinale.Range("D74").value
+            rs.Fields("MntTVQ") = wshFACFinale.Range("F74").value
+            rs.Fields("AR_Total") = wshFACFinale.Range("F76").value
+            rs.Fields("Depot") = wshFACFinale.Range("F78").value
+        End With
+    Else 'Update an existing record
+        'Open the recordset for the specified ID
+        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+        If Not rs.EOF Then
+            'Update fields for the existing record
+            With wshFACPrep
+                rs.Fields("InvNo") = .Range("O6")
+                rs.Fields("DateFacture") = .Range("O3").value
+                rs.Fields("CustID") = .Range("B18").value
+                rs.Fields("Contact") = .Range("K3").value
+                rs.Fields("NomClient") = .Range("K4").value
+                rs.Fields("Adresse") = .Range("K5").value
+                rs.Fields("VilleProvCP") = .Range("K6").value
+            End With
+            With wshFACFinale
+                rs.Fields("Honoraires") = .Range("F68").value
+                rs.Fields("AF1Desc") = .Range("C69").value
+                rs.Fields("AutresFrais1") = .Range("F69").value
+                rs.Fields("AF2Desc") = .Range("C70").value
+                rs.Fields("AutresFrais2") = .Range("F70").value
+                rs.Fields("AF3Desc") = .Range("C71").value
+                rs.Fields("AutresFrais3") = .Range("F71").value
+                rs.Fields("TauxTPS") = .Range("D73").value
+                rs.Fields("MntTPS") = .Range("F73").value
+                rs.Fields("TauxTVQ") = .Range("D74").value
+                rs.Fields("MntTVQ") = .Range("F74").value
+                rs.Fields("AR_Total") = .Range("F76").value
+                rs.Fields("Depot") = .Range("F78").value
+            End With
+        Else
+            'Handle the case where the specified ID is not found
+            MsgBox "L'enregistrement # '" & r & "' ne peut être trouvé!", vbExclamation
+            rs.Close
+            conn.Close
+            Set rs = Nothing
+            Set conn = Nothing
+            Exit Sub
+        End If
+    End If
+    'Update the recordset (create the record)
+    rs.Update
+    
+    'Prepare GL Posting
+    wshFACPrep.Range("B33").value = wshFACFinale.Range("F80").value 'AR amount
+    wshFACPrep.Range("B34").value = -wshFACFinale.Range("F68").value 'Revenues
+    wshFACPrep.Range("B35").value = -wshFACFinale.Range("F69").value 'Misc $ - 1
+    wshFACPrep.Range("B36").value = -wshFACFinale.Range("F70").value 'Misc $ - 2
+    wshFACPrep.Range("B37").value = -wshFACFinale.Range("F71").value 'Misc $ - 3
+    wshFACPrep.Range("B38").value = -wshFACFinale.Range("F73").value 'GST $
+    wshFACPrep.Range("B39").value = -wshFACFinale.Range("F74").value 'PST $
+    wshFACPrep.Range("B40").value = wshFACFinale.Range("F78").value 'Deposit
+    
+'    wshFACPrep.Range("B20").value = InvListRow
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    'Release objects from memory
+    Set rs = Nothing
+    Set conn = Nothing
+    
+    Application.ScreenUpdating = True
+
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "FAC_Prep_Add_Invoice_Header_to_DB() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
+End Sub
+
+Sub FAC_Prep_Add_Invoice_Details_to_DB()
+
+    Dim timerStart As Double 'Speed tests - 2024-02-21
+    timerStart = Timer
+
+    Application.ScreenUpdating = False
+    
+    Dim rowLastService As Long
+    rowLastService = wshFACPrep.Range("L46").End(xlUp).row
+    If rowLastService < 11 Then GoTo Nothing_to_Update
+    
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    sheetName = "Invoice_Details"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object, rs As Object
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Set rs = CreateObject("ADODB.Recordset")
+
+    'Create an empty recordset
+    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim r As Integer
+    For r = 11 To rowLastService
+        'Add fields to the recordset before updating it
+        rs.AddNew
+        With wshFACPrep
+            rs.Fields("InvNo") = .Range("O6").value
+            rs.Fields("Description") = .Range("L" & r).value
+            rs.Fields("Heures") = .Range("M" & r).value
+            rs.Fields("Taux") = .Range("N" & r).value
+            rs.Fields("Honoraires") = .Range("O" & r).value
+            rs.Fields("InvRow") = r
+            rs.Fields("Row") = ""
+        End With
+    'Update the recordset (create the record)
+    rs.Update
+    Next r
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    'Release objects from memory
+    Set rs = Nothing
+    Set conn = Nothing
+    
+Nothing_to_Update:
+
+    Application.ScreenUpdating = True
+
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "FAC_Prep_Add_Invoice_Header_to_DB() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
 End Sub
 
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
@@ -105,57 +335,57 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         .Range("O52").value = wshFACInvList.Range("P" & InvListRow).value
         .Range("O53").value = wshFACInvList.Range("R" & InvListRow).value
         .Range("O57").value = wshFACInvList.Range("T" & InvListRow).value
-        
+
 NoItems:
     .Range("B24").value = False 'Set Invoice Load To false
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "[modFAC] - Now exiting Sub Invoice_Load()" & vbNewLine
 End Sub
 
-Sub InvoiceGetAllTrans(inv As String)
+'Sub InvoiceGetAllTrans(inv As String)
+'
+'    Application.ScreenUpdating = False
+'
+'    wshFACPrep.Range("B31").value = 0
+'
+'    With wshFACInvList
+'        Dim lastrow As Long, LastResultRow As Long, ResultRow As Long
+'        lastrow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
+'        If lastrow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+'        On Error Resume Next
+'        .Names("Criterial").Delete
+'        On Error GoTo 0
+'        .Range("V3").value = wshFACPrep.Range("O6").value
+'        'Advanced Filter setup
+'        .Range("A3:T" & lastrow).AdvancedFilter xlFilterCopy, _
+'            CriteriaRange:=.Range("V2:V3"), _
+'            CopyToRange:=.Range("X2:AQ2"), _
+'            Unique:=True
+'        LastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
+'        If LastResultRow < 3 Then
+'            GoTo Done
+'        End If
+''        With .Sort
+''            .SortFields.Clear
+''            .SortFields.Add Key:=wshFACInvList.Range("X2"), _
+''                SortOn:=xlSortOnValues, _
+''                Order:=xlAscending, _
+''                DataOption:=xlSortNormal 'Sort Based Invoice Number
+''            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
+''                SortOn:=xlSortOnValues, _
+''                Order:=xlAscending, _
+''                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+''            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
+''            .Apply 'Apply Sort
+''         End With
+'         wshFACPrep.Range("B31").value = LastResultRow - 2 'Remove Header rows from row count
+'Done:
+'    End With
+'    Application.ScreenUpdating = True
+'
+'End Sub
 
-    Application.ScreenUpdating = False
-
-    wshFACPrep.Range("B31").value = 0
-   
-    With wshFACInvList
-        Dim lastrow As Long, LastResultRow As Long, ResultRow As Long
-        lastrow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
-        If lastrow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
-        On Error Resume Next
-        .Names("Criterial").Delete
-        On Error GoTo 0
-        .Range("V3").value = wshFACPrep.Range("O6").value
-        'Advanced Filter setup
-        .Range("A3:T" & lastrow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("V2:V3"), _
-            CopyToRange:=.Range("X2:AQ2"), _
-            Unique:=True
-        LastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
-        If LastResultRow < 3 Then
-            GoTo Done
-        End If
-'        With .Sort
-'            .SortFields.Clear
-'            .SortFields.Add Key:=wshFACInvList.Range("X2"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based On TEC_ID
-'            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
-'            .Apply 'Apply Sort
-'         End With
-         wshFACPrep.Range("B31").value = LastResultRow - 2 'Remove Header rows from row count
-Done:
-    End With
-    Application.ScreenUpdating = True
-
-End Sub
-
-Sub ClearAndFixTotalsFormulaFACPrep()
+Sub FAC_Prep_Clear_And_Fix_Totals_Formula()
 
     Application.EnableEvents = False
     
@@ -199,7 +429,7 @@ Sub ClearAndFixTotalsFormulaFACPrep()
 
 End Sub
 
-Sub ClearAndFixTotalsFormulaFACFinale()
+Sub FAC_Prep_Clear_And_Fix_Formula_Finale()
 
     Application.EnableEvents = False
     
@@ -240,96 +470,11 @@ Sub SetLabels(r As Range, l As String)
     If wshAdmin.Range(l & "_Bold").value = "OUI" Then r.Font.Bold = True
 
 End Sub
+
 Sub MiscCharges()
 
     ActiveWindow.SmallScroll Down:=14
     wshFACPrep.Range("O48").Select 'Misc Amount 1
-    
-End Sub
-Sub Invoice_SaveUpdate() '2023-12-20 @ 11:31
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Invoice_SaveUpdate() @ " & Time
-    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFACPrep.Range("B18").value
-    With wshFACPrep
-        'Check For Mandatory Fields - Client
-        If .Range("B18").value = Empty Then
-            MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
-            GoTo Fast_Exit_Sub
-        End If
-        'Check For Mandatory Fields - Date de facture
-        If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
-            MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et/ou le numéro de facture n'ont pas encore été saisi, sortie de la routine"
-            GoTo Fast_Exit_Sub
-        End If
-        'Determine the row number (InvListRow) for InvList
-        If wshFACPrep.Range("B20").value = Empty Then 'New Invoice
-            Dim InvListRow As Long
-            InvListRow = wshFACInvList.Range("A99999").End(xlUp).row + 1 'First available row
-            wshFACPrep.Range("B20").value = InvListRow
-            wshFACInvList.Range("A" & InvListRow).value = wshFACPrep.Range("O6").value 'Invoice #
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas A (B20 = '' ) alors InvListRow est établi selon les lignes existantes: InvListRow = " & InvListRow
-        Else 'Existing Invoice
-            InvListRow = .Range("B20").value 'Set Existing Invoice Row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Cas B (B20 <> '') alors B20 est utilisé - InvListRow = " & InvListRow
-        End If
-        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "B20 (Current InvListRow) = " & .Range("B20").value & "   B22 (Search InvListRow) = " & .Range("B22").value
-        'Load data into wshFACInvList (Invoice Header)
-        If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Facture # = " & wshFACPrep.Range("O6").value & " et Current Inv. Row = " & InvListRow & " - pour posting dans InvoiceListing"
-        
-        wshFACInvList.Range("B" & InvListRow).value = .Range("O3").value 'Date
-        wshFACInvList.Range("C" & InvListRow).value = .Range("B18").value 'Client_ID
-        wshFACInvList.Range("D" & InvListRow).value = .Range("K3").value 'Care of
-        wshFACInvList.Range("E" & InvListRow).value = .Range("K4").value 'Client Name
-        wshFACInvList.Range("F" & InvListRow).value = .Range("K5").value 'Client Address
-        wshFACInvList.Range("G" & InvListRow).value = .Range("K6").value 'City, Prov & Postal Code
-
-        wshFACInvList.Range("H" & InvListRow).value = wshFACFinale.Range("F68").value 'Fees sub-total
-        wshFACInvList.Range("I" & InvListRow).value = wshFACFinale.Range("C69").value 'Misc. # 1 - Desc
-        wshFACInvList.Range("J" & InvListRow).value = wshFACFinale.Range("F69").value 'Misc. # 1
-        wshFACInvList.Range("K" & InvListRow).value = wshFACFinale.Range("C70").value 'Misc. # 2 - Desc
-        wshFACInvList.Range("L" & InvListRow).value = wshFACFinale.Range("F70").value 'Misc. # 2
-        wshFACInvList.Range("M" & InvListRow).value = wshFACFinale.Range("C71").value 'Misc. # 3 - Desc
-        wshFACInvList.Range("N" & InvListRow).value = wshFACFinale.Range("F71").value 'Misc. # 3
-        
-        wshFACInvList.Range("O" & InvListRow).value = wshFACFinale.Range("D73").value 'GST Rate
-        wshFACInvList.Range("O" & InvListRow).NumberFormat = "0.00%"
-        wshFACInvList.Range("P" & InvListRow).value = wshFACFinale.Range("F73").value 'GST $
-        wshFACInvList.Range("Q" & InvListRow).value = wshFACFinale.Range("D74").value 'PST Rate
-        wshFACInvList.Range("Q" & InvListRow).NumberFormat = "0.000%"
-        wshFACInvList.Range("R" & InvListRow).value = wshFACFinale.Range("F74").value 'GST $
-        wshFACInvList.Range("S" & InvListRow).value = wshFACFinale.Range("F76").value 'Grand Total
-        wshFACInvList.Range("T" & InvListRow).value = wshFACFinale.Range("F78").value 'Deposit received
-        
-        'Load data into wshInvItems (Save/Update Invoice Items) - Columns A, F & G - TO-DO_RMV - 2023-12-17 @ 15:38 - Duplicate entries !!!
-        LastItemRow = .Range("L46").End(xlUp).row
-        If LastItemRow < 11 Then GoTo NoItems
-        For InvItemRow = 11 To LastItemRow
-            If .Range("Q" & InvItemRow).value = "" Then
-                ItemDBRow = wshFACInvItems.Range("A99999").End(xlUp).row + 1
-                .Range("Q" & InvItemRow).value = ItemDBRow 'Set Item DB Row
-                wshFACInvItems.Range("A" & ItemDBRow).value = .Range("O6").value 'Invoice #
-                wshFACInvItems.Range("F" & ItemDBRow).value = InvItemRow 'Set Invoice Row
-                wshFACInvItems.Range("G" & ItemDBRow).value = "=Row()"
-            Else 'Existing Item
-                ItemDBRow = .Range("Q" & InvItemRow).value  'Invoice Item Row
-            End If
-            'Paste 4 columns with one instruction - Columns B, C, D & E
-            wshFACInvItems.Range("B" & ItemDBRow & ":E" & ItemDBRow).value = .Range("L" & InvItemRow & ":O" & InvItemRow).value 'Save Invoice Item Details
-        Next InvItemRow
-NoItems:
-        MsgBox "La facture '" & .Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
-    End With
-    wshFACPrep.Range("B27").value = False
-    If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '"; wshFACPrep.Range("O6") & "' (avant taxes) est de " & Format(wshFACPrep.Range("O51").value, "### ##0.00 $")
-Fast_Exit_Sub:
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Invoice_SaveUpdate()" & vbNewLine
-    
-'    Dim myShape As Shape
-'    Set myShape = ActiveSheet.Shapes("Rectangle 18")
-    'Deactivate the shape
-    'myShape.OLEFormat.Object.Enabled = False
-    Call FAC_Prepare_GL_Posting(InvListRow)
     
 End Sub
 
@@ -353,6 +498,22 @@ Sub Client_Change(ClientName As String)
     
     TEC_Load
     
+    Range("E4:F4").Select
+    
+    With wshFACPrep.Range("E4:F4").Interior 'No filling
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    
+    With wshFACPrep.Range("O3").Interior 'Yellow filling
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    
     wshFACPrep.Range("O3").Select 'Move on to Invoice Date
 
 End Sub
@@ -373,11 +534,18 @@ Sub DateChange(d As String)
     wshFACPrep.Range("B29").value = GetTaxRate(DateTaxRates, "F")
     wshFACPrep.Range("B30").value = GetTaxRate(DateTaxRates, "P")
         
+    'Reset the cell (Date)
+    With wshFACPrep.Range("O3").Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+
     wshFACPrep.Range("L11").Select 'Move on to Services Entry
     
 End Sub
 
-Sub TEC_Clear()
+Sub TEC_Clear_All_Cells()
 
     Dim lastrow As Long
     lastrow = wshFACPrep.Range("D999").End(xlUp).row
@@ -501,7 +669,7 @@ SkipSort:
         End With
 NoItems:
 NotSaved:
-    Call Invoice_New 'Add New Invoice
+    Call FAC_Prep_Invoice_New 'Add New Invoice
     End With
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Invoice_Delete()" & vbNewLine
 End Sub
@@ -518,15 +686,15 @@ Sub Creation_PDF_Email() 'RMV - 2023-12-17 @ 14:35
 
 End Sub
 
-Sub Create_PDF_Email_Sub(NoFacture As String)
+Sub Create_PDF_Email_Sub(noFacture As String)
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Create_PDF_Email_Sub(NoFacture As String) @ " & Time
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
     Dim result As Boolean
-    result = Create_PDF_Email_Function(NoFacture, "CreateEmail")
+    result = Create_PDF_Email_Function(noFacture, "CreateEmail")
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Create_PDF_Email_Sub(NoFacture As String)" & vbNewLine
 End Sub
 
-Function Create_PDF_Email_Function(NoFacture As String, Optional action As String = "SaveOnly") As Boolean
+Function Create_PDF_Email_Function(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Now entering - [modFAC] - Function Create_PDF_Email_Function" & _
         "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
     Dim SaveAs As String
@@ -536,7 +704,7 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
     'Construct the SaveAs filename
     'NoFactFormate = Format(NoFacture, "000000")
     SaveAs = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
-                     NoFacture & ".pdf" '2023-12-19 @ 07:28
+                     noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Set Print Quality
     On Error Resume Next
@@ -570,7 +738,7 @@ Function Create_PDF_Email_Function(NoFacture As String, Optional action As Strin
 
         Dim source_file As String
         source_file = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
-                      NoFacture & ".pdf" '2023-12-19 @ 07:22
+                      noFacture & ".pdf" '2023-12-19 @ 07:22
         
         With myMail
             .To = "robertv13@hotmail.com"
@@ -719,116 +887,160 @@ End Sub
 Sub FAC_Prepare_GL_Posting(r As Long) '2024-02-14 @ 05:56
 
     Dim montant As Double
-    Dim DateFact As Date
-    Dim NoFacture As String, nomCLient As String
+    Dim dateFact As Date
+    Dim descGL_Trans As String, source As String
     
-    NoFacture = wshFACInvList.Range("A" & r).value
-    DateFact = wshFACInvList.Range("B" & r).value
-    nomCLient = wshFACInvList.Range("E" & r).value
+    dateFact = wshFACPrep.Range("O3").value
+    descGL_Trans = wshFACPrep.Range("E4").value
+    source = "FACT-" & wshFACPrep.Range("O6").value
     
-    Dim rng As Range
-    Set rng = wshGL_Trans.Range("A2:A99999")
-    Dim newID As Long
-    newID = WorksheetFunction.Max(rng) + 1
-
-    'RMV - O/S - 2024-02-13
-    'AR amount
-    montant = wshFACInvList.Range("S" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "1100", "Comptes Clients", DateFact)
+    Dim myArray(1 To 8, 1 To 4) As String
     
-    'Professionnal Fees
-    montant = -wshFACInvList.Range("H" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "4000", "Revenus", DateFact)
-    
-    'Miscellaneous Amount # 1
-    montant = -wshFACInvList.Range("J" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "5009", "Frais divers # 1", DateFact)
-    
-    'Miscellaneous Amount # 2
-    montant = -wshFACInvList.Range("L" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "5008", "Frais divers # 2", DateFact)
-    
-    'Miscellaneous Amount # 3
-    montant = -wshFACInvList.Range("N" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "5002", "Frais divers # 3", DateFact)
-    
-    'TPS à payer
-    montant = -wshFACInvList.Range("P" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "2200", "TPS à payer", DateFact)
-    
-    'TVQ à payer
-    montant = -wshFACInvList.Range("R" & r).value
-    If montant Then Call GL_Trans_Posting(montant, newID, "2201", "TVQ à payer", DateFact)
-    
-'    Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
-'    Call GL_Trans_Posting(0, newID, "", "", DateFact)
-    
-'    Call AdjustJETrans(newID)
-    
-End Sub
-
-Sub GL_Trans_Posting(m As Double, noEJ, GL As String, GLDesc As String, d As Date)
-
-    Dim rowGLTrans As Long, MaxID As Double, newID As Long
-    'Détermine la prochaine ligne disponible dans la table
-    rowGLTrans = wshGL_Trans.Range("A999999").End(xlUp).row + 1  'Last Used + 1 = First Empty Row
-
-    wshGL_Trans.Range("A" & rowGLTrans).value = noEJ
-    wshGL_Trans.Range("B" & rowGLTrans).value = d
-    wshGL_Trans.Range("C" & rowGLTrans).value = "Facturation"
-    wshGL_Trans.Range("E" & rowGLTrans).value = GL
-    wshGL_Trans.Range("F" & rowGLTrans).value = GLDesc
-    If m > 0 Then
-        wshGL_Trans.Range("G" & rowGLTrans).value = m
-    ElseIf m < 0 Then
-        wshGL_Trans.Range("H" & rowGLTrans).value = -m
+    'AR amount (wshFacPrep.Range("B33"))
+    montant = wshFACPrep.Range("B33").value
+    If montant Then
+        myArray(1, 1) = "1100"
+        myArray(1, 2) = "Comptes Clients"
+        myArray(1, 3) = montant
+        myArray(1, 4) = ""
     End If
-    wshGL_Trans.Range("I" & rowGLTrans).value = ""
-    wshGL_Trans.Range("J" & rowGLTrans).formula = "=ROW()"
-
+    
+    'Professional Fees (wshFacPrep.Range("B34"))
+    montant = wshFACPrep.Range("B34").value
+    If montant Then
+        myArray(2, 1) = "4000"
+        myArray(2, 2) = "Revenus"
+        myArray(2, 3) = montant
+        myArray(2, 4) = ""
+    End If
+    
+    'Miscellaneous Amount # 1 (wshFacPrep.Range("B35"))
+    montant = wshFACPrep.Range("B35").value
+    If montant Then
+        myArray(3, 1) = "5009"
+        myArray(3, 2) = "Frais divers # 1"
+        myArray(3, 3) = montant
+        myArray(3, 4) = ""
+    End If
+    
+    'Miscellaneous Amount # 2 (wshFacPrep.Range("B36"))
+    montant = wshFACPrep.Range("B36").value
+    If montant Then
+        myArray(4, 1) = "5008"
+        myArray(4, 2) = "Frais divers # 2"
+        myArray(4, 3) = montant
+        myArray(4, 4) = ""
+    End If
+    
+    'Miscellaneous Amount # 3 (wshFacPrep.Range("B37"))
+    montant = wshFACPrep.Range("B37").value
+    If montant Then
+        myArray(5, 1) = "5002"
+        myArray(5, 2) = "Frais divers # 3"
+        myArray(5, 3) = montant
+        myArray(5, 4) = ""
+    End If
+    
+    'GST to pay (wshFacPrep.Range("B38"))
+    montant = wshFACPrep.Range("B38").value
+    If montant Then
+        myArray(6, 1) = "2200"
+        myArray(6, 2) = "TPS à payer"
+        myArray(6, 3) = montant
+        myArray(6, 4) = ""
+    End If
+    
+    'PST to pay (wshFacPrep.Range("B39"))
+    montant = wshFACPrep.Range("B39").value
+    If montant Then
+        myArray(7, 1) = "2201"
+        myArray(7, 2) = "TVQ à payer"
+        myArray(7, 3) = montant
+        myArray(7, 4) = ""
+    End If
+    
+    'Deposit applied (wshFacPrep.Range("B40"))
+    montant = wshFACPrep.Range("B40").value
+    If montant Then
+        myArray(8, 1) = "1230"
+        myArray(8, 2) = "Avance - Prêt GCP"
+        myArray(8, 3) = montant
+        myArray(8, 4) = ""
+    End If
+    
+    Call FAC_GL_Posting(dateFact, descGL_Trans, source, myArray)
+    
 End Sub
 
-Sub AdjustJETrans(JENumber As Long) '2023-12-22 @ 08:18
+Sub FAC_GL_Posting(df, desc, source, arr As Variant)
+
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    sheetName = "GL_Trans"
     
-    Dim firstRow As Long, lastrow As Long, r As Long
-    Dim nrJE_All As Range
-    Set nrJE_All = Range("nrJE_All")
-    firstRow = Application.WorksheetFunction.Match(JENumber, nrJE_All, 0) + 1
-    r = firstRow
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Initialize recordset
+    Dim rs As Object
+    Set rs = CreateObject("ADODB.Recordset")
+
+    'SQL select command to find the next available ID
+    Dim strSQL As String
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & sheetName & "$]"
+
+    'Open recordset to find out the next JE number
+    rs.Open strSQL, conn
     
-    'Determine the last row for a given Journal Entry
-    Do While wshGL_Trans.Cells(r, 1).value = JENumber
-        r = r + 1
-    Loop
-    lastrow = r - 1
+    'Get the last used row
+    Dim maxEJNo As Long, lastJE As Long
+    If IsNull(rs.Fields("MaxEJNo").value) Then
+        ' Handle empty table (assign a default value, e.g., 1)
+        lastJE = 1
+    Else
+        lastJE = rs.Fields("MaxEJNo").value
+    End If
     
-    With wshGL_Trans
-        'Les lignes subséquentes sont en police blanche...
-        .Range("B" & (firstRow + 1) & ":D" & lastrow).Font.Color = vbWhite
-        
-        'We adjust Numeric Formats for the amounts
-        .Range("G" & firstRow & ":H" & (lastrow - 2)).NumberFormat = "#,###,##0.00 $"
-        
-'        'Ajoute des bordures (cadre extérieur) à l'ensemble des lignes de l'écriture
-'        Dim r1 As Range
-'        Set r1 = .Range("D" & firstRow & ":K" & (LastRow - 1))
-'        r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
-'
-'        With .Range("H" & (LastRow - 1) & ":K" & (LastRow - 1))
-'            .Merge
-'            .HorizontalAlignment = xlLeft
-'            .Font.Italic = True
-'            .Font.Bold = True
-'            With .Interior
-'                .Pattern = xlSolid
-'                .PatternColorIndex = xlAutomatic
-'                .ThemeColor = xlThemeColorDark1
-'                .TintAndShade = -0.149998474074526
-'                .PatternTintAndShade = 0
-'            End With
-'            .Borders(xlInsideVertical).LineStyle = xlNone
-'        End With
-    End With
+    'Calculate the new JE number
+    Dim nextJENo As Long
+    nextJENo = lastJE + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim i As Integer, j As Integer
+    'Loop through the array and post each row
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        If arr(i, 1) = "" Then GoTo Nothing_to_Post
+            rs.AddNew
+                rs.Fields("No_Entrée") = nextJENo
+                rs.Fields("Date") = CDate(df)
+                rs.Fields("Description") = desc
+                rs.Fields("Source") = source
+                rs.Fields("No_Compte") = arr(i, 1)
+                rs.Fields("Compte") = arr(i, 2)
+                If arr(i, 3) > 0 Then
+                    rs.Fields("Débit") = arr(i, 3)
+                Else
+                    rs.Fields("Crédit") = -arr(i, 3)
+                End If
+                rs.Fields("AutreRemarque") = arr(i, 4)
+            rs.Update
+Nothing_to_Post:
+    Next i
+
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
 End Sub
 
 Sub Back_To_FAC_Menu()

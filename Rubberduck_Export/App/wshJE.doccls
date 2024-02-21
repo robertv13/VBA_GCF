@@ -6,12 +6,12 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("E4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
-        Dim Source As String
-        Source = UCase(Trim(Range("E4").value))
-        If Source = "AUTO" Then
+        Dim source As String
+        source = UCase(Trim(Range("E4").value))
+        If source = "AUTO" Then
             Call UpdateJEAuto
             wshJE.Range("B2").value = -1
-            usfListeEJAuto.show vbModal
+            ufListeEJAuto.show vbModal
             If wshJE.Range("B2").value >= 0 Then
                 wshJE.Range("J4").Activate
             Else

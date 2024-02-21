@@ -79,7 +79,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
-    recSet.Source = "SELECT * FROM [" & sourceWorksheet & "$]"
+    recSet.source = "SELECT * FROM [" & sourceWorksheet & "$]"
     recSet.Open
     
     'Copy to wshAdmin workbook

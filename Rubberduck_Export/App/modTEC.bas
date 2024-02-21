@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.3.1" '2024-02-14 @ 09:31
+Global Const gAppVersion As String = "v2.3.3" '2024-02-21 @ 08:43
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     
@@ -53,7 +53,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
-    recSet.Source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
     Debug.Print vbNewLine & String(60, "*") & vbNewLine & _
@@ -189,7 +189,7 @@ No_Sort_Required:
 
 End Sub
 
-Sub EffaceFormulaire() 'Clear all fields on the userForm
+Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
     Dim timerStart As Double 'Speed tests - 2024-02-20
     timerStart = Timer
@@ -218,7 +218,7 @@ Sub EffaceFormulaire() 'Clear all fields on the userForm
     ufSaisieHeures.txtClient.SetFocus
     
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "EffaceFormulaire() - Secondes = " & Timer - timerStart & _
+        "TEC_Efface_Formulaire() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
