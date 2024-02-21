@@ -678,6 +678,12 @@ Sub Goto_Onglet_Preparation_Facture()
     wshFACPrep.Range("C1").Select
 End Sub
 
+Sub Goto_Onglet_Facture_Finale()
+    wshFACFinale.Visible = xlSheetVisible
+    wshFACFinale.Activate
+    wshFACFinale.Range("C1").Select
+End Sub
+
 Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     Dim wb As Workbook
     Dim wsSource As Worksheet
@@ -721,7 +727,7 @@ Sub FAC_Prepare_GL_Posting(r As Long) '2024-02-14 @ 05:56
     nomCLient = wshFACInvList.Range("E" & r).value
     
     Dim rng As Range
-    Set rng = wshGL_Trans.Range("A2:A999999")
+    Set rng = wshGL_Trans.Range("A2:A99999")
     Dim newID As Long
     newID = WorksheetFunction.Max(rng) + 1
 
@@ -757,7 +763,7 @@ Sub FAC_Prepare_GL_Posting(r As Long) '2024-02-14 @ 05:56
 '    Call GL_Trans_Posting(0, newID, "", NoFacture + "-" & nomClient, DateFact)
 '    Call GL_Trans_Posting(0, newID, "", "", DateFact)
     
-    Call AdjustJETrans(newID)
+'    Call AdjustJETrans(newID)
     
 End Sub
 

@@ -6,7 +6,7 @@ Private Sub Workbook_Open()
     Dim timerStart As Double
     timerStart = Timer
     
-'    Application.ScreenUpdating = False
+    Application.ScreenUpdating = False
 '    Windows(ThisWorkbook.name).Visible = False
    
     Call Hide_All_Worksheet_Except_Menu
@@ -14,7 +14,7 @@ Private Sub Workbook_Open()
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
 
 '    Windows(ThisWorkbook.name).Visible = True
-'    Application.ScreenUpdating = True
+    Application.ScreenUpdating = True
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
                 "Workbook_Open() - Secondes = " & Timer - timerStart & _

@@ -187,6 +187,36 @@ Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
 
 End Sub
 
+Sub List_All_Conditional_Formatting()
+    Dim ws As Worksheet
+    Dim cf As FormatCondition
+    
+    ' Loop through each worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        Debug.Print "Worksheet: " & ws.name
+        
+        'Loop through each conditional formatting rule
+        For Each cf In ws.Cells.FormatConditions
+            Debug.Print Tab(5); "Type: " & TypeName(cf)
+            Debug.Print Tab(5); "Applies to: " & cf.AppliesTo.Address
+            
+            ' Print other properties of the format condition as needed
+            ' For example:
+            ' Debug.Print "Formula1: " & cf.Formula1
+            ' Debug.Print "Formula2: " & cf.Formula2
+            ' Debug.Print "Operator: " & cf.Operator
+            ' Debug.Print "Interior Color: " & cf.Interior.Color
+            ' Debug.Print "Font Color: " & cf.Font.Color
+            
+            ' Add additional properties you want to inspect
+            
+            Debug.Print "---"
+        Next cf
+        
+        Debug.Print ""
+    Next ws
+End Sub
+
 Sub Array_Bubble_Sort(arr() As String)
     Dim i As Long, j As Long
     Dim temp As String
