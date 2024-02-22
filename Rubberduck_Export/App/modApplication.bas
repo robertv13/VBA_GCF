@@ -136,19 +136,19 @@ Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
 End Sub
 
 Sub LoopThroughRows()
-    Dim i As Long, lastrow As Long
+    Dim i As Long, lastRow As Long
     Dim pctdone As Single
-    lastrow = Range("A" & Rows.count).End(xlUp).row
-    lastrow = 30
+    lastRow = Range("A" & Rows.count).End(xlUp).row
+    lastRow = 30
 
     '(Step 1) Display your Progress Bar
     ufProgress.LabelProgress.Width = 0
     ufProgress.show
-    For i = 1 To lastrow
+    For i = 1 To lastRow
         '(Step 2) Periodically update progress bar
-        pctdone = i / lastrow
+        pctdone = i / lastRow
         With ufProgress
-            .Caption = "Étape " & i & " of " & lastrow
+            .Caption = "Étape " & i & " of " & lastRow
             .LabelProgress.Width = pctdone * (.FrameProgress.Width)
         End With
         DoEvents
@@ -159,7 +159,7 @@ Sub LoopThroughRows()
         '
         '--------------------------------------
         '(Step 3) Close the progress bar when you're done
-        If i = lastrow Then Unload ufProgress
+        If i = lastRow Then Unload ufProgress
     Next i
 End Sub
 
@@ -171,3 +171,20 @@ Sub FractionComplete(pctdone As Single)
     DoEvents
 End Sub
 
+Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone)
+    If fill Then
+        If IsMissing(colorIndex) Or colorIndex = xlNone Then
+            rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+        Else
+            rng.Interior.colorIndex = colorIndex ' Fill with specified color
+        End If
+    Else
+        rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+    End If
+End Sub
+
+Sub TabOrderMode()
+
+    TabOrderFlag = Not TabOrderFlag
+    
+End Sub

@@ -25,7 +25,7 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Clients' ou le DynamicRange n'a pas été trouvé!", _
+        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -119,14 +119,14 @@ Public Function GetTaxRate(d As Date, taxType As String) As Double
 
     Dim row As Integer
     With wshAdmin
-    For row = 18 To 11 Step -1
-        If .Range("L" & row).value = taxType Then
-            If d >= .Range("M" & row).value Then
-                GetTaxRate = .Range("N" & row).value
-                Exit For
+        For row = 18 To 11 Step -1
+            If .Range("L" & row).value = taxType Then
+                If d >= .Range("M" & row).value Then
+                    GetTaxRate = .Range("N" & row).value
+                    Exit For
+                End If
             End If
-        End If
-    Next row
+        Next row
     End With
     
 End Function

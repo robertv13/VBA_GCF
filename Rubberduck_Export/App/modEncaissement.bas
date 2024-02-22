@@ -1,26 +1,26 @@
 Attribute VB_Name = "modEncaissement"
 Option Explicit
-Dim lastrow As Long, LastResultRow As Long
+Dim lastRow As Long, lastResultRow As Long
 Dim PayRow As Long, PayCol As Long
 Dim ResultRow As Long, PayItemRow As Long, LastPayItemRow As Long, PayItemDBRow As Long
 
 Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     wshEncaissement.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
     With wshAR
-        LastResultRow = .Range("A99999").End(xlUp).row 'Last row
-        If LastResultRow < 3 Then Exit Sub
+        lastResultRow = .Range("A99999").End(xlUp).row 'Last row
+        If lastResultRow < 3 Then Exit Sub
         'Cells L3 contains a formula, no need to set it up
-        .Range("A2:K" & LastResultRow).AdvancedFilter _
+        .Range("A2:K" & lastResultRow).AdvancedFilter _
             xlFilterCopy, _
             CriteriaRange:=.Range("L2:M3"), _
             CopyToRange:=.Range("O2:T2"), _
             Unique:=True
-        LastResultRow = .Range("O99999").End(xlUp).row
-        If LastResultRow < 3 Then Exit Sub
+        lastResultRow = .Range("O99999").End(xlUp).row
+        If lastResultRow < 3 Then Exit Sub
         wshEncaissement.Range("B2").value = True 'Set PaymentLoad to True
-        .Range("R3:R" & LastResultRow).formula = .Range("R1").formula 'Total Payments Formula
+        .Range("R3:R" & lastResultRow).formula = .Range("R1").formula 'Total Payments Formula
         'Bring the Result data into our Payments List of Invoices
-        wshEncaissement.Range("E13:I" & LastResultRow + 10).value = .Range("O3:S" & LastResultRow).value
+        wshEncaissement.Range("E13:I" & lastResultRow + 10).value = .Range("O3:S" & lastResultRow).value
     End With
     wshEncaissement.Range("B2").value = False 'Set PaymentLoad to False
 End Sub
@@ -180,19 +180,19 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         'Load Pay Items
         With wshEncDetail
             .Range("M4:T999999").ClearContents
-            lastrow = .Range("A999999").End(xlUp).row
-            If lastrow < 4 Then GoTo NoData
-            .Range("A3:G" & lastrow).AdvancedFilter _
+            lastRow = .Range("A999999").End(xlUp).row
+            If lastRow < 4 Then GoTo NoData
+            .Range("A3:G" & lastRow).AdvancedFilter _
                 xlFilterCopy, _
                 CriteriaRange:=.Range("J2:J3"), _
                 CopyToRange:=.Range("O3:T3"), _
                 Unique:=True
-            LastResultRow = .Range("O99999").End(xlUp).row
-            If LastResultRow < 4 Then GoTo NoData
+            lastResultRow = .Range("O99999").End(xlUp).row
+            If lastResultRow < 4 Then GoTo NoData
             'Bring down the formulas into results
-            .Range("M4:N" & LastResultRow).formula = .Range("M1:N1").formula 'Bring Apply and Invoice Date Formulas
-            .Range("P4:R" & LastResultRow).formula = .Range("P1:R1").formula 'Inv. Amount, Prev. payments & Balance formulas
-            wshEncaissement.Range("D13:K" & LastResultRow + 9).value = .Range("M4:T" & LastResultRow).value 'Bring over Pay Items
+            .Range("M4:N" & lastResultRow).formula = .Range("M1:N1").formula 'Bring Apply and Invoice Date Formulas
+            .Range("P4:R" & lastResultRow).formula = .Range("P1:R1").formula 'Inv. Amount, Prev. payments & Balance formulas
+            wshEncaissement.Range("D13:K" & lastResultRow + 9).value = .Range("M4:T" & lastResultRow).value 'Bring over Pay Items
 NoData:
         End With
         .Range("B2").value = False 'Payment Load to False
@@ -236,14 +236,14 @@ Sub AR_Summary_Import_All() '2024-02-14 @ 09:50
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Insert Formula in column H
-    Dim lastrow As Long
-    lastrow = wshAR.Range("A99999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshAR.Range("A99999").End(xlUp).row
     'Check if there is data in column A
-    If lastrow < 3 Then
+    If lastRow < 3 Then
         MsgBox "No data found in column A.", vbExclamation
         Exit Sub
     End If
-    wshAR.Range("H3:H" & lastrow).formula = "=SUMIFS(pmnt_Amount,pmnt_InvNumb, $A3)"
+    wshAR.Range("H3:H" & lastRow).formula = "=SUMIFS(pmnt_Amount,pmnt_InvNumb, $A3)"
 
 '    'Define the named ranges for Pmnt_Amount and Pmnt_InvNumb outside of the loop
 '    Dim pmnt_Amount_Range As Range
@@ -380,17 +380,17 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim lastrow As Long
+        Dim lastRow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            lastrow = 1
+            lastRow = 1
         Else
-            lastrow = rs.Fields("MaxID").value
+            lastRow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = lastrow + 1
+        nextID = lastRow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
@@ -461,17 +461,17 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim lastrow As Long
+        Dim lastRow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            lastrow = 1
+            lastRow = 1
         Else
-            lastrow = rs.Fields("MaxID").value
+            lastRow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = lastrow + 1
+        nextID = lastRow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close

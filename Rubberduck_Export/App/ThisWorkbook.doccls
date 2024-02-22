@@ -11,6 +11,7 @@ Private Sub Workbook_Open()
     Call Hide_All_Worksheet_Except_Menu
     
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    Call Slide_In_All_Menu_Options
 
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
@@ -18,6 +19,8 @@ Private Sub Workbook_Open()
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
                 "Workbook_Open() - Secondes = " & Timer - timerStart & _
                 vbNewLine & String(45, "*")
+                
+    MsgBox "Vous pouvez maintenant utiliser l'application", vbInformation
 
 End Sub
 
@@ -30,3 +33,16 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     Cancel = False
     
 End Sub
+
+Sub Slide_In_All_Menu_Options()
+
+    SlideIn_TEC
+    SlideIn_Facturation
+    SlideIn_Debours
+    SlideIn_Comptabilite
+    SlideIn_Parametres
+    SlideIn_Exit
+
+End Sub
+
+
