@@ -145,7 +145,7 @@ Sub List_All_Shapes_Properties()
         ws.Range("F" & r).value = Shp.ZOrderPosition
         ws.Range("G" & r).value = Shp.Top
         ws.Range("H" & r).value = Shp.Left
-        ws.Range("I" & r).value = Shp.Width
+        ws.Range("I" & r).value = Shp.width
         ws.Range("J" & r).value = Shp.Height
         r = r + 1
     Next Shp

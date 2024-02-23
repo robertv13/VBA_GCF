@@ -136,20 +136,20 @@ Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
 End Sub
 
 Sub LoopThroughRows()
-    Dim i As Long, lastrow As Long
+    Dim i As Long, lastRow As Long
     Dim pctdone As Single
-    lastrow = Range("A" & Rows.count).End(xlUp).row
-    lastrow = 30
+    lastRow = Range("A" & Rows.count).End(xlUp).row
+    lastRow = 30
 
     '(Step 1) Display your Progress Bar
-    ufProgress.LabelProgress.Width = 0
+    ufProgress.LabelProgress.width = 0
     ufProgress.show
-    For i = 1 To lastrow
+    For i = 1 To lastRow
         '(Step 2) Periodically update progress bar
-        pctdone = i / lastrow
+        pctdone = i / lastRow
         With ufProgress
-            .Caption = "Étape " & i & " of " & lastrow
-            .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+            .Caption = "Étape " & i & " of " & lastRow
+            .LabelProgress.width = pctdone * (.FrameProgress.width)
         End With
         DoEvents
         Application.Wait Now + TimeValue("00:00:01")
@@ -159,14 +159,14 @@ Sub LoopThroughRows()
         '
         '--------------------------------------
         '(Step 3) Close the progress bar when you're done
-        If i = lastrow Then Unload ufProgress
+        If i = lastRow Then Unload ufProgress
     Next i
 End Sub
 
 Sub FractionComplete(pctdone As Single)
     With ufProgress
         .Caption = "Complété à " & pctdone * 100 & "%"
-        .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+        .LabelProgress.width = pctdone * (.FrameProgress.width)
     End With
     DoEvents
 End Sub

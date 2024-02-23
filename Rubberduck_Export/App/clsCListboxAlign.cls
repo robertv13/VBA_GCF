@@ -49,7 +49,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     Else
         ' assume default sizes
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = (LBox.Width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
+            sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
     End If
     
@@ -71,10 +71,10 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
             ' if you say to center align this column or center align all columns
             For lngIndex = 0 To LBox.ListCount - 1
                 LBox.TopIndex = lngIndex
-                labSizer.Width = LBox.Width
+                labSizer.width = LBox.width
                 labSizer.Caption = Trim(LBox.List(lngIndex, intColumn - 1))
                 labSizer.AutoSize = True
-                Do While labSizer.Width < sngWidth(intColumn)
+                Do While labSizer.width < sngWidth(intColumn)
                     labSizer.Caption = " " & labSizer.Caption & " "
                 Loop
                 LBox.List(lngIndex, intColumn - 1) = labSizer.Caption
@@ -113,7 +113,7 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     Else
         ' assume default sizes
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = (LBox.Width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
+            sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
     End If
     
@@ -160,7 +160,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
     Else
         ' assume default sizes
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = (LBox.Width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
+            sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
     End If
     
@@ -180,10 +180,10 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
             'if you say to right align this column, or right align all columns
             For lngIndex = 0 To LBox.ListCount - 1
                 LBox.TopIndex = lngIndex
-                labSizer.Width = LBox.Width
+                labSizer.width = LBox.width
                 labSizer.Caption = Trim(LBox.List(lngIndex, intColumn - 1))
                 labSizer.AutoSize = True
-                Do While labSizer.Width < sngWidth(intColumn)
+                Do While labSizer.width < sngWidth(intColumn)
                     labSizer.Caption = " " & labSizer.Caption
                 Loop
                 LBox.List(lngIndex, intColumn - 1) = labSizer.Caption

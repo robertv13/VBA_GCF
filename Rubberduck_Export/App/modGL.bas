@@ -10,7 +10,7 @@ Sub UpdateBV() 'Button 'Actualiser'
     
     Application.ScreenUpdating = True
     
-    Dim minDate As Date, dateCutOff As Date, lastrow As Long, solde As Currency
+    Dim minDate As Date, dateCutOff As Date, lastRow As Long, solde As Currency
     Dim planComptable As Range
     Set planComptable = wshAdmin.Range("dnrPlanComptable")
     
@@ -19,8 +19,8 @@ Sub UpdateBV() 'Button 'Actualiser'
 '    wshBV.Range("L4:T99999").ClearComments
     
     'Clear contents & formats for TB cells
-    lastrow = wshBV.Range("D99999").End(xlUp).row
-    With wshBV.Range("D4" & ":G" & lastrow + 2)
+    lastRow = wshBV.Range("D99999").End(xlUp).row
+    With wshBV.Range("D4" & ":G" & lastRow + 2)
         .ClearContents
         .ClearFormats
     End With
@@ -34,13 +34,13 @@ Sub UpdateBV() 'Button 'Actualiser'
     
     Call GL_Trans_Advanced_Filter("", minDate, dateCutOff)
     
-    lastrow = wshGL_Trans.Range("T99999").End(xlUp).row
-    If lastrow < 2 Then Exit Sub
+    lastRow = wshGL_Trans.Range("T99999").End(xlUp).row
+    If lastRow < 2 Then Exit Sub
     Dim r As Long, BreakGLNo As String, oldDesc As String
     BreakGLNo = wshGL_Trans.Range("T2").value
     oldDesc = wshGL_Trans.Range("U2").value
     
-    For r = 2 To lastrow
+    For r = 2 To lastRow
         If wshGL_Trans.Range("T" & r).value <> BreakGLNo Then
             Call GL_Trans_Sub_Total(BreakGLNo, oldDesc, solde)
             BreakGLNo = wshGL_Trans.Range("T" & r).value
@@ -112,12 +112,12 @@ Sub GLTransDisplay(GLAcct As String, GLDesc As String, minDate As Date, maxDate 
     wshBV.Range("B7").value = GLDesc
     
     'Use the Advanced Filter Result already prepared for TB
-    Dim row As Range, foundRow As Long, LastResultRow As Long
-    LastResultRow = wshGL_Trans.Range("T99999").End(xlUp).row
+    Dim row As Range, foundRow As Long, lastResultRow As Long
+    lastResultRow = wshGL_Trans.Range("T99999").End(xlUp).row
     foundRow = 0
     
     'Loop through each row in the search range - RMV - 2024-01-05 - À améliorer
-    For Each row In wshGL_Trans.Range("T2:T" & LastResultRow).Rows
+    For Each row In wshGL_Trans.Range("T2:T" & lastResultRow).Rows
         If row.Cells(1, 1).value = GLAcct Then
             'Store the row number and exit the loop
             foundRow = row.row
@@ -204,9 +204,9 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
-        Dim LastResultRow
-        LastResultRow = .Range("S999999").End(xlUp).row
-        If LastResultRow < 3 Then GoTo NoSort
+        Dim lastResultRow
+        lastResultRow = .Range("S999999").End(xlUp).row
+        If lastResultRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshGL_Trans.Range("T1"), _
@@ -221,7 +221,7 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On JE Number
-            .SetRange wshGL_Trans.Range("P2:Y" & LastResultRow) 'Set Range
+            .SetRange wshGL_Trans.Range("P2:Y" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
     End With
@@ -278,24 +278,24 @@ Sub GL_Trans_Import_All() '2024-02-14 @ 06:14
     wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastrow As Long
-    lastrow = wshGL_Trans.Range("A999999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
     
     'Adjust Formats for all new rows
     With wshGL_Trans
-        .Range("A" & 2 & ":J" & lastrow).HorizontalAlignment = xlCenter
-        .Range("B" & 2 & ":B" & lastrow).NumberFormat = "dd/mm/yyyy"
-        .Range("C" & 2 & ":C" & lastrow & _
-            ", D" & 2 & ":D" & lastrow & _
-            ", F" & 2 & ":F" & lastrow & _
-            ", I" & 2 & ":I" & lastrow) _
+        .Range("A" & 2 & ":J" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B" & 2 & ":B" & lastRow).NumberFormat = "dd/mm/yyyy"
+        .Range("C" & 2 & ":C" & lastRow & _
+            ", D" & 2 & ":D" & lastRow & _
+            ", F" & 2 & ":F" & lastRow & _
+            ", I" & 2 & ":I" & lastRow) _
                 .HorizontalAlignment = xlLeft
-        With .Range("G" & 2 & ":H" & lastrow)
+        With .Range("G" & 2 & ":H" & lastRow)
             .HorizontalAlignment = xlRight
             .NumberFormat = "#,##0.00 $"
         End With
-        With .Range("A" & 2 & ":A" & lastrow) _
-            .Range("J" & 2 & ":J" & lastrow).Interior
+        With .Range("A" & 2 & ":A" & lastRow) _
+            .Range("J" & 2 & ":J" & lastRow).Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorAccent5
@@ -307,7 +307,7 @@ Sub GL_Trans_Import_All() '2024-02-14 @ 06:14
     Dim firstRowJE As Long, lastRowJE As Long
     Dim r As Long
     
-    For r = 2 To lastrow 'RMV - 2024-01-05
+    For r = 2 To lastRow 'RMV - 2024-01-05
         With wshGL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
             .Font.ThemeColor = xlThemeColorLight1
             .Font.TintAndShade = -4.99893185216834E-02
@@ -356,13 +356,13 @@ End Sub
 
 Sub SetUpAndPrintTransactions()
     
-    Dim lastrow As Long, printRange As Range, Shp As Shape
-    lastrow = Range("M9999").End(xlUp).row
-    If lastrow < 4 Then Exit Sub
-    Set printRange = wshBV.Range("L1:T" & lastrow)
+    Dim lastRow As Long, printRange As Range, Shp As Shape
+    lastRow = Range("M9999").End(xlUp).row
+    If lastRow < 4 Then Exit Sub
+    Set printRange = wshBV.Range("L1:T" & lastRow)
     
     Dim pagesRequired As Integer
-    pagesRequired = Int((lastrow - 1) / 60) + 1
+    pagesRequired = Int((lastRow - 1) / 60) + 1
     
     Set Shp = ActiveSheet.Shapes("ImprimerTransactions")
     Shp.Visible = msoFalse
@@ -375,13 +375,13 @@ End Sub
 
 Sub SetUpAndPrintTB()
     
-    Dim lastrow As Long, printRange As Range, Shp As Shape
-    lastrow = Range("D9999").End(xlUp).row + 2
-    If lastrow < 4 Then Exit Sub
-    Set printRange = wshBV.Range("D1:G" & lastrow)
+    Dim lastRow As Long, printRange As Range, Shp As Shape
+    lastRow = Range("D9999").End(xlUp).row + 2
+    If lastRow < 4 Then Exit Sub
+    Set printRange = wshBV.Range("D1:G" & lastRow)
     
     Dim pagesRequired As Integer
-    pagesRequired = Int((lastrow - 1) / 60) + 1
+    pagesRequired = Int((lastRow - 1) / 60) + 1
     
     Set Shp = ActiveSheet.Shapes("ImprimerBV")
     Shp.Visible = msoFalse

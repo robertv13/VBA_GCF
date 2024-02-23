@@ -1,7 +1,7 @@
 Attribute VB_Name = "Invoice_Macros"
 Option Explicit
-Dim InvRow As Long, InvItemRow As Long, lastrow As Long, LastItemRow As Long
-Dim resultRow As Long, LastResultRow As Long, ItemRow As Long, TermRow As Long, StatusRow As Long
+Dim invRow As Long, invitemRow As Long, lastRow As Long, lastItemRow As Long
+Dim resultRow As Long, lastResultRow As Long, itemRow As Long, termRow As Long, statusRow As Long
 
 Sub Dashboard_Invoice_SaveUpdate()
     With Invoice
@@ -12,36 +12,36 @@ Sub Dashboard_Invoice_SaveUpdate()
         
         'Deterermine New Invoice/Existing Invoice
         If .Range("B3").value = Empty Then       'new Invoice
-            InvRow = wshInvoiceList.Range("A99999").End(xlUp).row + 1 'First Avail Row
+            invRow = wshInvoiceList.Range("A99999").End(xlUp).row + 1 'First Avail Row
             .Range("J1").value = .Range("B5").value 'Next Inv. #
-            wshInvoiceList.Range("A" & InvRow).value = .Range("B5").value 'Next Inv. #
+            wshInvoiceList.Range("A" & invRow).value = .Range("B5").value 'Next Inv. #
         Else                                     'Existing Invoice
-            InvRow = .Range("B3").value          'Invoice Row
+            invRow = .Range("B3").value          'Invoice Row
         End If
-        wshInvoiceList.Range("B" & InvRow).value = .Range("I3").value 'Date
-        wshInvoiceList.Range("C" & InvRow).value = .Range("G5").value 'Customer
-        wshInvoiceList.Range("D" & InvRow).value = .Range("I4").value 'Status
-        wshInvoiceList.Range("E" & InvRow).value = .Range("I5").value 'Terms
-        wshInvoiceList.Range("F" & InvRow).value = .Range("I6").value 'Due Date
-        wshInvoiceList.Range("G" & InvRow).value = .Range("J34").value 'Invoice Total
+        wshInvoiceList.Range("B" & invRow).value = .Range("I3").value 'Date
+        wshInvoiceList.Range("C" & invRow).value = .Range("G5").value 'Customer
+        wshInvoiceList.Range("D" & invRow).value = .Range("I4").value 'Status
+        wshInvoiceList.Range("E" & invRow).value = .Range("I5").value 'Terms
+        wshInvoiceList.Range("F" & invRow).value = .Range("I6").value 'Due Date
+        wshInvoiceList.Range("G" & invRow).value = .Range("J34").value 'Invoice Total
             
             
         'Add/Update Invoice Items
-        LastItemRow = .Range("C31").End(xlUp).row 'Last Invoice Row
-        If LastItemRow < 9 Then GoTo NoItems
-        For ItemRow = 9 To LastItemRow
-            If .Range("B" & ItemRow).value <> Empty Then 'DB Row Exists
-                InvItemRow = .Range("B" & ItemRow).value 'Inv. Item DB Row
-            Else                                 'New DB ItemRow
-                InvItemRow = InvoiceItems.Range("A99999").End(xlUp).row + 1 'First avail Row
-                InvoiceItems.Range("A" & InvItemRow).value = .Range("J1").value 'Inv ID
-                .Range("B" & ItemRow).value = InvItemRow 'Add DB Row
-                InvoiceItems.Range("K" & InvItemRow).value = "=Row()" 'Add Row Formula
+        lastItemRow = .Range("C31").End(xlUp).row 'Last Invoice Row
+        If lastItemRow < 9 Then GoTo NoItems
+        For itemRow = 9 To lastItemRow
+            If .Range("B" & itemRow).value <> Empty Then 'DB Row Exists
+                invitemRow = .Range("B" & itemRow).value 'Inv. Item DB Row
+            Else                                 'New DB itemRow
+                invitemRow = InvoiceItems.Range("A99999").End(xlUp).row + 1 'First avail Row
+                InvoiceItems.Range("A" & invitemRow).value = .Range("J1").value 'Inv ID
+                .Range("B" & itemRow).value = invitemRow 'Add DB Row
+                InvoiceItems.Range("K" & invitemRow).value = "=Row()" 'Add Row Formula
             End If
-            InvoiceItems.Range("B" & InvItemRow & ":H" & InvItemRow).value = .Range("C" & ItemRow & ":I" & ItemRow).value ' Bring over item Values
-            InvoiceItems.Range("I" & InvItemRow).value = .Range("K" & ItemRow).value 'Item Cost
-            InvoiceItems.Range("J" & InvItemRow).value = ItemRow 'Invoice Row
-        Next ItemRow
+            InvoiceItems.Range("B" & invitemRow & ":H" & invitemRow).value = .Range("C" & itemRow & ":I" & itemRow).value ' Bring over item Values
+            InvoiceItems.Range("I" & invitemRow).value = .Range("K" & itemRow).value 'Item Cost
+            InvoiceItems.Range("J" & invitemRow).value = itemRow 'Invoice Row
+        Next itemRow
     
 NoItems:
     End With
@@ -77,13 +77,13 @@ Sub Dashboard_Invoice_New()
         .Range("I3").value = Date                'Set current Date
         .Range("B6").value = False               'Set inv. Load to false
         On Error Resume Next
-        TermRow = Admin.Range("H6:H23").Find(Chr(252), , xlValues, xlWhole).row
+        termRow = Admin.Range("H6:H23").Find(Chr(252), , xlValues, xlWhole).row
         On Error GoTo 0
-        If TermRow <> 0 Then .Range("I5").value = Admin.Range("F" & TermRow).value 'Set Default Term
+        If termRow <> 0 Then .Range("I5").value = Admin.Range("F" & termRow).value 'Set Default Term
         On Error Resume Next
-        StatusRow = Admin.Range("D6:D12").Find(Chr(252), , xlValues, xlWhole).row
+        statusRow = Admin.Range("D6:D12").Find(Chr(252), , xlValues, xlWhole).row
         On Error GoTo 0
-        If StatusRow <> 0 Then .Range("I4").value = Admin.Range("C" & StatusRow).value 'Set Default Status
+        If statusRow <> 0 Then .Range("I4").value = Admin.Range("C" & statusRow).value 'Set Default Status
     End With
 End Sub
 
@@ -93,25 +93,25 @@ Sub Dashboard_Invoice_Load()
             MsgBox "Please entere a correct invoice #"
             Exit Sub
         End If
-        InvRow = .Range("B3").value              'Invoice Row
+        invRow = .Range("B3").value              'Invoice Row
         .Range("B6").value = True                'Set Inv. Load to true
         .Range("I3:J6,G5:G7,B9:I31,K9:K31").ClearContents
-        .Range("I3").value = wshInvoiceList.Range("B" & InvRow).value 'Inv. Date
-        .Range("G5").value = wshInvoiceList.Range("C" & InvRow).value 'Customer
-        .Range("I4").value = wshInvoiceList.Range("D" & InvRow).value 'Inv. Status
-        .Range("I5").value = wshInvoiceList.Range("E" & InvRow).value 'Terms
-        .Range("I6").value = wshInvoiceList.Range("F" & InvRow).value 'Due Date
+        .Range("I3").value = wshInvoiceList.Range("B" & invRow).value 'Inv. Date
+        .Range("G5").value = wshInvoiceList.Range("C" & invRow).value 'Customer
+        .Range("I4").value = wshInvoiceList.Range("D" & invRow).value 'Inv. Status
+        .Range("I5").value = wshInvoiceList.Range("E" & invRow).value 'Terms
+        .Range("I6").value = wshInvoiceList.Range("F" & invRow).value 'Due Date
     
         With InvoiceItems
-            lastrow = .Range("A99999").End(xlUp).row
-            If lastrow < 3 Then GoTo NoItems
-            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
-            LastResultRow = .Range("P99999").End(xlUp).row
-            If LastResultRow < 3 Then GoTo NoItems
-            For resultRow = 3 To LastResultRow
-                InvItemRow = .Range("Y" & resultRow).value 'Get Invoice Row
-                Invoice.Range("B" & InvItemRow & ":I" & InvItemRow).value = .Range("P" & resultRow & ":W" & resultRow).value 'Item Details
-                Invoice.Range("K" & InvItemRow).value = InvoiceItems.Range("X" & resultRow).value 'Item Cost
+            lastRow = .Range("A99999").End(xlUp).row
+            If lastRow < 3 Then GoTo NoItems
+            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            lastResultRow = .Range("P99999").End(xlUp).row
+            If lastResultRow < 3 Then GoTo NoItems
+            For resultRow = 3 To lastResultRow
+                invitemRow = .Range("Y" & resultRow).value 'Get Invoice Row
+                Invoice.Range("B" & invitemRow & ":I" & invitemRow).value = .Range("P" & resultRow & ":W" & resultRow).value 'Item Details
+                Invoice.Range("K" & invitemRow).value = InvoiceItems.Range("X" & resultRow).value 'Item Cost
             Next resultRow
         End With
 NoItems:
@@ -135,27 +135,27 @@ Sub Invoice_Delete()
     If MsgBox("Are you sure you want to delete this Invoice?", vbYesNo, "Delete Appointment") = vbNo Then Exit Sub
     With Invoice
         If .Range("B3").value = Empty Then GoTo NotSaved
-        InvRow = .Range("B3").value              'Order Row
-        wshInvoiceList.Range(InvRow & ":" & InvRow).EntireRow.Delete
+        invRow = .Range("B3").value              'Order Row
+        wshInvoiceList.Range(invRow & ":" & invRow).EntireRow.Delete
         'Remove Invoice Items
         With InvoiceItems
-            lastrow = .Range("A99999").End(xlUp).row
-            If lastrow < 3 Then GoTo NotSaved
-            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
-            LastResultRow = .Range("P99999").End(xlUp).row
-            If LastResultRow < 3 Then GoTo NotSaved
-            If LastResultRow < 4 Then GoTo SingleRow
+            lastRow = .Range("A99999").End(xlUp).row
+            If lastRow < 3 Then GoTo NotSaved
+            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            lastResultRow = .Range("P99999").End(xlUp).row
+            If lastResultRow < 3 Then GoTo NotSaved
+            If lastResultRow < 4 Then GoTo SingleRow
             'Sort based on descending rows
             With .Sort
                 .SortFields.Clear
                 .SortFields.Add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
-                .SetRange InvoiceItems.Range("P3:Y" & LastResultRow)
+                .SetRange InvoiceItems.Range("P3:Y" & lastResultRow)
                 .Apply
             End With
 SingleRow:
-            For resultRow = 3 To LastResultRow
-                InvItemRow = .Range("P" & resultRow).value 'Invoice Item DB Row
-                If InvItemRow > 3 Then .Range(InvItemRow & ":" & InvItemRow).EntireRow.Delete 'Don't remove 1st Row
+            For resultRow = 3 To lastResultRow
+                invitemRow = .Range("P" & resultRow).value 'Invoice Item DB Row
+                If invitemRow > 3 Then .Range(invitemRow & ":" & invitemRow).EntireRow.Delete 'Don't remove 1st Row
             Next resultRow
         End With
 NotSaved:

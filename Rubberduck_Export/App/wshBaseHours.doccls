@@ -80,12 +80,12 @@ Function Test_Advanced_Filter_ChatGPT() As Integer
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("TEC_Local")
     Dim rngData As Range
     Dim rngCriteria As Range
-    Dim lastrow As Long
+    Dim lastRow As Long
     
     ' Assuming your data starts from A1
     ' Set the range including the first row of headings
-    lastrow = ws.Range("A9999").End(xlUp).row
-    Set rngData = ws.Range("A1:P" & lastrow)
+    lastRow = ws.Range("A9999").End(xlUp).row
+    Set rngData = ws.Range("A1:P" & lastRow)
     
     'Define your criteria range
     Set rngCriteria = ws.Range("R1:W2")
