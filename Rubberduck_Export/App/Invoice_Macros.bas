@@ -1,7 +1,7 @@
 Attribute VB_Name = "Invoice_Macros"
 Option Explicit
-Dim InvRow As Long, InvItemRow As Long, lastRow As Long, LastItemRow As Long
-Dim ResultRow As Long, lastResultRow As Long, ItemRow As Long, TermRow As Long, StatusRow As Long
+Dim InvRow As Long, InvItemRow As Long, lastrow As Long, LastItemRow As Long
+Dim resultRow As Long, LastResultRow As Long, ItemRow As Long, TermRow As Long, StatusRow As Long
 
 Sub Dashboard_Invoice_SaveUpdate()
     With Invoice
@@ -103,16 +103,16 @@ Sub Dashboard_Invoice_Load()
         .Range("I6").value = wshInvoiceList.Range("F" & InvRow).value 'Due Date
     
         With InvoiceItems
-            lastRow = .Range("A99999").End(xlUp).row
-            If lastRow < 3 Then GoTo NoItems
-            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
-            lastResultRow = .Range("P99999").End(xlUp).row
-            If lastResultRow < 3 Then GoTo NoItems
-            For ResultRow = 3 To lastResultRow
-                InvItemRow = .Range("Y" & ResultRow).value 'Get Invoice Row
-                Invoice.Range("B" & InvItemRow & ":I" & InvItemRow).value = .Range("P" & ResultRow & ":W" & ResultRow).value 'Item Details
-                Invoice.Range("K" & InvItemRow).value = InvoiceItems.Range("X" & ResultRow).value 'Item Cost
-            Next ResultRow
+            lastrow = .Range("A99999").End(xlUp).row
+            If lastrow < 3 Then GoTo NoItems
+            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            LastResultRow = .Range("P99999").End(xlUp).row
+            If LastResultRow < 3 Then GoTo NoItems
+            For resultRow = 3 To LastResultRow
+                InvItemRow = .Range("Y" & resultRow).value 'Get Invoice Row
+                Invoice.Range("B" & InvItemRow & ":I" & InvItemRow).value = .Range("P" & resultRow & ":W" & resultRow).value 'Item Details
+                Invoice.Range("K" & InvItemRow).value = InvoiceItems.Range("X" & resultRow).value 'Item Cost
+            Next resultRow
         End With
 NoItems:
         .Range("B6").value = False               'Set inv. Load to false
@@ -139,24 +139,24 @@ Sub Invoice_Delete()
         wshInvoiceList.Range(InvRow & ":" & InvRow).EntireRow.Delete
         'Remove Invoice Items
         With InvoiceItems
-            lastRow = .Range("A99999").End(xlUp).row
-            If lastRow < 3 Then GoTo NotSaved
-            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
-            lastResultRow = .Range("P99999").End(xlUp).row
-            If lastResultRow < 3 Then GoTo NotSaved
-            If lastResultRow < 4 Then GoTo SingleRow
+            lastrow = .Range("A99999").End(xlUp).row
+            If lastrow < 3 Then GoTo NotSaved
+            .Range("A2:K" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            LastResultRow = .Range("P99999").End(xlUp).row
+            If LastResultRow < 3 Then GoTo NotSaved
+            If LastResultRow < 4 Then GoTo SingleRow
             'Sort based on descending rows
             With .Sort
                 .SortFields.Clear
                 .SortFields.Add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
-                .SetRange InvoiceItems.Range("P3:Y" & lastResultRow)
+                .SetRange InvoiceItems.Range("P3:Y" & LastResultRow)
                 .Apply
             End With
 SingleRow:
-            For ResultRow = 3 To lastResultRow
-                InvItemRow = .Range("P" & ResultRow).value 'Invoice Item DB Row
+            For resultRow = 3 To LastResultRow
+                InvItemRow = .Range("P" & resultRow).value 'Invoice Item DB Row
                 If InvItemRow > 3 Then .Range(InvItemRow & ":" & InvItemRow).EntireRow.Delete 'Don't remove 1st Row
-            Next ResultRow
+            Next resultRow
         End With
 NotSaved:
         Dashboard_Invoice_New                              'Clear Out All Invoice Fields

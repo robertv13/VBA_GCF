@@ -2,11 +2,20 @@
 
 Private Sub Worksheet_Activate()
 
+    Dim timerStart As Double
+    timerStart = Timer
+
     'Set the zoom factor to 93% when this worksheet is activated
-    ActiveWindow.Zoom = 93
+    ActiveWindow.Zoom = 94
     
     'Import TEC from GCF_Sortie_BD.xlsx
     Call TEC_Import_All
+    
+    wshFACPrep.EnableCalculation = True
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        Now() & "WshFACPrep_Worksheet_Activate() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
 
 End Sub
 
@@ -14,7 +23,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = False
     
-    Dim rng As Range
+    Dim Rng As Range
     
     'Client Name has changed
     If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
@@ -25,10 +34,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, wshFACPrep.Range("O3")) Is Nothing And IsDate(wshFACPrep.Range("O3").value) = True Then
         Call Date_Change(wshFACPrep.Range("O3").value)
-'        Set rng = wshFACPrep.Range("O3")
-'        Call Fill_Or_Empty_Range_Background(rng, False)
-'        Set rng = wshFACPrep.Range("L11")
-'        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        Set Rng = wshFACPrep.Range("O3")
+        Call Fill_Or_Empty_Range_Background(Rng, False)
+        Set Rng = wshFACPrep.Range("L11")
+        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
         GoTo ExitSub
     End If
     
@@ -42,10 +51,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     'Services entry
     If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACFinale.Range("C" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
-        Set rng = wshFACPrep.Range("L" & Target.row) 'Service
-        Call Fill_Or_Empty_Range_Background(rng, False)
-        Set rng = wshFACPrep.Range("M" & Target.row) 'Hours
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        Set Rng = wshFACPrep.Range("L" & Target.row) 'Service
+        Call Fill_Or_Empty_Range_Background(Rng, False)
+        Set Rng = wshFACPrep.Range("M" & Target.row) 'Hours
+        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
         wshFACPrep.Range("M" & Target.row).Select
         GoTo ExitSub
     End If
@@ -54,22 +63,22 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACPrep.Range("N" & Target.row).value = wshAdmin.Range("TauxHoraireFacturation")
         wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
-        Set rng = wshFACPrep.Range("L" & Target.row)
-        Call Fill_Or_Empty_Range_Background(rng, False)
-        Set rng = wshFACPrep.Range("M" & Target.row)
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        Set Rng = wshFACPrep.Range("L" & Target.row)
+        Call Fill_Or_Empty_Range_Background(Rng, False)
+        Set Rng = wshFACPrep.Range("M" & Target.row)
+        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
         wshFACFinale.Range("D" & Target.row + 23).value = wshFACPrep.Range("M" & Target.row).value
         wshFACFinale.Range("E" & Target.row + 23).value = wshFACPrep.Range("N" & Target.row).value
         wshFACFinale.Range("F" & Target.row + 23).value = wshFACPrep.Range("O" & Target.row).value
 
         'MAXIMUM of 35 services lines per Invoice
         If Target.row < 45 Then
-            Set rng = wshFACPrep.Range("L" & Target.row + 1)
-            Call Fill_Or_Empty_Range_Background(rng, True, 6)
+            Set Rng = wshFACPrep.Range("L" & Target.row + 1)
+            Call Fill_Or_Empty_Range_Background(Rng, True, 6)
             wshFACPrep.Range("L" & Target.row + 1).Select
         Else
-            Set rng = wshFACPrep.Range("O48")
-            Call Fill_Or_Empty_Range_Background(rng, True, 6)
+            Set Rng = wshFACPrep.Range("O48")
+            Call Fill_Or_Empty_Range_Background(Rng, True, 6)
             wshFACPrep.Range("O48").Select
         End If
         GoTo ExitSub
@@ -83,26 +92,26 @@ Public Sub Worksheet_Change(ByVal Target As Range)
             'Final Invoice - Misc charges AND move on to next field
             If Target.row = 48 Then
                 wshFACFinale.Range("F69").value = wshFACPrep.Range("O48").value
-                Set rng = wshFACPrep.Range("O48")
-                Call Fill_Or_Empty_Range_Background(rng, False)
-                Set rng = wshFACPrep.Range("O49")
-                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                Set Rng = wshFACPrep.Range("O48")
+                Call Fill_Or_Empty_Range_Background(Rng, False)
+                Set Rng = wshFACPrep.Range("O49")
+                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
                 wshFACPrep.Range("O49").Select
             End If
             If Target.row = 49 Then
                 wshFACFinale.Range("F70").value = wshFACPrep.Range("O49").value
-                Set rng = wshFACPrep.Range("O49")
-                Call Fill_Or_Empty_Range_Background(rng, False)
-                Set rng = wshFACPrep.Range("O50")
-                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                Set Rng = wshFACPrep.Range("O49")
+                Call Fill_Or_Empty_Range_Background(Rng, False)
+                Set Rng = wshFACPrep.Range("O50")
+                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
                 wshFACPrep.Range("O50").Select
             End If
             If Target.row = 50 Then
                 wshFACFinale.Range("F71").value = wshFACPrep.Range("O50").value
-                Set rng = wshFACPrep.Range("O50")
-                Call Fill_Or_Empty_Range_Background(rng, False)
-                Set rng = wshFACPrep.Range("O57")
-                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                Set Rng = wshFACPrep.Range("O50")
+                Call Fill_Or_Empty_Range_Background(Rng, False)
+                Set Rng = wshFACPrep.Range("O57")
+                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
                 wshFACPrep.Range("O57").Select
             End If
         End With
@@ -113,9 +122,9 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O57")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         With wshFACFinale
             'Final Invoice - Deposit
-            wshFACFinale.Range("E78").value = wshFACPrep.Range("O53").value
-            Set rng = wshFACPrep.Range("O57")
-            Call Fill_Or_Empty_Range_Background(rng, False)
+            wshFACFinale.Range("F78").value = wshFACPrep.Range("O57").value
+            Set Rng = wshFACPrep.Range("O57")
+            Call Fill_Or_Empty_Range_Background(Rng, False)
             ActiveWindow.SmallScroll Up:=18
         End With
         GoTo ExitSub
@@ -147,7 +156,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
     
     If TabOrderFlag = True Then Exit Sub
     
-    TabOrder = Array("E4", "O3", "L:L", "M:M", "M48:M50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
+    TabOrder = Array("E4", "O3", "L11:L45", "M11:M45", "M48:M50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
     For Each X In TabOrder
         If rg Is Nothing Then
             Set rg = Range(X)

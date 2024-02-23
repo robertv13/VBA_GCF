@@ -41,6 +41,9 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
+    
+    'Free up memory - 2024-02-23
+    Set ws = Nothing
 
 End Function
 
@@ -72,6 +75,27 @@ Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 20
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
+    'Free up memory - 2024-02-23
+    Set ws = Nothing
+    Set dynamicRange = Nothing
+
+End Function
+
+Public Function Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
+    
+    Dim matchResult As Variant
+
+    'Use the Match function to find the row number of the unique TEC_ID
+    matchResult = Application.Match(uniqueID, lookupRange.Columns(1), 0)
+
+    'Check if Match found a result
+    If Not IsError(matchResult) Then
+        Get_TEC_Row_Number_By_TEC_ID = matchResult
+    Else
+        'If Match did not find a result, return 0
+        Get_TEC_Row_Number_By_TEC_ID = 0
+    End If
+    
 End Function
 
 Public Function IsDataValid() As Boolean

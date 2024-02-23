@@ -2,7 +2,16 @@
 
 Private Sub Worksheet_Activate()
 
+    Dim timerStart As Double
+    timerStart = Timer
+    
     'Set the zoom factor to 80% when this worksheet is activated
     ActiveWindow.Zoom = 80
+    
+    wshFACFinale.EnableCalculation = True
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        Now() & "wshFACFinale_Worksheet_Activate() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
     
 End Sub

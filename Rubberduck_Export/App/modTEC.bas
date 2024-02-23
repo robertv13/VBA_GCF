@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.3.5" '2024-02-22 @ 07:19
+Global Const gAppVersion As String = "v2.3.6" '2024-02-22 @ 15:07
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 
@@ -37,8 +37,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
     sourceTab = "Clients"
     
     'ADODB connection
-    Dim connStr As ADODB.Connection
-    Set connStr = New ADODB.Connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
     
     'Connection String specific to EXCEL
     connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
@@ -51,8 +50,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
         vbNewLine & String(60, "*")
     
     'Recordset
-    Dim recSet As ADODB.Recordset
-    Set recSet = New ADODB.Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
@@ -83,6 +81,11 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-14 @ 07:22
 '            "## ##0") & " clients", _
 '        Title:="Vérification du nombre de clients", _
 '        Buttons:=vbInformation
+
+    'Free up memory - 2024-02-23
+    Set connStr = Nothing
+    Set recSet = Nothing
+
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
         "Client_List_Import_All() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
@@ -119,20 +122,24 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Arrange formats on all rows
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A99999").End(xlUp).row
+    Dim lastrow As Long
+    lastrow = wshBaseHours.Range("A99999").End(xlUp).row
     
     With wshBaseHours
-        .Range("A3" & ":P" & lastRow).HorizontalAlignment = xlCenter
-        With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
+        .Range("A3" & ":P" & lastrow).HorizontalAlignment = xlCenter
+        With .Range("F3:F" & lastrow & ",G3:G" & lastrow & ",I3:I" & lastrow & ",O3:O" & lastrow)
             .HorizontalAlignment = xlLeft
         End With
-        .Range("H3:H" & lastRow).NumberFormat = "#0.00"
-        .Range("K3:K" & lastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        .Range("H3:H" & lastrow).NumberFormat = "#0.00"
+        .Range("K3:K" & lastrow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
     End With
     
     Application.ScreenUpdating = True
     
+    'Free up memory - 2024-02-23
+    Set sourceRange = Nothing
+    Set destinationRange = Nothing
+
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
                 "TEC_Import_All() - Secondes = " & Timer - timerStart & _
                 vbNewLine & String(45, "*")
@@ -152,21 +159,21 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
     Call TEC_Import_All '2024-02-14 @ 06:20
     
     With wshBaseHours
-        Dim lastRow As Long, lastResultRow As Long, ResultRow As Long
-        lastRow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastrow As Long, LastResultRow As Long, resultRow As Long
+        lastrow = .Range("A999999").End(xlUp).row 'Last BaseHours Row
+        If lastrow < 3 Then Exit Sub 'Nothing to filter
         Application.ScreenUpdating = False
         On Error Resume Next
         .Names("Criterial").Delete
         On Error GoTo 0
         'Advanced Filter applied to BaseHours
-        .Range("A2:P" & lastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A2:P" & lastrow).AdvancedFilter xlFilterCopy, _
             CriteriaRange:=.Range("R2:W3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=True
         'Analyze Advance Filter Results
-        lastResultRow = .Range("Y999999").End(xlUp).row
-        If lastResultRow < 4 Then GoTo No_Sort_Required
+        LastResultRow = .Range("Y999999").End(xlUp).row
+        If LastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshBaseHours.Range("AB3"), _
@@ -181,7 +188,7 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-14 @ 06:41
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
-            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("Y3:AL" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 No_Sort_Required:
@@ -322,8 +329,7 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
         Exit Sub
     End If
     
-    Dim sh As Worksheet
-    Set sh = wshBaseHours
+    Dim sh As Worksheet: Set sh = wshBaseHours
     
     Dim selectedRow As Long
     'With a negative ID value, it means to soft delete this record
@@ -352,6 +358,9 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
     Call Refresh_ListBox_And_Add_Hours
     
     ufSaisieHeures.txtClient.SetFocus
+
+    'Free up memory - 2024-02-23
+    Set sh = Nothing
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
         "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
@@ -406,17 +415,17 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim lastRow As Long
+            Dim lastrow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 ' Handle empty table (assign a default value, e.g., 1)
-                lastRow = 1
+                lastrow = 1
             Else
-                lastRow = rs.Fields("MaxID").value
+                lastrow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = lastRow + 1
+            nextID = lastrow + 1
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
@@ -471,6 +480,10 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
     On Error GoTo 0
     conn.Close
     
+    'Free up memory - 2024-02-23
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Application.ScreenUpdating = True
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
@@ -491,19 +504,19 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     ufSaisieHeures.txtTotalHeures.value = ""
     
     'Last Row used in first column of result
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
-    If lastRow = 0 Then Exit Sub
+    Dim lastrow As Long
+    lastrow = wshBaseHours.Range("Y99999").End(xlUp).row - 1
+    If lastrow = 0 Then Exit Sub
         
     With ufSaisieHeures.lstData
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "28; 26; 51; 130; 180; 35; 80; 32; 83"
         
-        If lastRow = 1 Then
-            .RowSource = "HeuresBase!Y3:AG3"
+        If lastrow = 1 Then
+            .RowSource = "TEC_Local!Y3:AG3"
         Else
-            .RowSource = "HeuresBase!Y3:AG" & lastRow + 1
+            .RowSource = "TEC_Local!Y3:AG" & lastrow + 1
         End If
     End With
 

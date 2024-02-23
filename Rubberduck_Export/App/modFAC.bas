@@ -1,7 +1,7 @@
 Attribute VB_Name = "modFAC"
 Option Explicit
 Dim InvRow As Long, InvCol As Long, ItemDBRow As Long, InvItemRow As Long, InvNumb As Long
-Dim lastRow As Long, LastItemRow As Long, lastResultRow As Long, ResultRow As Long
+Dim lastrow As Long, LastItemRow As Long, LastResultRow As Long, resultRow As Long
 
 Sub FAC_Prep_Invoice_New() 'Clear contents
     
@@ -71,12 +71,20 @@ Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
             GoTo Fast_Exit_Sub
         End If
         
+        wshFACPrep.usedRange.Calculate
+        wshFACFinale.usedRange.Calculate
+        
         'Valid Invoice - Let's update it
         'Determine the row number (InvListRow) for New Invoice -OR- use existing one
         If wshFACPrep.Range("B20").value = Empty Then 'New Invoice
             Call FAC_Prep_Add_Invoice_Header_to_DB(0)
             Call FAC_Prep_Add_Invoice_Details_to_DB
             Call FAC_Prep_Add_Comptes_Clients_to_DB
+            Dim LastResultRow As Integer
+            LastResultRow = wshBaseHours.Range("Y9999").End(xlUp).row
+            If LastResultRow > 2 Then
+                Call Update_TEC_As_Billed_In_DB(3, LastResultRow)
+                Call FAC_Prep_TEC_As_Billed_Locally(3, LastResultRow)
         End If
     End With
 NoItems:
@@ -335,6 +343,112 @@ Sub FAC_Prep_Add_Comptes_Clients_to_DB()
 
 End Sub
 
+Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastrow As Integer) 'Update Billed Status in DB
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+
+    Application.ScreenUpdating = False
+    
+    Dim fullFileName As String, sheetName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                   "GCF_BD_Sortie.xlsx"
+    sheetName = "TEC"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object, rs As Object
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Set rs = CreateObject("ADODB.Recordset")
+
+    Dim r As Integer, TEC_ID As Long, SQL As String
+    For r = firstRow To lastrow
+        TEC_ID = wshBaseHours.Range("Y" & r).value
+        'Open the recordset for the specified ID
+        SQL = "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & TEC_ID
+        rs.Open SQL, conn, 2, 3
+        If Not rs.EOF Then
+            'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
+            rs.Fields("DateSaisie").value = Now
+            rs.Fields("EstFacturee").value = True
+            rs.Fields("DateFacturee").value = CDate(wshFACPrep.Range("O3").value)
+            rs.Fields("VersionApp").value = gAppVersion
+            rs.Fields("NoFacture").value = wshFACPrep.Range("O6").value
+            rs.Update
+        Else
+            'Handle the case where the specified ID is not found
+            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", _
+                vbExclamation
+            rs.Close
+            conn.Close
+            Exit Sub
+        End If
+        'Update the recordset (create the record)
+        rs.Update
+        rs.Close
+    Next r
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Set rs = Nothing
+    Set conn = Nothing
+    
+    Application.ScreenUpdating = True
+
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "Update_TEC_As_Billed_In_DB() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
+End Sub
+
+Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, LastResultRow As Integer)
+
+    Dim timerStart As Double 'Speed tests - 2024-02-20
+    timerStart = Timer
+    
+    'Set the range to look for
+    Dim lookupRange As Range, lastTECRow As Long
+    lastTECRow = wshBaseHours.Range("A99999").End(xlUp).row
+    Set lookupRange = wshBaseHours.Range("A3:A" & lastTECRow)
+    
+    Dim r As Integer, rowToBeUpdated As Long
+    For r = firstResultRow To LastResultRow
+        Dim TecID As Long
+        TecID = wshBaseHours.Range("Y" & r).value
+        rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(TecID, lookupRange)
+        Debug.Print "Need to update locally the TEC_ID = " & TecID & " which is at row # " & rowToBeUpdated
+        wshBaseHours.Range("K" & rowToBeUpdated).value = Now()
+        wshBaseHours.Range("L" & rowToBeUpdated).value = True
+        wshBaseHours.Range("M" & rowToBeUpdated).value = CDate(wshFACPrep.Range("O3").value)
+        wshBaseHours.Range("O" & rowToBeUpdated).value = gAppVersion
+        wshBaseHours.Range("P" & rowToBeUpdated).value = wshFACPrep.Range("O6").value
+    Next r
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "FAC_Prep_TEC_As_Billed_Locally() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+
+End Sub
+
+'Sub ExampleUsage()
+'    Dim rowToBeUpdated As Long
+'
+'    ' Call the function to get the row number of the unique ID
+'    rowToBeUpdated = GetrowToBeUpdatedByTEC_ID(TEC_ID, lookupRange)
+'
+'    ' Display the result
+'    If rowToBeUpdated > 0 Then
+'        MsgBox "The row number for Unique ID '" & TEC_ID & "' is: " & rowToBeUpdated
+'    Else
+'        MsgBox "Unique ID '" & TEC_ID & "' not found."
+'    End If
+'End Sub
+
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "[modFAC] - Now entering Sub Invoice_Load() @ " & Time
     With wshFACPrep
@@ -375,24 +489,24 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         wshFACFinale.Range("B26").value = wshFACInvList.Range("G" & InvListRow).value
         'Load Invoice Detail Items
         With wshFACInvItems
-            Dim lastRow As Long, lastResultRow As Long
-            lastRow = .Range("A999999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub 'No Item Lines
+            Dim lastrow As Long, LastResultRow As Long
+            lastrow = .Range("A999999").End(xlUp).row
+            If lastrow < 4 Then Exit Sub 'No Item Lines
             .Range("I3").value = wshFACPrep.Range("O6").value
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = '" & .Range("I3").value & "'"
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastrow & "', Critère = '" & .Range("I3").value & "'"
             wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
-            lastResultRow = .Range("O999").End(xlUp).row
-            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & lastResultRow
-            If lastResultRow < 3 Then GoTo NoItems
-            For ResultRow = 3 To lastResultRow
-                InvItemRow = .Range("O" & ResultRow).value
-                If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & ResultRow & " - Desc = " & .Range("K" & ResultRow).value & " - Hrs = " & .Range("L" & ResultRow).value
-                wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
-                wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & ResultRow).value  'Set Item DB Row
-                wshFACFinale.Range("C" & InvItemRow + 23 & ":F" & InvItemRow + 23).value = .Range("K" & ResultRow & ":N" & ResultRow).value 'Description, Hours, Rate & Value
-            Next ResultRow
+            .Range("A3:G" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+            LastResultRow = .Range("O999").End(xlUp).row
+            If wshFACPrep.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the LastResultRow = " & LastResultRow
+            If LastResultRow < 3 Then GoTo NoItems
+            For resultRow = 3 To LastResultRow
+                InvItemRow = .Range("O" & resultRow).value
+                If wshFACPrep.Range("B28").value Then Debug.Print Tab(10); "Loop = " & resultRow & " - Desc = " & .Range("K" & resultRow).value & " - Hrs = " & .Range("L" & resultRow).value
+                wshFACPrep.Range("L" & InvItemRow & ":O" & InvItemRow).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
+                wshFACPrep.Range("Q" & InvItemRow).value = .Range("P" & resultRow).value  'Set Item DB Row
+                wshFACFinale.Range("C" & InvItemRow + 23 & ":F" & InvItemRow + 23).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
+            Next resultRow
         End With
         'Proceed with trailer data (Misc. charges & Taxes)
         .Range("M48").value = wshFACInvList.Range("I" & InvListRow).value
@@ -411,48 +525,48 @@ NoItems:
     If wshFACPrep.Range("B28").value Then Debug.Print "[modFAC] - Now exiting Sub Invoice_Load()" & vbNewLine
 End Sub
 
-'Sub InvoiceGetAllTrans(inv As String)
-'
-'    Application.ScreenUpdating = False
-'
-'    wshFACPrep.Range("B31").value = 0
-'
-'    With wshFACInvList
-'        Dim lastrow As Long, LastResultRow As Long, ResultRow As Long
-'        lastrow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
-'        If lastrow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
-'        On Error Resume Next
-'        .Names("Criterial").Delete
-'        On Error GoTo 0
-'        .Range("V3").value = wshFACPrep.Range("O6").value
-'        'Advanced Filter setup
-'        .Range("A3:T" & lastrow).AdvancedFilter xlFilterCopy, _
-'            CriteriaRange:=.Range("V2:V3"), _
-'            CopyToRange:=.Range("X2:AQ2"), _
-'            Unique:=True
-'        LastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
-'        If LastResultRow < 3 Then
-'            GoTo Done
-'        End If
-''        With .Sort
-''            .SortFields.Clear
-''            .SortFields.Add Key:=wshFACInvList.Range("X2"), _
-''                SortOn:=xlSortOnValues, _
-''                Order:=xlAscending, _
-''                DataOption:=xlSortNormal 'Sort Based Invoice Number
-''            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
-''                SortOn:=xlSortOnValues, _
-''                Order:=xlAscending, _
-''                DataOption:=xlSortNormal 'Sort Based On TEC_ID
-''            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
-''            .Apply 'Apply Sort
-''         End With
-'         wshFACPrep.Range("B31").value = LastResultRow - 2 'Remove Header rows from row count
-'Done:
-'    End With
-'    Application.ScreenUpdating = True
-'
-'End Sub
+Sub InvoiceGetAllTrans(inv As String)
+
+    Application.ScreenUpdating = False
+
+    wshFACPrep.Range("B31").value = 0
+
+    With wshFACInvList
+        Dim lastrow As Long, LastResultRow As Long, resultRow As Long
+        lastrow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
+        If lastrow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+        On Error Resume Next
+        .Names("Criterial").Delete
+        On Error GoTo 0
+        .Range("V3").value = wshFACPrep.Range("O6").value
+        'Advanced Filter setup
+        .Range("A3:T" & lastrow).AdvancedFilter xlFilterCopy, _
+            CriteriaRange:=.Range("V2:V3"), _
+            CopyToRange:=.Range("X2:AQ2"), _
+            Unique:=True
+        LastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
+        If LastResultRow < 3 Then
+            GoTo Done
+        End If
+'        With .Sort
+'            .SortFields.Clear
+'            .SortFields.Add Key:=wshFACInvList.Range("X2"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based Invoice Number
+'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+'            .SetRange wshFACInvList.Range("X2:AQ" & lastResultRow) 'Set Range
+'            .Apply 'Apply Sort
+'         End With
+         wshFACPrep.Range("B31").value = LastResultRow - 2 'Remove Header rows from row count
+Done:
+    End With
+    Application.ScreenUpdating = True
+
+End Sub
 
 Sub FAC_Prep_Clear_And_Fix_Totals_Formula()
 
@@ -565,12 +679,12 @@ Sub Client_Change(ClientName As String)
     
     wshFACFinale.Range("B21").value = "Le " & Format(wshFACPrep.Range("O3").value, "d mmmm yyyy")
     
-    Dim rng As Range
-    Set rng = wshFACPrep.Range("E4:F4")
-    Call Fill_Or_Empty_Range_Background(rng, False)
+    Dim Rng As Range
+    Set Rng = wshFACPrep.Range("E4:F4")
+    Call Fill_Or_Empty_Range_Background(Rng, False)
     
-    Set rng = wshFACPrep.Range("O3")
-    Call Fill_Or_Empty_Range_Background(rng, True, 6)
+    Set Rng = wshFACPrep.Range("O3")
+    Call Fill_Or_Empty_Range_Background(Rng, True, 6)
     
     wshFACPrep.Range("O3").Select 'Move on to Invoice Date
 
@@ -596,22 +710,24 @@ Sub Date_Change(d As String)
     cutoffDate = d
     Call Get_All_TEC_By_Client(cutoffDate, False)
     
-    Dim rng As Range
-    Set rng = wshFACPrep.Range("O3")
-    Call Fill_Or_Empty_Range_Background(rng, False)
+    Dim Rng As Range
+    Set Rng = wshFACPrep.Range("O3")
+    Call Fill_Or_Empty_Range_Background(Rng, False)
     
-    Set rng = wshFACPrep.Range("L11")
-    Call Fill_Or_Empty_Range_Background(rng, True, 6)
+    Set Rng = wshFACPrep.Range("L11")
+    Call Fill_Or_Empty_Range_Background(Rng, True, 6)
 
+    On Error Resume Next
     wshFACPrep.Range("L11").Select 'Move on to Services Entry
+    On Error GoTo 0
     
 End Sub
 
 Sub TEC_Clear_All_Cells()
 
-    Dim lastRow As Long
-    lastRow = wshFACPrep.Range("D999").End(xlUp).row
-    If lastRow > 7 Then wshFACPrep.Range("D8:I" & lastRow).ClearContents
+    Dim lastrow As Long
+    lastrow = wshFACPrep.Range("D999").End(xlUp).row
+    If lastrow > 7 Then wshFACPrep.Range("D8:I" & lastrow).ClearContents
     
 End Sub
 
@@ -623,13 +739,13 @@ Sub Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c1 = 0 'All professionnals
     c2 = "<=" & Format(d, "mm-dd-yyyy")
     c3 = wshFACPrep.Range("B18").value
-    c4 = True
-    If includeBilledTEC Then c5 = True Else c5 = False
-    c6 = False
+    c4 = "VRAI"
+    If includeBilledTEC Then c5 = "VRAI" Else c5 = "FAUX"
+    c6 = "FAUX"
 
     Call FACPrep_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5, c6)
-    
     Call Copy_Filtered_Entries_To_FACPrep
+    Call Add_Total_To_Filtered_Entries
     
 End Sub
 
@@ -644,13 +760,13 @@ Sub FACPrep_TEC_Advanced_Filter_And_Sort(profID As Long, _
 
     With wshBaseHours
         'Is there anything to filter ?
-        Dim lastSourceRow As Long, lastResultRow As Long
+        Dim lastSourceRow As Long, LastResultRow As Long
         lastSourceRow = .Range("A99999").End(xlUp).row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
         'Clear the filtered rows area
-        lastResultRow = .Range("Y9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("Y3:AN" & lastResultRow).ClearContents
+        LastResultRow = .Range("Y9999").End(xlUp).row
+        If LastResultRow > 2 Then .Range("Y3:AN" & LastResultRow).ClearContents
         
         Application.ScreenUpdating = False
         
@@ -667,12 +783,12 @@ Sub FACPrep_TEC_Advanced_Filter_And_Sort(profID As Long, _
         
         rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngCopyToRange, Unique:=True
         
-        lastResultRow = .Range("Y9999").End(xlUp).row
-        If lastResultRow < 3 Then
+        LastResultRow = .Range("Y9999").End(xlUp).row
+        If LastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
         End If
-        If lastResultRow < 4 Then GoTo No_Sort_Required
+        If LastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
             .SortFields.Add Key:=wshBaseHours.Range("AB3"), _
@@ -687,7 +803,7 @@ Sub FACPrep_TEC_Advanced_Filter_And_Sort(profID As Long, _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("Y3:AN" & lastResultRow) 'Set Range
+            .SetRange wshBaseHours.Range("Y3:AN" & LastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 No_Sort_Required:
@@ -699,13 +815,14 @@ End Sub
 
 Sub Copy_Filtered_Entries_To_FACPrep()
 
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y9999").End(xlUp).row
+    Dim lastrow As Long
+    lastrow = wshBaseHours.Range("Y9999").End(xlUp).row
+    If lastrow < 3 Then Exit Sub
     Dim arr() As String
-    ReDim arr(1 To lastRow, 1 To 6) As String
+    ReDim arr(1 To (lastrow - 2), 1 To 6) As String
     With wshBaseHours
         Dim i As Integer
-        For i = 3 To lastRow
+        For i = 3 To lastrow
             arr(i - 2, 1) = .Range("AB" & i).value 'Date
             arr(i - 2, 2) = .Range("AA" & i).value 'Prof
             arr(i - 2, 3) = .Range("AE" & i).value 'Description
@@ -714,12 +831,28 @@ Sub Copy_Filtered_Entries_To_FACPrep()
             arr(i - 2, 6) = .Range("Y" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
-        Dim rng As Range
-        Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
-        rng.value = arr
+        Dim Rng As Range
+        'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
+        Set Rng = wshFACPrep.Range("D8").Resize(lastrow - 2, UBound(arr, 2))
+        Rng.value = arr
+        .Range("G8:G" & lastrow + 5).NumberFormat = "##0.00"
     End With
 End Sub
 
+Sub Add_Total_To_Filtered_Entries()
+
+    Dim lastrow As Integer
+    lastrow = wshFACPrep.Range("D9999").End(xlUp).row
+    If lastrow = 7 Then Exit Sub 'Nothing to add
+    Dim i As Integer, totalHres As Currency
+    For i = 8 To lastrow
+        totalHres = totalHres + wshFACPrep.Range("G" & i).value
+    Next i
+
+    wshFACPrep.Range("G" & lastrow + 2).value = totalHres
+    
+End Sub
+ 
 Sub Invoice_Delete()
     If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Invoice_Delete() @ " & Time
     With wshFACPrep
@@ -727,33 +860,33 @@ Sub Invoice_Delete()
         If .Range("B20").value = Empty Then GoTo NotSaved
         InvRow = .Range("B20").value 'Set Invoice Row
         wshFACInvList.Range(InvRow & ":" & InvRow).EntireRow.Delete
-        With InvItems
-            lastRow = .Range("A99999").End(xlUp).row
-            If lastRow < 4 Then Exit Sub
-            .Range("A3:J" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
-            lastResultRow = .Range("V99999").End(xlUp).row
-            If lastResultRow < 3 Then GoTo NoItems
-    '        If LastResultRow < 4 Then GoTo SkipSort
-    '        'Sort Rows Descending
-    '         With .Sort
-    '         .SortFields.Clear
-    '         .SortFields.Add Key:=wshFACInvItems.Range("W3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal  'Sort
-    '         .SetRange wshFACInvItems.Range("P3:W" & LastResultRow) 'Set Range
-    '         .Apply 'Apply Sort
-    '         End With
-SkipSort:
-            For ResultRow = 3 To lastResultRow
-                ItemDBRow = .Range("V" & ResultRow).value 'Set Invoice Database Row
-                .Range("A" & ItemDBRow & ":J" & ItemDBRow).ClearContents 'Clear Fields (deleting creates issues with results
-            Next ResultRow
-            'Resort DB to remove spaces
-            With .Sort
-                .SortFields.Clear
-                .SortFields.Add Key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
-                .SetRange wshFACInvItems.Range("A4:J" & lastResultRow) 'Set Range
-                .Apply 'Apply Sort
-            End With
-        End With
+'        With InvItems
+'            lastrow = .Range("A99999").End(xlUp).row
+'            If lastrow < 4 Then Exit Sub
+'            .Range("A3:J" & lastrow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("N2:N3"), CopyToRange:=.Range("P2:W2"), Unique:=True
+'            LastResultRow = .Range("V99999").End(xlUp).row
+'            If LastResultRow < 3 Then GoTo NoItems
+'    '        If LastResultRow < 4 Then GoTo SkipSort
+'    '        'Sort Rows Descending
+'    '         With .Sort
+'    '         .SortFields.Clear
+'    '         .SortFields.Add Key:=wshFACInvItems.Range("W3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal  'Sort
+'    '         .SetRange wshFACInvItems.Range("P3:W" & LastResultRow) 'Set Range
+'    '         .Apply 'Apply Sort
+'    '         End With
+'SkipSort:
+'            For ResultRow = 3 To LastResultRow
+'                ItemDBRow = .Range("V" & ResultRow).value 'Set Invoice Database Row
+'                .Range("A" & ItemDBRow & ":J" & ItemDBRow).ClearContents 'Clear Fields (deleting creates issues with results
+'            Next ResultRow
+'            'Resort DB to remove spaces
+'            With .Sort
+'                .SortFields.Clear
+'                .SortFields.Add Key:=wshFACInvItems.Range("A4"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:=xlSortNormal  'Sort
+'                .SetRange wshFACInvItems.Range("A4:J" & LastResultRow) 'Set Range
+'                .Apply 'Apply Sort
+'            End With
+'        End With
 NoItems:
 NotSaved:
     Call FAC_Prep_Invoice_New 'Add New Invoice
@@ -930,12 +1063,14 @@ End Sub
 Sub Goto_Onglet_Preparation_Facture()
     wshFACPrep.Visible = xlSheetVisible
     wshFACPrep.Activate
+    wshFACPrep.usedRange.Columns("B:P").Calculate
     wshFACPrep.Range("C1").Select
 End Sub
 
 Sub Goto_Onglet_Facture_Finale()
     wshFACFinale.Visible = xlSheetVisible
     wshFACFinale.Activate
+    wshFACFinale.usedRange.Columns("A:G").Calculate
     wshFACFinale.Range("I48").Select
 End Sub
 

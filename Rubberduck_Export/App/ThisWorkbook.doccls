@@ -13,14 +13,18 @@ Private Sub Workbook_Open()
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     Call Slide_In_All_Menu_Options
 
+    Dim wbName As String, wb As Workbook
+    wbName = ThisWorkbook.name
+    Set wb = Workbooks(wbName)
+    wb.Application.Calculation = xlCalculationManual
+    Set wb = Nothing
+    
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
-
+    
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
                 "Workbook_Open() - Secondes = " & Timer - timerStart & _
                 vbNewLine & String(45, "*")
-                
-    MsgBox "Vous pouvez maintenant utiliser l'application", vbInformation
 
 End Sub
 
