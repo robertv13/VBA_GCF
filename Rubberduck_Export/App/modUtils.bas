@@ -187,34 +187,55 @@ Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
 
 End Sub
 
-Sub List_All_Conditional_Formatting()
-    Dim ws As Worksheet
-    Dim cf As FormatCondition
+Sub List_All_Conditional_Formatting() '2024-02-24 @ 07:36
     
-    ' Loop through each worksheet
+    Dim timerStart As Double
+    timerStart = Timer
+
+    Dim r As Integer: r = 1
+    Dim numRows As Integer, numCols As Integer
+    numRows = 100
+    numCols = 5
+    Dim arr(1 To 100, 1 To 5) As String
+
+    'Loop through each worksheet
+    Dim ws As Worksheet
+    Dim fc As FormatCondition
+    Dim rng As Range
+    Dim wsName As String
     For Each ws In ThisWorkbook.Worksheets
-        Debug.Print "Worksheet: " & ws.name
-        
-        'Loop through each conditional formatting rule
-        For Each cf In ws.Cells.FormatConditions
-            Debug.Print Tab(5); "Type: " & TypeName(cf)
-            Debug.Print Tab(5); "Applies to: " & cf.AppliesTo.Address
-            
-            ' Print other properties of the format condition as needed
-            ' For example:
-            ' Debug.Print "Formula1: " & cf.Formula1
-            ' Debug.Print "Formula2: " & cf.Formula2
-            ' Debug.Print "Operator: " & cf.Operator
-            ' Debug.Print "Interior Color: " & cf.Interior.Color
-            ' Debug.Print "Font Color: " & cf.Font.Color
-            
-            ' Add additional properties you want to inspect
-            
-            Debug.Print "---"
-        Next cf
-        
-        Debug.Print ""
+        wsName = ws.name
+        'Loop through each conditional formatting rule within the worksheet
+        For Each fc In ws.Cells.FormatConditions
+            'Debug.Print Tab(5); "Type: " & TypeName(fc)
+            arr(r, 1) = wsName
+            arr(r, 2) = fc.AppliesTo.Address
+            Set rng = fc.AppliesTo
+            arr(r, 3) = rng.Cells.count
+            arr(r, 4) = fc.Formula1
+            arr(r, 5) = Now()
+            r = r + 1
+        Next fc
     Next ws
+    
+    Set fc = Nothing
+    Set ws = Nothing
+    Set rng = Nothing
+    
+    'Setup and prepare the output worksheet
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("DocConditionalFormatting")
+    Dim lastUsedRow As Long
+    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
+    wsOutput.Range("A2:F" & lastUsedRow).ClearContents
+    
+    wsOutput.Range("A2").Resize(numRows, numCols).value = arr
+    
+    Set wsOutput = Nothing
+    
+    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
+        "List_All_Conditional_Formatting() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(45, "*")
+ 
 End Sub
 
 Sub Array_Bubble_Sort(arr() As String)

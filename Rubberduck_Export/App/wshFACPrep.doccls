@@ -23,7 +23,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = False
     
-    Dim Rng As Range
+    Dim rng As Range
     
     'Client Name has changed
     If Not Intersect(Target, wshFACPrep.Range("E4")) Is Nothing And wshFACPrep.Range("E4").value <> Empty Then
@@ -34,10 +34,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, wshFACPrep.Range("O3")) Is Nothing And IsDate(wshFACPrep.Range("O3").value) = True Then
         Call Date_Change(wshFACPrep.Range("O3").value)
-        Set Rng = wshFACPrep.Range("O3")
-        Call Fill_Or_Empty_Range_Background(Rng, False)
-        Set Rng = wshFACPrep.Range("L11")
-        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+        Set rng = wshFACPrep.Range("O3")
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFACPrep.Range("L11")
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
     End If
     
@@ -51,10 +51,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     'Services entry
     If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACFinale.Range("C" & Target.row + 23).value = wshFACPrep.Range("L" & Target.row).value
-        Set Rng = wshFACPrep.Range("L" & Target.row) 'Service
-        Call Fill_Or_Empty_Range_Background(Rng, False)
-        Set Rng = wshFACPrep.Range("M" & Target.row) 'Hours
-        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+        Set rng = wshFACPrep.Range("L" & Target.row) 'Service
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFACPrep.Range("M" & Target.row) 'Hours
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         wshFACPrep.Range("M" & Target.row).Select
         GoTo ExitSub
     End If
@@ -63,22 +63,22 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFACPrep.Range("N" & Target.row).value = wshAdmin.Range("TauxHoraireFacturation")
         wshFACPrep.Range("O" & Target.row).value = wshFACPrep.Range("M" & Target.row).value * wshFACPrep.Range("N" & Target.row).value
-        Set Rng = wshFACPrep.Range("L" & Target.row)
-        Call Fill_Or_Empty_Range_Background(Rng, False)
-        Set Rng = wshFACPrep.Range("M" & Target.row)
-        Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+        Set rng = wshFACPrep.Range("L" & Target.row)
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFACPrep.Range("M" & Target.row)
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         wshFACFinale.Range("D" & Target.row + 23).value = wshFACPrep.Range("M" & Target.row).value
         wshFACFinale.Range("E" & Target.row + 23).value = wshFACPrep.Range("N" & Target.row).value
         wshFACFinale.Range("F" & Target.row + 23).value = wshFACPrep.Range("O" & Target.row).value
 
         'MAXIMUM of 35 services lines per Invoice
         If Target.row < 45 Then
-            Set Rng = wshFACPrep.Range("L" & Target.row + 1)
-            Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+            Set rng = wshFACPrep.Range("L" & Target.row + 1)
+            Call Fill_Or_Empty_Range_Background(rng, True, 6)
             wshFACPrep.Range("L" & Target.row + 1).Select
         Else
-            Set Rng = wshFACPrep.Range("O48")
-            Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+            Set rng = wshFACPrep.Range("O48")
+            Call Fill_Or_Empty_Range_Background(rng, True, 6)
             wshFACPrep.Range("O48").Select
         End If
         GoTo ExitSub
@@ -92,26 +92,26 @@ Public Sub Worksheet_Change(ByVal Target As Range)
             'Final Invoice - Misc charges AND move on to next field
             If Target.row = 48 Then
                 wshFACFinale.Range("F69").value = wshFACPrep.Range("O48").value
-                Set Rng = wshFACPrep.Range("O48")
-                Call Fill_Or_Empty_Range_Background(Rng, False)
-                Set Rng = wshFACPrep.Range("O49")
-                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+                Set rng = wshFACPrep.Range("O48")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFACPrep.Range("O49")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
                 wshFACPrep.Range("O49").Select
             End If
             If Target.row = 49 Then
                 wshFACFinale.Range("F70").value = wshFACPrep.Range("O49").value
-                Set Rng = wshFACPrep.Range("O49")
-                Call Fill_Or_Empty_Range_Background(Rng, False)
-                Set Rng = wshFACPrep.Range("O50")
-                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+                Set rng = wshFACPrep.Range("O49")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFACPrep.Range("O50")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
                 wshFACPrep.Range("O50").Select
             End If
             If Target.row = 50 Then
                 wshFACFinale.Range("F71").value = wshFACPrep.Range("O50").value
-                Set Rng = wshFACPrep.Range("O50")
-                Call Fill_Or_Empty_Range_Background(Rng, False)
-                Set Rng = wshFACPrep.Range("O57")
-                Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+                Set rng = wshFACPrep.Range("O50")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFACPrep.Range("O57")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
                 wshFACPrep.Range("O57").Select
             End If
         End With
@@ -123,8 +123,8 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         With wshFACFinale
             'Final Invoice - Deposit
             wshFACFinale.Range("F78").value = wshFACPrep.Range("O57").value
-            Set Rng = wshFACPrep.Range("O57")
-            Call Fill_Or_Empty_Range_Background(Rng, False)
+            Set rng = wshFACPrep.Range("O57")
+            Call Fill_Or_Empty_Range_Background(rng, False)
             ActiveWindow.SmallScroll Up:=18
         End With
         GoTo ExitSub

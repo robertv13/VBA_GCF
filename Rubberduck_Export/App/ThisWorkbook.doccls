@@ -11,6 +11,7 @@ Private Sub Workbook_Open()
     Call Hide_All_Worksheet_Except_Menu
     
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    wshMenu.Range("A1").Select
     Call Slide_In_All_Menu_Options
 
     Dim wbName As String, wb As Workbook

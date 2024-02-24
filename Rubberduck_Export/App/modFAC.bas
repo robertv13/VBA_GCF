@@ -679,12 +679,12 @@ Sub Client_Change(ClientName As String)
     
     wshFACFinale.Range("B21").value = "Le " & Format(wshFACPrep.Range("O3").value, "d mmmm yyyy")
     
-    Dim Rng As Range
-    Set Rng = wshFACPrep.Range("E4:F4")
-    Call Fill_Or_Empty_Range_Background(Rng, False)
+    Dim rng As Range
+    Set rng = wshFACPrep.Range("E4:F4")
+    Call Fill_Or_Empty_Range_Background(rng, False)
     
-    Set Rng = wshFACPrep.Range("O3")
-    Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+    Set rng = wshFACPrep.Range("O3")
+    Call Fill_Or_Empty_Range_Background(rng, True, 6)
     
     wshFACPrep.Range("O3").Select 'Move on to Invoice Date
 
@@ -710,12 +710,12 @@ Sub Date_Change(d As String)
     cutoffDate = d
     Call Get_All_TEC_By_Client(cutoffDate, False)
     
-    Dim Rng As Range
-    Set Rng = wshFACPrep.Range("O3")
-    Call Fill_Or_Empty_Range_Background(Rng, False)
+    Dim rng As Range
+    Set rng = wshFACPrep.Range("O3")
+    Call Fill_Or_Empty_Range_Background(rng, False)
     
-    Set Rng = wshFACPrep.Range("L11")
-    Call Fill_Or_Empty_Range_Background(Rng, True, 6)
+    Set rng = wshFACPrep.Range("L11")
+    Call Fill_Or_Empty_Range_Background(rng, True, 6)
 
     On Error Resume Next
     wshFACPrep.Range("L11").Select 'Move on to Services Entry
@@ -831,10 +831,10 @@ Sub Copy_Filtered_Entries_To_FACPrep()
             arr(i - 2, 6) = .Range("Y" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
-        Dim Rng As Range
+        Dim rng As Range
         'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
-        Set Rng = wshFACPrep.Range("D8").Resize(lastRow - 2, UBound(arr, 2))
-        Rng.value = arr
+        Set rng = wshFACPrep.Range("D8").Resize(lastRow - 2, UBound(arr, 2))
+        rng.value = arr
         .Range("G8:G" & lastRow + 5).NumberFormat = "##0.00"
     End With
 End Sub

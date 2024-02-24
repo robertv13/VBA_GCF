@@ -171,15 +171,15 @@ Sub FractionComplete(pctdone As Single)
     DoEvents
 End Sub
 
-Sub Fill_Or_Empty_Range_Background(Rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone)
+Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone)
     If fill Then
         If IsMissing(colorIndex) Or colorIndex = xlNone Then
-            Rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+            rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
         Else
-            Rng.Interior.colorIndex = colorIndex ' Fill with specified color
+            rng.Interior.colorIndex = colorIndex ' Fill with specified color
         End If
     Else
-        Rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+        rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
     End If
 End Sub
 

@@ -62,15 +62,15 @@ Sub wshARDashboard_Refresh()
         'Define a table - 2024-02-17 @ 08:15
         Dim ws As Worksheet
         Dim tbl As ListObject
-        Dim Rng As Range
+        Dim rng As Range
     End With
     
         'Set the worksheet where you want to create the table
         Set ws = wshInvoiceList
     
         'Define the range for the table and create the table
-        Set Rng = ws.Range("P1:W" & lastResultRow)
-        Set tbl = ws.ListObjects.Add(xlSrcRange, Rng, , xlYes)
+        Set rng = ws.Range("P1:W" & lastResultRow)
+        Set tbl = ws.ListObjects.Add(xlSrcRange, rng, , xlYes)
     
         'Define table properties
         tbl.name = "AgingSummary"
