@@ -88,6 +88,7 @@ Public Function Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lo
 
     'Use the Match function to find the row number of the unique TEC_ID
     matchResult = Application.Match(uniqueID, lookupRange.Columns(1), 0)
+    matchResult = matchResult + 2 'Two header lines...
 
     'Check if Match found a result
     If Not IsError(matchResult) Then

@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.4.1" '2024-02-24 @ 09:03
+Global Const gAppVersion As String = "v2.4.3" '2024-02-25 @ 13:12
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 
@@ -39,7 +39,7 @@ Sub AjouteLigneDetail() 'Add an entry to DB
         .chbFacturable = True
     End With
 
-    Call TEC_Advanced_Filter_And_Sort
+    Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
     'Reset command buttons
@@ -79,7 +79,7 @@ Sub ModifieLigneDetail() '2023-12-23 @ 07:04
         .chbFacturable = True
     End With
 
-    Call TEC_Advanced_Filter_And_Sort
+    Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
     rmv_state = rmv_modeCreation
@@ -92,7 +92,7 @@ Sub ModifieLigneDetail() '2023-12-23 @ 07:04
 
 End Sub
 
-Sub EffaceLigneDetail() '2023-12-23 @ 07:05
+Sub TEC_Efface_Ligne_Detail() '2023-12-23 @ 07:05
 
     Dim timerStart As Double 'Speed tests - 2024-02-20
     timerStart = Timer
@@ -117,11 +117,11 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
     
     Dim sh As Worksheet: Set sh = wshBaseHours
     
-    Dim selectedRow As Long
+    Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
-    selectedRow = -wshAdmin.Range("TEC_Current_ID").value
-    Call Add_Or_Update_TEC_Record_To_DB(selectedRow)  'Write to external XLSX file - 2023-12-23 @ 07:07
-    Call Add_Or_Update_TEC_Record_Local(selectedRow)  'Write to local worksheet - 2024-02-25 @ 10:40
+    tecID = -wshAdmin.Range("TEC_Current_ID").value
+    Call Add_Or_Update_TEC_Record_To_DB(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
+    Call Add_Or_Update_TEC_Record_Local(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
@@ -141,7 +141,7 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
     ufSaisieHeures.txtDate.Enabled = True
     rmv_state = rmv_modeCreation
     
-    Call TEC_Advanced_Filter_And_Sort
+    Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
     ufSaisieHeures.txtClient.SetFocus
@@ -150,12 +150,12 @@ Sub EffaceLigneDetail() '2023-12-23 @ 07:05
     Set sh = Nothing
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        Now() & " - TEC_Efface_Ligne_Detail() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
 
-Sub TEC_Advanced_Filter_And_Sort() '2024-02-24 @ 09:15
+Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     
     Dim timerStart As Double 'Speed tests - 2024-02-20
     timerStart = Timer
@@ -165,7 +165,7 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-24 @ 09:15
     'Set criteria
     wshBaseHours.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
     wshBaseHours.Range("S3").value = wshAdmin.Range("TEC_Date")
-    wshBaseHours.Range("T3").value = "FAUX"
+    wshBaseHours.Range("T3").value = "False"
     
     'ProfID and Date are mandatory to execute this routine
     If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
@@ -177,10 +177,10 @@ Sub TEC_Advanced_Filter_And_Sort() '2024-02-24 @ 09:15
         lastRow = .Range("A99999").End(xlUp).row 'Last wshBaseHours Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Advanced Filter applied to BaseHours (Prof & Date)
+        'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         .Range("A2:P" & lastRow).AdvancedFilter _
             xlFilterCopy, _
-            CriteriaRange:=.Range("R2:S3"), _
+            CriteriaRange:=.Range("R2:T3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=False
         lastResultRow = .Range("Y99999").End(xlUp).row
@@ -208,7 +208,7 @@ No_Sort_Required:
     Application.ScreenUpdating = True
     
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - TEC_Advanced_Filter_And_Sort() - Secondes = " & Timer - timerStart & _
+        Now() & " - TEC_AdvancedFilter_And_Sort() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
@@ -229,7 +229,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         .txtDate.Enabled = True
     End With
     
-    Call TEC_Advanced_Filter_And_Sort(0)
+    Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
     With ufSaisieHeures
@@ -242,13 +242,12 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     ufSaisieHeures.txtClient.SetFocus
     
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "TEC_Efface_Formulaire() - Secondes = " & Timer - timerStart & _
+        Now() & " - TEC_Efface_Formulaire() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
 
-
-Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to external .xlsx file
+Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
     Dim timerStart As Double 'Speed tests - 2024-02-20
     timerStart = Timer
@@ -267,9 +266,9 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
-    If r < 0 Then 'Soft delete a record
+    If tecID < 0 Then 'Soft delete a record
         'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & Abs(r), conn, 2, 3
+        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & Abs(tecID), conn, 2, 3
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = Now
@@ -278,7 +277,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.Update
         Else
             'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TEC_ID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
@@ -286,7 +285,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
         End If
     Else
         'If r is 0, add a new record; otherwise, update an existing record
-        If r = 0 Then 'Add a record
+        If tecID = 0 Then 'Add a record
         'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
             strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & sheetName & "$]"
@@ -332,7 +331,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
             rs.Fields("NoFacture").value = ""
         Else 'Update an existing record
             'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+            rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & tecID, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
@@ -345,7 +344,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
                 rs.Fields("VersionApp").value = gAppVersion
             Else
                 'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", vbExclamation
+                MsgBox "L'enregistrement avec le TEC_ID '" & tecID & "' ne peut être trouvé!", vbExclamation
                 rs.Close
                 conn.Close
                 Exit Sub
@@ -368,7 +367,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(r As Long) 'Write -OR- Update a record to ext
     Application.ScreenUpdating = True
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        Now() & " - Add_Or_Update_TEC_Record_To_DB() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
@@ -448,7 +447,7 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     Application.ScreenUpdating = True
 
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
+        Now() & "Add_Or_Update_TEC_Record_Local() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
 End Sub
@@ -468,22 +467,12 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     Dim lastRow As Long
     lastRow = wshBaseHours.Range("Y999").End(xlUp).row
     If lastRow < 3 Then Exit Sub
-    Dim rng As Range
-    Set rng = wshBaseHours.Range("Y3:AL" & lastRow)
         
     With ufSaisieHeures.ListBox2
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        
-        
-        
-        
-        If lastRow = 1 Then
-            .RowSource = "TEC_Local!Y3:AG3"
-        Else
-            .RowSource = "TEC_Local!Y3:AG" & lastRow + 1
-        End If
+        .RowSource = "TEC_Local!Y3:AG" & lastRow
     End With
 
     'Add hours to totalHeures
@@ -506,9 +495,9 @@ EndOfProcedure:
 
     'ufSaisieHeures.txtClient.SetFocus
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - EffaceLigneDetail() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Debug.Print vbNewLine & String(55, "*") & vbNewLine & _
+        Now() & " - Refresh_ListBox_And_Add_Hours() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(55, "*")
     
 End Sub
 

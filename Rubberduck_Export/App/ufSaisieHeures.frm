@@ -99,11 +99,15 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
+    If Me.cmbProfessionnel.value = "" Then
+        Exit Sub
+    End If
+    
     wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
     wshAdmin.Range("TEC_Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
     
     If wshAdmin.Range("TEC_Date").value <> "" Then
-        Call TEC_Advanced_Filter_And_Sort
+        Call TEC_AdvancedFilter_And_Sort
         Call Refresh_ListBox_And_Add_Hours
     End If
     
@@ -192,7 +196,7 @@ Private Sub txtDate_AfterUpdate()
     wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
 
     If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
-        Call TEC_Advanced_Filter_And_Sort
+        Call TEC_AdvancedFilter_And_Sort
         Call Refresh_ListBox_And_Add_Hours
     End If
     
