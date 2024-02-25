@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   9525.001
+   ClientHeight    =   8550.001
    ClientLeft      =   105
    ClientTop       =   450
-   ClientWidth     =   13275
+   ClientWidth     =   13950
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -23,12 +23,6 @@ Public Property Let ListData(ByVal rg As Range)
     oEventHandler.List = rg.value
 
 End Property
-
-Private Sub icoGraph_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-
-    MsgBox "Affichage des statistiques à compléter"
-
-End Sub
 
 Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
@@ -71,7 +65,7 @@ Sub UserForm_Activate()
     rmv_state = rmv_modeInitial
     
     Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "UserForm_Activate() - Secondes = " & Timer - timerStart & _
+        Now() & " - UserForm_Activate() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
     
 End Sub
@@ -366,39 +360,33 @@ Private Sub cmdDelete_Click()
 End Sub
 
 '****************************************** Get a row and display it in the form
-Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
-        wshAdmin.Range("TEC_Current_ID").value = .lstData.List(.lstData.ListIndex, 0)
-        'Debug.Print "Sauvegarde de l'ID de l'enregistrement à modifier - " & _
-            wshADMIN.Range("TEC_Current_ID").value
-        
-        .cmbProfessionnel.value = .lstData.List(.lstData.ListIndex, 1)
+        wshAdmin.Range("TEC_Current_ID").value = .ListBox2.List(.ListBox2.ListIndex, 0)
+    
+        .cmbProfessionnel.value = .ListBox2.List(.ListBox2.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
-        '.cmbProfessionnel.Locked = True
         
-        .txtDate.value = Format(.lstData.List(.lstData.ListIndex, 2), "dd/mm/yyyy")
+        .txtDate.value = Format(.ListBox2.List(.ListBox2.ListIndex, 2), "dd/mm/yyyy")
         .txtDate.Enabled = False
-        '.txtDate.Locked = True
         
-        .txtClient.value = .lstData.List(.lstData.ListIndex, 3)
+        .txtClient.value = .ListBox2.List(.ListBox2.ListIndex, 3)
         savedClient = .txtClient.value
-        'Debug.Print "Double click on a entry - " & savedClient
         wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
-        'Debug.Print "Client_ID - " & wshADMIN.Range("TEC_Client_ID").value
          
-        .txtActivite.value = .lstData.List(.lstData.ListIndex, 4)
+        .txtActivite.value = .ListBox2.List(.ListBox2.ListIndex, 4)
         savedActivite = .txtActivite.value
         
-        .txtHeures.value = Format(.lstData.List(.lstData.ListIndex, 5), "#0.00")
+        .txtHeures.value = Format(.ListBox2.List(.ListBox2.ListIndex, 5), "#0.00")
         savedHeures = .txtHeures.value
         
-        .txtCommNote.value = .lstData.List(.lstData.ListIndex, 6)
+        .txtCommNote.value = .ListBox2.List(.ListBox2.ListIndex, 6)
         savedCommNote = .txtCommNote.value
         
-        .chbFacturable.value = CBool(.lstData.List(.lstData.ListIndex, 7))
+        .chbFacturable.value = CBool(.ListBox2.List(.ListBox2.ListIndex, 7))
         savedFacturable = .chbFacturable.value
         
     End With
@@ -412,5 +400,22 @@ Sub lstData_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     rmv_state = rmv_modeAffichage
     
+End Sub
+
+Sub CopyRangeToListBoxWithoutRowSource()
+    Dim ws As Worksheet: Set ws = wshBaseHours
+    Dim rng As Range: Set rng = wshBaseHours("Y2:AL6")
+    Dim lb As Object: Set lb = ufSaisieHeures.ListBox2
+    Dim cell As Range
+    
+    'Clear any existing items in the ListBox
+    lb.Clear
+    
+    'Copy the range values to the ListBox, excluding rows based on the condition
+    For Each cell In rng
+        If cell.Offset(0, 11).value <> "VRAI" Then
+            lb.AddItem cell.value
+        End If
+    Next cell
 End Sub
 

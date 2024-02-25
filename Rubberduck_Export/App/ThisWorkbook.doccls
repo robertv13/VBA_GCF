@@ -23,9 +23,9 @@ Private Sub Workbook_Open()
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-                "Workbook_Open() - Secondes = " & Timer - timerStart & _
-                vbNewLine & String(45, "*")
+    Debug.Print vbNewLine & String(55, "*") & vbNewLine & _
+        Now() & " - Workbook_Open() - Secondes = " & Timer - timerStart & _
+        vbNewLine & String(55, "*")
 
 End Sub
 

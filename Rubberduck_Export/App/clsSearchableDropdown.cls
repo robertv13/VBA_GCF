@@ -382,7 +382,7 @@ Public Sub FilterListBox()
     Dim items As Variant
     items = FilterData
       
-    UpdateListbox (items)
+    Call UpdateListbox(items)
       
     m_UpdateControl = False
     

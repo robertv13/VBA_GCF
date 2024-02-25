@@ -285,3 +285,27 @@ Sub Add_Columns_To_Active_Worksheet()
     Debug.Print colToAdd & " columns added to the worksheet."
 End Sub
 
+Sub CopyRangeToListBox()
+    Dim ws As Worksheet: Set ws = wshBaseHours
+    Dim rng As Range
+    Dim lb As Object
+    Dim rowNum As Long
+    
+    'Set the range to copy
+    Set rng = ws.Range("Y3:AL6")
+    
+    'Assuming you already have a ListBox named "ListBox1" in your Excel sheet
+    Set lb = ufSaisieHeures.ListBox2
+    
+    'Clear any existing items in the ListBox
+    lb.Clear
+    
+    ' Copy the range values to the ListBox
+    For rowNum = 1 To 4
+    
+        If ws.Cells(rowNum, "B").value <> "VRAI" Then ' Checking the value in column B
+            lb.AddItem ws.Cells(rowNum, "A").value ' Add item to ListBox from column A
+        End If
+    Next rowNum
+End Sub
+

@@ -11,22 +11,19 @@ Private Sub Worksheet_Activate()
         Now() & " - wshBaseHours_Worksheet_Activate() - Secondes = " & Timer - timerStart & _
         vbNewLine & String(45, "*")
 
-
 End Sub
 
-Sub Test_Advanced_Filter_Button()
+Sub Test_Advanced_Filter_1()
    
+    Dim ws As Worksheet: Set ws = wshBaseHours
+    
     Call Destination_Clear
     
-    wshBaseHours.Names("Criteres").Delete
-    wshBaseHours.Range("A2:P262").AdvancedFilter _
+    wshBaseHours.Range("$A$2:$P$267").AdvancedFilter _
         action:=xlFilterCopy, _
-        CriteriaRange:=Range("T2:U3"), _
-        CopyToRange:=Range("Y2:AN2"), _
+        CriteriaRange:=Range("$R$2:$T$3"), _
+        CopyToRange:=Range("$Y$2:$AL$2"), _
         Unique:=False
-    Dim resultRow As Long
-    resultRow = wshBaseHours.Range("Y9999").End(xlUp).row - 2
-    MsgBox "Il y a " & resultRow & " lignes dans le résultat"
 
 End Sub
 
@@ -150,6 +147,6 @@ Sub Destination_Clear()
 
     Dim lastUsedRow As Long
     lastUsedRow = wshBaseHours.Range("Y9999").End(xlUp).row
-    wshBaseHours.Range("Y3:AN" & lastUsedRow).Clear
+    wshBaseHours.Range("Y3:AL" & lastUsedRow + 1).Clear
     
 End Sub

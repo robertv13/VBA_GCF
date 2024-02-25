@@ -418,10 +418,10 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
     
     Dim r As Integer, rowToBeUpdated As Long
     For r = firstResultRow To lastResultRow
-        Dim TecID As Long
-        TecID = wshBaseHours.Range("Y" & r).value
-        rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(TecID, lookupRange)
-        Debug.Print "Need to update locally the TEC_ID = " & TecID & " which is at row # " & rowToBeUpdated
+        Dim tecID As Long
+        tecID = wshBaseHours.Range("Y" & r).value
+        rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+        Debug.Print "Need to update locally the TEC_ID = " & tecID & " which is at row # " & rowToBeUpdated
         wshBaseHours.Range("K" & rowToBeUpdated).value = Now()
         wshBaseHours.Range("L" & rowToBeUpdated).value = True
         wshBaseHours.Range("M" & rowToBeUpdated).value = CDate(wshFACPrep.Range("O3").value)
