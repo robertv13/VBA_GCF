@@ -2,19 +2,18 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     wshBaseHours.EnableCalculation = True
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - wshBaseHours_Worksheet_Activate() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("wshBaseHours_Worksheet_Activate()", timerStart)
 
 End Sub
 
 Sub Test_Advanced_Filter_1()
    
+    Dim timerStart As Double: timerStart = Timer
+
     Dim ws As Worksheet: Set ws = wshBaseHours
     
     Call Destination_Clear
@@ -25,128 +24,6 @@ Sub Test_Advanced_Filter_1()
         CopyToRange:=Range("$Y$2:$AL$2"), _
         Unique:=False
 
-End Sub
+    Call Output_Timer_Results("Test_Advanced_Filter_1()", timerStart)
 
-Function Test_Advanced_Filter_A() As Integer
-   
-    wshBaseHours.Range("Y1:AN9999").ClearContents
-    On Error Resume Next
-    wshBaseHours.Names("Criteres").Delete
-    On Error GoTo 0
-    wshBaseHours.Range("A1:P261").AdvancedFilter _
-        action:=xlFilterCopy, _
-        CriteriaRange:=Range("R1:W2"), _
-        CopyToRange:=Range("Y1:AN1"), _
-        Unique:=True
-    Test_Advanced_Filter_A = wshBaseHours.Range("Y9999").End(xlUp).row - 1
-
-End Function
-
-Function Test_Advanced_Filter_B() As Integer
-   
-    Dim wb As Workbook: Set wb = ThisWorkbook
-    Dim ws As Worksheet: Set ws = wb.Worksheets("TEC_Local")
-    Dim rng As Range
-    Dim CRng As Range
-    Dim DRng As Range
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
-    Set rng = ws.Range("A1:P" & lastUsedRow)
-    Set CRng = ws.Range("R1:W2")
-    lastUsedRow = ws.Range("Y99999").End(xlUp).row
-    ws.Range("Y2:AN" & lastUsedRow).Clear
-    Set DRng = ws.Range("Y1:AN1")
-    On Error Resume Next
-    wshBaseHours.Names("Criteres").Delete
-    On Error GoTo 0
-    
-    rng.AdvancedFilter xlFilterCopy, CRng, DRng
-    Test_Advanced_Filter_B = wshBaseHours.Range("Y9999").End(xlUp).row - 1
-
-    'Free up memory - 2024-02-23
-    Set wb = Nothing
-    Set ws = Nothing
-    Set rng = Nothing
-    Set CRng = Nothing
-    Set DRng = Nothing
-    
-End Function
-
-Function Test_Advanced_Filter_ChatGPT() As Integer
-
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("TEC_Local")
-    Dim rngData As Range
-    Dim rngCriteria As Range
-    Dim lastRow As Long
-    
-    ' Assuming your data starts from A1
-    ' Set the range including the first row of headings
-    lastRow = ws.Range("A9999").End(xlUp).row
-    Set rngData = ws.Range("A1:P" & lastRow)
-    
-    'Define your criteria range
-    Set rngCriteria = ws.Range("R1:W2")
-    On Error Resume Next
-    wshBaseHours.Names("Criteres").Delete
-    On Error GoTo 0
-    ' Apply the Advanced Filter
-    rngData.AdvancedFilter action:=xlFilterCopy, _
-                           CriteriaRange:=rngCriteria, _
-                           CopyToRange:=ws.Range("Y1:AN1"), _
-                           Unique:=False
-    
-    'Clear any existing filter
-    ws.AutoFilterMode = False
-    Test_Advanced_Filter_ChatGPT = wshBaseHours.Range("Y9999").End(xlUp).row - 1
-    
-    'Free up memory - 2024-02-23
-    Set ws = Nothing
-    Set rngData = Nothing
-    Set rngCriteria = Nothing
-
-End Function
-
-Sub Test_Advanced_Filter_PC_Learning()
-
-    'https://www.youtube.com/watch?v=br5SGt59KLU&list=PLSKXKegJ_1wKy8VSR-6hX7JtAyIsbb1cV
-    
-    With wshBaseHours
-        .Range("A2:P262").AdvancedFilter _
-            action:=xlFilterCopy, _
-            CriteriaRange:=.Range("T2:W3"), _
-            CopyToRange:=.Range("Y2:AN2"), _
-            Unique:=False
-    MsgBox .Range("Y99999").End(xlUp).row - 2
-    End With
-
-End Sub
-
-Sub Test_Toutes_Options()
-
-    Application.ScreenUpdating = False
-    
-    Dim i As Integer
-    For i = 10 To 36
-        With wshBaseHours
-            .Range("U2").value = .Range("R" & i).value
-            .Range("V2").value = .Range("S" & i).value
-            .Range("W2").value = .Range("T" & i).value
-            
-            .Range("U" & i).value = Test_Advanced_Filter_A
-            .Range("V" & i).value = Test_Advanced_Filter_B
-            .Range("W" & i).value = Test_Advanced_Filter_ChatGPT
-            
-        End With
-    Next i
-
-    Application.ScreenUpdating = True
-
-End Sub
-
-Sub Destination_Clear()
-
-    Dim lastUsedRow As Long
-    lastUsedRow = wshBaseHours.Range("Y9999").End(xlUp).row
-    wshBaseHours.Range("Y3:AL" & lastUsedRow + 1).Clear
-    
 End Sub

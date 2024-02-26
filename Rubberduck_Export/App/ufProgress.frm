@@ -17,9 +17,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub UserForm_Initialize()
-    #If IsMac = False Then
-        'Hide the title bar if you're working on a Windows machine.
-        Me.Height = Me.Height - 10
-        modHideTitleBar.HideTitleBar Me
-    #End If
+    
+    Me.Height = Me.Height - 10
+    modHideTitleBar.HideTitleBar Me
+    
 End Sub

@@ -10,15 +10,12 @@ End Sub
 
 Sub SaisieHeures_Click()
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     SlideIn_SaisieHeures
     Load ufSaisieHeures
     ufSaisieHeures.show vbModal
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "SaisieHeures_Click() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("SaisieHeures_Click()", timerStart)
 
 End Sub

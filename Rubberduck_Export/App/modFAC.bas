@@ -5,8 +5,7 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Prep_Invoice_New() 'Clear contents
     
-    Dim timerStart As Double 'Speed tests - 2024-02-21
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     If wshFACPrep.Range("B27").value = False Then
         With wshFACPrep
@@ -48,9 +47,7 @@ Sub FAC_Prep_Invoice_New() 'Clear contents
     End If
     If wshFACPrep.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFACPrep.Range("O6").value & "' a été assignée"
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-    "FAC_Prep_Invoice_New() - Secondes = " & Timer - timerStart & _
-    vbNewLine & String(45, "*")
+    Call Output_Timer_Results("FAC_Prep_Invoice_New()", timerStart)
 
 End Sub
 
@@ -101,8 +98,7 @@ End Sub
 
 Sub FAC_Prep_Add_Invoice_Header_to_DB(r As Long)
 
-    Dim timerStart As Double 'Speed tests - 2024-02-21
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -216,16 +212,13 @@ Sub FAC_Prep_Add_Invoice_Header_to_DB(r As Long)
     
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "FAC_Prep_Add_Invoice_Header_to_DB() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Header_to_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Prep_Add_Invoice_Details_to_DB()
 
-    Dim timerStart As Double 'Speed tests - 2024-02-21
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -279,16 +272,13 @@ Nothing_to_Update:
 
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "FAC_Prep_Add_Invoice_Header_to_DB() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    '{T2BRs}FAC_Prep_Add_Invoice_Details_to_DB{T2BRe}
 
 End Sub
 
 Sub FAC_Prep_Add_Comptes_Clients_to_DB()
 
-    Dim timerStart As Double 'Speed tests - 2024-02-21
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -337,16 +327,13 @@ Sub FAC_Prep_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "FAC_Prep_Add_Comptes_Clients_to_DB() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("FAC_Prep_Add_Comptes_Clients_to_DB()", timerStart)
 
 End Sub
 
 Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update Billed Status in DB
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -400,16 +387,13 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
     
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "Update_TEC_As_Billed_In_DB() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("Update_TEC_As_Billed_In_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     'Set the range to look for
     Dim lookupRange As Range, lastTECRow As Long
@@ -429,9 +413,7 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
         wshBaseHours.Range("P" & rowToBeUpdated).value = wshFACPrep.Range("O6").value
     Next r
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "FAC_Prep_TEC_As_Billed_Locally() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("FAC_Prep_TEC_As_Billed_Locally()", timerStart)
 
 End Sub
 

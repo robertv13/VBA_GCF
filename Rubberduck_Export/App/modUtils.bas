@@ -68,32 +68,32 @@ Continue_for_each_ws:
 
 End Sub
 
-Sub List_All_Subs_And_Functions() '2024-02-17 @ 16:53
+Sub List_All_Subs_And_Functions() '2024-02-26 @ 11:18
     
+    Dim timerStart As Double: timerStart = Timer
+
     Dim VBComp As Object
     
-    'Setup the worksheet
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DocSubs&Functions")
+    'Setup the output worksheet
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("DocSubs&Functions")
 
-    'Prepare the output worksheet
-    Dim r As Long
-    r = ws.Range("D9999").End(xlUp).row 'Last Used Row
-    ws.Range("A2:F" & r).ClearContents
-    r = 2
-    
-    Dim posSub As Integer, posFunction As Integer, posExitSub As Integer, posREM As Integer
+    Dim posSub As Integer, posFunction As Integer, posExitSub As Integer
+    Dim posREM As Integer, posParam As Integer
     Dim lineNum As Long
-    Dim trimLineOfCode As String, remarks As String
+    Dim trimLineOfCode As String, remarks As String, params As String
+    Dim arr() As Variant
+    ReDim arr(1 To 300, 1 To 7)
     'Loop through all VBcomponents (modules, class and forms) in the workbook
+    Dim oName As String, oType As String, r As Integer
+    r = 1
     For Each VBComp In ThisWorkbook.VBProject.VBComponents
         'Check if the component is a userForm (1), a module (2) or a class module (3)
         If VBComp.Type <= 3 Then
-            ws.Cells(r, 1).value = VBComp.name
-            ws.Cells(r, 2).value = VBComp.Type
+            oName = VBComp.name
+            oType = VBComp.Type
             'Get the code module for the component
             Dim vbCodeMod As Object
             Set vbCodeMod = VBComp.CodeModule
-            Debug.Print vbCodeMod.name
             'Loop through all lines in the code module
             For lineNum = 1 To vbCodeMod.CountOfLines
                 'Check if the line contains 'Sub' or 'Function'
@@ -102,22 +102,61 @@ Sub List_All_Subs_And_Functions() '2024-02-17 @ 16:53
                 posFunction = InStr(trimLineOfCode, "Function ")
                 posExitSub = InStr(trimLineOfCode, "Exit Sub")
                 If (posSub <> 0 Or posFunction <> 0) And posExitSub = 0 Then
-                    ws.Cells(r, 3).value = lineNum
+                    arr(r, 1) = oType
+                    arr(r, 2) = oName
+                    arr(r, 3) = lineNum
                     posREM = InStr(trimLineOfCode, ") '")
                     If posREM > 0 Then
                         remarks = Trim(Mid(trimLineOfCode, posREM + 1))
                         trimLineOfCode = Trim(Left(trimLineOfCode, posREM))
                     End If
-                    ws.Cells(r, 4).value = trimLineOfCode
-                    If remarks <> "" Then ws.Cells(r, 5).value = "'" & remarks
-                    ws.Cells(r, 6).value = Now()
+                    posParam = InStr(trimLineOfCode, "(")
+                    If posParam > 0 Then
+                        params = Trim(Mid(trimLineOfCode, posParam))
+                        trimLineOfCode = Trim(Left(trimLineOfCode, posParam - 1))
+                    End If
+                    arr(r, 4) = trimLineOfCode
+                    If params <> "" Then arr(r, 5) = params
+                    If remarks <> "" Then arr(r, 6) = "'" & remarks
+                    arr(r, 7) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
                     r = r + 1
+                    params = ""
                     remarks = ""
                 End If
             Next lineNum
         End If
-        r = r + 1
     Next VBComp
+    
+    'Prepare the output worksheet
+    Dim lastUsedRow As Long
+    lastUsedRow = wsOutput.Range("D9999").End(xlUp).row 'Last Used Row
+    wsOutput.Range("A2:G" & lastUsedRow).ClearContents
+
+    'Sort the array based on column 1 then column 1
+    Call BubbleSort_2D_Array(arr)
+    
+    'Copy entire Array to Worksheet
+    wsOutput.Range("A2").Resize(UBound(arr, 1) - LBound(arr, 1) + 1, _
+        UBound(arr, 2) - LBound(arr, 2) + 1).value = arr
+        
+    'Remove empty lines & change the ObjectType to a description
+    Dim rowNumber As Integer
+    For rowNumber = 301 To 2 Step -1
+        If wsOutput.Range("A" & rowNumber).value = "" Then
+            wsOutput.Range("A" & rowNumber).EntireRow.Delete
+        ElseIf wsOutput.Range("A" & rowNumber).value = "1" Then
+            wsOutput.Range("A" & rowNumber).value = "1_Module"
+        ElseIf wsOutput.Range("A" & rowNumber).value = "2" Then
+            wsOutput.Range("A" & rowNumber).value = "2_Class"
+        ElseIf wsOutput.Range("A" & rowNumber).value = "3" Then
+            wsOutput.Range("A" & rowNumber).value = "3_userform"
+        Else
+            wsOutput.Range("A" & rowNumber).value = String(10, "*")
+        End If
+    Next rowNumber
+
+    Call Output_Timer_Results("List_All_Subs_And_Functions()", timerStart)
+
 End Sub
 
 Sub List_All_Shapes_Properties()
@@ -189,8 +228,7 @@ End Sub
 
 Sub List_All_Conditional_Formatting() '2024-02-24 @ 07:36
     
-    Dim timerStart As Double
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Dim r As Integer: r = 1
     Dim numRows As Integer, numCols As Integer
@@ -232,9 +270,7 @@ Sub List_All_Conditional_Formatting() '2024-02-24 @ 07:36
     
     Set wsOutput = Nothing
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "List_All_Conditional_Formatting() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("List_All_Conditional_Formatting()", timerStart)
  
 End Sub
 
@@ -252,6 +288,53 @@ Sub Array_Bubble_Sort(arr() As String)
             End If
         Next j
     Next i
+End Sub
+
+Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Dim i As Long, j As Long
+    Dim numRows As Long, numCols As Long
+    Dim temp As Variant
+    Dim sorted As Boolean
+
+    numRows = UBound(arr, 1)
+    numCols = UBound(arr, 2)
+
+    'Bubble Sort Algorithm
+    Dim c As Integer
+    For i = 1 To numRows - 1
+        sorted = True
+        For j = 1 To numRows - i
+            'Compare column 2 first
+            If arr(j, 1) > arr(j + 1, 1) Then
+                'Swap rows
+                For c = 1 To numCols
+                    temp = arr(j, c)
+                    arr(j, c) = arr(j + 1, c)
+                    arr(j + 1, c) = temp
+                Next c
+                sorted = False
+            ElseIf arr(j, 1) = arr(j + 1, 1) Then
+                'Column 1 values are equal, then compare column2 values
+                If arr(j, 2) > arr(j + 1, 2) Then
+                    'Swap rows
+                    For c = 1 To numCols
+                        temp = arr(j, c)
+                        arr(j, c) = arr(j + 1, c)
+                        arr(j + 1, c) = temp
+                    Next c
+                    sorted = False
+                End If
+            End If
+        Next j
+        'If no swaps were made, the array is sorted
+        If sorted Then Exit For
+    Next i
+    
+    Call Output_Timer_Results("BubbleSort_2D_Array()", timerStart)
+
 End Sub
 
 Sub Protect_Unprotect_Worksheet()
@@ -285,27 +368,13 @@ Sub Add_Columns_To_Active_Worksheet()
     Debug.Print colToAdd & " columns added to the worksheet."
 End Sub
 
-Sub CopyRangeToListBox()
-    Dim ws As Worksheet: Set ws = wshBaseHours
-    Dim rng As Range
-    Dim lb As Object
-    Dim rowNum As Long
-    
-    'Set the range to copy
-    Set rng = ws.Range("Y3:AL6")
-    
-    'Assuming you already have a ListBox named "ListBox1" in your Excel sheet
-    Set lb = ufSaisieHeures.ListBox2
-    
-    'Clear any existing items in the ListBox
-    lb.Clear
-    
-    ' Copy the range values to the ListBox
-    For rowNum = 1 To 4
-    
-        If ws.Cells(rowNum, "B").value <> "VRAI" Then ' Checking the value in column B
-            lb.AddItem ws.Cells(rowNum, "A").value ' Add item to ListBox from column A
-        End If
-    Next rowNum
-End Sub
+Sub Output_Timer_Results(subName As String, t As Double)
 
+    Dim l As Integer
+    l = Len(subName)
+    
+    Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
+        Format(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & subName & " = " _
+        & Format(Timer - t, "##0.0000") & " secondes" & vbNewLine & String(40 + l, "*")
+
+End Sub

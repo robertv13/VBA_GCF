@@ -2,8 +2,7 @@
 
 Private Sub Workbook_Open()
 
-    Dim timerStart As Double
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     Application.ScreenUpdating = False
 '    Windows(ThisWorkbook.name).Visible = False
@@ -23,13 +22,13 @@ Private Sub Workbook_Open()
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
     
-    Debug.Print vbNewLine & String(55, "*") & vbNewLine & _
-        Now() & " - Workbook_Open() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(55, "*")
+    Call Output_Timer_Results("Workbook_Open()", timerStart)
 
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
+    
+    Dim timerStart As Double: timerStart = Timer
     
     wshMenu.Activate
     
@@ -37,16 +36,22 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     
     Cancel = False
     
+    Call Output_Timer_Results("Workbook_BeforeClose()", timerStart)
+    
 End Sub
 
 Sub Slide_In_All_Menu_Options()
 
+    Dim timerStart As Double: timerStart = Timer
+    
     SlideIn_TEC
     SlideIn_Facturation
     SlideIn_Debours
     SlideIn_Comptabilite
     SlideIn_Parametres
     SlideIn_Exit
+
+    Call Output_Timer_Results("Slide_In_All_Menu_Options()", timerStart)
 
 End Sub
 

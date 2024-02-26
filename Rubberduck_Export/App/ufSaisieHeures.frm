@@ -26,6 +26,8 @@ End Property
 
 Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Dim timerStart As Double: timerStart = Timer
+    
     Dim i As Long
     With Me.lstNomClient
         For i = 0 To .ListCount - 1
@@ -36,14 +38,15 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
             End If
         Next i
     End With
+    
+    Call Output_Timer_Results("lstNomClient_DblClick()", timerStart)
 
 End Sub
 
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     Call Client_List_Import_All
     
@@ -64,14 +67,14 @@ Sub UserForm_Activate()
    
     rmv_state = rmv_modeInitial
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - UserForm_Activate() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("ufSaisieHeures - UserForm_Activate()", timerStart)
     
 End Sub
 
 Private Sub UserForm_Terminate()
     
+    Dim timerStart As Double: timerStart = Timer
+
     'Clear the admin control cells
     wshAdmin.Range("B3:B7").ClearContents
     
@@ -95,13 +98,15 @@ Private Sub UserForm_Terminate()
 MenuSelect:
     wshMenu.Select
     
+    Call Output_Timer_Results("ufSaisieHeures - UserForm_Terminate()", timerStart)
+
 End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    If Me.cmbProfessionnel.value = "" Then
-        Exit Sub
-    End If
+    Dim timerStart As Double: timerStart = Timer
+
+    If Me.cmbProfessionnel.value = "" Then GoTo exit_sub
     
     wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
     wshAdmin.Range("TEC_Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
@@ -118,7 +123,10 @@ Public Sub cmbProfessionnel_AfterUpdate()
         Trim(Me.txtHeures.value) <> "" Then
         cmdAdd.Enabled = True
     End If
-    
+
+exit_sub:
+    Call Output_Timer_Results("ufSaisieHeures - cmbProfessionnel_AfterUpdate()", timerStart)
+
 End Sub
 
 Private Sub txtDate_Enter()
@@ -333,7 +341,7 @@ End Sub
 
 Private Sub cmdAdd_Click()
 
-    AjouteLigneDetail
+    TEC_Ajoute_Ligne_Detail
 
 End Sub
 
@@ -346,7 +354,7 @@ Private Sub cmdUpdate_Click()
         Exit Sub
     End If
 
-    ModifieLigneDetail
+    TEC_Modifie_Ligne_Detail
 
 End Sub
 
@@ -359,7 +367,7 @@ Private Sub cmdDelete_Click()
         Exit Sub
     End If
     
-    EffaceLigneDetail
+    TEC_Efface_Ligne_Detail
 
 End Sub
 
@@ -406,20 +414,20 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
 End Sub
 
-Sub CopyRangeToListBoxWithoutRowSource()
-    Dim ws As Worksheet: Set ws = wshBaseHours
-    Dim rng As Range: Set rng = wshBaseHours("Y2:AL6")
-    Dim lb As Object: Set lb = ufSaisieHeures.ListBox2
-    Dim cell As Range
-    
-    'Clear any existing items in the ListBox
-    lb.Clear
-    
-    'Copy the range values to the ListBox, excluding rows based on the condition
-    For Each cell In rng
-        If cell.Offset(0, 11).value <> "VRAI" Then
-            lb.AddItem cell.value
-        End If
-    Next cell
-End Sub
+'Sub CopyRangeToListBoxWithoutRowSource()
+'    Dim ws As Worksheet: Set ws = wshBaseHours
+'    Dim rng As Range: Set rng = wshBaseHours("Y2:AL6")
+'    Dim lb As Object: Set lb = ufSaisieHeures.ListBox2
+'    Dim cell As Range
+'
+'    'Clear any existing items in the ListBox
+'    lb.Clear
+'
+'    'Copy the range values to the ListBox, excluding rows based on the condition
+'    For Each cell In rng
+'        If cell.Offset(0, 11).value <> "VRAI" Then
+'            lb.AddItem cell.value
+'        End If
+'    Next cell
+'End Sub
 

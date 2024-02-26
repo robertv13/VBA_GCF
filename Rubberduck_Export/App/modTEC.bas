@@ -14,14 +14,13 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.4.3" '2024-02-25 @ 13:12
+Global Const gAppVersion As String = "v2.4.4" '2024-02-25 @ 17:49
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 
-Sub AjouteLigneDetail() 'Add an entry to DB
+Sub TEC_Ajoute_Ligne_Detail() 'Add an entry to DB
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     If IsDataValid() = False Then Exit Sub
     
@@ -52,16 +51,13 @@ Sub AjouteLigneDetail() 'Add an entry to DB
     'Back to client
     ufSaisieHeures.txtClient.SetFocus
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "AjouteLigneDetail() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("TEC_Ajoute_Ligne_Detail()", timerStart)
 
 End Sub
 
-Sub ModifieLigneDetail() '2023-12-23 @ 07:04
+Sub TEC_Modifie_Ligne_Detail() '2023-12-23 @ 07:04
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     If IsDataValid() = False Then Exit Sub
 
@@ -86,16 +82,13 @@ Sub ModifieLigneDetail() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        "ModifieLigneDetail() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("TEC_Modifie_Ligne_Detail()", timerStart)
 
 End Sub
 
 Sub TEC_Efface_Ligne_Detail() '2023-12-23 @ 07:05
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     If wshAdmin.Range("TEC_Current_ID").value = "" Then
         MsgBox _
@@ -149,16 +142,13 @@ Sub TEC_Efface_Ligne_Detail() '2023-12-23 @ 07:05
     'Free up memory - 2024-02-23
     Set sh = Nothing
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - TEC_Efface_Ligne_Detail() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("TEC_Efface_Ligne_Detail()", timerStart)
 
 End Sub
 
 Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
 
@@ -207,16 +197,13 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - TEC_AdvancedFilter_And_Sort() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("TEC_AdvancedFilter_And_Sort()", timerStart)
 
 End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -241,16 +228,13 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - TEC_Efface_Formulaire() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("Workbook_Open()", timerStart)
 
 End Sub
 
 Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -366,16 +350,13 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - Add_Or_Update_TEC_Record_To_DB() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    '{T2BRs}Add_Or_Update_TEC_Record_To_DB{T2BRe}
 
 End Sub
 
 Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
@@ -446,16 +427,13 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & "Add_Or_Update_TEC_Record_Local() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("Add_Or_Update_TEC_Record_Local()", timerStart)
 
 End Sub
 
 Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
 
     If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
         GoTo EndOfProcedure
@@ -495,9 +473,7 @@ EndOfProcedure:
 
     'ufSaisieHeures.txtClient.SetFocus
     
-    Debug.Print vbNewLine & String(55, "*") & vbNewLine & _
-        Now() & " - Refresh_ListBox_And_Add_Hours() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(55, "*")
+    Call Output_Timer_Results("Refresh_ListBox_And_Add_Hours()", timerStart)
     
 End Sub
 

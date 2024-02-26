@@ -3,8 +3,7 @@ Option Explicit
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     Application.ScreenUpdating = False
     
@@ -56,16 +55,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Set connStr = Nothing
     Set recSet = Nothing
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & "- Client_List_Import_All() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("Client_List_Import_All()", timerStart)
         
 End Sub
 
 Sub TEC_Import_All() '2024-02-14 @ 06:19
     
-    Dim timerStart As Double 'Speed tests - 2024-02-20
-    timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer
     
     Application.ScreenUpdating = False
     
@@ -110,9 +106,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Set sourceRange = Nothing
     Set destinationRange = Nothing
 
-    Debug.Print vbNewLine & String(45, "*") & vbNewLine & _
-        Now() & " - TEC_Import_All() - Secondes = " & Timer - timerStart & _
-        vbNewLine & String(45, "*")
+    Call Output_Timer_Results("TEC_Import_All()", timerStart)
     
 End Sub
 
