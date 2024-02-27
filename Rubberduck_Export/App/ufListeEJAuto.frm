@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto
    ClientHeight    =   4725
    ClientLeft      =   7125
    ClientTop       =   6465
-   ClientWidth     =   5355
+   ClientWidth     =   5445
    OleObjectBlob   =   "ufListeEJAuto.frx":0000
 End
 Attribute VB_Name = "ufListeEJAuto"
@@ -33,7 +33,12 @@ Private Sub UserForm_Initialize()
     Dim rowJEAutoDesc As Long
     Set MyListBoxClass = New clsCListboxAlign 'declare the class
     
-    lsbDescEJAuto.ColumnCount = 2
+    With lsbDescEJAuto
+        .ColumnHeads = True
+        .ColumnCount = 2
+        .ColumnWidths = "220; 20"
+        .RowSource = "Admin!T81:U81"
+    End With
     rowJEAutoDesc = wshEJRecurrente.Range("L9999").End(xlUp).row  'Last Row Used in wshEJRecurrente (Description Section)
 
     Dim r As Integer
@@ -45,9 +50,9 @@ Private Sub UserForm_Initialize()
         End With
     Next r
 
-    'Corrige le format des colonnes
+    'Corrige le format des colonnes (Left, Center & Right)
     MyListBoxClass.Left Me.lsbDescEJAuto, 1
-    MyListBoxClass.Center Me.lsbDescEJAuto, 2
+    MyListBoxClass.Right Me.lsbDescEJAuto, 2
     
 End Sub
 

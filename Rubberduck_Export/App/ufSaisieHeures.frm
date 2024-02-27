@@ -46,7 +46,7 @@ End Sub
 '******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timer3Start As Double: timer3Start = Timer
     
     Call Client_List_Import_All
     
@@ -67,8 +67,26 @@ Sub UserForm_Activate()
    
     rmv_state = rmv_modeInitial
     
-    Call Output_Timer_Results("ufSaisieHeures - UserForm_Activate()", timerStart)
+    Call Output_Timer_Results("ufSaisieHeures - UserForm_Activate()", timer3Start)
     
+End Sub
+
+Private Sub UserForm_Initialize()
+
+    Dim MyListBoxClass As clsCListboxAlign
+    Set MyListBoxClass = New clsCListboxAlign 'declare the class
+
+    'Corrige le format des colonnes (Left, Center & Right)
+'    MyListBoxClass.Right Me.ListBox2, 1
+'    MyListBoxClass.Right Me.ListBox2, 2
+'    MyListBoxClass.Right Me.ListBox2, 3
+'    MyListBoxClass.Right Me.ListBox2, 4
+'    MyListBoxClass.Right Me.ListBox2, 5
+'    MyListBoxClass.Right Me.ListBox2, 6
+'    MyListBoxClass.Right Me.ListBox2, 7
+'    MyListBoxClass.Right Me.ListBox2, 8
+'    MyListBoxClass.Right Me.ListBox2, 9
+
 End Sub
 
 Private Sub UserForm_Terminate()
@@ -125,6 +143,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
     End If
 
 exit_sub:
+
     Call Output_Timer_Results("ufSaisieHeures - cmbProfessionnel_AfterUpdate()", timerStart)
 
 End Sub
@@ -279,7 +298,7 @@ Sub txtHeures_AfterUpdate()
         strHeures = Replace(strHeures, ".", ",")
     End If
     
-    If IsNumeric(strHeures) = False Then
+    If IsNumeric(strHeures) = False Or strHeures > 24 Then
         MsgBox _
         Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
         Title:="Validation d'une valeur numérique", _

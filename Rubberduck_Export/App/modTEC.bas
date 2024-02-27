@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.4.4" '2024-02-25 @ 17:49
+Global Const gAppVersion As String = "v2.4.5" '2024-02-25 @ 17:49
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 
@@ -309,7 +309,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstFacturee").value = False
-            rs.Fields("DateFacturee").value = Null
+            rs.Fields("DateFacture").value = Null
             rs.Fields("EstDetruit").value = False
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = ""
@@ -402,18 +402,18 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
 
         If tecID > 0 Then 'Modify the record
             With wshBaseHours
-                .Range("E" & nextRowNumber).value = wshAdmin.Range("TEC_Client_ID").value
-                .Range("F" & nextRowNumber).value = ufSaisieHeures.txtClient.value
-                .Range("G" & nextRowNumber).value = ufSaisieHeures.txtActivite.value
-                .Range("H" & nextRowNumber).value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
-                .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
-                .Range("J" & nextRowNumber).value = ufSaisieHeures.chbFacturable.value
-                .Range("K" & nextRowNumber).value = Now()
-                .Range("L" & nextRowNumber).value = False
-                .Range("M" & nextRowNumber).value = CDate("")
-                .Range("N" & nextRowNumber).value = False
-                .Range("O" & nextRowNumber).value = gAppVersion
-                .Range("P" & nextRowNumber).value = ""
+                .Range("E" & rowToBeUpdated).value = wshAdmin.Range("TEC_Client_ID").value
+                .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
+                .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
+                .Range("H" & rowToBeUpdated).value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+                .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
+                .Range("J" & rowToBeUpdated).value = ufSaisieHeures.chbFacturable.value
+                .Range("K" & rowToBeUpdated).value = Now()
+                .Range("L" & rowToBeUpdated).value = False
+                .Range("M" & rowToBeUpdated).value = ""
+                .Range("N" & rowToBeUpdated).value = False
+                .Range("O" & rowToBeUpdated).value = gAppVersion
+                .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
             wshBaseHours.Range("K" & rowToBeUpdated).value = Now()

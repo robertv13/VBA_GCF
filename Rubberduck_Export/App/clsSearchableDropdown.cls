@@ -39,8 +39,8 @@ Private m_UpdateControl As Boolean
 
 Private m_textboxStartingState As Boolean        'Used to decide when to remove the starting text
 
-Private WithEvents myListBox As MSForms.ListBox
-Attribute myListBox.VB_VarHelpID = -1
+Private WithEvents MyListBox As MSForms.ListBox
+Attribute MyListBox.VB_VarHelpID = -1
 Private WithEvents myTextBox As MSForms.TextBox
 Attribute myTextBox.VB_VarHelpID = -1
 
@@ -91,7 +91,7 @@ End Property
 
 Public Property Set SearchListBox(ByVal oListBox As MSForms.ListBox)
     
-    Set myListBox = oListBox
+    Set MyListBox = oListBox
     Call InitializeListBox
 
 End Property
@@ -122,7 +122,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'If the user doubleclicks or presses enter, place the selected value in the
     'textbox
     If m_UpdateControl = False Then
-        SetTextboxValue myListBox.value
+        SetTextboxValue MyListBox.value
         Call ShowListbox(False)
     End If
 
@@ -140,7 +140,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     ElseIf KeyCode = vbKeyReturn Then
         'swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        SetTextboxValue myListBox.value
+        SetTextboxValue MyListBox.value
         Call ShowListbox(False)
     End If
 
@@ -161,7 +161,7 @@ Private Sub List_MoveDown()
     
     m_UpdateControl = True
     If m_textboxStartingState = False Then
-        With myListBox
+        With MyListBox
             .SetFocus
             If .ListIndex < .ListCount - 1 Then
                 .ListIndex = .ListIndex + 1
@@ -177,15 +177,17 @@ End Sub
 
 Private Sub UpdateListbox(items As Variant)
  
-    With myListBox
+    With MyListBox
         'Reload listbox
         .Clear
         .ForeColor = rgbBlack
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
-            .List = Array("Je n'ai rien trouvé!")
-            .ForeColor = rgbRed
+            If m_textboxStartingState <> True Then
+                .List = Array("Je n'ai rien trouvé!")
+                .ForeColor = rgbRed
+            End If
         Else
             'items found
             .List = items
@@ -198,7 +200,7 @@ Private Sub UpdateListbox(items As Variant)
         If m_showAllMatches = True Then
             Call MakeAllMatchesAvailable
         Else
-            .Height = ResizeListbox(myListBox, 11)
+            .Height = ResizeListbox(MyListBox, 11)
         End If
     
     End With
@@ -207,10 +209,10 @@ End Sub
 
 Private Sub MakeAllMatchesAvailable()
 
-    With myListBox
+    With MyListBox
         'To get the scrollbar working correctly it is necessary to turn IntegralHeight off and on
         .IntegralHeight = False
-        .Height = ResizeListbox(myListBox, myTextBox.Font.Size)
+        .Height = ResizeListbox(MyListBox, myTextBox.Font.Size)
         .IntegralHeight = True
 
         'List index will not highlight to first unless the second one is
@@ -224,13 +226,13 @@ End Sub
 Private Sub InitializeListBox()
     
     'Remove any automatic resizing of the listbox
-    myListBox.IntegralHeight = False
+    MyListBox.IntegralHeight = False
 
 End Sub
 
 Public Sub CheckListBoxFirstItem()
     
-    If myListBox.ListIndex = 0 Then
+    If MyListBox.ListIndex = 0 Then
         m_UpdateControl = False
         SelectTextBox
     End If
@@ -239,17 +241,19 @@ End Sub
 
 Private Function ShowListbox(Optional ByVal show As Boolean = True)
     
-    If rmv_state = rmv_modeInitial Or rmv_state = rmv_modeAffichage Then
+    If rmv_state = rmv_modeInitial Or _
+        rmv_state = rmv_modeAffichage Or _
+        m_textboxStartingState = True Then
         show = False
     End If
     
-    myListBox.Visible = show
+    MyListBox.Visible = show
 
 End Function
 
 Private Function SetListboxPosition()
     
-    With myListBox
+    With MyListBox
         .Left = myTextBox.Left
         .Top = myTextBox.Top + (myTextBox.Height)
         .width = myTextBox.width
@@ -258,17 +262,17 @@ Private Function SetListboxPosition()
     
 End Function
 
-Private Function ResizeListbox(myListBox As MSForms.ListBox, fontSize As Double) As Double
+Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double) As Double
 
     'Set listbox font to the same size as the textbox
-    myListBox.Font.Size = fontSize
+    MyListBox.Font.Size = fontSize
 
     Dim ItemCount As Long
-    ItemCount = IIf(myListBox.ListCount > m_maxRows, m_maxRows, myListBox.ListCount)
+    ItemCount = IIf(MyListBox.ListCount > m_maxRows, m_maxRows, MyListBox.ListCount)
 
     Dim itemSize As Double
     'the font size is itself plus a quarter for the space between rows
-    itemSize = myListBox.Font.Size + (myListBox.Font.Size / 4)
+    itemSize = MyListBox.Font.Size + (MyListBox.Font.Size / 4)
     
     ResizeListbox = (itemSize * ItemCount) + 5
     
@@ -295,12 +299,12 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     
     'If the user presses keyup/down or enter while in the textbox
     If KeyCode = vbKeyDown Then
-        List_MoveDown
+        Call List_MoveDown
     ElseIf KeyCode = vbKeyReturn Then
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        If IsNull(myListBox.value) = False And m_textboxStartingState = False Then
-            SetTextboxValue myListBox.value
+        If IsNull(MyListBox.value) = False And m_textboxStartingState = False Then
+            SetTextboxValue MyListBox.value
         End If
         Call ShowListbox(False)
     ElseIf KeyCode = vbKeyEscape Then
@@ -317,7 +321,7 @@ Private Sub SetTextboxValue(ByVal text As String)
 
     If m_UpdateControl = False Then
         
-        With myListBox
+        With MyListBox
             m_UpdateControl = True
             'Set the listbox selected value to the textbox
             'and hide the listbox

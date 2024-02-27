@@ -16,7 +16,7 @@ Sub Test_Advanced_Filter_1()
 
     Dim ws As Worksheet: Set ws = wshBaseHours
     
-    Call Destination_Clear
+'    Call Destination_Clear
     
     wshBaseHours.Range("$A$2:$P$267").AdvancedFilter _
         action:=xlFilterCopy, _

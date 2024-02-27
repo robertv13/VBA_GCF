@@ -55,6 +55,8 @@ End Sub
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
+    Dim timerStart As Double: timerStart = Timer
+    
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
 
@@ -99,6 +101,8 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 '        Title:="Vérification du nombre de comptes", _
 '        Buttons:=vbInformation
         
+    Call Output_Timer_Results("ChartOfAccount_Import_All()", timerStart)
+
 End Sub
 
 Sub RedefineDynamicRange() '2024-02-13 @ 13:30
@@ -128,10 +132,14 @@ End Sub
 
 Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
     
+    Dim timerStart As Double: timerStart = Timer
+    
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
         If wsh.codeName <> "wshMenu" Then wsh.Visible = xlSheetHidden
     Next wsh
+    
+    Call Output_Timer_Results("Hide_All_Worksheet_Except_Menu()", timerStart)
     
 End Sub
 

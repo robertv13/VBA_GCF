@@ -150,27 +150,6 @@ Sub SlideIn_SaisieHeures()
     End With
 End Sub
 
-Sub SlideOut_ExportHeures()
-    With ActiveSheet.Shapes("btnExportHeures")
-        For width = 32 To maxWidth
-            .Height = width
-          ActiveSheet.Shapes("icoExportHeures").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Export des Heures"
-    End With
-End Sub
-
-Sub SlideIn_ExportHeures()
-    With ActiveSheet.Shapes("btnExportHeures")
-        For width = maxWidth To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoExportHeures").Left = width - 32
-        Next width
-        ActiveSheet.Shapes("btnExportHeures").TextFrame2.TextRange.Characters.text = ""
-    End With
-End Sub
-
 Sub SlideOut_PrepFact()
     With ActiveSheet.Shapes("btnPrepFact")
         For width = 32 To 182
@@ -362,6 +341,8 @@ End Sub
 
 Sub menuTEC_Click() '2024-02-13 @ 13:48
     
+    Dim timerStart As Double: timerStart = Timer
+    
     SlideIn_TEC
     
     wshMenuTEC.Visible = xlSheetVisible
@@ -371,9 +352,14 @@ Sub menuTEC_Click() '2024-02-13 @ 13:48
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
+    Call Output_Timer_Results("menuTEC_Click()", timerStart)
+
 End Sub
 
 Sub menuFacturation_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
@@ -386,9 +372,14 @@ Sub menuFacturation_Click() '2024-02-13 @ 13:48
     wshMenuFACT.Activate
     wshMenuFACT.Range("A1").Select
 
+    Call Output_Timer_Results("menuFacturation_Click()", timerStart)
+
 End Sub
 
 Sub menuDebours_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer
+    
     SlideIn_Debours
     
     wshMenuDEBOURS.Visible = xlSheetVisible
@@ -397,9 +388,14 @@ Sub menuDebours_Click() '2024-02-13 @ 13:48
     wshMenuDEBOURS.Activate
     wshMenuDEBOURS.Range("A1").Select
 
+    Call Output_Timer_Results("menuDebours_Click()", timerStart)
+
 End Sub
 
 Sub menuComptabilite_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer
+    
     SlideIn_Comptabilite
     
     wshMenuCOMPTA.Visible = xlSheetVisible
@@ -411,23 +407,35 @@ Sub menuComptabilite_Click() '2024-02-13 @ 13:48
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select
 
+    Call Output_Timer_Results("menuComptabilite_Click()", timerStart)
+
 End Sub
 
 Sub menuParametres_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideIn_Parametres
     
     wshAdmin.Visible = xlSheetVisible
     wshAdmin.Select
     
+    Call Output_Timer_Results("menuParametres_Click()", timerStart)
+    
 End Sub
 
 Sub EXIT_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideIn_Exit
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
         If wsh.name <> "Menu" Then wsh.Visible = xlSheetHidden
     Next wsh
+
+    Call Output_Timer_Results("EXIT_Click()", timerStart)
 
     ThisWorkbook.Close
     

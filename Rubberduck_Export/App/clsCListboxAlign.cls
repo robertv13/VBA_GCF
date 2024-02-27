@@ -34,26 +34,26 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     Dim lngTopIndex As Long
     Dim vntColWidths As Variant
     
-    ' get label control to help size text
+    'Get label control to help size text
     Set labSizer = m_GetSizer(LBox.Parent)
     If labSizer Is Nothing Then Exit Sub
     
     ReDim sngWidth(LBox.ColumnCount) As Single
     If Len(LBox.ColumnWidths) > 0 Then
-        ' decode column widths
+        'Decode column widths
         vntColWidths = Split(LBox.ColumnWidths, ";")
-        ' fudge for gap between cols
+        'Fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
             sngWidth(intColumn) = Val(vntColWidths(intColumn - 1)) - 5
         Next
     Else
-        ' assume default sizes
+        'Assume default sizes
         For intColumn = 1 To LBox.ColumnCount
             sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
     End If
     
-    ' generic font attributes
+    'Generic font attributes
     With labSizer
         With .Font
             .name = LBox.Font.name
@@ -64,7 +64,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
         .WordWrap = False
     End With
     
-    ' begin processing column width to center align
+    'Begin processing column width to center align
     lngTopIndex = LBox.TopIndex
     For intColumn = 1 To LBox.ColumnCount
         If intColumn = WhichColumn Or WhichColumn = -1 Then
@@ -104,14 +104,14 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     ReDim sngWidth(LBox.ColumnCount) As Single
     
     If Len(LBox.ColumnWidths) > 0 Then
-        ' decode column widths
+        'Decode column widths
         vntColWidths = Split(LBox.ColumnWidths, ";")
-        ' fudge for gap between cols
+        'Fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
             sngWidth(intColumn) = Val(vntColWidths(1)) - 5
         Next
     Else
-        ' assume default sizes
+        'Assume default sizes
         For intColumn = 1 To LBox.ColumnCount
             sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
@@ -120,7 +120,7 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     lngTopIndex = LBox.TopIndex
     For intColumn = 1 To LBox.ColumnCount
         If intColumn = WhichColumn Or WhichColumn = -1 Then
-            ' if you say to left align this column or left align all columns
+            'If you say to left align this column or left align all columns
             For lngIndex = 0 To LBox.ListCount - 1
                 LBox.TopIndex = lngIndex
                 LBox.List(lngIndex, intColumn - 1) = Trim(LBox.List(lngIndex, intColumn - 1))
@@ -145,7 +145,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
     Dim intColumn As Integer
     Dim lngTopIndex As Long
     Dim vntColWidths As Variant
-    ' get label control to help size text
+    'Get label control to help size text
     Set labSizer = m_GetSizer(LBox.Parent)
     If labSizer Is Nothing Then Exit Sub
     
@@ -155,12 +155,12 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
         vntColWidths = Split(LBox.ColumnWidths, ";")
         ' fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = Val(vntColWidths(1)) - 5
+            sngWidth(intColumn) = Val(vntColWidths(1)) - 10
         Next
     Else
         ' assume default sizes
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = (LBox.width - (15 * LBox.ColumnCount)) / LBox.ColumnCount
+            sngWidth(intColumn) = (LBox.width - (25 * LBox.ColumnCount)) / LBox.ColumnCount
         Next intColumn
     End If
     
@@ -177,7 +177,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
     lngTopIndex = LBox.TopIndex
     For intColumn = 1 To LBox.ColumnCount
         If intColumn = WhichColumn Or WhichColumn = -1 Then
-            'if you say to right align this column, or right align all columns
+            'If you say to right align this column, or right align all columns
             For lngIndex = 0 To LBox.ListCount - 1
                 LBox.TopIndex = lngIndex
                 labSizer.width = LBox.width
@@ -197,6 +197,8 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
 End Sub
 
 Private Property Get m_GetSizer(Base As MSForms.UserForm) As MSForms.Label
+    
     Set m_GetSizer = Base.Controls.Add("Forms.Label.1", "labSizer", True)
+
 End Property
 

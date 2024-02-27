@@ -10,12 +10,12 @@ End Sub
 
 Sub SaisieHeures_Click()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timer2Start As Double: timer2Start = Timer
     
     SlideIn_SaisieHeures
     Load ufSaisieHeures
     ufSaisieHeures.show vbModal
     
-    Call Output_Timer_Results("SaisieHeures_Click()", timerStart)
+    Call Output_Timer_Results("SaisieHeures_Click()", timer2Start)
 
 End Sub

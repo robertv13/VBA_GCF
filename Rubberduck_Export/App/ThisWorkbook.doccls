@@ -1,4 +1,5 @@
 ﻿Option Explicit
+Public sessionTimerStart As Double
 
 Private Sub Workbook_Open()
 
@@ -7,6 +8,13 @@ Private Sub Workbook_Open()
     Application.ScreenUpdating = False
 '    Windows(ThisWorkbook.name).Visible = False
    
+    Dim lastUsedRow As Long
+    lastUsedRow = wshLogAppli.Range("A99999").End(xlUp).row
+    wshLogAppli.Range("A" & lastUsedRow).value = Now()
+    wshLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
+    wshLogAppli.Range("C" & lastUsedRow).value = 0
+    sessionTimerStart = Timer
+    
     Call Hide_All_Worksheet_Except_Menu
     
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
@@ -37,6 +45,8 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     Cancel = False
     
     Call Output_Timer_Results("Workbook_BeforeClose()", timerStart)
+    
+    Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
     
 End Sub
 
