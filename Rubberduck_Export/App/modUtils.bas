@@ -21,8 +21,8 @@ Sub List_All_Formulas() '2024-02-19 @ 07:41 - ChatGPT
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long, r As Long, c As Long
-    lastUsedRow = wshDocFormules.Range("E99999").End(xlUp).row 'Last used row
-    If lastUsedRow > 1 Then wshDocFormules.Range("A2:G" & lastUsedRow).ClearContents
+    lastUsedRow = wshzDocFormules.Range("E99999").End(xlUp).row 'Last used row
+    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).ClearContents
     
     'Create an Array to receive the formulas informations
     Dim OutputArray(1499, 7) As Variant
@@ -32,8 +32,8 @@ Sub List_All_Formulas() '2024-02-19 @ 07:41 - ChatGPT
     Dim codeName As String, name As String, usedRange As String, cellsCount As String
     r = 0
     For Each ws In wb.Sheets
-        If ws.codeName = "wshDocNamedRange" Or _
-            ws.codeName = "wshDocFormules" Then
+        If ws.codeName = "wshzDocNamedRange" Or _
+            ws.codeName = "wshzDocFormules" Then
                 GoTo Continue_for_each_ws
         End If
         Debug.Print r; ws.name; Tab(20); ws.codeName; Tab(45); Now()
@@ -62,7 +62,7 @@ Sub List_All_Formulas() '2024-02-19 @ 07:41 - ChatGPT
 Continue_for_each_ws:
     Next ws
     'Transfer the array data to the worksheet
-    With wshDocFormules
+    With wshzDocFormules
         .Range(.Cells(2, 1), .Cells(r + 1, 8)).value = OutputArray
     End With
 
@@ -383,7 +383,7 @@ Sub Output_Timer_Results(subName As String, t As Double)
 
     'modeOper = 2 - Dump to worksheet
     If modeOper = 2 Then
-        With wshLogAppli
+        With wshzDocLogAppli
             Dim lastUsedRow As Long
             lastUsedRow = .Range("A9999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record

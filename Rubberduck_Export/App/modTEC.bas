@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.4.5" '2024-02-25 @ 17:49
+Global Const gAppVersion As String = "v2.4.6" '2024-02-27 @ 08:12
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 

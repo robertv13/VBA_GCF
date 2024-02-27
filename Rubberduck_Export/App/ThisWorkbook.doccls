@@ -9,10 +9,10 @@ Private Sub Workbook_Open()
 '    Windows(ThisWorkbook.name).Visible = False
    
     Dim lastUsedRow As Long
-    lastUsedRow = wshLogAppli.Range("A99999").End(xlUp).row
-    wshLogAppli.Range("A" & lastUsedRow).value = Now()
-    wshLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
-    wshLogAppli.Range("C" & lastUsedRow).value = 0
+    lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
+    wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
+    wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
+    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
     sessionTimerStart = Timer
     
     Call Hide_All_Worksheet_Except_Menu
@@ -38,9 +38,9 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     
     Dim timerStart As Double: timerStart = Timer
     
-    wshMenu.Activate
-    
     Call Hide_All_Worksheet_Except_Menu
+    
+    wshMenu.Activate
     
     Cancel = False
     

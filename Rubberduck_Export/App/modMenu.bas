@@ -428,16 +428,14 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     
     Dim timerStart As Double: timerStart = Timer
 
-    SlideIn_Exit
+    Call SlideIn_Exit
     
-    Dim wsh As Worksheet
-    For Each wsh In ThisWorkbook.Worksheets
-        If wsh.name <> "Menu" Then wsh.Visible = xlSheetHidden
-    Next wsh
+    Call Hide_All_Worksheet_Except_Menu
 
     Call Output_Timer_Results("EXIT_Click()", timerStart)
 
-    ThisWorkbook.Close
+    ThisWorkbook.Close SaveChanges:=True
+    Application.Quit
     
 End Sub
 

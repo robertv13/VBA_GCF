@@ -121,15 +121,6 @@ Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     
 End Sub
 
-Sub Hide_All_Worksheet_Except_Active_Sheet() '2024-02-17 @ 07:29
-    
-    Dim wsh As Worksheet
-    For Each wsh In ThisWorkbook.Worksheets
-        If wsh.name <> ActiveSheet.name Then wsh.Visible = xlSheetHidden
-    Next wsh
-    
-End Sub
-
 Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
     
     Dim timerStart As Double: timerStart = Timer

@@ -394,34 +394,36 @@ End Sub
 Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     rmv_state = rmv_modeAffichage
-    
+'    Stop
+'    ufSaisieHeures.ListBox2.ColumnWidths = "35; 30; 55; 130; 180; 35; 80; 40; 85"
+'    Stop
     With ufSaisieHeures
         wshAdmin.Range("TEC_Current_ID").value = .ListBox2.List(.ListBox2.ListIndex, 0)
-    
+
         .cmbProfessionnel.value = .ListBox2.List(.ListBox2.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
-        
+
         .txtDate.value = Format(.ListBox2.List(.ListBox2.ListIndex, 2), "dd/mm/yyyy")
         .txtDate.Enabled = False
-        
+
         .txtClient.value = .ListBox2.List(.ListBox2.ListIndex, 3)
         savedClient = .txtClient.value
         wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
-         
+
         .txtActivite.value = .ListBox2.List(.ListBox2.ListIndex, 4)
         savedActivite = .txtActivite.value
-        
+
         .txtHeures.value = Format(.ListBox2.List(.ListBox2.ListIndex, 5), "#0.00")
         savedHeures = .txtHeures.value
-        
+
         .txtCommNote.value = .ListBox2.List(.ListBox2.ListIndex, 6)
         savedCommNote = .txtCommNote.value
-        
+
         .chbFacturable.value = CBool(.ListBox2.List(.ListBox2.ListIndex, 7))
         savedFacturable = .chbFacturable.value
-        
+
     End With
-    
+
     With ufSaisieHeures
         ufSaisieHeures.cmdClear.Enabled = True
         ufSaisieHeures.cmdAdd.Enabled = False
