@@ -423,7 +423,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         End If
     End If
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     
     'Close recordset and connection
     On Error Resume Next
@@ -503,7 +503,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         End If
     End If
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     
     'Close recordset and connection
     On Error Resume Next

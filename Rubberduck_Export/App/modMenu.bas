@@ -150,6 +150,27 @@ Sub SlideIn_SaisieHeures()
     End With
 End Sub
 
+Sub SlideOut_TEC_TDB()
+    With ActiveSheet.Shapes("btnTEC_TDB")
+        For width = 32 To maxWidth
+            .Height = width
+            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = "Tableau de bord"
+    End With
+End Sub
+
+Sub SlideIn_TEC_TDB()
+    With ActiveSheet.Shapes("btnTEC_TDB")
+        For width = maxWidth To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+        Next width
+        ActiveSheet.Shapes("btnTEC_TDB").TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
 Sub SlideOut_PrepFact()
     With ActiveSheet.Shapes("btnPrepFact")
         For width = 32 To 182

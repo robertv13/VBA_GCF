@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.4.6" '2024-02-27 @ 08:12
+Global Const gAppVersion As String = "v2.5" '2024-02-29 @ 14:16
 
 Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
 
@@ -176,16 +176,16 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
         lastResultRow = .Range("Y99999").End(xlUp).row
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
-            .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("AA3"), _
+            .SortFields.clear
+            .SortFields.add Key:=wshBaseHours.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("Z3"), _
+            .SortFields.add Key:=wshBaseHours.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.add Key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
@@ -258,7 +258,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstDetruit").value = True
             rs.Fields("VersionApp").value = gAppVersion
-            rs.Update
+            rs.update
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TEC_ID '" & tecID & "' ne peut être trouvé!", _
@@ -336,7 +336,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
         End If
     End If
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     
     'Close recordset and connection
     On Error Resume Next
@@ -448,7 +448,7 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
         
     With ufSaisieHeures.ListBox2
         .ColumnHeads = True
-        .ColumnCount = 9
+        .ColumnCount = 10
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
         .RowSource = "TEC_Local!Y3:AG" & lastRow
     End With

@@ -1,21 +1,26 @@
 ﻿Option Explicit
 
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    SlideIn_SaisieHeures
-End Sub
-
 Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
     SlideOut_SaisieHeures
 End Sub
 
-Sub SaisieHeures_Click()
+Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+    SlideIn_SaisieHeures
+    SlideOut_TEC_TDB
+End Sub
 
-    Dim timer2Start As Double: timer2Start = Timer
-    
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+   SlideIn_TEC_TDB
+   SlideIn_SaisieHeures
+End Sub
+
+Sub SaisieHeures_Click()
     SlideIn_SaisieHeures
     Load ufSaisieHeures
     ufSaisieHeures.show vbModal
-    
-    Call Output_Timer_Results("SaisieHeures_Click()", timer2Start)
+End Sub
 
+Sub TEC_TDB_Click()
+    SlideIn_TEC_TDB
+    MsgBox "Procédure 'Tableau de bord - TEC' à implanter", vbInformation
 End Sub

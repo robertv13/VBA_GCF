@@ -184,7 +184,7 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields("Débit").value = wshJE.Range("G" & l).value
             rs.Fields("Crédit").value = wshJE.Range("H" & l).value
             rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
-        rs.Update
+        rs.update
     Next l
     
     'Close recordset and connection
@@ -250,13 +250,13 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
             rs.Fields("Débit").value = wshJE.Range("G" & l).value
             rs.Fields("Crédit").value = wshJE.Range("H" & l).value
             rs.Fields("AutreRemarque").value = wshJE.Range("I" & l).value
-        rs.Update
+        rs.update
     Next l
     
     'Empty Line at the end
     rs.AddNew
         rs.Fields("No_EJA").value = nextEJANo
-    rs.Update
+    rs.update
     
     'Close recordset and connection
     On Error Resume Next

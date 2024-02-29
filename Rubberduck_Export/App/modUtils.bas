@@ -143,7 +143,7 @@ Sub List_All_Subs_And_Functions() '2024-02-26 @ 11:18
     Dim rowNumber As Integer
     For rowNumber = 301 To 2 Step -1
         If wsOutput.Range("A" & rowNumber).value = "" Then
-            wsOutput.Range("A" & rowNumber).EntireRow.Delete
+            wsOutput.Range("A" & rowNumber).EntireRow.delete
         ElseIf wsOutput.Range("A" & rowNumber).value = "1" Then
             wsOutput.Range("A" & rowNumber).value = "1_Module"
         ElseIf wsOutput.Range("A" & rowNumber).value = "2" Then
@@ -368,6 +368,59 @@ Sub Add_Columns_To_Active_Worksheet()
     Debug.Print colToAdd & " columns added to the worksheet."
 End Sub
 
+Sub Build_Worksheet_Columns() '2024-02-28 @ 06:40
+
+    Dim arr(1 To 20, 1 To 2) As Variant
+    Dim output(1 To 200, 1 To 5) As Variant
+    Dim r As Long
+    r = 0
+    r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
+    r = r + 1: arr(r, 1) = "ClientsImportés": arr(r, 2) = "A1:J1"
+    r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
+    r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
+    r = r + 1: arr(r, 1) = "Doc_LogAppli": arr(r, 2) = "A1:C1"
+    r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
+    r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
+    r = r + 1: arr(r, 1) = "Documentation": arr(r, 2) = "A1:E1"
+    r = r + 1: arr(r, 1) = "Encaissements_Entête": arr(r, 2) = "A3:F3"
+    r = r + 1: arr(r, 1) = "Encaissements_Détail": arr(r, 2) = "A3:F3"
+    r = r + 1: arr(r, 1) = "Factures": arr(r, 2) = "A3:T3"
+    r = r + 1: arr(r, 1) = "FacturesLignes": arr(r, 2) = "A3:G3"
+    r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
+    r = r + 1: arr(r, 1) = "EJ_Auto": arr(r, 2) = "C1:J1"
+    r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
+    r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
+    r = 1
+    Dim i As Long, colNo As Integer
+    For i = 1 To UBound(arr, 1)
+        If arr(i, 1) = "" Then Exit For
+        Dim rng As Range, rngAddress As String, cell As Range
+        Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
+        colNo = 0
+        For Each cell In rng
+            colNo = colNo + 1
+            output(r, 2) = arr(i, 1)
+            output(r, 3) = Chr(64 + colNo)
+            output(r, 4) = colNo
+            output(r, 5) = cell.value
+            r = r + 1
+        Next cell
+    Next i
+    
+    'Setup and prepare the output worksheet
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
+    Dim lastUsedRow As Long
+    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
+    wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
+    
+    wsOutput.Range("A2").Resize(r, 5).value = output
+    
+    Set rng = Nothing
+    Set cell = Nothing
+    Set wsOutput = Nothing
+    
+End Sub
+
 Sub Output_Timer_Results(subName As String, t As Double)
 
     Dim modeOper As Integer
@@ -394,3 +447,4 @@ Sub Output_Timer_Results(subName As String, t As Double)
     End If
 
 End Sub
+

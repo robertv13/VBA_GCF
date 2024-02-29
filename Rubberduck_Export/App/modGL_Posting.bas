@@ -54,7 +54,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
         rs.Fields("AutreRemarque").value = desc
-    rs.Update
+    rs.update
     
     'Credit side
     rs.AddNew
@@ -67,7 +67,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
         rs.Fields("Compte").value = "Comptes-Clients" 'Hardcoded
         rs.Fields("Crédit").value = montant
         rs.Fields("AutreRemarque").value = desc
-    rs.Update
+    rs.update
 
     'Close recordset and connection
     On Error Resume Next

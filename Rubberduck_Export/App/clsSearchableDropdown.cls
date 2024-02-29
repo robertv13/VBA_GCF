@@ -179,15 +179,13 @@ Private Sub UpdateListbox(items As Variant)
  
     With MyListBox
         'Reload listbox
-        .Clear
+        .clear
         .ForeColor = rgbBlack
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
-            If m_textboxStartingState <> True Then
                 .List = Array("Je n'ai rien trouvé!")
                 .ForeColor = rgbRed
-            End If
         Else
             'items found
             .List = items

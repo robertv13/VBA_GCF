@@ -198,7 +198,7 @@ End Sub
 
 Private Property Get m_GetSizer(Base As MSForms.UserForm) As MSForms.Label
     
-    Set m_GetSizer = Base.Controls.Add("Forms.Label.1", "labSizer", True)
+    Set m_GetSizer = Base.Controls.add("Forms.Label.1", "labSizer", True)
 
 End Property
 

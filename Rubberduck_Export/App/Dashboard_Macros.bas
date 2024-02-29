@@ -70,7 +70,7 @@ Sub wshARDashboard_Refresh()
     
         'Define the range for the table and create the table
         Set rng = ws.Range("P1:W" & lastResultRow)
-        Set tbl = ws.ListObjects.Add(xlSrcRange, rng, , xlYes)
+        Set tbl = ws.ListObjects.add(xlSrcRange, rng, , xlYes)
     
         'Define table properties
         tbl.name = "AgingSummary"

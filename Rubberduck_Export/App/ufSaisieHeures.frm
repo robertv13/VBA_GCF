@@ -62,6 +62,8 @@ Sub UserForm_Activate()
         .CompareMethod = vbTextCompare
     End With
 
+    Call Buttons_Enabled_True_Or_False(False, False, False, False)
+
     cmbProfessionnel.value = ""
     cmbProfessionnel.SetFocus
    
@@ -134,12 +136,12 @@ Public Sub cmbProfessionnel_AfterUpdate()
         Call Refresh_ListBox_And_Add_Hours
     End If
     
-    'Enabled the ADD button if the minimum fields are non empty
+    'Enabled the NEW & ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> "" And _
         Trim(Me.txtDate.value) <> "" And _
         Trim(Me.txtClient.value) <> "" And _
         Trim(Me.txtHeures.value) <> "" Then
-        cmdAdd.Enabled = True
+        Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
 
 exit_sub:
@@ -152,6 +154,14 @@ Private Sub txtDate_Enter()
 
     If txtDate.value = vbNullString Then
         txtDate.value = Format(CDate(Now()), "dd/mm/yyyy")
+    End If
+    
+    'Enabled the NEW & ADD button if the minimum fields are non empty
+    If Trim(Me.cmbProfessionnel.value) <> "" And _
+        Trim(Me.txtDate.value) <> "" And _
+        Trim(Me.txtClient.value) <> "" And _
+        Trim(Me.txtHeures.value) <> "" Then
+        Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
 
 End Sub
@@ -227,12 +237,12 @@ Private Sub txtDate_AfterUpdate()
         Call Refresh_ListBox_And_Add_Hours
     End If
     
-    'Enabled the ADD button if the minimum fields are non empty
+    'Enabled the NEW & ADD button if the minimum fields are non empty
     If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
         Trim(Me.txtDate.value) <> vbNullString And _
         Trim(Me.txtClient.value) <> vbNullString And _
         Trim(Me.txtHeures.value) <> vbNullString Then
-        cmdAdd.Enabled = True
+        Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
     
 End Sub
@@ -253,26 +263,15 @@ Sub txtClient_AfterUpdate()
             Trim(Me.txtDate.value) <> "" And _
             Trim(Me.txtClient.value) <> "" And _
             Trim(Me.txtHeures.value) <> "" Then
-            cmdAdd.Enabled = True
+            Call Buttons_Enabled_True_Or_False(True, True, False, False)
         End If
-    End If
-    
-    If rmv_state = rmv_modeAffichage Then
+    ElseIf rmv_state = rmv_modeAffichage Then
         If savedClient <> Me.txtClient.value Or _
             savedActivite <> Me.txtActivite.value Or _
             savedHeures <> Me.txtHeures.value Or _
             savedCommNote <> Me.txtCommNote Or _
             savedFacturable <> Me.chbFacturable Then
-            cmdUpdate.Enabled = True
-        End If
-    End If
-    
-    'Debug.Print rmv_state
-    
-    If rmv_state = rmv_modeAffichage Then
-        If Me.txtClient.value <> savedClient Then
-            cmdDelete.Enabled = False
-            cmdUpdate.Enabled = True
+            Call Buttons_Enabled_True_Or_False(False, False, True, True)
         End If
     End If
     
@@ -282,7 +281,7 @@ Private Sub txtActivite_AfterUpdate()
 
     If rmv_state = rmv_modeAffichage Then
         If txtActivite.value <> savedActivite Then
-            cmdUpdate.Enabled = True
+            Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
 
@@ -310,20 +309,19 @@ Sub txtHeures_AfterUpdate()
     
     Me.txtHeures.value = Format(strHeures, "#0.00")
     
-    'Enabled the ADD button if the minimum fields are non empty
+    'Enabled the NEW & ADD button if the minimum fields are non empty
     If rmv_state = rmv_modeCreation Then
         If Trim(Me.cmbProfessionnel.value) <> "" And _
-           Trim(Me.txtDate.value) <> "" And _
-           Trim(Me.txtClient.value) <> "" And _
-           Trim(Me.txtHeures.value) <> "" Then
-            cmdAdd.Enabled = True
+            Trim(Me.txtDate.value) <> "" And _
+            Trim(Me.txtClient.value) <> "" And _
+            Trim(Me.txtHeures.value) <> "" Then
+            Call Buttons_Enabled_True_Or_False(True, True, False, False)
         End If
     End If
 
     If rmv_state = rmv_modeAffichage Then
         If Me.txtHeures.value <> savedHeures Then
-            cmdDelete.Enabled = False
-            cmdUpdate.Enabled = True
+            Call Buttons_Enabled_True_Or_False(True, False, True, False)
         End If
     End If
     
@@ -333,8 +331,7 @@ Private Sub chbFacturable_AfterUpdate()
 
     If rmv_state = rmv_modeAffichage Then
         If Me.chbFacturable.value <> savedFacturable Then
-            cmdDelete.Enabled = False
-            cmdUpdate.Enabled = True
+            Call Buttons_Enabled_True_Or_False(True, False, True, False)
         End If
     End If
 
@@ -344,8 +341,7 @@ Private Sub txtCommNote_AfterUpdate()
 
     If rmv_state = rmv_modeAffichage Then
         If Me.txtCommNote.value <> savedCommNote Then
-            cmdDelete.Enabled = False
-            cmdUpdate.Enabled = True
+            Call Buttons_Enabled_True_Or_False(True, False, True, False)
         End If
     End If
 
@@ -396,10 +392,29 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rmv_state = rmv_modeAffichage
 '    Stop
 '    ufSaisieHeures.ListBox2.ColumnWidths = "35; 30; 55; 130; 180; 35; 80; 40; 85"
-'    Stop
+    
     With ufSaisieHeures
-        wshAdmin.Range("TEC_Current_ID").value = .ListBox2.List(.ListBox2.ListIndex, 0)
+    
+        Dim tecID As Long
+        tecID = .ListBox2.List(.ListBox2.ListIndex, 0)
+        wshAdmin.Range("TEC_Current_ID").value = tecID
+        
+        'Retrieve the record in wshBaseHours
+        Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
+        lastTECRow = wshBaseHours.Range("A99999").End(xlUp).row
+        Set lookupRange = wshBaseHours.Range("A3:A" & lastTECRow)
+        rowTecID = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+        
+        Dim isBilled As Boolean
+        isBilled = wshBaseHours.Range("L" & rowTecID).value
 
+        'Has this charge beeing INVOICED ?
+        If isBilled Then
+            MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
+                        vbNewLine & "une charge déjà FACTURÉE", vbExclamation
+            GoTo exit_sub
+        End If
+        
         .cmbProfessionnel.value = .ListBox2.List(.ListBox2.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
 
@@ -424,15 +439,25 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     End With
 
-    With ufSaisieHeures
-        ufSaisieHeures.cmdClear.Enabled = True
-        ufSaisieHeures.cmdAdd.Enabled = False
-        ufSaisieHeures.cmdUpdate.Enabled = False
-        ufSaisieHeures.cmdDelete.Enabled = True
-    End With
+exit_sub:
+
+    Call Buttons_Enabled_True_Or_False(True, False, False, True)
     
     rmv_state = rmv_modeAffichage
     
+    Set lookupRange = Nothing
+    
+End Sub
+
+Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
+                                  update As Boolean, delete As Boolean)
+    With ufSaisieHeures
+        .cmdClear.Enabled = clear
+        .cmdAdd.Enabled = add
+        .cmdUpdate.Enabled = update
+        .cmdDelete.Enabled = delete
+    End With
+
 End Sub
 
 'Sub CopyRangeToListBoxWithoutRowSource()

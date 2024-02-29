@@ -186,7 +186,7 @@ Sub FAC_Prep_Add_Invoice_Header_to_DB(r As Long)
         End If
     End If
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     
     'Prepare GL Posting
     wshFACPrep.Range("B33").value = wshFACFinale.Range("F80").value 'AR amount
@@ -255,7 +255,7 @@ Sub FAC_Prep_Add_Invoice_Details_to_DB()
             'rs.Fields("Row") = ""
         End With
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     Next r
     
     'Close recordset and connection
@@ -313,7 +313,7 @@ Sub FAC_Prep_Add_Comptes_Clients_to_DB()
     End With
     
     'Update the recordset (create the record)
-    rs.Update
+    rs.update
     
     'Close recordset and connection
     On Error Resume Next
@@ -362,7 +362,7 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
             rs.Fields("DateFacturee").value = CDate(wshFACPrep.Range("O3").value)
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = wshFACPrep.Range("O6").value
-            rs.Update
+            rs.update
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", _
@@ -372,7 +372,7 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
             Exit Sub
         End If
         'Update the recordset (create the record)
-        rs.Update
+        rs.update
         rs.Close
     Next r
     
@@ -518,7 +518,7 @@ Sub InvoiceGetAllTrans(inv As String)
         lastRow = .Range("A999999").End(xlUp).row 'Last wshFACInvList Row
         If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
         On Error Resume Next
-        .Names("Criterial").Delete
+        .Names("Criterial").delete
         On Error GoTo 0
         .Range("V3").value = wshFACPrep.Range("O6").value
         'Advanced Filter setup
@@ -772,16 +772,16 @@ Sub FACPrep_TEC_Advanced_Filter_And_Sort(profID As Long, _
         End If
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
-            .SortFields.Clear
-            .SortFields.Add Key:=wshBaseHours.Range("AB3"), _
+            .SortFields.clear
+            .SortFields.add Key:=wshBaseHours.Range("AB3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshBaseHours.Range("Z3"), _
+            .SortFields.add Key:=wshBaseHours.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.Add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.add Key:=wshBaseHours.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -841,7 +841,7 @@ Sub Invoice_Delete()
         If MsgBox("Are you sure you want to delete this Invoice?", vbYesNo, "Delete Invoice") = vbNo Then Exit Sub
         If .Range("B20").value = Empty Then GoTo NotSaved
         invRow = .Range("B20").value 'Set Invoice Row
-        wshFACInvList.Range(invRow & ":" & invRow).EntireRow.Delete
+        wshFACInvList.Range(invRow & ":" & invRow).EntireRow.delete
 '        With InvItems
 '            lastRow = .Range("A99999").End(xlUp).row
 '            If lastRow < 4 Then Exit Sub
@@ -911,7 +911,7 @@ Function Create_PDF_Email_Function(noFacture As String, Optional action As Strin
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
-    Err.Clear
+    Err.clear
     On Error GoTo 0
 
     'Adjust Document Properties - 2023-10-06 @ 09:54
@@ -950,7 +950,7 @@ Function Create_PDF_Email_Function(noFacture As String, Optional action As Strin
             .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
                 vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "Guillaume Charron, CPA, CA, M. Fisc." & _
                 vbNewLine & "Président"
-            .Attachments.Add source_file
+            .Attachments.add source_file
            
             .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
             'myMail.Send
@@ -1233,7 +1233,7 @@ Sub FAC_GL_Posting(df, desc, source, arr As Variant)
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-            rs.Update
+            rs.update
 Nothing_to_Post:
     Next i
 

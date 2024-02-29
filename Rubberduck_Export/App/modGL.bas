@@ -208,16 +208,16 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
         lastResultRow = .Range("S999999").End(xlUp).row
         If lastResultRow < 3 Then GoTo NoSort
         With .Sort
-            .SortFields.Clear
-            .SortFields.Add Key:=wshGL_Trans.Range("T1"), _
+            .SortFields.clear
+            .SortFields.add Key:=wshGL_Trans.Range("T1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
-            .SortFields.Add Key:=wshGL_Trans.Range("Q1"), _
+            .SortFields.add Key:=wshGL_Trans.Range("Q1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add Key:=wshGL_Trans.Range("P1"), _
+            .SortFields.add Key:=wshGL_Trans.Range("P1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On JE Number

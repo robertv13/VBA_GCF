@@ -136,7 +136,7 @@ Sub Invoice_Delete()
     With Invoice
         If .Range("B3").value = Empty Then GoTo NotSaved
         invRow = .Range("B3").value              'Order Row
-        wshInvoiceList.Range(invRow & ":" & invRow).EntireRow.Delete
+        wshInvoiceList.Range(invRow & ":" & invRow).EntireRow.delete
         'Remove Invoice Items
         With InvoiceItems
             lastRow = .Range("A99999").End(xlUp).row
@@ -147,15 +147,15 @@ Sub Invoice_Delete()
             If lastResultRow < 4 Then GoTo SingleRow
             'Sort based on descending rows
             With .Sort
-                .SortFields.Clear
-                .SortFields.Add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
+                .SortFields.clear
+                .SortFields.add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
                 .SetRange InvoiceItems.Range("P3:Y" & lastResultRow)
                 .Apply
             End With
 SingleRow:
             For resultRow = 3 To lastResultRow
                 invitemRow = .Range("P" & resultRow).value 'Invoice Item DB Row
-                If invitemRow > 3 Then .Range(invitemRow & ":" & invitemRow).EntireRow.Delete 'Don't remove 1st Row
+                If invitemRow > 3 Then .Range(invitemRow & ":" & invitemRow).EntireRow.delete 'Don't remove 1st Row
             Next resultRow
         End With
 NotSaved:

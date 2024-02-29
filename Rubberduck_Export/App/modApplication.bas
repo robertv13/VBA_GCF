@@ -109,7 +109,7 @@ Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     
     'Delete existing dynamic named range (assuming it exists)
     On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptableDescription").Delete
+    ThisWorkbook.Names("dnrPlanComptableDescription").delete
     On Error GoTo 0
     
     'Define a new dynamic named range
@@ -117,7 +117,7 @@ Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create a new dynamic named range
-    ThisWorkbook.Names.Add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
     
 End Sub
 
