@@ -356,7 +356,7 @@ End Sub
 
 Private Sub cmdAdd_Click()
 
-    TEC_Ajoute_Ligne_Detail
+    Call TEC_Ajoute_Ligne_Detail
 
 End Sub
 
@@ -369,7 +369,7 @@ Private Sub cmdUpdate_Click()
         Exit Sub
     End If
 
-    TEC_Modifie_Ligne_Detail
+    Call TEC_Modifie_Ligne_Detail
 
 End Sub
 
@@ -394,7 +394,6 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 '    ufSaisieHeures.ListBox2.ColumnWidths = "35; 30; 55; 130; 180; 35; 80; 40; 85"
     
     With ufSaisieHeures
-    
         Dim tecID As Long
         tecID = .ListBox2.List(.ListBox2.ListIndex, 0)
         wshAdmin.Range("TEC_Current_ID").value = tecID
@@ -436,14 +435,14 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
         .chbFacturable.value = CBool(.ListBox2.List(.ListBox2.ListIndex, 7))
         savedFacturable = .chbFacturable.value
-
     End With
 
 exit_sub:
 
     Call Buttons_Enabled_True_Or_False(True, False, False, True)
     
-    rmv_state = rmv_modeAffichage
+    rmv_state = rmv_modeModification
+'    rmv_state = rmv_modeAffichage
     
     Set lookupRange = Nothing
     

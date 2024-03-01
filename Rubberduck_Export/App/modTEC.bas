@@ -24,6 +24,9 @@ Sub TEC_Ajoute_Ligne_Detail() 'Add an entry to DB
 
     If IsDataValid() = False Then Exit Sub
     
+    'Get the Client_ID
+    wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
+    
     Call Add_Or_Update_TEC_Record_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
     Call Add_Or_Update_TEC_Record_Local(0) 'Write to local worksheet - 2024-02-25 @ 10:34
     
@@ -350,7 +353,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    '{T2BRs}Add_Or_Update_TEC_Record_To_DB{T2BRe}
+    Call Output_Timer_Results("Add_Or_Update_TEC_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -363,12 +366,14 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     'What is the row number of this TEC_ID ?
     Dim lastUsedRow As Long
     
+    Dim hoursValue As Double '2024-03-01 @ 05:40
+    hoursValue = CDbl(ufSaisieHeures.txtHeures.value)
+    Debug.Print hoursValue & " - " & IsNumeric(hoursValue) & " - " & Val(hoursValue)
+    
     If tecID = 0 Then 'Add a new record
-        'Get the last used row in TEC_Local
-        lastUsedRow = wshBaseHours.Range("A9999").End(xlUp).row
-        'Calculate the next Row Number
+        'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
-        nextRowNumber = lastUsedRow + 1
+        nextRowNumber = wshBaseHours.Range("A9999").End(xlUp).row + 1
         With wshBaseHours
             .Range("A" & nextRowNumber).value = wshAdmin.Range("TEC_Current_ID").value
             .Range("B" & nextRowNumber).value = wshAdmin.Range("TEC_Prof_ID").value
@@ -377,7 +382,7 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
             .Range("E" & nextRowNumber).value = wshAdmin.Range("TEC_Client_ID").value
             .Range("F" & nextRowNumber).value = ufSaisieHeures.txtClient.value
             .Range("G" & nextRowNumber).value = ufSaisieHeures.txtActivite.value
-            .Range("H" & nextRowNumber).value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+            .Range("H" & nextRowNumber).value = hoursValue
             .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
             .Range("J" & nextRowNumber).value = ufSaisieHeures.chbFacturable.value
             .Range("K" & nextRowNumber).value = Now()
@@ -407,7 +412,7 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
                 .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
                 .Range("H" & rowToBeUpdated).value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
                 .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
-                .Range("J" & rowToBeUpdated).value = ufSaisieHeures.chbFacturable.value
+                .Range("J" & rowToBeUpdated).value = hoursValue
                 .Range("K" & rowToBeUpdated).value = Now()
                 .Range("L" & rowToBeUpdated).value = False
                 .Range("M" & rowToBeUpdated).value = ""

@@ -119,11 +119,12 @@ End Sub
 
 Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
-    'If the user doubleclicks or presses enter, place the selected value in the
-    'textbox
+    'If the user doubleclicks or presses enter, place the selected value
+    '   in the textbox
     If m_UpdateControl = False Then
-        SetTextboxValue MyListBox.value
+        Call SetTextboxValue(MyListBox.value)
         Call ShowListbox(False)
+        SendKeys "{TAB}"
     End If
 
 End Sub
@@ -137,11 +138,12 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     ElseIf KeyCode = vbKeyUp Then
         m_UpdateControl = True
         CheckListBoxFirstItem
-    ElseIf KeyCode = vbKeyReturn Then
+    ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        SetTextboxValue MyListBox.value
+        Call SetTextboxValue(MyListBox.value)
         Call ShowListbox(False)
+        SendKeys "{TAB}"
     End If
 
 End Sub
@@ -152,6 +154,8 @@ Private Sub myListBox_KeyUp(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift 
     If KeyCode = vbKeyDown Then
         m_UpdateControl = False
     ElseIf KeyCode = vbKeyUp Then
+        m_UpdateControl = False
+    ElseIf KeyCode = vbKeyTab Then
         m_UpdateControl = False
     End If
 
@@ -174,7 +178,6 @@ Private Sub List_MoveDown()
 End Sub
 
 '------------------------------------------------------------------ LISTBOX SUBS
-
 Private Sub UpdateListbox(items As Variant)
  
     With MyListBox
@@ -184,10 +187,10 @@ Private Sub UpdateListbox(items As Variant)
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
-                .List = Array("Je n'ai rien trouvé!")
-                .ForeColor = rgbRed
+            .List = Array("Je n'ai rien trouvé!")
+            .ForeColor = rgbRed
         Else
-            'items found
+            'Items found
             .List = items
             .ListIndex = 0
         End If
@@ -302,7 +305,7 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
         If IsNull(MyListBox.value) = False And m_textboxStartingState = False Then
-            SetTextboxValue MyListBox.value
+            Call SetTextboxValue(MyListBox.value)
         End If
         Call ShowListbox(False)
     ElseIf KeyCode = vbKeyEscape Then
@@ -321,16 +324,13 @@ Private Sub SetTextboxValue(ByVal text As String)
         
         With MyListBox
             m_UpdateControl = True
-            'Set the listbox selected value to the textbox
-            'and hide the listbox
+            'Set the listbox selected value to the textbox and hide the listbox
             myTextBox.value = text
             
             Call SelectTextBox
             
             m_UpdateControl = False
-
         End With
-        
     End If
     
 End Sub
@@ -374,8 +374,7 @@ Private Function SelectTextBox()
 
 End Function
 
-'Filters the Listbox
-Public Sub FilterListBox()
+Public Sub FilterListBox() 'Filters the Listbox
     'In case a setting like MaxRows is used before the range is set
     If IsEmpty(m_listOfItems) Then Exit Sub
 

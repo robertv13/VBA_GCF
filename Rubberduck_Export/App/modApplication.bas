@@ -127,7 +127,10 @@ Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
-        If wsh.codeName <> "wshMenu" Then wsh.Visible = xlSheetHidden
+        If wsh.codeName <> "wshMenu" And _
+            InStr(wsh.codeName, "wshzDoc") = 0 Then
+                wsh.Visible = xlSheetHidden
+        End If
     Next wsh
     
     Call Output_Timer_Results("Hide_All_Worksheet_Except_Menu()", timerStart)
