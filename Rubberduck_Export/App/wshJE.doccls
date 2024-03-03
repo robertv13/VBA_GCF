@@ -3,12 +3,14 @@
 Private Sub Worksheet_Activate() '2024-03-03 @ 10:14
 
     Call GL_Trans_Import_All
+    Call GL_JE_Auto_Import_All
+    Call wshJE_Clear_All_Cells
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    'Si la cellule de la source change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
+    'Si la cellule de la SOURCE change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
     If Not Intersect(Target, Range("E4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
@@ -28,9 +30,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End If
         End If
         Application.EnableEvents = True
+        wshJE.Range("J4").Select
     End If
     
-    'Si la cellule de la date change, alors on essaie de construire une date
+    'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
         Dim rng As Range: Set rng = Me.Range("J4")
@@ -47,11 +50,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 rng.Activate
                 rng.Select
                 Application.EnableEvents = True
-'                Exit Sub
             End If
         End If
         Set rng = Nothing
         Application.EnableEvents = True
+        wshJE.Range("E6").Select
     End If
     
     'Modification de la description du compte, sauvegarde du no de compte & suggestion du montant résiduel
@@ -102,51 +105,50 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Modified to control TAB order
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    ' No need for code here
+End Sub
 
-    Dim tabOrderListOfCells As Variant, X As Variant
-    Dim addr As String
-    Dim rg As Range, targ As Range
-    
-    isTab_Order_Activated = True
-    If isTab_Order_Activated = False Then Exit Sub
-    tabOrderListOfCells = Array("E4", "J4", "E6", _
-        "D9:I9", "D10:I10", "D11:I11", "D12:I12", "D13:I13", _
-        "D14:I14", "D15:I15", "D16:I16", "D17:I17", "D18:I18", _
-        "D19:I19", "D20:I20", "D21:I21", "D22:I22", "D23:I23") 'List your cell addresses in desired tab order here
-    For Each X In tabOrderListOfCells
-        If rg Is Nothing Then
-            Set rg = Range(X)
-        Else
-            Set rg = Union(rg, Range(X))
-        End If
-    Next
-    
-    Set targ = Intersect(rg, Target)
-    rg.Interior.Color = RGB(225, 237, 239)
-    rg.Select
-    If targ Is Nothing Then
-        addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
-        X = Application.Match(addr, tabOrderListOfCells, 0)
-        If IsError(X) Then
-            Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
-            Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Select
-        End If
-    Else
-        targ.Activate
-    End If
-    
-    'Force the focus to the next line if possible
-    If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        If Target.CountLarge > 1 Then GoTo Clean_Exit
-        If Target.row < 23 Then wshJE.Range("D" & Target.row + 1).Activate
-    End If
-    
-Clean_Exit:
-    'Free up memory - 2024-02-23
-    Set rg = Nothing
-    Set targ = Nothing
+Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
+    ' No need for code here
+End Sub
 
+Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
+    ' No need for code here
+End Sub
+
+Private Sub Worksheet_KeyDown(ByVal Key As MSForms.ReturnInteger, ByVal Shift As Integer)
+    If Key = vbKeyTab Then ' Check if Tab key is pressed
+        Select Case ActiveCell.Address
+            Case "$E$4"
+                Me.Range("J4").Select
+            Case "$J$4"
+                Me.Range("E6").Select
+            Case "$E$6"
+                Me.Range("D9").Select
+            Case "$D$9"
+                Me.Range("G9").Select
+            Case "$G$9"
+                Me.Range("H9").Select
+            Case "$H$9"
+                Me.Range("I9").Select
+            Case "$I$9"
+                Me.Range("D10").Select
+            Case "$D$10"
+                Me.Range("G10").Select
+            Case "$G$10"
+                Me.Range("H10").Select
+            Case "$H$10"
+                Me.Range("I10").Select
+            Case "$I$10"
+                Me.Range("D11").Select
+            Case "$D$11"
+                ' Add more cases as needed for your tab order
+                ' If you want to loop back to the beginning, you can add "Case Else" and specify the first cell
+        End Select
+        ' Prevent default Tab behavior
+        Key = 0
+    End If
 End Sub
 
 Private Sub ckbRecurrente_Click()

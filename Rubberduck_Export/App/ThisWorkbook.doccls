@@ -6,7 +6,6 @@ Private Sub Workbook_Open()
     Dim timerStart As Double: timerStart = Timer
     
     Application.ScreenUpdating = False
-'    Windows(ThisWorkbook.name).Visible = False
    
     Dim lastUsedRow As Long
     lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
@@ -21,7 +20,7 @@ Private Sub Workbook_Open()
     wshMenu.Activate
     wshMenu.Range("A1").Select
     
-'    Call Slide_In_All_Menu_Options
+    Call Slide_In_All_Menu_Options
 
     Dim wbName As String, wb As Workbook
     wbName = ThisWorkbook.name

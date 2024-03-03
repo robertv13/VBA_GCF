@@ -110,6 +110,51 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
 End Sub
 
+Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
+
+    'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
+    Dim sourceWorkbook As String, sourceWorksheet As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx"
+    sourceWorksheet = "PlanComptable"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection
+    Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset
+    Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceWorksheet & "$]"
+    recSet.Open
+    
+    'Copy to wshAdmin workbook
+    wshAdmin.Range("T11").CopyFromRecordset recSet
+'    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    Call RedefineDynamicRange
+        
+    Call Output_Timer_Results("ChartOfAccount_Import_All()", timerStart)
+
+End Sub
+
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
     Dim timerStart As Double: timerStart = Timer
@@ -186,4 +231,54 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
 End Sub
 
+Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    Dim saveLastRow As Long
+    saveLastRow = wshEJRecurrente.Range("C999").End(xlUp).row
+    
+    'Clear all cells, but the headers and Columns A & B, in the target worksheet
+    wshEJRecurrente.Range("C2:J" & saveLastRow).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
+    sourceTab = "EJ_Auto"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshEJRecurrente.Range("C1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    wshEJRecurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastUsedRow As Long
+    lastUsedRow = wshEJRecurrente.Range("C999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshEJRecurrente
+        Union(.Range("C2:C" & lastUsedRow), _
+            .Range("E2:E" & lastUsedRow)).HorizontalAlignment = xlCenter
+        Union(.Range("D2:D" & lastUsedRow), _
+            .Range("F2:F" & lastUsedRow)).HorizontalAlignment = xlLeft
+        With .Range("G2:H" & lastUsedRow)
+            .HorizontalAlignment = xlRight
+            .NumberFormat = "#,##0.00 $"
+        End With
+    End With
+    
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("GL_JE_Auto_Import_All()", timerStart)
+
+End Sub
 

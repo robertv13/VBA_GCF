@@ -40,9 +40,8 @@ Sub Save_EJ_Recurrente(ll As Long)
     rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
     
     Call Add_JE_Auto_Record_To_DB(ll)
+    Call Add_JE_Auto_Record_Locally(ll)
     
-    'r1.BorderAround LineStyle:=xlContinuous, Weight:=xlMedium, Color:=vbBlack
-
 End Sub
 
 Sub LoadJEAutoIntoJE(EJAutoDesc As String, NoEJAuto As Long)
@@ -73,10 +72,13 @@ End Sub
 Sub wshJE_Clear_All_Cells()
 
     'Efface toutes les cellules de la feuille
+    Application.EnableEvents = False
     With wshJE
         .Range("E4,J4,E6:J6").ClearContents
         .Range("D9:F23,G9:G23,H9:H23,I9:J23,K9:K23").ClearContents
         .ckbRecurrente = False
+        .Range("J4").value = " "
+    Application.EnableEvents = True
     End With
 
 End Sub
@@ -246,6 +248,8 @@ End Sub
 
 Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
+    Dim timerStart As Double: timerStart = Timer
+
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
@@ -277,10 +281,7 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     
     'Calculate the new ID
     nextEJANo = lastEJA + 1
-
-    'Define the =ROW() formula
-    Dim formula As String
-    formula = "=ROW()"
+    wshEJRecurrente.Range("B2").value = nextEJANo
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -300,11 +301,6 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
         rs.update
     Next l
     
-    'Empty Line at the end
-    rs.AddNew
-        rs.Fields("No_EJA").value = nextEJANo
-    rs.update
-    
     'Close recordset and connection
     On Error Resume Next
     rs.Close
@@ -313,6 +309,45 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     
     Application.ScreenUpdating = True
 
+    Call Output_Timer_Results("Add_JE_Auto_Record_To_DB()", timerStart)
+
+End Sub
+
+Sub Add_JE_Auto_Record_Locally(r As Long) 'Write records to local file
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Get the JE number
+    Dim JENo As Long
+    JENo = wshEJRecurrente.Range("B1").value
+    
+    'What is the last used row in EJ_AUto ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshEJRecurrente.Range("C999").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    Dim i As Integer
+    For i = 9 To r
+        wshEJRecurrente.Range("C" & rowToBeUsed).value = JENo
+        wshEJRecurrente.Range("D" & rowToBeUsed).value = wshJE.Range("E6").value
+        wshEJRecurrente.Range("E" & rowToBeUsed).value = wshJE.Range("K" & i).value
+        wshEJRecurrente.Range("F" & rowToBeUsed).value = wshJE.Range("D" & i).value
+        If wshJE.Range("G" & i).value <> "" Then
+            wshEJRecurrente.Range("G" & rowToBeUsed).value = wshJE.Range("G" & i).value
+        End If
+        If wshJE.Range("H" & i).value <> "" Then
+            wshEJRecurrente.Range("H" & rowToBeUsed).value = wshJE.Range("H" & i).value
+        End If
+        wshEJRecurrente.Range("I" & rowToBeUsed).value = wshJE.Range("I" & i).value
+        rowToBeUsed = rowToBeUsed + 1
+    Next i
+    
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("Add_JE_Auto_Record_Locally()", timerStart)
+    
 End Sub
 
 Sub UpdateJEAuto()

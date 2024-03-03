@@ -1,0 +1,52 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-31
+
+    If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
+        Application.EnableEvents = False
+        Dim r As Range: Set r = Range("J1")
+        Range("J1").value = Validate_A_Date(Range("J1").value)
+        If Range("J1").value = "" Then
+            Range("J1").Activate
+            Range("J1").Select
+        End If
+        Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
+        Range("L2").value = ""
+        
+        Call UpdateBV 'Automatically recalculate Trial Balance
+        
+        Application.EnableEvents = True
+    End If
+
+    If Not Intersect(Target, Range("T4")) Is Nothing Then 'Dates have changed
+        Application.EnableEvents = False
+        
+        Call DetermineFromAndToDate(Range("T4").value)
+                
+        'Force redisplay of GL Transactions details
+        Call GLTransDisplay(Range("B6").value, Range("B7").value, _
+            Format(Range("B8").value, "dd-mm-yyyy"), _
+            Format(Range("B9").value, "dd-mm-yyyy"))
+        
+        Application.EnableEvents = True
+    End If
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value)) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        Application.EnableEvents = False
+        Dim GLAcct As String, GLDescription As String, DateLimite As Date
+        GLAcct = CStr(Range("D" & Target.row).value)
+        GLDescription = Range("E" & Target.row).value
+        DateLimite = Format(Range("J1").value, "dd-mm-yyyy")
+        Range("T4").value = "Toutes les dates"
+
+        Call GLTransDisplay(GLAcct, GLDescription, "01-01-2023", DateLimite)
+        
+        Application.EnableEvents = True
+    End If
+
+End Sub

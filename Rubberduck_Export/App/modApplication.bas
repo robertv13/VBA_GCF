@@ -12,98 +12,6 @@ Sub BackToMainMenu()
 
 End Sub
 
-'Sub Build_Date(r As Range) '2024-01-06 @ 18:29
-'        Dim d, m, y As Integer
-'        Dim strDateConsruite As String, cell As String
-'        Dim dateValide As Boolean
-'        cell = Trim(r.value)
-'        dateValide = True
-'
-'        cell = Replace(cell, "/", "")
-'        cell = Replace(cell, "-", "")
-'
-'        'Utilisation de la date du jour
-'        d = Day(Now())
-'        m = Month(Now())
-'        y = Year(Now())
-'
-'        Select Case Len(cell)
-'            Case 0
-'                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-'            Case 1, 2
-'                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
-'            Case 3
-'                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
-'            Case 4
-'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
-'            Case 6
-'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
-'            Case 8
-'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
-'            Case Else
-'                dateValide = False
-'        End Select
-'        dateValide = IsDate(strDateConsruite)
-'
-'    If dateValide Then
-'        r.value = Format(strDateConsruite, "dd/mm/yyyy")
-'    Else
-'        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
-'    End If
-'
-'End Sub
-
-Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
-
-    Dim timerStart As Double: timerStart = Timer
-    
-    'Clear all cells, but the headers, in the target worksheet
-    wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
-
-    'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
-    Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
-    sourceWorksheet = "PlanComptable"
-    
-    'ADODB connection
-    Dim connStr As ADODB.Connection
-    Set connStr = New ADODB.Connection
-    
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset
-    Set recSet = New ADODB.Recordset
-    
-    recSet.ActiveConnection = connStr
-    recSet.source = "SELECT * FROM [" & sourceWorksheet & "$]"
-    recSet.Open
-    
-    'Copy to wshAdmin workbook
-    wshAdmin.Range("T11").CopyFromRecordset recSet
-'    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    
-    'Close resource
-    recSet.Close
-    connStr.Close
-    
-    Call RedefineDynamicRange
-    
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshAdmin.Range("T10").CurrentRegion.Rows.count - 1, _
-'            "## ##0") & " comptes du Grand Livre", _
-'        Title:="Vérification du nombre de comptes", _
-'        Buttons:=vbInformation
-        
-    Call Output_Timer_Results("ChartOfAccount_Import_All()", timerStart)
-
-End Sub
 
 Sub RedefineDynamicRange() '2024-02-13 @ 13:30
     
@@ -205,7 +113,6 @@ End Sub
 
 Sub Invalid_Date_Message() '2024-03-03 @ 07:45
 
-    If strDate = "" Then
     MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
         Title:="Validation de la date", _
         Buttons:=vbCritical
