@@ -152,14 +152,14 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added to control TAB order
 'Establishes tab order for data entry. Hit Enter or Tab keys to jump to the next cell.
 
-    Dim TabOrder As Variant, X As Variant
+    Dim tabOrderListOfCells As Variant, X As Variant
     Dim addr As String
     Dim rg As Range, targ As Range
     
-    If TabOrderFlag = True Then Exit Sub
+    If isTab_Order_Activated = True Then Exit Sub
     
-    TabOrder = Array("E4", "O3", "L11:L45", "M11:M45", "M48:M50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
-    For Each X In TabOrder
+    tabOrderListOfCells = Array("E4", "O3", "L11:L45", "M11:M45", "M48:M50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
+    For Each X In tabOrderListOfCells
         If rg Is Nothing Then
             Set rg = Range(X)
         Else
@@ -171,8 +171,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
     rg.Select
     If targ Is Nothing Then
         addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
-        X = Application.Match(addr, TabOrder, 0)
-        If IsError(X) Then Range(TabOrder(LBound(TabOrder))).Activate
+        X = Application.Match(addr, tabOrderListOfCells, 0)
+        If IsError(X) Then Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
     Else
         targ.Activate
     End If

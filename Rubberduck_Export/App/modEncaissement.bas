@@ -201,14 +201,18 @@ End Sub
 
 Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
-    '3 sheets to import
+    Dim timerStart As Double: timerStart = Timer
+    
     Application.ScreenUpdating = False
     
+    '3 sheets to import
     Call AR_Summary_Import_All
     Call Enc_Entete_Import_All
     Call Enc_Detail_Import_All
     
     Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("Encaissement_Import_All()", timerStart)
     
 End Sub
 Sub AR_Summary_Import_All() '2024-02-14 @ 09:50

@@ -100,6 +100,73 @@ Public Function Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lo
     
 End Function
 
+Public Function Validate_A_Date(paramDate As String) '2024-03-02 @ 08:04
+
+    paramDate = Trim(paramDate)
+    'User can enter / or - for separators
+    Dim sDateDelimiter As String
+    sDateDelimiter = "-"
+    'Make sure that paramDate uses proper delimiter
+    paramDate = Replace(paramDate, "/", sDateDelimiter)
+    
+    Dim sDate As String, isValidDate As Boolean
+    sDate = ""
+    isValidDate = False
+
+    'Uses today's date as default
+    Dim d, m, y As Integer
+    d = Day(Now())
+    m = Month(Now())
+    y = Year(Now())
+
+    Select Case Len(paramDate)
+        Case 0                                       'Today's date
+            sDate = Format(d, "00") & sDateDelimiter & Format(m, "00") & sDateDelimiter & Format(y, "0000")
+        Case 1, 2                                    'Day only
+            sDate = Format(paramDate, "00") & sDateDelimiter & Format(m, "00") & sDateDelimiter & Format(y, "0000")
+        Case 3                                       'd/m only
+            sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 1), "00") & sDateDelimiter & Format(y, "0000")
+        Case 4                                       'd/mm or dd/m
+            If InStr(paramDate, sDateDelimiter) = 2 Then
+                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 2), "00") & sDateDelimiter & Format(y, "0000")
+            ElseIf InStr(paramDate, sDateDelimiter) = 3 Then
+                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 1), "00") & sDateDelimiter & Format(y, "0000")
+            End If
+        Case 5                                       'dd/mm
+            If InStr(paramDate, sDateDelimiter) = 3 Then
+                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 2), "00") & sDateDelimiter & Format(y, "0000")
+            End If
+        Case 8                                       'd/m/yyyy or yy/mm/dd
+            If Mid(paramDate, 2, 1) = sDateDelimiter And Mid(paramDate, 4, 1) = sDateDelimiter Then
+                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 5, 4), "0000")
+            End If
+            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 6, 1) = sDateDelimiter Then
+                sDate = Format(Mid(paramDate, 7, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 2), "00") & sDateDelimiter & IIf(Left(paramDate, 2) >= 50, "19", "20") & Format(Left(paramDate, 2), "00")
+            End If
+            
+        Case 9                                       'dd/m/yyyy or d/mm/yyyy
+            If Mid(paramDate, 2, 1) = sDateDelimiter And Mid(paramDate, 5, 1) = sDateDelimiter Then
+                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 6, 4), "0000")
+            End If
+            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 5, 1) = sDateDelimiter Then
+                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 6, 4), "0000")
+            End If
+        Case 10                                      'dd/mm/yyyy or yyyy/mm/dd
+            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 6, 1) = sDateDelimiter Then
+                sDate = paramDate
+            ElseIf Mid(paramDate, 5, 1) = sDateDelimiter And Mid(paramDate, 8, 1) = sDateDelimiter Then
+                sDate = Mid(paramDate, 9, 2) & sDateDelimiter & Mid(paramDate, 6, 2) & sDateDelimiter & Left(paramDate, 4)
+            End If
+        Case Else
+            sDate = ""
+    End Select
+        
+    'Is the 'built' date valid ?
+    isValidDate = IsDate(sDate)
+    If isValidDate Then Validate_A_Date = sDate
+        
+End Function
+
 Public Function IsDataValid() As Boolean
 
     IsDataValid = False

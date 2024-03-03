@@ -1,15 +1,15 @@
 ﻿Option Explicit
 
-Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideOut_SaisieHeures
 End Sub
 
-Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_SaisieHeures
     SlideOut_TEC_TDB
 End Sub
 
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
    SlideIn_TEC_TDB
    SlideIn_SaisieHeures
 End Sub

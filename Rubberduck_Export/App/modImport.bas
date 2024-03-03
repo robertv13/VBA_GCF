@@ -110,3 +110,80 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
 End Sub
 
+Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    Dim saveLastRow As Long
+    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
+    sourceTab = "GL_Trans"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshGL_Trans.Range("A1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshGL_Trans
+        .Range("A" & 2 & ":J" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B" & 2 & ":B" & lastRow).NumberFormat = "dd/mm/yyyy"
+        .Range("C" & 2 & ":C" & lastRow & _
+            ", D" & 2 & ":D" & lastRow & _
+            ", F" & 2 & ":F" & lastRow & _
+            ", I" & 2 & ":I" & lastRow) _
+                .HorizontalAlignment = xlLeft
+        With .Range("G" & 2 & ":H" & lastRow)
+            .HorizontalAlignment = xlRight
+            .NumberFormat = "#,##0.00 $"
+        End With
+        With .Range("A" & 2 & ":A" & lastRow) _
+            .Range("J" & 2 & ":J" & lastRow).Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorAccent5
+            .TintAndShade = 0.799981688894314
+            .PatternTintAndShade = 0
+        End With
+    End With
+    
+    Dim firstRowJE As Long, lastRowJE As Long
+    Dim r As Long
+    
+'    For r = 2 To lastRow 'RMV - 2024-01-05
+'        With wshGL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
+'            .Font.ThemeColor = xlThemeColorLight1
+'            .Font.TintAndShade = -4.99893185216834E-02
+'            .Interior.Pattern = xlNone
+'            .Interior.TintAndShade = 0
+'            .Interior.PatternTintAndShade = 0
+'        End With
+'        wshGL_Trans.Range("J" & r).formula = "=ROW()"
+'    Next r
+
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("GL_Trans_Import_All()", timerStart)
+
+End Sub
+
+

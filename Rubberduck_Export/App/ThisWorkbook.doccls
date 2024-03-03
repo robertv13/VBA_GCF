@@ -20,7 +20,8 @@ Private Sub Workbook_Open()
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     wshMenu.Activate
     wshMenu.Range("A1").Select
-    Call Slide_In_All_Menu_Options
+    
+'    Call Slide_In_All_Menu_Options
 
     Dim wbName As String, wb As Workbook
     wbName = ThisWorkbook.name
@@ -31,7 +32,7 @@ Private Sub Workbook_Open()
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("Workbook_Open()", timerStart)
+    Call Output_Timer_Results("Workbook_Open()", 0)
 
 End Sub
 

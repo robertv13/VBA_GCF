@@ -8,11 +8,12 @@ Sub JE_Update()
     If IsEcritureBalance = False Then Exit Sub
     
     Dim rowEJLast As Long
-    rowEJLast = wshJE.Range("D99").End(xlUp).row  'Last Used Row in wshJE
+    rowEJLast = wshJE.Range("D23").End(xlUp).row  'Last Used Row in wshJE
     If IsEcritureValide(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
     Call Add_GL_Trans_Record_To_DB(rowEJLast)
+    Call Add_GL_Trans_Record_Locally(rowEJLast)
     
     If wshJE.ckbRecurrente = True Then
         Save_EJ_Recurrente rowEJLast
@@ -24,6 +25,8 @@ Sub JE_Update()
         
         Call wshJE_Clear_All_Cells
         
+        wshJE.Activate
+        .Range("E4").Select
         .Range("E4").Activate
     End With
     
@@ -126,6 +129,8 @@ End Function
 
 Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
+    Dim timerStart As Double: timerStart = Timer
+    
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
@@ -144,7 +149,7 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & sheetName & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & sheetName & "$]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -158,9 +163,10 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
         lastJE = rs.Fields("MaxEJNo").value
     End If
     
-    'Calculate the new ID
+    'Calculate the new JE number
     Dim nextJENo As Long
     nextJENo = lastJE + 1
+    wshJE.Range("B1").value = nextJENo
     
     'Build formula
     Dim formula As String
@@ -175,7 +181,7 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("No_EJ").value = nextJENo
+            rs.Fields("No_Entrée").value = nextJENo
             rs.Fields("Date").value = CDate(wshJE.Range("J4").value)
             rs.Fields("Description").value = wshJE.Range("E6").value
             rs.Fields("Source").value = wshJE.Range("E4").value
@@ -193,6 +199,47 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     On Error GoTo 0
     conn.Close
     
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("Add_GL_Trans_Record_To_DB()", timerStart)
+
+End Sub
+
+Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Get the JE number
+    Dim JENo As Long
+    JENo = wshJE.Range("B1").value
+    
+    'What is the last used row in GL_Trans ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    Dim i As Integer
+    For i = 9 To r
+        wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
+        wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshJE.Range("J4").value)
+        wshGL_Trans.Range("C" & rowToBeUsed).value = wshJE.Range("E6").value
+        wshGL_Trans.Range("D" & rowToBeUsed).value = wshJE.Range("E4").value
+        wshGL_Trans.Range("E" & rowToBeUsed).value = wshJE.Range("K" & i).value
+        wshGL_Trans.Range("F" & rowToBeUsed).value = wshJE.Range("D" & i).value
+        If wshJE.Range("G" & i).value <> "" Then
+            wshGL_Trans.Range("G" & rowToBeUsed).value = wshJE.Range("G" & i).value
+        End If
+        If wshJE.Range("H" & i).value <> "" Then
+            wshGL_Trans.Range("H" & rowToBeUsed).value = wshJE.Range("H" & i).value
+        End If
+        wshGL_Trans.Range("I" & rowToBeUsed).value = wshJE.Range("I" & i).value
+        rowToBeUsed = rowToBeUsed + 1
+    Next i
+    
+    Call Output_Timer_Results("Add_GL_Trans_Record_Locally()", timerStart)
+
     Application.ScreenUpdating = True
 
 End Sub

@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   8550.001
+   ClientHeight    =   8145
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   13950
@@ -24,12 +24,12 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim timerStart As Double: timerStart = Timer
     
     Dim i As Long
-    With Me.lstNomClient
+    With Me.lstboxNomClient
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
@@ -39,11 +39,10 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-    Call Output_Timer_Results("lstNomClient_DblClick()", timerStart)
+    Call Output_Timer_Results("lstboxNomClient_DblClick()", timerStart)
 
 End Sub
 
-'******************************************* Execute when UserForm is displayed
 Sub UserForm_Activate()
 
     Dim timer3Start As Double: timer3Start = Timer
@@ -55,7 +54,7 @@ Sub UserForm_Activate()
     ufSaisieHeures.ListData = wshClientDB.Range("A1:J" & lastUsedRow)
     
     With oEventHandler
-        Set .SearchListBox = lstNomClient
+        Set .SearchListBox = lstboxNomClient
         Set .SearchTextBox = txtClient
         .MaxRows = 10
         .ShowAllMatches = False
@@ -116,6 +115,7 @@ Private Sub UserForm_Terminate()
     Exit Sub
     
 MenuSelect:
+    wshMenu.Activate
     wshMenu.Select
     
     Call Output_Timer_Results("ufSaisieHeures - UserForm_Terminate()", timerStart)
@@ -135,14 +135,6 @@ Public Sub cmbProfessionnel_AfterUpdate()
         Call TEC_AdvancedFilter_And_Sort
         Call Refresh_ListBox_And_Add_Hours
     End If
-    
-    'Enabled the NEW & ADD button if the minimum fields are non empty
-    If Trim(Me.cmbProfessionnel.value) <> "" And _
-        Trim(Me.txtDate.value) <> "" And _
-        Trim(Me.txtClient.value) <> "" And _
-        Trim(Me.txtHeures.value) <> "" Then
-        Call Buttons_Enabled_True_Or_False(True, True, False, False)
-    End If
 
 exit_sub:
 
@@ -152,85 +144,55 @@ End Sub
 
 Private Sub txtDate_Enter()
 
-    If txtDate.value = vbNullString Then
-        txtDate.value = Format(CDate(Now()), "dd/mm/yyyy")
-    End If
-    
-    'Enabled the NEW & ADD button if the minimum fields are non empty
-    If Trim(Me.cmbProfessionnel.value) <> "" And _
-        Trim(Me.txtDate.value) <> "" And _
-        Trim(Me.txtClient.value) <> "" And _
-        Trim(Me.txtHeures.value) <> "" Then
-        Call Buttons_Enabled_True_Or_False(True, True, False, False)
+    If Me.txtDate.value = "" Then
+        Me.txtDate.value = Format(Now(), "dd/mm/yyyy")
     End If
 
 End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
-    If txtDate.value = vbNullString Then
-        txtDate.value = Format(CDate(Now()), "dd/mm/yyyy")
-    End If
-
     Dim strDate As String
-    strDate = txtDate.value
-
-    Dim separateur As String
-    separateur = "/"
-
-    Dim currentYear As Integer, currentMonth As Integer, currentDay As Integer
-    currentYear = Format(Year(Now()), "0000")
-    currentMonth = Format(Month(Now()), "00")
-    currentDay = Format(Day(Now()), "00")
-
-    If Len(strDate) <= 2 Then
-        strDate = Format(strDate, "00") & separateur & currentMonth & _
-                  separateur & currentYear
-    ElseIf Len(strDate) = 5 Then
-        strDate = strDate & separateur & currentYear
-    End If
-
-    'Validation de la date
-    If IsDate(strDate) = False Then
-        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide!", _
-            Title:="Validation de la date", _
-            Buttons:=vbCritical
-            txtDate.SelStart = 0
-            txtDate.SelLength = Len(txtDate.value)
+    strDate = Validate_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
+    
+    
+    If strDate = "" Then '2024-03-02 @ 09:36 - RMV_MSGBOX
+    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
+        Title:="Validation de la date", _
+        Buttons:=vbCritical
+        txtDate.SelStart = 0
+        txtDate.SelLength = Len(Me.txtDate.value)
+        txtDate.SetFocus
+        Cancel = True
         Exit Sub
     End If
-
-    If Not IsDate(strDate) Then
-        txtDateShowError ("Dates seulement!")
-        Cancel = True
-    Else
-        If CDate(strDate) > Date Then
-            Call txtDateShowError("Pas de date future!")
+    
+    Me.txtDate.value = strDate
+    
+    If strDate > Format(Now(), "dd-mm-yyyy") Then
+        If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
+            txtDate.SelStart = 0
+            txtDate.SelLength = Len(Me.txtDate.value)
+            txtDate.SetFocus
             Cancel = True
+            Exit Sub
         End If
     End If
     
-    txtDate.value = strDate
-
-End Sub
-
-Private Sub txtDateShowError(ErrorCaption As String)
-
-    txtDate.BackColor = rgbPink
-    lblDate.ForeColor = rgbRed
-    lblDate.Caption = ErrorCaption
-    txtDate.SelStart = 0
-    txtDate.SelLength = Len(txtDate.value)
-
+    Cancel = False
+    
 End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    txtDate.BackColor = rgbWhite
-    lblDate.Caption = "Date *"
-    lblDate.ForeColor = Me.ForeColor
-    
-    wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
+    If IsDate(Me.txtDate.value) Then
+        wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
+    Else
+        Me.txtDate.SetFocus
+        Me.txtDate.SelLength = Len(Me.txtDate.value)
+        Me.txtDate.SelStart = 0
+        Exit Sub
+    End If
 
     If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
         Call TEC_AdvancedFilter_And_Sort
@@ -241,7 +203,7 @@ Private Sub txtDate_AfterUpdate()
     If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
         Trim(Me.txtDate.value) <> vbNullString And _
         Trim(Me.txtClient.value) <> vbNullString And _
-        Trim(Me.txtHeures.value) <> vbNullString Then
+        Trim(Me.txtHeures.value) <> 0 Then
         Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
     
@@ -255,23 +217,13 @@ Private Sub txtClient_Enter()
 
 End Sub
 
-Sub txtClient_AfterUpdate()
+Private Sub txtClient_AfterUpdate()
     
-    'Enabled the ADD button if the minimum fields are non empty
-    If rmv_state = rmv_modeCreation Then
-        If Trim(Me.cmbProfessionnel.value) <> "" And _
-            Trim(Me.txtDate.value) <> "" And _
-            Trim(Me.txtClient.value) <> "" And _
-            Trim(Me.txtHeures.value) <> "" Then
-            Call Buttons_Enabled_True_Or_False(True, True, False, False)
-        End If
-    ElseIf rmv_state = rmv_modeAffichage Then
-        If savedClient <> Me.txtClient.value Or _
-            savedActivite <> Me.txtActivite.value Or _
-            savedHeures <> Me.txtHeures.value Or _
-            savedCommNote <> Me.txtCommNote Or _
-            savedFacturable <> Me.chbFacturable Then
-            Call Buttons_Enabled_True_Or_False(False, False, True, True)
+    If Me.txtClient.value <> Me.txtSavedClient.value Then
+        If Me.txtTEC_ID.value = "" Then
+            Call Buttons_Enabled_True_Or_False(True, False, False, False)
+        Else
+            Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
     
@@ -279,8 +231,10 @@ End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
-    If rmv_state = rmv_modeAffichage Then
-        If txtActivite.value <> savedActivite Then
+    If Me.txtActivite.value <> Me.txtSavedActivite.value Then
+        If Me.txtTEC_ID = "" Then
+            Call Buttons_Enabled_True_Or_False(True, False, False, False)
+        Else
             Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
@@ -309,19 +263,11 @@ Sub txtHeures_AfterUpdate()
     
     Me.txtHeures.value = Format(strHeures, "#0.00")
     
-    'Enabled the NEW & ADD button if the minimum fields are non empty
-    If rmv_state = rmv_modeCreation Then
-        If Trim(Me.cmbProfessionnel.value) <> "" And _
-            Trim(Me.txtDate.value) <> "" And _
-            Trim(Me.txtClient.value) <> "" And _
-            Trim(Me.txtHeures.value) <> "" Then
+    If Me.txtHeures.value <> Me.txtSavedHeures.value Then
+        If Me.txtTEC_ID = "" Then
             Call Buttons_Enabled_True_Or_False(True, True, False, False)
-        End If
-    End If
-
-    If rmv_state = rmv_modeAffichage Then
-        If Me.txtHeures.value <> savedHeures Then
-            Call Buttons_Enabled_True_Or_False(True, False, True, False)
+        Else
+            Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
     
@@ -329,9 +275,11 @@ End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
-    If rmv_state = rmv_modeAffichage Then
-        If Me.chbFacturable.value <> savedFacturable Then
-            Call Buttons_Enabled_True_Or_False(True, False, True, False)
+    If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
+        If Me.txtTEC_ID = "" Then
+            Call Buttons_Enabled_True_Or_False(True, True, False, False)
+        Else
+            Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
 
@@ -339,24 +287,32 @@ End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
-    If rmv_state = rmv_modeAffichage Then
-        If Me.txtCommNote.value <> savedCommNote Then
-            Call Buttons_Enabled_True_Or_False(True, False, True, False)
+    If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
+        If Me.txtTEC_ID = "" Then
+            Call Buttons_Enabled_True_Or_False(True, True, False, False)
+        Else
+            Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
+
+'    If rmv_state = rmv_modeAffichage Then
+'        If Me.txtCommNote.value <> savedCommNote Then
+'            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+'        End If
+'    End If
 
 End Sub
 
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
-    TEC_Efface_Formulaire
+    Call TEC_Efface_Formulaire
 
 End Sub
 
 Private Sub cmdAdd_Click()
 
-    Call TEC_Ajoute_Ligne_Detail
+    Call TEC_Ajoute_Ligne
 
 End Sub
 
@@ -369,7 +325,7 @@ Private Sub cmdUpdate_Click()
         Exit Sub
     End If
 
-    Call TEC_Modifie_Ligne_Detail
+    Call TEC_Modifie_Ligne
 
 End Sub
 
@@ -382,7 +338,7 @@ Private Sub cmdDelete_Click()
         Exit Sub
     End If
     
-    TEC_Efface_Ligne_Detail
+    Call TEC_Efface_Ligne
 
 End Sub
 
@@ -390,13 +346,12 @@ End Sub
 Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     rmv_state = rmv_modeAffichage
-'    Stop
-'    ufSaisieHeures.ListBox2.ColumnWidths = "35; 30; 55; 130; 180; 35; 80; 40; 85"
     
     With ufSaisieHeures
         Dim tecID As Long
         tecID = .ListBox2.List(.ListBox2.ListIndex, 0)
         wshAdmin.Range("TEC_Current_ID").value = tecID
+        txtTEC_ID = tecID
         
         'Retrieve the record in wshBaseHours
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
@@ -422,19 +377,24 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
         .txtClient.value = .ListBox2.List(.ListBox2.ListIndex, 3)
         savedClient = .txtClient.value
+        .txtSavedClient.value = .txtClient.value
         wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
 
         .txtActivite.value = .ListBox2.List(.ListBox2.ListIndex, 4)
         savedActivite = .txtActivite.value
+        .txtSavedActivite.value = .txtActivite.value
 
         .txtHeures.value = Format(.ListBox2.List(.ListBox2.ListIndex, 5), "#0.00")
         savedHeures = .txtHeures.value
+        .txtSavedHeures.value = .txtHeures.value
 
         .txtCommNote.value = .ListBox2.List(.ListBox2.ListIndex, 6)
         savedCommNote = .txtCommNote.value
+        .txtSavedCommNote.value = .txtCommNote.value
 
         .chbFacturable.value = CBool(.ListBox2.List(.ListBox2.ListIndex, 7))
         savedFacturable = .chbFacturable.value
+        .txtSavedFacturable.value = .chbFacturable.value
     End With
 
 exit_sub:
@@ -446,17 +406,6 @@ exit_sub:
     
     Set lookupRange = Nothing
     
-End Sub
-
-Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
-                                  update As Boolean, delete As Boolean)
-    With ufSaisieHeures
-        .cmdClear.Enabled = clear
-        .cmdAdd.Enabled = add
-        .cmdUpdate.Enabled = update
-        .cmdDelete.Enabled = delete
-    End With
-
 End Sub
 
 'Sub CopyRangeToListBoxWithoutRowSource()

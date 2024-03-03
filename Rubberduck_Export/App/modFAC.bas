@@ -272,7 +272,7 @@ Nothing_to_Update:
 
     Application.ScreenUpdating = True
 
-    '{T2BRs}FAC_Prep_Add_Invoice_Details_to_DB{T2BRe}
+    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Details_to_DB()", timerStart)
 
 End Sub
 
@@ -675,9 +675,9 @@ End Sub
 Sub Date_Change(d As String)
 
     If InStr(1, wshFACPrep.Range("O6").value, "-") = 0 Then
-        Dim Y As String
-        Y = Right(Year(d), 2)
-        wshFACPrep.Range("O6").value = Y & "-" & wshFACPrep.Range("O6").value
+        Dim y As String
+        y = Right(Year(d), 2)
+        wshFACPrep.Range("O6").value = y & "-" & wshFACPrep.Range("O6").value
         wshFACFinale.Range("F28").value = wshFACPrep.Range("O6").value
     End If
     wshFACFinale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
@@ -876,9 +876,18 @@ NotSaved:
     If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Invoice_Delete()" & vbNewLine
 End Sub
 
-Sub Previsualisation_PDF() 'RMV - 2023-12-17 @ 14:33
+Sub FAC_BROUILLON_Prev_PDF() '2024-03-02 @ 16:18
 
-    wshFACFinale.PrintOut , , , True, True, , , , False
+    Call Goto_Onglet_Facture_Finale
+    Call FAC_FINALE_Prev_PDF
+    Call Goto_Onglet_Preparation_Facture
+    
+End Sub
+
+Sub FAC_FINALE_Prev_PDF() '2024-03-02 @ 16:18
+
+    wshFACFinale.PrintOut , , 1, True, True, , , , False
+'    wshFACFinale.PrintOut , , , True, True, , , , False
     
 End Sub
 
@@ -1250,6 +1259,9 @@ End Sub
 Sub Back_To_FAC_Menu()
 
     wshMenuFACT.Activate
+    Call SlideIn_PrepFact
+    Call SlideIn_SuiviCC
+    Call SlideIn_Encaissement
     wshMenuFACT.Range("A1").Select
     
 End Sub

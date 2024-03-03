@@ -1,5 +1,11 @@
 ﻿Option Explicit
 
+Private Sub Worksheet_Activate() '2024-03-03 @ 10:14
+
+    Call GL_Trans_Import_All
+
+End Sub
+
 Private Sub Worksheet_Change(ByVal Target As Range)
 
     'Si la cellule de la source change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
@@ -14,9 +20,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             ufListeEJAuto.show vbModal
             If wshJE.Range("B2").value >= 0 Then
                 wshJE.Range("J4").Activate
+                wshJE.Range("J4").Select
             Else
                 Call wshJE_Clear_All_Cells
                 wshJE.Range("E4").Activate 'Nothing was selected
+                wshJE.Range("E4").Select
             End If
         End If
         Application.EnableEvents = True
@@ -25,8 +33,24 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la date change, alors on essaie de construire une date
     If Not Intersect(Target, Range("J4")) Is Nothing Then
         Application.EnableEvents = False
-        Dim r As Range: Set r = Range("J4")
-        Call Build_Date(r)
+        Dim rng As Range: Set rng = Me.Range("J4")
+        rng.value = Validate_A_Date(rng.value)
+        If rng.value = "" Then
+            Call Invalid_Date_Message
+            rng.Activate
+            rng.Select
+        End If
+        If CDate(rng.value) > Now() Then
+            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                rng.value = ""
+                Call Pause_Application(1)
+                rng.Activate
+                rng.Select
+                Application.EnableEvents = True
+'                Exit Sub
+            End If
+        End If
+        Set rng = Nothing
         Application.EnableEvents = True
     End If
     
@@ -59,7 +83,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
-        If Range("H25").value <> Range("G25").value Then
+        If Range("G25").value <> Range("H25").value Then
             With Range("G25:H25").Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
@@ -76,21 +100,21 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
     
-    'Free up memory - 2024-02-23
-    Set r = Nothing
-    
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Modified to control TAB order
 
-    Dim TabOrder As Variant, X As Variant
+    Dim tabOrderListOfCells As Variant, X As Variant
     Dim addr As String
     Dim rg As Range, targ As Range
     
-    If TabOrderFlag = True Then Exit Sub
-    ', "G9:G23", "H9:H23", "I9:I23"
-    TabOrder = Array("E4", "J4", "E6", "D9:J23") 'List your cell addresses in desired tab order here
-    For Each X In TabOrder
+    isTab_Order_Activated = True
+    If isTab_Order_Activated = False Then Exit Sub
+    tabOrderListOfCells = Array("E4", "J4", "E6", _
+        "D9:I9", "D10:I10", "D11:I11", "D12:I12", "D13:I13", _
+        "D14:I14", "D15:I15", "D16:I16", "D17:I17", "D18:I18", _
+        "D19:I19", "D20:I20", "D21:I21", "D22:I22", "D23:I23") 'List your cell addresses in desired tab order here
+    For Each X In tabOrderListOfCells
         If rg Is Nothing Then
             Set rg = Range(X)
         Else
@@ -99,22 +123,40 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Modif
     Next
     
     Set targ = Intersect(rg, Target)
+    rg.Interior.Color = RGB(225, 237, 239)
     rg.Select
     If targ Is Nothing Then
         addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
-        X = Application.Match(addr, TabOrder, 0)
-        If IsError(X) Then Range(TabOrder(LBound(TabOrder))).Activate
+        X = Application.Match(addr, tabOrderListOfCells, 0)
+        If IsError(X) Then
+            Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
+            Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Select
+        End If
     Else
         targ.Activate
     End If
     
+    'Force the focus to the next line if possible
     If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        If Target.CountLarge > 1 Then Exit Sub
+        If Target.CountLarge > 1 Then GoTo Clean_Exit
         If Target.row < 23 Then wshJE.Range("D" & Target.row + 1).Activate
     End If
     
+Clean_Exit:
     'Free up memory - 2024-02-23
     Set rg = Nothing
+    Set targ = Nothing
 
 End Sub
+
+Private Sub ckbRecurrente_Click()
+
+    If ckbRecurrente.value = True Then
+        ckbRecurrente.BackColor = vbYellow
+    Else
+        ckbRecurrente.BackColor = RGB(217, 217, 217)
+    End If
+
+End Sub
+
 

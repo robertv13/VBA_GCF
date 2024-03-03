@@ -14,11 +14,11 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.5" '2024-02-29 @ 14:16
+Global Const gAppVersion As String = "v2.6.2" '2024-03-02 @ 12:24
 
-Public TabOrderFlag As Boolean 'To be able to specify the TAB order of a worksheet
+Public isTab_Order_Activated As Boolean 'To be able to specify the TAB order of a worksheet
 
-Sub TEC_Ajoute_Ligne_Detail() 'Add an entry to DB
+Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -32,8 +32,7 @@ Sub TEC_Ajoute_Ligne_Detail() 'Add an entry to DB
     
     'Clear the fields after saving
     With ufSaisieHeures
-'        .cmbProfessionnel.Enabled = True
-'        .txtDate.Enabled = True
+        .txtTEC_ID.value = 0
         .txtClient.value = ""
         .txtActivite.value = ""
         .txtHeures.value = ""
@@ -45,20 +44,16 @@ Sub TEC_Ajoute_Ligne_Detail() 'Add an entry to DB
     Call Refresh_ListBox_And_Add_Hours
     
     'Reset command buttons
-    With ufSaisieHeures
-        .cmdClear.Enabled = False
-        .cmdAdd.Enabled = False
-        .cmdUpdate.Enabled = False
-    End With
+    Call Buttons_Enabled_True_Or_False(False, False, False, False)
     
     'Back to client
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Ajoute_Ligne_Detail()", timerStart)
+    Call Output_Timer_Results("TEC_Ajoute_Ligne()", timerStart)
 
 End Sub
 
-Sub TEC_Modifie_Ligne_Detail() '2023-12-23 @ 07:04
+Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -69,6 +64,7 @@ Sub TEC_Modifie_Ligne_Detail() '2023-12-23 @ 07:04
  
     'Initialize dynamic variables
     With ufSaisieHeures
+        .txtTEC_ID.value = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
         .txtClient.value = ""
@@ -85,11 +81,11 @@ Sub TEC_Modifie_Ligne_Detail() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Modifie_Ligne_Detail()", timerStart)
+    Call Output_Timer_Results("TEC_Modifie_Ligne()", timerStart)
 
 End Sub
 
-Sub TEC_Efface_Ligne_Detail() '2023-12-23 @ 07:05
+Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -145,7 +141,7 @@ Sub TEC_Efface_Ligne_Detail() '2023-12-23 @ 07:05
     'Free up memory - 2024-02-23
     Set sh = Nothing
 
-    Call Output_Timer_Results("TEC_Efface_Ligne_Detail()", timerStart)
+    Call Output_Timer_Results("TEC_Efface_Ligne()", timerStart)
 
 End Sub
 
@@ -176,6 +172,7 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
             CriteriaRange:=.Range("R2:T3"), _
             CopyToRange:=.Range("Y2:AL2"), _
             Unique:=False
+        
         lastResultRow = .Range("Y99999").End(xlUp).row
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
@@ -195,6 +192,7 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
             .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
+
 No_Sort_Required:
     End With
     
@@ -206,10 +204,11 @@ End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart4 As Double: timerStart4 = Timer
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
+        .txtTEC_ID.value = "" '2024-03-01 @ 09:56
         .txtClient.value = ""
         wshAdmin.Range("TEC_Client_ID").value = 0
         .txtActivite.value = ""
@@ -222,16 +221,11 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
-    With ufSaisieHeures
-        .cmdClear.Enabled = False
-        .cmdAdd.Enabled = False
-        .cmdDelete.Enabled = False
-        .cmdUpdate.Enabled = False
-    End With
+    Call Buttons_Enabled_True_Or_False(False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("Workbook_Open()", timerStart)
+    Call Output_Timer_Results("TEC_Efface_Formulaire()", timerStart4)
 
 End Sub
 
@@ -368,7 +362,6 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     
     Dim hoursValue As Double '2024-03-01 @ 05:40
     hoursValue = CDbl(ufSaisieHeures.txtHeures.value)
-    Debug.Print hoursValue & " - " & IsNumeric(hoursValue) & " - " & Val(hoursValue)
     
     If tecID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
@@ -410,9 +403,9 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
                 .Range("E" & rowToBeUpdated).value = wshAdmin.Range("TEC_Client_ID").value
                 .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
                 .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
-                .Range("H" & rowToBeUpdated).value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+                .Range("H" & rowToBeUpdated).value = hoursValue
                 .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
-                .Range("J" & rowToBeUpdated).value = hoursValue
+                .Range("J" & rowToBeUpdated).value = ufSaisieHeures.chbFacturable.value
                 .Range("K" & rowToBeUpdated).value = Now()
                 .Range("L" & rowToBeUpdated).value = False
                 .Range("M" & rowToBeUpdated).value = ""
@@ -471,12 +464,10 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     End If
 
 EndOfProcedure:
-    ufSaisieHeures.cmdClear.Enabled = False
-    ufSaisieHeures.cmdAdd.Enabled = False
-    ufSaisieHeures.cmdUpdate.Enabled = False
-    ufSaisieHeures.cmdDelete.Enabled = False
 
-    'ufSaisieHeures.txtClient.SetFocus
+    Call Buttons_Enabled_True_Or_False(False, False, False, False)
+
+    ufSaisieHeures.txtClient.SetFocus
     
     Call Output_Timer_Results("Refresh_ListBox_And_Add_Hours()", timerStart)
     

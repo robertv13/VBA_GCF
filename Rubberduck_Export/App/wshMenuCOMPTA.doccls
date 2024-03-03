@@ -1,28 +1,28 @@
 ﻿Option Explicit
 
-Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_BV
     SlideOut_EJ
 End Sub
 
-Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_EJ
     SlideIn_GL_Report
     SlideOut_BV
 End Sub
 
-Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_BV
     SlideIn_EF
     SlideOut_GL_Report
 End Sub
 
-Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_GL_Report
     SlideOut_EF
 End Sub
 
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_EJ
     SlideIn_BV
     SlideIn_GL_Report
@@ -32,6 +32,7 @@ End Sub
 Sub EJ_Click()
     SlideIn_BV
     SlideIn_EJ
+    Application.Calculation = xlCalculationAutomatic
     With wshJE
         .Visible = xlSheetVisible
         .Select

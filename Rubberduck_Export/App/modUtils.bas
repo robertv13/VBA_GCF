@@ -442,9 +442,73 @@ Sub Output_Timer_Results(subName As String, t As Double)
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
             .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
             .Range("B" & lastUsedRow).value = subName
-            .Range("C" & lastUsedRow).value = Timer - t
+            If t Then
+                .Range("C" & lastUsedRow).value = Timer - t
+            End If
         End With
     End If
 
 End Sub
+
+Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
+
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
+    Dim rng As Range, lastUsedRow As Long
+    lastUsedRow = ws.Range("A999").End(xlUp).row
+    Set rng = ws.Range("A1:D" & lastUsedRow)
+    
+    With ws.ListObjects("tblTests_And_Todo").Sort
+        .SortFields.clear
+        .SortFields.Add2 _
+            Key:=Range("tblTests_And_Todo[Statut]"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlDescending, _
+            DataOption:=xlSortNormal
+        .SortFields.Add2 _
+            Key:=Range("tblTests_And_Todo[Module]"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal
+        .SortFields.Add2 _
+            Key:=Range("tblTests_And_Todo[Priorité]"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal
+        .SortFields.Add2 _
+            Key:=Range("tblTests_And_Todo[TimeStamp]"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal
+        .Header = xlYes
+'        .MatchCase = False
+'        .Orientation = xlTopToBottom
+'        .SortMethod = xlPinYin
+        .Apply
+    End With
+    
+    Dim tbl As ListObject: Set tbl = ws.ListObjects("tblTests_And_Todo")
+    Dim rowToMove As Range
+
+    'Move completed item ($D = a) to the bottom of the list
+    Dim i As Long, lastRow As Long
+    i = 2
+
+    While ws.Range("D2").value = "a"
+        Set rowToMove = tbl.ListRows(1).Range
+        lastRow = tbl.ListRows.count
+        rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(lastRow + 1)
+        tbl.ListRows(1).delete
+    Wend
+
+    Set ws = Nothing
+    Set rng = Nothing
+    Set tbl = Nothing
+    Set rowToMove = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
 

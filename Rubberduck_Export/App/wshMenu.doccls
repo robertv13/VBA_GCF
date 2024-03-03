@@ -1,39 +1,39 @@
 ﻿Option Explicit
 
-Private Sub TECHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub TECHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Facturation
     SlideOut_TEC
 End Sub
 
-Private Sub FACHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub FACHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_TEC
     SlideIn_Debours
     SlideOut_Facturation
 End Sub
 
-Private Sub DEBHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub DEBHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Facturation
     SlideIn_Comptabilite
     SlideOut_Debours
 End Sub
 
-Private Sub GLHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub GLHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Debours
     SlideIn_Parametres
     SlideOut_Comptabilite
 End Sub
 
-Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Comptabilite
     SlideOut_Parametres
 End Sub
 
-Private Sub EXITHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub EXITHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_Parametres
     SlideOut_Exit
 End Sub
 
-Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_TEC
     SlideIn_Facturation
     SlideIn_Debours

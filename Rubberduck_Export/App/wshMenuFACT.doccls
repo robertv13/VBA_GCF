@@ -1,33 +1,43 @@
 ﻿Option Explicit
 
-Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_SuiviCC
     SlideOut_PrepFact
 End Sub
 
-Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_PrepFact
     SlideIn_Encaissement
     SlideOut_SuiviCC
 End Sub
 
-Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_SuiviCC
     SlideOut_Encaissement
 End Sub
 
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     SlideIn_PrepFact
     SlideIn_SuiviCC
     SlideIn_Encaissement
 End Sub
 
 Sub PreparationFacture_Click()
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideIn_PrepFact
     
+    Application.ScreenUpdating = False
+    
     wshFACPrep.Visible = xlSheetVisible
+    wshFACFinale.Visible = xlSheetVisible
     wshFACPrep.Activate
-
+    
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("PreparationFacture_Click()", timerStart)
+    
 End Sub
 
 Sub SuiviCC_Click()

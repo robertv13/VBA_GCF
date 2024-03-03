@@ -12,46 +12,46 @@ Sub BackToMainMenu()
 
 End Sub
 
-Sub Build_Date(r As Range) '2024-01-06 @ 18:29
-        Dim d, m, Y As Integer
-        Dim strDateConsruite As String, cell As String
-        Dim dateValide As Boolean
-        cell = Trim(r.value)
-        dateValide = True
-
-        cell = Replace(cell, "/", "")
-        cell = Replace(cell, "-", "")
-
-        'Utilisation de la date du jour
-        d = Day(Now())
-        m = Month(Now())
-        Y = Year(Now())
-
-        Select Case Len(cell)
-            Case 0
-                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
-            Case 1, 2
-                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(Y, "0000")
-            Case 3
-                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(Y, "0000")
-            Case 4
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Y, "0000")
-            Case 6
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
-            Case 8
-                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
-            Case Else
-                dateValide = False
-        End Select
-        dateValide = IsDate(strDateConsruite)
-
-    If dateValide Then
-        r.value = Format(strDateConsruite, "dd/mm/yyyy")
-    Else
-        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
-    End If
-
-End Sub
+'Sub Build_Date(r As Range) '2024-01-06 @ 18:29
+'        Dim d, m, y As Integer
+'        Dim strDateConsruite As String, cell As String
+'        Dim dateValide As Boolean
+'        cell = Trim(r.value)
+'        dateValide = True
+'
+'        cell = Replace(cell, "/", "")
+'        cell = Replace(cell, "-", "")
+'
+'        'Utilisation de la date du jour
+'        d = Day(Now())
+'        m = Month(Now())
+'        y = Year(Now())
+'
+'        Select Case Len(cell)
+'            Case 0
+'                strDateConsruite = Format(d, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+'            Case 1, 2
+'                strDateConsruite = Format(cell, "00") & "/" & Format(m, "00") & "/" & Format(y, "0000")
+'            Case 3
+'                strDateConsruite = Format(Left(cell, 1), "00") & "/" & Format(Mid(cell, 2, 2), "00") & "/" & Format(y, "0000")
+'            Case 4
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(y, "0000")
+'            Case 6
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & "20" & Format(Mid(cell, 5, 2), "00")
+'            Case 8
+'                strDateConsruite = Format(Left(cell, 2), "00") & "/" & Format(Mid(cell, 3, 2), "00") & "/" & Format(Mid(cell, 5, 4), "0000")
+'            Case Else
+'                dateValide = False
+'        End Select
+'        dateValide = IsDate(strDateConsruite)
+'
+'    If dateValide Then
+'        r.value = Format(strDateConsruite, "dd/mm/yyyy")
+'    Else
+'        MsgBox "La saisie est invalide...", vbInformation, "Il est impossible de construire une date"
+'    End If
+'
+'End Sub
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
@@ -185,9 +185,43 @@ Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional color
     End If
 End Sub
 
-Sub TabOrderMode()
+'Sub Tab_Order_Toggle_Mode()
+'
+'    isTab_Order_Activated = Not isTab_Order_Activated
+'    isTab_Order_Activated = True
+'
+'End Sub
 
-    TabOrderFlag = Not TabOrderFlag
-    TabOrderFlag = True
+Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
+                                  update As Boolean, delete As Boolean)
+    With ufSaisieHeures
+        .cmdClear.Enabled = clear
+        .cmdAdd.Enabled = add
+        .cmdUpdate.Enabled = update
+        .cmdDelete.Enabled = delete
+    End With
+
+End Sub
+
+Sub Invalid_Date_Message() '2024-03-03 @ 07:45
+
+    If strDate = "" Then
+    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
+        Title:="Validation de la date", _
+        Buttons:=vbCritical
+
+End Sub
+
+Sub Pause_Application(s As Double)
+    
+    If s > 5 Then Stop
+    
+    Dim endTime As Double
+    endTime = Timer + s 'Set end time to 's' seconds from now
+    
+    Do While Timer < endTime
+        'Sleep
+    Loop
     
 End Sub
+
