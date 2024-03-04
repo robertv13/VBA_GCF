@@ -3,15 +3,13 @@ Public sessionTimerStart As Double
 
 Private Sub Workbook_Open()
 
-    Dim timerStart As Double: timerStart = Timer
-    
     Application.ScreenUpdating = False
    
     Dim lastUsedRow As Long
     lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
     wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
     wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
-    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
+'    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
     sessionTimerStart = Timer
     
     Call Hide_All_Worksheet_Except_Menu
@@ -30,8 +28,6 @@ Private Sub Workbook_Open()
     
 '    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
-    
-    Call Output_Timer_Results("Workbook_Open()", 0)
 
 End Sub
 

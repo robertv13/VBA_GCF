@@ -16,8 +16,6 @@ Global savedCommNote As String
 
 Global Const gAppVersion As String = "v2.6.2" '2024-03-02 @ 12:24
 
-Public isTab_Order_Activated As Boolean 'To be able to specify the TAB order of a worksheet
-
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim timerStart As Double: timerStart = Timer

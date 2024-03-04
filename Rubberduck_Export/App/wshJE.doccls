@@ -5,38 +5,41 @@ Private Sub Worksheet_Activate() '2024-03-03 @ 10:14
     Call GL_Trans_Import_All
     Call GL_JE_Auto_Import_All
     Call wshJE_Clear_All_Cells
+    wshJE.Range("K4").value = Format(Now(), "dd-mm-yyyy")
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
     'Si la cellule de la SOURCE change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
-    If Not Intersect(Target, Range("E4")) Is Nothing Then
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
-        Application.EnableEvents = False
+'        Application.EnableEvents = False
         Dim source As String
-        source = UCase(Trim(Range("E4").value))
+        source = UCase(Trim(Range("F4").value))
         If source = "AUTO" Then
-            Call UpdateJEAuto
+'            Call UpdateJEAuto
             wshJE.Range("B2").value = -1
-            ufListeEJAuto.show vbModal
+            ufListeEJAuto.show
             If wshJE.Range("B2").value >= 0 Then
-                wshJE.Range("J4").Activate
-                wshJE.Range("J4").Select
+                wshJE.Range("K4").Activate
+                wshJE.Range("K4").Select
             Else
                 Call wshJE_Clear_All_Cells
-                wshJE.Range("E4").Activate 'Nothing was selected
-                wshJE.Range("E4").Select
+'                wshJE.Range("F4").Activate 'Nothing was selected
+'                wshJE.Range("F4").Select
             End If
         End If
-        Application.EnableEvents = True
-        wshJE.Range("J4").Select
+'        Application.EnableEvents = True
     End If
     
     'Si la cellule de la DATE change, alors on essaie de construire une date
-    If Not Intersect(Target, Range("J4")) Is Nothing Then
+    If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        Dim rng As Range: Set rng = Me.Range("J4")
+        Dim rng As Range: Set rng = Me.Range("K4")
+        If rng.value = "" Then
+            rng.value = Format(Now(), "dd-mm-yyyy")
+        End If
         rng.value = Validate_A_Date(rng.value)
         If rng.value = "" Then
             Call Invalid_Date_Message
@@ -54,26 +57,25 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         Set rng = Nothing
         Application.EnableEvents = True
-        wshJE.Range("E6").Select
     End If
     
     'Modification de la description du compte, sauvegarde du no de compte & suggestion du montant résiduel
-    If Not Intersect(Target, Range("D9:F23")) Is Nothing Then
+    If Not Intersect(Target, Range("E9:G23")) Is Nothing Then
         Application.EnableEvents = False
         With wshJE
-            If .Range("D" & Target.row).value <> "" Then
-                .Range("K" & Target.row).value = Get_GL_Code_From_GL_Description(.Range("D" & Target.row).value)
+            If .Range("E" & Target.row).value <> "" Then
+                .Range("L" & Target.row).value = Get_GL_Code_From_GL_Description(.Range("E" & Target.row).value)
             End If
             
             If Target.row > 9 And _
-                (.Range("G25").value <> 0 Or .Range("H25").value <> 0) And _
-                .Range("G25").value <> .Range("H25").value Then
-                    If .Range("G25").value > .Range("H25").value Then
-                        .Range("H" & Target.row).value = .Range("G25").value - .Range("H25").value
-                        .Range("H" & Target.row).Select
+                (.Range("H26").value <> 0 Or .Range("I26").value <> 0) And _
+                .Range("H26").value <> .Range("I26").value Then
+                    If .Range("H26").value > .Range("I26").value Then
+                        .Range("I" & Target.row).value = .Range("H26").value - .Range("I26").value
+                        .Range("I" & Target.row).Select
                     Else
-                        .Range("G" & Target.row).value = .Range("H25").value - .Range("G25").value
-                        .Range("G" & Target.row).Select
+                        .Range("H" & Target.row).value = .Range("I26").value - .Range("H26").value
+                        .Range("H" & Target.row).Select
                     End If
             End If
         End With
@@ -81,13 +83,13 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
-    If Not Intersect(Target, Range("G9:H23")) Is Nothing Then
-        If (wshJE.Range("G" & Target.row).value < 0 Or wshJE.Range("H" & Target.row).value < 0) Then
+    If Not Intersect(Target, Range("H9:I23")) Is Nothing Then
+        If (wshJE.Range("H" & Target.row).value < 0 Or wshJE.Range("I" & Target.row).value < 0) Then
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
-        If Range("G25").value <> Range("H25").value Then
-            With Range("G25:H25").Interior
+        If Range("H26").value <> Range("I26").value Then
+            With Range("H26:I26").Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
@@ -95,7 +97,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 .PatternTintAndShade = 0
             End With
         Else
-            With Range("G25:H25").Interior
+            With Range("H26:I26").Interior
                 .Pattern = xlNone
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
@@ -106,49 +108,41 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-    ' No need for code here
-End Sub
 
-Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
-    ' No need for code here
-End Sub
-
-Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
-    ' No need for code here
-End Sub
-
-Private Sub Worksheet_KeyDown(ByVal Key As MSForms.ReturnInteger, ByVal Shift As Integer)
-    If Key = vbKeyTab Then ' Check if Tab key is pressed
-        Select Case ActiveCell.Address
-            Case "$E$4"
-                Me.Range("J4").Select
-            Case "$J$4"
-                Me.Range("E6").Select
-            Case "$E$6"
-                Me.Range("D9").Select
-            Case "$D$9"
-                Me.Range("G9").Select
-            Case "$G$9"
-                Me.Range("H9").Select
-            Case "$H$9"
-                Me.Range("I9").Select
-            Case "$I$9"
-                Me.Range("D10").Select
-            Case "$D$10"
-                Me.Range("G10").Select
-            Case "$G$10"
-                Me.Range("H10").Select
-            Case "$H$10"
-                Me.Range("I10").Select
-            Case "$I$10"
-                Me.Range("D11").Select
-            Case "$D$11"
-                ' Add more cases as needed for your tab order
-                ' If you want to loop back to the beginning, you can add "Case Else" and specify the first cell
-        End Select
-        ' Prevent default Tab behavior
-        Key = 0
+    If Not Intersect(Target, Me.Range("E3:L24")) Is Nothing Then
+        Dim tabOrderListOfCells As Variant, cellsAddress As Variant
+        Dim addr As String
+        Dim rng As Range, targetRng As Range
+        
+        If isTab_Order_Activated = True Then Exit Sub
+        
+        tabOrderListOfCells = Array("F4", "K4", "F6", _
+            "E9:K9", "E10:K10", "E11:K11", "E12:K12", "E13:K13", _
+            "E14:K14", "E15:K15", "E16:K16", "E17:K17", "E18:K18", _
+            "E19:K19", "E20:K20", "E21:K21", "E22:K22", "E23:K23")
+        For Each cellsAddress In tabOrderListOfCells
+            If rng Is Nothing Then
+                Set rng = Range(cellsAddress)
+            Else
+                Set rng = Union(rng, Range(cellsAddress))
+            End If
+        Next
+        
+        Set targetRng = Intersect(rng, Target)
+        rng.Select
+        If targetRng Is Nothing Then
+            addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
+            cellsAddress = Application.Match(addr, tabOrderListOfCells, 0)
+            If IsError(cellsAddress) Then Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
+        Else
+            targetRng.Activate
+        End If
     End If
+    
+    'Clean memory
+    Set rng = Nothing
+    Set targetRng = Nothing
+
 End Sub
 
 Private Sub ckbRecurrente_Click()
@@ -160,5 +154,3 @@ Private Sub ckbRecurrente_Click()
     End If
 
 End Sub
-
-
