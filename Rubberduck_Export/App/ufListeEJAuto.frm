@@ -4,7 +4,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto
    ClientHeight    =   4500
    ClientLeft      =   7125
    ClientTop       =   6465
-   ClientWidth     =   6585
+   ClientWidth     =   7200
    OleObjectBlob   =   "ufListeEJAuto.frx":0000
 End
 Attribute VB_Name = "ufListeEJAuto"
@@ -23,8 +23,8 @@ Private Sub UserForm_Initialize()
     With lsbDescEJAuto
         .ColumnHeads = True
         .ColumnCount = 2
-        .ColumnWidths = "275; 20"
-        .RowSource = "EJ_Auto!K2:L2"
+        .ColumnWidths = "275; 25"
+        .RowSource = "EJ_Auto!K2:L12"
     End With
     
 End Sub
@@ -35,10 +35,10 @@ Private Sub UserForm_Activate()
     rowJEAutoDesc = wshEJRecurrente.Range("L999").End(xlUp).row  'Last Row Used in wshEJRecurrente (Description Section)
 
     Dim r As Integer
-    Dim data() As Variant
+    Dim arr() As Variant
     
     ' Resize the array to hold the data
-    ReDim data(1 To rowJEAutoDesc - 1, 1 To 2)
+    ReDim arr(1 To rowJEAutoDesc - 1, 1 To 2)
     
     On Error Resume Next
     For r = 2 To rowJEAutoDesc
@@ -47,87 +47,12 @@ Private Sub UserForm_Activate()
         Debug.Print "Value in L column: " & wshEJRecurrente.Range("L" & r).value
         
         ' Store values in the array
-        data(r - 1, 1) = wshEJRecurrente.Range("K" & r).value
-        data(r - 1, 2) = wshEJRecurrente.Range("L" & r).value
+        arr(r - 1, 1) = wshEJRecurrente.Range("K" & r).value
+        arr(r - 1, 2) = wshEJRecurrente.Range("L" & r).value
     Next r
     
-    ' Assign the entire array to the listbox
-    ufListeEJAuto.lsbDescEJAuto.List = data
-    
-    If Err.Number <> 0 Then
-        MsgBox "Error: " & Err.Description
-    End If
-    On Error GoTo 0
-
-'    Dim r As Integer
-'    Dim data() As Variant
-'
-'    'Resize the array to hold the data
-'    ReDim data(1 To rowJEAutoDesc - 1, 1 To 2)
-'
-'    On Error Resume Next
-'    For r = 2 To rowJEAutoDesc
-'        Debug.Print "Row: " & r
-'        Debug.Print "Value in K column: " & wshEJRecurrente.Range("K" & r).value
-'        Debug.Print "Value in L column: " & wshEJRecurrente.Range("L" & r).value
-'
-'        ' Store values in the array
-'        data(r - 1, 1) = wshEJRecurrente.Range("K" & r).value
-'        data(r - 1, 2) = wshEJRecurrente.Range("L" & r).value
-'    Next r
-'
-'    ' Assign the entire array to the listbox
-'    ufListeEJAuto.lsbDescEJAuto.List = data
-'
-'    If Err.Number <> 0 Then
-'        MsgBox "Error: " & Err.Description
-'    End If
-'    On Error GoTo 0
-
-'    Dim r As Integer
-'    On Error Resume Next
-'    For r = 2 To rowJEAutoDesc
-'        Debug.Print "Row: " & r
-'        Debug.Print "Value in K column: " & wshEJRecurrente.Range("K" & r).value
-'        Debug.Print "Value in L column: " & wshEJRecurrente.Range("L" & r).value
-'
-'        With ufListeEJAuto.lsbDescEJAuto
-'            If r - 2 < .ListCount Then
-'                .List(r - 2, 0) = wshEJRecurrente.Range("K" & r).value
-'                .List(r - 2, 1) = wshEJRecurrente.Range("L" & r).value
-'            Else
-'                .AddItem
-'                .List(r - 2, 0) = wshEJRecurrente.Range("K" & r).value
-'                .List(r - 2, 1) = wshEJRecurrente.Range("L" & r).value
-'            End If
-'        End With
-'        DoEvents
-'    Next r
-'
-'    If Err.Number <> 0 Then
-'        MsgBox "Error: " & Err.Description
-'    End If
-'    On Error GoTo 0
-    
-'    Dim r As Integer
-'    On Error Resume Next
-'    For r = 2 To rowJEAutoDesc
-'        Debug.Print wshEJRecurrente.Range("K" & r).value & " - " & wshEJRecurrente.Range("L" & r).value
-'        With ufListeEJAuto.lsbDescEJAuto
-'            .AddItem
-'            .List((r - 2), 0) = wshEJRecurrente.Range("K" & r).value
-'            .List((r - 2), 1) = wshEJRecurrente.Range("L" & r).value
-'        End With
-'    Next r
-'    If Err.Number <> 0 Then
-'        MsgBox "Error: " & Err.Description
-'    End If
-'    On Error GoTo 0
-
-'    'Corrige le format des colonnes (Left, Center & Right)
-'    MyListBoxClass.Left Me.lsbDescEJAuto, 1
-'    MyListBoxClass.Right Me.lsbDescEJAuto, 2
-    
+    'Assign the entire array to the listbox
+    ufListeEJAuto.lsbDescEJAuto.List = arr
 
 End Sub
 

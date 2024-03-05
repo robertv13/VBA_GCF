@@ -196,6 +196,7 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields("Débit").value = wshJE.Range("H" & l).value
             rs.Fields("Crédit").value = wshJE.Range("I" & l).value
             rs.Fields("AutreRemarque").value = wshJE.Range("J" & l).value
+            rs.Fields("TimeStamp").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
         rs.update
     Next l
     
@@ -241,6 +242,7 @@ Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("H" & rowToBeUsed).value = wshJE.Range("I" & i).value
         End If
         wshGL_Trans.Range("I" & rowToBeUsed).value = wshJE.Range("J" & i).value
+        wshGL_Trans.Range("J" & rowToBeUsed).value = CDate(Now())
         rowToBeUsed = rowToBeUsed + 1
     Next i
     

@@ -14,7 +14,7 @@ Global savedHeures As String
 Global savedFacturable As String
 Global savedCommNote As String
 
-Global Const gAppVersion As String = "v2.6.2" '2024-03-02 @ 12:24
+Global Const gAppVersion As String = "v2.8" '2024-03-04 @ 10:53
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 

@@ -29,14 +29,16 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     SlideIn_EF
 End Sub
 
-Sub EJ_Click()
+Sub JE_Click()
     SlideIn_BV
     SlideIn_EJ
     Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = False
     With wshJE
         .Visible = xlSheetVisible
         .Select
     End With
+    Application.ScreenUpdating = True
 End Sub
 
 Sub BV_Click()
