@@ -1,6 +1,9 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
+
+Global Const gAppVersion As String = "v2.8.4" '2024-03-05 @ 11:17
+
 Public isTab_Order_Activated As Boolean
 
 Sub BackToMainMenu()
@@ -119,6 +122,15 @@ Sub Invalid_Date_Message() '2024-03-03 @ 07:45
         Buttons:=vbCritical
 
 End Sub
+
+Sub Erreur_Totaux_DT_CT()
+
+    MsgBox Prompt:="Les totaux (Débit vs. Crédit) sont différents !!!", _
+        Title:="Validation des totaux du G/L", _
+        Buttons:=vbCritical
+
+End Sub
+
 
 Sub Pause_Application(s As Double)
     

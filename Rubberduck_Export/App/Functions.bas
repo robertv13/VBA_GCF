@@ -238,4 +238,24 @@ Public Function ClearRangeBorders(r As Range)
 
 End Function
 
+Public Function Pad_A_String(s As String, f As String, l As Integer, lr As String) As String
+
+    Dim paddedString As String
+    Dim charactersNeeded As Integer
+    
+    charactersNeeded = l - Len(s)
+    
+    If charactersNeeded > 0 Then
+        If lr = "R" Then
+            paddedString = s & String(charactersNeeded, f)
+        Else
+            paddedString = String(charactersNeeded, f) & s
+        End If
+    Else
+        paddedString = s
+    End If
+
+    Pad_A_String = paddedString
+        
+End Function
 

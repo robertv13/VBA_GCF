@@ -161,7 +161,7 @@ End Sub
 
 Sub List_All_Shapes_Properties()
     Dim ws As Worksheet
-    Dim Shp As Shape
+    Dim shp As Shape
     
     ' Set the worksheet (change "Sheet1" to your sheet's name)
     Set ws = ActiveSheet
@@ -178,16 +178,16 @@ Sub List_All_Shapes_Properties()
     
     r = 3
     'Loop through all shapes on the worksheet
-    For Each Shp In ws.Shapes
-        ws.Range("D" & r).value = Shp.Type
-        ws.Range("E" & r).value = Shp.name
-        ws.Range("F" & r).value = Shp.ZOrderPosition
-        ws.Range("G" & r).value = Shp.Top
-        ws.Range("H" & r).value = Shp.Left
-        ws.Range("I" & r).value = Shp.width
-        ws.Range("J" & r).value = Shp.Height
+    For Each shp In ws.Shapes
+        ws.Range("D" & r).value = shp.Type
+        ws.Range("E" & r).value = shp.name
+        ws.Range("F" & r).value = shp.ZOrderPosition
+        ws.Range("G" & r).value = shp.Top
+        ws.Range("H" & r).value = shp.Left
+        ws.Range("I" & r).value = shp.width
+        ws.Range("J" & r).value = shp.Height
         r = r + 1
-    Next Shp
+    Next shp
 End Sub
 
 Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
@@ -506,6 +506,8 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Set rng = Nothing
     Set tbl = Nothing
     Set rowToMove = Nothing
+    
+    ws.Calculate
     
     Application.ScreenUpdating = True
     

@@ -1,19 +1,71 @@
 ﻿Option Explicit
 
+Dim dynamicShape As Shape
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer
+
+    'Set the zoom factor to 90% when this worksheet is activated
+    ActiveWindow.Zoom = 90
+    
+    wshGL_BV.EnableCalculation = True
+    
+    Call Output_Timer_Results("wshGL_BV_Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And wshGL_BV.Range("J1").value = "" Then
+        wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
+    End If
+    
+    If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value)) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        Application.EnableEvents = False
+        Dim GLAcct As String, GLDescription As String, DateLimite As Date
+        GLAcct = CStr(Range("D" & Target.row).value)
+        GLDescription = Range("E" & Target.row).value
+        DateLimite = Format(Range("J1").value, "dd-mm-yyyy")
+        Range("T4").value = "Toutes les dates"
+
+        Call GL_Display_Trans_Selected_Account(GLAcct, GLDescription, "01-01-2023", DateLimite)
+        
+        Application.EnableEvents = True
+    End If
+    
+    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing And _
+        wshGL_BV.Range("M" & Target.row) <> "" Then
+            Dim noJE As Long
+            noJE = wshGL_BV.Range("N" & Target.row).value
+            Application.EnableEvents = False
+            wshGL_BV.Range("B10").value = Target.row
+            Application.EnableEvents = True
+            Call Get_An_JE_Detail_Trans(noJE)
+            Call Display_JE_Trans_With_Shape
+    End If
+    
+End Sub
+
 Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-31
 
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
-        Dim r As Range: Set r = Range("J1")
-        Range("J1").value = Validate_A_Date(Range("J1").value)
-        If Range("J1").value = "" Then
+        Dim strDate As String
+        strDate = Validate_A_Date(Range("J1").value)
+        If strDate = "" Then
+            Call Invalid_Date_Message
             Range("J1").Activate
             Range("J1").Select
+            GoTo Clean_Exit
+        Else
+            Range("J1").value = strDate
         End If
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
         Range("L2").value = ""
         
-        Call UpdateBV 'Automatically recalculate Trial Balance
+        Call GL_Build_TB 'Automatically recalculate Trial Balance
         
         Application.EnableEvents = True
     End If
@@ -24,29 +76,140 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Call DetermineFromAndToDate(Range("T4").value)
                 
         'Force redisplay of GL Transactions details
-        Call GLTransDisplay(Range("B6").value, Range("B7").value, _
+        Call GL_Display_Trans_Selected_Account(Range("B6").value, Range("B7").value, _
             Format(Range("B8").value, "dd-mm-yyyy"), _
             Format(Range("B9").value, "dd-mm-yyyy"))
         
+Clean_Exit:
         Application.EnableEvents = True
     End If
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+Sub Get_An_JE_Detail_Trans(no As Long)
 
-    If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value)) Is Nothing Then
-        If Target.CountLarge > 1 Then Exit Sub
-        Application.EnableEvents = False
-        Dim GLAcct As String, GLDescription As String, DateLimite As Date
-        GLAcct = CStr(Range("D" & Target.row).value)
-        GLDescription = Range("E" & Target.row).value
-        DateLimite = Format(Range("J1").value, "dd-mm-yyyy")
-        Range("T4").value = "Toutes les dates"
+'    Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
 
-        Call GLTransDisplay(GLAcct, GLDescription, "01-01-2023", DateLimite)
+    Dim timerStart As Double: timerStart = Timer
+
+    With wshGL_Trans
+        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
+        Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
+'        Call ClearRangeBorders(rgResult)
+        rgResult.ClearContents
+        Set rgData = .Range("A1").CurrentRegion
+        .Range("AA3").value = no
         
-        Application.EnableEvents = True
-    End If
+        Set rgCriteria = .Range("AA2:AA3")
+        Set rgCopyToRange = .Range("AC1:AJ1")
+        
+        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
+        
+        Dim lastResultUsedRow
+        lastResultUsedRow = .Range("AC999").End(xlUp).row
+        If lastResultUsedRow < 3 Then GoTo NoSort
+        With .Sort
+            .SortFields.clear
+            .SortFields.add Key:=wshGL_Trans.Range("AF1"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
+            .SortFields.add Key:=wshGL_Trans.Range("AH1"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlDescending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SetRange wshGL_Trans.Range("AC2:AJ" & lastResultUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+    End With
 
+NoSort:
+
+    Call Output_Timer_Results("Get_An_JE_Detail_Trans()", timerStart)
+
+End Sub
+
+Sub Display_JE_Trans_With_Shape()
+
+    Call CreateDynamicShape
+    Call Fill_The_Shape
+    Call ShowDynamicShape
+    
+End Sub
+
+Sub CreateDynamicShape()
+    'Check if the shape has already been created
+    If dynamicShape Is Nothing Then
+        'Create the text box shape
+        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 25, 300, 500, 100)
+    End If
+        
+    dynamicShape.Visible = False
+
+End Sub
+
+Sub Fill_The_Shape()
+
+        Dim lastResultRow As Long
+        lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
+        If lastResultRow < 2 Then Exit Sub
+        
+        Dim rowSelected As Long
+        rowSelected = wshGL_BV.Range("B10").value
+        
+        Dim texteShp As String
+        
+        Dim i As Integer, maxLength As Integer
+        With wshGL_Trans
+            For i = 2 To lastResultRow
+                If Len(.Range("AD2").value) > maxLength Then
+                    maxLength = Len(.Range("AD2").value)
+                End If
+                If i = 2 Then
+                    texteShp = "Desc: " & .Range("AD2").value & vbCrLf & _
+                               "Source: " & .Range("AE2").value & vbCrLf & vbCrLf
+                End If
+                texteShp = texteShp & "     " & Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
+                                      " - " & Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
+                                      "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00$"), " ", 12, "L") & _
+                                      "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00$"), " ", 12, "L") & vbCrLf
+'                If Trim(.Range("AJ" & i).value) <> "" Then
+'                    texteShp = texteShp & vbCrLf & .Range("AJ" & i).value
+'                End If
+            Next i
+        End With
+        If Right(texteShp, Len(texteShp) - 1) = vbCrLf Then
+            texteShp = Left(texteShp, Len(texteShp) - 2)
+        End If
+        'Set shape properties
+        With dynamicShape
+'            .fill.ForeColor.RGB = RGB(215, 255, 255)
+'            .fill.ForeColor.RGB = RGB(213, 255, 217)
+'            .fill.ForeColor.RGB = RGB(229, 249, 249)
+            .name = "JE_Detail_Trans"
+            .fill.ForeColor.RGB = RGB(249, 255, 229)
+            .Line.ForeColor.RGB = vbBlue
+            .TextFrame.Characters.text = texteShp
+            .TextFrame.Characters.Font.Color = vbBlack
+            .TextFrame.Characters.Font.name = "Consolas"
+            .TextFrame.Characters.Font.Size = 11
+            .Left = wshGL_BV.Range("O" & rowSelected).Left + 10
+            .Top = wshGL_BV.Range("O" & rowSelected + 1).Top + 5
+            .Height = ((lastResultRow + 4) * 12) + 3 + 3
+            If maxLength < 80 Then maxLength = 80
+            .width = ((maxLength * 6.5) + 5 + 5)
+        End With
+      
+End Sub
+
+Sub ShowDynamicShape()
+    If Not dynamicShape Is Nothing Then
+        dynamicShape.Visible = True
+    End If
+End Sub
+
+Sub HideDynamicShape()
+    If Not dynamicShape Is Nothing Then
+        dynamicShape.Visible = False
+    End If
 End Sub

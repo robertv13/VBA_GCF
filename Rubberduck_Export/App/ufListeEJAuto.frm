@@ -58,11 +58,11 @@ End Sub
 
 Private Sub lsbDescEJAuto_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim RowSelected As Integer, DescEJAuto As String, NoEJAuto As Long
-    RowSelected = lsbDescEJAuto.ListIndex
-    DescEJAuto = lsbDescEJAuto.List(RowSelected, 0)
-    NoEJAuto = lsbDescEJAuto.List(RowSelected, 1)
-    wshJE.Range("B2").value = RowSelected '2024-01-08 @ 13:58
+    Dim rowSelected As Integer, DescEJAuto As String, NoEJAuto As Long
+    rowSelected = lsbDescEJAuto.ListIndex
+    DescEJAuto = lsbDescEJAuto.List(rowSelected, 0)
+    NoEJAuto = lsbDescEJAuto.List(rowSelected, 1)
+    wshJE.Range("B2").value = rowSelected '2024-01-08 @ 13:58
     Unload ufListeEJAuto
     Call Load_JEAuto_Into_JE(DescEJAuto, NoEJAuto)
 

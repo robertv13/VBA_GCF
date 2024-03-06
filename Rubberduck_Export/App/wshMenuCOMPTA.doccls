@@ -45,7 +45,7 @@ Sub BV_Click()
     SlideIn_EJ
     SlideIn_BV
     SlideIn_GL_Report
-    With wshBV
+    With wshGL_BV
         .Visible = xlSheetVisible
         .Select
     End With

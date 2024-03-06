@@ -95,12 +95,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Else
             Me.Range("K4").value = strDate
         End If
-        Debug.Print "Check for future date"
         If CDate(Me.Range("K4").value) > Format(Now(), "dd-mm-yyyy") Then
         Call Save_Detailled_Log("Dates comparaison: " & CDate(Me.Range("K4").value) & " vs. " & Format(Now(), "dd-mm-yyyy"))
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Me.Range("K4").value = ""
-                'Call Pause_Application(1)
                 Me.Range("K4").Activate
                 Me.Range("K4").Select
             End If
