@@ -1,6 +1,6 @@
 ﻿Option Explicit
 
-Dim dynamicShape As Shape
+Public dynamicShape As Shape
 
 Private Sub Worksheet_Activate()
 
@@ -11,12 +11,44 @@ Private Sub Worksheet_Activate()
     
     wshGL_BV.EnableCalculation = True
     
+    'Clear the display area & display the account number & description
+    Application.EnableEvents = False
+    wshGL_BV.Range("L4:T99999").clear
+    wshGL_BV.Range("L2").value = ""
+    wshGL_BV.Range("J1").value = Format(CDate(Now()), "mm-dd-yyyy")
+    Application.EnableEvents = True
+    
+'    Dim rng As Range
+'    Set rng = Range("M5:T9999")
+'    With rng.FormatConditions
+'        .delete
+'        With .add(Type:=xlExpression, Formula1:="=ligne()=$B$10")
+'            .Interior.Color = RGB(47, 117, 181)
+'            .Font.Color = RGB(2555, 255, 255)
+'        End With
+'    End With
+'    wshGL_BV.Range("B10").value = 0
+    
     Call Output_Timer_Results("wshGL_BV_Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_Deactivate()
+
+    On Error Resume Next
+    If Not dynamicShape Is Nothing Then
+        dynamicShape.Visible = False
+    End If
+    On Error GoTo 0
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
+    If Not dynamicShape Is Nothing Then
+        If dynamicShape.Visible = True Then dynamicShape.Visible = False
+    End If
+    
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And wshGL_BV.Range("J1").value = "" Then
         wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
     End If
@@ -132,7 +164,7 @@ End Sub
 Sub Display_JE_Trans_With_Shape()
 
     Call CreateDynamicShape
-    Call Fill_The_Shape
+    Call Adjust_The_Shape
     Call ShowDynamicShape
     
 End Sub
@@ -141,14 +173,12 @@ Sub CreateDynamicShape()
     'Check if the shape has already been created
     If dynamicShape Is Nothing Then
         'Create the text box shape
-        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 25, 300, 500, 100)
+        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
     End If
-        
-    dynamicShape.Visible = False
-
+       
 End Sub
 
-Sub Fill_The_Shape()
+Sub Adjust_The_Shape()
 
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
@@ -157,7 +187,7 @@ Sub Fill_The_Shape()
         Dim rowSelected As Long
         rowSelected = wshGL_BV.Range("B10").value
         
-        Dim texteShp As String
+        Dim texteOneLine As String, texteFull As String
         
         Dim i As Integer, maxLength As Integer
         With wshGL_Trans
@@ -166,38 +196,46 @@ Sub Fill_The_Shape()
                     maxLength = Len(.Range("AD2").value)
                 End If
                 If i = 2 Then
-                    texteShp = "Desc: " & .Range("AD2").value & vbCrLf & _
-                               "Source: " & .Range("AE2").value & vbCrLf & vbCrLf
+                    texteFull = "Desc  : " & .Range("AD2").value & vbCrLf
+                    If Trim(.Range("AE2").value) <> "" Then
+                        texteFull = texteFull & "Source: " & .Range("AE2").value & vbCrLf & vbCrLf
+                    Else
+                        texteFull = texteFull & vbCrLf
+                    End If
                 End If
-                texteShp = texteShp & "     " & Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
-                                      " - " & Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
-                                      "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00$"), " ", 12, "L") & _
-                                      "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00$"), " ", 12, "L") & vbCrLf
-'                If Trim(.Range("AJ" & i).value) <> "" Then
-'                    texteShp = texteShp & vbCrLf & .Range("AJ" & i).value
-'                End If
+                texteOneLine = "   " & Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
+                                      " - " & Pad_A_String(.Range("AG" & i).value, " ", 40, "R") & _
+                                      "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 12, "L") & _
+                                      "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 12, "L")
+                If Trim(.Range("AJ" & i).value) <> "" Then
+                    texteOneLine = Pad_A_String(texteOneLine, " ", 80, "R") & Trim(.Range("AJ" & i).value)
+                    maxLength = Len(texteOneLine)
+                End If
+                texteFull = texteFull & texteOneLine & vbCrLf
             Next i
         End With
-        If Right(texteShp, Len(texteShp) - 1) = vbCrLf Then
-            texteShp = Left(texteShp, Len(texteShp) - 2)
+        If Right(texteFull, Len(texteFull) - 1) = vbCrLf Then
+            texteFull = Left(texteFull, Len(texteFull) - 2)
         End If
         'Set shape properties
         With dynamicShape
-'            .fill.ForeColor.RGB = RGB(215, 255, 255)
-'            .fill.ForeColor.RGB = RGB(213, 255, 217)
-'            .fill.ForeColor.RGB = RGB(229, 249, 249)
             .name = "JE_Detail_Trans"
             .fill.ForeColor.RGB = RGB(249, 255, 229)
             .Line.ForeColor.RGB = vbBlue
-            .TextFrame.Characters.text = texteShp
+            .TextFrame.Characters.text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
             .TextFrame.Characters.Font.name = "Consolas"
             .TextFrame.Characters.Font.Size = 11
-            .Left = wshGL_BV.Range("O" & rowSelected).Left + 10
+            .TextFrame.MarginLeft = 5
+            .TextFrame.MarginRight = 5
+            .TextFrame.MarginTop = 5
+            .TextFrame.MarginBottom = 5
+            If maxLength < 78 Then maxLength = 78
+            .width = ((maxLength * 6.5))
+'            .Height = ((lastResultRow + 4) * 12) + 3 + 3
+            .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
+            .Left = wshGL_BV.Range("O" & rowSelected).Left + 5
             .Top = wshGL_BV.Range("O" & rowSelected + 1).Top + 5
-            .Height = ((lastResultRow + 4) * 12) + 3 + 3
-            If maxLength < 80 Then maxLength = 80
-            .width = ((maxLength * 6.5) + 5 + 5)
         End With
       
 End Sub

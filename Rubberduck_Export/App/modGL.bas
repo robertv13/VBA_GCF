@@ -6,7 +6,7 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    Call GL_Trans_Import_All
+    'Call GL_Trans_Import_All is it mandatory ???
     
     Dim minDate As Date, dateCutOff As Date, lastUsedRow As Long, solde As Currency
     Dim planComptable As Range
@@ -14,6 +14,9 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     
     'Clear Detail transaction section
     wshGL_BV.Range("L4:T9999").clear
+'    If Not dynamicShape Is Nothing Then
+'        dynamicShape.Visible = False
+'    End If
     
     'Clear contents & formats for TB cells
     lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
@@ -108,7 +111,7 @@ End Sub
 Sub GL_Display_Trans_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
     'Clear the display area & display the account number & description
-    wshGL_BV.Range("M4:T99999").clear
+    wshGL_BV.Range("M4:T99999").ClearContents
     wshGL_BV.Range("L2").value = "Du " & minDate & " au " & maxDate
     
     wshGL_BV.Range("L4").Font.Bold = True
@@ -126,16 +129,6 @@ Sub GL_Display_Trans_Selected_Account(GLAcct As String, GLDesc As String, minDat
     Set searchRange = wshGL_Trans.Range("T2:T" & lastResultUsedRow)
     Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
     foundRow = foundCell.row
-    
-'    Loop through each row in the search range (wshGL_Trans) - RMV - 2024-01-05 - À améliorer
-'    foundRow = Application.Match(GLAcct, wshGL_Trans.Range("T2:T" & lastResultUsedRow), row(wshGL_Trans.Range("T2:T" & lastResultUsedRow)))
-'    For Each row In wshGL_Trans.Range("T2:T" & lastResultUsedRow).Rows
-'        If row.Cells(1, 1).value = GLAcct Then
-'            'Store the row number and exit the loop
-'            foundRow = row.row
-'            Exit For
-'        End If
-'    Next row
     
     ' Check if the target value was found
     If foundRow = 0 Then
@@ -407,11 +400,6 @@ Public Sub ClearDynamicShape()
 End Sub
 
 Sub Back_To_GL_Menu()
-
-    On Error Resume Next
-'    dynamicShape.delete
-'    Set dynamicShape = Nothing
-    On Error GoTo 0
     
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select

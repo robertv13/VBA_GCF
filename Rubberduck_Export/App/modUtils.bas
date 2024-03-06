@@ -502,12 +502,12 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
         tbl.ListRows(1).delete
     Wend
 
+    ws.Calculate
+    
     Set ws = Nothing
     Set rng = Nothing
     Set tbl = Nothing
     Set rowToMove = Nothing
-    
-    ws.Calculate
     
     Application.ScreenUpdating = True
     
