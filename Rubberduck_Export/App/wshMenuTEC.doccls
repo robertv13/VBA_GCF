@@ -22,5 +22,11 @@ End Sub
 
 Sub TEC_TDB_Click()
     SlideIn_TEC_TDB
-    MsgBox "Procédure 'Tableau de bord - TEC' à implanter", vbInformation
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = False
+    With wshTEC_Dashboard
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    Application.ScreenUpdating = True
 End Sub

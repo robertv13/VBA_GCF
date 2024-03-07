@@ -6,8 +6,8 @@ Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer
 
-    'Set the zoom factor to 93% when this worksheet is activated
-    ActiveWindow.Zoom = 93
+    'Set the zoom factor to 92% when this worksheet is activated
+    ActiveWindow.Zoom = 92
     
     wshGL_BV.EnableCalculation = True
     

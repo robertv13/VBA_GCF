@@ -1,1 +1,23 @@
 ﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Call Handle_Activation
+
+End Sub
+
+Sub Handle_Activation()
+
+    Call Update_TEC_Local_To_DB_Data
+    Call RefreshPivotTable
+    
+End Sub
+
+Sub Back_To_TEC_Menu()
+
+    wshTEC_Dashboard.Visible = xlSheetHidden
+    
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
+
+End Sub

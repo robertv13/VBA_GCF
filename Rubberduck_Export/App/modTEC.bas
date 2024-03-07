@@ -28,7 +28,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     
     'Clear the fields after saving
     With ufSaisieHeures
-        .txtTEC_ID.value = 0
+        .txtTEC_ID.value = ""
         .txtClient.value = ""
         .txtActivite.value = ""
         .txtHeures.value = ""
@@ -473,5 +473,46 @@ EndOfProcedure:
     
     Call Output_Timer_Results("Refresh_ListBox_And_Add_Hours()", timerStart)
     
+End Sub
+
+Sub Update_TEC_Local_To_DB_Data()
+
+    Dim timerStart As Double: timerStart = Timer
+
+    Dim wsFrom As Worksheet: Set wsFrom = wshBaseHours
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wshBaseHours.Range("A99999").End(xlUp).row
+    
+    Dim arr() As Variant
+    ReDim arr(1 To lastUsedRow - 2, 1 To 8) '2 rows of Heading
+    
+    Dim i As Long
+    For i = 3 To lastUsedRow
+        With wsFrom
+            arr(i - 2, 1) = .Range("A" & i).value
+            arr(i - 2, 2) = .Range("C" & i).value
+            arr(i - 2, 3) = .Range("D" & i).value
+            arr(i - 2, 4) = .Range("F" & i).value
+            arr(i - 2, 5) = .Range("H" & i).value
+            arr(i - 2, 6) = .Range("J" & i).value
+            arr(i - 2, 7) = .Range("L" & i).value
+            arr(i - 2, 8) = .Range("N" & i).value
+        End With
+    Next i
+
+    Dim rngTo As Range
+    Set rngTo = wshTEC_DB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
+    rngTo.value = arr
+    
+    Call Output_Timer_Results("Update_TEC_Local_To_DB_Data()", timerStart)
+
+End Sub
+
+Sub RefreshPivotTable()
+    Dim pt As PivotTable
+    For Each pt In wshTEC_DB_PivotTable.PivotTables
+        pt.RefreshTable
+    Next pt
 End Sub
 

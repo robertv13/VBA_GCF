@@ -213,7 +213,7 @@ Private Sub txtClient_AfterUpdate()
         If Me.txtTEC_ID.value = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
         Else
-            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+            Call Buttons_Enabled_True_Or_False(True, False, False, False)
         End If
     End If
     
