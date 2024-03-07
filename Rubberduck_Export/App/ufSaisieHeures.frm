@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   8145
+   ClientHeight    =   8160
    ClientLeft      =   105
    ClientTop       =   450
    ClientWidth     =   13950
@@ -16,6 +16,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
+Private MyListBoxClass As clsListboxAlign
 
 'Allows the calling code to set the data
 Public Property Let ListData(ByVal rg As Range)
@@ -48,6 +49,7 @@ Sub UserForm_Activate()
     Dim timer3Start As Double: timer3Start = Timer
     
     Call Client_List_Import_All
+    Call TEC_Import_All
     
     Dim lastUsedRow As Long
     lastUsedRow = wshClientDB.Range("A9999").End(xlUp).row
@@ -74,20 +76,8 @@ End Sub
 
 Private Sub UserForm_Initialize()
 
-    Dim MyListBoxClass As clsCListboxAlign
-    Set MyListBoxClass = New clsCListboxAlign 'declare the class
-
-    'Corrige le format des colonnes (Left, Center & Right)
-'    MyListBoxClass.Right Me.ListBox2, 1
-'    MyListBoxClass.Right Me.ListBox2, 2
-'    MyListBoxClass.Right Me.ListBox2, 3
-'    MyListBoxClass.Right Me.ListBox2, 4
-'    MyListBoxClass.Right Me.ListBox2, 5
-'    MyListBoxClass.Right Me.ListBox2, 6
-'    MyListBoxClass.Right Me.ListBox2, 7
-'    MyListBoxClass.Right Me.ListBox2, 8
-'    MyListBoxClass.Right Me.ListBox2, 9
-
+    Set MyListBoxClass = New clsListboxAlign
+    
 End Sub
 
 Private Sub UserForm_Terminate()
@@ -145,7 +135,7 @@ End Sub
 Private Sub txtDate_Enter()
 
     If Me.txtDate.value = "" Then
-        Me.txtDate.value = Format(Now(), "dd/mm/yyyy")
+        Me.txtDate.value = Format(Now(), "dd-mm-yyyy")
     End If
 
 End Sub
@@ -154,7 +144,6 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim strDate As String
     strDate = Validate_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
-    
     
     If strDate = "" Then '2024-03-02 @ 09:36 - RMV_MSGBOX
     MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
@@ -169,7 +158,8 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Me.txtDate.value = strDate
     
-    If strDate > Format(Now(), "dd-mm-yyyy") Then
+    Debug.Print strDate & " - " & Format(Now(), "dd-mm-yyyy")
+    If CDate(strDate) > Format(Now(), "dd-mm-yyyy") Then
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
@@ -343,13 +333,13 @@ Private Sub cmdDelete_Click()
 End Sub
 
 '****************************************** Get a row and display it in the form
-Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
         Dim tecID As Long
-        tecID = .ListBox2.List(.ListBox2.ListIndex, 0)
+        tecID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
         wshAdmin.Range("TEC_Current_ID").value = tecID
         txtTEC_ID = tecID
         
@@ -369,30 +359,30 @@ Sub ListBox2_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             GoTo exit_sub
         End If
         
-        .cmbProfessionnel.value = .ListBox2.List(.ListBox2.ListIndex, 1)
+        .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
 
-        .txtDate.value = Format(.ListBox2.List(.ListBox2.ListIndex, 2), "dd/mm/yyyy")
+        .txtDate.value = Format(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
         .txtDate.Enabled = False
 
-        .txtClient.value = .ListBox2.List(.ListBox2.ListIndex, 3)
+        .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
         savedClient = .txtClient.value
         .txtSavedClient.value = .txtClient.value
         wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
 
-        .txtActivite.value = .ListBox2.List(.ListBox2.ListIndex, 4)
+        .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
         savedActivite = .txtActivite.value
         .txtSavedActivite.value = .txtActivite.value
 
-        .txtHeures.value = Format(.ListBox2.List(.ListBox2.ListIndex, 5), "#0.00")
+        .txtHeures.value = Format(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
         savedHeures = .txtHeures.value
         .txtSavedHeures.value = .txtHeures.value
 
-        .txtCommNote.value = .ListBox2.List(.ListBox2.ListIndex, 6)
+        .txtCommNote.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
         savedCommNote = .txtCommNote.value
         .txtSavedCommNote.value = .txtCommNote.value
 
-        .chbFacturable.value = CBool(.ListBox2.List(.ListBox2.ListIndex, 7))
+        .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
         savedFacturable = .chbFacturable.value
         .txtSavedFacturable.value = .chbFacturable.value
     End With
@@ -408,10 +398,16 @@ exit_sub:
     
 End Sub
 
+'Public Sub InitializeListBoxClass()
+'
+'    Set MyListBoxClass = New clsListboxAlign
+'
+'End Sub
+
 'Sub CopyRangeToListBoxWithoutRowSource()
 '    Dim ws As Worksheet: Set ws = wshBaseHours
 '    Dim rng As Range: Set rng = wshBaseHours("Y2:AL6")
-'    Dim lb As Object: Set lb = ufSaisieHeures.ListBox2
+'    Dim lb As Object: Set lb = ufSaisieHeures.lsbHresJour
 '    Dim cell As Range
 '
 '    'Clear any existing items in the ListBox

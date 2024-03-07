@@ -56,7 +56,7 @@ Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 20
     
     On Error Resume Next
     Set ws = ThisWorkbook.Sheets("Admin")
-    Set dynamicRange = ws.Range("dnrPlanComptable")
+    Set dynamicRange = ws.Range("dnrPlanComptableDescription")
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then

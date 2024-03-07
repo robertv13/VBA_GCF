@@ -14,11 +14,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private MyListBoxClass As clsCListboxAlign
+Private MyListBoxClass2 As CListBoxAlign
 
 Private Sub UserForm_Initialize()
-    
-'    Set MyListBoxClass = New clsCListboxAlign 'declare the class
     
     With lsbDescEJAuto
         .ColumnHeads = True
@@ -26,6 +24,10 @@ Private Sub UserForm_Initialize()
         .ColumnWidths = "275; 25"
         .RowSource = "EJ_Auto!K2:L12"
     End With
+    
+    'Class (clsCListboxAlign) to align column within a lisbox
+    MyListBoxClass2.Left Me.lsbDescEJAuto, 1
+    MyListBoxClass2.Right Me.lsbDescEJAuto, 2
     
 End Sub
 
@@ -42,14 +44,11 @@ Private Sub UserForm_Activate()
     
     On Error Resume Next
     For r = 2 To rowJEAutoDesc
-        Debug.Print "Row: " & r
-        Debug.Print "Value in K column: " & wshEJRecurrente.Range("K" & r).value
-        Debug.Print "Value in L column: " & wshEJRecurrente.Range("L" & r).value
-        
-        ' Store values in the array
+        'Store values in the array
         arr(r - 1, 1) = wshEJRecurrente.Range("K" & r).value
-        arr(r - 1, 2) = wshEJRecurrente.Range("L" & r).value
+        arr(r - 1, 2) = Pad_A_String(wshEJRecurrente.Range("L" & r).value, " ", 2, "L")
     Next r
+    On Error GoTo 0
     
     'Assign the entire array to the listbox
     ufListeEJAuto.lsbDescEJAuto.List = arr
@@ -71,6 +70,6 @@ End Sub
 Private Sub UserForm_Terminate()
     Unload Me
     'Clear the class declaration
-    Set MyListBoxClass = Nothing
+    Set MyListBoxClass2 = Nothing
 End Sub
 

@@ -149,7 +149,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     recSet.Close
     connStr.Close
     
-    Call RedefineDynamicRange
+    Call Dynamic_Range_Redefine_Plan_Comptable
         
     Call Output_Timer_Results("ChartOfAccount_Import_All()", timerStart)
 

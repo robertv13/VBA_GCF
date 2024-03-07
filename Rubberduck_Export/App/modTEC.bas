@@ -440,21 +440,27 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     lastRow = wshBaseHours.Range("Y999").End(xlUp).row
     If lastRow < 3 Then Exit Sub
         
-    With ufSaisieHeures.ListBox2
+    With ufSaisieHeures.lsbHresJour
         .ColumnHeads = True
-        .ColumnCount = 10
+        .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
         .RowSource = "TEC_Local!Y3:AG" & lastRow
     End With
+     
+'    ufSaisieHeures.InitializeListBoxClass
+
+'    MyListBoxClass.Left ufSaisieHeures.lsbHresJour, 1
+'    MyListBoxClass.Center ufSaisieHeures.lsbHresJour, 2
+'    MyListBoxClass.Right ufSaisieHeures.lsbHresJour, 3
 
     'Add hours to totalHeures
     Dim nbrRows, i As Integer
-    nbrRows = ufSaisieHeures.ListBox2.ListCount
+    nbrRows = ufSaisieHeures.lsbHresJour.ListCount
     Dim totalHeures As Double
     
     If nbrRows > 0 Then
         For i = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(ufSaisieHeures.ListBox2.List(i, 5))
+            totalHeures = totalHeures + CCur(ufSaisieHeures.lsbHresJour.List(i, 5))
         Next
         ufSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
     End If

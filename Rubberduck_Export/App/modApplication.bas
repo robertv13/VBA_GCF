@@ -1,7 +1,7 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
-Global Const gAppVersion As String = "v2.8.5" '2024-03-06 @ 07:39
+Global Const gAppVersion As String = "v2.9" '2024-03-06 @ 12:09
 
 Public isTab_Order_Activated As Boolean
 
@@ -16,20 +16,35 @@ Sub BackToMainMenu()
 
 End Sub
 
+Private Sub auto_open() '2024-03-06 @ 14:36
 
-Sub RedefineDynamicRange() '2024-02-13 @ 13:30
+    'MsgBox "Sub auto_open()"
+
+End Sub
+
+Private Sub auto_close() '2024-03-06 @ 14:36
+
+    'MsgBox "Sub auto_close()"
+
+End Sub
+
+Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-03-06 @ 13:43
     
+    Dim timerStart As Double: timerStart = Timer
+
     'Delete existing dynamic named range (assuming it exists)
     On Error Resume Next
     ThisWorkbook.Names("dnrPlanComptableDescription").delete
     On Error GoTo 0
     
-    'Define a new dynamic named range
+    'Define a new dynamic named range for 'Plan Comptable'
     Dim newRangeFormula As String
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create a new dynamic named range
     ThisWorkbook.Names.add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
+    
+    Call Output_Timer_Results("Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
     
 End Sub
 
@@ -129,7 +144,6 @@ Sub Erreur_Totaux_DT_CT()
         Buttons:=vbCritical
 
 End Sub
-
 
 Sub Pause_Application(s As Double)
     

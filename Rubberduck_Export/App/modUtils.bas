@@ -457,7 +457,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
     Dim rng As Range, lastUsedRow As Long
     lastUsedRow = ws.Range("A999").End(xlUp).row
-    Set rng = ws.Range("A1:D" & lastUsedRow)
+    Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
         .SortFields.clear

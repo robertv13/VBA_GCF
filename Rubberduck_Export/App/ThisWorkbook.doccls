@@ -10,7 +10,8 @@ Private Sub Workbook_Open()
     lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
     wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
     wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
-'    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
+    'wshzDocLogAppli.Range("C" & lastUsedRow).value = ""
+    
     sessionTimerStart = Timer
     
     Call Hide_All_Worksheet_Except_Menu
@@ -45,6 +46,9 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
     Call Output_Timer_Results("Workbook_BeforeClose()", timerStart)
     
     Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
+    
+    Debug.Print "Sub Workbook_BeforeClose()"
+
     
 End Sub
 

@@ -10,13 +10,15 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     
     Dim minDate As Date, dateCutOff As Date, lastUsedRow As Long, solde As Currency
     Dim planComptable As Range
-    Set planComptable = wshAdmin.Range("dnrPlanComptable")
+    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
     
     'Clear Detail transaction section
-    wshGL_BV.Range("L4:T9999").clear
-'    If Not dynamicShape Is Nothing Then
-'        dynamicShape.Visible = False
-'    End If
+    wshGL_BV.Range("L4:T9999").ClearContents
+    With wshGL_BV.Range("S4:S9999").Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
     
     'Clear contents & formats for TB cells
     lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
@@ -28,6 +30,7 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     minDate = CDate("01/01/2023")
     dateCutOff = CDate(wshGL_BV.Range("J1").value)
     wshGL_BV.Range("B2").value = 3
+    wshGL_BV.Range("B10").value = 0
     
     Call GL_Trans_Advanced_Filter("", minDate, dateCutOff) 'Get all transactions between the 2 dates
     

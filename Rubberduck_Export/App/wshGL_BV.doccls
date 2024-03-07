@@ -6,28 +6,19 @@ Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer
 
-    'Set the zoom factor to 90% when this worksheet is activated
-    ActiveWindow.Zoom = 90
+    'Set the zoom factor to 93% when this worksheet is activated
+    ActiveWindow.Zoom = 93
     
     wshGL_BV.EnableCalculation = True
     
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
-    wshGL_BV.Range("L4:T99999").clear
+    wshGL_BV.Range("L4:T99999").ClearContents
     wshGL_BV.Range("L2").value = ""
-    wshGL_BV.Range("J1").value = Format(CDate(Now()), "mm-dd-yyyy")
-    Application.EnableEvents = True
+    wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
+    wshGL_BV.Range("B10").value = 0
     
-'    Dim rng As Range
-'    Set rng = Range("M5:T9999")
-'    With rng.FormatConditions
-'        .delete
-'        With .add(Type:=xlExpression, Formula1:="=ligne()=$B$10")
-'            .Interior.Color = RGB(47, 117, 181)
-'            .Font.Color = RGB(2555, 255, 255)
-'        End With
-'    End With
-'    wshGL_BV.Range("B10").value = 0
+    Application.EnableEvents = True
     
     Call Output_Timer_Results("wshGL_BV_Worksheet_Activate()", timerStart)
 
@@ -60,6 +51,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         GLAcct = CStr(Range("D" & Target.row).value)
         GLDescription = Range("E" & Target.row).value
         DateLimite = Format(Range("J1").value, "dd-mm-yyyy")
+        wshGL_BV.Range("B10").value = 0
         Range("T4").value = "Toutes les dates"
 
         Call GL_Display_Trans_Selected_Account(GLAcct, GLDescription, "01-01-2023", DateLimite)
@@ -67,8 +59,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Application.EnableEvents = True
     End If
     
-    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing And _
-        wshGL_BV.Range("M" & Target.row) <> "" Then
+    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing Then
+        If wshGL_BV.Range("M" & Target.row) <> "" Then
             Dim noJE As Long
             noJE = wshGL_BV.Range("N" & Target.row).value
             Application.EnableEvents = False
@@ -76,6 +68,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = True
             Call Get_An_JE_Detail_Trans(noJE)
             Call Display_JE_Trans_With_Shape
+        Else
+        wshGL_BV.Range("B10").value = 0
+        End If
+    Else
+        wshGL_BV.Range("B10").value = 0
     End If
     
 End Sub
@@ -180,6 +177,8 @@ End Sub
 
 Sub Adjust_The_Shape()
 
+        Dim timerStart As Double: timerStart = Timer
+        
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
         If lastResultRow < 2 Then Exit Sub
@@ -203,12 +202,18 @@ Sub Adjust_The_Shape()
                         texteFull = texteFull & vbCrLf
                     End If
                 End If
-                texteOneLine = "   " & Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
-                                      " - " & Pad_A_String(.Range("AG" & i).value, " ", 40, "R") & _
-                                      "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 12, "L") & _
-                                      "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 12, "L")
+                texteOneLine = Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
+                                " - " & Pad_A_String(.Range("AG" & i).value, " ", 38, "R") & _
+                                "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
+                                "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
+                Debug.Print Trim(.Range("AF" & i).value) & " vs. " & Trim(wshGL_BV.Range("B6").value)
+                If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
+                    texteOneLine = " * " & texteOneLine
+                Else
+                    texteOneLine = "   " & texteOneLine
+                End If
                 If Trim(.Range("AJ" & i).value) <> "" Then
-                    texteOneLine = Pad_A_String(texteOneLine, " ", 80, "R") & Trim(.Range("AJ" & i).value)
+                    texteOneLine = Pad_A_String(texteOneLine, " ", 82, "R") & Trim(.Range("AJ" & i).value)
                     maxLength = Len(texteOneLine)
                 End If
                 texteFull = texteFull & texteOneLine & vbCrLf
@@ -221,22 +226,25 @@ Sub Adjust_The_Shape()
         With dynamicShape
             .name = "JE_Detail_Trans"
             .fill.ForeColor.RGB = RGB(249, 255, 229)
+            .Line.Weight = 2.25
             .Line.ForeColor.RGB = vbBlue
             .TextFrame.Characters.text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
             .TextFrame.Characters.Font.name = "Consolas"
             .TextFrame.Characters.Font.Size = 11
-            .TextFrame.MarginLeft = 5
-            .TextFrame.MarginRight = 5
-            .TextFrame.MarginTop = 5
-            .TextFrame.MarginBottom = 5
-            If maxLength < 78 Then maxLength = 78
+            .TextFrame.MarginLeft = 4
+            .TextFrame.MarginRight = 4
+            .TextFrame.MarginTop = 3
+            .TextFrame.MarginBottom = 3
+            If maxLength < 80 Then maxLength = 80
             .width = ((maxLength * 6.5))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
             .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
-            .Left = wshGL_BV.Range("O" & rowSelected).Left + 5
-            .Top = wshGL_BV.Range("O" & rowSelected + 1).Top + 5
+            .Left = wshGL_BV.Range("O" & rowSelected).Left + 4
+            .Top = wshGL_BV.Range("O" & rowSelected + 1).Top + 4
         End With
+      
+      Call Output_Timer_Results("Adjust_The_Shape()", timerStart)
       
 End Sub
 
