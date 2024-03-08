@@ -62,10 +62,10 @@ End Sub
 
 Sub FAC_Prep_Invoice_New() 'Clear contents
     
-    Application.EnableEvents = False
-
     Dim timerStart As Double: timerStart = Timer
     
+    Application.EnableEvents = False
+
     If wshFAC_Brouillon.Range("B27").value = False Then
         With wshFAC_Brouillon
             .Range("B24").value = True
@@ -76,7 +76,6 @@ Sub FAC_Prep_Invoice_New() 'Clear contents
             
             Call FAC_Clear_All_TEC_Cells
             Call FAC_Prep_Clear_And_Fix_Totals_Formula
-            
             
             .Range("B20").value = ""
             .Range("B24").value = False
@@ -105,15 +104,21 @@ Sub FAC_Prep_Invoice_New() 'Clear contents
         End With
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print vbNewLine & "Le numéro de facture '" & wshFAC_Brouillon.Range("O6").value & "' a été assignée"
     
     Application.EnableEvents = True
 
+    Dim shp As Shape
+    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    shp.Visible = True
+    
     Call Output_Timer_Results("FAC_Prep_Invoice_New()", timerStart)
 
 End Sub
 
 Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
+
+    Dim timerStart As Double: timerStart = Timer
+
     If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub FAC_Prep_Save_And_Update() @ " & Time
     If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFAC_Brouillon.Range("B18").value
     With wshFAC_Brouillon
@@ -149,14 +154,21 @@ Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
     End With
 NoItems:
     wshFAC_Brouillon.Range("B27").value = False
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Total de la facture '"; wshFAC_Brouillon.Range("O6") & "' (avant taxes) est de " & Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")
-Fast_Exit_Sub:
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub FAC_Prep_Save_And_Update()" & vbNewLine
     
     Call FAC_Prepare_GL_Posting
     
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+    
+Fast_Exit_Sub:
 
+    Dim shp As Shape
+    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    shp.Visible = False
+    
+    Call Goto_Onglet_FAC_Brouillon
+    
+    Call Output_Timer_Results("FAC_Prep_Save_And_Update()", timerStart)
+    
 End Sub
 
 Sub FAC_Prep_Add_Invoice_Header_to_DB(r As Long)
@@ -708,9 +720,9 @@ Sub SetLabels(r As Range, l As String)
 
 End Sub
 
-Sub MiscCharges()
+Sub FAC_Brouillon_Goto_Misc_Charges()
 
-    ActiveWindow.SmallScroll Down:=14
+    ActiveWindow.SmallScroll Down:=3
     wshFAC_Brouillon.Range("O48").Select 'Misc Amount 1
     
 End Sub
@@ -722,7 +734,7 @@ Sub FAC_Clear_All_TEC_Cells()
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Range("D999").End(xlUp).row
     If lastRow > 7 Then
-        wshFAC_Brouillon.Range("D8:I" & lastRow).ClearContents
+        wshFAC_Brouillon.Range("D8:I" & lastRow + 2).ClearContents
     End If
 
     Application.EnableEvents = True
@@ -891,9 +903,9 @@ End Sub
 
 Sub FAC_BROUILLON_Prev_PDF() '2024-03-02 @ 16:18
 
-    Call Goto_Onglet_Facture_Finale
+    Call Goto_Onglet_FAC_Finale
     Call FAC_FINALE_Prev_PDF
-    Call Goto_Onglet_Preparation_Facture
+    Call Goto_Onglet_FAC_Brouillon
     
 End Sub
 
@@ -1058,24 +1070,28 @@ Sub Cacher_Heures()
 End Sub
 
 Sub Montrer_Heures()
+    
     With wshFAC_Finale.Range("D34:F66")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With
+
 End Sub
 
-Sub Goto_Onglet_Preparation_Facture()
+Sub Goto_Onglet_FAC_Brouillon()
+
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
-    wshFAC_Brouillon.usedRange.Columns("B:P").Calculate
-    wshFAC_Brouillon.Range("C1").Select
+    wshFAC_Brouillon.Range("E4").Select
+
 End Sub
 
-Sub Goto_Onglet_Facture_Finale()
+Sub Goto_Onglet_FAC_Finale()
+
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Finale.Activate
-    wshFAC_Finale.usedRange.Columns("A:G").Calculate
-    wshFAC_Finale.Range("I48").Select
+    wshFAC_Finale.Range("I50").Select
+
 End Sub
 
 Sub ExportAllFacInvList() '2023-12-21 @ 14:36
@@ -1255,6 +1271,7 @@ Sub FAC_GL_Posting(df, desc, source, arr As Variant)
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
+                rs.Fields("TimeStamp") = Format(Now(), "dd-mm-yyyy hh:mm:ss")
             rs.update
 Nothing_to_Post:
     Next i

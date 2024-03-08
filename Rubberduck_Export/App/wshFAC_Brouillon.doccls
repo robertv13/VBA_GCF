@@ -5,7 +5,7 @@ Private Sub Worksheet_Activate()
     Dim timerStart As Double: timerStart = Timer
 
     'Set the zoom factor to 93% when this worksheet is activated
-    ActiveWindow.Zoom = 94
+    ActiveWindow.Zoom = 93
     
     'Import TEC from GCF_Sortie_BD.xlsx
     Call TEC_Import_All
@@ -21,14 +21,14 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added to control TAB order
 'Establishes tab order for data entry. Hit Enter or Tab keys to jump to the next cell.
 
-    If Not Intersect(Target, Me.Range("L11:O45" & " , " & "M11:M45" & " , " & "O11:O45" & " , " & "O48:O50" & " , " & "O50")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("L11:O45" & " , " & "M11:M45" & " , " & "O11:O45" & " , " & "O48:O50" & " , " & "O57")) Is Nothing Then
         Dim tabOrderListOfCells As Variant, X As Variant
         Dim addr As String
         Dim rg As Range, targ As Range
         
         If isTab_Order_Activated = True Then Exit Sub
         
-        tabOrderListOfCells = Array("E4", "O3", "L11:L45", "M11:M45", "N48:N50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
+        tabOrderListOfCells = Array("E4", "O3", "L11:L45", "M11:M45", "M48:M50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
         For Each X In tabOrderListOfCells
             If rg Is Nothing Then
                 Set rg = Range(X)
