@@ -1,0 +1,197 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer
+
+    'Set the zoom factor to 93% when this worksheet is activated
+    ActiveWindow.Zoom = 94
+    
+    'Import TEC from GCF_Sortie_BD.xlsx
+    Call TEC_Import_All
+    Call FAC_Entete_Import_All
+    Call FAC_Detail_Import_All
+    
+    wshFAC_Brouillon.EnableCalculation = True
+    
+    Call Output_Timer_Results("wshFAC_Brouillon_Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added to control TAB order
+'Establishes tab order for data entry. Hit Enter or Tab keys to jump to the next cell.
+
+    If Not Intersect(Target, Me.Range("L11:O45" & " , " & "M11:M45" & " , " & "O11:O45" & " , " & "O48:O50" & " , " & "O50")) Is Nothing Then
+        Dim tabOrderListOfCells As Variant, X As Variant
+        Dim addr As String
+        Dim rg As Range, targ As Range
+        
+        If isTab_Order_Activated = True Then Exit Sub
+        
+        tabOrderListOfCells = Array("E4", "O3", "L11:L45", "M11:M45", "N48:N50", "O48:O50", "O57") 'List your cell addresses in desired tab order here
+        For Each X In tabOrderListOfCells
+            If rg Is Nothing Then
+                Set rg = Range(X)
+            Else
+                Set rg = Union(rg, Range(X))
+            End If
+        Next
+        
+        Set targ = Intersect(rg, Target)
+        rg.Select
+        If targ Is Nothing Then
+            addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
+            X = Application.Match(addr, tabOrderListOfCells, 0)
+            If IsError(X) Then Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
+        Else
+            targ.Activate
+        End If
+    End If
+
+End Sub
+
+Public Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.EnableEvents = False
+    
+    Dim rng As Range
+    
+    'Client Name has changed
+    If Not Intersect(Target, wshFAC_Brouillon.Range("E4")) Is Nothing And wshFAC_Brouillon.Range("E4").value <> Empty Then
+        Call Client_Change(wshFAC_Brouillon.Range("E4").value)
+        GoTo ExitSub
+    End If
+    
+    'Invoice Date has changed
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing And IsDate(wshFAC_Brouillon.Range("O3").value) = True Then
+        Call Date_Change(wshFAC_Brouillon.Range("O3").value)
+'        Set rng = wshFAC_Brouillon.Range("O3")
+'        Call Fill_Or_Empty_Range_Background(rng, False)
+'        Set rng = wshFAC_Brouillon.Range("L11")
+'        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        GoTo ExitSub
+    End If
+    
+    'Include Billed_TEC or not (B16 is linked to the checkbox)
+    If Not Intersect(Target, wshFAC_Brouillon.Range("B16")) Is Nothing Then
+        MsgBox "Value of B16 is " & wshFAC_Brouillon.Range("B16").value
+        GoTo ExitSub
+    End If
+    
+    
+    'Services entry
+    If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFAC_Finale.Range("C" & Target.row + 23).value = wshFAC_Brouillon.Range("L" & Target.row).value
+        Set rng = wshFAC_Brouillon.Range("L" & Target.row) 'Service
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        wshFAC_Brouillon.Range("M" & Target.row).Select
+        GoTo ExitSub
+    End If
+  
+    'Hours per service
+    If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        wshFAC_Brouillon.Range("N" & Target.row).value = wshAdmin.Range("TauxHoraireFacturation")
+        wshFAC_Brouillon.Range("O" & Target.row).value = wshFAC_Brouillon.Range("M" & Target.row).value * wshFAC_Brouillon.Range("N" & Target.row).value
+        Set rng = wshFAC_Brouillon.Range("L" & Target.row)
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row)
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        wshFAC_Finale.Range("D" & Target.row + 23).value = wshFAC_Brouillon.Range("M" & Target.row).value
+        wshFAC_Finale.Range("E" & Target.row + 23).value = wshFAC_Brouillon.Range("N" & Target.row).value
+        wshFAC_Finale.Range("F" & Target.row + 23).value = wshFAC_Brouillon.Range("O" & Target.row).value
+
+        'MAXIMUM of 35 services lines per Invoice
+        If Target.row < 45 Then
+            Set rng = wshFAC_Brouillon.Range("L" & Target.row + 1)
+            Call Fill_Or_Empty_Range_Background(rng, True, 6)
+            wshFAC_Brouillon.Range("L" & Target.row + 1).Select
+        Else
+            Set rng = wshFAC_Brouillon.Range("O48")
+            Call Fill_Or_Empty_Range_Background(rng, True, 6)
+            wshFAC_Brouillon.Range("O48").Select
+        End If
+        GoTo ExitSub
+      End If
+    
+    'Miscellaneous Amounts
+    If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        With wshFAC_Finale
+            'Final Invoice - Sub-total
+            wshFAC_Finale.Range("F68").value = wshFAC_Brouillon.Range("O47").value
+            'Final Invoice - Misc charges AND move on to next field
+            If Target.row = 48 Then
+                wshFAC_Finale.Range("F69").value = wshFAC_Brouillon.Range("O48").value
+                Set rng = wshFAC_Brouillon.Range("O48")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFAC_Brouillon.Range("O49")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                wshFAC_Brouillon.Range("O49").Select
+            End If
+            If Target.row = 49 Then
+                wshFAC_Finale.Range("F70").value = wshFAC_Brouillon.Range("O49").value
+                Set rng = wshFAC_Brouillon.Range("O49")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFAC_Brouillon.Range("O50")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                wshFAC_Brouillon.Range("O50").Select
+            End If
+            If Target.row = 50 Then
+                wshFAC_Finale.Range("F71").value = wshFAC_Brouillon.Range("O50").value
+                Set rng = wshFAC_Brouillon.Range("O50")
+                Call Fill_Or_Empty_Range_Background(rng, False)
+                Set rng = wshFAC_Brouillon.Range("O57")
+                Call Fill_Or_Empty_Range_Background(rng, True, 6)
+                wshFAC_Brouillon.Range("O57").Select
+            End If
+        End With
+        GoTo ExitSub
+    End If
+
+    'Deposit Amount
+    If Not Intersect(Target, Range("O57")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+        With wshFAC_Finale
+            'Final Invoice - Deposit
+            wshFAC_Finale.Range("F78").value = wshFAC_Brouillon.Range("O57").value
+            Set rng = wshFAC_Brouillon.Range("O57")
+            Call Fill_Or_Empty_Range_Background(rng, False)
+            ActiveWindow.SmallScroll Up:=18
+        End With
+        GoTo ExitSub
+    End If
+    
+'    'Invoice search - Removed temporary - 2024-02-22
+'    If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
+'        If Range("B22").value = Empty Then
+'            MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
+'            GoTo ExitSub
+'        End If
+'        Range("O6").value = Range("S2").value 'Set Invoice #
+'        Range("S2").ClearContents
+'        Call Invoice_Load 'Load Invoice from file
+'    End If
+
+ExitSub:
+
+    Application.EnableEvents = True
+    
+    Call Output_Timer_Results("wshFAC_Brouillon - Worksheet_Change()", timerStart)
+
+  
+End Sub
+
+Sub Inclure_TEC_Factures_Click()
+
+    Dim cutoffDate As Date
+    cutoffDate = wshFAC_Brouillon.Range("O3").value
+    
+    If wshFAC_Brouillon.Range("B16").value = True Then
+        Call Get_All_TEC_By_Client(cutoffDate, True)
+    Else
+        Call Get_All_TEC_By_Client(cutoffDate, False)
+    End If
+    
+End Sub

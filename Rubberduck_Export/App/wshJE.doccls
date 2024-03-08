@@ -5,7 +5,7 @@ Private Sub Worksheet_Activate() '2024-03-03 @ 10:14
     Call GL_Trans_Import_All
     Call GL_JE_Auto_Import_All
     Call wshJE_Clear_All_Cells
-    Call Save_Detailled_Log("Worksheet 'wshJE' is activated")
+    Call Save_Detailled_Log("wshJE - Worksheet 'wshJE' is activated")
 
 End Sub
 
@@ -41,7 +41,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Else
             targetRng.Activate
         End If
-        Call Save_Detailled_Log("Exiting Worksheet_SelectionChange (Form) - " & Target.Address)
+        Call Save_Detailled_Log("wshJE - Exitting Worksheet_SelectionChange (Form) - " & Target.Address)
     End If
     
     'If date is empty, assign today's date by default
@@ -153,7 +153,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 .PatternTintAndShade = 0
             End With
         End If
-        Call Save_Detailled_Log("Exitting Worksheet_Change (Amount) - " & wshJE.Range("H" & Target.row).value & " - " & wshJE.Range("I" & Target.row).value)
+        Call Save_Detailled_Log("wshJE - Exitting Worksheet_Change (Amount) - " & wshJE.Range("H" & Target.row).value & " - " & wshJE.Range("I" & Target.row).value)
     End If
 End Sub
 

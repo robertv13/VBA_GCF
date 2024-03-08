@@ -1,0 +1,14 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    'Set the zoom factor to 80% when this worksheet is activated
+    ActiveWindow.Zoom = 80
+    
+    wshFAC_Finale.EnableCalculation = True
+    
+    Call Output_Timer_Results("wshFAC_Finale_Worksheet_Activate()", timerStart)
+    
+End Sub

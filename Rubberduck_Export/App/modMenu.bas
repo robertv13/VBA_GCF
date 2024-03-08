@@ -384,11 +384,11 @@ Sub menuFacturation_Click() '2024-02-13 @ 13:48
     SlideIn_Facturation
     
     wshMenuFACT.Visible = xlSheetVisible
-'    wshFACPrep.Visible = xlSheetVisible
+'    wshFAC_Brouillon.Visible = xlSheetVisible
 '    wshClientDB.Visible = xlSheetVisible
-'    wshFACInvList.Visible = xlSheetVisible
-'    wshFACInvItems.Visible = xlSheetVisible
-'    wshFACFinale.Visible = xlSheetVisible
+'    wshFAC_Entête.Visible = xlSheetVisible
+'    wshFAC_Détails.Visible = xlSheetVisible
+'    wshFAC_Finale.Visible = xlSheetVisible
     
     wshMenuFACT.Activate
     wshMenuFACT.Range("A1").Select

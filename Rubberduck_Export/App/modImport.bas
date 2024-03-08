@@ -282,3 +282,105 @@ Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
 
 End Sub
 
+Sub FAC_Entete_Import_All() '2024-03-07 @ 16:21
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshFAC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "Invoice_Header"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshFAC_Entête.Range("A3")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    wshFAC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshFAC_Entête.Range("A99999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshFAC_Entête
+        .Range("A4:C" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B4:B" & lastRow).NumberFormat = "dd/mm/yyyy"
+        .Range("D4:D" & lastRow & ", E4:E" & lastRow & ", F4:F" & lastRow & ",G4:G" & lastRow & ",I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow).HorizontalAlignment = xlLeft
+        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).HorizontalAlignment = xlRight
+        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
+    End With
+'        With .Range("A" & 2 & ":A" & lastRow) _
+'            .Range("J" & 2 & ":J" & lastRow).Interior
+'            .Pattern = xlSolid
+'            .PatternColorIndex = xlAutomatic
+'            .ThemeColor = xlThemeColorAccent5
+'            .TintAndShade = 0.799981688894314
+'            .PatternTintAndShade = 0
+'        End With
+
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("FAC_Entete_Import_All()", timerStart)
+
+End Sub
+
+Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshFAC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+
+    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "Invoice_Details"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshFAC_Détails.Range("A3")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    wshFAC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshFAC_Détails.Range("A99999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshFAC_Détails
+        .Range("A4:A" & lastRow & ", C4:C" & lastRow & ", F4:F" & lastRow & ", G4:G" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B4:B" & lastRow).HorizontalAlignment = xlLeft
+        .Range("D4:E" & lastRow).HorizontalAlignment = xlRight
+        .Range("C4:C" & lastRow).NumberFormat = "#,##0.00"
+        .Range("D4:E" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
+    End With
+
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("FAC_Detail_Import_All()", timerStart)
+
+End Sub
+
+

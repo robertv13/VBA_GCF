@@ -30,9 +30,9 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = False
     
-    wshFACPrep.Visible = xlSheetVisible
-    wshFACFinale.Visible = xlSheetVisible
-    wshFACPrep.Activate
+    wshFAC_Brouillon.Visible = xlSheetVisible
+    wshFAC_Finale.Visible = xlSheetVisible
+    wshFAC_Brouillon.Activate
     
     Application.ScreenUpdating = True
     
