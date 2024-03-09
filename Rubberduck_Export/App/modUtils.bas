@@ -68,14 +68,14 @@ Continue_for_each_ws:
 
 End Sub
 
-Sub List_All_Subs_And_Functions() '2024-02-26 @ 11:18
+Sub List_All_Subs_And_Functions() '2024-03-08 @ 21:26
     
     Dim timerStart As Double: timerStart = Timer
 
     Dim VBComp As Object
     
     'Setup the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("DocSubs&Functions")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_Subs&Functions")
 
     Dim posSub As Integer, posFunction As Integer, posExitSub As Integer
     Dim posREM As Integer, posParam As Integer
@@ -378,9 +378,9 @@ Sub Build_Worksheet_Columns() '2024-02-28 @ 06:40
     r = r + 1: arr(r, 1) = "ClientsImportés": arr(r, 2) = "A1:J1"
     r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
-    r = r + 1: arr(r, 1) = "Doc_LogAppli": arr(r, 2) = "A1:C1"
-    r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
-    r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
+    r = r + 1: arr(r, 1) = "Doc_Log_Appli": arr(r, 2) = "A1:C1"
+    r = r + 1: arr(r, 1) = "Doc_Named_Ranges": arr(r, 2) = "A1:B1"
+    r = r + 1: arr(r, 1) = "Doc_Subs_&_Functions": arr(r, 2) = "A1:G1"
     r = r + 1: arr(r, 1) = "Documentation": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Encaissements_Entête": arr(r, 2) = "A3:F3"
     r = r + 1: arr(r, 1) = "Encaissements_Détail": arr(r, 2) = "A3:F3"
@@ -526,4 +526,19 @@ Sub Save_Detailled_Log(s As String)
     End With
 
 End Sub
+
+Sub Test_Lookup_Data_In_A_Range()
+
+    Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+    Dim myInfo() As Variant
+    
+    Dim searchString As String
+    searchString = "Gestion MAROB inc."
+    
+    myInfo = Lookup_Data_In_A_Range(rng, 1, searchString, 3)
+    
+    Set rng = Nothing
+
+End Sub
+
 

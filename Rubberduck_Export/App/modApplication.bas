@@ -48,7 +48,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-03-06 @ 13:43
     
 End Sub
 
-Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
+Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -60,7 +60,7 @@ Sub Hide_All_Worksheet_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next wsh
     
-    Call Output_Timer_Results("Hide_All_Worksheet_Except_Menu()", timerStart)
+    Call Output_Timer_Results("Hide_All_Worksheets_Except_Menu()", timerStart)
     
 End Sub
 
@@ -156,5 +156,20 @@ Sub Pause_Application(s As Double)
         'Sleep
     Loop
     
+End Sub
+
+Sub Slide_In_All_Menu_Options()
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    SlideIn_TEC
+    SlideIn_Facturation
+    SlideIn_Debours
+    SlideIn_Comptabilite
+    SlideIn_Parametres
+    SlideIn_Exit
+
+    Call Output_Timer_Results("Slide_In_All_Menu_Options()", timerStart)
+
 End Sub
 

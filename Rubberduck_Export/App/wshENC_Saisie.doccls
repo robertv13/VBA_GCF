@@ -1,0 +1,50 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    'On Customer Change BUT NOT on Payment load and only on new payments
+'    Debug.Print Intersect(Target, Range("F3"))
+'    Debug.Print Range("F3").value
+'    Debug.Print Range("B2").value
+'    Debug.Print Range("B4").value
+    If Not Intersect(Target, Range("F3")) Is Nothing And _
+        Range("F3").value <> Empty And Range("B2").value = False And Range("B4").value = Empty Then
+        Application.EnableEvents = False
+        Call Encaissement_Load_Open_Invoices
+        Application.EnableEvents = True
+'        Range("J3").Select
+    End If
+        
+    If Not Intersect(Target, Range("J3")) Is Nothing And Range("J3").value <> Empty Then Range("F5").Select
+
+    If Not Intersect(Target, Range("F5")) Is Nothing And Range("F5").value <> Empty Then Range("J5").Select
+
+    'If Not Intersect(Target, Range("J5")) Is Nothing Then Me.Range("F7").Select
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    If Target.CountLarge > 1 Then Exit Sub
+    
+    'Apply check
+    If Not Intersect(Target, Range("D13:D42")) Is Nothing And Range("E" & Target.row).value <> "" Then
+        If Target.value = "" Then Target.value = Chr(252) Else Target.ClearContents
+        Range("F3").Select
+        Dim MAA As Currency
+        If Target.value = Chr(252) Then
+            'Calculate the maximum amount to applied
+            If Range("J5").value - Range("J10").value >= 0 Then
+                MAA = Range("J5").value - Range("J10").value
+            Else
+                MAA = 0
+            End If
+            If MAA Then 'THere is money to apply
+                Range("J" & Target.row).value = Application.WorksheetFunction.Min(MAA, Range("I" & Target.row).value) 'Set Amt. Applied = Balance
+            Else 'Can not apply any amount
+                Target.value = ""
+            End If
+        Else
+            Range("J" & Target.row).ClearContents
+        End If
+    End If
+End Sub
+

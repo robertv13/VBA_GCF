@@ -52,8 +52,8 @@ Sub UserForm_Activate()
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshClientDB.Range("A9999").End(xlUp).row
-    ufSaisieHeures.ListData = wshClientDB.Range("A1:J" & lastUsedRow)
+    lastUsedRow = wshBD_Clients.Range("A9999").End(xlUp).row
+    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:J" & lastUsedRow)
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
@@ -343,14 +343,14 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         wshAdmin.Range("TEC_Current_ID").value = tecID
         txtTEC_ID = tecID
         
-        'Retrieve the record in wshBaseHours
+        'Retrieve the record in wshTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
-        lastTECRow = wshBaseHours.Range("A99999").End(xlUp).row
-        Set lookupRange = wshBaseHours.Range("A3:A" & lastTECRow)
+        lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+        Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
         rowTecID = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
         
         Dim isBilled As Boolean
-        isBilled = wshBaseHours.Range("L" & rowTecID).value
+        isBilled = wshTEC_Local.Range("L" & rowTecID).value
 
         'Has this charge beeing INVOICED ?
         If isBilled Then
@@ -405,8 +405,8 @@ End Sub
 'End Sub
 
 'Sub CopyRangeToListBoxWithoutRowSource()
-'    Dim ws As Worksheet: Set ws = wshBaseHours
-'    Dim rng As Range: Set rng = wshBaseHours("Y2:AL6")
+'    Dim ws As Worksheet: Set ws = wshTEC_Local
+'    Dim rng As Range: Set rng = wshTEC_Local("Y2:AL6")
 '    Dim lb As Object: Set lb = ufSaisieHeures.lsbHresJour
 '    Dim cell As Range
 '

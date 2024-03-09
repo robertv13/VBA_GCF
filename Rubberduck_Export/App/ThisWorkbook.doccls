@@ -10,11 +10,11 @@ Private Sub Workbook_Open()
     lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
     wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
     wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
-    'wshzDocLogAppli.Range("C" & lastUsedRow).value = ""
+    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
     
     sessionTimerStart = Timer
     
-    Call Hide_All_Worksheet_Except_Menu
+    Call Hide_All_Worksheets_Except_Menu
     
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     wshMenu.Activate
@@ -28,43 +28,27 @@ Private Sub Workbook_Open()
     wb.Application.Calculation = xlCalculationManual
     Set wb = Nothing
     
-'    Windows(ThisWorkbook.name).Visible = True
     Application.ScreenUpdating = True
 
 End Sub
 
-Private Sub Workbook_BeforeClose(Cancel As Boolean) '2024-01-10 @ 11:41
+Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
     
     Dim timerStart As Double: timerStart = Timer
     
-    Call Hide_All_Worksheet_Except_Menu
+    Call Hide_All_Worksheets_Except_Menu
     
     wshMenu.Activate
     
     Cancel = False
     
-    Call Output_Timer_Results("Workbook_BeforeClose()", timerStart)
+    Call Output_Timer_Results("Workbook_Before_Close()", timerStart)
     
     Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
     
-    Debug.Print "Sub Workbook_BeforeClose()"
-
+    Debug.Print "Sub Workbook_Before_Close()"
     
 End Sub
 
-Sub Slide_In_All_Menu_Options()
-
-    Dim timerStart As Double: timerStart = Timer
-    
-    SlideIn_TEC
-    SlideIn_Facturation
-    SlideIn_Debours
-    SlideIn_Comptabilite
-    SlideIn_Parametres
-    SlideIn_Exit
-
-    Call Output_Timer_Results("Slide_In_All_Menu_Options()", timerStart)
-
-End Sub
 
 

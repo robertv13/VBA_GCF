@@ -34,20 +34,20 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     
     Call GL_Trans_Advanced_Filter("", minDate, dateCutOff) 'Get all transactions between the 2 dates
     
-    lastUsedRow = wshGL_Trans.Range("T999999").End(xlUp).row
+    lastUsedRow = wshBD_GL_Trans.Range("T999999").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub
     Dim r As Long, BreakGLNo As String, oldDesc As String
-    BreakGLNo = wshGL_Trans.Range("T2").value
-    oldDesc = wshGL_Trans.Range("U2").value
+    BreakGLNo = wshBD_GL_Trans.Range("T2").value
+    oldDesc = wshBD_GL_Trans.Range("U2").value
     
     For r = 2 To lastUsedRow
-        If wshGL_Trans.Range("T" & r).value <> BreakGLNo Then
+        If wshBD_GL_Trans.Range("T" & r).value <> BreakGLNo Then
             Call GL_Trans_Sub_Total(BreakGLNo, oldDesc, solde)
-            BreakGLNo = wshGL_Trans.Range("T" & r).value
-            oldDesc = wshGL_Trans.Range("U" & r).value
+            BreakGLNo = wshBD_GL_Trans.Range("T" & r).value
+            oldDesc = wshBD_GL_Trans.Range("U" & r).value
             solde = 0
         End If
-        solde = solde + wshGL_Trans.Range("V" & r).value - wshGL_Trans.Range("W" & r).value
+        solde = solde + wshBD_GL_Trans.Range("V" & r).value - wshBD_GL_Trans.Range("W" & r).value
     Next r
     
     Call GL_Trans_Sub_Total(BreakGLNo, oldDesc, solde)
@@ -124,12 +124,12 @@ Sub GL_Display_Trans_Selected_Account(GLAcct As String, GLDesc As String, minDat
     
     'Use the Advanced Filter Result already prepared for TB
     Dim row As Range, foundRow As Long, lastResultUsedRow As Long
-    lastResultUsedRow = wshGL_Trans.Range("T99999").End(xlUp).row
+    lastResultUsedRow = wshBD_GL_Trans.Range("T99999").End(xlUp).row
     foundRow = 0
     
     'Find the first occurence of GlACct in AdvancedFilter Results on GL_Trans
     Dim foundCell As Range, searchRange As Range
-    Set searchRange = wshGL_Trans.Range("T2:T" & lastResultUsedRow)
+    Set searchRange = wshBD_GL_Trans.Range("T2:T" & lastResultUsedRow)
     Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
     foundRow = foundCell.row
     
@@ -155,24 +155,24 @@ Sub GL_Display_Trans_Selected_Account(GLAcct As String, GLDesc As String, minDat
     Dim d As Date, OK As Integer
     
     With wshGL_BV
-    Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
+    Do Until wshBD_GL_Trans.Range("T" & foundRow).value <> GLAcct
         'Traitement des transactions détaillées
-        d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd-mm-yyyy")
+        d = Format(wshBD_GL_Trans.Range("Q" & foundRow).Value2, "dd-mm-yyyy")
         If d >= minDate And d <= maxDate Then
-            .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
-            .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
+            .Range("M" & rowGLDetail).value = wshBD_GL_Trans.Range("Q" & foundRow).value
+            .Range("N" & rowGLDetail).value = wshBD_GL_Trans.Range("P" & foundRow).value
             .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
-            .Range("O" & rowGLDetail).value = wshGL_Trans.Range("R" & foundRow).value
-            .Range("P" & rowGLDetail).value = wshGL_Trans.Range("S" & foundRow).value
-            .Range("Q" & rowGLDetail).value = wshGL_Trans.Range("V" & foundRow).value
-            .Range("R" & rowGLDetail).value = wshGL_Trans.Range("W" & foundRow).value
+            .Range("O" & rowGLDetail).value = wshBD_GL_Trans.Range("R" & foundRow).value
+            .Range("P" & rowGLDetail).value = wshBD_GL_Trans.Range("S" & foundRow).value
+            .Range("Q" & rowGLDetail).value = wshBD_GL_Trans.Range("V" & foundRow).value
+            .Range("R" & rowGLDetail).value = wshBD_GL_Trans.Range("W" & foundRow).value
             .Range("S" & rowGLDetail).value = wshGL_BV.Range("S" & rowGLDetail - 1).value + _
-                wshGL_Trans.Range("V" & foundRow).value - wshGL_Trans.Range("W" & foundRow).value
+                wshBD_GL_Trans.Range("V" & foundRow).value - wshBD_GL_Trans.Range("W" & foundRow).value
 '            With .Range("S" & rowGLDetail).Font
 '                .Name = "Aptos Narrow"
 '                .Size = 11
 '            End With
-            .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).value
+            .Range("T" & rowGLDetail).Value2 = wshBD_GL_Trans.Range("X" & foundRow).value
             foundRow = foundRow + 1
             rowGLDetail = rowGLDetail + 1
             OK = OK + 1
@@ -199,7 +199,7 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
 
     Dim timerStart As Double: timerStart = Timer
 
-    With wshGL_Trans
+    With wshBD_GL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("P2").CurrentRegion
         Call ClearRangeBorders(rgResult)
@@ -219,19 +219,19 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshGL_Trans.Range("T1"), _
+            .SortFields.add Key:=wshBD_GL_Trans.Range("T1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
-            .SortFields.add Key:=wshGL_Trans.Range("Q1"), _
+            .SortFields.add Key:=wshBD_GL_Trans.Range("Q1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshGL_Trans.Range("P1"), _
+            .SortFields.add Key:=wshBD_GL_Trans.Range("P1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On JE Number
-            .SetRange wshGL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
+            .SetRange wshBD_GL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
     End With

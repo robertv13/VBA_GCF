@@ -34,7 +34,7 @@ End Sub
 Private Sub UserForm_Activate()
 
     Dim rowJEAutoDesc As Long
-    rowJEAutoDesc = wshEJRecurrente.Range("L999").End(xlUp).row  'Last Row Used in wshEJRecurrente (Description Section)
+    rowJEAutoDesc = wshGL_EJ_Recurrente.Range("L999").End(xlUp).row  'Last Row Used in wshGL_EJ_Recurrente (Description Section)
 
     Dim r As Integer
     Dim arr() As Variant
@@ -45,8 +45,8 @@ Private Sub UserForm_Activate()
     On Error Resume Next
     For r = 2 To rowJEAutoDesc
         'Store values in the array
-        arr(r - 1, 1) = wshEJRecurrente.Range("K" & r).value
-        arr(r - 1, 2) = Pad_A_String(wshEJRecurrente.Range("L" & r).value, " ", 2, "L")
+        arr(r - 1, 1) = wshGL_EJ_Recurrente.Range("K" & r).value
+        arr(r - 1, 2) = Pad_A_String(wshGL_EJ_Recurrente.Range("L" & r).value, " ", 2, "L")
     Next r
     On Error GoTo 0
     
@@ -61,7 +61,7 @@ Private Sub lsbDescEJAuto_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rowSelected = lsbDescEJAuto.ListIndex
     DescEJAuto = lsbDescEJAuto.List(rowSelected, 0)
     NoEJAuto = lsbDescEJAuto.List(rowSelected, 1)
-    wshJE.Range("B2").value = rowSelected '2024-01-08 @ 13:58
+    wshGL_EJ.Range("B2").value = rowSelected '2024-01-08 @ 13:58
     Unload ufListeEJAuto
     Call Load_JEAuto_Into_JE(DescEJAuto, NoEJAuto)
 

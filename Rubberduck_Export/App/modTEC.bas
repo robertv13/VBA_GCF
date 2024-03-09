@@ -103,7 +103,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         Exit Sub
     End If
     
-    Dim sh As Worksheet: Set sh = wshBaseHours
+    Dim sh As Worksheet: Set sh = wshTEC_Local
     
     Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
@@ -148,18 +148,18 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     Application.ScreenUpdating = False
 
     'Set criteria
-    wshBaseHours.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    wshBaseHours.Range("S3").value = wshAdmin.Range("TEC_Date")
-    wshBaseHours.Range("T3").value = "False"
+    wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
+    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date")
+    wshTEC_Local.Range("T3").value = "False"
     
     'ProfID and Date are mandatory to execute this routine
-    If wshBaseHours.Range("R3").value = "" Or wshBaseHours.Range("S3").value = "" Then
+    If wshTEC_Local.Range("R3").value = "" Or wshTEC_Local.Range("S3").value = "" Then
         Exit Sub
     End If
     
-    With wshBaseHours
+    With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A99999").End(xlUp).row 'Last wshBaseHours Used Row
+        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
@@ -173,19 +173,19 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.clear
-            .SortFields.add Key:=wshBaseHours.Range("AA3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshBaseHours.Range("Z3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
-            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshTEC_Local.Range("Y3:AL" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 
@@ -362,8 +362,8 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     If tecID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
-        nextRowNumber = wshBaseHours.Range("A9999").End(xlUp).row + 1
-        With wshBaseHours
+        nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).row + 1
+        With wshTEC_Local
             .Range("A" & nextRowNumber).value = wshAdmin.Range("TEC_Current_ID").value
             .Range("B" & nextRowNumber).value = wshAdmin.Range("TEC_Prof_ID").value
             .Range("C" & nextRowNumber).value = ufSaisieHeures.cmbProfessionnel.value
@@ -384,8 +384,8 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     Else
         'What is the row number for the TEC_ID
         Dim lookupRange As Range, rowToBeUpdated As Long
-        lastUsedRow = wshBaseHours.Range("A99999").End(xlUp).row
-        Set lookupRange = wshBaseHours.Range("A3:A" & lastUsedRow)
+        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
+        Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(Abs(tecID), lookupRange)
         If rowToBeUpdated = 0 Then
             'Handle the case where the specified TecID is not found !!
@@ -395,7 +395,7 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
         End If
 
         If tecID > 0 Then 'Modify the record
-            With wshBaseHours
+            With wshTEC_Local
                 .Range("E" & rowToBeUpdated).value = wshAdmin.Range("TEC_Client_ID").value
                 .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
                 .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
@@ -410,9 +410,9 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
-            wshBaseHours.Range("K" & rowToBeUpdated).value = Now()
-            wshBaseHours.Range("N" & rowToBeUpdated).value = True
-            wshBaseHours.Range("O" & rowToBeUpdated).value = gAppVersion
+            wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
+            wshTEC_Local.Range("N" & rowToBeUpdated).value = True
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
         End If
     End If
     
@@ -437,7 +437,7 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y999").End(xlUp).row
+    lastRow = wshTEC_Local.Range("Y999").End(xlUp).row
     If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
@@ -479,10 +479,10 @@ Sub Update_TEC_Local_To_DB_Data()
 
     Dim timerStart As Double: timerStart = Timer
 
-    Dim wsFrom As Worksheet: Set wsFrom = wshBaseHours
+    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBaseHours.Range("A99999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
     
     Dim arr() As Variant
     ReDim arr(1 To lastUsedRow - 2, 1 To 8) '2 rows of Heading

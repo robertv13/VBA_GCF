@@ -18,7 +18,7 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
     Dim ws As Worksheet, dynamicRange As Range
     On Error Resume Next
-    Set ws = wshClientDB
+    Set ws = wshBD_Clients
     Set dynamicRange = ws.Range("dnrClients_All")
     On Error GoTo 0
 
@@ -45,27 +45,38 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 End Function
 
-Function GetInfoByName(nameToFind As String, infoColumn As Integer, Optional tableRange As Range) As Variant
+Function Lookup_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant()
+    
+    'This function is used to retrieve information from a range
+    'If found, it returns Address, Row number and the value for a specific column
+    '2024-03-09 - First version
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
     Dim foundCell As Range
-    Dim infoArray As Variant
+    Dim dataValue As Variant
     
-    If tableRange Is Nothing Then
-        Set tableRange = wshClientDB.Range("dnrClients_All")
-    End If
+    'Search for the string in a given range (r) at the column specified (cs)
+    Set foundCell = r.Columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
     
-    ' Search for the name in the first column of the table
-    Set foundCell = tableRange.Columns(1).Find(What:=nameToFind, LookIn:=xlValues, LookAt:=xlWhole)
-    
+    'Check if the string was found
     If Not foundCell Is Nothing Then
-        ' If name is found, retrieve the desired information from the same row
-        infoArray = foundCell.Offset(0, infoColumn - 1).Resize(1, 10).value ' Assuming you want to retrieve two columns starting from the specified column
-        
-        GetInfoByName = infoArray
+        'With the foundCell get the the address, the row number and the value
+        foundInfo(1) = foundCell.Address
+        foundInfo(2) = foundCell.row
+        foundInfo(3) = foundCell.Offset(0, cr - cs).value 'Return Column - Searching column
+        Lookup_Data_In_A_Range = foundInfo 'foundInfo is an array
     Else
-        GetInfoByName = CVErr(xlErrNA) ' Return #N/A if name is not found
+        Lookup_Data_In_A_Range = foundInfo 'foundInfo is an array
     End If
     
+    Set foundCell = Nothing
+    
+    Call Output_Timer_Results("Lookup_Data_In_A_Range()", timerStart)
+
 End Function
+
 Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim dynamicRange As Range

@@ -367,8 +367,8 @@ Sub menuTEC_Click() '2024-02-13 @ 13:48
     SlideIn_TEC
     
     wshMenuTEC.Visible = xlSheetVisible
-'    wshBaseHours.Visible = xlSheetVisible
-'    wshClientDB.Visible = xlSheetVisible
+'    wshTEC_Local.Visible = xlSheetVisible
+'    wshBD_Clients.Visible = xlSheetVisible
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
@@ -385,7 +385,7 @@ Sub menuFacturation_Click() '2024-02-13 @ 13:48
     
     wshMenuFACT.Visible = xlSheetVisible
 '    wshFAC_Brouillon.Visible = xlSheetVisible
-'    wshClientDB.Visible = xlSheetVisible
+'    wshBD_Clients.Visible = xlSheetVisible
 '    wshFAC_Entête.Visible = xlSheetVisible
 '    wshFAC_Détails.Visible = xlSheetVisible
 '    wshFAC_Finale.Visible = xlSheetVisible
@@ -420,9 +420,9 @@ Sub menuComptabilite_Click() '2024-02-13 @ 13:48
     SlideIn_Comptabilite
     
     wshMenuCOMPTA.Visible = xlSheetVisible
-'    wshJE.Visible = xlSheetVisible
+'    wshGL_EJ.Visible = xlSheetVisible
 '    wshGL.Visible = xlSheetVisible
-'    wshEJRecurrente.Visible = xlSheetVisible
+'    wshGL_EJ_Recurrente.Visible = xlSheetVisible
 '    wshBV.Visible = xlSheetVisible
         
     wshMenuCOMPTA.Activate
@@ -451,7 +451,7 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
 
     Call SlideIn_Exit
     
-    Call Hide_All_Worksheet_Except_Menu
+    Call Hide_All_Worksheets_Except_Menu
 
     Call Output_Timer_Results("EXIT_Click()", timerStart)
 

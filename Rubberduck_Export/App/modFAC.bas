@@ -7,20 +7,29 @@ Sub Client_Change(ClientName As String)
 
     Dim timerStart As Double: timerStart = Timer
     
-    wshFAC_Brouillon.Range("B18").value = GetID_From_Client_Name(ClientName)
+    Dim myInfo() As Variant
+    Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     
-    With wshFAC_Brouillon 'TODO[] - 2024-02-22
-'        .Range("K3").value = GetInfoByName(ClientName, 3)
+    myInfo = Lookup_Data_In_A_Range(rng, 1, ClientName, 3)
+    
+    If myInfo(1) = "" Then
+        MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
+        GoTo Clean_Exit
+    End If
+        
+    wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
+    
+    With wshFAC_Brouillon
+        .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("K4").value = ClientName
-'        .Range("K5").value = GetInfoByName(ClientName, 5) 'Address 1
-'        .Range("K6").value = GetInfoByName(ClientName, 7) & " " & _
-'                             GetInfoByName(ClientName, 8) & " " & _
-'                             GetInfoByName(ClientName, 9) 'Ville, Province & Code postal
+        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 5)
+        .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 6) & " " & _
+                             wshBD_Clients.Cells(myInfo(2), 7) & " " & _
+                             wshBD_Clients.Cells(myInfo(2), 8) 'Ville, Province & Code postal
     End With
     
     wshFAC_Finale.Range("B21").value = "Le " & Format(wshFAC_Brouillon.Range("O3").value, "d mmmm yyyy")
     
-    Dim rng As Range
     Set rng = wshFAC_Brouillon.Range("E4:F4")
     Call Fill_Or_Empty_Range_Background(rng, False)
     
@@ -28,6 +37,8 @@ Sub Client_Change(ClientName As String)
     Call Fill_Or_Empty_Range_Background(rng, True, 6)
     
     wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
+
+Clean_Exit:
 
     Set rng = Nothing
     
@@ -152,7 +163,7 @@ Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
             Call FAC_Prep_Add_Invoice_Details_to_DB
             Call FAC_Prep_Add_Comptes_Clients_to_DB
             Dim lastResultRow As Integer
-            lastResultRow = wshBaseHours.Range("Y9999").End(xlUp).row
+            lastResultRow = wshTEC_Local.Range("Y9999").End(xlUp).row
             If lastResultRow > 2 Then
                 Call Update_TEC_As_Billed_In_DB(3, lastResultRow)
                 Call FAC_Prep_TEC_As_Billed_Locally(3, lastResultRow)
@@ -437,7 +448,7 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
 
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
-        TEC_ID = wshBaseHours.Range("Y" & r).value
+        TEC_ID = wshTEC_Local.Range("Y" & r).value
         'Open the recordset for the specified ID
         SQL = "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
@@ -483,39 +494,25 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
     
     'Set the range to look for
     Dim lookupRange As Range, lastTECRow As Long
-    lastTECRow = wshBaseHours.Range("A99999").End(xlUp).row
-    Set lookupRange = wshBaseHours.Range("A3:A" & lastTECRow)
+    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+    Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Integer, rowToBeUpdated As Long
     For r = firstResultRow To lastResultRow
         Dim tecID As Long
-        tecID = wshBaseHours.Range("Y" & r).value
+        tecID = wshTEC_Local.Range("Y" & r).value
         rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
         Debug.Print "Need to update locally the TEC_ID = " & tecID & " which is at row # " & rowToBeUpdated
-        wshBaseHours.Range("K" & rowToBeUpdated).value = Now()
-        wshBaseHours.Range("L" & rowToBeUpdated).value = True
-        wshBaseHours.Range("M" & rowToBeUpdated).value = CDate(wshFAC_Brouillon.Range("O3").value)
-        wshBaseHours.Range("O" & rowToBeUpdated).value = gAppVersion
-        wshBaseHours.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
+        wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
+        wshTEC_Local.Range("L" & rowToBeUpdated).value = True
+        wshTEC_Local.Range("M" & rowToBeUpdated).value = CDate(wshFAC_Brouillon.Range("O3").value)
+        wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
+        wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
     Next r
     
     Call Output_Timer_Results("FAC_Prep_TEC_As_Billed_Locally()", timerStart)
 
 End Sub
-
-'Sub ExampleUsage()
-'    Dim rowToBeUpdated As Long
-'
-'    ' Call the function to get the row number of the unique ID
-'    rowToBeUpdated = GetrowToBeUpdatedByTEC_ID(TEC_ID, lookupRange)
-'
-'    ' Display the result
-'    If rowToBeUpdated > 0 Then
-'        MsgBox "The row number for Unique ID '" & TEC_ID & "' is: " & rowToBeUpdated
-'    Else
-'        MsgBox "Unique ID '" & TEC_ID & "' not found."
-'    End If
-'End Sub
 
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
     If wshFAC_Brouillon.Range("B28").value Then Debug.Print vbNewLine & "[modFAC] - Now entering Sub Invoice_Load() @ " & Time
@@ -622,7 +619,7 @@ Sub InvoiceGetAllTrans(inv As String)
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
+'            .SortFields.Add Key:=wshBD_GL_Trans.Range("Y3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -760,7 +757,7 @@ Sub Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c5 = "FAUX"
 
     Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
-    Call Copy_Filtered_Entries_To_FACPrep
+    Call Copy_TEC_Filtered_Entries_To_FAC_Brouillon
     Call Add_Total_To_Filtered_Entries
     
 End Sub
@@ -773,7 +770,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
     
     Application.ScreenUpdating = False
 
-    With wshBaseHours
+    With wshTEC_Local
         'Is there anything to filter ?
         Dim lastSourceRow As Long, lastResultRow As Long
         lastSourceRow = .Range("A99999").End(xlUp).row 'Last TEC Entry row
@@ -786,7 +783,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         Application.ScreenUpdating = False
         
         Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
-        Set rngSource = wshBaseHours.Range("A2:P" & lastSourceRow)
+        Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)
         If clientID <> 0 Then .Range("R8").value = clientID
         .Range("S8").value = cutoffDate
         .Range("T8").value = isBillable
@@ -805,19 +802,19 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshBaseHours.Range("AA3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshBaseHours.Range("Z3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add Key:=wshBaseHours.Range("Y3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshBaseHours.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshTEC_Local.Range("Y3:AL" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 No_Sort_Required:
@@ -827,29 +824,30 @@ No_Sort_Required:
 
 End Sub
 
-Sub Copy_Filtered_Entries_To_FACPrep()
+Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
 
-    Dim lastRow As Long
-    lastRow = wshBaseHours.Range("Y9999").End(xlUp).row
-    If lastRow < 3 Then Exit Sub
+    Dim lastUsedRow As Long
+    lastUsedRow = wshTEC_Local.Range("Y9999").End(xlUp).row
+    If lastUsedRow < 3 Then Exit Sub 'No rows
+    
     Dim arr() As String
-    ReDim arr(1 To (lastRow - 2), 1 To 6) As String
-    With wshBaseHours
+    ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As String
+    With wshTEC_Local
         Dim i As Integer
-        For i = 3 To lastRow
-            arr(i - 2, 1) = .Range("AA" & i).value 'Date
+        For i = 3 To lastUsedRow
+            arr(i - 2, 1) = CDate(.Range("AA" & i).value) 'Date
             arr(i - 2, 2) = .Range("Z" & i).value 'Prof
             arr(i - 2, 3) = .Range("AC" & i).value 'Description
-            arr(i - 2, 4) = .Range("AD" & i).value 'Heures
+            arr(i - 2, 4) = CCur(.Range("AD" & i).value) 'Heures
             arr(i - 2, 5) = .Range("AH" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("Y" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
         Dim rng As Range
         'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
-        Set rng = wshFAC_Brouillon.Range("D8").Resize(lastRow - 2, UBound(arr, 2))
+        Set rng = wshFAC_Brouillon.Range("D8").Resize(lastUsedRow - 2, UBound(arr, 2))
         rng.value = arr
-        .Range("G8:G" & lastRow + 5).NumberFormat = "##0.00"
+        .Range("G8:G" & lastUsedRow + 7).NumberFormat = "##0.00"
     End With
 End Sub
 

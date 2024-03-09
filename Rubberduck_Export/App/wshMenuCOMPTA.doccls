@@ -34,7 +34,7 @@ Sub JE_Click()
     SlideIn_EJ
     Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = False
-    With wshJE
+    With wshGL_EJ
         .Visible = xlSheetVisible
         .Select
     End With

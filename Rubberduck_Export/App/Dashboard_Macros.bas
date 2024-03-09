@@ -2,11 +2,11 @@ Attribute VB_Name = "Dashboard_Macros"
 Option Explicit
 Dim lastRow As Long, lastResultRow As Long, selRow As Long, selCol As Long
 
-Sub wshARDashboard_TabChange()
+Sub wshCC_Dashboard_TabChange()
     
     Application.ScreenUpdating = False
     
-    With wshARDashboard
+    With wshCC_Dashboard
         selCol = .Range("AA3").value 'Selected Column
         'Hide All Shapes & Graphs
         .Range("4:1004").EntireRow.Hidden = True
@@ -17,7 +17,7 @@ Sub wshARDashboard_TabChange()
             Case Is = 2                                 'Dashboard
                 .Range("4:32").EntireRow.Hidden = False
                 .Shapes("DashGrp").Visible = msoCTrue   'Display Dashboard Graphs/Buttons
-                Call wshARDashboard_Refresh
+                Call wshCC_Dashboard_Refresh
             Case Is = 3                                 'Aging Summary
                 .Range("33:502").EntireRow.Hidden = False
                 Call Aging_Refresh                      'Run Macro To Refresh Aging
@@ -33,17 +33,17 @@ Sub wshARDashboard_TabChange()
     
 End Sub
 
-Sub wshARDashboard_Refresh()
+Sub wshCC_Dashboard_Refresh()
     'Get Current Data
-    With wshInvoiceList 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
+    With wshCC_Invoice_List 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
         lastRow = .Range("A999999").End(xlUp).row
         .Range("A3:J" & lastRow).ClearContents
         
         'Copy AR_Entête to Invoice List
         Dim sourceRange As Range, targetRange As Range, maxRow As Long
-        lastRow = wshAR.Range("A999999").End(xlUp).row
-        Set sourceRange = wshAR.Range("A3:J" & lastRow)
-        Set targetRange = wshInvoiceList.Range("A3:J" & lastRow)
+        lastRow = wshCC.Range("A999999").End(xlUp).row
+        Set sourceRange = wshCC.Range("A3:J" & lastRow)
+        Set targetRange = wshCC_Invoice_List.Range("A3:J" & lastRow)
         'Copy values from source range to target range
         targetRange.value = sourceRange.value
 
@@ -66,7 +66,7 @@ Sub wshARDashboard_Refresh()
     End With
     
         'Set the worksheet where you want to create the table
-        Set ws = wshInvoiceList
+        Set ws = wshCC_Invoice_List
     
         'Define the range for the table and create the table
         Set rng = ws.Range("P1:W" & lastResultRow)
@@ -78,15 +78,15 @@ Sub wshARDashboard_Refresh()
 
 End Sub
 
-Sub wshARDashboard_SelectAgingDetails()
+Sub wshCC_Dashboard_SelectAgingDetails()
     detailNumb = Replace(Application.Caller, "Aging", "")
-    wshARDashboard.Range("AA504").value = detailNumb  'Set Detail level #
-    wshARDashboard.Range("E2").Select                 'Select to trigger macro
+    wshCC_Dashboard.Range("AA504").value = detailNumb  'Set Detail level #
+    wshCC_Dashboard.Range("E2").Select                 'Select to trigger macro
 End Sub
 
 Sub Aging_Refresh()
-    wshARDashboard.Range("B35:R499").ClearContents    'Clear Previous Results
-    With wshInvoiceList
+    wshCC_Dashboard.Range("B35:R499").ClearContents    'Clear Previous Results
+    With wshCC_Invoice_List
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
         lastRow = .Range("A99999").End(xlUp).row
@@ -97,14 +97,14 @@ Sub Aging_Refresh()
         lastResultRow = .Range("P99999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         .Range("Q3:V" & lastResultRow).formula = .Range("Q1:W1").formula
-        wshARDashboard.Range("B35:H" & lastResultRow + 32).value = .Range("P3:V" & lastResultRow).value 'Bring over Aging Data
+        wshCC_Dashboard.Range("B35:H" & lastResultRow + 32).value = .Range("P3:V" & lastResultRow).value 'Bring over Aging Data
     End With
 End Sub
 
 Sub Aging_ShowCustDetail()
-    wshARDashboard.Range("J34:R499").ClearContents    'Clear Previous Results
-    selRow = wshARDashboard.Range("AA1").value        'Set Selected Row
-    With wshInvoiceList
+    wshCC_Dashboard.Range("J34:R499").ClearContents    'Clear Previous Results
+    selRow = wshCC_Dashboard.Range("AA1").value        'Set Selected Row
+    With wshCC_Invoice_List
         'Clear Prior Results
         lastRow = .Range("AB9999").End(xlUp).row + 1
         .Range("AB3:AJ" & lastRow).ClearContents
@@ -117,13 +117,13 @@ Sub Aging_ShowCustDetail()
             Unique:=True
         lastResultRow = .Range("AB99999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
-        wshARDashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).value = .Range("AB1:AJ" & lastResultRow).value 'Bring over Customer Details
-            wshARDashboard.Range("J" & selRow & ":R" & selRow).HorizontalAlignment = xlCenterAcrossSelection
+        wshCC_Dashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).value = .Range("AB1:AJ" & lastResultRow).value 'Bring over Customer Details
+            wshCC_Dashboard.Range("J" & selRow & ":R" & selRow).HorizontalAlignment = xlCenterAcrossSelection
     End With
 End Sub
 
 Sub Aging_GoToInvoice()
-    With wshARDashboard
+    With wshCC_Dashboard
         selRow = .Range("AA2").value             'Selected Row
         If selRow = 0 Then Exit Sub
         If .Range("J" & selRow).value = "" Then Exit Sub
@@ -133,8 +133,8 @@ Sub Aging_GoToInvoice()
 End Sub
 
 Sub AgingDetail_Refresh()
-    wshARDashboard.Range("B507:J9999").ClearContents  'Clear Existing Data
-    With wshInvoiceList
+    wshCC_Dashboard.Range("B507:J9999").ClearContents  'Clear Existing Data
+    With wshCC_Invoice_List
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
         lastRow = .Range("A99999").End(xlUp).row
@@ -146,7 +146,7 @@ Sub AgingDetail_Refresh()
             Unique:=True
         lastResultRow = .Range("AB99999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
-        wshARDashboard.Range("B507:J" & lastResultRow + 504).value = .Range("AB3:AJ" & lastResultRow).value 'Bring over Aging Data
+        wshCC_Dashboard.Range("B507:J" & lastResultRow + 504).value = .Range("AB3:AJ" & lastResultRow).value 'Bring over Aging Data
     End With
 
 End Sub

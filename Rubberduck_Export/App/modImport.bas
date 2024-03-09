@@ -8,7 +8,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshClientDB.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    wshBD_Clients.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim fullFileName As String
@@ -34,9 +34,9 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshClientDB workbook
-    wshClientDB.Range("A2").CopyFromRecordset recSet
-    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    'Copy to wshBD_Clients workbook
+    wshBD_Clients.Range("A2").CopyFromRecordset recSet
+    wshBD_Clients.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
     'Close resource
     recSet.Close
@@ -46,7 +46,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
 '    MsgBox _
 '        Prompt:="J'ai importé un total de " & _
-'            Format(wshClientDB.Range("A1").CurrentRegion.Rows.count - 1, _
+'            Format(wshBD_Clients.Range("A1").CurrentRegion.Rows.count - 1, _
 '            "## ##0") & " clients", _
 '        Title:="Vérification du nombre de clients", _
 '        Buttons:=vbInformation
@@ -66,7 +66,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshBaseHours.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    wshTEC_Local.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim fileName As String, sourceWorkbook As String, sourceTab As String
@@ -78,20 +78,20 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Set destinationRange = wshBaseHours.Range("A2")
+    Set destinationRange = wshTEC_Local.Range("A2")
 
     'Copy data, using Range to Range and Autofit all columns
     sourceRange.Copy destinationRange
-    wshBaseHours.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    wshTEC_Local.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Arrange formats on all rows
     Dim lastRow As Long
-    lastRow = wshBaseHours.Range("A99999").End(xlUp).row
+    lastRow = wshTEC_Local.Range("A99999").End(xlUp).row
     
-    With wshBaseHours
+    With wshTEC_Local
         .Range("A3" & ":P" & lastRow).HorizontalAlignment = xlCenter
         With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
             .HorizontalAlignment = xlLeft
@@ -143,7 +143,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     
     'Copy to wshAdmin workbook
     wshAdmin.Range("T11").CopyFromRecordset recSet
-'    wshClientDB.Range("A1").CurrentRegion.EntireColumn.AutoFit
+'    wshBD_Clients.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
     'Close resource
     recSet.Close
@@ -162,10 +162,10 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
-    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    saveLastRow = wshBD_GL_Trans.Range("A99999").End(xlUp).row
     
     'Clear all cells, but the headers, in the target worksheet
-    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    wshBD_GL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GLTrans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -178,18 +178,18 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshGL_Trans.Range("A1")
+    Set destinationRange = wshBD_GL_Trans.Range("A1")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    wshBD_GL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
-    lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
+    lastRow = wshBD_GL_Trans.Range("A999999").End(xlUp).row
     
     'Adjust Formats for all new rows
-    With wshGL_Trans
+    With wshBD_GL_Trans
         .Range("A" & 2 & ":J" & lastRow).HorizontalAlignment = xlCenter
         .Range("B" & 2 & ":B" & lastRow).NumberFormat = "dd/mm/yyyy"
         .Range("C" & 2 & ":C" & lastRow & _
@@ -215,14 +215,14 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Dim r As Long
     
 '    For r = 2 To lastRow 'RMV - 2024-01-05
-'        With wshGL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
+'        With wshBD_GL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
 '            .Font.ThemeColor = xlThemeColorLight1
 '            .Font.TintAndShade = -4.99893185216834E-02
 '            .Interior.Pattern = xlNone
 '            .Interior.TintAndShade = 0
 '            .Interior.PatternTintAndShade = 0
 '        End With
-'        wshGL_Trans.Range("J" & r).formula = "=ROW()"
+'        wshBD_GL_Trans.Range("J" & r).formula = "=ROW()"
 '    Next r
 
     Application.ScreenUpdating = True
@@ -238,10 +238,10 @@ Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
-    saveLastRow = wshEJRecurrente.Range("C999").End(xlUp).row
+    saveLastRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
-    wshEJRecurrente.Range("C2:J" & saveLastRow).ClearContents
+    wshGL_EJ_Recurrente.Range("C2:J" & saveLastRow).ClearContents
 
     'Import GLTrans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -254,18 +254,18 @@ Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshEJRecurrente.Range("C1")
+    Set destinationRange = wshGL_EJ_Recurrente.Range("C1")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshEJRecurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
+    wshGL_EJ_Recurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshEJRecurrente.Range("C999").End(xlUp).row
+    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
     'Adjust Formats for all new rows
-    With wshEJRecurrente
+    With wshGL_EJ_Recurrente
         Union(.Range("C2:C" & lastUsedRow), _
             .Range("E2:E" & lastUsedRow)).HorizontalAlignment = xlCenter
         Union(.Range("D2:D" & lastUsedRow), _
