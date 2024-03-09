@@ -5,13 +5,17 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub Client_Change(ClientName As String)
 
+    Dim timerStart As Double: timerStart = Timer
+    
     wshFAC_Brouillon.Range("B18").value = GetID_From_Client_Name(ClientName)
     
     With wshFAC_Brouillon 'TODO[] - 2024-02-22
-        .Range("K3").value = "Monsieur Robert M. Vigneault"
+'        .Range("K3").value = GetInfoByName(ClientName, 3)
         .Range("K4").value = ClientName
-        .Range("K5").value = "15 chemin des Mésanges" 'Address 1
-        .Range("K6").value = "Mansonville, QC  J0E 1X0" 'Ville, Province & Code postal
+'        .Range("K5").value = GetInfoByName(ClientName, 5) 'Address 1
+'        .Range("K6").value = GetInfoByName(ClientName, 7) & " " & _
+'                             GetInfoByName(ClientName, 8) & " " & _
+'                             GetInfoByName(ClientName, 9) 'Ville, Province & Code postal
     End With
     
     wshFAC_Finale.Range("B21").value = "Le " & Format(wshFAC_Brouillon.Range("O3").value, "d mmmm yyyy")
@@ -25,6 +29,10 @@ Sub Client_Change(ClientName As String)
     
     wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
 
+    Set rng = Nothing
+    
+    Call Output_Timer_Results("Client_Change()", timerStart)
+    
 End Sub
 
 Sub Date_Change(d As String)
@@ -119,8 +127,6 @@ Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
 
     Dim timerStart As Double: timerStart = Timer
 
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub FAC_Prep_Save_And_Update() @ " & Time
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "B18 (Cust. ID) = " & wshFAC_Brouillon.Range("B18").value
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
         If .Range("B18").value = Empty Then
@@ -138,7 +144,8 @@ Sub FAC_Prep_Save_And_Update() '2024-02-21 @ 10:11
         wshFAC_Brouillon.usedRange.Calculate
         wshFAC_Finale.usedRange.Calculate
         
-        'Valid Invoice - Let's update it
+        'Valid Invoice - Let's update it ******************************************
+        
         'Determine the row number (InvListRow) for New Invoice -OR- use existing one
         If wshFAC_Brouillon.Range("B20").value = Empty Then 'New Invoice
             Call FAC_Prep_Add_Invoice_Header_to_DB(0)

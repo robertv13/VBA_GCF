@@ -16,9 +16,6 @@ End Function
 
 Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-'    Dim lastRow As Long
-'    lastRow = wshClientDB.Range("A99999").End(xlUp).row
-    
     Dim ws As Worksheet, dynamicRange As Range
     On Error Resume Next
     Set ws = wshClientDB
@@ -48,6 +45,27 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 End Function
 
+Function GetInfoByName(nameToFind As String, infoColumn As Integer, Optional tableRange As Range) As Variant
+    Dim foundCell As Range
+    Dim infoArray As Variant
+    
+    If tableRange Is Nothing Then
+        Set tableRange = wshClientDB.Range("dnrClients_All")
+    End If
+    
+    ' Search for the name in the first column of the table
+    Set foundCell = tableRange.Columns(1).Find(What:=nameToFind, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    If Not foundCell Is Nothing Then
+        ' If name is found, retrieve the desired information from the same row
+        infoArray = foundCell.Offset(0, infoColumn - 1).Resize(1, 10).value ' Assuming you want to retrieve two columns starting from the specified column
+        
+        GetInfoByName = infoArray
+    Else
+        GetInfoByName = CVErr(xlErrNA) ' Return #N/A if name is not found
+    End If
+    
+End Function
 Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim dynamicRange As Range

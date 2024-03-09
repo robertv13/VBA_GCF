@@ -2,14 +2,22 @@
 
 Private Sub Worksheet_Activate()
 
+    Application.ScreenUpdating = False
+    
     Call Handle_Activation
+    
+    'Set the zoom factor to 98% when this worksheet is activated
+    ActiveWindow.Zoom = 98
+
+    Application.ScreenUpdating = True
 
 End Sub
 
 Sub Handle_Activation()
 
     Call Update_TEC_Local_To_DB_Data
-    Call RefreshPivotTable
+    
+    Call TEC_Refresh_All_Pivot_Table
     
 End Sub
 

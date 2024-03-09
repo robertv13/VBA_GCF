@@ -302,7 +302,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstFacturee").value = False
-            rs.Fields("DateFacture").value = Null
+            rs.Fields("DateFacturee").value = Null
             rs.Fields("EstDetruit").value = False
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = ""
@@ -509,7 +509,7 @@ Sub Update_TEC_Local_To_DB_Data()
 
 End Sub
 
-Sub RefreshPivotTable()
+Sub TEC_Refresh_All_Pivot_Table()
     Dim pt As PivotTable
     For Each pt In wshTEC_DB_PivotTable.PivotTables
         pt.RefreshTable
