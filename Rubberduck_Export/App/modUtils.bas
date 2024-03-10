@@ -513,20 +513,6 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
 End Sub
 
-Sub Save_Detailled_Log(s As String)
-
-    Dim nextRow As Long
-    nextRow = wshzDocDetailledLog.Range("A99999").End(xlUp).row + 1
-    
-    Debug.Print s
-    
-    With wshzDocDetailledLog
-        .Range("A" & nextRow).value = Format(Now(), "dd-mm-yyyy hh:MM:ss")
-        .Range("B" & nextRow).value = s
-    End With
-
-End Sub
-
 Sub Test_Lookup_Data_In_A_Range()
 
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")

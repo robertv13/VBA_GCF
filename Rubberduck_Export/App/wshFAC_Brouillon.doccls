@@ -4,6 +4,8 @@ Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer
 
+    Application.ScreenUpdating = False
+    
     'Set the zoom factor to 93% when this worksheet is activated
     ActiveWindow.Zoom = 93
     
@@ -13,6 +15,8 @@ Private Sub Worksheet_Activate()
     Call FAC_Detail_Import_All
     
     wshFAC_Brouillon.EnableCalculation = True
+    
+    Application.ScreenUpdating = True
     
     Call Output_Timer_Results("wshFAC_Brouillon_Worksheet_Activate()", timerStart)
 
@@ -38,6 +42,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
         Next
         
         Set targ = Intersect(rg, Target)
+        Call Fill_Or_Empty_Range_Background(rg, False)
         rg.Select
         If targ Is Nothing Then
             addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
@@ -46,6 +51,16 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
         Else
             targ.Activate
         End If
+        
+        Set rg = Nothing
+        Set targ = Nothing
+        
+    End If
+    
+    'If date is empty, assign today's date by default
+    If Not Intersect(Target, Me.Range("O3")) Is Nothing And Me.Range("O3").value = "" Then
+            Me.Range("O3").value = Format(Now(), "dd-mm-yyyy")
+            MsgBox "Date was empty, so I used '" & wshFAC_Brouillon.Range("O3").value & "' as default"
     End If
 
 End Sub
@@ -59,18 +74,40 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     Dim rng As Range
     
     'Client Name has changed
-    If Not Intersect(Target, wshFAC_Brouillon.Range("E4")) Is Nothing And wshFAC_Brouillon.Range("E4").value <> Empty Then
-        Call Client_Change(wshFAC_Brouillon.Range("E4").value)
+    If Not Intersect(Target, Me.Range("E4")) Is Nothing And Me.Range("E4").value <> Empty Then
+        Call Client_Change(Me.Range("E4").value)
+        Set rng = Me.Range("O3")
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
     End If
     
-    'Invoice Date has changed
-    If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing And IsDate(wshFAC_Brouillon.Range("O3").value) = True Then
+    'Invoice Date has changed, try to build a valid date
+    If Not Intersect(Target, Range("O3")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim strDate As String
+        strDate = Validate_A_Date(Range("O3").value)
+        If strDate = "" Then
+            Call Invalid_Date_Message
+            Range("O3").Activate
+            Range("O3").Select
+        Else
+            Range("O3").value = strDate
+        End If
+        If CDate(Range("O3").value) > Format(Now(), "dd-mm-yyyy") Then
+            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Range("O3").value = ""
+                Range("O3").Activate
+                Range("O3").Select
+            End If
+        End If
+        Application.EnableEvents = True
+
         Call Date_Change(wshFAC_Brouillon.Range("O3").value)
-'        Set rng = wshFAC_Brouillon.Range("O3")
-'        Call Fill_Or_Empty_Range_Background(rng, False)
-'        Set rng = wshFAC_Brouillon.Range("L11")
-'        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+        
+        Set rng = wshFAC_Brouillon.Range("O3")
+        Call Fill_Or_Empty_Range_Background(rng, False)
+        Set rng = wshFAC_Brouillon.Range("L11")
+        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
     End If
     
@@ -80,14 +117,13 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         GoTo ExitSub
     End If
     
-    
     'Services entry
     If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFAC_Finale.Range("C" & Target.row + 23).value = wshFAC_Brouillon.Range("L" & Target.row).value
         Set rng = wshFAC_Brouillon.Range("L" & Target.row) 'Service
-        Call Fill_Or_Empty_Range_Background(rng, False)
+'        Call Fill_Or_Empty_Range_Background(rng, False)
         Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
+'        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         wshFAC_Brouillon.Range("M" & Target.row).Select
         GoTo ExitSub
     End If
@@ -179,7 +215,6 @@ ExitSub:
     Application.EnableEvents = True
     
     Call Output_Timer_Results("wshFAC_Brouillon - Worksheet_Change()", timerStart)
-
   
 End Sub
 

@@ -4,10 +4,14 @@ Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer
     
+    Application.ScreenUpdating = False
+    
     'Set the zoom factor to 75% when this worksheet is activated
     ActiveWindow.Zoom = 75
     
     wshFAC_Finale.EnableCalculation = True
+    
+    Application.ScreenUpdating = True
     
     Call Output_Timer_Results("wshFAC_Finale_Worksheet_Activate()", timerStart)
     

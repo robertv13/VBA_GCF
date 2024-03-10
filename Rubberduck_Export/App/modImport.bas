@@ -44,12 +44,12 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.ScreenUpdating = True
     
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshBD_Clients.Range("A1").CurrentRegion.Rows.count - 1, _
-'            "## ##0") & " clients", _
-'        Title:="Vérification du nombre de clients", _
-'        Buttons:=vbInformation
+    MsgBox _
+        Prompt:="J'ai importé un total de " & _
+            Format(wshBD_Clients.Range("A1").CurrentRegion.Rows.count - 1, _
+            "## ##0") & " clients", _
+        Title:="Vérification du nombre de clients", _
+        Buttons:=vbInformation
 
     'Free up memory - 2024-02-23
     Set connStr = Nothing
