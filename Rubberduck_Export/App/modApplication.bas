@@ -1,7 +1,7 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
-Global Const gAppVersion As String = "v2.9.6" '2024-03-10 @ 09:11
+Global Const gAppVersion As String = "v2.9.8" '2024-03-11 @ 14:00
 
 Public isTab_Order_Activated As Boolean
 

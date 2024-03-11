@@ -351,10 +351,10 @@ Sub FAC_Entete_Import_All() '2024-03-07 @ 16:21
     With wshFAC_Entête
         .Range("A4:C" & lastRow).HorizontalAlignment = xlCenter
         .Range("B4:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("D4:D" & lastRow & ", E4:E" & lastRow & ", F4:F" & lastRow & ",G4:G" & lastRow & ",I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow).HorizontalAlignment = xlLeft
-        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).HorizontalAlignment = xlRight
-        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
+        .Range("D4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:N" & lastRow).HorizontalAlignment = xlLeft
+        .Range("I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow & ",O4:U" & lastRow).HorizontalAlignment = xlRight
+        .Range("I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow & ",O4:U" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("P4:P" & lastRow & ",R4:R" & lastRow).NumberFormat = "#0.000 %"
     End With
 '        With .Range("A" & 2 & ":A" & lastRow) _
 '            .Range("J" & 2 & ":J" & lastRow).Interior
@@ -378,7 +378,7 @@ Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+    wshFAC_Détails.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import GLTrans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -391,7 +391,7 @@ Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshFAC_Détails.Range("A3")
+    Set destinationRange = wshFAC_Détails.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -425,7 +425,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshCC.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+    wshCC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -438,7 +438,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshCC.Range("A3")
+    Set destinationRange = wshCC.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -450,7 +450,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     
     'Adjust Formats for all new rows
     With wshCC
-        .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J:J" & lastRow).HorizontalAlignment = xlCenter
+        .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J3:J" & lastRow).HorizontalAlignment = xlCenter
         .Range("C3:C" & lastRow).HorizontalAlignment = xlLeft
         .Range("G3:I" & lastRow).HorizontalAlignment = xlRight
         .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"

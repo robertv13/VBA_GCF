@@ -12,7 +12,7 @@ Private Sub Worksheet_Activate()
     'Import FAC_Entête & FAC_Détail from GCF_Sortie_BD.xlsx
     Call FAC_Entete_Import_All
     Call FAC_Detail_Import_All
-    call
+    Call FAC_Comptes_Clients_Import_All
     
     wshFAC_Brouillon.EnableCalculation = True
     
@@ -60,7 +60,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
     'If date is empty, assign today's date by default
     If Not Intersect(Target, Me.Range("O3")) Is Nothing And Me.Range("O3").value = "" Then
             Me.Range("O3").value = Format(Now(), "dd-mm-yyyy")
-            MsgBox "Date was empty, so I used '" & wshFAC_Brouillon.Range("O3").value & "' as default"
     End If
 
 End Sub
