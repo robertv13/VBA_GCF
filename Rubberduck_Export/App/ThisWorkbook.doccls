@@ -4,6 +4,8 @@ Public sessionTimerStart As Double
 
 Private Sub Workbook_Open()
 
+    sessionTimerStart = Timer
+    
     Application.ScreenUpdating = False
    
     Dim lastUsedRow As Long
@@ -11,8 +13,6 @@ Private Sub Workbook_Open()
     wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
     wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
     wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
-    
-    sessionTimerStart = Timer
     
     Call Hide_All_Worksheets_Except_Menu
     
@@ -26,8 +26,10 @@ Private Sub Workbook_Open()
     wbName = ThisWorkbook.name
     Set wb = Workbooks(wbName)
     wb.Application.Calculation = xlCalculationManual
-    Set wb = Nothing
+   
+    Call Import_Minimum_From_External_DB '2024-03-11 @ 09:56
     
+    Set wb = Nothing
     Application.ScreenUpdating = True
 
 End Sub
@@ -46,7 +48,7 @@ Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
     
     Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
     
-    Debug.Print "Sub Workbook_Before_Close()"
+    MsgBox "Sub Workbook_Before_Close()"
     
 End Sub
 

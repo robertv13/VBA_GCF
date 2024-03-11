@@ -173,3 +173,25 @@ Sub Slide_In_All_Menu_Options()
 
 End Sub
 
+Sub Add_Caption_To_Userform(uf As UserForm, titleText As String)
+    
+    uf.Caption = titleText
+
+End Sub
+
+Sub Add_Label_To_Userform(uf As UserForm, labelText As String, leftPos As Single, topPos As Single)
+    
+    'Add a label to the userform
+    Dim newLabel As MSForms.Label: Set newLabel = uf.Controls.add("Forms.Label.1")
+    
+    With newLabel
+        .Caption = labelText
+        .Left = leftPos
+        .width = 150
+        .Top = topPos
+        'Set other properties as needed
+    End With
+
+End Sub
+
+

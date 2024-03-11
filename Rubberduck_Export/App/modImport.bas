@@ -1,6 +1,41 @@
 Attribute VB_Name = "modImport"
 Option Explicit
 
+Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    Call Setup_Message_Userform
+    
+    Call Client_List_Import_All
+    Call TEC_Import_All
+    
+    Call Close_Message_Userform
+    
+    Call Output_Timer_Results("Import_Minimum()", timerStart)
+
+End Sub
+
+Sub Setup_Message_Userform()
+
+    Dim uf As UserForm: Set uf = ufMessage
+    
+    'Call Add_Caption_To_Userform(uf, "Traitement initial")
+    
+    Call Add_Label_To_Userform(uf, "Importation des Clients", 15, 10)
+    Call Add_Label_To_Userform(uf, "Importation des TEC", 15, 30)
+    
+    ufMessage.show vbModeless
+    
+End Sub
+
+Sub Close_Message_Userform()
+
+    ufMessage.Hide
+    Unload ufMessage
+    
+End Sub
+
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim timerStart As Double: timerStart = Timer
@@ -44,12 +79,12 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.ScreenUpdating = True
     
-    MsgBox _
-        Prompt:="J'ai importé un total de " & _
-            Format(wshBD_Clients.Range("A1").CurrentRegion.Rows.count - 1, _
-            "## ##0") & " clients", _
-        Title:="Vérification du nombre de clients", _
-        Buttons:=vbInformation
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshBD_Clients.Range("A1").CurrentRegion.Rows.count - 1, _
+'            "## ##0") & " clients", _
+'        Title:="Vérification du nombre de clients", _
+'        Buttons:=vbInformation
 
     'Free up memory - 2024-02-23
     Set connStr = Nothing
@@ -380,6 +415,51 @@ Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     
     Call Output_Timer_Results("FAC_Detail_Import_All()", timerStart)
+
+End Sub
+
+Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshCC.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+
+    'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "Comptes_Clients"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshCC.Range("A3")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshCC.Range("A99999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshCC
+        .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J:J" & lastRow).HorizontalAlignment = xlCenter
+        .Range("C3:C" & lastRow).HorizontalAlignment = xlLeft
+        .Range("G3:I" & lastRow).HorizontalAlignment = xlRight
+        .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"
+        .Range("G3:I" & lastRow).NumberFormat = "#,##0.00 $"
+    End With
+
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("FAC_Comptes_Clients_Import_All()", timerStart)
 
 End Sub
 

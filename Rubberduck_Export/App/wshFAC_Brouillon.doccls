@@ -9,10 +9,10 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 93% when this worksheet is activated
     ActiveWindow.Zoom = 93
     
-    'Import TEC from GCF_Sortie_BD.xlsx
-    Call TEC_Import_All
+    'Import FAC_Entête & FAC_Détail from GCF_Sortie_BD.xlsx
     Call FAC_Entete_Import_All
     Call FAC_Detail_Import_All
+    call
     
     wshFAC_Brouillon.EnableCalculation = True
     
