@@ -32,7 +32,7 @@ End Sub
 Sub JE_Click()
     SlideIn_BV
     SlideIn_EJ
-    Application.Calculation = xlCalculationAutomatic
+    wshGL_EJ.Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = False
     With wshGL_EJ
         .Visible = xlSheetVisible

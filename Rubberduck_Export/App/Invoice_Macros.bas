@@ -50,15 +50,15 @@ End Sub
 
 Sub Invoice_SavedMsg()
     With Invoice.Shapes("InvSavedMsg")
-        Dim i As Long, Delay As Double, StartTime As Double
+        Dim i As Long, Delay As Double, startTime As Double
         .Visible = msoCTrue
         For i = 1 To 150
             .fill.Transparency = i / 150
             Delay = 0.009
-            StartTime = Timer
+            startTime = Timer
             Do
                 DoEvents
-            Loop While Timer - StartTime < Delay
+            Loop While Timer - startTime < Delay
         Next i
         .Visible = msoFalse
     End With

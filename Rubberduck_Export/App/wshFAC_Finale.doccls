@@ -9,7 +9,8 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 75% when this worksheet is activated
     ActiveWindow.Zoom = 75
     
-    wshFAC_Finale.EnableCalculation = True
+'    wshFAC_Finale.EnableCalculation = True
+    wshFAC_Finale.Application.Calculation = xlCalculationAutomatic
     
     Application.ScreenUpdating = True
     

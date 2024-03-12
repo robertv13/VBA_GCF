@@ -5,37 +5,48 @@ Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
 
     Dim timerStart As Double: timerStart = Timer
     
-    Call Setup_Message_Userform
-    
+'    Dim uf As UserForm: Set uf = ufMessage
+'    Call Show_Message_Userform
+'
+'    Call Add_Label_To_Userform(ufMessage, "Importation des Clients", 15, 10)
     Call Client_List_Import_All
-    Call TEC_Import_All
+'    Call Pause_Application(1)
     
-    Call Close_Message_Userform
+'    Call Add_Label_To_Userform(ufMessage, "Importation des TEC", 15, 30)
+    Call TEC_Import_All
+'    Call Pause_Application(1)
+    
+'    Call Close_Message_Userform
     
     Call Output_Timer_Results("Import_Minimum()", timerStart)
 
 End Sub
 
-Sub Setup_Message_Userform()
-
-    Dim uf As UserForm: Set uf = ufMessage
-    
-    'Call Add_Caption_To_Userform(uf, "Traitement initial")
-    
-    Call Add_Label_To_Userform(uf, "Importation des Clients", 15, 10)
-    Call Add_Label_To_Userform(uf, "Importation des TEC", 15, 30)
-    
-    ufMessage.show vbModeless
-    
-End Sub
-
-Sub Close_Message_Userform()
-
-    ufMessage.Hide
-    Unload ufMessage
-    
-End Sub
-
+'Sub Show_Message_Userform()
+'
+'    ufMessage.show vbModeless
+'
+'End Sub
+'
+'Sub Add_Label_To_Userform(uf As UserForm, t As String, l As Long, t As Long)
+'
+'    Dim newLabel As MSForms.Label
+'    Set newLabel = ufMessage.Controls.add("Forms.Label.1")
+'    With newLabel
+'        .Caption = t
+'        .Left = l
+'        .Top = t
+'    End With
+'
+'End Sub
+'
+'Sub Close_Message_Userform()
+'
+'    ufMessage.Hide
+'    Unload ufMessage
+'
+'End Sub
+'
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim timerStart As Double: timerStart = Timer

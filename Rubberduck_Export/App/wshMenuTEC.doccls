@@ -22,7 +22,7 @@ End Sub
 
 Sub TEC_TDB_Click()
     SlideIn_TEC_TDB
-    Application.Calculation = xlCalculationAutomatic
+    wshTEC_Dashboard.Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = False
     With wshTEC_Dashboard
         .Visible = xlSheetVisible

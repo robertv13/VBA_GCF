@@ -27,7 +27,6 @@ Sub Client_Change(ClientName As String)
         .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
                              wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
                              wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
-        End If
     End With
     
     Call FAC_Clear_All_TEC_Cells
@@ -118,6 +117,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
+        wshFAC_Brouillon.Select
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
     
@@ -139,30 +139,24 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         'Check For Mandatory Fields - Client
         If .Range("B18").value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
-            If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que le nom de client n'est pas encore saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
         'Check For Mandatory Fields - Date de facture
         If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
-            If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Sauvegarde REFUSÉE parce que la date de facture et/ou le numéro de facture n'ont pas encore été saisi, sortie de la routine"
             GoTo Fast_Exit_Sub
         End If
         
         'Valid Invoice - Let's update it ******************************************
         
         Call FAC_Prep_Add_Invoice_Header_to_DB
-        Stop
         Call FAC_Prep_Add_Invoice_Header_Locally
-        Stop
+        
         Call FAC_Prep_Add_Invoice_Details_to_DB
-        Stop
         Call FAC_Prep_Add_Invoice_Details_Locally
-        Stop
+        
         Call FAC_Prep_Add_Comptes_Clients_to_DB
-        Stop
         Call FAC_Prep_Add_Comptes_Clients_Locally
-        Stop
         
         Dim lastResultRow As Integer
         lastResultRow = wshTEC_Local.Range("Y9999").End(xlUp).row
@@ -171,25 +165,30 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         
             Call Update_TEC_As_Billed_In_DB(3, lastResultRow)
             Call FAC_Prep_TEC_As_Billed_Locally(3, lastResultRow)
+            Call FAC_Clear_All_TEC_Cells
             
         End If
     End With
     
     Call FAC_Prepare_GL_Posting
     
-    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
-    
-    wshFAC_Brouillon.Range("B27").value = False
-    
-Fast_Exit_Sub:
-
     Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
     
+    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+    
+    wshFAC_Brouillon.Range("B27").value = False
+    Call FAC_Brouillon_New_Invoice '2024-03-12 @ 08:08 - Maybe ??
+    
+Fast_Exit_Sub:
+
+    Set shp = Nothing
+    
     Call Output_Timer_Results("FAC_Brouillon_Save()", timerStart)
     
-    Call Goto_Onglet_FAC_Brouillon
+    wshFAC_Brouillon.Select
+'    Call Goto_Onglet_FAC_Brouillon
     
 End Sub
 
@@ -225,7 +224,7 @@ Sub FAC_Prep_Add_Invoice_Header_to_DB()
         rs.Fields("Contact") = .Range("B23").value
         rs.Fields("Nom_Client") = .Range("B24").value
         rs.Fields("Adresse_1") = .Range("B25").value
-        rs.Fields("Adresse_2") = "Unité 201" ' .Range("B26").value
+        'rs.Fields("Adresse_2") = "Unité 201" ' .Range("B26").value
         rs.Fields("Ville_Prov_CP") = .Range("B27").value
         rs.Fields("Honoraires") = .Range("F71").value
         
@@ -332,7 +331,7 @@ Sub FAC_Prep_Add_Invoice_Details_to_DB()
     
     Dim rowLastService As Long
     rowLastService = wshFAC_Finale.Range("C70").End(xlUp).row
-    If rowLastService < 35 Then GoTo nothing_to_update
+    If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim fullFileName As String, sheetName As String
     fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
@@ -350,7 +349,7 @@ Sub FAC_Prep_Add_Invoice_Details_to_DB()
     rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
     
     Dim r As Integer
-    For r = 35 To rowLastService
+    For r = 34 To rowLastService
         'Add fields to the recordset before updating it
         rs.AddNew
         With wshFAC_Finale
@@ -393,21 +392,22 @@ Sub FAC_Prep_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records l
     'Get the last entered service
     Dim lastEnteredService As Long
     lastEnteredService = wshFAC_Finale.Range("C70").End(xlUp).row
-    If lastEnteredService < 35 Then GoTo nothing_to_update
+    If lastEnteredService < 34 Then GoTo nothing_to_update
     
     'Get the first free row
     Dim firstFreeRow As Long
     firstFreeRow = wshFAC_Détails.Range("A99999").End(xlUp).row + 1
    
     Dim i As Integer
-    For i = 35 To lastEnteredService
+    For i = 34 To lastEnteredService
         With wshFAC_Détails
-            .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F28")
+            .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
             .Range("B" & firstFreeRow).value = wshFAC_Finale.Range("C" & i).value
-            .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("D" & i).value
+            .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("D" & i).value
             .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("E" & i).value
             .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("F" & i).value
             .Range("F" & firstFreeRow).value = i - 24
+            firstFreeRow = firstFreeRow + 1
         End With
     Next i
 
@@ -480,17 +480,12 @@ Sub FAC_Prep_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records l
     
     Application.ScreenUpdating = False
     
-    'Get the last entered service
-    Dim lastEnteredService As Long
-    lastEnteredService = wshFAC_Finale.Range("C70").End(xlUp).row
-    If lastEnteredService < 35 Then GoTo nothing_to_update
-    
     'Get the first free row
     Dim firstFreeRow As Long
     firstFreeRow = wshCC.Range("A9999").End(xlUp).row + 1
    
     With wshCC
-        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F28")
+        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
         .Range("D" & firstFreeRow).value = "Unpaid"
@@ -584,7 +579,6 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
         Dim tecID As Long
         tecID = wshTEC_Local.Range("Y" & r).value
         rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
-        Debug.Print "Need to update locally the TEC_ID = " & tecID & " which is at row # " & rowToBeUpdated
         wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
         wshTEC_Local.Range("L" & rowToBeUpdated).value = True
         wshTEC_Local.Range("M" & rowToBeUpdated).value = CDate(wshFAC_Brouillon.Range("O3").value)
@@ -597,7 +591,6 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
 End Sub
 
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print vbNewLine & "[modFAC] - Now entering Sub Invoice_Load() @ " & Time
     With wshFAC_Brouillon
         If wshFAC_Brouillon.Range("B20").value = Empty Then
             MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
@@ -616,7 +609,6 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
                 GoTo NoItems
             End If
         End If
-        If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Loading info from InvList with row # = " & .Range("B20").value
         .Range("B24").value = True 'Set Invoice Load to true
         .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
         wshFAC_Finale.Range("C34:F63").ClearContents
@@ -640,16 +632,13 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
             lastRow = .Range("A999999").End(xlUp).row
             If lastRow < 4 Then Exit Sub 'No Item Lines
             .Range("I3").value = wshFAC_Brouillon.Range("O6").value
-            If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Invoice Items - From Range '" & "A3:G" & lastRow & "', Critère = '" & .Range("I3").value & "'"
             wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
             .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
             lastResultRow = .Range("O999").End(xlUp).row
-            If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Based on column 'O' (Inv. Row), the lastResultRow = " & lastResultRow
             If lastResultRow < 3 Then GoTo NoItems
             For resultRow = 3 To lastResultRow
                 invitemRow = .Range("O" & resultRow).value
-                If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(10); "Loop = " & resultRow & " - Desc = " & .Range("K" & resultRow).value & " - Hrs = " & .Range("L" & resultRow).value
                 wshFAC_Brouillon.Range("L" & invitemRow & ":O" & invitemRow).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
                 wshFAC_Brouillon.Range("Q" & invitemRow).value = .Range("P" & resultRow).value  'Set Item DB Row
                 wshFAC_Finale.Range("C" & invitemRow + 23 & ":F" & invitemRow + 23).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
@@ -669,7 +658,6 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
 NoItems:
     .Range("B24").value = False 'Set Invoice Load To false
     End With
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "[modFAC] - Now exiting Sub Invoice_Load()" & vbNewLine
 End Sub
 
 Sub InvoiceGetAllTrans(inv As String)
@@ -767,11 +755,11 @@ Sub FAC_Finale_Setup_All_Cells()
     
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
-        .Range("B23").value = "=" & wshFAC_Brouillon.name & "!k3"
-        .Range("B24").value = "=" & wshFAC_Brouillon.name & "!k4"
-        .Range("B25").value = "=" & wshFAC_Brouillon.name & "!k5"
-        .Range("B26").value = "=" & wshFAC_Brouillon.name & "!k6"
-        .Range("B27").value = "=" & wshFAC_Brouillon.name & "!k7"
+        .Range("B23").formula = "=IF(" & wshFAC_Brouillon.name & "!k3<>""""," & "FAC_Brouillon!K3," & """"")"
+        .Range("B24").formula = "=IF(" & wshFAC_Brouillon.name & "!k4<>""""," & "FAC_Brouillon!K4," & """"")"
+        .Range("B25").formula = "=IF(" & wshFAC_Brouillon.name & "!k5<>""""," & "FAC_Brouillon!K5," & """"")"
+        .Range("B26").formula = "=IF(" & wshFAC_Brouillon.name & "!k6<>""""," & "FAC_Brouillon!K6," & """"")"
+        .Range("B27").formula = "=IF(" & wshFAC_Brouillon.name & "!k7<>""""," & "FAC_Brouillon!K7," & """"")"
         .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
 
         Call SetLabels(.Range("B71"), "FAC_Label_SubTotal_1")
@@ -846,9 +834,9 @@ Sub Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim c4 As Boolean, c5 As Boolean
     c1 = wshFAC_Brouillon.Range("B18").value
     c2 = "<=" & Format(d, "mm-dd-yyyy")
-    c3 = "VRAI"
-    If includeBilledTEC Then c4 = "VRAI" Else c4 = "FAUX"
-    c5 = "FAUX"
+    c3 = True
+    If includeBilledTEC Then c4 = True Else c4 = False
+    c5 = False
 
     Call FAC_Clear_All_TEC_Cells
     Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
@@ -948,7 +936,6 @@ Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
 End Sub
  
 Sub Invoice_Delete()
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Invoice_Delete() @ " & Time
     With wshFAC_Brouillon
         If MsgBox("Are you sure you want to delete this Invoice?", vbYesNo, "Delete Invoice") = vbNo Then Exit Sub
         If .Range("B20").value = Empty Then GoTo NotSaved
@@ -985,7 +972,6 @@ NoItems:
 NotSaved:
     Call FAC_Brouillon_New_Invoice 'Add New Invoice
     End With
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Invoice_Delete()" & vbNewLine
 End Sub
 
 Sub FAC_BROUILLON_Prev_PDF() '2024-03-02 @ 16:18
@@ -1010,16 +996,13 @@ Sub Creation_PDF_Email() 'RMV - 2023-12-17 @ 14:35
 End Sub
 
 Sub Create_PDF_Email_Sub(noFacture As String)
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Create_PDF_Email_Sub(NoFacture As String) @ " & Time
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
     Dim result As Boolean
     result = Create_PDF_Email_Function(noFacture, "CreateEmail")
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Create_PDF_Email_Sub(NoFacture As String)" & vbNewLine
 End Sub
 
 Function Create_PDF_Email_Function(noFacture As String, Optional action As String = "SaveOnly") As Boolean
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Now entering - [modFAC] - Function Create_PDF_Email_Function" & _
-        "(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean @ " & Time
+    
     Dim SaveAs As String
 
     Application.ScreenUpdating = False
@@ -1092,11 +1075,9 @@ RefLibError:
 
 EndMacro:
     Application.ScreenUpdating = True
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print Tab(5); "Now exiting  - [modFAC] - Create_PDF_Email_Function(NoFacture As Long, Optional action As String = """"SaveOnly"""") As Boolean" & vbNewLine
 End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Prev_Invoice() @ " & Time
     With wshFAC_Brouillon
         Dim MininvNumb As Long
         On Error Resume Next
@@ -1119,11 +1100,9 @@ Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
         .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Prev_Invoice()" & vbNewLine
 End Sub
 
 Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now entering - [modFAC] - Sub Next_Invoice() @ " & Time
     With wshFAC_Brouillon
         Dim MaxinvNumb As Long
         On Error Resume Next
@@ -1146,7 +1125,6 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
         .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
-    If wshFAC_Brouillon.Range("B28").value Then Debug.Print "Now exiting  - [modFAC] - Sub Next_Invoice()" & vbNewLine
 End Sub
 
 Sub Cacher_Heures()

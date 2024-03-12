@@ -30,6 +30,10 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = False
     
+    Call FAC_Entete_Import_All
+    Call FAC_Detail_Import_All
+    Call FAC_Comptes_Clients_Import_All
+
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
