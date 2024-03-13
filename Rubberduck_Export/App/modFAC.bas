@@ -29,7 +29,7 @@ Sub Client_Change(ClientName As String)
                              wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
     End With
     
-    Call FAC_Clear_All_TEC_Cells
+    Call FAC_Brouillon_Clear_All_TEC_Displayed
     
     wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
 
@@ -106,7 +106,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         End With
         
-        Call FAC_Clear_All_TEC_Cells
+        Call FAC_Brouillon_Clear_All_TEC_Displayed
         
         'Move on to CLient Name
         wshFAC_Brouillon.Range("E4:F4").ClearContents
@@ -149,23 +149,23 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         
         'Valid Invoice - Let's update it ******************************************
         
-        Call FAC_Prep_Add_Invoice_Header_to_DB
-        Call FAC_Prep_Add_Invoice_Header_Locally
+        Call FAC_Finale_Add_Invoice_Header_to_DB
+        Call FAC_Finale_Add_Invoice_Header_Locally
         
-        Call FAC_Prep_Add_Invoice_Details_to_DB
-        Call FAC_Prep_Add_Invoice_Details_Locally
+        Call FAC_Finale_Add_Invoice_Details_to_DB
+        Call FAC_Finale_Add_Invoice_Details_Locally
         
-        Call FAC_Prep_Add_Comptes_Clients_to_DB
-        Call FAC_Prep_Add_Comptes_Clients_Locally
+        Call FAC_Finale_Add_Comptes_Clients_to_DB
+        Call FAC_Finale_Add_Comptes_Clients_Locally
         
         Dim lastResultRow As Integer
         lastResultRow = wshTEC_Local.Range("Y9999").End(xlUp).row
         
         If lastResultRow > 2 Then
         
-            Call Update_TEC_As_Billed_In_DB(3, lastResultRow)
-            Call FAC_Prep_TEC_As_Billed_Locally(3, lastResultRow)
-            Call FAC_Clear_All_TEC_Cells
+            Call TEC_Record_Update_As_Billed_To_DB(3, lastResultRow)
+            Call TEC_Record_Update_As_Billed_Locally(3, lastResultRow)
+            Call FAC_Brouillon_Clear_All_TEC_Displayed
             
         End If
     End With
@@ -192,28 +192,28 @@ Fast_Exit_Sub:
     
 End Sub
 
-Sub FAC_Prep_Add_Invoice_Header_to_DB()
+Sub FAC_Finale_Add_Invoice_Header_to_DB()
 
     Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "Invoice_Header"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Entête"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
     'Can only ADD to the file, no modification is allowed
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
     rs.AddNew
@@ -275,11 +275,11 @@ Sub FAC_Prep_Add_Invoice_Header_to_DB()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Header_to_DB()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Prep_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
+Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -317,13 +317,13 @@ Sub FAC_Prep_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records lo
         .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("F81").value
     End With
     
-    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Header_Locally()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub FAC_Prep_Add_Invoice_Details_to_DB()
+Sub FAC_Finale_Add_Invoice_Details_to_DB()
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -333,20 +333,20 @@ Sub FAC_Prep_Add_Invoice_Details_to_DB()
     rowLastService = wshFAC_Finale.Range("C70").End(xlUp).row
     If rowLastService < 34 Then GoTo nothing_to_update
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "Invoice_Details"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Détails"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     Dim r As Integer
     For r = 34 To rowLastService
@@ -379,11 +379,11 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Details_to_DB()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Prep_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
+Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -413,32 +413,32 @@ Sub FAC_Prep_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records l
 
 nothing_to_update:
 
-    Call Output_Timer_Results("FAC_Prep_Add_Invoice_Details_Locally()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Details_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub FAC_Prep_Add_Comptes_Clients_to_DB()
+Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
     Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "Comptes_Clients"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Comptes_Clients"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
     rs.AddNew
@@ -470,11 +470,11 @@ Sub FAC_Prep_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Prep_Add_Comptes_Clients_to_DB()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Prep_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
+Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -499,27 +499,27 @@ Sub FAC_Prep_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records l
 
 nothing_to_update:
 
-    Call Output_Timer_Results("FAC_Prep_Add_Comptes_Clients_Locally()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Add_Comptes_Clients_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update Billed Status in DB
+Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) 'Update Billed Status in DB
 
     Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "TEC"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "TEC"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
@@ -527,7 +527,7 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
     For r = firstRow To lastRow
         TEC_ID = wshTEC_Local.Range("Y" & r).value
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & TEC_ID
+        SQL = "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
@@ -561,11 +561,11 @@ Sub Update_TEC_As_Billed_In_DB(firstRow As Integer, lastRow As Integer) 'Update 
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("Update_TEC_As_Billed_In_DB()", timerStart)
+    Call Output_Timer_Results("TEC_Record_Update_As_Billed_To_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
+Sub TEC_Record_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
 
     Dim timerStart As Double: timerStart = Timer
     
@@ -586,7 +586,7 @@ Sub FAC_Prep_TEC_As_Billed_Locally(firstResultRow As Integer, lastResultRow As I
         wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
     Next r
     
-    Call Output_Timer_Results("FAC_Prep_TEC_As_Billed_Locally()", timerStart)
+    Call Output_Timer_Results("TEC_Record_Update_As_Billed_Locally()", timerStart)
 
 End Sub
 
@@ -813,7 +813,7 @@ Sub FAC_Brouillon_Goto_Misc_Charges()
     
 End Sub
 
-Sub FAC_Clear_All_TEC_Cells()
+Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
     Application.EnableEvents = False
     
@@ -838,7 +838,7 @@ Sub Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     If includeBilledTEC Then c4 = True Else c4 = False
     c5 = False
 
-    Call FAC_Clear_All_TEC_Cells
+    Call FAC_Brouillon_Clear_All_TEC_Displayed
     Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
     Call Copy_TEC_Filtered_Entries_To_FAC_Brouillon
     
@@ -1297,15 +1297,15 @@ End Sub
 
 Sub FAC_GL_Posting(df, desc, source, arr As Variant)
 
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "GL_Trans"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Initialize recordset
     Dim rs As Object
@@ -1313,7 +1313,7 @@ Sub FAC_GL_Posting(df, desc, source, arr As Variant)
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & sheetName & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
 
     'Open recordset to find out the next JE number
     rs.Open strSQL, conn
@@ -1333,7 +1333,7 @@ Sub FAC_GL_Posting(df, desc, source, arr As Variant)
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     Dim i As Integer, j As Integer
     'Loop through the array and post each row

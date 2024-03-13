@@ -206,90 +206,88 @@ Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     Application.ScreenUpdating = False
     
     '3 sheets to import
-    Call AR_Summary_Import_All
-    Call Enc_Entete_Import_All
-    Call Enc_Detail_Import_All
+    Call FAC_Comptes_Clients_Import_All
+    Call FAC_Encaissements_Entête_Import_All
+    Call FAC_Encaissements_Détails_Import_All
     
     Application.ScreenUpdating = True
     
     Call Output_Timer_Results("Encaissement_Import_All()", timerStart)
     
 End Sub
-Sub AR_Summary_Import_All() '2024-02-14 @ 09:50
-    
-    'Clear all cells, but the headers, in the destination worksheet
-    wshCC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
-
-    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
-    Dim fileName As String, sourceWorkbook As String, sourceTab As String
-    fileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceWorkbook = fileName
-    sourceTab = "Comptes_Clients"
-    
-    'Set up source and destination ranges
-    Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Set destinationRange = wshCC.Range("A2")
-
-    'Copy data, using Range to Range and Autofit all columns
-    sourceRange.Copy destinationRange
-    wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
-
-    'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
-    'Insert Formula in column H
-    Dim lastRow As Long
-    lastRow = wshCC.Range("A99999").End(xlUp).row
-    'Check if there is data in column A
-    If lastRow < 3 Then
-        MsgBox "No data found in column A.", vbExclamation
-        Exit Sub
-    End If
-    wshCC.Range("H3:H" & lastRow).formula = "=SUMIFS(pmnt_Amount,pmnt_invNumb, $A3)"
-
-'    'Define the named ranges for Pmnt_Amount and Pmnt_invNumb outside of the loop
-'    Dim pmnt_Amount_Range As Range
-'    Dim Pmnt_invNumb_Range As Range
-'    With wshENC_Détails
-'        Set pmnt_Amount_Range = .Range("Pmnt_Amount")
-'        Set Pmnt_invNumb_Range = .Range("Pmnt_invNumb")
-'    End With
+'Sub FAC_Comptes_Clients_Import_All() '2024-02-14 @ 09:50
 '
-'    Dim cell As Range
-'    'Loop through each cell in the range H3 to H[lastRow]
-'    For Each cell In wshCC.Range("H3:H" & lastRow)
-'        'Assign the formula to each cell individually using the Formula property
-'        cell.formula = "=SUMIFS('" & wshENC_Détails.name & "'!" & pmnt_Amount_Range.Address & "," & _
-'                               "'" & wshENC_Détails.name & "'!" & Pmnt_invNumb_Range.Address & "," & _
-'                               "'" & wshCC.name & "'!$A" & cell.row & ")"
-'        Debug.Print cell.Address
-'    Next cell
-
-'    With wshCC
-'        .Range("A3" & ":F" & lastRow).HorizontalAlignment = xlCenter
-'        With .Range("C3:C" & lastRow & ",D3:D" & lastRow & ",E3:E" & lastRow)
-'            .HorizontalAlignment = xlLeft
-'        End With
-'        .Range("G3:G" & lastRow & ",I3:I" & lastRow).HorizontalAlignment = xlRight
-'        .Range("G3:I" & lastRow).NumberFormat = "#,##0.00 $"
-'        .Range("B3:B" & lastRow & ",F3:F" & lastRow).NumberFormat = "dd/mm/yyyy"
-'    End With
-    
-End Sub
-
-Sub Enc_Entete_Import_All() '2024-02-14 @ 10:05
+'    'Clear all cells, but the headers, in the destination worksheet
+'    wshCC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+'
+'    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
+'    Dim sourceWorkbook As String, sourceTab As String
+'    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+'                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+'    sourceTab = "FAC_Comptes_Clients"
+'
+'    'Set up source and destination ranges
+'    Dim sourceRange As Range, destinationRange As Range
+'    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+'    Set destinationRange = wshCC.Range("A2")
+'
+'    'Copy data, using Range to Range and Autofit all columns
+'    sourceRange.Copy destinationRange
+'    wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
+'
+'    'Close the source workbook, without saving it
+'    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+'
+'    'Insert Formula in column H
+'    Dim lastRow As Long
+'    lastRow = wshCC.Range("A99999").End(xlUp).row
+'    'Check if there is data in column A
+'    If lastRow < 3 Then
+'        MsgBox "No data found in column A.", vbExclamation
+'        Exit Sub
+'    End If
+'    wshCC.Range("H3:H" & lastRow).formula = "=SUMIFS(pmnt_Amount,pmnt_invNumb, $A3)"
+'
+''    'Define the named ranges for Pmnt_Amount and Pmnt_invNumb outside of the loop
+''    Dim pmnt_Amount_Range As Range
+''    Dim Pmnt_invNumb_Range As Range
+''    With wshENC_Détails
+''        Set pmnt_Amount_Range = .Range("Pmnt_Amount")
+''        Set Pmnt_invNumb_Range = .Range("Pmnt_invNumb")
+''    End With
+''
+''    Dim cell As Range
+''    'Loop through each cell in the range H3 to H[lastRow]
+''    For Each cell In wshCC.Range("H3:H" & lastRow)
+''        'Assign the formula to each cell individually using the Formula property
+''        cell.formula = "=SUMIFS('" & wshENC_Détails.name & "'!" & pmnt_Amount_Range.Address & "," & _
+''                               "'" & wshENC_Détails.name & "'!" & Pmnt_invNumb_Range.Address & "," & _
+''                               "'" & wshCC.name & "'!$A" & cell.row & ")"
+''        Debug.Print cell.Address
+''    Next cell
+'
+''    With wshCC
+''        .Range("A3" & ":F" & lastRow).HorizontalAlignment = xlCenter
+''        With .Range("C3:C" & lastRow & ",D3:D" & lastRow & ",E3:E" & lastRow)
+''            .HorizontalAlignment = xlLeft
+''        End With
+''        .Range("G3:G" & lastRow & ",I3:I" & lastRow).HorizontalAlignment = xlRight
+''        .Range("G3:I" & lastRow).NumberFormat = "#,##0.00 $"
+''        .Range("B3:B" & lastRow & ",F3:F" & lastRow).NumberFormat = "dd/mm/yyyy"
+''    End With
+'
+'End Sub
+'
+Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
-    Dim fileName As String, sourceWorkbook As String, sourceTab As String
-    fileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceWorkbook = fileName
-    sourceTab = "Encaissements_Entête"
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+    sourceTab = "FAC_Encaissements_Entête"
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
@@ -320,17 +318,16 @@ Sub Enc_Entete_Import_All() '2024-02-14 @ 10:05
     
 End Sub
 
-Sub Enc_Detail_Import_All() '2024-02-14 @ 10:14
+Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
-    Dim fileName As String, sourceWorkbook As String, sourceTab As String
-    fileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceWorkbook = fileName
-    sourceTab = "Encaissements_Détail"
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+    sourceTab = "FAC_Encaissements_Détails"
     
     'Set up source and destination ranges
     Dim sourceRange As Range, destinationRange As Range
@@ -362,15 +359,15 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "Encaissements_Entête"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Encaissements_Entête"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
@@ -378,7 +375,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     If r = 0 Then 'Add a record
         'SQL select command to find the next available ID
         Dim strSQL As String, MaxID As Long
-        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & sheetName & "$]"
+        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & destinationTab & "$]"
     
         'Open recordset to find out the MaxID
         rs.Open strSQL, conn
@@ -398,7 +395,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
         
         'Add fields to the recordset before updating it
         rs.AddNew
@@ -410,7 +407,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
             rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
     Else 'Update an existing record
         'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
         If Not rs.EOF Then
             'Update fields for the existing record
             rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
@@ -443,15 +440,15 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "Encaissements_Détail"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Encaissements_Détails"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
@@ -459,7 +456,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     If r = 0 Then 'Add a record
         'SQL select command to find the next available ID
         Dim strSQL As String, MaxID As Long
-        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & sheetName & "$]"
+        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & destinationTab & "$]"
     
         'Open recordset to find out the MaxID
         rs.Open strSQL, conn
@@ -479,7 +476,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
         
         'Add fields to the recordset before updating it
         rs.AddNew
@@ -490,7 +487,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
             rs.Fields("Pay_Amount").value = Format(wshENC_Saisie.Range("J" & encRow).value, "#,##0.00")
     Else 'Update an existing record
         'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & r, conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
         If Not rs.EOF Then
             'Update fields for the existing record
             rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value

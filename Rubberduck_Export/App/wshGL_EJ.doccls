@@ -3,7 +3,7 @@
 Private Sub Worksheet_Activate() '2024-03-03 @ 10:14
 
     Call GL_Trans_Import_All
-    Call GL_JE_Auto_Import_All
+    Call GL_EJ_Auto_Import_All
     Call wshGL_EJ_Clear_All_Cells
 
 End Sub

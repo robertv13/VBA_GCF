@@ -57,11 +57,9 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     wshBD_Clients.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
-    Dim fullFileName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & _
-                   Application.PathSeparator & "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = fullFileName
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients"
     
     'ADODB connection
@@ -115,10 +113,9 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     wshTEC_Local.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
-    Dim fileName As String, sourceWorkbook As String, sourceTab As String
-    fileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceWorkbook = fileName
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
     sourceTab = "TEC"
     
     'Set up source and destination ranges
@@ -277,7 +274,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
 End Sub
 
-Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
+Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
     Dim timerStart As Double: timerStart = Timer
     
@@ -293,7 +290,7 @@ Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
-    sourceTab = "EJ_Auto"
+    sourceTab = "GL_EJ_Auto"
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
@@ -324,11 +321,11 @@ Sub GL_JE_Auto_Import_All() '2024-03-03 @ 11:36
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("GL_JE_Auto_Import_All()", timerStart)
+    Call Output_Timer_Results("GL_EJ_Auto_Import_All()", timerStart)
 
 End Sub
 
-Sub FAC_Entete_Import_All() '2024-03-07 @ 16:21
+Sub FAC_Entête_Import_All() '2024-03-07 @ 16:21
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -341,7 +338,7 @@ Sub FAC_Entete_Import_All() '2024-03-07 @ 16:21
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx"
-    sourceTab = "Invoice_Header"
+    sourceTab = "FAC_Entête"
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
@@ -378,11 +375,11 @@ Sub FAC_Entete_Import_All() '2024-03-07 @ 16:21
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Entete_Import_All()", timerStart)
+    Call Output_Timer_Results("FAC_Entête_Import_All()", timerStart)
 
 End Sub
 
-Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
+Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -395,7 +392,7 @@ Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx"
-    sourceTab = "Invoice_Details"
+    sourceTab = "FAC_Détails"
                      
     'Set up source and destination ranges
     Dim sourceRange As Range
@@ -425,7 +422,7 @@ Sub FAC_Detail_Import_All() '2024-03-07 @ 17:38
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Detail_Import_All()", timerStart)
+    Call Output_Timer_Results("FAC_Détails_Import_All()", timerStart)
 
 End Sub
 
@@ -442,7 +439,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx"
-    sourceTab = "Comptes_Clients"
+    sourceTab = "FAC_Comptes_Clients"
                      
     'Set up source and destination ranges
     Dim sourceRange As Range

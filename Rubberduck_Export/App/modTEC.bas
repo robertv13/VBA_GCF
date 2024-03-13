@@ -23,8 +23,8 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     'Get the Client_ID
     wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
     
-    Call Add_Or_Update_TEC_Record_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
-    Call Add_Or_Update_TEC_Record_Local(0) 'Write to local worksheet - 2024-02-25 @ 10:34
+    Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
+    Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
     
     'Clear the fields after saving
     With ufSaisieHeures
@@ -55,8 +55,8 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     If IsDataValid() = False Then Exit Sub
 
-    Call Add_Or_Update_TEC_Record_To_DB(wshAdmin.Range("TEC_Current_ID").value)  'Write to external XLSX file - 2023-12-16 @ 14:10
-    Call Add_Or_Update_TEC_Record_Local(wshAdmin.Range("TEC_Current_ID").value)  'Write to local worksheet - 2024-02-25 @ 10:38
+    Call TEC_Record_Add_Or_Update_To_DB(wshAdmin.Range("TEC_Current_ID").value)  'Write to external XLSX file - 2023-12-16 @ 14:10
+    Call TEC_Record_Add_Or_Update_Locally(wshAdmin.Range("TEC_Current_ID").value)  'Write to local worksheet - 2024-02-25 @ 10:38
  
     'Initialize dynamic variables
     With ufSaisieHeures
@@ -108,8 +108,8 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
     tecID = -wshAdmin.Range("TEC_Current_ID").value
-    Call Add_Or_Update_TEC_Record_To_DB(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
-    Call Add_Or_Update_TEC_Record_Local(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
+    Call TEC_Record_Add_Or_Update_To_DB(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
+    Call TEC_Record_Add_Or_Update_Locally(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
@@ -225,27 +225,27 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
 End Sub
 
-Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
+Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
     Dim timerStart As Double: timerStart = Timer
 
     Application.ScreenUpdating = False
     
-    Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                   "GCF_BD_Sortie.xlsx"
-    sheetName = "TEC"
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "TEC"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
     Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
     If tecID < 0 Then 'Soft delete a record
         'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & Abs(tecID), conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & Abs(tecID), conn, 2, 3
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = Now
@@ -265,7 +265,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
         If tecID = 0 Then 'Add a record
         'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
-            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & sheetName & "$]"
+            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & destinationTab & "$]"
         
             'Open recordset to find out the MaxID
             rs.Open strSQL, conn
@@ -286,7 +286,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
-            rs.Open "SELECT * FROM [" & sheetName & "$] WHERE 1=0", conn, 2, 3
+            rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
             'Add fields to the recordset before updating it
             rs.AddNew
@@ -308,7 +308,7 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields("NoFacture").value = ""
         Else 'Update an existing record
             'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & sheetName & "$] WHERE TEC_ID=" & tecID, conn, 2, 3
+            rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & tecID, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
@@ -343,11 +343,11 @@ Sub Add_Or_Update_TEC_Record_To_DB(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("Add_Or_Update_TEC_Record_To_DB()", timerStart)
+    Call Output_Timer_Results("TEC_Record_Add_Or_Update_DB()", timerStart)
 
 End Sub
 
-Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to local worksheet
+Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
     Dim timerStart As Double: timerStart = Timer
 
@@ -421,7 +421,7 @@ Sub Add_Or_Update_TEC_Record_Local(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("Add_Or_Update_TEC_Record_Local()", timerStart)
+    Call Output_Timer_Results("TEC_Record_Add_Or_Update_Locally()", timerStart)
 
 End Sub
 
