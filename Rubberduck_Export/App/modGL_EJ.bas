@@ -12,8 +12,8 @@ Sub JE_Update()
     If IsEcritureValide(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
-    Call Add_GL_Trans_Record_To_DB(rowEJLast)
-    Call Add_GL_Trans_Record_Locally(rowEJLast)
+    Call GL_Trans_Add_Record_To_DB(rowEJLast)
+    Call GL_Trans_Add_Record_Locally(rowEJLast)
     
     If wshGL_EJ.ckbRecurrente = True Then
         Call Save_EJ_Recurrente(rowEJLast)
@@ -43,8 +43,8 @@ Sub Save_EJ_Recurrente(ll As Long)
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Range("E99").End(xlUp).row  'Last Used Row in wshGL_EJ
     
-    Call Add_JE_Auto_Record_To_DB(ll)
-    Call Add_JE_Auto_Record_Locally(ll)
+    Call GL_EJ_Auto_Add_Record_To_DB(ll)
+    Call GL_EJ_Auto_Add_Record_Locally(ll)
     
 End Sub
 
@@ -87,53 +87,7 @@ Sub wshGL_EJ_Clear_All_Cells()
 
 End Sub
 
-Function IsDateValide() As Boolean
-
-    IsDateValide = False
-    If wshGL_EJ.Range("K4").value = "" Or IsDate(wshGL_EJ.Range("K4").value) = False Then
-        MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
-            "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
-    Else
-        IsDateValide = True
-    End If
-
-End Function
-
-Function IsEcritureBalance() As Boolean
-
-    IsEcritureBalance = False
-    If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
-        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
-            "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
-            "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
-    Else
-        IsEcritureBalance = True
-    End If
-
-End Function
-
-Function IsEcritureValide(rmax As Long) As Boolean
-
-    IsEcritureValide = True 'Optimist
-    If rmax <= 9 Or rmax > 23 Then
-        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
-            "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
-        IsEcritureValide = False
-    End If
-    
-    Dim i As Long
-    For i = 9 To rmax
-        If wshGL_EJ.Range("E" & i).value <> "" Then
-            If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
-                MsgBox "Il existe une ligne avec un compte, sans montant !"
-                IsEcritureValide = False
-            End If
-        End If
-    Next i
-
-End Function
-
-Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -208,11 +162,11 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("Add_GL_Trans_Record_To_DB()", timerStart)
+    Call Output_Timer_Results("GL_Trans_Add_Record_To_DB()", timerStart)
 
 End Sub
 
-Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
+Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -224,35 +178,35 @@ Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshBD_GL_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Integer
     For i = 9 To r
-        wshBD_GL_Trans.Range("A" & rowToBeUsed).value = JENo
-        wshBD_GL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
-        wshBD_GL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
-        wshBD_GL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
-        wshBD_GL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
-        wshBD_GL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
+        wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
+        wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
+        wshGL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
+        wshGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
+        wshGL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
+        wshGL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
         If wshGL_EJ.Range("H" & i).value <> "" Then
-            wshBD_GL_Trans.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
+            wshGL_Trans.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
         End If
         If wshGL_EJ.Range("I" & i).value <> "" Then
-            wshBD_GL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
+            wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
-        wshBD_GL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshBD_GL_Trans.Range("J" & rowToBeUsed).value = CDate(Now())
+        wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
+        wshGL_Trans.Range("J" & rowToBeUsed).value = CDate(Now())
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call Output_Timer_Results("Add_GL_Trans_Record_Locally()", timerStart)
+    Call Output_Timer_Results("GL_Trans_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
     Dim timerStart As Double: timerStart = Timer
 
@@ -315,11 +269,11 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("Add_JE_Auto_Record_To_DB()", timerStart)
+    Call Output_Timer_Results("GL_EJ_Auto_Add_Record_To_DB()", timerStart)
 
 End Sub
 
-Sub Add_JE_Auto_Record_Locally(r As Long) 'Write records to local file
+Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
     Dim timerStart As Double: timerStart = Timer
     
@@ -352,7 +306,7 @@ Sub Add_JE_Auto_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("Add_JE_Auto_Record_Locally()", timerStart)
+    Call Output_Timer_Results("GL_EJ_Auto_Add_Record_Locally()", timerStart)
     
 End Sub
 

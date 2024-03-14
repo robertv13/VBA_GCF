@@ -121,7 +121,7 @@ Sub Get_An_JE_Detail_Trans(no As Long)
 
     Dim timerStart As Double: timerStart = Timer
 
-    With wshBD_GL_Trans
+    With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
 '        Call ClearRangeBorders(rgResult)
@@ -139,15 +139,15 @@ Sub Get_An_JE_Detail_Trans(no As Long)
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshBD_GL_Trans.Range("AF1"), _
+            .SortFields.add Key:=wshGL_Trans.Range("AF1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
-            .SortFields.add Key:=wshBD_GL_Trans.Range("AH1"), _
+            .SortFields.add Key:=wshGL_Trans.Range("AH1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SetRange wshBD_GL_Trans.Range("AC2:AJ" & lastResultUsedRow) 'Set Range
+            .SetRange wshGL_Trans.Range("AC2:AJ" & lastResultUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
     End With
@@ -180,7 +180,7 @@ Sub Adjust_The_Shape()
         Dim timerStart As Double: timerStart = Timer
         
         Dim lastResultRow As Long
-        lastResultRow = wshBD_GL_Trans.Range("AC999").End(xlUp).row
+        lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
         If lastResultRow < 2 Then Exit Sub
         
         Dim rowSelected As Long
@@ -189,7 +189,7 @@ Sub Adjust_The_Shape()
         Dim texteOneLine As String, texteFull As String
         
         Dim i As Integer, maxLength As Integer
-        With wshBD_GL_Trans
+        With wshGL_Trans
             For i = 2 To lastResultRow
                 If Len(.Range("AD2").value) > maxLength Then
                     maxLength = Len(.Range("AD2").value)

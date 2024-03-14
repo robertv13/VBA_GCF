@@ -205,10 +205,10 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
-    saveLastRow = wshBD_GL_Trans.Range("A99999").End(xlUp).row
+    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
     
     'Clear all cells, but the headers, in the target worksheet
-    wshBD_GL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GLTrans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -221,18 +221,18 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshBD_GL_Trans.Range("A1")
+    Set destinationRange = wshGL_Trans.Range("A1")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshBD_GL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
-    lastRow = wshBD_GL_Trans.Range("A999999").End(xlUp).row
+    lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
     
     'Adjust Formats for all new rows
-    With wshBD_GL_Trans
+    With wshGL_Trans
         .Range("A" & 2 & ":J" & lastRow).HorizontalAlignment = xlCenter
         .Range("B" & 2 & ":B" & lastRow).NumberFormat = "dd/mm/yyyy"
         .Range("C" & 2 & ":C" & lastRow & _
@@ -258,14 +258,14 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Dim r As Long
     
 '    For r = 2 To lastRow 'RMV - 2024-01-05
-'        With wshBD_GL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
+'        With wshGL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
 '            .Font.ThemeColor = xlThemeColorLight1
 '            .Font.TintAndShade = -4.99893185216834E-02
 '            .Interior.Pattern = xlNone
 '            .Interior.TintAndShade = 0
 '            .Interior.PatternTintAndShade = 0
 '        End With
-'        wshBD_GL_Trans.Range("J" & r).formula = "=ROW()"
+'        wshGL_Trans.Range("J" & r).formula = "=ROW()"
 '    Next r
 
     Application.ScreenUpdating = True
@@ -325,14 +325,14 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
 End Sub
 
-Sub FAC_Entête_Import_All() '2024-03-07 @ 16:21
+Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     
     Dim timerStart As Double: timerStart = Timer
     
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+    wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import GLTrans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -345,7 +345,7 @@ Sub FAC_Entête_Import_All() '2024-03-07 @ 16:21
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshFAC_Entête.Range("A3")
+    Set destinationRange = wshFAC_Entête.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange

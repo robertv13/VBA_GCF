@@ -22,11 +22,18 @@ Sub Client_Change(ClientName As String)
     With wshFAC_Brouillon
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("K4").value = ClientName
-        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 5)
-        .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 6)
-        .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
-                             wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
-                             wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 5) 'Adresse1
+        If wshBD_Clients.Cells(myInfo(2), 6) <> "" Then
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse2
+            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+        Else
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+            .Range("K7").value = ""
+        End If
     End With
     
     Call FAC_Brouillon_Clear_All_TEC_Displayed
@@ -219,13 +226,13 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     rs.AddNew
     With wshFAC_Finale
         rs.Fields("Inv_No") = .Range("F29").value
-        rs.Fields("Date_Facture") = wshFAC_Brouillon.Range("O3").value
+        rs.Fields("Date_Facture") = CDate(wshFAC_Brouillon.Range("O3").value)
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
         rs.Fields("Nom_Client") = .Range("B24").value
-        rs.Fields("Adresse_1") = .Range("B25").value
-        'rs.Fields("Adresse_2") = "Unité 201" ' .Range("B26").value
-        rs.Fields("Ville_Prov_CP") = .Range("B27").value
+        rs.Fields("Adresse1") = .Range("B25").value
+        rs.Fields("Adresse2") = .Range("B26").value
+        rs.Fields("Adresse3") = .Range("B27").value
         rs.Fields("Honoraires") = .Range("F71").value
         
         rs.Fields("AF1_Desc") = .Range("C72").value
@@ -291,7 +298,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
-        .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
+        .Range("B" & firstFreeRow).value = CDate(wshFAC_Brouillon.Range("O3").value)
         .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
         .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
@@ -689,7 +696,7 @@ Sub InvoiceGetAllTrans(inv As String)
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshBD_GL_Trans.Range("Y3"), _
+'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -755,12 +762,14 @@ Sub FAC_Finale_Setup_All_Cells()
     
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
-        .Range("B23").formula = "=IF(" & wshFAC_Brouillon.name & "!k3<>""""," & "FAC_Brouillon!K3," & """"")"
-        .Range("B24").formula = "=IF(" & wshFAC_Brouillon.name & "!k4<>""""," & "FAC_Brouillon!K4," & """"")"
-        .Range("B25").formula = "=IF(" & wshFAC_Brouillon.name & "!k5<>""""," & "FAC_Brouillon!K5," & """"")"
-        .Range("B26").formula = "=IF(" & wshFAC_Brouillon.name & "!k6<>""""," & "FAC_Brouillon!K6," & """"")"
-        .Range("B27").formula = "=IF(" & wshFAC_Brouillon.name & "!k7<>""""," & "FAC_Brouillon!K7," & """"")"
+        .Range("B23").formula = "=FAC_Brouillon!K3"
+        .Range("B24").formula = "=FAC_Brouillon!K4"
+        .Range("B25").formula = "=FAC_Brouillon!K5"
+        .Range("B26").formula = "=FAC_Brouillon!K6"
+        .Range("B27").formula = "=FAC_Brouillon!K7"
         .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
+        
+        .Range("F34:F69").formula = "=if(and(D34<>0,E34<>0),D34*E34,"""")"
 
         Call SetLabels(.Range("B71"), "FAC_Label_SubTotal_1")
         Call SetLabels(.Range("B75"), "FAC_Label_SubTotal_2")
@@ -781,12 +790,12 @@ Sub FAC_Finale_Setup_All_Cells()
         .Range("C74").value = "='" & wshFAC_Brouillon.name & "'!M50" 'Misc. Amount # 3 - Description
         .Range("F74").value = "='" & wshFAC_Brouillon.name & "'!O50" 'Misc. Amount # 3
         
-        .Range("F75").formula = "=SUM(F70:F73)"                   'Invoice Sub-Total
+        .Range("F75").formula = "=SUM(F71:F74)"                      'Invoice Sub-Total
         
         .Range("D76").value = "='" & wshFAC_Brouillon.name & "'!N52" 'GST Rate
-        .Range("F76").value = "='" & wshFAC_Brouillon.name & "'!O52" 'GST Amount
+        .Range("F76").formula = "=round(F75*D76,2)"                    'GST Amount"
         .Range("D77").value = "='" & wshFAC_Brouillon.name & "'!N53" 'PST Rate
-        .Range("F77").value = "='" & wshFAC_Brouillon.name & "'!O53" 'PST Amount
+        .Range("F77").formula = "=round(F75*D77,2)"                'PST Amount
         
         .Range("F79").value = "=SUM(F75:F77)" 'Total including taxes
         .Range("F81").value = "='" & wshFAC_Brouillon.name & "'!O57" 'Deposit Amount
@@ -862,8 +871,6 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         lastResultRow = .Range("Y9999").End(xlUp).row
         If lastResultRow > 2 Then .Range("Y3:AN" & lastResultRow).ClearContents
         
-        Application.ScreenUpdating = False
-        
         Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
         Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)
         If clientID <> 0 Then .Range("R8").value = clientID
@@ -917,12 +924,12 @@ Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
     With wshTEC_Local
         Dim i As Integer
         For i = 3 To lastUsedRow
-            arr(i - 2, 1) = .Range("AA" & i).value 'Date
-            arr(i - 2, 2) = .Range("Z" & i).value 'Prof
-            arr(i - 2, 3) = .Range("AC" & i).value 'Description
-            arr(i - 2, 4) = .Range("AD" & i).value 'Heures
-            totalHres = totalHres + .Range("AD" & i).value
-            arr(i - 2, 5) = .Range("AH" & i).value 'Facturée ou pas
+            arr(i - 2, 1) = .Range("AB" & i).value 'Date
+            arr(i - 2, 2) = .Range("AA" & i).value 'Prof
+            arr(i - 2, 3) = .Range("AD" & i).value 'Description
+            arr(i - 2, 4) = .Range("AF" & i).value 'Heures
+            totalHres = totalHres + .Range("AF" & i).value
+            arr(i - 2, 5) = .Range("AJ" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("Y" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
@@ -1167,7 +1174,7 @@ Sub Goto_Onglet_FAC_Finale()
     
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Finale.Activate
-    wshFAC_Finale.Range("I48").Select
+    wshFAC_Finale.Range("I50").Select
     
     Application.ScreenUpdating = True
 
@@ -1291,11 +1298,12 @@ Sub FAC_Prepare_GL_Posting() '2024-02-14 @ 05:56
         myArray(8, 4) = ""
     End If
     
-    Call FAC_GL_Posting(dateFact, descGL_Trans, source, myArray)
+    Call FAC_Finale_GL_Posting_To_DB(dateFact, descGL_Trans, source, myArray)
+    Call FAC_Finale_GL_Posting_Locally(dateFact, descGL_Trans, source, myArray)
     
 End Sub
 
-Sub FAC_GL_Posting(df, desc, source, arr As Variant)
+Sub FAC_Finale_GL_Posting_To_DB(df, desc, source, arr As Variant)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
@@ -1330,6 +1338,9 @@ Sub FAC_GL_Posting(df, desc, source, arr As Variant)
     'Calculate the new JE number
     Dim nextJENo As Long
     nextJENo = lastJE + 1
+    Application.EnableEvents = False
+    wshFAC_Brouillon.Range("B41").value = nextJENo '2024-03-13 @ 08:31
+    Application.EnableEvents = True
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -1367,6 +1378,49 @@ Nothing_to_Post:
 
 End Sub
 
+Sub FAC_Finale_GL_Posting_Locally(df, desc, source, arr As Variant) 'Write records locally
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.ScreenUpdating = False
+    
+    'Get the JE number
+    Dim JENo As Long
+    JENo = wshFAC_Brouillon.Range("B41").value
+    
+    'What is the last used row in GL_Trans ?
+    Dim rowToBeUsed As Long
+    rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).row + 1
+    
+    Dim i As Integer, j As Integer
+    'Loop through the array and post each row
+    With wshGL_Trans
+        For i = LBound(arr, 1) To UBound(arr, 1)
+            If arr(i, 1) <> "" Then
+                .Range("A" & rowToBeUsed).value = JENo
+                .Range("B" & rowToBeUsed).value = CDate(df)
+                .Range("C" & rowToBeUsed).value = desc
+                .Range("D" & rowToBeUsed).value = source
+                .Range("E" & rowToBeUsed).value = arr(i, 1)
+                .Range("F" & rowToBeUsed).value = arr(i, 2)
+                If arr(i, 3) > 0 Then
+                     .Range("G" & rowToBeUsed).value = arr(i, 3)
+                Else
+                     .Range("H" & rowToBeUsed).value = -arr(i, 3)
+                End If
+                .Range("I" & rowToBeUsed).value = arr(i, 4)
+                .Range("J" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+                rowToBeUsed = rowToBeUsed + 1
+            End If
+        Next i
+    End With
+    
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("GL_Trans_Add_Record_Locally()", timerStart)
+
+End Sub
+
 Sub Back_To_FAC_Menu()
 
     wshMenuFACT.Activate
@@ -1384,4 +1438,32 @@ Sub Enable_Save_Button()
     shp.Visible = False
 
 End Sub
+
+Sub test_AF_TEC() '2024-03-13 @ 11:58
+
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim data As Range
+    Dim cRng As Range
+    Dim dRng As Range
+    
+    Set wb = ThisWorkbook
+    Set ws = wb.Worksheets("TEC_Local")
+    Set data = ws.Range("A2:P361")
+    Set cRng = ws.Range("R7:V8")
+    Set dRng = ws.Range("Y2:AN2")
+    
+    'Clear prior results (if any)
+    Dim lastResultRow As Long
+    lastResultRow = ws.Range("Y999").End(xlUp).row
+    If lastResultRow > 2 Then ws.Range("Y3:AN" & lastResultRow).clear
+    
+    data.AdvancedFilter xlFilterCopy, cRng, dRng
+
+End Sub
+
+
+
+
+
 

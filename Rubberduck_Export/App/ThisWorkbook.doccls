@@ -21,20 +21,16 @@ Private Sub Workbook_Open()
     
     Call Hide_All_Worksheets_Except_Menu
     
-    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     wshMenu.Activate
-    wshMenu.Range("A1").Select
+    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     
     Call Slide_In_All_Menu_Options
 
-    Dim wbName As String, wb As Workbook
-    wbName = ThisWorkbook.name
-    Set wb = Workbooks(wbName)
+    Dim wb As Workbook: Set wb = ActiveWorkbook
     wb.Application.Calculation = xlCalculationManual
    
     Call Import_Minimum_From_External_DB '2024-03-11 @ 09:56
     
-    Set wb = Nothing
     Application.ScreenUpdating = True
 
 End Sub

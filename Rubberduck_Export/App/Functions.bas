@@ -253,6 +253,52 @@ Public Function GetTaxRate(d As Date, taxType As String) As Double
     
 End Function
 
+Function IsDateValide() As Boolean
+
+    IsDateValide = False
+    If wshGL_EJ.Range("K4").value = "" Or IsDate(wshGL_EJ.Range("K4").value) = False Then
+        MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
+            "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
+    Else
+        IsDateValide = True
+    End If
+
+End Function
+
+Function IsEcritureBalance() As Boolean
+
+    IsEcritureBalance = False
+    If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
+        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
+            "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
+            "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
+    Else
+        IsEcritureBalance = True
+    End If
+
+End Function
+
+Function IsEcritureValide(rmax As Long) As Boolean
+
+    IsEcritureValide = True 'Optimist
+    If rmax <= 9 Or rmax > 23 Then
+        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+            "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
+        IsEcritureValide = False
+    End If
+    
+    Dim i As Long
+    For i = 9 To rmax
+        If wshGL_EJ.Range("E" & i).value <> "" Then
+            If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
+                MsgBox "Il existe une ligne avec un compte, sans montant !"
+                IsEcritureValide = False
+            End If
+        End If
+    Next i
+
+End Function
+
 Public Function ClearRangeBorders(r As Range)
 
     'MsgBox "Range to clear = " & r.Address

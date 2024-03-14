@@ -9,13 +9,7 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 93% when this worksheet is activated
     ActiveWindow.Zoom = 93
     
-    'Import FAC_Entête & FAC_Détail from GCF_Sortie_BD.xlsx
-'    Call FAC_Entête_Import_All
-'    Call FAC_Détails_Import_All
-'    Call FAC_Comptes_Clients_Import_All
-    
-'    wshFAC_Brouillon.EnableCalculation = True
-    wshFAC_Brouillon.Application.Calculation = xlCalculationAutomatic
+    Me.Application.Calculation = xlCalculationAutomatic
     
     Application.ScreenUpdating = True
     
@@ -138,7 +132,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
         wshFAC_Finale.Range("D" & Target.row + 23).value = wshFAC_Brouillon.Range("M" & Target.row).value
         wshFAC_Finale.Range("E" & Target.row + 23).value = wshFAC_Brouillon.Range("N" & Target.row).value
-        wshFAC_Finale.Range("F" & Target.row + 23).value = wshFAC_Brouillon.Range("O" & Target.row).value
+'        wshFAC_Finale.Range("F" & Target.row + 23).value = wshFAC_Brouillon.Range("O" & Target.row).value
 
         'MAXIMUM of 35 services lines per Invoice
         If Target.row < 45 Then
@@ -157,10 +151,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         With wshFAC_Finale
             'Final Invoice - Sub-total
-            wshFAC_Finale.Range("F68").value = wshFAC_Brouillon.Range("O47").value
+            wshFAC_Finale.Range("F71").value = wshFAC_Brouillon.Range("O47").value
             'Final Invoice - Misc charges AND move on to next field
             If Target.row = 48 Then
-                wshFAC_Finale.Range("F69").value = wshFAC_Brouillon.Range("O48").value
+                wshFAC_Finale.Range("F72").value = wshFAC_Brouillon.Range("O48").value
                 Set rng = wshFAC_Brouillon.Range("O48")
                 Call Fill_Or_Empty_Range_Background(rng, False)
                 Set rng = wshFAC_Brouillon.Range("O49")
@@ -168,7 +162,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
                 wshFAC_Brouillon.Range("O49").Select
             End If
             If Target.row = 49 Then
-                wshFAC_Finale.Range("F70").value = wshFAC_Brouillon.Range("O49").value
+                wshFAC_Finale.Range("F73").value = wshFAC_Brouillon.Range("O49").value
                 Set rng = wshFAC_Brouillon.Range("O49")
                 Call Fill_Or_Empty_Range_Background(rng, False)
                 Set rng = wshFAC_Brouillon.Range("O50")
@@ -176,7 +170,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
                 wshFAC_Brouillon.Range("O50").Select
             End If
             If Target.row = 50 Then
-                wshFAC_Finale.Range("F71").value = wshFAC_Brouillon.Range("O50").value
+                wshFAC_Finale.Range("F74").value = wshFAC_Brouillon.Range("O50").value
                 Set rng = wshFAC_Brouillon.Range("O50")
                 Call Fill_Or_Empty_Range_Background(rng, False)
                 Set rng = wshFAC_Brouillon.Range("O57")
@@ -191,7 +185,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O57")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         With wshFAC_Finale
             'Final Invoice - Deposit
-            wshFAC_Finale.Range("F78").value = wshFAC_Brouillon.Range("O57").value
+            wshFAC_Finale.Range("F81").value = wshFAC_Brouillon.Range("O57").value
             Set rng = wshFAC_Brouillon.Range("O57")
             Call Fill_Or_Empty_Range_Background(rng, False)
             ActiveWindow.SmallScroll Up:=18
