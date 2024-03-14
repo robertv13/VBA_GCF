@@ -15,9 +15,9 @@ End Sub
 
 Sub Handle_Activation()
 
-    Call Update_TEC_Local_To_DB_Data
+    Call TEC_Local_Push_To_DB_Data
     
-    Call TEC_Refresh_All_Pivot_Table
+    Call TEC_Refresh_All_DB_Pivot_Table
     
 End Sub
 

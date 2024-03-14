@@ -86,7 +86,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Dim timerStart As Double: timerStart = Timer
     
     Application.EnableEvents = False
-
+    Application.ScreenUpdating = False
+    
     If wshFAC_Brouillon.Range("B27").value = False Then
         With wshFAC_Brouillon
             .Range("B24").value = True
@@ -129,13 +130,13 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         wshFAC_Brouillon.Select
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
-    
-    
-    Application.EnableEvents = True
 
     Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
     
     Call Output_Timer_Results("FAC_Brouillon_New_Invoice()", timerStart)
 
@@ -169,14 +170,12 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         Call FAC_Finale_Add_Comptes_Clients_Locally
         
         Dim lastResultRow As Integer
-        lastResultRow = wshTEC_Local.Range("Y9999").End(xlUp).row
+        lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
         
         If lastResultRow > 2 Then
-        
             Call TEC_Record_Update_As_Billed_To_DB(3, lastResultRow)
             Call TEC_Record_Update_As_Billed_Locally(3, lastResultRow)
             Call FAC_Brouillon_Clear_All_TEC_Displayed
-            
         End If
     End With
     
@@ -587,7 +586,7 @@ Sub TEC_Record_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow
     Dim r As Integer, rowToBeUpdated As Long
     For r = firstResultRow To lastResultRow
         Dim tecID As Long
-        tecID = wshTEC_Local.Range("Y" & r).value
+        tecID = wshTEC_Local.Range("AT" & r).value
         rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
         wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
         wshTEC_Local.Range("L" & rowToBeUpdated).value = True
@@ -621,7 +620,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         End If
         .Range("B24").value = True 'Set Invoice Load to true
         .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
-        wshFAC_Finale.Range("C34:F63").ClearContents
+        wshFAC_Finale.Range("C34:F69").ClearContents
         Dim InvListRow As Long
         InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
@@ -765,11 +764,11 @@ Sub FAC_Finale_Setup_All_Cells()
     
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
-        .Range("B23").formula = "=FAC_Brouillon!K3"
-        .Range("B24").formula = "=FAC_Brouillon!K4"
-        .Range("B25").formula = "=FAC_Brouillon!K5"
-        .Range("B26").formula = "=FAC_Brouillon!K6"
-        .Range("B27").formula = "=FAC_Brouillon!K7"
+        .Range("B23").formula = "=if(FAC_Brouillon!K3<>"""",FAC_Brouillon!K3,"""")"
+        .Range("B24").formula = "=if(FAC_Brouillon!K4<>"""",FAC_Brouillon!K4,"""")"
+        .Range("B25").formula = "=if(FAC_Brouillon!K5<>"""",FAC_Brouillon!K5,"""")"
+        .Range("B26").formula = "=if(FAC_Brouillon!K6<>"""",FAC_Brouillon!K6,"""")"
+        .Range("B27").formula = "=if(FAC_Brouillon!K7<>"""",FAC_Brouillon!K7,"""")"
         .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
         
         .Range("F34:F69").formula = "=if(and(D34<>0,E34<>0),D34*E34,"""")"
@@ -852,7 +851,7 @@ Sub Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
-    Call Copy_TEC_Filtered_Entries_To_FAC_Brouillon
+    Call TEC_Filtered_Entries_Copy_To_FAC_Brouillon
     
 End Sub
 
@@ -916,7 +915,7 @@ No_Sort_Required:
 
 End Sub
 
-Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
+Sub TEC_Filtered_Entries_Copy_To_FAC_Brouillon()
 
     Dim lastUsedRow As Long
     lastUsedRow = wshTEC_Local.Range("AT9999").End(xlUp).row

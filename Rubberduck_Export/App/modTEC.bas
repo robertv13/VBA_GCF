@@ -475,7 +475,7 @@ EndOfProcedure:
     
 End Sub
 
-Sub Update_TEC_Local_To_DB_Data()
+Sub TEC_Local_Push_To_DB_Data()
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -490,14 +490,14 @@ Sub Update_TEC_Local_To_DB_Data()
     Dim i As Long
     For i = 3 To lastUsedRow
         With wsFrom
-            arr(i - 2, 1) = .Range("A" & i).value
-            arr(i - 2, 2) = .Range("C" & i).value
-            arr(i - 2, 3) = .Range("D" & i).value
-            arr(i - 2, 4) = .Range("F" & i).value
-            arr(i - 2, 5) = .Range("H" & i).value
-            arr(i - 2, 6) = .Range("J" & i).value
-            arr(i - 2, 7) = .Range("L" & i).value
-            arr(i - 2, 8) = .Range("N" & i).value
+            arr(i - 2, 1) = .Range("A" & i).value 'TEC_ID
+            arr(i - 2, 2) = .Range("C" & i).value 'Prof
+            arr(i - 2, 3) = .Range("D" & i).value 'Date
+            arr(i - 2, 4) = .Range("F" & i).value 'Client's Name
+            arr(i - 2, 5) = .Range("H" & i).value 'Hours
+            arr(i - 2, 6) = .Range("J" & i).value 'isBillable
+            arr(i - 2, 7) = .Range("L" & i).value 'isInvoiced
+            arr(i - 2, 8) = .Range("N" & i).value 'isDeleted
         End With
     Next i
 
@@ -505,11 +505,11 @@ Sub Update_TEC_Local_To_DB_Data()
     Set rngTo = wshTEC_DB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
     
-    Call Output_Timer_Results("Update_TEC_Local_To_DB_Data()", timerStart)
+    Call Output_Timer_Results("TEC_Local_Push_To_DB_Data()", timerStart)
 
 End Sub
 
-Sub TEC_Refresh_All_Pivot_Table()
+Sub TEC_Refresh_All_DB_Pivot_Table()
     Dim pt As PivotTable
     For Each pt In wshTEC_DB_PivotTable.PivotTables
         pt.RefreshTable
