@@ -82,7 +82,35 @@ Sub wshGL_EJ_Clear_All_Cells()
         .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
     Application.EnableEvents = True
-    wshGL_EJ.Range("F4").Activate
+    wshGL_EJ.Activate
+    wshGL_EJ.Range("F4").Select
+    End With
+
+End Sub
+
+Sub GL_EJ_Auto_Build_Summary()
+
+    'Build the summary at column K & L
+    Dim lastUsedRow1 As Long
+    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    
+    Dim lastUsedRow2 As Long
+    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).row
+    If lastUsedRow2 > 1 Then
+        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
+    End If
+    
+    With wshGL_EJ_Recurrente
+        Dim i As Integer, k As Integer, oldEntry As String
+        k = 2
+        For i = 2 To lastUsedRow1
+            If .Range("D" & i).value <> oldEntry Then
+                .Range("K" & k).value = .Range("D" & i).value
+                .Range("L" & k).value = "'" & Pad_A_String(.Range("C" & i).value, " ", 5, "L")
+                oldEntry = .Range("D" & i).value
+                k = k + 1
+            End If
+        Next i
     End With
 
 End Sub
@@ -196,7 +224,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
         wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = CDate(Now())
+        wshGL_Trans.Range("J" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -303,6 +331,8 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
         wshGL_EJ_Recurrente.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
         rowToBeUsed = rowToBeUsed + 1
     Next i
+    
+    Call GL_EJ_Auto_Build_Summary '2024-03-14 @ 07:40
     
     Application.ScreenUpdating = True
     

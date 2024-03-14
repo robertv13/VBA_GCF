@@ -113,6 +113,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         End With
         
+        wshFAC_Brouillon.Range("B16").value = False '2024-03-14 @ 08:41
+        
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
         'Move on to CLient Name
@@ -127,6 +129,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         wshFAC_Brouillon.Select
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
+    
     
     Application.EnableEvents = True
 
@@ -868,22 +871,22 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
         'Clear the filtered rows area
-        lastResultRow = .Range("Y9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("Y3:AN" & lastResultRow).ClearContents
+        lastResultRow = .Range("AT9999").End(xlUp).row
+        If lastResultRow > 2 Then .Range("AT3:BI" & lastResultRow).ClearContents
         
         Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
         Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)
-        If clientID <> 0 Then .Range("R8").value = clientID
-        .Range("S8").value = cutoffDate
-        .Range("T8").value = isBillable
-        .Range("U8").value = isInvoiced
-        .Range("V8").value = isDeleted
-        Set rngCriteria = .Range("R7:V8")
-        Set rngCopyToRange = .Range("Y2:AL2")
+        If clientID <> 0 Then .Range("AN3").value = clientID
+        .Range("AO3").value = cutoffDate
+        .Range("AP3").value = isBillable
+        .Range("AQ3").value = isInvoiced
+        .Range("AR3").value = isDeleted
+        Set rngCriteria = .Range("AN2:AR3")
+        Set rngCopyToRange = .Range("AT2:BH2")
         
         rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngCopyToRange, Unique:=True
         
-        lastResultRow = .Range("Y9999").End(xlUp).row
+        lastResultRow = .Range("AT9999").End(xlUp).row
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -891,19 +894,19 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshTEC_Local.Range("AA3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("AW3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshTEC_Local.Range("Z3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("AU3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add Key:=wshTEC_Local.Range("Y3"), _
+            .SortFields.add Key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshTEC_Local.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshTEC_Local.Range("AT3:BH" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 No_Sort_Required:
@@ -916,7 +919,7 @@ End Sub
 Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("Y9999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Range("AT9999").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Dim arr() As Variant, totalHres As Double
@@ -924,13 +927,13 @@ Sub Copy_TEC_Filtered_Entries_To_FAC_Brouillon()
     With wshTEC_Local
         Dim i As Integer
         For i = 3 To lastUsedRow
-            arr(i - 2, 1) = .Range("AB" & i).value 'Date
-            arr(i - 2, 2) = .Range("AA" & i).value 'Prof
-            arr(i - 2, 3) = .Range("AD" & i).value 'Description
-            arr(i - 2, 4) = .Range("AF" & i).value 'Heures
-            totalHres = totalHres + .Range("AF" & i).value
-            arr(i - 2, 5) = .Range("AJ" & i).value 'Facturée ou pas
-            arr(i - 2, 6) = .Range("Y" & i).value 'TEC_ID
+            arr(i - 2, 1) = .Range("AW" & i).value 'Date
+            arr(i - 2, 2) = .Range("AV" & i).value 'Prof
+            arr(i - 2, 3) = .Range("AY" & i).value 'Description
+            arr(i - 2, 4) = .Range("AZ" & i).value 'Heures
+            totalHres = totalHres + .Range("AZ" & i).value
+            arr(i - 2, 5) = .Range("BD" & i).value 'Facturée ou pas
+            arr(i - 2, 6) = .Range("AT" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
         Dim rng As Range

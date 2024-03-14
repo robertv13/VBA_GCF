@@ -392,7 +392,6 @@ exit_sub:
     Call Buttons_Enabled_True_Or_False(True, False, False, True)
     
     rmv_state = rmv_modeModification
-'    rmv_state = rmv_modeAffichage
     
     Set lookupRange = Nothing
     

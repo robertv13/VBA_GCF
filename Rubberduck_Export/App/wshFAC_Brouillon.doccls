@@ -105,11 +105,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         GoTo ExitSub
     End If
     
-    'Include Billed_TEC or not (B16 is linked to the checkbox)
-    If Not Intersect(Target, wshFAC_Brouillon.Range("B16")) Is Nothing Then
-        MsgBox "Value of B16 is " & wshFAC_Brouillon.Range("B16").value
-        GoTo ExitSub
-    End If
+'    'Include Billed_TEC or not (B16 is linked to the checkbox)
+'    If Not Intersect(Target, wshFAC_Brouillon.Range("B16")) Is Nothing Then
+'        GoTo ExitSub
+'    End If
     
     'Services entry
     If Not Intersect(Target, Range("L11:L45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then

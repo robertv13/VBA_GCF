@@ -280,13 +280,15 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
     Application.ScreenUpdating = False
     
-    Dim saveLastRow As Long
-    saveLastRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    Dim lastUsedRow1 As Long
+    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
-    wshGL_EJ_Recurrente.Range("C2:J" & saveLastRow).ClearContents
-
-    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    If lastUsedRow1 > 1 Then
+        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow1).ClearContents
+    End If
+    
+    'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
@@ -304,21 +306,45 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     wshGL_EJ_Recurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    'Get the last used rows AFTER the copy
+    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
-    'Adjust Formats for all new rows
+    'Adjust Formats for all rows
     With wshGL_EJ_Recurrente
-        Union(.Range("C2:C" & lastUsedRow), _
-            .Range("E2:E" & lastUsedRow)).HorizontalAlignment = xlCenter
-        Union(.Range("D2:D" & lastUsedRow), _
-            .Range("F2:F" & lastUsedRow)).HorizontalAlignment = xlLeft
-        With .Range("G2:H" & lastUsedRow)
+        Union(.Range("C2:C" & lastUsedRow1), _
+              .Range("E2:E" & lastUsedRow1)).HorizontalAlignment = xlCenter
+        Union(.Range("D2:D" & lastUsedRow1), _
+              .Range("F2:F" & lastUsedRow1), _
+              .Range("I2:I" & lastUsedRow1)).HorizontalAlignment = xlLeft
+        With .Range("G2:H" & lastUsedRow1)
             .HorizontalAlignment = xlRight
             .NumberFormat = "#,##0.00 $"
         End With
     End With
     
+    Call GL_EJ_Auto_Build_Summary '2024-03-14 @ 07:38
+    
+'    'Build the summary at column K & L
+'    Dim lastUsedRow2 As Long
+'    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).row
+'    If lastUsedRow2 > 1 Then
+'        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
+'    End If
+'
+'    With wshGL_EJ_Recurrente
+'        Dim i As Integer, k As Integer, oldEntry As String
+'        k = 2
+'        For i = 2 To lastUsedRow1
+'            If .Range("D" & i).value <> oldEntry Then
+'                .Range("K" & k).value = .Range("D" & i).value
+'                .Range("L" & k).value = .Range("C" & i).value
+'                oldEntry = .Range("D" & i).value
+'                k = k + 1
+'            End If
+'        Next i
+'    End With
+    
+Clean_Exit:
     Application.ScreenUpdating = True
     
     Call Output_Timer_Results("GL_EJ_Auto_Import_All()", timerStart)
