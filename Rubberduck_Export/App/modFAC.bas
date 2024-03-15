@@ -903,7 +903,11 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If clientID <> 0 Then .Range("AN3").value = clientID
         .Range("AO3").value = cutoffDate
         .Range("AP3").value = isBillable
-        .Range("AQ3").value = isInvoiced
+        If isInvoiced <> True Then
+            .Range("AQ3").value = isInvoiced
+        Else
+            .Range("AQ3").value = ""
+        End If
         .Range("AR3").value = isDeleted
         Set rngCriteria = .Range("AN2:AR3")
         Set rngCopyToRange = .Range("AT2:BH2")
