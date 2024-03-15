@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto 
    Caption         =   "Choisir l'entrée récurrente à utiliser"
    ClientHeight    =   4500
-   ClientLeft      =   7125
-   ClientTop       =   6465
-   ClientWidth     =   7200
+   ClientLeft      =   7155
+   ClientTop       =   6585
+   ClientWidth     =   9000.001
    OleObjectBlob   =   "ufListeEJAuto.frx":0000
 End
 Attribute VB_Name = "ufListeEJAuto"

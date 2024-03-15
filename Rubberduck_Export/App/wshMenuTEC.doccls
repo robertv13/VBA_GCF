@@ -1,26 +1,86 @@
 ﻿Option Explicit
 
 Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideOut_SaisieHeures
+    
+    Call Output_Timer_Results("lblSaisieHeures_Hover_MouseMove()", timerStart)
+
 End Sub
 
 Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Dim timerStart As Double: timerStart = Timer
+
     SlideIn_SaisieHeures
     SlideOut_TEC_TDB
+
+    Call Output_Timer_Results("lblTDB_Hover_MouseMove()", timerStart)
+
 End Sub
 
 Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-   SlideIn_TEC_TDB
-   SlideIn_SaisieHeures
+   
+    Dim timerStart As Double: timerStart = Timer
+   
+    SlideIn_TEC_TDB
+    SlideIn_SaisieHeures
+    
+    Dim shp As Shape
+    Set shp = wshMenuTEC.Shapes("grpSaisieHeures")
+    shp.Top = 70
+    shp.Left = 0
+    shp.width = 40
+    shp.Height = 40
+    
+    Set shp = wshMenuTEC.Shapes("icoSaisieHeures")
+    shp.Top = 65
+    shp.Left = 0
+    shp.width = 35
+    shp.Height = 35
+    
+    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
+    shp.Top = 65
+    shp.Left = 0
+    shp.width = 35
+    shp.Height = 35
+
+    Set shp = wshMenuTEC.Shapes("grpTableauDeBord_TEC")
+    shp.Top = 130
+    shp.Left = 0
+    shp.width = 40
+    shp.Height = 40
+
+    Set shp = wshMenuTEC.Shapes("icoTEC_TDB")
+    shp.Top = 125
+    shp.Left = 0
+    shp.width = 32
+    shp.Height = 32
+    
+    Set shp = wshMenuTEC.Shapes("btnTEC_TDB")
+    shp.Top = 130
+    shp.Left = 0
+    shp.width = 35
+    shp.Height = 35
+    
+    Set shp = Nothing
+    
+    Call Output_Timer_Results("lblMinAll_Hover_MouseMove()", timerStart)
+
 End Sub
 
 Sub SaisieHeures_Click()
+
     SlideIn_SaisieHeures
     Load ufSaisieHeures
     ufSaisieHeures.show vbModal
+    
 End Sub
 
 Sub TEC_TDB_Click()
+
     SlideIn_TEC_TDB
     wshTEC_Dashboard.Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = False
@@ -29,4 +89,5 @@ Sub TEC_TDB_Click()
         .Select
     End With
     Application.ScreenUpdating = True
+
 End Sub

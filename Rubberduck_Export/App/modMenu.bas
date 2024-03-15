@@ -5,7 +5,7 @@ Dim width As Long
 Public Const maxWidth As Integer = 150
 
 Sub SlideOut_TEC()
-    With ActiveSheet.Shapes("btnTEC")
+    With wshMenu.Shapes("btnTEC")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoTEC").Left = width - 32
@@ -15,7 +15,7 @@ Sub SlideOut_TEC()
 End Sub
 
 Sub SlideIn_TEC()
-    With ActiveSheet.Shapes("btnTEC")
+    With wshMenu.Shapes("btnTEC")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -26,7 +26,7 @@ Sub SlideIn_TEC()
 End Sub
 
 Sub SlideOut_Facturation()
-    With ActiveSheet.Shapes("btnFacturation")
+    With wshMenu.Shapes("btnFacturation")
         For width = 32 To maxWidth
             .Height = width
           ActiveSheet.Shapes("icoFacturation").Left = width - 32
@@ -36,7 +36,7 @@ Sub SlideOut_Facturation()
 End Sub
 
 Sub SlideIn_Facturation()
-    With ActiveSheet.Shapes("btnFacturation")
+    With wshMenu.Shapes("btnFacturation")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -47,7 +47,7 @@ Sub SlideIn_Facturation()
 End Sub
 
 Sub SlideOut_Debours()
-    With ActiveSheet.Shapes("btnDebours")
+    With wshMenu.Shapes("btnDebours")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoDebours").Left = width - 32
@@ -57,7 +57,7 @@ Sub SlideOut_Debours()
 End Sub
 
 Sub SlideIn_Debours()
-    With ActiveSheet.Shapes("btnDebours")
+    With wshMenu.Shapes("btnDebours")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -67,7 +67,7 @@ Sub SlideIn_Debours()
     End With
 End Sub
 Sub SlideOut_Comptabilite()
-    With ActiveSheet.Shapes("btnComptabilite")
+    With wshMenu.Shapes("btnComptabilite")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoComptabilite").Left = width - 32
@@ -77,7 +77,7 @@ Sub SlideOut_Comptabilite()
 End Sub
 
 Sub SlideIn_Comptabilite()
-    With ActiveSheet.Shapes("btnComptabilite")
+    With wshMenu.Shapes("btnComptabilite")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -87,7 +87,7 @@ Sub SlideIn_Comptabilite()
     End With
 End Sub
 Sub SlideOut_Parametres()
-    With ActiveSheet.Shapes("btnParametres")
+    With wshMenu.Shapes("btnParametres")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoParametres").Left = width - 32
@@ -97,7 +97,7 @@ Sub SlideOut_Parametres()
 End Sub
 
 Sub SlideIn_Parametres()
-    With ActiveSheet.Shapes("btnParametres")
+    With wshMenu.Shapes("btnParametres")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -172,8 +172,8 @@ Sub SlideIn_TEC_TDB()
 End Sub
 
 Sub SlideOut_PrepFact()
-    With ActiveSheet.Shapes("btnPrepFact")
-        For width = 32 To 182
+    With wshMenuFACT.Shapes("btnPrepFact")
+        For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoPrepFact").Left = width - 32
         Next width
@@ -182,8 +182,8 @@ Sub SlideOut_PrepFact()
 End Sub
 
 Sub SlideIn_PrepFact()
-    With ActiveSheet.Shapes("btnPrepFact")
-        For width = 182 To 32 Step -1
+    With wshMenuFACT.Shapes("btnPrepFact")
+        For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoPrepFact").Left = width - 32
@@ -193,7 +193,7 @@ Sub SlideIn_PrepFact()
 End Sub
 
 Sub SlideOut_SuiviCC()
-    With ActiveSheet.Shapes("btnSuiviCC")
+    With wshMenuFACT.Shapes("btnSuiviCC")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
@@ -203,7 +203,7 @@ Sub SlideOut_SuiviCC()
 End Sub
 
 Sub SlideIn_SuiviCC()
-    With ActiveSheet.Shapes("btnSuiviCC")
+    With wshMenuFACT.Shapes("btnSuiviCC")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -214,7 +214,7 @@ Sub SlideIn_SuiviCC()
 End Sub
 
 Sub SlideOut_Encaissement()
-    With ActiveSheet.Shapes("btnEncaissement")
+    With wshMenuFACT.Shapes("btnEncaissement")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoEncaissement").Left = width - 32
@@ -224,7 +224,7 @@ Sub SlideOut_Encaissement()
 End Sub
 
 Sub SlideIn_Encaissement()
-    With ActiveSheet.Shapes("btnEncaissement")
+    With wshMenuFACT.Shapes("btnEncaissement")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -235,7 +235,7 @@ Sub SlideIn_Encaissement()
 End Sub
 
 Sub SlideOut_Regularisation()
-    With ActiveSheet.Shapes("btnRegularisation")
+    With wshMenuFACT.Shapes("btnRegularisation")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoRegularisation").Left = width - 32
@@ -245,7 +245,7 @@ Sub SlideOut_Regularisation()
 End Sub
 
 Sub SlideIn_Regularisation()
-    With ActiveSheet.Shapes("btnRegularisation")
+    With wshMenuFACT.Shapes("btnRegularisation")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
@@ -320,7 +320,7 @@ End Sub
 
 Sub SlideOut_BV()
     With ActiveSheet.Shapes("btnBV")
-        For width = 32 To 182
+        For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoBV").Left = width - 32
         Next width
@@ -330,7 +330,7 @@ End Sub
 
 Sub SlideIn_BV()
     With ActiveSheet.Shapes("btnBV")
-        For width = 182 To 32 Step -1
+        For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoBV").Left = width - 32

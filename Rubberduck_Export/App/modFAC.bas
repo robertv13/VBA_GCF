@@ -36,6 +36,23 @@ Sub Client_Change(ClientName As String)
         End If
     End With
     
+    With wshFAC_Finale
+        .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
+        .Range("B24").value = ClientName
+        .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 5) 'Adresse1
+        If wshBD_Clients.Cells(myInfo(2), 6) <> "" Then
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse2
+            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+        Else
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+            .Range("B27").value = ""
+        End If
+    End With
+    
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
     wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
@@ -366,7 +383,9 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
             rs.Fields("Description") = .Range("C" & r).value
             rs.Fields("Heures") = .Range("D" & r).value
             rs.Fields("Taux") = .Range("E" & r).value
-            rs.Fields("Honoraires") = .Range("F" & r).value
+            If .Range("F" & r).value <> "" Then
+                rs.Fields("Honoraires") = .Range("F" & r).value
+            End If
             rs.Fields("Inv_Row") = r
             'rs.Fields("Row") = ""
         End With
@@ -415,7 +434,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
             .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("D" & i).value
             .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("E" & i).value
             .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("F" & i).value
-            .Range("F" & firstFreeRow).value = i - 24
+            .Range("F" & firstFreeRow).value = i
             firstFreeRow = firstFreeRow + 1
         End With
     Next i
@@ -764,12 +783,18 @@ Sub FAC_Finale_Setup_All_Cells()
     
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
-        .Range("B23").formula = "=if(FAC_Brouillon!K3<>"""",FAC_Brouillon!K3,"""")"
-        .Range("B24").formula = "=if(FAC_Brouillon!K4<>"""",FAC_Brouillon!K4,"""")"
-        .Range("B25").formula = "=if(FAC_Brouillon!K5<>"""",FAC_Brouillon!K5,"""")"
-        .Range("B26").formula = "=if(FAC_Brouillon!K6<>"""",FAC_Brouillon!K6,"""")"
-        .Range("B27").formula = "=if(FAC_Brouillon!K7<>"""",FAC_Brouillon!K7,"""")"
+        .Range("B23").formula = ""
+        .Range("B24").formula = ""
+        .Range("B25").formula = ""
+        .Range("B26").formula = ""
+        .Range("B27").formula = ""
         .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
+'        .Range("B23").formula = "=if(FAC_Brouillon!K3<>"""", FAC_Brouillon!K3, """")"
+'        .Range("B24").formula = "=IF(FAC_Brouillon!K4<>"""", FAC_Brouillon!K4, """")"
+'        .Range("B25").formula = "=if(FAC_Brouillon!K5<>"""", FAC_Brouillon!K5, """")"
+'        .Range("B26").formula = "=if(FAC_Brouillon!K6<>"""", FAC_Brouillon!K6, """")"
+'        .Range("B27").formula = "=if(FAC_Brouillon!K7<>"""", FAC_Brouillon!K7, """")"
+'        .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
         
         .Range("F34:F69").formula = "=if(and(D34<>0,E34<>0),D34*E34,"""")"
 
@@ -871,7 +896,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         
         'Clear the filtered rows area
         lastResultRow = .Range("AT9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("AT3:BI" & lastResultRow).ClearContents
+        If lastResultRow > 2 Then .Range("AT3:BH" & lastResultRow).ClearContents
         
         Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
         Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)

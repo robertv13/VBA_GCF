@@ -89,7 +89,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         MsgBox _
         Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
         Buttons:=vbCritical
-        Exit Sub
+        GoTo Clean_Exit
     End If
     
     Dim answerYesNo As Integer
@@ -100,7 +100,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
         Title:="Confirmation", _
         Buttons:=vbCritical
-        Exit Sub
+        GoTo Clean_Exit
     End If
     
     Dim sh As Worksheet: Set sh = wshTEC_Local
@@ -132,6 +132,10 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
+Clean_Exit:
+
+    .txtTEC_ID.value = ""
+
     ufSaisieHeures.txtClient.SetFocus
 
     'Free up memory - 2024-02-23
