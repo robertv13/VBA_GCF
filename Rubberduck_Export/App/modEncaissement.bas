@@ -10,12 +10,11 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
         lastResultRow = .Range("A99999").End(xlUp).row 'Last row
         If lastResultRow < 3 Then Exit Sub
         'Cells L3 contains a formula, no need to set it up
-        .Range("A2:K" & lastResultRow).AdvancedFilter _
+        .Range("A2:J" & lastResultRow).AdvancedFilter _
             xlFilterCopy, _
             CriteriaRange:=.Range("L2:M3"), _
-            CopyToRange:=.Range("O2:T2"), _
-            Unique:=True
-        lastResultRow = .Range("O99999").End(xlUp).row
+            CopyToRange:=.Range("O2:S2")
+        lastResultRow = .Range("O9999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         wshENC_Saisie.Range("B2").value = True 'Set PaymentLoad to True
         .Range("R3:R" & lastResultRow).formula = .Range("R1").formula 'Total Payments Formula

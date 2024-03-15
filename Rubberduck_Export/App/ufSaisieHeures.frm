@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   12750
+   ClientHeight    =   8160
    ClientLeft      =   135
    ClientTop       =   570
-   ClientWidth     =   17430
+   ClientWidth     =   14025
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

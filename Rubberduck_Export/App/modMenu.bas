@@ -151,7 +151,7 @@ Sub SlideIn_SaisieHeures()
 End Sub
 
 Sub SlideOut_TEC_TDB()
-    With ActiveSheet.Shapes("btnTEC_TDB")
+    With wshMenuTEC.Shapes("btnTEC_TDB")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
@@ -161,13 +161,13 @@ Sub SlideOut_TEC_TDB()
 End Sub
 
 Sub SlideIn_TEC_TDB()
-    With ActiveSheet.Shapes("btnTEC_TDB")
+    With wshMenuTEC.Shapes("btnTEC_TDB")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnTEC_TDB").TextFrame2.TextRange.Characters.text = ""
+        wshMenuTEC.Shapes("btnTEC_TDB").TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -447,16 +447,17 @@ End Sub
 
 Sub EXIT_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
-
+    Application.EnableEvents = False
+    
     Call SlideIn_Exit
     
     Call Hide_All_Worksheets_Except_Menu
 
-    Call Output_Timer_Results("EXIT_Click()", timerStart)
-
     ThisWorkbook.Close SaveChanges:=True
+    
     Application.Quit
+    
+    Application.EnableEvents = True
     
 End Sub
 

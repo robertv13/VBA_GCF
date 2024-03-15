@@ -1,7 +1,7 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
-Global Const gAppVersion As String = "v2.9.B" '2024-03-14 @ 14:25
+Global Const gAppVersion As String = "v2.9.C" '2024-03-15 @ 00:10
 
 Public isTab_Order_Activated As Boolean
 
@@ -28,6 +28,8 @@ Private Sub auto_close() '2024-03-06 @ 14:36
 
     Dim timerStart As Double: timerStart = Timer
 
+    MsgBox "Auto_Close..."
+    
     Call Output_Timer_Results("auto_close()", timerStart)
     
 End Sub
@@ -68,42 +70,6 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-'Sub LoopThroughRows()
-'    Dim i As Long, lastRow As Long
-'    Dim pctdone As Single
-'    lastRow = Range("A" & Rows.count).End(xlUp).row
-'    lastRow = 30
-'
-'    '(Step 1) Display your Progress Bar
-'    ufProgress.LabelProgress.width = 0
-'    ufProgress.show
-'    For i = 1 To lastRow
-'        '(Step 2) Periodically update progress bar
-'        pctdone = i / lastRow
-'        With ufProgress
-'            .Caption = "Étape " & i & " of " & lastRow
-'            .LabelProgress.width = pctdone * (.FrameProgress.width)
-'        End With
-'        DoEvents
-'        Application.Wait Now + TimeValue("00:00:01")
-'        '--------------------------------------
-'        'the rest of your macro goes below here
-'        '
-'        '
-'        '--------------------------------------
-'        '(Step 3) Close the progress bar when you're done
-'        If i = lastRow Then Unload ufProgress
-'    Next i
-'End Sub
-'
-'Sub FractionComplete(pctdone As Single)
-'    With ufProgress
-'        .Caption = "Complété à " & pctdone * 100 & "%"
-'        .LabelProgress.width = pctdone * (.FrameProgress.width)
-'    End With
-'    DoEvents
-'End Sub
-'
 Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone)
     If fill Then
         If IsMissing(colorIndex) Or colorIndex = xlNone Then
@@ -177,25 +143,25 @@ Sub Slide_In_All_Menu_Options()
 
 End Sub
 
-Sub Add_Caption_To_Userform(uf As UserForm, titleText As String)
-    
-    uf.Caption = titleText
-
-End Sub
-
-Sub Add_Label_To_Userform(uf As UserForm, labelText As String, leftPos As Single, topPos As Single)
-    
-    'Add a label to the userform
-    Dim newLabel As MSForms.Label: Set newLabel = uf.Controls.add("Forms.Label.1")
-    
-    With newLabel
-        .Caption = labelText
-        .Left = leftPos
-        .width = 150
-        .Top = topPos
-        'Set other properties as needed
-    End With
-
-End Sub
-
+'Sub Add_Caption_To_Userform(uf As UserForm, titleText As String)
+'
+'    uf.Caption = titleText
+'
+'End Sub
+'
+'Sub Add_Label_To_Userform(uf As UserForm, labelText As String, leftPos As Single, topPos As Single)
+'
+'    'Add a label to the userform
+'    Dim newLabel As MSForms.Label: Set newLabel = uf.Controls.add("Forms.Label.1")
+'
+'    With newLabel
+'        .Caption = labelText
+'        .Left = leftPos
+'        .width = 150
+'        .Top = topPos
+'        'Set other properties as needed
+'    End With
+'
+'End Sub
+'
 

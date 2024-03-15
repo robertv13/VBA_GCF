@@ -553,7 +553,7 @@ Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) '
 
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
-        TEC_ID = wshTEC_Local.Range("Y" & r).value
+        TEC_ID = wshTEC_Local.Range("AT" & r).value
         'Open the recordset for the specified ID
         SQL = "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
@@ -561,7 +561,7 @@ Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) '
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstFacturee").value = True
-            rs.Fields("DateFacturee").value = CDate(wshFAC_Brouillon.Range("O3").value)
+            rs.Fields("DateFacturee").value = Format(CDate(wshFAC_Brouillon.Range("O3").value), "dd-mm-yyyy hh:mm:ss")
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -609,7 +609,7 @@ Sub TEC_Record_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow
         rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
         wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
         wshTEC_Local.Range("L" & rowToBeUpdated).value = True
-        wshTEC_Local.Range("M" & rowToBeUpdated).value = CDate(wshFAC_Brouillon.Range("O3").value)
+        wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()
         wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
         wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
     Next r

@@ -35,91 +35,30 @@ Private Sub Workbook_Open()
 
 End Sub
 
-'Sub ShowProgressForm()
-'    'Create a new userform
-'    Set frmProgress = UserForms.add
-'
-'    'Set up userform properties
-'    With frmProgress
-'        .Caption = "Processing..."
-'        .width = 300
-'        .Height = 100
-'        .StartUpPosition = 0 ' Center the form on the screen
-'    End With
-'
-'    'Add a label to the userform
-'    Set lblStatus = frmProgress.Controls.add("Forms.Label.1", "lblStatus", True)
-'    With lblStatus
-'        .Left = 10
-'        .Top = 10
-'        .width = 280
-'        .Height = 20
-'        .Caption = "Processing in progress..."
-'    End With
-'
-'    ' Show the userform
-'    frmProgress.show
-'
-'    ' Start the long process
-'    startTime = Timer
-'    Call LongProcess
-'
-'    ' Close the userform after the process is finished
-'    Unload frmProgress
-'End Sub
-'
-'Sub LongProcess()
-'    Dim i As Long
-'    Dim totalIterations As Long
-'
-'    ' Set the total number of iterations for the process
-'    totalIterations = 1000
-'
-'    ' Perform the long process
-'    For i = 1 To totalIterations
-'        ' Update label to show progress
-'        lblStatus.Caption = "Processing... " & Format(i / totalIterations, "0%") & " complete"
-'
-'        ' Add a DoEvents to allow the label to update
-'        DoEvents
-'
-'        ' Simulate a delay (replace with your actual processing code)
-'        Application.Wait Now + TimeValue("00:00:01") ' 1 second delay
-'
-'        ' Check if the user has clicked the cancel button
-'        If frmProgress.Tag = "Cancel" Then
-'            MsgBox "Process canceled by the user.", vbExclamation
-'            Exit Sub
-'        End If
-'    Next i
-'
-'    ' Calculate elapsed time
-'    elapsedTime = Timer - startTime
-'    MsgBox "Processing completed in " & Format(elapsedTime, "0.00") & " seconds.", vbInformation
-'End Sub
-'
-'Sub CancelProcess()
-'    ' Set a tag on the form to indicate cancellation
-'    frmProgress.Tag = "Cancel"
-'End Sub
-'
-Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
-    
-    Dim timerStart As Double: timerStart = Timer
-    
-    Call Hide_All_Worksheets_Except_Menu
-    
-    wshMenu.Activate
-    
-    Cancel = False
-    
-    Call Output_Timer_Results("Workbook_Before_Close()", timerStart)
-    
-    Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
-    
-    MsgBox "Sub Workbook_Before_Close()"
-    
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    'Prevent closing the workbook
+    Cancel = True
+    MsgBox "Veuillez utiliser l'option du menu pour sortir" & _
+            vbNewLine & "de l'application.", vbExclamation
 End Sub
 
+'Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
+'
+'    Dim timerStart As Double: timerStart = Timer
+'
+'    Call Hide_All_Worksheets_Except_Menu
+'
+'    wshMenu.Activate
+'
+'    Cancel = False
+'
+'    Call Output_Timer_Results("Workbook_Before_Close()", timerStart)
+'
+'    Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
+'
+'    MsgBox "Sub Workbook_Before_Close()"
+'
+'End Sub
+'
 
 
