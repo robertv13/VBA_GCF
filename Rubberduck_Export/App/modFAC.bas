@@ -1036,10 +1036,10 @@ End Sub
 Sub Create_PDF_Email_Sub(noFacture As String)
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
     Dim result As Boolean
-    result = Create_PDF_Email_Function(noFacture, "CreateEmail")
+    result = Create_PDF_Email_Func(noFacture, "CreateEmail")
 End Sub
 
-Function Create_PDF_Email_Function(noFacture As String, Optional action As String = "SaveOnly") As Boolean
+Function Create_PDF_Email_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     
     Dim SaveAs As String
 
@@ -1104,12 +1104,12 @@ Function Create_PDF_Email_Function(noFacture As String, Optional action As Strin
     End If
     
 SaveOnly:
-    Create_PDF_Email_Function = True 'Return value
+    Create_PDF_Email_Func = True 'Return value
     GoTo EndMacro
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-    Create_PDF_Email_Function = False 'Return value
+    Create_PDF_Email_Func = False 'Return value
 
 EndMacro:
     Application.ScreenUpdating = True

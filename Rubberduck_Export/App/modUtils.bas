@@ -68,21 +68,18 @@ Continue_for_each_ws:
 
 End Sub
 
-Sub List_All_Subs_And_Functions() '2024-03-08 @ 21:26
+Sub List_All_Subs_And_Functions() '2024-03-15 @ 21:26
     
     Dim timerStart As Double: timerStart = Timer
 
     Dim VBComp As Object
-    
-    'Setup the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_Subs&Functions")
 
-    Dim posSub As Integer, posFunction As Integer, posExitSub As Integer
-    Dim posREM As Integer, posParam As Integer
+    Dim posSub As Integer, posFunction As Integer, posExitSub As Integer, posExitFunction As Integer, posSpace As Integer
+    Dim posREM As Integer, posParam As Integer, scope As String, sType As String
     Dim lineNum As Long
-    Dim trimLineOfCode As String, remarks As String, params As String
+    Dim trimLineOfCode As String, saveLineOfCode As String, remarks As String, params As String
     Dim arr() As Variant
-    ReDim arr(1 To 300, 1 To 7)
+    ReDim arr(1 To 300, 1 To 9)
     'Loop through all VBcomponents (modules, class and forms) in the workbook
     Dim oName As String, oType As String, r As Integer
     r = 1
@@ -91,23 +88,35 @@ Sub List_All_Subs_And_Functions() '2024-03-08 @ 21:26
         If VBComp.Type <= 3 Then
             oName = VBComp.name
             oType = VBComp.Type
+            Select Case oType
+                Case 1
+                    oType = "1_Module"
+                Case 2
+                    oType = "2_Class"
+                Case 3
+                    oType = "3_userform"
+                Case Else
+                    oType = String(10, "*")
+            End Select
             'Get the code module for the component
             Dim vbCodeMod As Object
             Set vbCodeMod = VBComp.CodeModule
             'Loop through all lines in the code module
             For lineNum = 1 To vbCodeMod.CountOfLines
                 'Check if the line contains 'Sub' or 'Function'
+                saveLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
                 trimLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
                 posSub = InStr(trimLineOfCode, "Sub ")
                 posFunction = InStr(trimLineOfCode, "Function ")
                 posExitSub = InStr(trimLineOfCode, "Exit Sub")
-                If (posSub <> 0 Or posFunction <> 0) And posExitSub = 0 Then
+                posExitFunction = InStr(trimLineOfCode, "Exit Function")
+                If (posSub <> 0 Or posFunction <> 0) And posExitSub = 0 And posExitFunction = 0 Then
                     arr(r, 1) = oType
                     arr(r, 2) = oName
                     arr(r, 3) = lineNum
                     posREM = InStr(trimLineOfCode, ") '")
                     If posREM > 0 Then
-                        remarks = Trim(Mid(trimLineOfCode, posREM + 1))
+                        remarks = Trim(Mid(trimLineOfCode, posREM + 2))
                         trimLineOfCode = Trim(Left(trimLineOfCode, posREM))
                     End If
                     posParam = InStr(trimLineOfCode, "(")
@@ -115,45 +124,65 @@ Sub List_All_Subs_And_Functions() '2024-03-08 @ 21:26
                         params = Trim(Mid(trimLineOfCode, posParam))
                         trimLineOfCode = Trim(Left(trimLineOfCode, posParam - 1))
                     End If
-                    arr(r, 4) = trimLineOfCode
-                    If params <> "" Then arr(r, 5) = params
-                    If remarks <> "" Then arr(r, 6) = "'" & remarks
-                    arr(r, 7) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-                    r = r + 1
+                    
+                    If InStr(trimLineOfCode, "Sub ") > 1 Or InStr(trimLineOfCode, "Function ") > 1 Then
+                        posSpace = InStr(trimLineOfCode, " ")
+'                        On Error Resume Next
+                        scope = Left(trimLineOfCode, posSpace - 1)
+                        trimLineOfCode = Trim(Mid(trimLineOfCode, posSpace + 1))
+                    Else
+                        scope = ""
+                    End If
+                    arr(r, 4) = scope
+'                    On Error GoTo 0
+'                    If Trim(scope) = "Sub" Or Trim(scope) = "Function" Then scope = ""
+                    If InStr(trimLineOfCode, "Sub ") = 1 Then
+                        sType = "Sub"
+                        trimLineOfCode = Trim(Mid(trimLineOfCode, 5))
+                    Else
+                        If InStr(trimLineOfCode, "Function ") = 1 Then
+                            sType = "Function"
+                            trimLineOfCode = Trim(Mid(trimLineOfCode, 10))
+                        End If
+                    End If
+                    arr(r, 5) = sType
+                    arr(r, 6) = trimLineOfCode
+                    If params <> "" Then arr(r, 7) = params
+                    If remarks <> "" Then arr(r, 8) = "'" & remarks
+                    arr(r, 9) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
                     params = ""
                     remarks = ""
+                    r = r + 1
                 End If
             Next lineNum
         End If
     Next VBComp
+    r = r - 1
+    Set vbCodeMod = Nothing
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("D9999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:G" & lastUsedRow).ClearContents
+    lastUsedRow = wshzDocSubsAndFunctions.Range("A999").End(xlUp).row 'Last Used Row
+    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).ClearContents
 
-    'Sort the array based on column 1 then column 1
-    Call BubbleSort_2D_Array(arr)
+    Dim numColumns As Long
+    numColumns = UBound(arr, 2)
+    Dim minArray() As Variant
+    ReDim minArray(1 To r, 1 To numColumns)
     
-    'Copy entire Array to Worksheet
-    wsOutput.Range("A2").Resize(UBound(arr, 1) - LBound(arr, 1) + 1, _
-        UBound(arr, 2) - LBound(arr, 2) + 1).value = arr
-        
-    'Remove empty lines & change the ObjectType to a description
-    Dim rowNumber As Integer
-    For rowNumber = 301 To 2 Step -1
-        If wsOutput.Range("A" & rowNumber).value = "" Then
-            wsOutput.Range("A" & rowNumber).EntireRow.delete
-        ElseIf wsOutput.Range("A" & rowNumber).value = "1" Then
-            wsOutput.Range("A" & rowNumber).value = "1_Module"
-        ElseIf wsOutput.Range("A" & rowNumber).value = "2" Then
-            wsOutput.Range("A" & rowNumber).value = "2_Class"
-        ElseIf wsOutput.Range("A" & rowNumber).value = "3" Then
-            wsOutput.Range("A" & rowNumber).value = "3_userform"
-        Else
-            wsOutput.Range("A" & rowNumber).value = String(10, "*")
-        End If
-    Next rowNumber
+    'Copy the data from arr to minArray
+    Dim i As Integer, j As Integer
+    For i = 1 To r
+        For j = 1 To numColumns
+            minArray(i, j) = arr(i, j)
+        Next j
+    Next i
+    
+    'Sort the array based on column 1 then column 1
+    Call BubbleSort_2D_Array(minArray)
+    
+    'Transfer the array to the worksheet
+    wshzDocSubsAndFunctions.Range("A2").Resize(UBound(minArray, 1), UBound(minArray, 2)).value = minArray
 
     Call Output_Timer_Results("List_All_Subs_And_Functions()", timerStart)
 
@@ -292,8 +321,6 @@ End Sub
 
 Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
     
-    Dim timerStart As Double: timerStart = Timer
-    
     Dim i As Long, j As Long
     Dim numRows As Long, numCols As Long
     Dim temp As Variant
@@ -332,8 +359,6 @@ Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
         'If no swaps were made, the array is sorted
         If sorted Then Exit For
     Next i
-    
-    Call Output_Timer_Results("BubbleSort_2D_Array()", timerStart)
 
 End Sub
 
@@ -527,4 +552,21 @@ Sub Test_Lookup_Data_In_A_Range()
 
 End Sub
 
+Sub Test_Array_To_Range() '2024-03-18 @ 17:34
 
+    Dim ws As Worksheet
+    Set ws = Feuil2
+    
+    Dim arr() As Variant
+    ReDim arr(1 To 1000, 1 To 20)
+    
+    Dim i As Integer, j As Integer
+    For i = 1 To UBound(arr, 1)
+        For j = 1 To UBound(arr, 2)
+            arr(i, j) = "i = " & i & " and j = " & j & " - *********"
+        Next j
+    Next i
+    
+    ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    
+End Sub
