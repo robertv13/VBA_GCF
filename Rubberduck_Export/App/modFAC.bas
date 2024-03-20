@@ -3,6 +3,67 @@ Option Explicit
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
+Sub FAC_Brouillon_New_Invoice() 'Clear contents
+    
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    If wshFAC_Brouillon.Range("B27").value = False Then
+        With wshFAC_Brouillon
+            .Range("B24").value = True
+            .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
+            .Range("J8:Q46").ClearContents
+            .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
+            .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
+            
+            Call FAC_Brouillon_Setup_All_Cells
+            
+            .Range("B20").value = ""
+            .Range("B24").value = False
+            .Range("B26").value = False
+            .Range("B27").value = True 'Set the value to TRUE
+        End With
+        
+        With wshFAC_Finale
+            .Range("B21,B23:C27,E28").ClearContents
+            .Range("A34:F68").ClearContents
+            .Range("E28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
+            .Range("B69:F81").ClearContents 'NOT the formulas
+            
+            Call FAC_Finale_Setup_All_Cells
+        
+        End With
+        
+        wshFAC_Brouillon.Range("B16").value = False '2024-03-14 @ 08:41
+        
+        Call FAC_Brouillon_Clear_All_TEC_Displayed
+        
+        'Move on to CLient Name
+        wshFAC_Brouillon.Range("E4:F4").ClearContents
+        With wshFAC_Brouillon.Range("E4:F4").Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 65535
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        wshFAC_Brouillon.Select
+        wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
+    End If
+
+    Dim shp As Shape
+    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    shp.Visible = True
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    Call Output_Timer_Results("FAC_Brouillon_New_Invoice()", timerStart)
+
+End Sub
+
 Sub Client_Change(ClientName As String)
 
     Dim timerStart As Double: timerStart = Timer
@@ -67,13 +128,18 @@ End Sub
 
 Sub Date_Change(d As String)
 
+    Application.EnableEvents = False
+    
+    If d = "" Then d = Now()
+    
     If InStr(1, wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
         y = Right(Year(d), 2)
         wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
-        wshFAC_Finale.Range("F29").value = wshFAC_Brouillon.Range("O6").value
+        wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
-'    wshFAC_Finale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
+    
+    wshFAC_Finale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
     
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column
     Dim DateTaxRates As Date
@@ -87,7 +153,7 @@ Sub Date_Change(d As String)
     
     Dim rng As Range
     Set rng = wshFAC_Brouillon.Range("O3")
-'    Call Fill_Or_Empty_Range_Background(rng, False)
+    Call Fill_Or_Empty_Range_Background(rng, False)
     
     Set rng = wshFAC_Brouillon.Range("L11")
 '    Call Fill_Or_Empty_Range_Background(rng, True, 6)
@@ -96,67 +162,21 @@ Sub Date_Change(d As String)
     wshFAC_Brouillon.Range("L11").Select 'Move on to Services Entry
     On Error GoTo 0
     
-End Sub
-
-Sub FAC_Brouillon_New_Invoice() 'Clear contents
-    
-    Dim timerStart As Double: timerStart = Timer
-    
-    Application.EnableEvents = False
-    Application.ScreenUpdating = False
-    
-    If wshFAC_Brouillon.Range("B27").value = False Then
-        With wshFAC_Brouillon
-            .Range("B24").value = True
-            .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("J8:Q46").ClearContents
-            .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
-            .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
-            
-            Call FAC_Brouillon_Setup_All_Cells
-            
-            .Range("B20").value = ""
-            .Range("B24").value = False
-            .Range("B26").value = False
-            .Range("B27").value = True 'Set the value to TRUE
-        End With
-        
-        With wshFAC_Finale
-            .Range("B21,B23:C27,F29").ClearContents
-            .Range("A34:G69, D65, E65").ClearContents
-            .Range("F29").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
-            .Range("B71:F83").ClearContents 'NOT the formula
-            
-            Call FAC_Finale_Setup_All_Cells
-        
-        End With
-        
-        wshFAC_Brouillon.Range("B16").value = False '2024-03-14 @ 08:41
-        
-        Call FAC_Brouillon_Clear_All_TEC_Displayed
-        
-        'Move on to CLient Name
-        wshFAC_Brouillon.Range("E4:F4").ClearContents
-        With wshFAC_Brouillon.Range("E4:F4").Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .Color = 65535
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        wshFAC_Brouillon.Select
-        wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
-    End If
-
-    Dim shp As Shape
-    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
-    shp.Visible = True
-    
-    Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("FAC_Brouillon_New_Invoice()", timerStart)
+End Sub
 
+Sub Inclure_TEC_Factures_Click()
+
+    Dim cutoffDate As Date
+    cutoffDate = wshFAC_Brouillon.Range("O3").value
+    
+    If wshFAC_Brouillon.Range("B16").value = True Then
+        Call Get_All_TEC_By_Client(cutoffDate, True)
+    Else
+        Call Get_All_TEC_By_Client(cutoffDate, False)
+    End If
+    
 End Sub
 
 Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
@@ -244,7 +264,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     'Add fields to the recordset before updating it
     rs.AddNew
     With wshFAC_Finale
-        rs.Fields("Inv_No") = .Range("F29").value
+        rs.Fields("Inv_No") = .Range("E28").value
         rs.Fields("Date_Facture") = CDate(wshFAC_Brouillon.Range("O3").value)
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
@@ -252,23 +272,24 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields("Adresse1") = .Range("B25").value
         rs.Fields("Adresse2") = .Range("B26").value
         rs.Fields("Adresse3") = .Range("B27").value
-        rs.Fields("Honoraires") = .Range("F71").value
         
-        rs.Fields("AF1_Desc") = .Range("C72").value
-        rs.Fields("AutresFrais_1") = wshFAC_Finale.Range("F72").value
-        rs.Fields("AF2_Desc") = .Range("C73").value
-        rs.Fields("AutresFrais_2") = .Range("F73").value
-        rs.Fields("AF3_Desc") = .Range("C74").value
-        rs.Fields("AutresFrais_3") = .Range("F74").value
+        rs.Fields("Honoraires") = .Range("E69").value
         
-        rs.Fields("Taux_TPS") = .Range("D76").value
-        rs.Fields("Mnt_TPS") = .Range("F76").value
-        rs.Fields("Taux_TVQ") = .Range("D77").value
-        rs.Fields("Mnt_TVQ") = .Range("F77").value
+        rs.Fields("AF1_Desc") = .Range("B70").value
+        rs.Fields("AutresFrais_1") = wshFAC_Finale.Range("E70").value
+        rs.Fields("AF2_Desc") = .Range("B71").value
+        rs.Fields("AutresFrais_2") = .Range("E71").value
+        rs.Fields("AF3_Desc") = .Range("B72").value
+        rs.Fields("AutresFrais_3") = .Range("E72").value
         
-        rs.Fields("AR_Total") = .Range("F79").value
+        rs.Fields("Taux_TPS") = .Range("C74").value
+        rs.Fields("Mnt_TPS") = .Range("E74").value
+        rs.Fields("Taux_TVQ") = .Range("C75").value
+        rs.Fields("Mnt_TVQ") = .Range("E75").value
         
-        rs.Fields("Dépôt") = .Range("F81").value
+        rs.Fields("AR_Total") = .Range("E77").value
+        
+        rs.Fields("Dépôt") = .Range("E79").value
     End With
     'Update the recordset (create the record)
     rs.update
@@ -277,14 +298,14 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     'Prepare GL Posting
     With wshFAC_Brouillon
-        .Range("B33").value = wshFAC_Finale.Range("F83").value 'AR amount
-        .Range("B34").value = -wshFAC_Finale.Range("F71").value 'Revenues
-        .Range("B35").value = -wshFAC_Finale.Range("F72").value 'Misc $ - 1
-        .Range("B36").value = -wshFAC_Finale.Range("F73").value 'Misc $ - 2
-        .Range("B37").value = -wshFAC_Finale.Range("F74").value 'Misc $ - 3
-        .Range("B38").value = -wshFAC_Finale.Range("F76").value 'GST $
-        .Range("B39").value = -wshFAC_Finale.Range("F77").value 'PST $
-        .Range("B40").value = wshFAC_Finale.Range("F81").value 'Deposit
+        .Range("B33").value = wshFAC_Finale.Range("E81").value   'AR amount
+        .Range("B34").value = -wshFAC_Finale.Range("E69").value  'Revenues
+        .Range("B35").value = -wshFAC_Finale.Range("E70").value  'Misc $ - 1
+        .Range("B36").value = -wshFAC_Finale.Range("E71").value  'Misc $ - 2
+        .Range("B37").value = -wshFAC_Finale.Range("E72").value  'Misc $ - 3
+        .Range("B38").value = -wshFAC_Finale.Range("E74").value  'GST $
+        .Range("B39").value = -wshFAC_Finale.Range("E75").value  'PST $
+        .Range("B40").value = wshFAC_Finale.Range("E79").value   'Deposit
     End With
     
     Application.EnableEvents = True
@@ -316,7 +337,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     firstFreeRow = wshFAC_Entête.Range("A9999").End(xlUp).row + 1
     
     With wshFAC_Entête
-        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
+        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = CDate(wshFAC_Brouillon.Range("O3").value)
         .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
@@ -325,22 +346,23 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("B26").value
         .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("B27").value
         
-        .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("F71").value
-        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("C72").value
-        .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("F72").value
-        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("C73").value
-        .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("F73").value
-        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
-        .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("F74").value
+        .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("E69").value
         
-        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("D76").value
-        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("F76").value
-        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("D77").value
-        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("F77").value
+        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("B70").value
+        .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("E70").value
+        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("B71").value
+        .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("E71").value
+        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("B72").value
+        .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("E72").value
         
-        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("F79").value
+        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
+        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("E74").value
+        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("C75").value
+        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("E75").value
         
-        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("F81").value
+        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("E77").value
+        
+        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
     End With
     
     Call Output_Timer_Results("FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
@@ -356,7 +378,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Application.ScreenUpdating = False
     
     Dim rowLastService As Long
-    rowLastService = wshFAC_Finale.Range("C70").End(xlUp).row
+    rowLastService = wshFAC_Finale.Range("B64").End(xlUp).row
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
@@ -379,12 +401,12 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
         'Add fields to the recordset before updating it
         rs.AddNew
         With wshFAC_Finale
-            rs.Fields("Inv_No") = .Range("F29").value
-            rs.Fields("Description") = .Range("C" & r).value
-            rs.Fields("Heures") = .Range("D" & r).value
-            rs.Fields("Taux") = .Range("E" & r).value
-            If .Range("F" & r).value <> "" Then
-                rs.Fields("Honoraires") = .Range("F" & r).value
+            rs.Fields("Inv_No") = .Range("E28").value
+            rs.Fields("Description") = .Range("B" & r).value
+            rs.Fields("Heures") = .Range("C" & r).value
+            rs.Fields("Taux") = .Range("D" & r).value
+            If .Range("E" & r).value <> "" Then
+                rs.Fields("Honoraires") = .Range("E" & r).value
             End If
             rs.Fields("Inv_Row") = r
             'rs.Fields("Row") = ""
@@ -419,7 +441,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the last entered service
     Dim lastEnteredService As Long
-    lastEnteredService = wshFAC_Finale.Range("C70").End(xlUp).row
+    lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).row
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
     'Get the first free row
@@ -429,11 +451,11 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     Dim i As Integer
     For i = 34 To lastEnteredService
         With wshFAC_Détails
-            .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
-            .Range("B" & firstFreeRow).value = wshFAC_Finale.Range("C" & i).value
-            .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("D" & i).value
-            .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("E" & i).value
-            .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("F" & i).value
+            .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
+            .Range("B" & firstFreeRow).value = wshFAC_Finale.Range("B" & i).value
+            .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("C" & i).value
+            .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("D" & i).value
+            .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("E" & i).value
             .Range("F" & firstFreeRow).value = i
             firstFreeRow = firstFreeRow + 1
         End With
@@ -471,13 +493,13 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     'Add fields to the recordset before updating it
     rs.AddNew
     With wshFAC_Finale
-        rs.Fields("Invoice_No") = .Range("F29").value
+        rs.Fields("Invoice_No") = .Range("E28").value
         rs.Fields("Invoice_Date") = CDate(wshFAC_Brouillon.Range("O3").value)
         rs.Fields("Customer") = .Range("B24").value
         rs.Fields("Status") = "Unpaid"
         rs.Fields("Terms") = "Net 30"
         rs.Fields("Due_Date") = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
-        rs.Fields("Total") = .Range("F83").value
+        rs.Fields("Total") = .Range("E81").value
         'rs.Fields("Total_Paid") = ""
         'rs.Fields("Balance") = ""
         'rs.Fields("Days_Overdue") = ""
@@ -513,13 +535,13 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     firstFreeRow = wshCC.Range("A9999").End(xlUp).row + 1
    
     With wshCC
-        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("F29")
+        .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
         .Range("D" & firstFreeRow).value = "Unpaid"
         .Range("E" & firstFreeRow).value = "Net 30"
         .Range("F" & firstFreeRow).value = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
-        .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("F83").value
+        .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("E81").value
         .Range("H" & firstFreeRow).formula = ""
         .Range("I" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
         .Range("J" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
@@ -736,7 +758,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     Application.EnableEvents = False
     
     With wshFAC_Brouillon
-        .Range("J47:P59").ClearContents
+        .Range("J47:P60").ClearContents
         
         Call SetLabels(.Range("K47"), "FAC_Label_SubTotal_1")
         Call SetLabels(.Range("K51"), "FAC_Label_SubTotal_2")
@@ -746,28 +768,30 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call SetLabels(.Range("K57"), "FAC_Label_Deposit")
         Call SetLabels(.Range("K59"), "FAC_Label_AmountDue")
         
-        .Range("O47").formula = "=SUM(O11:O45)" 'Fees sub-total
+        .Range("M47").formula = "=sum(M11:M45)" 'Total hours"
+        .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
+        .Range("O47").formula = "=M47*N47"                               'Fees sub-total
         .Range("O47").Font.Bold = True
         
         .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value 'Misc. # 1 - Descr.
-        .Range("O48").value = "" 'Misc. # 1 - Amount
+        .Range("O48").value = ""                                        'Misc. # 1 - Amount
         .Range("M49").value = wshAdmin.Range("FAC_Label_Frais_2").value 'Misc. # 2 - Descr.
-        .Range("O49").value = "" 'Misc. # 2 - Amount
+        .Range("O49").value = ""                                        'Misc. # 2 - Amount
         .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value 'Misc. # 3 - Descr.
-        .Range("O50").value = "" 'Misc. # 3 - Amount
+        .Range("O50").value = ""                                        'Misc. # 3 - Amount
         
-        .Range("O51").formula = "=sum(O47:O50)" 'Sub-total
+        .Range("O51").formula = "=sum(O47:O50)"                         'Sub-total
         .Range("O51").Font.Bold = True
         
-        .Range("N52").value = wshFAC_Brouillon.Range("B29").value 'GST Rate
+        .Range("N52").value = wshFAC_Brouillon.Range("B29").value       'GST Rate
         .Range("N52").NumberFormat = "0.00%"
-        .Range("O52").formula = "=round(o51*n52,2)" 'GST Amnt
-        .Range("N53").value = wshFAC_Brouillon.Range("B30").value 'PST Rate
+        .Range("O52").formula = "=round(o51*n52,2)"                     'GST Amnt
+        .Range("N53").value = wshFAC_Brouillon.Range("B30").value       'PST Rate
         .Range("N53").NumberFormat = "0.000%"
-        .Range("O53").formula = "=round(o51*n53,2)" 'GST Amnt
-        .Range("O55").formula = "=sum(o51:o54)" 'Grand Total"
-        .Range("O57").value = "" 'Deposit Amount
-        .Range("O59").formula = "=O55-O57" 'Deposit Amount
+        .Range("O53").formula = "=round(o51*n53,2)"                     'PST Amnt
+        .Range("O55").formula = "=sum(o51:o54)"                         'Grand Total"
+        .Range("O57").value = ""
+        .Range("O59").formula = "=O55-O57"                              'Deposit Amount
         
     End With
     
@@ -783,50 +807,48 @@ Sub FAC_Finale_Setup_All_Cells()
     
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
-        .Range("B23").formula = ""
-        .Range("B24").formula = ""
-        .Range("B25").formula = ""
-        .Range("B26").formula = ""
-        .Range("B27").formula = ""
-        .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
-'        .Range("B23").formula = "=if(FAC_Brouillon!K3<>"""", FAC_Brouillon!K3, """")"
-'        .Range("B24").formula = "=IF(FAC_Brouillon!K4<>"""", FAC_Brouillon!K4, """")"
-'        .Range("B25").formula = "=if(FAC_Brouillon!K5<>"""", FAC_Brouillon!K5, """")"
-'        .Range("B26").formula = "=if(FAC_Brouillon!K6<>"""", FAC_Brouillon!K6, """")"
-'        .Range("B27").formula = "=if(FAC_Brouillon!K7<>"""", FAC_Brouillon!K7, """")"
-'        .Range("F29").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
+        .Range("B23:B27").value = ""
+        .Range("E28").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
         
-        .Range("F34:F69").formula = "=if(and(D34<>0,E34<>0),D34*E34,"""")"
+        .Range("C65").value = "Heures"                               'Summary Heading
+        .Range("D65").value = "Taux"                                 'Summary Heading
+        .Range("C66").formula = "=" & wshFAC_Brouillon.name & "!M47" 'Hours summary
+        .Range("D66").formula = "=" & wshFAC_Brouillon.name & "!N47" 'Hourly Rate
+        
+        With .Range("C65:D66")
+            .Font.ThemeColor = xlThemeColorLight1
+            .Font.TintAndShade = 0
+        End With
 
-        Call SetLabels(.Range("B71"), "FAC_Label_SubTotal_1")
-        Call SetLabels(.Range("B75"), "FAC_Label_SubTotal_2")
-        Call SetLabels(.Range("B76"), "FAC_Label_TPS")
-        Call SetLabels(.Range("B77"), "FAC_Label_TVQ")
-        Call SetLabels(.Range("B79"), "FAC_Label_GrandTotal")
-        Call SetLabels(.Range("B81"), "FAC_Label_Deposit")
-        Call SetLabels(.Range("B83"), "FAC_Label_AmountDue")
+        Call SetLabels(.Range("B69"), "FAC_Label_SubTotal_1")
+        Call SetLabels(.Range("B73"), "FAC_Label_SubTotal_2")
+        Call SetLabels(.Range("B74"), "FAC_Label_TPS")
+        Call SetLabels(.Range("B75"), "FAC_Label_TVQ")
+        Call SetLabels(.Range("B77"), "FAC_Label_GrandTotal")
+        Call SetLabels(.Range("B79"), "FAC_Label_Deposit")
+        Call SetLabels(.Range("B81"), "FAC_Label_AmountDue")
 
-        .Range("F71").formula = "=SUM(F34:F69)"                      'Fees Sub-Total
+        .Range("E69").formula = "=C66*D66"                           'Fees Sub-Total
         
-        .Range("C72").value = "='" & wshFAC_Brouillon.name & "'!M48" 'Misc. Amount # 1 - Description
-        .Range("F72").value = "='" & wshFAC_Brouillon.name & "'!O48" 'Misc. Amount # 1
+        .Range("B70").value = "='" & wshFAC_Brouillon.name & "'!M48" 'Misc. Amount # 1 - Description
+        .Range("E70").value = "='" & wshFAC_Brouillon.name & "'!O48" 'Misc. Amount # 1
         
-        .Range("C73").value = "='" & wshFAC_Brouillon.name & "'!M49" 'Misc. Amount # 2 - Description
-        .Range("F73").value = "='" & wshFAC_Brouillon.name & "'!O49" 'Misc. Amount # 2
+        .Range("B71").value = "='" & wshFAC_Brouillon.name & "'!M49" 'Misc. Amount # 2 - Description
+        .Range("E71").value = "='" & wshFAC_Brouillon.name & "'!O49" 'Misc. Amount # 2
         
-        .Range("C74").value = "='" & wshFAC_Brouillon.name & "'!M50" 'Misc. Amount # 3 - Description
-        .Range("F74").value = "='" & wshFAC_Brouillon.name & "'!O50" 'Misc. Amount # 3
+        .Range("B72").value = "='" & wshFAC_Brouillon.name & "'!M50" 'Misc. Amount # 3 - Description
+        .Range("E72").value = "='" & wshFAC_Brouillon.name & "'!O50" 'Misc. Amount # 3
         
-        .Range("F75").formula = "=SUM(F71:F74)"                      'Invoice Sub-Total
+        .Range("E73").formula = "=SUM(E69:E72)"                      'Invoice Sub-Total
         
-        .Range("D76").value = "='" & wshFAC_Brouillon.name & "'!N52" 'GST Rate
-        .Range("F76").formula = "=round(F75*D76,2)"                    'GST Amount"
-        .Range("D77").value = "='" & wshFAC_Brouillon.name & "'!N53" 'PST Rate
-        .Range("F77").formula = "=round(F75*D77,2)"                'PST Amount
+        .Range("C74").value = "='" & wshFAC_Brouillon.name & "'!N52" 'GST Rate
+        .Range("E74").formula = "=round(E73*C74,2)"                  'GST Amount"
+        .Range("C75").value = "='" & wshFAC_Brouillon.name & "'!N53" 'PST Rate
+        .Range("E75").formula = "=round(E73*C75,2)"                  'PST Amount
         
-        .Range("F79").value = "=SUM(F75:F77)" 'Total including taxes
-        .Range("F81").value = "='" & wshFAC_Brouillon.name & "'!O57" 'Deposit Amount
-        .Range("F83").value = "=F79-F81" 'Total due on that invoice
+        .Range("E77").value = "=SUM(E73:E75)"                        'Total including taxes
+        .Range("E79").value = "='" & wshFAC_Brouillon.name & "'!O57" 'Deposit Amount
+        .Range("E81").value = "=E77-E79"                             'Total due on that invoice
     End With
     
     Application.EnableEvents = True
@@ -845,7 +867,7 @@ End Sub
 Sub FAC_Brouillon_Goto_Misc_Charges()
     
     ActiveWindow.SmallScroll Down:=3
-    wshFAC_Brouillon.Range("O48").Select 'Misc Amount 1
+    wshFAC_Brouillon.Range("M47").Select 'Hours Summary
     
 End Sub
 
@@ -1166,19 +1188,31 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
 End Sub
 
 Sub Cacher_Heures()
-    With wshFAC_Finale.Range("D32:F69")
+    With wshFAC_Finale.Range("C34:E63")
         .Font.ThemeColor = xlThemeColorDark1
         .Font.TintAndShade = 0
     End With
 End Sub
 
 Sub Montrer_Heures()
-    
-    With wshFAC_Finale.Range("D32:F69")
+    With wshFAC_Finale.Range("C34:E63")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With
+End Sub
 
+Sub Cacher_Sommaire_Heures()
+    With wshFAC_Finale.Range("C65:D66")
+        .Font.ThemeColor = xlThemeColorDark1
+        .Font.TintAndShade = 0
+    End With
+End Sub
+
+Sub Montrer_Sommaire_Heures()
+    With wshFAC_Finale.Range("C65:D66")
+        .Font.ThemeColor = xlThemeColorLight1
+        .Font.TintAndShade = 0
+    End With
 End Sub
 
 Sub Goto_Onglet_FAC_Brouillon()
@@ -1493,7 +1527,14 @@ Sub test_AF_TEC() '2024-03-13 @ 11:58
 
 End Sub
 
+Sub FAC_Brouillon_Input_Misc_Description(rowBrouillon As Long, rowFinale As Long)
 
+    Dim service As String
+    service = Application.InputBox("", Title:="Description / Commentaire", Type:=2)
+    wshFAC_Brouillon.Range("L" & rowBrouillon).value = "'- " & service
+    wshFAC_Finale.Range("B" & rowFinale).value = "'- " & service
+    
+End Sub
 
 
 
