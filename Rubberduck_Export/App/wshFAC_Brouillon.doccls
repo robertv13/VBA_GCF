@@ -56,6 +56,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
         
     End If
     
+    If Not Intersect(Target, wshFAC_Brouillon.Range("A7:A46")) Is Nothing Then
+        MsgBox Target.Address
+    End If
     If previousCellAddress <> "" Then
         'Check if the user moved out of the invoice date cell
         If previousCellAddress = "$O$3" Then
@@ -118,6 +121,10 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         Set rng = wshFAC_Brouillon.Range("L11")
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
+    End If
+    
+    If Not Intersect(Target, wshFAC_Brouillon.Range("C7:C46")) Is Nothing Then
+        MsgBox Target.Address
     End If
     
     'Services entry

@@ -338,7 +338,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
-        .Range("B" & firstFreeRow).value = CDate(wshFAC_Brouillon.Range("O3").value)
+        .Range("B" & firstFreeRow).value = Format(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy")
         .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
         .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
@@ -575,7 +575,12 @@ Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) '
 
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
+        If wshTEC_Local.Range("BD" & r).value = True Or _
+            wshFAC_Brouillon.Range("C" & r + 5) <> True Then
+            GoTo next_iteration
+        End If
         TEC_ID = wshTEC_Local.Range("AT" & r).value
+        
         'Open the recordset for the specified ID
         SQL = "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
@@ -598,6 +603,7 @@ Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) '
         'Update the recordset (create the record)
         rs.update
         rs.Close
+next_iteration:
     Next r
     
     'Close recordset and connection
@@ -624,16 +630,18 @@ Sub TEC_Record_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow
     lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
     Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
-    Dim r As Integer, rowToBeUpdated As Long
+    Dim r As Integer, rowToBeUpdated As Long, tecID As Long
     For r = firstResultRow To lastResultRow
-        Dim tecID As Long
-        tecID = wshTEC_Local.Range("AT" & r).value
-        rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
-        wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
-        wshTEC_Local.Range("L" & rowToBeUpdated).value = True
-        wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()
-        wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
-        wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
+        If wshTEC_Local.Range("BD" & r).value = False And _
+            wshFAC_Brouillon.Range("C" & r + 5) = True Then
+            tecID = wshTEC_Local.Range("AT" & r).value
+            rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+            wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
+            wshTEC_Local.Range("L" & rowToBeUpdated).value = True
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
+            wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
+        End If
     Next r
     
     Call Output_Timer_Results("TEC_Record_Update_As_Billed_Locally()", timerStart)
@@ -873,15 +881,20 @@ End Sub
 
 Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
+    Dim timerStart As Double: timerStart = Timer
+    
     Application.EnableEvents = False
     
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Range("D999").End(xlUp).row
     If lastRow > 7 Then
         wshFAC_Brouillon.Range("D8:I" & lastRow + 2).ClearContents
+        Call FAC_Brouillon_TEC_Remove_Check_Box(lastRow)
     End If
-
+    
     Application.EnableEvents = True
+
+    Call Output_Timer_Results("FAC_Brouillon_Clear_All_TEC_Displayed()", timerStart)
 
 End Sub
 
@@ -966,11 +979,15 @@ No_Sort_Required:
 
 End Sub
 
-Sub TEC_Filtered_Entries_Copy_To_FAC_Brouillon()
+Sub TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:10
+
+    Dim timerStart As Double: timerStart = Timer
 
     Dim lastUsedRow As Long
     lastUsedRow = wshTEC_Local.Range("AT9999").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
+    
+    Application.ScreenUpdating = False
     
     Dim arr() As Variant, totalHres As Double
     ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As Variant
@@ -990,9 +1007,22 @@ Sub TEC_Filtered_Entries_Copy_To_FAC_Brouillon()
         'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
         Set rng = wshFAC_Brouillon.Range("D8").Resize(lastUsedRow - 2, UBound(arr, 2))
         rng.value = arr
-        wshFAC_Brouillon.Range("G" & lastUsedRow + 7).value = totalHres
+    End With
+    
+    With wshFAC_Brouillon
+        .Range("D8:H" & lastRow + 7).Font.Color = vbBlack
+        .Range("D8:H" & lastRow + 7).Font.Bold = False
+        
+        .Range("G" & lastUsedRow + 7).value = totalHres
         .Range("G8:G" & lastUsedRow + 7).NumberFormat = "##0.00"
     End With
+        
+    Call FAC_Brouillon_TEC_Add_Check_Box(lastUsedRow)
+
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("TEC_Filtered_Entries_Copy_To_FAC_Brouillon()", timerStart)
+    
 End Sub
  
 Sub Invoice_Delete()
@@ -1536,6 +1566,64 @@ Sub FAC_Brouillon_Input_Misc_Description(rowBrouillon As Long, rowFinale As Long
     
 End Sub
 
+Sub FAC_Brouillon_TEC_Add_Check_Box(row As Long)
 
+    Dim timerStart As Double: timerStart = Timer
+    
+    Dim chkBoxRange As Range
+    Set chkBoxRange = wshFAC_Brouillon.Range("C8:C" & row + 5)
+    
+    Application.EnableEvents = False
+    
+    Dim cell As Range
+    Dim cbx As CheckBox
+        For Each cell In chkBoxRange
+        ' Check if the cell is empty and doesn't have a checkbox already
+        If Cells(cell.row, 8).value = False Then 'IsInvoiced = False
+            'Create a checkbox linked to the cell
+            Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.width, cell.Height)
+            With cbx
+                .name = "chkBox - " & cell.row
+                .value = True
+                .text = ""
+                .LinkedCell = cell.Address
+                .Display3DShading = True
+            End With
+        End If
+    Next cell
 
+    With wshFAC_Brouillon
+        .Range("D8:D" & row + 5).NumberFormat = "dd/mm/yyyy"
+        .Range("D8:D" & row + 5).Font.Bold = False
+        
+        .Range("D" & row + 7).formula = "=SUMIF(C8:C" & row + 5 & ",True,G8:G" & row + 5 & ")"
+        .Range("D" & row + 7).NumberFormat = "##0.00"
+        .Range("D" & row + 7).Font.Bold = True
+    End With
+    Application.EnableEvents = True
+
+    Call Output_Timer_Results("FAC_Brouillon_TEC_Add_Check_Box()", timerStart)
+
+End Sub
+
+Sub FAC_Brouillon_TEC_Remove_Check_Box(row As Long)
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    Application.EnableEvents = False
+    
+    Dim cbx As Shape
+    For Each cbx In wshFAC_Brouillon.Shapes
+        If InStr(cbx.name, "chkBox - ") Then
+            cbx.delete
+        End If
+    Next cbx
+    wshFAC_Brouillon.Range("C7:C" & row).value = "" 'Remove text left over
+    wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the total formula
+
+    Application.EnableEvents = True
+
+    Call Output_Timer_Results("FAC_Brouillon_TEC_Remove_Check_Box()", timerStart)
+
+End Sub
 
