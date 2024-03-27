@@ -78,8 +78,8 @@ Sub wshGL_EJ_Clear_All_Cells()
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
     With wshGL_EJ
-        .Range("F4,F6:K6").ClearContents
-        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
+        .Range("F4,F6:K6").Clearcontents
+        .Range("E9:G23,H9:H23,I9:I23,J9:L23").Clearcontents
         .ckbRecurrente = False
     Application.EnableEvents = True
     wshGL_EJ.Activate
@@ -97,7 +97,7 @@ Sub GL_EJ_Auto_Build_Summary()
     Dim lastUsedRow2 As Long
     lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
+        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).Clearcontents
     End If
     
     With wshGL_EJ_Recurrente

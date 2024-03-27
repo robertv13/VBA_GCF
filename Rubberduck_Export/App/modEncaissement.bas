@@ -5,7 +5,7 @@ Dim payRow As Long
 Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow As Long
 
 Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
-    wshENC_Saisie.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
+    wshENC_Saisie.Range("D13:K42").Clearcontents 'Clear the invoices area before loading it
     With wshCC
         lastResultRow = .Range("A99999").End(xlUp).row 'Last row
         If lastResultRow < 3 Then Exit Sub
@@ -98,7 +98,7 @@ End Sub
 
 Sub Encaissement_Add_New() '2024-02-07 @ 12:39
     wshENC_Saisie.Range("B2").value = False
-    wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents 'Clear Fields
+    wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").Clearcontents 'Clear Fields
     wshENC_Saisie.Range("J3").value = Date 'Set Default Date
     wshENC_Saisie.Range("F5").value = "Banque" ' Set Default type
 End Sub
@@ -168,7 +168,7 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         End If
         payRow = .Range("B4").value 'Payment Row
         .Range("B2").value = True
-        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents
+        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").Clearcontents
         'Update worksheet fields
         .Range("J3").value = wshENC_Entête.Cells(payRow, 2).value
         .Range("F3").value = wshENC_Entête.Cells(payRow, 3).value
@@ -178,7 +178,7 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         
         'Load Pay Items
         With wshENC_Détails
-            .Range("M4:T999999").ClearContents
+            .Range("M4:T999999").Clearcontents
             lastRow = .Range("A999999").End(xlUp).row
             If lastRow < 4 Then GoTo NoData
             .Range("A3:G" & lastRow).AdvancedFilter _
@@ -280,7 +280,7 @@ End Sub
 Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+    wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -320,7 +320,7 @@ End Sub
 Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
+    wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String

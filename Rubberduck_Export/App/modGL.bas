@@ -13,7 +13,7 @@ Sub GL_Build_TB() '2024-03-05 @ 13:34
     Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
     
     'Clear Detail transaction section
-    wshGL_BV.Range("L4:T9999").ClearContents
+    wshGL_BV.Range("L4:T9999").Clearcontents
     With wshGL_BV.Range("S4:S9999").Interior
         .Pattern = xlNone
         .TintAndShade = 0
@@ -114,7 +114,7 @@ End Sub
 Sub GL_Display_Trans_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
     'Clear the display area & display the account number & description
-    wshGL_BV.Range("M4:T99999").ClearContents
+    wshGL_BV.Range("M4:T99999").Clearcontents
     wshGL_BV.Range("L2").value = "Du " & minDate & " au " & maxDate
     
     wshGL_BV.Range("L4").Font.Bold = True
@@ -203,7 +203,7 @@ Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("P2").CurrentRegion
         Call ClearRangeBorders(rgResult)
-        rgResult.ClearContents
+        rgResult.Clearcontents
         Set rgData = .Range("A1").CurrentRegion
         .Range("L3").value = GLNo
         .Range("M3").value = ">=" & Format(minDate, "mm-dd-yyyy")

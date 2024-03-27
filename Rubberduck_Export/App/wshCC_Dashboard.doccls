@@ -23,7 +23,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             .Visible = msoCTrue
         End With
     Else
-        Range("AA2").ClearContents
+        Range("AA2").Clearcontents
     End If
 
 End Sub

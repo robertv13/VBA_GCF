@@ -2,23 +2,19 @@
 
 Private Sub Worksheet_Activate()
 
+    Dim timerStart As Double: timerStart = Timer
+   
     Application.ScreenUpdating = False
     
-    Call Handle_Activation
+    Call TEC_DB_Update_All
     
     'Set the zoom factor to 98% when this worksheet is activated
     ActiveWindow.Zoom = 98
 
     Application.ScreenUpdating = True
 
-End Sub
+    Call Output_Timer_Results("wsh_TEC_Local_Worksheet_Activate()", timerStart)
 
-Sub Handle_Activation()
-
-    Call TEC_Local_Push_To_DB_Data
-    
-    Call TEC_Refresh_All_DB_Pivot_Table
-    
 End Sub
 
 Sub Back_To_TEC_Menu()

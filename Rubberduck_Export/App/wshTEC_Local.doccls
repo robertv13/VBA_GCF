@@ -22,7 +22,7 @@ Sub Test_Advanced_Filter() 'Advanced Filter for TEC records - 2024-03-15 @ 08:07
         Dim dRng As Range
         lastUsedRow = .Range("AT99999").End(xlUp).row
         Set dRng = .Range("AT2:BH" & lastUsedRow)
-        dRng.Offset(1, 0).ClearContents
+        dRng.Offset(1, 0).Clearcontents
         .Range("AP10").value = ""
         
         Dim criteriaRng As Range

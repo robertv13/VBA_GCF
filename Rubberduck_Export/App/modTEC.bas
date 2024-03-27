@@ -39,6 +39,8 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     Call TEC_AdvancedFilter_And_Sort
     Call Refresh_ListBox_And_Add_Hours
     
+    Call TEC_DB_Update_All
+    
     'Reset command buttons
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
     
@@ -134,7 +136,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
 Clean_Exit:
 
-    .txtTEC_ID.value = ""
+    ufSaisieHeures.txtTEC_ID.value = ""
 
     ufSaisieHeures.txtClient.SetFocus
 
@@ -479,7 +481,7 @@ EndOfProcedure:
     
 End Sub
 
-Sub TEC_Local_Push_To_DB_Data()
+Sub TEC_DB_Push_TEC_Local_To_DB_Data()
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -509,14 +511,27 @@ Sub TEC_Local_Push_To_DB_Data()
     Set rngTo = wshTEC_DB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
     
-    Call Output_Timer_Results("TEC_Local_Push_To_DB_Data()", timerStart)
+    Call Output_Timer_Results("TEC_DB_Push_TEC_Local_To_DB_Data()", timerStart)
 
 End Sub
 
-Sub TEC_Refresh_All_DB_Pivot_Table()
+Sub TEC_DB_Update_All()
+
+    Dim timerStart As Double: timerStart = Timer
+    
+    Call TEC_DB_Push_TEC_Local_To_DB_Data
+    Call TEC_DB_Refresh_All_Pivot_Tables
+    
+    Call Output_Timer_Results("TEC_DB_Update_All()", timerStart)
+
+End Sub
+
+Sub TEC_DB_Refresh_All_Pivot_Tables()
+
     Dim pt As PivotTable
     For Each pt In wshTEC_DB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
+
 End Sub
 

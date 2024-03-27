@@ -44,10 +44,6 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
 End Sub
 
-Private Sub txtTEC_ID_Change()
-
-End Sub
-
 Sub UserForm_Activate()
 
     Dim timer3Start As Double: timer3Start = Timer
@@ -89,7 +85,7 @@ Private Sub UserForm_Terminate()
     Dim timerStart As Double: timerStart = Timer
 
     'Clear the admin control cells
-    wshAdmin.Range("B3:B7").ClearContents
+    wshAdmin.Range("B3:B7").Clearcontents
     
     ThisWorkbook.Save
     
@@ -162,7 +158,6 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Me.txtDate.value = strDate
     
-    Debug.Print strDate & " - " & Format(Now(), "dd-mm-yyyy")
     If CDate(strDate) > Format(Now(), "dd-mm-yyyy") Then
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0

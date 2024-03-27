@@ -8,37 +8,38 @@ Sub List_All_Worksheets()
     'Loop through all worksheets in the active workbook
     For Each ws In ThisWorkbook.Sheets
         Dim spaces As String
-        spaces = Space(25 - Len(ws.codeName))
+        spaces = Space(25 - Len(ws.CodeName))
         'Print the name of each worksheet to the Immediate Window
-        Debug.Print "codeName = " & ws.codeName & spaces & "Name = " & ws.name; ""
+        Debug.Print "codeName = " & ws.CodeName & spaces & "Name = " & ws.name; ""
     Next ws
     
 End Sub
 
-Sub List_All_Formulas() '2024-02-19 @ 07:41 - ChatGPT
+Sub List_All_Formulas() '2024-03-26 @ 14:20 - ChatGPT
+    
     'Set a reference to the current workbook
     Dim wb As Workbook: Set wb = ThisWorkbook
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long, r As Long, c As Long
     lastUsedRow = wshzDocFormules.Range("E99999").End(xlUp).row 'Last used row
-    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).ClearContents
+    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).Clearcontents
     
     'Create an Array to receive the formulas informations
-    Dim OutputArray(1499, 7) As Variant
+    Dim OutputArray(10000, 7) As Variant
     
     'Loop through each worksheet
     Dim ws As Worksheet
-    Dim codeName As String, name As String, usedRange As String, cellsCount As String
+    Dim CodeName As String, name As String, usedRange As String, cellsCount As String
     r = 0
     For Each ws In wb.Sheets
-        If ws.codeName = "wshzDocNamedRange" Or _
-            ws.codeName = "wshzDocFormules" Then
+        If ws.CodeName = "wshzDocNamedRange" Or _
+            ws.CodeName = "wshzDocFormules" Then
                 GoTo Continue_for_each_ws
         End If
-        Debug.Print r; ws.name; Tab(20); ws.codeName; Tab(45); Now()
+        Debug.Print r; ws.name; Tab(20); ws.CodeName; Tab(45); Now()
         'Save information for this worksheet
-        codeName = ws.codeName
+        CodeName = ws.CodeName
         name = ws.name
         usedRange = ws.usedRange.Address
         cellsCount = ws.usedRange.count
@@ -48,7 +49,7 @@ Sub List_All_Formulas() '2024-02-19 @ 07:41 - ChatGPT
             'Does the cell contain a Formula
             If Left(cell.formula, 1) = "=" Then
                 'Write formula information to the destination worksheet
-                OutputArray(r, 0) = codeName
+                OutputArray(r, 0) = CodeName
                 OutputArray(r, 1) = name
                 OutputArray(r, 2) = usedRange
                 OutputArray(r, 3) = cellsCount
@@ -68,7 +69,7 @@ Continue_for_each_ws:
 
 End Sub
 
-Sub List_All_Subs_And_Functions() '2024-03-15 @ 21:26
+Sub List_All_Subs_And_Functions() '2024-03-26 @ 14:27
     
     Dim timerStart As Double: timerStart = Timer
 
@@ -163,7 +164,7 @@ Sub List_All_Subs_And_Functions() '2024-03-15 @ 21:26
     'Prepare the output worksheet
     Dim lastUsedRow As Long
     lastUsedRow = wshzDocSubsAndFunctions.Range("A999").End(xlUp).row 'Last Used Row
-    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).ClearContents
+    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).Clearcontents
 
     Dim numColumns As Long
     numColumns = UBound(arr, 2)
@@ -188,38 +189,7 @@ Sub List_All_Subs_And_Functions() '2024-03-15 @ 21:26
 
 End Sub
 
-Sub List_All_Shapes_Properties()
-    Dim ws As Worksheet
-    Dim shp As Shape
-    
-    ' Set the worksheet (change "Sheet1" to your sheet's name)
-    Set ws = ActiveSheet
-    
-    Dim r As Integer
-    r = 2
-    ws.Range("D" & r).value = "Type"
-    ws.Range("E" & r).value = "Shape Name"
-    ws.Range("F" & r).value = "ZOrder"
-    ws.Range("G" & r).value = "Top"
-    ws.Range("H" & r).value = "Left"
-    ws.Range("I" & r).value = "Width"
-    ws.Range("J" & r).value = "Height"
-    
-    r = 3
-    'Loop through all shapes on the worksheet
-    For Each shp In ws.Shapes
-        ws.Range("D" & r).value = shp.Type
-        ws.Range("E" & r).value = shp.name
-        ws.Range("F" & r).value = shp.ZOrderPosition
-        ws.Range("G" & r).value = shp.Top
-        ws.Range("H" & r).value = shp.Left
-        ws.Range("I" & r).value = shp.width
-        ws.Range("J" & r).value = shp.Height
-        r = r + 1
-    Next shp
-End Sub
-
-Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
+Sub List_All_Named_Ranges() '2024-03-26 @ 14:30 - From ChatGPT
     
     Application.ScreenUpdating = False
     
@@ -230,10 +200,10 @@ Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
     wbName = ThisWorkbook.name
 
     'Setup and prepare the output worksheet
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DocNamedRanges")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Doc_NamedRanges")
     Dim r As Long
     r = ws.Range("A9999").End(xlUp).row 'Last Used Row
-    ws.Range("A2:F" & r).ClearContents
+    ws.Range("A2:F" & r).Clearcontents
     r = 2
     
     'Loop through each named range in the workbook
@@ -241,7 +211,7 @@ Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
         Debug.Print nr.name
         ws.Cells(r, 1).value = nr.name
         ws.Cells(r, 2).value = "'" & nr.value
-        ws.Cells(r, 3).value = "'" & nr.Parent
+'        ws.Cells(r, 3).value = "'" & nr.Parent
         ws.Cells(r, 4).value = Now()
         r = r + 1
 '        'Check if the named range refers to the old workbook
@@ -255,7 +225,7 @@ Sub List_All_Named_Ranges() '2024-02-18 @ 07:23 - From ChatGPT
 
 End Sub
 
-Sub List_All_Conditional_Formatting() '2024-02-24 @ 07:36
+Sub List_All_Conditional_Formatting() '2024-03-26 @ 14:32
     
     Dim timerStart As Double: timerStart = Timer
 
@@ -290,10 +260,10 @@ Sub List_All_Conditional_Formatting() '2024-02-24 @ 07:36
     Set rng = Nothing
     
     'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("DocConditionalFormatting")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_ConditionalFormatting")
     Dim lastUsedRow As Long
     lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow).ClearContents
+    wsOutput.Range("A2:F" & lastUsedRow).Clearcontents
     
     wsOutput.Range("A2").Resize(numRows, numCols).value = arr
     
@@ -362,6 +332,37 @@ Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
 
 End Sub
 
+Sub List_All_Shapes_Properties()
+    Dim ws As Worksheet
+    Dim shp As Shape
+    
+    ' Set the worksheet (change "Sheet1" to your sheet's name)
+    Set ws = ActiveSheet
+    
+    Dim r As Integer
+    r = 2
+    ws.Range("D" & r).value = "Type"
+    ws.Range("E" & r).value = "Shape Name"
+    ws.Range("F" & r).value = "ZOrder"
+    ws.Range("G" & r).value = "Top"
+    ws.Range("H" & r).value = "Left"
+    ws.Range("I" & r).value = "Width"
+    ws.Range("J" & r).value = "Height"
+    
+    r = 3
+    'Loop through all shapes on the worksheet
+    For Each shp In ws.Shapes
+        ws.Range("D" & r).value = shp.Type
+        ws.Range("E" & r).value = shp.name
+        ws.Range("F" & r).value = shp.ZOrderPosition
+        ws.Range("G" & r).value = shp.Top
+        ws.Range("H" & r).value = shp.Left
+        ws.Range("I" & r).value = shp.width
+        ws.Range("J" & r).value = shp.Height
+        r = r + 1
+    Next shp
+End Sub
+
 Sub Protect_Unprotect_Worksheet()
     Dim password As String
     password = "GCmfp"
@@ -393,10 +394,10 @@ Sub Add_Columns_To_Active_Worksheet()
     Debug.Print colToAdd & " columns added to the worksheet."
 End Sub
 
-Sub Build_Worksheet_Columns() '2024-02-28 @ 06:40
+Sub Build_Worksheet_Columns() '2024-03-26 @ 14:35
 
     Dim arr(1 To 20, 1 To 2) As Variant
-    Dim output(1 To 200, 1 To 5) As Variant
+    Dim output(1 To 150, 1 To 5) As Variant
     Dim r As Long
     r = 0
     r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
@@ -404,13 +405,12 @@ Sub Build_Worksheet_Columns() '2024-02-28 @ 06:40
     r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
     r = r + 1: arr(r, 1) = "Doc_Log_Appli": arr(r, 2) = "A1:C1"
-    r = r + 1: arr(r, 1) = "Doc_Named_Ranges": arr(r, 2) = "A1:B1"
-    r = r + 1: arr(r, 1) = "Doc_Subs_&_Functions": arr(r, 2) = "A1:G1"
-    r = r + 1: arr(r, 1) = "Documentation": arr(r, 2) = "A1:E1"
+    r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
+    r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
     r = r + 1: arr(r, 1) = "Encaissements_Entête": arr(r, 2) = "A3:F3"
     r = r + 1: arr(r, 1) = "Encaissements_Détail": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "Factures": arr(r, 2) = "A3:T3"
-    r = r + 1: arr(r, 1) = "FacturesLignes": arr(r, 2) = "A3:G3"
+    r = r + 1: arr(r, 1) = "Factures_Entête": arr(r, 2) = "A3:T3"
+    r = r + 1: arr(r, 1) = "Factures_Détails": arr(r, 2) = "A3:G3"
     r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
     r = r + 1: arr(r, 1) = "EJ_Auto": arr(r, 2) = "C1:J1"
     r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
@@ -436,7 +436,7 @@ Sub Build_Worksheet_Columns() '2024-02-28 @ 06:40
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
     Dim lastUsedRow As Long
     lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
+    wsOutput.Range("A2:F" & lastUsedRow + 1).Clearcontents
     
     wsOutput.Range("A2").Resize(r, 5).value = output
     

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
-Global Const gAppVersion As String = "v2.B" '2024-03-20 @ 14:59
+Global Const gAppVersion As String = "v3.0" '2024-03-26 @ 14:19
 
 Public isTab_Order_Activated As Boolean
 
@@ -60,8 +60,8 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
-        If wsh.codeName <> "wshMenu" And _
-            InStr(wsh.codeName, "wshzDoc") = 0 Then
+        If wsh.CodeName <> "wshMenu" And _
+            InStr(wsh.CodeName, "wshzDoc") = 0 Then
                 wsh.Visible = xlSheetHidden
         End If
     Next wsh

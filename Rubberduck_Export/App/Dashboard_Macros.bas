@@ -37,7 +37,7 @@ Sub wshCC_Dashboard_Refresh()
     'Get Current Data
     With wshCC_Invoice_List 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
         lastRow = .Range("A999999").End(xlUp).row
-        .Range("A3:J" & lastRow).ClearContents
+        .Range("A3:J" & lastRow).Clearcontents
         
         'Copy AR_Entête to Invoice List
         Dim sourceRange As Range, targetRange As Range, maxRow As Long
@@ -48,7 +48,7 @@ Sub wshCC_Dashboard_Refresh()
         targetRange.value = sourceRange.value
 
         'Clear Prior Results
-        .Range("AB3:AJ9999").ClearContents
+        .Range("AB3:AJ9999").Clearcontents
         lastRow = .Range("A99999").End(xlUp).row
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
@@ -85,10 +85,10 @@ Sub wshCC_Dashboard_SelectAgingDetails()
 End Sub
 
 Sub Aging_Refresh()
-    wshCC_Dashboard.Range("B35:R499").ClearContents    'Clear Previous Results
+    wshCC_Dashboard.Range("B35:R499").Clearcontents    'Clear Previous Results
     With wshCC_Invoice_List
         'Clear Prior Results
-        .Range("AB3:AJ9999").ClearContents
+        .Range("AB3:AJ9999").Clearcontents
         lastRow = .Range("A99999").End(xlUp).row
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
@@ -102,12 +102,12 @@ Sub Aging_Refresh()
 End Sub
 
 Sub Aging_ShowCustDetail()
-    wshCC_Dashboard.Range("J34:R499").ClearContents    'Clear Previous Results
+    wshCC_Dashboard.Range("J34:R499").Clearcontents    'Clear Previous Results
     selRow = wshCC_Dashboard.Range("AA1").value        'Set Selected Row
     With wshCC_Invoice_List
         'Clear Prior Results
         lastRow = .Range("AB9999").End(xlUp).row + 1
-        .Range("AB3:AJ" & lastRow).ClearContents
+        .Range("AB3:AJ" & lastRow).Clearcontents
         lastRow = .Range("A99999").End(xlUp).row
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
@@ -133,10 +133,10 @@ Sub Aging_GoToInvoice()
 End Sub
 
 Sub AgingDetail_Refresh()
-    wshCC_Dashboard.Range("B507:J9999").ClearContents  'Clear Existing Data
+    wshCC_Dashboard.Range("B507:J9999").Clearcontents  'Clear Existing Data
     With wshCC_Invoice_List
         'Clear Prior Results
-        .Range("AB3:AJ9999").ClearContents
+        .Range("AB3:AJ9999").Clearcontents
         lastRow = .Range("A99999").End(xlUp).row
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas

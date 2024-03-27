@@ -13,7 +13,7 @@ Private Sub Worksheet_Activate()
     
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
-    wshGL_BV.Range("L4:T99999").ClearContents
+    wshGL_BV.Range("L4:T99999").Clearcontents
     wshGL_BV.Range("L2").value = ""
     wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
     wshGL_BV.Range("B10").value = 0
@@ -125,7 +125,7 @@ Sub Get_An_JE_Detail_Trans(no As Long)
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
 '        Call ClearRangeBorders(rgResult)
-        rgResult.ClearContents
+        rgResult.Clearcontents
         Set rgData = .Range("A1").CurrentRegion
         .Range("AA3").value = no
         

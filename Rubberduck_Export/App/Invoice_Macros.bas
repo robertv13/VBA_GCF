@@ -72,7 +72,7 @@ End Sub
 Sub Dashboard_Invoice_New()
     With Invoice
         .Range("B6").value = True                'Set Inv. Load to true
-        .Range("I3:J6,G5:G7,B9:I31,K9:K31").ClearContents
+        .Range("I3:J6,G5:G7,B9:I31,K9:K31").Clearcontents
         .Range("J1").value = .Range("B5").value  'Set Next invoice #
         .Range("I3").value = Date                'Set current Date
         .Range("B6").value = False               'Set inv. Load to false
@@ -95,7 +95,7 @@ Sub Dashboard_Invoice_Load()
         End If
         invRow = .Range("B3").value              'Invoice Row
         .Range("B6").value = True                'Set Inv. Load to true
-        .Range("I3:J6,G5:G7,B9:I31,K9:K31").ClearContents
+        .Range("I3:J6,G5:G7,B9:I31,K9:K31").Clearcontents
         .Range("I3").value = wshCC_Invoice_List.Range("B" & invRow).value 'Inv. Date
         .Range("G5").value = wshCC_Invoice_List.Range("C" & invRow).value 'Customer
         .Range("I4").value = wshCC_Invoice_List.Range("D" & invRow).value 'Inv. Status

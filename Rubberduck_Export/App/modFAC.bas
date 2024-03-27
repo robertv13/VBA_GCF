@@ -13,8 +13,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     If wshFAC_Brouillon.Range("B27").value = False Then
         With wshFAC_Brouillon
             .Range("B24").value = True
-            .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("J8:Q46").ClearContents
+            .Range("K3:L7,O3,O5").Clearcontents 'Clear cells for a new Invoice
+            .Range("J8:Q46").Clearcontents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
             
@@ -27,10 +27,10 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         End With
         
         With wshFAC_Finale
-            .Range("B21,B23:C27,E28").ClearContents
-            .Range("A34:F68").ClearContents
+            .Range("B21,B23:C27,E28").Clearcontents
+            .Range("A34:F68").Clearcontents
             .Range("E28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
-            .Range("B69:F81").ClearContents 'NOT the formulas
+            .Range("B69:F81").Clearcontents 'NOT the formulas
             
             Call FAC_Finale_Setup_All_Cells
         
@@ -41,7 +41,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
         'Move on to CLient Name
-        wshFAC_Brouillon.Range("E4:F4").ClearContents
+        wshFAC_Brouillon.Range("E4:F4").Clearcontents
         With wshFAC_Brouillon.Range("E4:F4").Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -53,9 +53,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
 
-    Dim shp As Shape
-    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
-    shp.Visible = True
+'    Dim shp As Shape
+'    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+'    shp.Visible = True
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -216,8 +216,10 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         End If
     End With
     
-    Call FAC_Prepare_GL_Posting
+    Call FAC_Finale_GL_Posting_Preparation
     
+    Call TEC_DB_Update_All '2024-03-21 @ 12:32
+
     Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
@@ -668,8 +670,8 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
             End If
         End If
         .Range("B24").value = True 'Set Invoice Load to true
-        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
-        wshFAC_Finale.Range("C34:F69").ClearContents
+        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").Clearcontents
+        wshFAC_Finale.Range("C34:F69").Clearcontents
         Dim InvListRow As Long
         InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
@@ -766,7 +768,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     Application.EnableEvents = False
     
     With wshFAC_Brouillon
-        .Range("J47:P60").ClearContents
+        .Range("J47:P60").Clearcontents
         
         Call SetLabels(.Range("K47"), "FAC_Label_SubTotal_1")
         Call SetLabels(.Range("K51"), "FAC_Label_SubTotal_2")
@@ -776,7 +778,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call SetLabels(.Range("K57"), "FAC_Label_Deposit")
         Call SetLabels(.Range("K59"), "FAC_Label_AmountDue")
         
-        .Range("M47").formula = "=sum(M11:M45)" 'Total hours"
+        .Range("M47").formula = "=IF(SUM(M11:M45),SOMME(M11:M45),B19)"   'Total hours entered OR TEC selected"
         .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=M47*N47"                               'Fees sub-total
         .Range("O47").Font.Bold = True
@@ -888,7 +890,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Range("D999").End(xlUp).row
     If lastRow > 7 Then
-        wshFAC_Brouillon.Range("D8:I" & lastRow + 2).ClearContents
+        wshFAC_Brouillon.Range("D8:I" & lastRow + 2).Clearcontents
         Call FAC_Brouillon_TEC_Remove_Check_Box(lastRow)
     End If
     
@@ -931,7 +933,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         
         'Clear the filtered rows area
         lastResultRow = .Range("AT9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("AT3:BH" & lastResultRow).ClearContents
+        If lastResultRow > 2 Then .Range("AT3:BH" & lastResultRow).Clearcontents
         
         Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
         Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)
@@ -1079,26 +1081,29 @@ Sub FAC_FINALE_Prev_PDF() '2024-03-02 @ 16:18
     
 End Sub
 
-Sub Creation_PDF_Email() 'RMV - 2023-12-17 @ 14:35
+Sub FAC_Finale_Creation_PDF_And_Email() 'RMV - 2023-12-17 @ 14:35
     
-    Call Create_PDF_Email_Sub(wshFAC_Brouillon.Range("O6").value)
+    Call FAC_Finale_Create_PDF_Email_Sub(wshFAC_Brouillon.Range("O6").value)
+    
+    Call FAC_Finale_Enable_Save_Button
 
 End Sub
 
-Sub Create_PDF_Email_Sub(noFacture As String)
+Sub FAC_Finale_Create_PDF_Email_Sub(noFacture As String)
+
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
     Dim result As Boolean
-    result = Create_PDF_Email_Func(noFacture, "CreateEmail")
+    result = FAC_Finale_Create_PDF_Email_Func(noFacture, "CreateEmail")
+
 End Sub
 
-Function Create_PDF_Email_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
+Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     
     Dim SaveAs As String
 
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    'NoFactFormate = Format(NoFacture, "000000")
     SaveAs = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
@@ -1110,10 +1115,10 @@ Function Create_PDF_Email_Func(noFacture As String, Optional action As String = 
 
     'Adjust Document Properties - 2023-10-06 @ 09:54
     With ActiveSheet.PageSetup
-        .LeftMargin = Application.InchesToPoints(0.1)
-        .RightMargin = Application.InchesToPoints(0.1)
-        .TopMargin = Application.InchesToPoints(0.1)
-        .BottomMargin = Application.InchesToPoints(0.1)
+        .LeftMargin = Application.InchesToPoints(0)
+        .RightMargin = Application.InchesToPoints(0)
+        .TopMargin = Application.InchesToPoints(0)
+        .BottomMargin = Application.InchesToPoints(0)
     End With
     
     'Create the PDF file and Save It
@@ -1130,7 +1135,8 @@ Function Create_PDF_Email_Func(noFacture As String, Optional action As String = 
         Dim myMail As Outlook.MailItem
         
         Set outlookApp = New Outlook.Application
-        Set myMail = outlookApp.CreateItem(olMailItem)
+        Set myMail = outlookApp.CreateItemFromTemplate
+'        Set myMail = outlookApp.CreateItem(olMailItem)
 
         Dim source_file As String
         source_file = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
@@ -1156,15 +1162,16 @@ Function Create_PDF_Email_Func(noFacture As String, Optional action As String = 
     End If
     
 SaveOnly:
-    Create_PDF_Email_Func = True 'Return value
+    FAC_Finale_Create_PDF_Email_Func = True 'Return value
     GoTo EndMacro
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-    Create_PDF_Email_Func = False 'Return value
+    FAC_Finale_Create_PDF_Email_Func = False 'Return value
 
 EndMacro:
     Application.ScreenUpdating = True
+    
 End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
@@ -1267,6 +1274,9 @@ Sub Goto_Onglet_FAC_Finale()
    
     Application.ScreenUpdating = False
     
+    Call Cacher_Heures
+    Call Cacher_Sommaire_Heures
+    
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Finale.Activate
     wshFAC_Finale.Range("I50").Select
@@ -1309,7 +1319,9 @@ Sub ExportAllFacInvList() '2023-12-21 @ 14:36
     
 End Sub
 
-Sub FAC_Prepare_GL_Posting() '2024-02-14 @ 05:56
+Sub FAC_Finale_GL_Posting_Preparation() '2024-02-14 @ 05:56
+
+    Dim timerStart As Double: timerStart = Timer
 
     Dim montant As Double
     Dim dateFact As Date
@@ -1396,9 +1408,13 @@ Sub FAC_Prepare_GL_Posting() '2024-02-14 @ 05:56
     Call FAC_Finale_GL_Posting_To_DB(dateFact, descGL_Trans, source, myArray)
     Call FAC_Finale_GL_Posting_Locally(dateFact, descGL_Trans, source, myArray)
     
+    Call Output_Timer_Results("FAC_Finale_GL_Posting_Preparation()", timerStart)
+
 End Sub
 
 Sub FAC_Finale_GL_Posting_To_DB(df, desc, source, arr As Variant)
+
+    Dim timerStart As Double: timerStart = Timer
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
@@ -1471,6 +1487,8 @@ Nothing_to_Post:
     
     Application.ScreenUpdating = True
 
+    Call Output_Timer_Results("FAC_Finale_GL_Posting_To_DB()", timerStart)
+
 End Sub
 
 Sub FAC_Finale_GL_Posting_Locally(df, desc, source, arr As Variant) 'Write records locally
@@ -1512,7 +1530,7 @@ Sub FAC_Finale_GL_Posting_Locally(df, desc, source, arr As Variant) 'Write recor
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("GL_Trans_Add_Record_Locally()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_GL_Posting_Locally()", timerStart)
 
 End Sub
 
@@ -1526,11 +1544,11 @@ Sub Back_To_FAC_Menu()
     
 End Sub
 
-Sub Enable_Save_Button()
+Sub FAC_Finale_Enable_Save_Button()
 
     Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
-    shp.Visible = False
+    shp.Visible = True
 
 End Sub
 
@@ -1599,7 +1617,10 @@ Sub FAC_Brouillon_TEC_Add_Check_Box(row As Long)
         .Range("D" & row + 7).formula = "=SUMIF(C8:C" & row + 5 & ",True,G8:G" & row + 5 & ")"
         .Range("D" & row + 7).NumberFormat = "##0.00"
         .Range("D" & row + 7).Font.Bold = True
+        
+        .Range("B19").formula = "=SUMIF(C8:C" & row + 5 & ",True,G8:G" & row + 5 & ")"
     End With
+    
     Application.EnableEvents = True
 
     Call Output_Timer_Results("FAC_Brouillon_TEC_Add_Check_Box()", timerStart)
