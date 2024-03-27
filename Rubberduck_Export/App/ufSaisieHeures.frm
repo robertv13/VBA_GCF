@@ -25,6 +25,12 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+'Private Sub cmbProfessionnel_Enter()
+'
+'    MsgBox userName
+'
+'End Sub
+'
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim timerStart As Double: timerStart = Timer
@@ -65,7 +71,12 @@ Sub UserForm_Activate()
 
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
 
-    cmbProfessionnel.value = ""
+    'Default Professionnal - 2024-03-27 @ 07:00
+    If userName = "Guillaume Charron" Then
+        cmbProfessionnel.value = "GC"
+    ElseIf userName = "Robert M. Vigneault" Then
+        cmbProfessionnel.value = "RMV"
+    End If
     cmbProfessionnel.SetFocus
    
     rmv_state = rmv_modeInitial
@@ -236,7 +247,7 @@ Sub txtHeures_AfterUpdate()
     Dim strHeures As String
     strHeures = Me.txtHeures.value
     
-    If InStr(".", strHeures) Then
+    If InStr(strHeures, ".") > 0 Then
         strHeures = Replace(strHeures, ".", ",")
     End If
     

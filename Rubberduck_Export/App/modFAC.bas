@@ -1132,10 +1132,18 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
         On Error GoTo SaveOnly
         
         Dim outlookApp As Outlook.Application
-        Dim myMail As Outlook.MailItem
-        
         Set outlookApp = New Outlook.Application
-        Set myMail = outlookApp.CreateItemFromTemplate
+        
+        'Where are the email templates ? - 2024-03-27 @ 07:28
+        Dim FullTemplatePathAndFile As String
+        If userName <> "Robert M. Vigneault" Then
+            FullTemplatePathAndFile = "C:\Path\To\Your\Template.oft"
+        Else
+            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\Test_de_gabarit.oft"
+        End If
+
+        Dim myMail As Outlook.MailItem
+        Set myMail = outlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
 '        Set myMail = outlookApp.CreateItem(olMailItem)
 
         Dim source_file As String
