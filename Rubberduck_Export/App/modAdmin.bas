@@ -11,7 +11,6 @@ Sub BrowseForMainSharedFolder()
         wshAdmin.Range("F5").value = .SelectedItems(1)
 NotSelected:
     End With
-'    FolderSharedData.value = "P:\Admin-GC\GC Fiscalité Plus Inc\Informatique RMV\GC_FISCALITÉ\DataFiles"
     
 End Sub
 
@@ -25,6 +24,6 @@ Sub BrowseForFacturesPDFFolder()
         wshAdmin.Range("F6").value = .SelectedItems(1)
     End With
 NoSelection:
-'    FolderPDFInvoice = "P:\Admin-GC\GC Fiscalité Plus Inc\Informatique RMV\GC_FISCALITÉ\Factures_PDF"
+
 End Sub
 

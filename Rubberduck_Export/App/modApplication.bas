@@ -1,7 +1,9 @@
 Attribute VB_Name = "modApplication"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.0" '2024-03-26 @ 14:19
+Global Const gAppVersion As String = "v3.1" '2024-03-27 @ 06:51
+
+Global userName As String
 
 Public isTab_Order_Activated As Boolean
 
@@ -19,6 +21,8 @@ End Sub
 Private Sub auto_open() '2024-03-06 @ 14:36
 
     Dim timerStart As Double: timerStart = Timer
+    
+    userName = Environ("Username") '2024-03-27 @ 06:54
 
     Call Output_Timer_Results("auto_open()", timerStart)
 
