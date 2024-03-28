@@ -63,7 +63,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
 '            previousCellAddress = "$O$3" Then
                 'User moved out of the previous cell
                 previousCellAddress = ""
-                Call Date_Change(wshFAC_Brouillon.Range("O3").value)
+                Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
 '                MsgBox "User moved out of cell: " & previousCellAddress
                 'Add your code to handle the event here
         End If
@@ -84,7 +84,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     
     'Client Name has changed
     If Not Intersect(Target, Me.Range("E4")) Is Nothing And Me.Range("E4").value <> Empty Then
-        Call Client_Change(Me.Range("E4").value)
+        Call FAC_Brouillon_Client_Change(Me.Range("E4").value)
         Set rng = Me.Range("O3")
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
@@ -111,7 +111,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         End If
         Application.EnableEvents = True
 
-        Call Date_Change(wshFAC_Brouillon.Range("O3").value)
+        Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         
         Set rng = wshFAC_Brouillon.Range("O3")
         Call Fill_Or_Empty_Range_Background(rng, False)
