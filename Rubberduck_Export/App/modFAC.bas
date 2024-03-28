@@ -53,9 +53,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
     End If
 
-'    Dim shp As Shape
-'    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
-'    shp.Visible = True
+    'Save button is disabled UNTIL the invoice is saved
+    Call FAC_Finale_Disable_Save_Button
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -179,7 +178,7 @@ Sub Inclure_TEC_Factures_Click()
     
 End Sub
 
-Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
+Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -197,6 +196,8 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         
         'Valid Invoice - Let's update it ******************************************
         
+        Call FAC_Finale_Disable_Save_Button
+    
         Call FAC_Finale_Add_Invoice_Header_to_DB
         Call FAC_Finale_Add_Invoice_Header_Locally
         
@@ -212,18 +213,18 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
         If lastResultRow > 2 Then
             Call TEC_Record_Update_As_Billed_To_DB(3, lastResultRow)
             Call TEC_Record_Update_As_Billed_Locally(3, lastResultRow)
-            Call FAC_Brouillon_Clear_All_TEC_Displayed
         End If
+        
+        Call FAC_Brouillon_Clear_All_TEC_Displayed
+        
     End With
     
+    'GL stuff
     Call FAC_Finale_GL_Posting_Preparation
     
+    'Update TEC_DashBoard
     Call TEC_DB_Update_All '2024-03-21 @ 12:32
 
-    Dim shp As Shape
-    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
-    shp.Visible = False
-    
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
     wshFAC_Brouillon.Range("B27").value = False
@@ -231,9 +232,7 @@ Sub FAC_Brouillon_Save() '2024-02-21 @ 10:11
     
 Fast_Exit_Sub:
 
-    Set shp = Nothing
-    
-    Call Output_Timer_Results("FAC_Brouillon_Save()", timerStart)
+    Call Output_Timer_Results("FAC_Finale_Save()", timerStart)
     
     wshFAC_Brouillon.Select
 '    Call Goto_Onglet_FAC_Brouillon
@@ -590,7 +589,7 @@ Sub TEC_Record_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) '
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstFacturee").value = True
-            rs.Fields("DateFacturee").value = Format(CDate(wshFAC_Brouillon.Range("O3").value), "dd-mm-yyyy hh:mm:ss")
+            rs.Fields("DateFacturee").value = Now
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -876,7 +875,7 @@ End Sub
 
 Sub FAC_Brouillon_Goto_Misc_Charges()
     
-    ActiveWindow.SmallScroll Down:=3
+    ActiveWindow.SmallScroll Down:=6
     wshFAC_Brouillon.Range("M47").Select 'Hours Summary
     
 End Sub
@@ -1069,12 +1068,12 @@ End Sub
 Sub FAC_BROUILLON_Prev_PDF() '2024-03-02 @ 16:18
 
     Call Goto_Onglet_FAC_Finale
-    Call FAC_FINALE_Prev_PDF
+    Call FAC_Finale_Preview_PDF
     Call Goto_Onglet_FAC_Brouillon
     
 End Sub
 
-Sub FAC_FINALE_Prev_PDF() '2024-03-02 @ 16:18
+Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
 
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
 '    wshFAC_Finale.PrintOut , , , True, True, , , , False
@@ -1083,7 +1082,7 @@ End Sub
 
 Sub FAC_Finale_Creation_PDF_And_Email() 'RMV - 2023-12-17 @ 14:35
     
-    Call FAC_Finale_Create_PDF_Email_Sub(wshFAC_Brouillon.Range("O6").value)
+    Call FAC_Finale_Create_PDF_Email_Sub(wshFAC_Finale.Range("E28").value)
     
     Call FAC_Finale_Enable_Save_Button
 
@@ -1137,7 +1136,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
         'Where are the email templates ? - 2024-03-27 @ 07:28
         Dim FullTemplatePathAndFile As String
         If userName <> "Robert M. Vigneault" Then
-            FullTemplatePathAndFile = "C:\Path\To\Your\Template.oft"
+            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\Test_de_gabarit.oft"
         Else
             FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\Test_de_gabarit.oft"
         End If
@@ -1155,7 +1154,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
             .CC = "robertv13@me.com"
             .BCC = "robertv13@gmail.com"
             .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"
-            .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
+'            .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
                 vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "Guillaume Charron, CPA, CA, M. Fisc." & _
                 vbNewLine & "Président"
             .Attachments.add source_file
@@ -1557,6 +1556,14 @@ Sub FAC_Finale_Enable_Save_Button()
     Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
+
+End Sub
+
+Sub FAC_Finale_Disable_Save_Button()
+
+    Dim shp As Shape
+    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    shp.Visible = False
 
 End Sub
 

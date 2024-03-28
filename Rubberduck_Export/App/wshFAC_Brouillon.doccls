@@ -125,9 +125,9 @@ Public Sub Worksheet_Change(ByVal Target As Range)
         wshFAC_Finale.Range("B" & Target.row + 23).value = wshFAC_Brouillon.Range("L" & Target.row).value
         Set rng = wshFAC_Brouillon.Range("L" & Target.row) 'Service
         Call Fill_Or_Empty_Range_Background(rng, False)
-        If rng.value = "- *" Then
-            Call FAC_Brouillon_Input_Misc_Description(Target.row, Target.row + 23)
-        End If
+'        If rng.value = "- *" Then
+'            Call FAC_Brouillon_Input_Misc_Description(Target.row, Target.row + 23)
+'        End If
         Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
         rng.Select
