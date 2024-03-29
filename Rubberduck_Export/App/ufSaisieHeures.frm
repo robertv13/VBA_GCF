@@ -25,6 +25,10 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub fraDetails_Click()
+
+End Sub
+
 'Private Sub cmbProfessionnel_Enter()
 '
 '    MsgBox userName

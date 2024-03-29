@@ -41,6 +41,10 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
             Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
         End If
         
+        'Save Invoice total amount
+        Dim invoice_Total As Currency
+        invoice_Total = wshFAC_Brouillon.Range("O51").value
+        
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
     End With
@@ -51,7 +55,10 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     'Update TEC_DashBoard
     Call TEC_DB_Update_All '2024-03-21 @ 12:32
 
-    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & vbNewLine & vbNewLine & "Le total de la facture est " & Trim(Format(wshFAC_Brouillon.Range("O51").value, "### ##0.00 $")) & " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
+        vbNewLine & vbNewLine & "Le total de la facture est " & _
+        Trim(Format(invoice_Total, "### ##0.00 $")) & _
+        " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
     wshFAC_Brouillon.Range("B27").value = False
     Call FAC_Brouillon_New_Invoice '2024-03-12 @ 08:08 - Maybe ??

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.3" '2024-03-28 @ 15:17
+Global Const gAppVersion As String = "v3.4" '2024-03-29 @ 06:15
 
 Public userName As String
 
