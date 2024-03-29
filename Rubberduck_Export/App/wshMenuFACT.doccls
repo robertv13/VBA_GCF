@@ -44,7 +44,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("PreparationFacture_Click()", timerStart)
+    Call Output_Timer_Results("wshMenuFACT:PreparationFacture_Click()", timerStart)
     
 End Sub
 

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.4" '2024-03-29 @ 06:15
+Global Const gAppVersion As String = "v3.5" '2024-03-29 @ 08:06
 
 Public userName As String
 
@@ -24,7 +24,7 @@ Private Sub auto_open() '2024-03-06 @ 14:36
     
     userName = Environ("Username") '2024-03-27 @ 06:54
 
-    Call Output_Timer_Results("auto_open()", timerStart)
+    Call Output_Timer_Results("modAppli:auto_open()", timerStart)
 
 End Sub
 
@@ -34,7 +34,7 @@ Private Sub auto_close() '2024-03-06 @ 14:36
 
     MsgBox "Auto_Close..."
     
-    Call Output_Timer_Results("auto_close()", timerStart)
+    Call Output_Timer_Results("modAppli:auto_close()", timerStart)
     
 End Sub
 
@@ -54,7 +54,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-03-06 @ 13:43
     'Create a new dynamic named range
     ThisWorkbook.Names.add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
     
-    Call Output_Timer_Results("Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
+    Call Output_Timer_Results("modAppli:Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
     
 End Sub
 
@@ -70,7 +70,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next wsh
     
-    Call Output_Timer_Results("Hide_All_Worksheets_Except_Menu()", timerStart)
+    Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
     
 End Sub
 
@@ -143,7 +143,7 @@ Sub Slide_In_All_Menu_Options()
     SlideIn_Parametres
     SlideIn_Exit
 
-    Call Output_Timer_Results("Slide_In_All_Menu_Options()", timerStart)
+    Call Output_Timer_Results("modAppli:Slide_In_All_Menu_Options()", timerStart)
 
 End Sub
 

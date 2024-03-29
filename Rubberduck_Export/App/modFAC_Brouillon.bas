@@ -475,7 +475,8 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
             cbx.delete
         End If
     Next cbx
-    wshFAC_Brouillon.Range("C7:C" & row).value = "" 'Remove text left over
+    
+    wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the total formula
 
     Application.EnableEvents = True

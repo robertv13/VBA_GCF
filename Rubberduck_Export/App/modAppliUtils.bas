@@ -4,7 +4,7 @@ Option Explicit
 Sub Output_Timer_Results(subName As String, t As Double)
 
     Dim modeOper As Integer
-    modeOper = 2 '2024-02-26 @ 16:42
+    modeOper = 2 '2024-03-29 @ 11:37
     
     'modeOper = 1 - Dump to immediate Window
     If modeOper = 1 Then

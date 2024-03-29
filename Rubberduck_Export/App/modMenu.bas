@@ -373,7 +373,7 @@ Sub menuTEC_Click() '2024-02-13 @ 13:48
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
-    Call Output_Timer_Results("menuTEC_Click()", timerStart)
+    Call Output_Timer_Results("modMenu:menuTEC_Click()", timerStart)
 
 End Sub
 
@@ -393,7 +393,7 @@ Sub menuFacturation_Click() '2024-02-13 @ 13:48
     wshMenuFACT.Activate
     wshMenuFACT.Range("A1").Select
 
-    Call Output_Timer_Results("menuFacturation_Click()", timerStart)
+    Call Output_Timer_Results("modMenu:menuFacturation_Click()", timerStart)
 
 End Sub
 
@@ -409,7 +409,7 @@ Sub menuDebours_Click() '2024-02-13 @ 13:48
     wshMenuDEBOURS.Activate
     wshMenuDEBOURS.Range("A1").Select
 
-    Call Output_Timer_Results("menuDebours_Click()", timerStart)
+    Call Output_Timer_Results("modMenu:menuDebours_Click()", timerStart)
 
 End Sub
 
@@ -428,7 +428,7 @@ Sub menuComptabilite_Click() '2024-02-13 @ 13:48
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select
 
-    Call Output_Timer_Results("menuComptabilite_Click()", timerStart)
+    Call Output_Timer_Results("modMenu:menuComptabilite_Click()", timerStart)
 
 End Sub
 
@@ -441,7 +441,7 @@ Sub menuParametres_Click() '2024-02-13 @ 13:48
     wshAdmin.Visible = xlSheetVisible
     wshAdmin.Select
     
-    Call Output_Timer_Results("menuParametres_Click()", timerStart)
+    Call Output_Timer_Results("modMenu:menuParametres_Click()", timerStart)
     
 End Sub
 
@@ -452,6 +452,9 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     Call SlideIn_Exit
     
     Call Hide_All_Worksheets_Except_Menu
+
+    Call Output_Timer_Results("ThisWorkbook - Session is finished", 0)
+    Call Output_Timer_Results("ThisWorkbook - Session is finished", 0)
 
     ThisWorkbook.Close SaveChanges:=True
     

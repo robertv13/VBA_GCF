@@ -18,6 +18,16 @@ Private Sub Worksheet_Activate()
     wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
     wshGL_BV.Range("B10").value = 0
     
+    Dim cbx As Shape
+    For Each cbx In wshGL_BV.Shapes
+        Debug.Print cbx.name
+        If InStr(cbx.name, "GL_Trans") Then
+            cbx.delete
+        End If
+    Next cbx
+
+    Set cbx = Nothing
+    
     Application.EnableEvents = True
     
     Call Output_Timer_Results("wshGL_BV_Worksheet_Activate()", timerStart)
@@ -66,8 +76,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = False
             wshGL_BV.Range("B10").value = Target.row
             Application.EnableEvents = True
-            Call Get_An_JE_Detail_Trans(noJE)
-            Call Display_JE_Trans_With_Shape
+            Call wshGL_BV_Get_An_JE_Detail_Trans(noJE)
+            Call wshGL_BV_Display_JE_Trans_With_Shape
         Else
         wshGL_BV.Range("B10").value = 0
         End If
@@ -115,7 +125,7 @@ Clean_Exit:
 
 End Sub
 
-Sub Get_An_JE_Detail_Trans(no As Long)
+Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 '    Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
@@ -154,19 +164,20 @@ Sub Get_An_JE_Detail_Trans(no As Long)
 
 NoSort:
 
-    Call Output_Timer_Results("Get_An_JE_Detail_Trans()", timerStart)
+    Call Output_Timer_Results("wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
 
 End Sub
 
-Sub Display_JE_Trans_With_Shape()
+Sub wshGL_BV_Display_JE_Trans_With_Shape()
 
-    Call CreateDynamicShape
-    Call Adjust_The_Shape
-    Call ShowDynamicShape
+    Call wshGL_BV_Create_Dynamic_Shape
+    Call wshGL_BV_Adjust_The_Shape
+    Call wshGL_BV_Show_Dynamic_Shape
     
 End Sub
 
-Sub CreateDynamicShape()
+Sub wshGL_BV_Create_Dynamic_Shape()
+
     'Check if the shape has already been created
     If dynamicShape Is Nothing Then
         'Create the text box shape
@@ -175,7 +186,7 @@ Sub CreateDynamicShape()
        
 End Sub
 
-Sub Adjust_The_Shape()
+Sub wshGL_BV_Adjust_The_Shape()
 
         Dim timerStart As Double: timerStart = Timer
         
@@ -191,9 +202,9 @@ Sub Adjust_The_Shape()
         Dim i As Integer, maxLength As Integer
         With wshGL_Trans
             For i = 2 To lastResultRow
-                If Len(.Range("AD2").value) > maxLength Then
-                    maxLength = Len(.Range("AD2").value)
-                End If
+'                If Len(.Range("AD2").value) > maxLength Then
+'                    maxLength = Len(.Range("AD2").value)
+'                End If
                 If i = 2 Then
                     texteFull = "Desc  : " & .Range("AD2").value & vbCrLf
                     If Trim(.Range("AE2").value) <> "" Then
@@ -203,7 +214,7 @@ Sub Adjust_The_Shape()
                     End If
                 End If
                 texteOneLine = Fn_Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
-                                " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 38, "R") & _
+                                " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
                                 "  " & Fn_Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
                                 "  " & Fn_Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
                 If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
@@ -211,9 +222,13 @@ Sub Adjust_The_Shape()
                 Else
                     texteOneLine = "   " & texteOneLine
                 End If
+                texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
                 If Trim(.Range("AJ" & i).value) <> "" Then
-                    texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 82, "R") & Trim(.Range("AJ" & i).value)
+                    texteOneLine = texteOneLine & Trim(.Range("AJ" & i).value)
+                End If
+                If Len(texteOneLine) > maxLength Then
                     maxLength = Len(texteOneLine)
+                    Debug.Print i & " = " & maxLength
                 End If
                 texteFull = texteFull & texteOneLine & vbCrLf
             Next i
@@ -225,7 +240,7 @@ Sub Adjust_The_Shape()
         With dynamicShape
             .name = "JE_Detail_Trans"
             .fill.ForeColor.RGB = RGB(249, 255, 229)
-            .Line.Weight = 2.25
+            .Line.Weight = 2
             .Line.ForeColor.RGB = vbBlue
             .TextFrame.Characters.text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
@@ -236,25 +251,29 @@ Sub Adjust_The_Shape()
             .TextFrame.MarginTop = 3
             .TextFrame.MarginBottom = 3
             If maxLength < 80 Then maxLength = 80
-            .width = ((maxLength * 6.5))
+            .width = ((maxLength * 6.4))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
             .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
-            .Left = wshGL_BV.Range("O" & rowSelected).Left + 4
-            .Top = wshGL_BV.Range("O" & rowSelected + 1).Top + 4
+            .Left = wshGL_BV.Range("N" & rowSelected).Left + 4
+            .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
         End With
       
-      Call Output_Timer_Results("Adjust_The_Shape()", timerStart)
+      Call Output_Timer_Results("wshGL_BV_Adjust_The_Shape()", timerStart)
       
 End Sub
 
-Sub ShowDynamicShape()
+Sub wshGL_BV_Show_Dynamic_Shape()
+
     If Not dynamicShape Is Nothing Then
         dynamicShape.Visible = True
     End If
+    
 End Sub
 
-Sub HideDynamicShape()
+Sub wshGL_BV_Hide_Dynamic_Shape()
+
     If Not dynamicShape Is Nothing Then
         dynamicShape.Visible = False
     End If
+    
 End Sub

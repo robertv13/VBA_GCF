@@ -5,7 +5,7 @@ Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("dnrProf")
+    For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
             Fn_GetID_From_Initials = cell.Offset(0, 1).value
             Exit Function

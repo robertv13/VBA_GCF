@@ -505,7 +505,7 @@ Sub TEC_DB_Push_TEC_Local_To_DB_Data()
     Set rngTo = wshTEC_DB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
     
-    Call Output_Timer_Results("TEC_DB_Push_TEC_Local_To_DB_Data()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_DB_Push_TEC_Local_To_DB_Data()", timerStart)
 
 End Sub
 
@@ -516,20 +516,26 @@ Sub TEC_DB_Update_All()
     Call TEC_DB_Push_TEC_Local_To_DB_Data
     Call TEC_DB_Refresh_All_Pivot_Tables
     
-    Call Output_Timer_Results("TEC_DB_Update_All()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_DB_Update_All()", timerStart)
 
 End Sub
 
 Sub TEC_DB_Refresh_All_Pivot_Tables()
 
+    Dim timerStart As Double: timerStart = Timer
+    
     Dim pt As PivotTable
     For Each pt In wshTEC_DB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
 
+    Call Output_Timer_Results("modTEC:TEC_DB_Refresh_All_Pivot_Tables()", timerStart)
+
 End Sub
 
 Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:07
+    
+    Dim timerStart As Double: timerStart = Timer
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -581,6 +587,8 @@ No_Sort_Required:
     Set sRng = Nothing
     Set dRng = Nothing
     Set criteriaRng = Nothing
+
+    Call Output_Timer_Results("modTEC:TEC_Advanced_Filter_2()", timerStart)
 
 End Sub
 

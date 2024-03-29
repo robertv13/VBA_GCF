@@ -18,7 +18,7 @@ Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
     
 '    Call Close_Message_Userform
     
-    Call Output_Timer_Results("Import_Minimum()", timerStart)
+    Call Output_Timer_Results("modImport:Import_Minimum()", timerStart)
 
 End Sub
 
@@ -74,7 +74,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Set connStr = Nothing
     Set recSet = Nothing
 
-    Call Output_Timer_Results("Client_List_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:Client_List_Import_All()", timerStart)
         
 End Sub
 
@@ -124,7 +124,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Set sourceRange = Nothing
     Set destinationRange = Nothing
 
-    Call Output_Timer_Results("TEC_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
     
 End Sub
 
@@ -169,7 +169,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     
     Call Dynamic_Range_Redefine_Plan_Comptable
         
-    Call Output_Timer_Results("ChartOfAccount_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:ChartOfAccount_Import_All()", timerStart)
 
 End Sub
 
@@ -245,7 +245,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("GL_Trans_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
 
 End Sub
 
@@ -322,7 +322,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 Clean_Exit:
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("GL_EJ_Auto_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:GL_EJ_Auto_Import_All()", timerStart)
 
 End Sub
 
@@ -376,7 +376,7 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Entête_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
 
 End Sub
 
@@ -423,7 +423,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Détails_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
 
 End Sub
 

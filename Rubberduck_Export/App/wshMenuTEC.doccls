@@ -6,7 +6,7 @@ Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift
 
     SlideOut_SaisieHeures
     
-    Call Output_Timer_Results("lblSaisieHeures_Hover_MouseMove()", timerStart)
+    Call Output_Timer_Results("wshMenuTEC:lblSaisieHeures_Hover_MouseMove()", timerStart)
 
 End Sub
 
@@ -17,7 +17,7 @@ Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integ
     SlideIn_SaisieHeures
     SlideOut_TEC_TDB
 
-    Call Output_Timer_Results("lblTDB_Hover_MouseMove()", timerStart)
+    Call Output_Timer_Results("wshMenuTEC:lblTDB_Hover_MouseMove()", timerStart)
 
 End Sub
 
@@ -67,7 +67,7 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     
     Set shp = Nothing
     
-    Call Output_Timer_Results("lblMinAll_Hover_MouseMove()", timerStart)
+    Call Output_Timer_Results("wshMenuTEC:lblMinAll_Hover_MouseMove()", timerStart)
 
 End Sub
 

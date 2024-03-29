@@ -114,13 +114,15 @@ End Sub
 Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
     'Clear the display area & display the account number & description
-    wshGL_BV.Range("M4:T99999").Clearcontents
-    wshGL_BV.Range("L2").value = "Du " & minDate & " au " & maxDate
+    With wshGL_BV
+        .Range("M4:T99999").clear '2024-03-29 @ 12:09
+        .Range("L2").value = "Du " & minDate & " au " & maxDate
     
-    wshGL_BV.Range("L4").Font.Bold = True
-    wshGL_BV.Range("L4").value = GLAcct & " - " & GLDesc
-    wshGL_BV.Range("B6").value = GLAcct
-    wshGL_BV.Range("B7").value = GLDesc
+        .Range("L4").Font.Bold = True
+        .Range("L4").value = GLAcct & " - " & GLDesc
+        .Range("B6").value = GLAcct
+        .Range("B7").value = GLDesc
+    End With
     
     'Use the Advanced Filter Result already prepared for TB
     Dim row As Range, foundRow As Long, lastResultUsedRow As Long
@@ -141,15 +143,17 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     Dim rowGLDetail As Long
     rowGLDetail = 5
-    wshGL_BV.Range("S4").value = 0
-    wshGL_BV.Range("S4").Font.Bold = True
-    wshGL_BV.Range("S4").NumberFormat = "#,##0.00 $"
-    With wshGL_BV.Range("S4").Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -0.149998474074526
-        .PatternTintAndShade = 0
+    With wshGL_BV.Range("S4")
+        .value = 0
+        .Font.Bold = True
+        .NumberFormat = "#,##0.00 $"
+        With .Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorDark1
+            .TintAndShade = -0.149998474074526
+            .PatternTintAndShade = 0
+        End With
     End With
     
     Dim d As Date, OK As Integer
@@ -184,15 +188,33 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     Loop
     End With
 
-        wshGL_BV.Range("S" & rowGLDetail - 1).Font.Bold = True
-        With wshGL_BV.Range("S" & rowGLDetail - 1).Interior
+    With wshGL_BV.Range("S" & rowGLDetail - 1)
+        .Font.Bold = True
+        With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = -0.149998474074526
             .PatternTintAndShade = 0
         End With
-
+    End With
+        
+    'Set columns width for the detailled transactions list
+    Dim rng As Range
+    lastResultUsedRow = wshGL_BV.Range("M9999").End(xlUp).row
+    Set rng = wshGL_BV.Range("M5:M" & lastResultUsedRow)
+    rng.ColumnWidth = 11
+    Set rng = wshGL_BV.Range("N5:N" & lastResultUsedRow)
+    rng.ColumnWidth = 10
+    Set rng = wshGL_BV.Range("O5:O" & lastResultUsedRow)
+    rng.ColumnWidth = 40
+    Set rng = wshGL_BV.Range("P5:P" & lastResultUsedRow)
+    rng.ColumnWidth = 16
+    Set rng = wshGL_BV.Range("Q5:S" & lastResultUsedRow)
+    rng.ColumnWidth = 15
+    Set rng = wshGL_BV.Range("T5:T" & lastResultUsedRow)
+    rng.ColumnWidth = 30
+    
 End Sub
 
 Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
