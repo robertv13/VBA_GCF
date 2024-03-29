@@ -173,7 +173,7 @@ End Sub
 
 Sub SlideOut_PrepFact()
     With wshMenuFACT.Shapes("btnPrepFact")
-        For width = 32 To maxWidth
+        For width = 32 To 200
             .Height = width
             ActiveSheet.Shapes("icoPrepFact").Left = width - 32
         Next width
@@ -183,7 +183,7 @@ End Sub
 
 Sub SlideIn_PrepFact()
     With wshMenuFACT.Shapes("btnPrepFact")
-        For width = maxWidth To 32 Step -1
+        For width = 200 To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoPrepFact").Left = width - 32
@@ -320,7 +320,7 @@ End Sub
 
 Sub SlideOut_BV()
     With ActiveSheet.Shapes("btnBV")
-        For width = 32 To maxWidth
+        For width = 32 To 180
             .Height = width
             ActiveSheet.Shapes("icoBV").Left = width - 32
         Next width
@@ -330,7 +330,7 @@ End Sub
 
 Sub SlideIn_BV()
     With ActiveSheet.Shapes("btnBV")
-        For width = maxWidth To 32 Step -1
+        For width = 180 To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoBV").Left = width - 32

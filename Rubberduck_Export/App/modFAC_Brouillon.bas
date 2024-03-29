@@ -70,7 +70,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     
-    myInfo = Lookup_Data_In_A_Range(rng, 1, ClientName, 3)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, ClientName, 3)
     
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
@@ -143,8 +143,8 @@ Sub FAC_Brouillon_Date_Change(d As String)
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column
     Dim DateTaxRates As Date
     DateTaxRates = d
-    wshFAC_Brouillon.Range("B29").value = GetTaxRate(DateTaxRates, "F")
-    wshFAC_Brouillon.Range("B30").value = GetTaxRate(DateTaxRates, "P")
+    wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "F")
+    wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "P")
         
     Dim cutoffDate As Date
     cutoffDate = d

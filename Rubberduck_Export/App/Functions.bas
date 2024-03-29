@@ -1,20 +1,20 @@
 Attribute VB_Name = "Functions"
 Option Explicit
 
-Function GetID_FromInitials(i As String)
+Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
     
     For Each cell In wshAdmin.Range("dnrProf")
         If cell.Value2 = i Then
-            GetID_FromInitials = cell.Offset(0, 1).value
+            Fn_GetID_From_Initials = cell.Offset(0, 1).value
             Exit Function
         End If
     Next cell
 
 End Function
 
-Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
+Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
     Dim ws As Worksheet, dynamicRange As Range
     On Error Resume Next
@@ -35,7 +35,7 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
-        GetID_From_Client_Name = result
+        Fn_GetID_From_Client_Name = result
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
@@ -45,10 +45,10 @@ Function GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 End Function
 
-Function Lookup_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant()
+Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
     'This function is used to retrieve information from a range
-    'If found, it returns Address, Row number and the value for a specific column
+    'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
     Dim timerStart As Double: timerStart = Timer
@@ -66,18 +66,18 @@ Function Lookup_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long
         foundInfo(1) = foundCell.Address
         foundInfo(2) = foundCell.row
         foundInfo(3) = foundCell.Offset(0, cr - cs).value 'Return Column - Searching column
-        Lookup_Data_In_A_Range = foundInfo 'foundInfo is an array
+        Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     Else
-        Lookup_Data_In_A_Range = foundInfo 'foundInfo is an array
+        Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     End If
     
     Set foundCell = Nothing
     
-    Call Output_Timer_Results("Lookup_Data_In_A_Range()", timerStart)
+    Call Output_Timer_Results("Fn_Find_Data_In_A_Range()", timerStart)
 
 End Function
 
-Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim dynamicRange As Range
     Dim result As Variant
@@ -100,7 +100,7 @@ Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 20
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
-        Get_GL_Code_From_GL_Description = result
+        Fn_Get_GL_Code_From_GL_Description = result
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
@@ -111,7 +111,7 @@ Public Function Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 20
 
 End Function
 
-Public Function Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
+Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
     
     Dim matchResult As Variant
 
@@ -121,15 +121,15 @@ Public Function Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lo
 
     'Check if Match found a result
     If Not IsError(matchResult) Then
-        Get_TEC_Row_Number_By_TEC_ID = matchResult
+        Fn_Get_TEC_Row_Number_By_TEC_ID = matchResult
     Else
         'If Match did not find a result, return 0
-        Get_TEC_Row_Number_By_TEC_ID = 0
+        Fn_Get_TEC_Row_Number_By_TEC_ID = 0
     End If
     
 End Function
 
-Public Function Validate_A_Date(paramDate As String) '2024-03-02 @ 08:04
+Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
 
     paramDate = Trim(paramDate)
     'User can enter / or - for separators
@@ -192,13 +192,13 @@ Public Function Validate_A_Date(paramDate As String) '2024-03-02 @ 08:04
         
     'Is the 'built' date valid ?
     isValidDate = IsDate(sDate)
-    If isValidDate Then Validate_A_Date = sDate
+    If isValidDate Then Fn_Build_A_Date = sDate
         
 End Function
 
-Public Function IsDataValid() As Boolean
+Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
-    IsDataValid = False
+    Fn_TEC_Is_Data_Valid = False
     
     'Validations first (one field at a time)
     If ufSaisieHeures.cmbProfessionnel.value = "" Then
@@ -233,18 +233,18 @@ Public Function IsDataValid() As Boolean
         Exit Function
     End If
 
-    IsDataValid = True
+    Fn_TEC_Is_Data_Valid = True
 
 End Function
 
-Public Function GetTaxRate(d As Date, taxType As String) As Double
+Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
     Dim row As Integer
     With wshAdmin
         For row = 18 To 11 Step -1
             If .Range("L" & row).value = taxType Then
                 If d >= .Range("M" & row).value Then
-                    GetTaxRate = .Range("N" & row).value
+                    Fn_Get_Tax_Rate = .Range("N" & row).value
                     Exit For
                 End If
             End If
@@ -253,38 +253,38 @@ Public Function GetTaxRate(d As Date, taxType As String) As Double
     
 End Function
 
-Function IsDateValide() As Boolean
+Function Fn_Is_Date_Valide() As Boolean
 
-    IsDateValide = False
+    Fn_Is_Date_Valide = False
     If wshGL_EJ.Range("K4").value = "" Or IsDate(wshGL_EJ.Range("K4").value) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
-        IsDateValide = True
+        Fn_Is_Date_Valide = True
     End If
 
 End Function
 
-Function IsEcritureBalance() As Boolean
+Function Fn_Is_Ecriture_Balance() As Boolean
 
-    IsEcritureBalance = False
+    Fn_Is_Ecriture_Balance = False
     If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
         MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
             "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
-        IsEcritureBalance = True
+        Fn_Is_Ecriture_Balance = True
     End If
 
 End Function
 
-Function IsEcritureValide(rmax As Long) As Boolean
+Function Fn_Is_JE_Valid(rmax As Long) As Boolean
 
-    IsEcritureValide = True 'Optimist
+    Fn_Is_JE_Valid = True 'Optimist
     If rmax <= 9 Or rmax > 23 Then
         MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
-        IsEcritureValide = False
+        Fn_Is_JE_Valid = False
     End If
     
     Dim i As Long
@@ -292,14 +292,14 @@ Function IsEcritureValide(rmax As Long) As Boolean
         If wshGL_EJ.Range("E" & i).value <> "" Then
             If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
-                IsEcritureValide = False
+                Fn_Is_JE_Valid = False
             End If
         End If
     Next i
 
 End Function
 
-Public Function ClearRangeBorders(r As Range)
+Public Function Fn_Clear_Range_Borders(r As Range)
 
     'MsgBox "Range to clear = " & r.Address
     With r
@@ -313,24 +313,24 @@ Public Function ClearRangeBorders(r As Range)
 
 End Function
 
-Public Function Pad_A_String(s As String, f As String, l As Integer, lr As String) As String
+Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As Integer, leftOrRight As String) As String
 
     Dim paddedString As String
     Dim charactersNeeded As Integer
     
-    charactersNeeded = l - Len(s)
+    charactersNeeded = length - Len(s)
     
     If charactersNeeded > 0 Then
-        If lr = "R" Then
-            paddedString = s & String(charactersNeeded, f)
+        If leftOrRight = "R" Then
+            paddedString = s & String(charactersNeeded, fillCaracter)
         Else
-            paddedString = String(charactersNeeded, f) & s
+            paddedString = String(charactersNeeded, fillCaracter) & s
         End If
     Else
         paddedString = s
     End If
 
-    Pad_A_String = paddedString
+    Fn_Pad_A_String = paddedString
         
 End Function
 

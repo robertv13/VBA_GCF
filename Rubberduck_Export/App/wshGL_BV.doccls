@@ -54,7 +54,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         wshGL_BV.Range("B10").value = 0
         Range("T4").value = "Toutes les dates"
 
-        Call GL_Display_Trans_Selected_Account(GLAcct, GLDescription, "01-01-2023", DateLimite)
+        Call GL_TB_Display_Trans_For_Selected_Account(GLAcct, GLDescription, "01-01-2023", DateLimite)
         
         Application.EnableEvents = True
     End If
@@ -82,7 +82,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
         Dim strDate As String
-        strDate = Validate_A_Date(Range("J1").value)
+        strDate = Fn_Build_A_Date(Range("J1").value)
         If strDate = "" Then
             Call Invalid_Date_Message
             Range("J1").Activate
@@ -94,7 +94,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
         Range("L2").value = ""
         
-        Call GL_Build_TB 'Automatically recalculate Trial Balance
+        Call GL_TB_Build_Trial_Balance 'Automatically recalculate Trial Balance
         
         Application.EnableEvents = True
     End If
@@ -102,10 +102,10 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
     If Not Intersect(Target, Range("T4")) Is Nothing Then 'Dates have changed
         Application.EnableEvents = False
         
-        Call DetermineFromAndToDate(Range("T4").value)
+        Call GL_TB_Determine_From_And_To_Date(Range("T4").value)
                 
         'Force redisplay of GL Transactions details
-        Call GL_Display_Trans_Selected_Account(Range("B6").value, Range("B7").value, _
+        Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
             Format(Range("B8").value, "dd-mm-yyyy"), _
             Format(Range("B9").value, "dd-mm-yyyy"))
         
@@ -117,14 +117,14 @@ End Sub
 
 Sub Get_An_JE_Detail_Trans(no As Long)
 
-'    Sub GL_Trans_Advanced_Filter(GLNo As String, minDate As Date, maxDate As Date)
+'    Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
     Dim timerStart As Double: timerStart = Timer
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
-'        Call ClearRangeBorders(rgResult)
+'        Call Fn_Clear_Range_Borders(rgResult)
         rgResult.Clearcontents
         Set rgData = .Range("A1").CurrentRegion
         .Range("AA3").value = no
@@ -202,18 +202,17 @@ Sub Adjust_The_Shape()
                         texteFull = texteFull & vbCrLf
                     End If
                 End If
-                texteOneLine = Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
-                                " - " & Pad_A_String(.Range("AG" & i).value, " ", 38, "R") & _
-                                "  " & Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
-                                "  " & Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
-                Debug.Print Trim(.Range("AF" & i).value) & " vs. " & Trim(wshGL_BV.Range("B6").value)
+                texteOneLine = Fn_Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
+                                " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 38, "R") & _
+                                "  " & Fn_Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
+                                "  " & Fn_Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
                 If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
                     texteOneLine = " * " & texteOneLine
                 Else
                     texteOneLine = "   " & texteOneLine
                 End If
                 If Trim(.Range("AJ" & i).value) <> "" Then
-                    texteOneLine = Pad_A_String(texteOneLine, " ", 82, "R") & Trim(.Range("AJ" & i).value)
+                    texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 82, "R") & Trim(.Range("AJ" & i).value)
                     maxLength = Len(texteOneLine)
                 End If
                 texteFull = texteFull & texteOneLine & vbCrLf

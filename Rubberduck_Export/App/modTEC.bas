@@ -18,10 +18,10 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim timerStart As Double: timerStart = Timer
 
-    If IsDataValid() = False Then Exit Sub
+    If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
     
     'Get the Client_ID
-    wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
+    wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
     
     Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
     Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
@@ -37,7 +37,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     End With
 
     Call TEC_AdvancedFilter_And_Sort
-    Call Refresh_ListBox_And_Add_Hours
+    Call TEC_Refresh_ListBox_And_Add_Hours
     
     Call TEC_DB_Update_All
     
@@ -55,7 +55,7 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     Dim timerStart As Double: timerStart = Timer
 
-    If IsDataValid() = False Then Exit Sub
+    If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
     Call TEC_Record_Add_Or_Update_To_DB(wshAdmin.Range("TEC_Current_ID").value)  'Write to external XLSX file - 2023-12-16 @ 14:10
     Call TEC_Record_Add_Or_Update_Locally(wshAdmin.Range("TEC_Current_ID").value)  'Write to local worksheet - 2024-02-25 @ 10:38
@@ -73,7 +73,7 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     End With
 
     Call TEC_AdvancedFilter_And_Sort
-    Call Refresh_ListBox_And_Add_Hours
+    Call TEC_Refresh_ListBox_And_Add_Hours
     
     rmv_state = rmv_modeCreation
     
@@ -132,7 +132,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     rmv_state = rmv_modeCreation
     
     Call TEC_AdvancedFilter_And_Sort
-    Call Refresh_ListBox_And_Add_Hours
+    Call TEC_Refresh_ListBox_And_Add_Hours
     
 Clean_Exit:
 
@@ -221,7 +221,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     End With
     
     Call TEC_AdvancedFilter_And_Sort
-    Call Refresh_ListBox_And_Add_Hours
+    Call TEC_Refresh_ListBox_And_Add_Hours
     
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
         
@@ -392,7 +392,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         Dim lookupRange As Range, rowToBeUpdated As Long
         lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
-        rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(Abs(tecID), lookupRange)
+        rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(Abs(tecID), lookupRange)
         If rowToBeUpdated = 0 Then
             'Handle the case where the specified TecID is not found !!
             MsgBox "L'enregistrement avec le TEC_ID '" & tecID & "' ne peut être trouvé!", _
@@ -431,7 +431,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
 
 End Sub
 
-Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
+Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
     Dim timerStart As Double: timerStart = Timer
 
@@ -453,12 +453,6 @@ Sub Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate recor
         .RowSource = "TEC_Local!Y3:AG" & lastRow
     End With
      
-'    ufSaisieHeures.InitializeListBoxClass
-
-'    MyListBoxClass.Left ufSaisieHeures.lsbHresJour, 1
-'    MyListBoxClass.Center ufSaisieHeures.lsbHresJour, 2
-'    MyListBoxClass.Right ufSaisieHeures.lsbHresJour, 3
-
     'Add hours to totalHeures
     Dim nbrRows, i As Integer
     nbrRows = ufSaisieHeures.lsbHresJour.ListCount
@@ -477,7 +471,7 @@ EndOfProcedure:
 
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("Refresh_ListBox_And_Add_Hours()", timerStart)
+    Call Output_Timer_Results("TEC_Refresh_ListBox_And_Add_Hours()", timerStart)
     
 End Sub
 
@@ -532,6 +526,61 @@ Sub TEC_DB_Refresh_All_Pivot_Tables()
     For Each pt In wshTEC_DB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
+
+End Sub
+
+Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:07
+    
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
+    With wshTEC_Local
+        Dim lastUsedRow As Long, sRng As Range
+        lastUsedRow = .Range("A99999").End(xlUp).row
+        Set sRng = .Range("A2:P" & lastUsedRow)
+        
+        Dim dRng As Range
+        lastUsedRow = .Range("AT99999").End(xlUp).row
+        Set dRng = .Range("AT2:BH" & lastUsedRow)
+        dRng.Offset(1, 0).Clearcontents
+        .Range("AP10").value = ""
+        
+        Dim criteriaRng As Range
+        Set criteriaRng = .Range("AN2:AR3")
+        
+        sRng.AdvancedFilter _
+            action:=xlFilterCopy, _
+            CriteriaRange:=criteriaRng, _
+            CopyToRange:=dRng, _
+            Unique:=False
+            
+        Dim lastResultRow As Long
+        lastResultRow = .Range("AT99999").End(xlUp).row
+                If lastResultRow < 4 Then GoTo No_Sort_Required
+            With .Sort
+                .SortFields.clear
+                .SortFields.add Key:=wshTEC_Local.Range("AW3"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On Date
+                .SortFields.add Key:=wshTEC_Local.Range("AU3"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On Prof_ID
+                .SortFields.add Key:=wshTEC_Local.Range("AT3"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On TEC_ID
+                .SetRange wshTEC_Local.Range("AT3:BH" & lastResultRow) 'Set Range
+                .Apply 'Apply Sort
+             End With
+    
+No_Sort_Required:
+        wshTEC_Local.Range("AP10").value = lastResultRow - 2
+    End With
+    
+    Set sRng = Nothing
+    Set dRng = Nothing
+    Set criteriaRng = Nothing
 
 End Sub
 

@@ -40,7 +40,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(Me.txtClient.value)
+                wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(Me.txtClient.value)
                 Exit For
             End If
         Next i
@@ -130,11 +130,11 @@ Public Sub cmbProfessionnel_AfterUpdate()
     If Me.cmbProfessionnel.value = "" Then GoTo exit_sub
     
     wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
-    wshAdmin.Range("TEC_Prof_ID").value = GetID_FromInitials(Me.cmbProfessionnel.value)
+    wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(Me.cmbProfessionnel.value)
     
     If wshAdmin.Range("TEC_Date").value <> "" Then
         Call TEC_AdvancedFilter_And_Sort
-        Call Refresh_ListBox_And_Add_Hours
+        Call TEC_Refresh_ListBox_And_Add_Hours
     End If
 
 exit_sub:
@@ -154,7 +154,7 @@ End Sub
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim strDate As String
-    strDate = Validate_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
+    strDate = Fn_Build_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
     
     If strDate = "" Then '2024-03-02 @ 09:36 - RMV_MSGBOX
     MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
@@ -196,7 +196,7 @@ Private Sub txtDate_AfterUpdate()
 
     If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
         Call TEC_AdvancedFilter_And_Sort
-        Call Refresh_ListBox_And_Add_Hours
+        Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
     'Enabled the NEW & ADD button if the minimum fields are non empty
@@ -357,7 +357,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
         lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
-        rowTecID = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+        rowTecID = Fn_Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
         
         Dim isBilled As Boolean
         isBilled = wshTEC_Local.Range("L" & rowTecID).value
@@ -378,7 +378,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
         savedClient = .txtClient.value
         .txtSavedClient.value = .txtClient.value
-        wshAdmin.Range("TEC_Client_ID").value = GetID_From_Client_Name(savedClient)
+        wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(savedClient)
 
         .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
         savedActivite = .txtActivite.value

@@ -74,7 +74,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added
     
 End Sub
 
-Public Sub Worksheet_Change(ByVal Target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim timerStart As Double: timerStart = Timer
     
@@ -94,7 +94,7 @@ Public Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O3")) Is Nothing Then
         Application.EnableEvents = False
         Dim strDate As String
-        strDate = Validate_A_Date(Range("O3").value)
+        strDate = Fn_Build_A_Date(Range("O3").value)
         If strDate = "" Then
             Call Invalid_Date_Message
             Range("O3").Activate
@@ -218,6 +218,8 @@ Public Sub Worksheet_Change(ByVal Target As Range)
 
 ExitSub:
 
+    Set rng = Nothing
+    
     Application.EnableEvents = True
     
     Call Output_Timer_Results("wshFAC_Brouillon - Worksheet_Change()", timerStart)

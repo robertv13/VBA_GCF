@@ -2,10 +2,10 @@
 
 Public sessionTimerStart As Double
 
-Dim frmProgress As UserForm
-Dim lblStatus As Label
-Dim startTime As Double
-Dim elapsedTime As Double
+Public startTime As Double
+'Dim frmProgress As UserForm
+'Dim lblStatus As Label
+'Dim elapsedTime As Double
 
 Private Sub Workbook_Open()
 

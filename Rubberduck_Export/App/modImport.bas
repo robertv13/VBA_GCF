@@ -22,31 +22,6 @@ Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
 
 End Sub
 
-'Sub Show_Message_Userform()
-'
-'    ufMessage.show vbModeless
-'
-'End Sub
-'
-'Sub Add_Label_To_Userform(uf As UserForm, t As String, l As Long, t As Long)
-'
-'    Dim newLabel As MSForms.Label
-'    Set newLabel = ufMessage.Controls.add("Forms.Label.1")
-'    With newLabel
-'        .Caption = t
-'        .Left = l
-'        .Top = t
-'    End With
-'
-'End Sub
-'
-'Sub Close_Message_Userform()
-'
-'    ufMessage.Hide
-'    Unload ufMessage
-'
-'End Sub
-'
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim timerStart As Double: timerStart = Timer
@@ -496,5 +471,34 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Call Output_Timer_Results("FAC_Comptes_Clients_Import_All()", timerStart)
 
 End Sub
+
+'TO BE DELETED evantually
+
+'Sub Show_Message_Userform() 2024-03-28 @ 15:49
+'
+'    ufMessage.show vbModeless
+'
+'End Sub
+'
+'Sub Add_Label_To_Userform(uf As UserForm, t As String, l As Long, t As Long)
+'
+'    Dim newLabel As MSForms.Label
+'    Set newLabel = ufMessage.Controls.add("Forms.Label.1")
+'    With newLabel
+'        .Caption = t
+'        .Left = l
+'        .Top = t
+'    End With
+'
+'End Sub
+'
+'Sub Close_Message_Userform()
+'
+'    ufMessage.Hide
+'    Unload ufMessage
+'
+'End Sub
+'
+'-------------------------------------------------------------------------------------------------
 
 

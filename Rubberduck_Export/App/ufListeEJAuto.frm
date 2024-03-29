@@ -50,7 +50,7 @@ End Sub
 '    For r = 2 To lastUsedRow
 '        'Store values in the array
 '        arr(r - 1, 1) = wshGL_EJ_Recurrente.Range("K" & r).value
-'        arr(r - 1, 2) = Pad_A_String(wshGL_EJ_Recurrente.Range("L" & r).value, " ", 2, "L")
+'        arr(r - 1, 2) = Fn_Pad_A_String(wshGL_EJ_Recurrente.Range("L" & r).value, " ", 2, "L")
 '    Next r
 '    On Error GoTo 0
 '

@@ -462,7 +462,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
         If wshTEC_Local.Range("BD" & r).value = False And _
             wshFAC_Brouillon.Range("C" & r + 5) = True Then
             tecID = wshTEC_Local.Range("AT" & r).value
-            rowToBeUpdated = Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+            rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
             wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
             wshTEC_Local.Range("L" & rowToBeUpdated).value = True
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()
@@ -709,9 +709,9 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
         'Where are the email templates ? - 2024-03-27 @ 07:28
         Dim FullTemplatePathAndFile As String
         If userName <> "Robert M. Vigneault" Then
-            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\Test_de_gabarit.oft"
+            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
         Else
-            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\Test_de_gabarit.oft"
+            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
         End If
 
         Dim myMail As Outlook.MailItem

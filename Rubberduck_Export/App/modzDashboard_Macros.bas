@@ -1,4 +1,4 @@
-Attribute VB_Name = "Dashboard_Macros"
+Attribute VB_Name = "modzDashboard_Macros"
 Option Explicit
 
 Dim lastRow As Long, lastResultRow As Long, selRow As Long, selCol As Long

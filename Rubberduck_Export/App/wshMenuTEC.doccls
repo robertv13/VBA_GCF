@@ -85,9 +85,9 @@ Sub TEC_TDB_Click()
     
     Application.ScreenUpdating = False
     
-    wshTEC_Dashboard.Application.Calculation = xlCalculationAutomatic
+    wshTEC_DB.Application.Calculation = xlCalculationAutomatic
     
-    With wshTEC_Dashboard
+    With wshTEC_DB
         .Visible = xlSheetVisible
         .Select
     End With
