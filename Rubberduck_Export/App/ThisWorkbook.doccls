@@ -3,21 +3,14 @@
 Public sessionTimerStart As Double
 
 Public startTime As Double
-'Dim frmProgress As UserForm
-'Dim lblStatus As Label
-'Dim elapsedTime As Double
 
 Private Sub Workbook_Open()
 
+    Call Output_Timer_Results("ThisWorkbook - Session started", 0)
+    
     sessionTimerStart = Timer
     
     Application.ScreenUpdating = False
-   
-    Dim lastUsedRow As Long
-    lastUsedRow = wshzDocLogAppli.Range("A99999").End(xlUp).row
-    wshzDocLogAppli.Range("A" & lastUsedRow).value = Now()
-    wshzDocLogAppli.Range("B" & lastUsedRow).value = "ThisWorkbook - Session started"
-    wshzDocLogAppli.Range("C" & lastUsedRow).value = 0
     
     Call Hide_All_Worksheets_Except_Menu
     
