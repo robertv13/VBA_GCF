@@ -192,8 +192,11 @@ Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
         
     'Is the 'built' date valid ?
     isValidDate = IsDate(sDate)
-    If isValidDate Then Fn_Build_A_Date = sDate
-        
+    If isValidDate Then
+        Fn_Build_A_Date = sDate
+    Else
+        Fn_Build_A_Date = ""
+    End If
 End Function
 
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
@@ -253,10 +256,10 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     
 End Function
 
-Function Fn_Is_Date_Valide() As Boolean
+Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False
-    If wshGL_EJ.Range("K4").value = "" Or IsDate(wshGL_EJ.Range("K4").value) = False Then
+    If d = "" Or IsDate(d) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
@@ -278,6 +281,19 @@ Function Fn_Is_Ecriture_Balance() As Boolean
 
 End Function
 
+Function Fn_Is_Debours_Balance() As Boolean
+
+    Fn_Is_Debours_Balance = False
+    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("H26").value Then
+        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
+            "Total = " & wshDEB_Saisie.Range("O26").value & " et Ventilation = " & wshDEB_Saisie.Range("H26").value & vbNewLine & vbNewLine & _
+            "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
+    Else
+        Fn_Is_Debours_Balance = True
+    End If
+
+End Function
+
 Function Fn_Is_JE_Valid(rmax As Long) As Boolean
 
     Fn_Is_JE_Valid = True 'Optimist
@@ -293,6 +309,27 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
             If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
+            End If
+        End If
+    Next i
+
+End Function
+
+Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
+
+    Fn_Is_Deb_Saisie_Valid = True 'Optimist
+    If rmax < 9 Or rmax > 23 Then
+        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+            "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
+        Fn_Is_Deb_Saisie_Valid = False
+    End If
+    
+    Dim i As Long
+    For i = 9 To rmax
+        If wshDEB_Saisie.Range("E" & i).value <> "" Then
+            If wshDEB_Saisie.Range("N" & i).value = "" Then
+                MsgBox "Il existe une ligne avec un compte, sans montant !"
+                Fn_Is_Deb_Saisie_Valid = False
             End If
         End If
     Next i

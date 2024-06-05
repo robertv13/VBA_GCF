@@ -21,7 +21,7 @@ Sub SlideIn_TEC()
             .Left = width - 32
             ActiveSheet.Shapes("icoTEC").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnTEC").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -42,7 +42,7 @@ Sub SlideIn_Facturation()
             .Left = width - 32
             ActiveSheet.Shapes("icoFacturation").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnFacturation").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -63,7 +63,7 @@ Sub SlideIn_Debours()
             .Left = width - 32
             ActiveSheet.Shapes("icoDebours").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnDebours").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 Sub SlideOut_Comptabilite()
@@ -83,7 +83,7 @@ Sub SlideIn_Comptabilite()
             .Left = width - 32
             ActiveSheet.Shapes("icoComptabilite").Left = width - 32
         Next width
-            ActiveSheet.Shapes("btnComptabilite").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 Sub SlideOut_Parametres()
@@ -103,7 +103,7 @@ Sub SlideIn_Parametres()
             .Left = width - 32
             ActiveSheet.Shapes("icoParametres").Left = width - 32
         Next width
-            ActiveSheet.Shapes("btnParametres").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -124,13 +124,13 @@ Sub SlideIn_Exit()
             .Left = width - 32
             ActiveSheet.Shapes("icoEXIT").Left = width - 32
         Next width
-            ActiveSheet.Shapes("btnExit").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
 'Second level (sub-menu) ---------------------------------------------------------------------------
 Sub SlideOut_SaisieHeures()
-    With ActiveSheet.Shapes("btnSaisieHeures")
+    With wshMenuTEC.Shapes("btnSaisieHeures")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
@@ -140,13 +140,13 @@ Sub SlideOut_SaisieHeures()
 End Sub
 
 Sub SlideIn_SaisieHeures()
-    With ActiveSheet.Shapes("btnSaisieHeures")
+    With wshMenuTEC.Shapes("btnSaisieHeures")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnSaisieHeures").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -167,7 +167,7 @@ Sub SlideIn_TEC_TDB()
             .Left = width - 32
             ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
         Next width
-        wshMenuTEC.Shapes("btnTEC_TDB").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -188,7 +188,7 @@ Sub SlideIn_PrepFact()
             .Left = width - 32
             ActiveSheet.Shapes("icoPrepFact").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnPrepFact").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -209,7 +209,7 @@ Sub SlideIn_SuiviCC()
             .Left = width - 32
             ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnSuiviCC").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -230,7 +230,7 @@ Sub SlideIn_Encaissement()
             .Left = width - 32
             ActiveSheet.Shapes("icoEncaissement").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnEncaissement").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -251,12 +251,12 @@ Sub SlideIn_Regularisation()
             .Left = width - 32
             ActiveSheet.Shapes("icoRegularisation").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnRegularisation").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
 Sub SlideOut_Paiement()
-    With ActiveSheet.Shapes("btnPaiement")
+    With wshMenuDEBOURS.Shapes("btnPaiement")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoPaiement").Left = width - 32
@@ -266,18 +266,18 @@ Sub SlideOut_Paiement()
 End Sub
 
 Sub SlideIn_Paiement()
-    With ActiveSheet.Shapes("btnPaiement")
+    With wshMenuDEBOURS.Shapes("btnPaiement")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoPaiement").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnPaiement").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
 Sub SlideOut_EJ()
-    With ActiveSheet.Shapes("btnEJ")
+    With wshMenuCOMPTA.Shapes("btnEJ")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoEJ").Left = width - 32
@@ -287,39 +287,18 @@ Sub SlideOut_EJ()
 End Sub
 
 Sub SlideIn_EJ()
-    With ActiveSheet.Shapes("btnEJ")
+    With wshMenuCOMPTA.Shapes("btnEJ")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoEJ").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnEJ").TextFrame2.TextRange.Characters.text = ""
-    End With
-End Sub
-
-Sub SlideOut_GL_Report()
-    With ActiveSheet.Shapes("btnGL")
-        For width = 32 To maxWidth
-            .Height = width
-            ActiveSheet.Shapes("icoGL").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Rapport - GL"
-    End With
-End Sub
-
-Sub SlideIn_GL_Report()
-    With ActiveSheet.Shapes("btnGL")
-        For width = maxWidth To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoGL").Left = width - 32
-        Next width
-        ActiveSheet.Shapes("btnGL").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
 Sub SlideOut_BV()
-    With ActiveSheet.Shapes("btnBV")
+    With wshMenuCOMPTA.Shapes("btnBV")
         For width = 32 To 180
             .Height = width
             ActiveSheet.Shapes("icoBV").Left = width - 32
@@ -329,18 +308,39 @@ Sub SlideOut_BV()
 End Sub
 
 Sub SlideIn_BV()
-    With ActiveSheet.Shapes("btnBV")
+    With wshMenuCOMPTA.Shapes("btnBV")
         For width = 180 To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoBV").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnBV").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
+    End With
+End Sub
+
+Sub SlideOut_GL_Report()
+    With wshMenuCOMPTA.Shapes("btnGL")
+        For width = 32 To maxWidth
+            .Height = width
+            ActiveSheet.Shapes("icoGL").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = "Rapport - GL"
+    End With
+End Sub
+
+Sub SlideIn_GL_Report()
+    With wshMenuCOMPTA.Shapes("btnGL")
+        For width = maxWidth To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            ActiveSheet.Shapes("icoGL").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
 Sub SlideOut_EF()
-    With ActiveSheet.Shapes("btnEF")
+    With wshMenuCOMPTA.Shapes("btnEF")
         For width = 32 To maxWidth
             .Height = width
             ActiveSheet.Shapes("icoEF").Left = width - 32
@@ -350,13 +350,13 @@ Sub SlideOut_EF()
 End Sub
 
 Sub SlideIn_EF()
-    With ActiveSheet.Shapes("btnEF")
+    With wshMenuCOMPTA.Shapes("btnEF")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoEF").Left = width - 32
         Next width
-        ActiveSheet.Shapes("btnEF").TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.text = ""
     End With
 End Sub
 
@@ -448,19 +448,19 @@ End Sub
 Sub EXIT_Click() '2024-02-13 @ 13:48
     
     Application.EnableEvents = False
+    Application.ScreenUpdating = False
     
     Call SlideIn_Exit
     
     Call Hide_All_Worksheets_Except_Menu
 
     Call Output_Timer_Results("ThisWorkbook - Session is finished", 0)
-    Call Output_Timer_Results("ThisWorkbook - Session is finished", 0)
 
     ThisWorkbook.Close SaveChanges:=True
     
-    Application.Quit
+    Application.ScreenUpdating = True
     
-    Application.EnableEvents = True
+    Application.Quit
     
 End Sub
 

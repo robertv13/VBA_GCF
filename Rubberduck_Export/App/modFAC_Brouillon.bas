@@ -320,15 +320,15 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshTEC_Local.Range("AW3"), _
+            .SortFields.add key:=wshTEC_Local.Range("AW3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshTEC_Local.Range("AU3"), _
+            .SortFields.add key:=wshTEC_Local.Range("AU3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add Key:=wshTEC_Local.Range("AT3"), _
+            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID

@@ -148,7 +148,7 @@ Sub Invoice_Delete()
             'Sort based on descending rows
             With .Sort
                 .SortFields.clear
-                .SortFields.add Key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
+                .SortFields.add key:=InvoiceItems.Range("P3"), SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
                 .SetRange InvoiceItems.Range("P3:Y" & lastResultRow)
                 .Apply
             End With

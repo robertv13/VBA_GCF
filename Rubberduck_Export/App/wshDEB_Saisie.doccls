@@ -1,0 +1,109 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Call DEB_Saisie_Clear_All_Cells
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    'Date has change
+    If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
+        Dim buildDate As String
+        buildDate = Fn_Build_A_Date(Range("O4").value)
+        If IsDate(buildDate) = True Then
+            Application.EnableEvents = False
+            Range("O4").value = buildDate
+            Application.EnableEvents = True
+        Else
+            Range("O4").Select
+        End If
+    End If
+
+    'Modification de la description du compte et sauvegarde du no de compte
+    If Not Intersect(Target, Range("E9:E23")) Is Nothing Then
+        If wshDEB_Saisie.Range("E" & Target.row).value <> "" Then
+            Application.EnableEvents = False
+            wshDEB_Saisie.Range("Q" & Target.row).value = _
+                Fn_Get_GL_Code_From_GL_Description(wshDEB_Saisie.Range("E" & Target.row).value)
+            Application.EnableEvents = True
+        End If
+    End If
+    
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    Application.EnableEvents = False
+    
+    'Force GST/TPS calculation with a formula
+    If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
+        If Range("H" & Target.row).value <> 0 Then
+            Range("J" & Target.row).formula = "=round((RC[-2]/1.14975)*0.05,2)"
+        Else
+            Range("J" & Target.row).value = ""
+        End If
+    End If
+    
+    'Force PST/TVQ calculation with a formula
+    If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
+        If Range("H" & Target.row).value <> 0 Then
+            Range("K" & Target.row).formula = "=round((RC[-3]/1.14975)*0.09975,2)"
+        Else
+            Range("K" & Target.row).value = ""
+        End If
+    End If
+    
+    'Credit GST/TPS
+    If Not Intersect(Target, Range("L9:L23")) Is Nothing Then
+        If Range("H" & Target.row).value <> 0 Then
+            Select Case Range("I" & Target.row).value
+                Case "FP"
+                    Target.value = Range("J" & Target.row).value
+                Case "REP"
+                    Target.value = Round(Range("J" & Target.row).value * 0.5, 2)
+                Case "F"
+                    Target.value = Range("J" & Target.row).value
+                Case "P"
+                    Target.value = 0
+                Case Else
+                    Target.value = 0
+            End Select
+        Else
+            Range("L" & Target.row).value = ""
+        End If
+    End If
+    
+    'Credit PST/TVQ
+    If Not Intersect(Target, Range("M9:M23")) Is Nothing Then
+        If Range("H" & Target.row).value <> 0 Then
+            Select Case Range("I" & Target.row).value
+                Case "FP"
+                    Target.value = Range("K" & Target.row).value
+                Case "REP"
+                    Target.value = Round(Range("K" & Target.row).value * 0.5, 2)
+                Case "F"
+                    Target.value = 0
+                Case "P"
+                    Target.value = Range("K" & Target.row).value
+                Case Else
+                    Target.value = 0
+            End Select
+        Else
+            Range("M" & Target.row).value = ""
+        End If
+    End If
+
+    'Calculate the NET amount (Expense)
+    If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
+        If Range("H" & Target.row).value <> 0 Then
+            Range("N" & Target.row).formula = "=round(RC[-6]-rc[-2]-rc[-1],2)"
+        Else
+            Range("N" & Target.row).value = ""
+        End If
+    End If
+
+    Application.EnableEvents = True
+
+End Sub

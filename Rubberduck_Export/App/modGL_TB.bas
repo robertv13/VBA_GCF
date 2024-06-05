@@ -241,15 +241,15 @@ Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshGL_Trans.Range("T1"), _
+            .SortFields.add key:=wshGL_Trans.Range("T1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
-            .SortFields.add Key:=wshGL_Trans.Range("Q1"), _
+            .SortFields.add key:=wshGL_Trans.Range("Q1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshGL_Trans.Range("P1"), _
+            .SortFields.add key:=wshGL_Trans.Range("P1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On JE Number

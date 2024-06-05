@@ -179,15 +179,15 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.clear
-            .SortFields.add Key:=wshTEC_Local.Range("AA3"), _
+            .SortFields.add key:=wshTEC_Local.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add Key:=wshTEC_Local.Range("Z3"), _
+            .SortFields.add key:=wshTEC_Local.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add Key:=wshTEC_Local.Range("Y3"), _
+            .SortFields.add key:=wshTEC_Local.Range("Y3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
@@ -564,15 +564,15 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:0
                 If lastResultRow < 4 Then GoTo No_Sort_Required
             With .Sort
                 .SortFields.clear
-                .SortFields.add Key:=wshTEC_Local.Range("AW3"), _
+                .SortFields.add key:=wshTEC_Local.Range("AW3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On Date
-                .SortFields.add Key:=wshTEC_Local.Range("AU3"), _
+                .SortFields.add key:=wshTEC_Local.Range("AU3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On Prof_ID
-                .SortFields.add Key:=wshTEC_Local.Range("AT3"), _
+                .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On TEC_ID

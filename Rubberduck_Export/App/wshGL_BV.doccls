@@ -149,11 +149,11 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
-            .SortFields.add Key:=wshGL_Trans.Range("AF1"), _
+            .SortFields.add key:=wshGL_Trans.Range("AF1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
-            .SortFields.add Key:=wshGL_Trans.Range("AH1"), _
+            .SortFields.add key:=wshGL_Trans.Range("AH1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal 'Sort Based On Date

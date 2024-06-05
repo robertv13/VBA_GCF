@@ -15,9 +15,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim tabOrderListOfCells As Variant, cellsAddress As Variant
         Dim addr As String
         Dim rng As Range, targetRng As Range
-        
+
         If isTab_Order_Activated = True Then Exit Sub
-        
+
         tabOrderListOfCells = Array("F4", "K4", "F6", "E9:K23")
         For Each cellsAddress In tabOrderListOfCells
             If rng Is Nothing Then
@@ -26,7 +26,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 Set rng = Union(rng, Range(cellsAddress))
             End If
         Next
-        
+
         Set targetRng = Intersect(rng, Target)
         rng.Select
         If targetRng Is Nothing Then
@@ -39,12 +39,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             targetRng.Activate
         End If
     End If
-    
+
     'If date is empty, assign today's date by default
     If Not Intersect(Target, Me.Range("K4")) Is Nothing And Me.Range("K4").value = "" Then
         Me.Range("K4").value = Format(Now(), "dd-mm-yyyy")
     End If
-    
+
     'Clean memory
     On Error Resume Next
     Set rng = Nothing

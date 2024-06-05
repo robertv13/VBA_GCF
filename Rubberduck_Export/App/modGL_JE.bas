@@ -3,7 +3,7 @@ Option Explicit
 
 Sub JE_Update()
 
-    If Fn_Is_Date_Valide = False Then Exit Sub
+    If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").value) = False Then Exit Sub
     
     If Fn_Is_Ecriture_Balance = False Then Exit Sub
     

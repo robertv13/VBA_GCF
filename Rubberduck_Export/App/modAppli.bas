@@ -18,6 +18,13 @@ Sub BackToMainMenu()
 
 End Sub
 
+Sub DEBOURS_Back_To_Menu()
+    
+    wshMenuDEBOURS.Activate
+    wshMenuDEBOURS.Range("A1").Select
+    
+End Sub
+
 Private Sub auto_open() '2024-03-06 @ 14:36
 
     Dim timerStart As Double: timerStart = Timer
@@ -147,6 +154,26 @@ Sub Slide_In_All_Menu_Options()
 
 End Sub
 
+Sub HighlightActiveCell()
+
+'    'First remove highlight from the previous cell
+'    On Error Resume Next
+'    Cells.Interior.Color = xlNone
+'    'Highlight the new cell
+'    ActiveCell.Interior.Color = vbYellow
+
+End Sub
+
+Sub TEST_GetOneDrivePath()
+    On Error GoTo eh
+    Debug.Print "Original Path is: " & ThisWorkbook.Path & "/" & ThisWorkbook.name
+    Debug.Print "The Path is     : " & GetOneDrivePath(ThisWorkbook.FullName)
+    Exit Sub
+eh:
+    MsgBox Err.Description
+End Sub
+ 
+ 
 'Sub Add_Caption_To_Userform(uf As UserForm, titleText As String)
 '
 '    uf.Caption = titleText

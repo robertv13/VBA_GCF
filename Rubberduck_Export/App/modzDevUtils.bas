@@ -458,22 +458,22 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     With ws.ListObjects("tblTests_And_Todo").Sort
         .SortFields.clear
         .SortFields.Add2 _
-            Key:=Range("tblTests_And_Todo[Statut]"), _
+            key:=Range("tblTests_And_Todo[Statut]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlDescending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            Key:=Range("tblTests_And_Todo[Module]"), _
+            key:=Range("tblTests_And_Todo[Module]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            Key:=Range("tblTests_And_Todo[Priorité]"), _
+            key:=Range("tblTests_And_Todo[Priorité]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            Key:=Range("tblTests_And_Todo[TimeStamp]"), _
+            key:=Range("tblTests_And_Todo[TimeStamp]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal

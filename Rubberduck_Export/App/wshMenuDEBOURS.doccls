@@ -10,6 +10,24 @@ End Sub
 
 Sub Paiement_Click()
     SlideIn_Paiement
-    MsgBox "Ajouter la fonction 'Déboursé'"
+    wshDEB_Saisie.Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = False
+    With wshDEB_Saisie
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    Application.ScreenUpdating = True
 End Sub
 
+
+Sub JE_Click()
+    SlideIn_BV
+    SlideIn_EJ
+    wshGL_EJ.Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = False
+    With wshGL_EJ
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    Application.ScreenUpdating = True
+End Sub
