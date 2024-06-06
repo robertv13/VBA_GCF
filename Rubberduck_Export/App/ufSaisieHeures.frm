@@ -33,7 +33,7 @@ End Property
 '
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -93,7 +93,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     'Clear the admin control cells
     wshAdmin.Range("B3:B7").Clearcontents
@@ -125,7 +125,7 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     If Me.cmbProfessionnel.value = "" Then GoTo exit_sub
     

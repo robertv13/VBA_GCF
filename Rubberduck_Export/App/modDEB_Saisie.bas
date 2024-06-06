@@ -3,10 +3,15 @@ Option Explicit
 
 Sub DEB_Saisie_Update()
 
-    If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").value) = False Then Exit Sub
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Update()")
     
-    If Fn_Is_Debours_Balance = False Then Exit Sub
+    'Date is not valid OR the transaction does not balance
+    If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").value) = False Or _
+        Fn_Is_Debours_Balance = False Then
+            Exit Sub
+    End If
     
+    'Is every line of the transaction well entered ?
     Dim rowDebSaisie As Long
     rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
@@ -15,26 +20,29 @@ Sub DEB_Saisie_Update()
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
     Call DEB_Trans_Add_Record_Locally(rowDebSaisie)
     
+    'GL posting
+    Call DEB_Saisie_GL_Posting_Preparation
+    
 '    If wshDEB_Saisie.ckbRecurrente = True Then
 '        Call Save_EJ_Recurrente(rowEJLast)
 '    End If
     
-    'GL posting
-    Call DEB_Saisie_GL_Posting_Preparation
-    
-    'Save Current DEBOURS number
+    'Retrieve the CurrentDebours number
     Dim CurrentDeboursNo As String
     CurrentDeboursNo = wshDEB_Saisie.Range("B1").value
     
     MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
     
+    'Get ready for a new one
     Call DEB_Saisie_Clear_All_Cells
+        
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Update()", timerStart)
         
 End Sub
 
 Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -115,13 +123,13 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("DEB_Trans_Add_Record_To_DB()", timerStart)
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()", timerStart)
 
 End Sub
 
 Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Trans_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -154,7 +162,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call Output_Timer_Results("DEB_Trans_Add_Record_Locally()", timerStart)
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -162,17 +170,19 @@ End Sub
 
 Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()")
 
     Dim montant As Double
     Dim dateDebours As Date
     Dim descGL_Trans As String, source As String
+    Dim GLTransNo As Long
     
     dateDebours = wshDEB_Saisie.Range("O4").value
     descGL_Trans = wshDEB_Saisie.Range("F4").value & " - " & _
                    wshDEB_Saisie.Range("F6").value & " [" & _
                    wshDEB_Saisie.Range("M6").value & "]"
     source = "DÉBOURS-" & Format(wshDEB_Saisie.Range("B1").value, "000000")
+    GLTransNo = wshDEB_Saisie.Range("B1").value
     
     Dim myArray() As String
     ReDim myArray(1 To 16, 1 To 4)
@@ -216,24 +226,28 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         End If
     Next l
    
-    Call FAC_Finale_GL_Posting_To_DB(dateDebours, descGL_Trans, source, myArray)
-    Call FAC_Finale_GL_Posting_Locally(dateDebours, descGL_Trans, source, myArray)
+    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, myArray)
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GLTransNo, myArray)
     
-    Call Output_Timer_Results("FAC_Finale_GL_Posting_Preparation()", timerStart)
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 
 End Sub
 
 Public Sub DEB_Saisie_Clear_All_Cells()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()")
+
     'Vide les cellules
     Application.EnableEvents = False
     With wshDEB_Saisie
-        .Range("F4:H4, F6:L6, O6, M6, E9:O23, Q9:Q23").Clearcontents
-        .Range("O4").value = Format(Now(), "dd/mm/yyyy")
+        .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").Clearcontents
+        .Range("O4").value = Format(Now(), "dd-mm-yyyy")
         .Range("F4").Select
         .Range("F4").Activate
     End With
     Application.EnableEvents = True
+    
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
 
 End Sub
 

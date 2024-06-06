@@ -1,6 +1,32 @@
 Attribute VB_Name = "modAppliUtils"
 Option Explicit
 
+Sub Start_Routine(subName As String) '2024-06-06 @ 10:12
+
+    Dim modeOper As Integer
+    modeOper = 2
+    
+    'modeOper = 1 - Dump to immediate Window
+    If modeOper = 1 Then
+        Dim l As Integer: l = Len(subName)
+        Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
+        Format(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & "Entering: " & subName & _
+            vbNewLine & String(40 + l, "*")
+    End If
+
+    'modeOper = 2 - Dump to worksheet
+    If modeOper = 2 Then
+        With wshzDocLogAppli
+            Dim lastUsedRow As Long
+            lastUsedRow = .Range("A99999").End(xlUp).row
+            lastUsedRow = lastUsedRow + 1 'Row to write a new record
+            .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("B" & lastUsedRow).value = "Entering: " & subName
+        End With
+    End If
+
+End Sub
+
 Sub Output_Timer_Results(subName As String, t As Double)
 
     Dim modeOper As Integer

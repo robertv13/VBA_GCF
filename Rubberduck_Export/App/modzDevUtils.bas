@@ -71,7 +71,7 @@ End Sub
 
 Sub List_All_Subs_And_Functions() '2024-03-26 @ 14:27
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     Dim VBComp As Object
 
@@ -227,7 +227,7 @@ End Sub
 
 Sub List_All_Conditional_Formatting() '2024-03-26 @ 14:32
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     Dim r As Integer: r = 1
     Dim numRows As Integer, numCols As Integer

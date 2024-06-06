@@ -4,7 +4,7 @@ Private previousCellAddress As String
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     Application.ScreenUpdating = False
     
@@ -74,7 +74,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
     
     Application.EnableEvents = False
     

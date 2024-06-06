@@ -16,7 +16,7 @@ Global savedCommNote As String
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Ajoute_Ligne()")
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
     
@@ -47,13 +47,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     'Back to client
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Ajoute_Ligne()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Ajoute_Ligne()", timerStart)
 
 End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Modifie_Ligne()")
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -79,13 +79,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Modifie_Ligne()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Modifie_Ligne()", timerStart)
 
 End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Efface_Ligne()")
 
     If wshAdmin.Range("TEC_Current_ID").value = "" Then
         MsgBox _
@@ -143,13 +143,13 @@ Clean_Exit:
     'Free up memory - 2024-02-23
     Set sh = Nothing
 
-    Call Output_Timer_Results("TEC_Efface_Ligne()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Efface_Ligne()", timerStart)
 
 End Sub
 
 Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_AdvancedFilter_And_Sort()")
 
     Application.ScreenUpdating = False
 
@@ -200,13 +200,13 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("TEC_AdvancedFilter_And_Sort()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_AdvancedFilter_And_Sort()", timerStart)
 
 End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim timerStart4 As Double: timerStart4 = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_AdvancedFilter_And_Sort()")
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -227,13 +227,13 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Efface_Formulaire()", timerStart4)
+    Call Output_Timer_Results("modTEC:TEC_Efface_Formulaire()", timerStart)
 
 End Sub
 
 Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Record_Add_Or_Update_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -349,13 +349,13 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("TEC_Record_Add_Or_Update_DB()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_To_DB()", timerStart)
 
 End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Record_Add_Or_Update_Locally()")
 
     Application.ScreenUpdating = False
     
@@ -427,13 +427,13 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("TEC_Record_Add_Or_Update_Locally()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_Locally()", timerStart)
 
 End Sub
 
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Refresh_ListBox_And_Add_Hours()")
 
     If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
         GoTo EndOfProcedure
@@ -471,13 +471,13 @@ EndOfProcedure:
 
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("TEC_Refresh_ListBox_And_Add_Hours()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_Refresh_ListBox_And_Add_Hours()", timerStart)
     
 End Sub
 
 Sub TEC_DB_Push_TEC_Local_To_DB_Data()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_DB_Push_TEC_Local_To_DB_Data()")
 
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
@@ -511,7 +511,7 @@ End Sub
 
 Sub TEC_DB_Update_All()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_DB_Update_All()")
     
     Call TEC_DB_Push_TEC_Local_To_DB_Data
     Call TEC_DB_Refresh_All_Pivot_Tables
@@ -522,7 +522,7 @@ End Sub
 
 Sub TEC_DB_Refresh_All_Pivot_Tables()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_DB_Refresh_All_Pivot_Tables()")
     
     Dim pt As PivotTable
     For Each pt In wshTEC_DB_PivotTable.PivotTables
@@ -535,7 +535,7 @@ End Sub
 
 Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:07
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Advanced_Filter_2()")
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     

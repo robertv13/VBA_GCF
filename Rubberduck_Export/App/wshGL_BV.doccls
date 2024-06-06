@@ -4,7 +4,7 @@ Public dynamicShape As Shape
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     'Set the zoom factor to 92% when this worksheet is activated
     ActiveWindow.Zoom = 92
@@ -129,7 +129,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 '    Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
@@ -188,7 +188,7 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-        Dim timerStart As Double: timerStart = Timer
+        Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
         
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row

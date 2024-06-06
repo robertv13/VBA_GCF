@@ -24,7 +24,7 @@ End Sub
 
 Sub PreparationFacture_Click()
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 
     SlideIn_PrepFact
     

@@ -37,7 +37,7 @@ End Sub
 
 'Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
 '
-'    Dim timerStart As Double: timerStart = Timer
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
 '
 '    Call Hide_All_Worksheets_Except_Menu
 '

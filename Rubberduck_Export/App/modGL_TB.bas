@@ -3,6 +3,8 @@ Option Explicit
 
 Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Build_Trial_Balance()")
+    
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
@@ -72,10 +74,14 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
   
     Application.EnableEvents = True
   
+    Call Output_Timer_Results("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
+
 End Sub
 
 Sub GL_TB_Display_TB_Totals(r As Long, c As Long) '2024-03-05 @ 14:03
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_TB_Totals()")
+    
     'Dt and Ct columns at the same time
     Dim sumDtRange As Range, sumCtRange As Range
     Dim sumDt As Double, sumCT As Double
@@ -109,10 +115,14 @@ Sub GL_TB_Display_TB_Totals(r As Long, c As Long) '2024-03-05 @ 14:03
     Set sumDtRange = Nothing
     Set sumCtRange = Nothing
     
+    Call Output_Timer_Results("modGL_TB:GL_TB_Display_TB_Totals()", timerStart)
+
 End Sub
 
 Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()")
+    
     'Clear the display area & display the account number & description
     With wshGL_BV
         .Range("M4:T99999").clear '2024-03-29 @ 12:09
@@ -215,11 +225,13 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     Set rng = wshGL_BV.Range("T5:T" & lastResultUsedRow)
     rng.ColumnWidth = 30
     
+    Call Output_Timer_Results("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", timerStart)
+
 End Sub
 
 Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Advanced_Filter_By_GL()")
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
@@ -260,13 +272,13 @@ Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date
 
 NoSort:
 
-    Call Output_Timer_Results("GL_TB_Advanced_Filter_By_GL()", timerStart)
+    Call Output_Timer_Results("modGL_TB:GL_TB_Advanced_Filter_By_GL()", timerStart)
 
 End Sub
 
 Sub GL_TB_Sub_Totals(GLNo As String, GLDesc As String, s As Currency)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Sub_Totals()")
 
     Dim r As Long
     With wshGL_BV
@@ -282,11 +294,13 @@ Sub GL_TB_Sub_Totals(GLNo As String, GLDesc As String, s As Currency)
         .Range("B2").value = wshGL_BV.Range("B2").value + 1
     End With
     
-    Call Output_Timer_Results("GL_TB_Sub_Totals()", timerStart)
+    Call Output_Timer_Results("modGL_TB:GL_TB_Sub_Totals()", timerStart)
 
 End Sub
 
 Sub GL_TB_Determine_From_And_To_Date(period As String)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Determine_From_And_To_Date()")
 
     Select Case period
         Case "Mois"
@@ -314,11 +328,14 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B8").value = CDate(Format(wshGL_BV.Range("B3").value, "dd-mm-yyyy"))
             wshGL_BV.Range("B9").value = CDate(Format(wshGL_BV.Range("B4").value, "dd-mm-yyyy"))
     End Select
-'            Debug.Print "Period is '" & period & "' so MinDate = " & wshGL_BV.Range("B8").value & _
-'                "  maxDate = " & wshGL_BV.Range("B9").value
+    
+    Call Output_Timer_Results("modGL_TB:GL_TB_Determine_From_And_To_Date()", timerStart)
+
 End Sub
 
 Sub GL_TB_Setup_And_Print()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print()")
     
     Dim lastRow As Long, printRange As Range, shp As Shape
     lastRow = Range("D999").End(xlUp).row + 2
@@ -338,9 +355,13 @@ Sub GL_TB_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
+    Call Output_Timer_Results("modGL_TB:GL_TB_Setup_And_Print()", timerStart)
+
 End Sub
 
 Sub GL_TB_Setup_And_Print_Trans()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
     Dim lastRow As Long, printRange As Range, shp As Shape
     lastRow = Range("M9999").End(xlUp).row
@@ -357,11 +378,13 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     shp.Visible = msoTrue
     
+    Call Output_Timer_Results("modGL_TB:GL_TB_Setup_And_Print_Trans()", timerStart)
+
 End Sub
 
 Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Integer)
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_SetUp_And_Print_Document()")
     
     With ActiveSheet.PageSetup
         .PrintTitleRows = ""
@@ -409,7 +432,7 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Integer)
     
     wshGL_BV.PrintOut , , 1, True, True, , , , False
  
-    Call Output_Timer_Results("GL_TB_SetUp_And_Print_Document()", timerStart)
+    Call Output_Timer_Results("modGL_TB:GL_TB_SetUp_And_Print_Document()", timerStart)
  
 End Sub
 
@@ -420,18 +443,3 @@ Sub GL_TB_Back_To_Menu()
     
 End Sub
 
-'------------------------------------------------------------------------------------------------
-'TO BE DELETED eventually
-
-'Public Sub ClearDynamicShape() - 2024-03-28 @ 15:48
-'    'Hide the shape if it's visible
-'    If dynamicShape.Visible Then
-'        dynamicShape.Visible = False
-'    End If
-'
-'    'Set dynamicShape to Nothing to release memory
-'    Set dynamicShape = Nothing
-'
-'End Sub
-'
-'----------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.5" '2024-03-29 @ 08:06
+Global Const gAppVersion As String = "v3.6.5" '2024-06-06 @ 06:30
 
 Public userName As String
 
@@ -27,7 +27,7 @@ End Sub
 
 Private Sub auto_open() '2024-03-06 @ 14:36
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
     
     userName = Environ("Username") '2024-03-27 @ 06:54
 
@@ -37,7 +37,7 @@ End Sub
 
 Private Sub auto_close() '2024-03-06 @ 14:36
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_close()")
 
     MsgBox "Auto_Close..."
     
@@ -45,16 +45,16 @@ Private Sub auto_close() '2024-03-06 @ 14:36
     
 End Sub
 
-Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-03-06 @ 13:43
+Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-06-06 @ 07:41
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Dynamic_Range_Redefine_Plan_Comptable()")
 
-    'Delete existing dynamic named range (assuming it exists)
+    'Delete existing dynamic named range (assuming it could exists)
     On Error Resume Next
     ThisWorkbook.Names("dnrPlanComptableDescription").delete
     On Error GoTo 0
     
-    'Define a new dynamic named range for 'Plan Comptable'
+    'Define a new dynamic named range for 'dnrPlanComptableDescription'
     Dim newRangeFormula As String
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
@@ -67,7 +67,7 @@ End Sub
 
 Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Hide_All_Worksheets_Except_Menu()")
     
     Dim wsh As Worksheet
     For Each wsh In ThisWorkbook.Worksheets
@@ -141,7 +141,7 @@ End Sub
 
 Sub Slide_In_All_Menu_Options()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Slide_In_All_Menu_Options()")
     
     SlideIn_TEC
     SlideIn_Facturation
@@ -172,27 +172,4 @@ Sub TEST_GetOneDrivePath()
 eh:
     MsgBox Err.Description
 End Sub
- 
- 
-'Sub Add_Caption_To_Userform(uf As UserForm, titleText As String)
-'
-'    uf.Caption = titleText
-'
-'End Sub
-'
-'Sub Add_Label_To_Userform(uf As UserForm, labelText As String, leftPos As Single, topPos As Single)
-'
-'    'Add a label to the userform
-'    Dim newLabel As MSForms.Label: Set newLabel = uf.Controls.add("Forms.Label.1")
-'
-'    With newLabel
-'        .Caption = labelText
-'        .Left = leftPos
-'        .width = 150
-'        .Top = topPos
-'        'Set other properties as needed
-'    End With
-'
-'End Sub
-'
 

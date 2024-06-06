@@ -51,7 +51,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
     
     Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
     Dim foundCell As Range
@@ -285,8 +285,8 @@ Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
     If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("H26").value Then
-        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
-            "Total = " & wshDEB_Saisie.Range("O26").value & " et Ventilation = " & wshDEB_Saisie.Range("H26").value & vbNewLine & vbNewLine & _
+        MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
+            "Total saisi = " & wshDEB_Saisie.Range("O6").value & " et Ventilation = " & wshDEB_Saisie.Range("H26").value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
         Fn_Is_Debours_Balance = True

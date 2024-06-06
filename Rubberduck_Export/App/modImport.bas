@@ -3,28 +3,18 @@ Option Explicit
 
 Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Import_Minimum_From_External_DB()")
     
-'    Dim uf As UserForm: Set uf = ufMessage
-'    Call Show_Message_Userform
-'
-'    Call Add_Label_To_Userform(ufMessage, "Importation des Clients", 15, 10)
     Call Client_List_Import_All
-'    Call Pause_Application(1)
-    
-'    Call Add_Label_To_Userform(ufMessage, "Importation des TEC", 15, 30)
     Call TEC_Import_All
-'    Call Pause_Application(1)
     
-'    Call Close_Message_Userform
-    
-    Call Output_Timer_Results("modImport:Import_Minimum()", timerStart)
+    Call Output_Timer_Results("modImport:Import_Minimum_From_External_DB()", timerStart)
 
 End Sub
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Client_List_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -80,7 +70,7 @@ End Sub
 
 Sub TEC_Import_All() '2024-02-14 @ 06:19
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:TEC_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -130,7 +120,7 @@ End Sub
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ChartOfAccount_Import_All()")
     
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).Clearcontents
@@ -175,7 +165,7 @@ End Sub
 
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_Trans_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -232,17 +222,6 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Dim firstRowJE As Long, lastRowJE As Long
     Dim r As Long
     
-'    For r = 2 To lastRow 'RMV - 2024-01-05
-'        With wshGL_Trans.Range("A" & r & ":J" & r) 'No_EJ & No.Ligne
-'            .Font.ThemeColor = xlThemeColorLight1
-'            .Font.TintAndShade = -4.99893185216834E-02
-'            .Interior.Pattern = xlNone
-'            .Interior.TintAndShade = 0
-'            .Interior.PatternTintAndShade = 0
-'        End With
-'        wshGL_Trans.Range("J" & r).formula = "=ROW()"
-'    Next r
-
     Application.ScreenUpdating = True
     
     Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
@@ -251,7 +230,7 @@ End Sub
 
 Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_EJ_Auto_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -328,7 +307,7 @@ End Sub
 
 Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Entête_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -365,14 +344,6 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
         .Range("I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow & ",O4:U" & lastRow).NumberFormat = "#,##0.00 $"
         .Range("P4:P" & lastRow & ",R4:R" & lastRow).NumberFormat = "#0.000 %"
     End With
-'        With .Range("A" & 2 & ":A" & lastRow) _
-'            .Range("J" & 2 & ":J" & lastRow).Interior
-'            .Pattern = xlSolid
-'            .PatternColorIndex = xlAutomatic
-'            .ThemeColor = xlThemeColorAccent5
-'            .TintAndShade = 0.799981688894314
-'            .PatternTintAndShade = 0
-'        End With
 
     Application.ScreenUpdating = True
     
@@ -382,7 +353,7 @@ End Sub
 
 Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Détails_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -429,7 +400,7 @@ End Sub
 
 Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Comptes_Clients_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -468,37 +439,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Comptes_Clients_Import_All()", timerStart)
+    Call Output_Timer_Results("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
 
 End Sub
-
-'TO BE DELETED evantually
-
-'Sub Show_Message_Userform() 2024-03-28 @ 15:49
-'
-'    ufMessage.show vbModeless
-'
-'End Sub
-'
-'Sub Add_Label_To_Userform(uf As UserForm, t As String, l As Long, t As Long)
-'
-'    Dim newLabel As MSForms.Label
-'    Set newLabel = ufMessage.Controls.add("Forms.Label.1")
-'    With newLabel
-'        .Caption = t
-'        .Left = l
-'        .Top = t
-'    End With
-'
-'End Sub
-'
-'Sub Close_Message_Userform()
-'
-'    ufMessage.Hide
-'    Unload ufMessage
-'
-'End Sub
-'
-'-------------------------------------------------------------------------------------------------
-
 

@@ -362,7 +362,7 @@ End Sub
 
 Sub menuTEC_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:menuTEC_Click()")
     
     SlideIn_TEC
     
@@ -379,7 +379,7 @@ End Sub
 
 Sub menuFacturation_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:menuFacturation_Click()")
 
     SlideIn_Facturation
     
@@ -399,7 +399,7 @@ End Sub
 
 Sub menuDebours_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:menuDebours_Click()")
     
     SlideIn_Debours
     
@@ -415,7 +415,7 @@ End Sub
 
 Sub menuComptabilite_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:menuComptabilite_Click()")
     
     SlideIn_Comptabilite
     
@@ -434,7 +434,7 @@ End Sub
 
 Sub menuParametres_Click() '2024-02-13 @ 13:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:menuParametres_Click()")
 
     SlideIn_Parametres
     
@@ -446,6 +446,8 @@ Sub menuParametres_Click() '2024-02-13 @ 13:48
 End Sub
 
 Sub EXIT_Click() '2024-02-13 @ 13:48
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:EXIT_Click()")
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -459,8 +461,10 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     ThisWorkbook.Close SaveChanges:=True
     
     Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    Call Output_Timer_Results("modMenu:EXIT_Click()", timerStart)
     
     Application.Quit
     
 End Sub
-

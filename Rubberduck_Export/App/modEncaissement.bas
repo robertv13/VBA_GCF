@@ -5,6 +5,9 @@ Dim payRow As Long
 Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow As Long
 
 Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Load_Open_Invoices()")
+    
     wshENC_Saisie.Range("D13:K42").Clearcontents 'Clear the invoices area before loading it
     With wshCC
         lastResultRow = .Range("A99999").End(xlUp).row 'Last row
@@ -22,9 +25,15 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
         wshENC_Saisie.Range("E13:I" & lastResultRow + 10).value = .Range("O3:S" & lastResultRow).value
     End With
     wshENC_Saisie.Range("B2").value = False 'Set PaymentLoad to False
+    
+    Call Output_Timer_Results("modEncaissement:Encaissement_Load_Open_Invoices()", timerStart)
+
 End Sub
 
 Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Save_Update()")
+    
     With wshENC_Saisie
         'Check for mandatory fields (4)
         If .Range("F3").value = Empty Or _
@@ -94,16 +103,28 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
         Call Encaissement_Add_New 'Reset the form
         .Range("F3").Select
     End With
+    
+    Call Output_Timer_Results("modEncaissement:Encaissement_Save_Update()", timerStart)
+
 End Sub
 
 Sub Encaissement_Add_New() '2024-02-07 @ 12:39
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Add_New()")
+
     wshENC_Saisie.Range("B2").value = False
     wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").Clearcontents 'Clear Fields
     wshENC_Saisie.Range("J3").value = Date 'Set Default Date
     wshENC_Saisie.Range("F5").value = "Banque" ' Set Default type
+    
+    Call Output_Timer_Results("modEncaissement:Encaissement_Add_New()", timerStart)
+    
 End Sub
 
 Sub Encaissement_Previous() '2024-02-14 @ 11:04
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Previous()")
+
     Dim MinPayID As Long, PayID As Long
     With wshENC_Saisie
         On Error Resume Next
@@ -126,10 +147,15 @@ Sub Encaissement_Previous() '2024-02-14 @ 11:04
         .Range("B3").value = wshENC_Entête.Range("A" & payRow).value 'Set Payment ID
         Call Encaissement_Load 'Load Payment
     End With
+
+    Call Output_Timer_Results("modEncaissement:Encaissement_Previous()", timerStart)
+
 End Sub
 
 Sub Encaissement_Next() '2024-02-14 @ 11:04
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Next()")
+
     Application.EnableEvents = False
 
     Dim MaxPayID As Long
@@ -158,9 +184,14 @@ Sub Encaissement_Next() '2024-02-14 @ 11:04
     
     Application.EnableEvents = True
 
+    Call Output_Timer_Results("modEncaissement:Encaissement_Next()", timerStart)
+
 End Sub
 
 Sub Encaissement_Load() '2024-02-14 @ 11:04
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Load()")
+
     With wshENC_Saisie
         If .Range("B4").value = Empty Then
             MsgBox "Assurez vous de choisir un paiement valide", vbExclamation
@@ -196,11 +227,14 @@ NoData:
         End With
         .Range("B2").value = False 'Payment Load to False
     End With
+    
+    Call Output_Timer_Results("modEncaissement:Encaissement_Load()", timerStart)
+
 End Sub
 
 Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Encaissement_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -211,7 +245,7 @@ Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("Encaissement_Import_All()", timerStart)
+    Call Output_Timer_Results("modEncaissement:Encaissement_Import_All()", timerStart)
     
 End Sub
 'Sub FAC_Comptes_Clients_Import_All() '2024-02-14 @ 09:50
@@ -279,6 +313,8 @@ End Sub
 '
 Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:FAC_Encaissements_Entête_Import_All()")
+    
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
 
@@ -315,9 +351,13 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
 '        .Range("F4:F" & lastRow).NumberFormat = "dd/mm/yyyy"
 '    End With
     
+    Call Output_Timer_Results("modEncaissement:FAC_Encaissements_Entête_Import_All()", timerStart)
+  
 End Sub
 
 Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:FAC_Encaissements_Détails_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
@@ -352,9 +392,13 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
 '        .Range("E3:E" & lastRow).NumberFormat = "#,##0.00 $"
 '    End With
     
+    Call Output_Timer_Results("modEncaissement:FAC_Encaissements_Détails_Import_All()", timerStart)
+    
 End Sub
 
 Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record to external .xlsx file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Add_Or_Update_Enc_Entete_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -433,9 +477,13 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     
     Application.ScreenUpdating = True
 
+    Call Output_Timer_Results("modEncaissement:Add_Or_Update_Enc_Entete_Record_To_DB()", timerStart)
+    
 End Sub
 
 Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR- Update a record to external .xlsx file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modEncaissement:Add_Or_Update_Enc_Detail_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -513,5 +561,6 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     
     Application.ScreenUpdating = True
 
+    Call Output_Timer_Results("modEncaissement:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
+    
 End Sub
-

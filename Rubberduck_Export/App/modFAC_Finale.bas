@@ -6,7 +6,7 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Save()")
 
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
@@ -65,16 +65,15 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
 Fast_Exit_Sub:
 
-    Call Output_Timer_Results("FAC_Finale_Save()", timerStart)
-    
     wshFAC_Brouillon.Select
-'    Call FAC_Finale_Goto_Onglet_FAC_Brouillon
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Save()", timerStart)
     
 End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -156,13 +155,13 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -199,7 +198,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
     End With
     
-    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -207,7 +206,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -263,13 +262,13 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -296,16 +295,15 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     Next i
 
 nothing_to_update:
-
-    Call Output_Timer_Results("FAC_Finale_Add_Invoice_Details_Locally()", timerStart)
-
     Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -354,13 +352,13 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -383,15 +381,15 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
 
 nothing_to_update:
 
-    Call Output_Timer_Results("FAC_Finale_Add_Comptes_Clients_Locally()", timerStart)
-
     Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) 'Update Billed Status in DB
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -451,13 +449,13 @@ next_iteration:
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("FAC_Finale_TEC_Update_As_Billed_To_DB()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()", timerStart)
 
 End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
     
     'Set the range to look for
     Dim lookupRange As Range, lastTECRow As Long
@@ -478,11 +476,14 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
         End If
     Next r
     
-    Call Output_Timer_Results("FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
 
 End Sub
 
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Invoice_Load()")
+
     With wshFAC_Brouillon
         If wshFAC_Brouillon.Range("B20").value = Empty Then
             MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
@@ -550,9 +551,14 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
 NoItems:
     .Range("B24").value = False 'Set Invoice Load To false
     End With
+    
+    Call Output_Timer_Results("modFAC_Finale:Invoice_Load()", timerStart)
+
 End Sub
 
 Sub InvoiceGetAllTrans(inv As String)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:InvoiceGetAllTrans()")
 
     Application.ScreenUpdating = False
 
@@ -593,11 +599,13 @@ Done:
     End With
     Application.ScreenUpdating = True
 
+    Call Output_Timer_Results("modFAC_Finale:InvoiceGetAllTrans()", timerStart)
+
 End Sub
 
 Sub FAC_Finale_Setup_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Setup_All_Cells()")
     
     Application.EnableEvents = False
     
@@ -649,7 +657,7 @@ Sub FAC_Finale_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("FAC_Finale_Setup_All_Cells()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Setup_All_Cells()", timerStart)
 
 End Sub
 
@@ -762,6 +770,9 @@ EndMacro:
 End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Prev_Invoice()")
+    
     With wshFAC_Brouillon
         Dim MininvNumb As Long
         On Error Resume Next
@@ -784,9 +795,15 @@ Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
         .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
+    
+    Call Output_Timer_Results("modFAC_Finale:Prev_Invoice()", timerStart)
+
 End Sub
 
 Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Next_Invoice()")
+    
     With wshFAC_Brouillon
         Dim MaxinvNumb As Long
         On Error Resume Next
@@ -809,39 +826,50 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
         .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
         Invoice_Load
     End With
+
+    Call Output_Timer_Results("modFAC_Finale:Next_Invoice()", timerStart)
+
 End Sub
 
 Sub FAC_Finale_Cacher_Heures()
+
     With wshFAC_Finale.Range("C34:E63")
         .Font.ThemeColor = xlThemeColorDark1
         .Font.TintAndShade = 0
     End With
+    
 End Sub
 
 Sub FAC_Finale_Montrer_Heures()
+
     With wshFAC_Finale.Range("C34:E63")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With
+    
 End Sub
 
 Sub FAC_Finale_Cacher_Sommaire_Heures()
+
     With wshFAC_Finale.Range("C65:D66")
         .Font.ThemeColor = xlThemeColorDark1
         .Font.TintAndShade = 0
     End With
+    
 End Sub
 
 Sub FAC_Finale_Montrer_Sommaire_Heures()
+
     With wshFAC_Finale.Range("C65:D66")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With
+    
 End Sub
 
 Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()")
    
     Application.ScreenUpdating = False
     
@@ -851,21 +879,23 @@ Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("FAC_Finale_Goto_Onglet_FAC_Brouillon()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()", timerStart)
 
 End Sub
 
-Sub FAC_Finale_GL_Posting_Preparation() '2024-02-14 @ 05:56
+Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
 
-    Dim timerStart As Double: timerStart = Timer
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:modFAC_Finale()")
 
     Dim montant As Double
     Dim dateFact As Date
     Dim descGL_Trans As String, source As String
+    Dim GLTransNo As Long
     
     dateFact = wshFAC_Brouillon.Range("O3").value
     descGL_Trans = wshFAC_Brouillon.Range("E4").value
     source = "FACT-" & wshFAC_Brouillon.Range("O6").value
+    GLTransNo = wshFAC_Brouillon.Range("B41").value
     
     Dim myArray(1 To 8, 1 To 4) As String
     
@@ -941,132 +971,10 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-02-14 @ 05:56
         myArray(8, 4) = ""
     End If
     
-    Call FAC_Finale_GL_Posting_To_DB(dateFact, descGL_Trans, source, myArray)
-    Call FAC_Finale_GL_Posting_Locally(dateFact, descGL_Trans, source, myArray)
+    Call GL_Posting_To_DB(dateFact, descGL_Trans, source, myArray)
+    Call GL_Posting_Locally(dateFact, descGL_Trans, source, GLTransNo, myArray)
     
-    Call Output_Timer_Results("FAC_Finale_GL_Posting_Preparation()", timerStart)
-
-End Sub
-
-Sub FAC_Finale_GL_Posting_To_DB(df, desc, source, arr As Variant)
-
-    Dim timerStart As Double: timerStart = Timer
-
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
-    destinationTab = "GL_Trans"
-    
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object
-    Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
-    Dim rs As Object
-    Set rs = CreateObject("ADODB.Recordset")
-
-    'SQL select command to find the next available ID
-    Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
-
-    'Open recordset to find out the next JE number
-    rs.Open strSQL, conn
-    
-    'Get the last used row
-    Dim maxEJNo As Long, lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
-    Else
-        lastJE = rs.Fields("MaxEJNo").value
-    End If
-    
-    'Calculate the new JE number
-    Dim nextJENo As Long
-    nextJENo = lastJE + 1
-    Application.EnableEvents = False
-    wshFAC_Brouillon.Range("B41").value = nextJENo '2024-03-13 @ 08:31
-    Application.EnableEvents = True
-
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
-    
-    Dim i As Integer, j As Integer
-    'Loop through the array and post each row
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 1) = "" Then GoTo Nothing_to_Post
-            rs.AddNew
-                rs.Fields("No_Entrée") = nextJENo
-                rs.Fields("Date") = CDate(df)
-                rs.Fields("Description") = desc
-                rs.Fields("Source") = source
-                rs.Fields("No_Compte") = arr(i, 1)
-                rs.Fields("Compte") = arr(i, 2)
-                If arr(i, 3) > 0 Then
-                    rs.Fields("Débit") = arr(i, 3)
-                Else
-                    rs.Fields("Crédit") = -arr(i, 3)
-                End If
-                rs.Fields("AutreRemarque") = arr(i, 4)
-                rs.Fields("TimeStamp") = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-            rs.update
-Nothing_to_Post:
-    Next i
-
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-
-    Call Output_Timer_Results("FAC_Finale_GL_Posting_To_DB()", timerStart)
-
-End Sub
-
-Sub FAC_Finale_GL_Posting_Locally(df, desc, source, arr As Variant) 'Write records locally
-    
-    Dim timerStart As Double: timerStart = Timer
-    
-    Application.ScreenUpdating = False
-    
-    'Get the JE number
-    Dim JENo As Long
-    JENo = wshFAC_Brouillon.Range("B41").value
-    
-    'What is the last used row in GL_Trans ?
-    Dim rowToBeUsed As Long
-    rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).row + 1
-    
-    Dim i As Integer, j As Integer
-    'Loop through the array and post each row
-    With wshGL_Trans
-        For i = LBound(arr, 1) To UBound(arr, 1)
-            If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = JENo
-                .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = desc
-                .Range("D" & rowToBeUsed).value = source
-                .Range("E" & rowToBeUsed).value = arr(i, 1)
-                .Range("F" & rowToBeUsed).value = arr(i, 2)
-                If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).value = arr(i, 3)
-                Else
-                     .Range("H" & rowToBeUsed).value = -arr(i, 3)
-                End If
-                .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-                rowToBeUsed = rowToBeUsed + 1
-            End If
-        Next i
-    End With
-    
-    Application.ScreenUpdating = True
-    
-    Call Output_Timer_Results("FAC_Finale_GL_Posting_Locally()", timerStart)
+    Call Output_Timer_Results("modFAC_Finale:modFAC_Finale()", timerStart)
 
 End Sub
 
@@ -1085,19 +993,6 @@ Sub FAC_Finale_Disable_Save_Button()
     shp.Visible = False
 
 End Sub
-
-'TO BE DELETED EVENTUALLY...
-
-'Sub FAC_Brouillon_Input_Misc_Description(rowBrouillon As Long, rowFinale As Long) - 2024-03-28 @ 14:16
-'
-'    Dim service As String
-'    service = Application.InputBox("", Title:="Description / Commentaire", Type:=2)
-'    wshFAC_Brouillon.Range("L" & rowBrouillon).value = "'- " & service
-'    wshFAC_Finale.Range("B" & rowFinale).value = "'- " & service
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
 
 'Sub ExportAllFacInvList() '2024-03-28 @ 14:22
 '    Dim wb As Workbook
@@ -1142,30 +1037,4 @@ End Sub
 'End Sub
 '
 '-----------------------------------------------------------------------------------------------------------
-
-'Sub test_AF_TEC() '2024-03-28 @ 14:55
-'
-'    Dim wb As Workbook
-'    Dim ws As Worksheet
-'    Dim data As Range
-'    Dim cRng As Range
-'    Dim dRng As Range
-'
-'    Set wb = ThisWorkbook
-'    Set ws = wb.Worksheets("TEC_Local")
-'    Set data = ws.Range("A2:P361")
-'    Set cRng = ws.Range("R7:V8")
-'    Set dRng = ws.Range("Y2:AN2")
-'
-'    'Clear prior results (if any)
-'    Dim lastResultRow As Long
-'    lastResultRow = ws.Range("Y999").End(xlUp).row
-'    If lastResultRow > 2 Then ws.Range("Y3:AN" & lastResultRow).clear
-'
-'    data.AdvancedFilter xlFilterCopy, cRng, dRng
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-
 
