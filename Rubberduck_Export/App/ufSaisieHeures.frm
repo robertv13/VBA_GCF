@@ -33,7 +33,7 @@ End Property
 '
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:lstboxNomClient_DblClick()")
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -46,13 +46,13 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-    Call Output_Timer_Results("lstboxNomClient_DblClick()", timerStart)
+    Call Output_Timer_Results("ufSaisieHeures:lstboxNomClient_DblClick()", timerStart)
 
 End Sub
 
 Sub UserForm_Activate()
 
-    Dim timer3Start As Double: timer3Start = Timer
+    Dim timer3Start As Double: timer3Start = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Activate()")
     
     Call Client_List_Import_All
     Call TEC_Import_All
@@ -81,7 +81,7 @@ Sub UserForm_Activate()
    
     rmv_state = rmv_modeInitial
     
-    Call Output_Timer_Results("ufSaisieHeures - UserForm_Activate()", timer3Start)
+    Call Output_Timer_Results("ufSaisieHeures:UserForm_Activate()", timer3Start)
     
 End Sub
 
@@ -93,7 +93,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Terminate()")
 
     'Clear the admin control cells
     wshAdmin.Range("B3:B7").Clearcontents
@@ -119,13 +119,13 @@ MenuSelect:
     wshMenu.Activate
     wshMenu.Select
     
-    Call Output_Timer_Results("ufSaisieHeures - UserForm_Terminate()", timerStart)
+    Call Output_Timer_Results("ufSaisieHeures:UserForm_Terminate()", timerStart)
 
 End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
 
     If Me.cmbProfessionnel.value = "" Then GoTo exit_sub
     
@@ -139,7 +139,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
 exit_sub:
 
-    Call Output_Timer_Results("ufSaisieHeures - cmbProfessionnel_AfterUpdate()", timerStart)
+    Call Output_Timer_Results("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", timerStart)
 
 End Sub
 
@@ -153,6 +153,8 @@ End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtDate_BeforeUpdate()")
+    
     Dim strDate As String
     strDate = Fn_Build_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
     
@@ -181,10 +183,14 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
+    Call Output_Timer_Results("ufSaisieHeures:txtDate_BeforeUpdate()", timerStart)
+    
 End Sub
 
 Private Sub txtDate_AfterUpdate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtDate_AfterUpdate()")
+    
     If IsDate(Me.txtDate.value) Then
         wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
     Else
@@ -207,6 +213,8 @@ Private Sub txtDate_AfterUpdate()
         Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
     
+    Call Output_Timer_Results("ufSaisieHeures:txtDate_AfterUpdate()", timerStart)
+    
 End Sub
 
 Private Sub txtClient_Enter()
@@ -219,6 +227,8 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtClient_AfterUpdate()")
+    
     If Me.txtClient.value <> Me.txtSavedClient.value Then
         If Me.txtTEC_ID.value = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
@@ -227,10 +237,14 @@ Private Sub txtClient_AfterUpdate()
         End If
     End If
     
+    Call Output_Timer_Results("ufSaisieHeures:txtClient_AfterUpdate()", timerStart)
+    
 End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtActivite_AfterUpdate()")
+    
     If Me.txtActivite.value <> Me.txtSavedActivite.value Then
         If Me.txtTEC_ID = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
@@ -239,10 +253,14 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
 
+    Call Output_Timer_Results("ufSaisieHeures:txtActivite_AfterUpdate()", timerStart)
+    
 End Sub
 
 Sub txtHeures_AfterUpdate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtHeures_AfterUpdate()")
+    
     'Validation des heures saisies
     Dim strHeures As String
     strHeures = Me.txtHeures.value
@@ -271,10 +289,14 @@ Sub txtHeures_AfterUpdate()
         End If
     End If
     
+    Call Output_Timer_Results("ufSaisieHeures:txtHeures_AfterUpdate()", timerStart)
+    
 End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:chbFacturable_AfterUpdate()")
+    
     If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
         If Me.txtTEC_ID = "" Then
             Call Buttons_Enabled_True_Or_False(True, True, False, False)
@@ -283,10 +305,14 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
+    Call Output_Timer_Results("ufSaisieHeures:chbFacturable_AfterUpdate()", timerStart)
+    
 End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtCommNote_AfterUpdate()")
+    
     If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
         If Me.txtTEC_ID = "" Then
             Call Buttons_Enabled_True_Or_False(True, True, False, False)
@@ -301,6 +327,8 @@ Private Sub txtCommNote_AfterUpdate()
 '        End If
 '    End If
 
+    Call Output_Timer_Results("ufSaisieHeures:txtCommNote_AfterUpdate()", timerStart)
+    
 End Sub
 
 '----------------------------------------------------------------- ButtonsEvents
@@ -348,16 +376,16 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
-        Dim tecID As Long
-        tecID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
-        wshAdmin.Range("TEC_Current_ID").value = tecID
-        txtTEC_ID = tecID
+        Dim TECID As Long
+        TECID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
+        wshAdmin.Range("TEC_Current_ID").value = TECID
+        txtTEC_ID = TECID
         
         'Retrieve the record in wshTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
         lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
-        rowTecID = Fn_Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+        rowTecID = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
         
         Dim isBilled As Boolean
         isBilled = wshTEC_Local.Range("L" & rowTecID).value
@@ -406,27 +434,4 @@ exit_sub:
     Set lookupRange = Nothing
     
 End Sub
-
-'Public Sub InitializeListBoxClass()
-'
-'    Set MyListBoxClass = New clsListboxAlign
-'
-'End Sub
-
-'Sub CopyRangeToListBoxWithoutRowSource()
-'    Dim ws As Worksheet: Set ws = wshTEC_Local
-'    Dim rng As Range: Set rng = wshTEC_Local("Y2:AL6")
-'    Dim lb As Object: Set lb = ufSaisieHeures.lsbHresJour
-'    Dim cell As Range
-'
-'    'Clear any existing items in the ListBox
-'    lb.Clear
-'
-'    'Copy the range values to the ListBox, excluding rows based on the condition
-'    For Each cell In rng
-'        If cell.Offset(0, 11).value <> "VRAI" Then
-'            lb.AddItem cell.value
-'        End If
-'    Next cell
-'End Sub
 

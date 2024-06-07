@@ -38,9 +38,8 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     'Calculate the new JE number
     Dim nextJENo As Long
     nextJENo = lastJE + 1
-    Application.EnableEvents = False
-    wshFAC_Brouillon.Range("B41").value = nextJENo '2024-03-13 @ 08:31
-    Application.EnableEvents = True
+    wshAdmin.Range("B9").value = nextJENo '2024-06-06 @ 16:30
+    MsgBox "Numéro de l'écriture = " & nextJENo
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -102,9 +101,9 @@ Sub GL_Posting_Locally(df, desc, source, GLTransNo, arr As Variant) 'Write recor
                 .Range("E" & rowToBeUsed).value = arr(i, 1)
                 .Range("F" & rowToBeUsed).value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).value = arr(i, 3)
+                     .Range("G" & rowToBeUsed).value = CDbl(arr(i, 3))
                 Else
-                     .Range("H" & rowToBeUsed).value = -arr(i, 3)
+                     .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
                 End If
                 .Range("I" & rowToBeUsed).value = arr(i, 4)
                 .Range("J" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")

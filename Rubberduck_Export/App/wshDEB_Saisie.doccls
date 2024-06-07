@@ -40,19 +40,19 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 Then
+        If Range("H" & Target.row).value <> 0 And InStr("FP^REP^F^", Range("I" & Target.row) & "^") <> 0 Then
             Range("J" & Target.row).formula = "=round((RC[-2]/1.14975)*0.05,2)"
         Else
-            Range("J" & Target.row).value = ""
+            Range("J" & Target.row).value = "0"
         End If
     End If
     
     'Force PST/TVQ calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 Then
+        If Range("H" & Target.row).value <> 0 And InStr("FP^REP^P^", Range("I" & Target.row) & "^") <> 0 Then
             Range("K" & Target.row).formula = "=round((RC[-3]/1.14975)*0.09975,2)"
         Else
-            Range("K" & Target.row).value = ""
+            Range("K" & Target.row).value = "0"
         End If
     End If
     

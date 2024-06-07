@@ -462,12 +462,12 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
     Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
-    Dim r As Integer, rowToBeUpdated As Long, tecID As Long
+    Dim r As Integer, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
         If wshTEC_Local.Range("BD" & r).value = False And _
             wshFAC_Brouillon.Range("C" & r + 5) = True Then
-            tecID = wshTEC_Local.Range("AT" & r).value
-            rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(tecID, lookupRange)
+            TECID = wshTEC_Local.Range("AT" & r).value
+            rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
             wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
             wshTEC_Local.Range("L" & rowToBeUpdated).value = True
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()

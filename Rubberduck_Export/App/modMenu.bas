@@ -456,7 +456,7 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     
     Call Hide_All_Worksheets_Except_Menu
 
-    Call Output_Timer_Results("ThisWorkbook - Session is finished", 0)
+    Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
 
     ThisWorkbook.Close SaveChanges:=True
     

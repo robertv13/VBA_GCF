@@ -104,9 +104,9 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Total").value = wshDEB_Saisie.Range("O6").value
             rs.Fields("No_Compte").value = wshDEB_Saisie.Range("Q" & l).value
             rs.Fields("Compte").value = wshDEB_Saisie.Range("E" & l).value
-            rs.Fields("Total").value = wshDEB_Saisie.Range("H" & l).value
+            rs.Fields("Total").value = CDbl(wshDEB_Saisie.Range("H" & l).value)
             rs.Fields("CodeTaxe").value = wshDEB_Saisie.Range("I" & l).value
-            rs.Fields("TPS").value = wshDEB_Saisie.Range("J" & l).value
+            rs.Fields("TPS").value = CDbl(wshDEB_Saisie.Range("J" & l).value)
             rs.Fields("TVQ").value = wshDEB_Saisie.Range("K" & l).value
             rs.Fields("Crédit_TPS").value = wshDEB_Saisie.Range("L" & l).value
             rs.Fields("Crédit_TVQ").value = wshDEB_Saisie.Range("M" & l).value
@@ -172,29 +172,43 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()")
 
-    Dim montant As Double
-    Dim dateDebours As Date
-    Dim descGL_Trans As String, source As String
+    Dim montant As Double, dateDebours As Date
+    Dim descGL_Trans As String, source As String, deboursType As String
     Dim GLTransNo As Long
     
     dateDebours = wshDEB_Saisie.Range("O4").value
-    descGL_Trans = wshDEB_Saisie.Range("F4").value & " - " & _
+    deboursType = wshDEB_Saisie.Range("F4").value
+    descGL_Trans = deboursType & " - " & _
                    wshDEB_Saisie.Range("F6").value & " [" & _
                    wshDEB_Saisie.Range("M6").value & "]"
     source = "DÉBOURS-" & Format(wshDEB_Saisie.Range("B1").value, "000000")
-    GLTransNo = wshDEB_Saisie.Range("B1").value
     
     Dim myArray() As String
     ReDim myArray(1 To 16, 1 To 4)
     
+    'Based on Disbursement type, the CREDIT account will be different
     'Disbursement Total (wshDEB_Saisie.Range("O6"))
     montant = wshDEB_Saisie.Range("O6").value
-    If montant Then
-        myArray(1, 1) = "1000"
-        myArray(1, 2) = "Encaisse"
-        myArray(1, 3) = -montant
-        myArray(1, 4) = ""
-    End If
+    
+    Dim GLNo_Credit As String
+    
+    Select Case deboursType
+        Case "Chèque", "Virement", "Paiement pré-autorisé"
+            myArray(1, 1) = "1000"
+            myArray(1, 2) = "Encaisse-1"
+        Case "VISA", "MCARD", "AMEX"
+            myArray(1, 1) = "1000"
+            myArray(1, 2) = "Encaisse-2"
+        Case "Autre"
+            myArray(1, 1) = "1000"
+            myArray(1, 2) = "Encaisse-3"
+        Case Else
+            myArray(1, 1) = "1000"
+            myArray(1, 2) = "Encaisse-4"
+    End Select
+    
+    myArray(1, 3) = -montant
+    myArray(1, 4) = ""
     
     'Process every lines
     Dim lastUsedRow As Long
@@ -225,8 +239,9 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
             arrRow = arrRow + 1
         End If
     Next l
-   
+    
     Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, myArray)
+    GLTransNo = wshAdmin.Range("B9").value
     Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GLTransNo, myArray)
     
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)

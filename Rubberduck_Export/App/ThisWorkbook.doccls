@@ -1,14 +1,10 @@
 ﻿Option Explicit
 
-Public sessionTimerStart As Double
-
 Public startTime As Double
 
 Private Sub Workbook_Open()
 
-    Call Output_Timer_Results("ThisWorkbook - Session started", 0)
-    
-    sessionTimerStart = Timer
+    Call Output_Timer_Results("message:N E W  session  has  started", 0)
     
     Application.ScreenUpdating = False
     
