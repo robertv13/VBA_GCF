@@ -4,7 +4,7 @@ Private previousCellAddress As String
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Brouillon:Worksheet_Activate()")
 
     Application.ScreenUpdating = False
     
@@ -20,7 +20,7 @@ Private Sub Worksheet_Activate()
     
     Me.Range("E4").Select
     
-    Call Output_Timer_Results("wshFAC_Brouillon_Worksheet_Activate()", timerStart)
+    Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -74,7 +74,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Brouillon:Worksheet_Change()")
     
     Application.EnableEvents = False
     
@@ -221,6 +221,6 @@ ExitSub:
     
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("wshFAC_Brouillon - Worksheet_Change()", timerStart)
+    Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Change()", timerStart)
   
 End Sub

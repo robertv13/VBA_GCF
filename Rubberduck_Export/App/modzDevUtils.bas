@@ -71,7 +71,7 @@ End Sub
 
 Sub List_All_Subs_And_Functions() '2024-03-26 @ 14:27
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modzDevUtils:List_All_Subs_And_Functions()")
 
     Dim VBComp As Object
 
@@ -185,7 +185,7 @@ Sub List_All_Subs_And_Functions() '2024-03-26 @ 14:27
     'Transfer the array to the worksheet
     wshzDocSubsAndFunctions.Range("A2").Resize(UBound(minArray, 1), UBound(minArray, 2)).value = minArray
 
-    Call Output_Timer_Results("List_All_Subs_And_Functions()", timerStart)
+    Call Output_Timer_Results("modzDevUtils:List_All_Subs_And_Functions()", timerStart)
 
 End Sub
 
@@ -227,7 +227,7 @@ End Sub
 
 Sub List_All_Conditional_Formatting() '2024-03-26 @ 14:32
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modzDevUtils:List_All_Conditional_Formatting()")
 
     Dim r As Integer: r = 1
     Dim numRows As Integer, numCols As Integer
@@ -269,7 +269,7 @@ Sub List_All_Conditional_Formatting() '2024-03-26 @ 14:32
     
     Set wsOutput = Nothing
     
-    Call Output_Timer_Results("List_All_Conditional_Formatting()", timerStart)
+    Call Output_Timer_Results("modzDevUtils:List_All_Conditional_Formatting()", timerStart)
  
 End Sub
 
@@ -528,20 +528,3 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
 End Sub
 
-'TO BE DELETED eventually
-'
-'Sub Test_Fn_Find_Data_In_A_Range() - 2024-03-28 @ 16:09
-'
-'    Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-'    Dim myInfo() As Variant
-'
-'    Dim searchString As String
-'    searchString = "Gestion MAROB inc."
-'
-'    myInfo = Fn_Find_Data_In_A_Range(rng, 1, searchString, 3)
-'
-'    Set rng = Nothing
-'
-'End Sub
-'
-'

@@ -2,10 +2,10 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Local:Worksheet_Activate()")
 
     wshTEC_Local.EnableCalculation = True
     
-    Call Output_Timer_Results("wshTEC_Local_Worksheet_Activate()", timerStart)
+    Call Output_Timer_Results("wshTEC_Local:Worksheet_Activate()", timerStart)
 
 End Sub

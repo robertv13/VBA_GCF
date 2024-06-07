@@ -1,0 +1,85 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_Rapport:Worksheet_Activate()")
+    
+    Dim ws As Worksheet
+    Dim lb As OLEObject
+    Dim i As Integer
+
+    Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    Set lb = Me.OLEObjects("ListBox1")
+    
+    'Ensure it is a ListBox
+    If TypeName(lb.Object) = "ListBox" Then
+        With lb.Object
+            'Clear existing items
+            .clear
+
+            Dim arr As Variant
+            arr = Fn_Get_Chart_Of_Accounts()
+            
+            'Add items to the ListBox
+            For i = LBound(arr, 1) To UBound(arr, 1)
+                .AddItem arr(i)
+            Next i
+
+            'Set properties
+            .MultiSelect = fmMultiSelectMulti
+            .ListStyle = fmListStyleOption
+        End With
+    End If
+
+    With ws
+        .Range("F6").value = Format(Now(), "dd-mm-yyyy")
+        .Range("H6").value = Format(Now(), "dd-mm-yyyy")
+    End With
+    
+    Call Output_Timer_Results("wshGL_Rapport:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    'Period change
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        Application.EnableEvents = False
+        Select Case Range("F4").value
+            Case "Aujourd'hui"
+                wshGL_Rapport.Range("F6").value = Format(Now(), "dd-mm-yyyy")
+                wshGL_Rapport.Range("H6").value = Format(Now(), "dd-mm-yyyy")
+            Case "Mois Courant"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("MoisDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("MoisA")
+            Case "Mois Dernier"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("MoisPrecDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("MoisPrecA")
+            Case "Trimestre courant"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("TrimDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("TrimA")
+            Case "Trimestre précédent"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("TrimPrecDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("TrimPrecA")
+            Case "Année courante"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("AnneeDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("AnneeA")
+        End Select
+        Application.EnableEvents = True
+    End If
+
+End Sub
+
+Private Sub cbTous_Click()
+
+    Dim lb As OLEObject
+    Set lb = Me.OLEObjects("ListBox1")
+    
+    Dim i As Long
+    With lb.Object
+        For i = 0 To .ListCount - 1
+            .Selected(i) = Not (.Selected(i))
+        Next i
+    End With
+
+End Sub

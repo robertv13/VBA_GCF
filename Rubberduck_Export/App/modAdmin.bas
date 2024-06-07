@@ -9,7 +9,7 @@ Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
         .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show = -1 Then
-            wshAdmin.Range("F5").value = .SelectedItems(1)
+            wshAdmin.Range("F5").value = .selectedItems(1)
         End If
     End With
     
@@ -23,7 +23,7 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
         .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
         If .show = -1 Then
-            wshAdmin.Range("F6").value = .SelectedItems(1)
+            wshAdmin.Range("F6").value = .selectedItems(1)
         End If
     End With
 

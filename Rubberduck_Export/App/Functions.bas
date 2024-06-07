@@ -51,7 +51,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Find_Data_In_A_Range()")
     
     Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
     Dim foundCell As Range
@@ -73,7 +73,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     
     Set foundCell = Nothing
     
-    Call Output_Timer_Results("Fn_Find_Data_In_A_Range()", timerStart)
+    Call Output_Timer_Results("Functions:Fn_Find_Data_In_A_Range()", timerStart)
 
 End Function
 
@@ -370,4 +370,30 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As I
     Fn_Pad_A_String = paddedString
         
 End Function
+
+Function Fn_Get_Chart_Of_Accounts() As Variant '2024-06-07 @ 07:31
+
+    'Reference the named range
+    Dim planComptable As Range
+    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
+    
+    'Iterate through each row of the named range
+    Dim rowNum As Long, row As Range, rowRange As Range
+    Dim arr() As String
+    ReDim arr(1 To planComptable.Rows.count) As String
+    
+    For rowNum = 1 To planComptable.Rows.count
+        'Get the entire row as a range
+        Set rowRange = planComptable.Rows(rowNum)
+        'Process each cell in the row
+        For Each row In rowRange.Rows
+            Debug.Print row.Cells(1, 2) & " " & row.Cells(1, 1)
+            arr(rowNum) = row.Cells(1, 2) & " " & row.Cells(1, 1)
+        Next row
+    Next rowNum
+    
+    Fn_Get_Chart_Of_Accounts = arr
+    
+End Function
+
 

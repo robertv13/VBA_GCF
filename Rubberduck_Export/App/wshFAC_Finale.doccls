@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Finale:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     
@@ -13,6 +13,6 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("wshFAC_Finale_Worksheet_Activate()", timerStart)
+    Call Output_Timer_Results("wshFAC_Finale:Worksheet_Activate()", timerStart)
     
 End Sub

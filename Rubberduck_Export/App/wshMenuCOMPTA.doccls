@@ -56,7 +56,11 @@ Sub GL_Report_Click()
     SlideIn_BV
     SlideIn_GL_Report
     SlideIn_EF
-    MsgBox "Ajouter la fonction 'Rapport du G/L'"
+    
+    With wshGL_Rapport
+        .Visible = xlSheetVisible
+        .Select
+    End With
 End Sub
 
 Sub EF_Click()

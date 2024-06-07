@@ -4,7 +4,7 @@ Public dynamicShape As Shape
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:Worksheet_Activate()")
 
     'Set the zoom factor to 92% when this worksheet is activated
     ActiveWindow.Zoom = 92
@@ -30,7 +30,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("wshGL_BV_Worksheet_Activate()", timerStart)
+    Call Output_Timer_Results("wshGL_BV:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -129,7 +129,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 '    Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()")
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
@@ -164,7 +164,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 NoSort:
 
-    Call Output_Timer_Results("wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
+    Call Output_Timer_Results("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
 
 End Sub
 
@@ -188,7 +188,7 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-        Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
+        Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:wshGL_BV_Adjust_The_Shape()")
         
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
@@ -258,7 +258,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
         End With
       
-      Call Output_Timer_Results("wshGL_BV_Adjust_The_Shape()", timerStart)
+      Call Output_Timer_Results("wshGL_BV:wshGL_BV_Adjust_The_Shape()", timerStart)
       
 End Sub
 
