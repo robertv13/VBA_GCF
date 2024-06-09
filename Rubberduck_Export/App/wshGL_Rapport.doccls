@@ -5,10 +5,9 @@ Private Sub Worksheet_Activate()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_Rapport:Worksheet_Activate()")
     
     Dim ws As Worksheet
-    Dim lb As OLEObject
-    Dim i As Integer
-
     Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    
+    Dim lb As OLEObject
     Set lb = Me.OLEObjects("ListBox1")
     
     'Ensure it is a ListBox
@@ -21,20 +20,24 @@ Private Sub Worksheet_Activate()
             arr = Fn_Get_Chart_Of_Accounts()
             
             'Add items to the ListBox
+            Dim i As Integer
             For i = LBound(arr, 1) To UBound(arr, 1)
                 .AddItem arr(i)
             Next i
-
-            'Set properties
-            .MultiSelect = fmMultiSelectMulti
-            .ListStyle = fmListStyleOption
         End With
     End If
 
+    Application.EnableEvents = False
+    
     With ws
-        .Range("F6").value = Format(Now(), "dd-mm-yyyy")
-        .Range("H6").value = Format(Now(), "dd-mm-yyyy")
+        .Range("B3").value = True 'Sort by Date
+        .Range("F4").value = "Dates manuelles"
+        .Range("F6").value = ""
+        .Range("H6").value = ""
+        .Range("F4").Select
     End With
+    
+    Application.EnableEvents = True
     
     Call Output_Timer_Results("wshGL_Rapport:Worksheet_Activate()", timerStart)
 
@@ -64,6 +67,21 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Case "Année courante"
                 wshGL_Rapport.Range("F6").value = wshAdmin.Range("AnneeDe")
                 wshGL_Rapport.Range("H6").value = wshAdmin.Range("AnneeA")
+            Case "Année précédente"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("AnneePrecDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("AnneePrecA")
+            Case "7 derniers jours"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("SeptJoursDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("SeptJoursA")
+            Case "15 derniers jours"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("QuinzeJoursDe")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("QuinzeJoursA")
+            Case "Semaine"
+                wshGL_Rapport.Range("F6").value = wshAdmin.Range("DateDebutSemaine")
+                wshGL_Rapport.Range("H6").value = wshAdmin.Range("DateFinSemaine")
+            Case Else
+                wshGL_Rapport.Range("F6").value = ""
+                wshGL_Rapport.Range("H6").value = ""
         End Select
         Application.EnableEvents = True
     End If

@@ -31,7 +31,7 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     'Using XLOOKUP to find the result directly
     Dim result As Variant
     result = Application.WorksheetFunction.XLookup(nomCLient, _
-        dynamicRange.Columns(1), dynamicRange.Columns(2), _
+        dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
@@ -58,7 +58,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     Dim dataValue As Variant
     
     'Search for the string in a given range (r) at the column specified (cs)
-    Set foundCell = r.Columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
+    Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
     
     'Check if the string was found
     If Not foundCell Is Nothing Then
@@ -96,7 +96,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
     
     'Using XLOOKUP to find the result directly
     result = Application.WorksheetFunction.XLookup(GLDescr, _
-        dynamicRange.Columns(1), dynamicRange.Columns(2), _
+        dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
@@ -116,7 +116,7 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
     Dim matchResult As Variant
 
     'Use the Match function to find the row number of the unique TEC_ID
-    matchResult = Application.Match(uniqueID, lookupRange.Columns(1), 0)
+    matchResult = Application.Match(uniqueID, lookupRange.columns(1), 0)
     matchResult = matchResult + 2 'Two header lines...
 
     'Check if Match found a result
@@ -380,14 +380,13 @@ Function Fn_Get_Chart_Of_Accounts() As Variant '2024-06-07 @ 07:31
     'Iterate through each row of the named range
     Dim rowNum As Long, row As Range, rowRange As Range
     Dim arr() As String
-    ReDim arr(1 To planComptable.Rows.count) As String
+    ReDim arr(1 To planComptable.rows.count + 1) As String
     
-    For rowNum = 1 To planComptable.Rows.count
+    For rowNum = 1 To planComptable.rows.count + 1
         'Get the entire row as a range
-        Set rowRange = planComptable.Rows(rowNum)
+        Set rowRange = planComptable.rows(rowNum)
         'Process each cell in the row
-        For Each row In rowRange.Rows
-            Debug.Print row.Cells(1, 2) & " " & row.Cells(1, 1)
+        For Each row In rowRange.rows
             arr(rowNum) = row.Cells(1, 2) & " " & row.Cells(1, 1)
         Next row
     Next rowNum
@@ -396,4 +395,14 @@ Function Fn_Get_Chart_Of_Accounts() As Variant '2024-06-07 @ 07:31
     
 End Function
 
+Public Function GetCurrentRegion(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
 
+    Set GetCurrentRegion = dataRange.CurrentRegion
+    If headerSize > 0 Then
+        With GetCurrentRegion
+            'Remove the header
+            Set GetCurrentRegion = .Offset(headerSize).Resize(.rows.count - headerSize)
+        End With
+    End If
+    
+End Function

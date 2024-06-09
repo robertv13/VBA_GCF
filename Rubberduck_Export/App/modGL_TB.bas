@@ -10,23 +10,24 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Call GL_Trans_Import_All is it mandatory ???
     
-    Dim minDate As Date, dateCutOff As Date, lastUsedRow As Long, solde As Currency
-    Dim planComptable As Range
-    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
+'    Dim planComptable As Range
+'    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription") 'Contains Description + Account No.
     
+    'Clear TB cells - Contents & formats
+    Dim lastUsedRow As Long
+    lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
+    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 1).clear
+
     'Clear Detail transaction section
-    wshGL_BV.Range("L4:T9999").Clearcontents
+    wshGL_BV.Range("L4:T99999").Clearcontents
     With wshGL_BV.Range("S4:S9999").Interior
         .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
     
-    'Clear contents & formats for TB cells
-    lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
-    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).clear
-    
     'Add the cut-off date in the header (printing purposes)
+    Dim minDate As Date, dateCutOff As Date
     wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("B4").value, "dd-mm-yyyy"))
 
     minDate = CDate("01/01/2023")
@@ -34,43 +35,83 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     wshGL_BV.Range("B2").value = 3
     wshGL_BV.Range("B10").value = 0
     
-    Call GL_TB_Advanced_Filter_By_GL("", minDate, dateCutOff) 'Get all transactions between the 2 dates
+    'Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
+    Call GL_TB_AdvancedFilter_By_GL("", minDate, dateCutOff)
+    'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     
     lastUsedRow = wshGL_Trans.Range("T999999").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub
-    Dim r As Long, BreakGLNo As String, oldDesc As String
-    BreakGLNo = wshGL_Trans.Range("T2").value
-    oldDesc = wshGL_Trans.Range("U2").value
     
-    For r = 2 To lastUsedRow
-        If wshGL_Trans.Range("T" & r).value <> BreakGLNo Then
-            Call GL_TB_Sub_Totals(BreakGLNo, oldDesc, solde)
-            BreakGLNo = wshGL_Trans.Range("T" & r).value
-            oldDesc = wshGL_Trans.Range("U" & r).value
-            solde = 0
+    'The Chart of Account will drive the results, so the sort order is determined by COA
+    Dim arr As Variant
+    arr = Fn_Get_Chart_Of_Accounts()
+    
+    Dim dictSolde As Dictionary 'GLNo dictionary
+    Set dictSolde = New Dictionary
+    Dim arrSolde() As Variant 'GLbalance
+    ReDim arrSolde(1 To UBound(arr, 1), 1 To 2)
+    Dim newRowID As Long: newRowID = 1
+    Dim currRowID As Long
+    
+    Dim i As Long, glNo As String, dtct As Currency
+    For i = 2 To lastUsedRow
+        glNo = wshGL_Trans.Range("T" & i).value & " " & wshGL_Trans.Range("U" & i).value
+        dtct = wshGL_Trans.Range("V" & i).value - wshGL_Trans.Range("W" & i).value
+        If dictSolde.Exists(glNo) = False Then
+            dictSolde.add glNo, newRowID
+            arrSolde(newRowID, 1) = glNo
+            newRowID = newRowID + 1
         End If
-        solde = solde + wshGL_Trans.Range("V" & r).value - wshGL_Trans.Range("W" & r).value
-    Next r
+        currRowID = dictSolde(glNo)
+        'Update the summary array
+        arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + dtct
+    Next i
     
-    Call GL_TB_Sub_Totals(BreakGLNo, oldDesc, solde)
+    Dim sumDt1 As Currency, sumCt1 As Currency, GLNoPlusDesc As String
+    Dim currRow As Long: currRow = 4
+    wshGL_BV.Range("D4:D" & UBound(arrSolde, 1)).HorizontalAlignment = xlCenter
+    wshGL_BV.Range("F4:G" & UBound(arrSolde, 1) + 3).HorizontalAlignment = xlRight
     
-    r = wshGL_BV.Range("B2").value + 2
+    For i = LBound(arrSolde, 1) To UBound(arrSolde, 1)
+        GLNoPlusDesc = arrSolde(i, 1)
+        If GLNoPlusDesc <> "" Then
+            wshGL_BV.Range("D" & currRow).value = Left(GLNoPlusDesc, InStr(GLNoPlusDesc, " "))
+            wshGL_BV.Range("E" & currRow).value = Right(GLNoPlusDesc, Len(GLNoPlusDesc) - InStr(GLNoPlusDesc, " ") + 1)
+            If arrSolde(i, 2) >= 0 Then
+                wshGL_BV.Range("F" & currRow).value = Format(arrSolde(i, 2), "###,###,##0.00")
+                sumDt1 = sumDt1 + arrSolde(i, 2)
+            Else
+                wshGL_BV.Range("G" & currRow).value = Format(arrSolde(i, 2), "###,###,##0.00")
+                sumCt1 = sumCt1 - arrSolde(i, 2)
+            End If
+            currRow = currRow + 1
+        End If
+    Next i
+
+    currRow = currRow + 1
+    wshGL_BV.Range("B2").value = currRow
     
-    Call GL_TB_Display_TB_Totals(r, 6) 'Débit and Crédit - 2024-03-05 @ 14:10
-'    Call GL_TB_Display_TB_Totals(r, 7) 'Crédit
+    'Output Debit total
+    Dim rng As Range
+    Set rng = wshGL_BV.Range("F" & currRow)
+    Call GL_TB_Display_TB_Totals(rng, sumDt1) 'Débit total - 2024-06-09 @ 07:51
+    
+    'Output Credit total
+    Set rng = wshGL_BV.Range("G" & currRow)
+    Call GL_TB_Display_TB_Totals(rng, sumCt1) 'Débit total - 2024-06-09 @ 07:51
     
     'Setup page for printing purposes
     Dim CenterHeaderTxt As String
     CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
     With ActiveSheet.PageSetup
         .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
-        .PrintArea = "$D$1:$G$" & r
+        .PrintArea = "$D$1:$G$" & currRow
         .Orientation = xlPortrait
         .FitToPagesWide = 1
         .FitToPagesTall = 1
     End With
 
-    wshGL_BV.Range("B2").value = r - 2
+    wshGL_BV.Range("B2").value = currRow - 2
   
     Application.EnableEvents = True
   
@@ -78,42 +119,34 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
 
 End Sub
 
-Sub GL_TB_Display_TB_Totals(r As Long, c As Long) '2024-03-05 @ 14:03
+Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_TB_Totals()")
     
-    'Dt and Ct columns at the same time
-    Dim sumDtRange As Range, sumCtRange As Range
-    Dim sumDt As Double, sumCT As Double
-
-    With wshGL_BV
-        With .Range(.Cells(r, c), .Cells(r, c + 1)).Borders(xlEdgeTop)
+'    Dim ws As Worksheet
+'    Set ws = ThisWorkbook.Worksheets("GL_BV")
+    
+    With rng
+        With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
             .colorIndex = 0
             .TintAndShade = 0
             .Weight = xlThin
         End With
-        With .Range(.Cells(r, c), .Cells(r, c + 1)).Borders(xlBottom)
+        With .Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
             .colorIndex = 0
             .TintAndShade = 0
-            .Weight = xlMedium
+            .Weight = xlThick
         End With
-    
-        .Range(.Cells(r, c), .Cells(r, c + 1)).Font.Bold = True
-        .Range(.Cells(r, c), .Cells(r, c + 1)).NumberFormat = "#,##0.00 $"
-        Set sumDtRange = Range(Cells(4, c), Cells(r - 1, c))
-        Set sumCtRange = Range(Cells(4, c + 1), Cells(r - 1, c + 1))
-        
-        .Cells(r, c).value = Application.WorksheetFunction.Sum(sumDtRange)
-        .Cells(r, c + 1).value = Application.WorksheetFunction.Sum(sumCtRange)
-        If .Cells(r, c).value <> .Cells(r, c + 1).value Then
-            Call Erreur_Totaux_DT_CT
-        End If
+        .value = t
+        .Font.Bold = True
+        .NumberFormat = "#,##0.00 $"
     End With
     
-    Set sumDtRange = Nothing
-    Set sumCtRange = Nothing
+'        If .Cells(r, c).value <> .Cells(r, c + 1).value Then
+'            Call Erreur_Totaux_DT_CT
+'        End If
     
     Call Output_Timer_Results("modGL_TB:GL_TB_Display_TB_Totals()", timerStart)
 
@@ -125,7 +158,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     'Clear the display area & display the account number & description
     With wshGL_BV
-        .Range("M4:T99999").clear '2024-03-29 @ 12:09
+        .Range("L4:T99999").clear '2024-06-08 @ 15:28
         .Range("L2").value = "Du " & minDate & " au " & maxDate
     
         .Range("L4").Font.Bold = True
@@ -145,7 +178,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
     foundRow = foundCell.row
     
-    ' Check if the target value was found
+    'Check if the target value was found
     If foundRow = 0 Then
         MsgBox "Il n'existe aucune transaction pour ce compte (période choisie)."
         Exit Sub
@@ -229,34 +262,37 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
 
 End Sub
 
-Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
+Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Advanced_Filter_By_GL()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_AdvancedFilter_By_GL()")
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("P2").CurrentRegion
-        Call Fn_Clear_Range_Borders(rgResult)
-        rgResult.Clearcontents
+'        Call Fn_Clear_Range_Borders(rgResult)
+        rgResult.Offset(1).Clearcontents
+        
         Set rgData = .Range("A1").CurrentRegion
-        .Range("L3").value = GLNo
+        .Range("L3").value = ""
         .Range("M3").value = ">=" & Format(minDate, "mm-dd-yyyy")
         .Range("N3").value = "<=" & Format(maxDate, "mm-dd-yyyy")
         
         Set rgCriteria = .Range("L2:N3")
-        Set rgCopyToRange = .Range("P1")
+        Set rgCopyToRange = .Range("P1:Y1")
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
         lastResultUsedRow = .Range("P99999").End(xlUp).row
         If lastResultUsedRow < 3 Then GoTo NoSort
+        
+        'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
         With .Sort
             .SortFields.clear
             .SortFields.add key:=wshGL_Trans.Range("T1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
+                DataOption:=xlSortNormal 'Sort Based On GLNo , incorrect since NUM & NUM + Letter
             .SortFields.add key:=wshGL_Trans.Range("Q1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -272,11 +308,11 @@ Sub GL_TB_Advanced_Filter_By_GL(GLNo As String, minDate As Date, maxDate As Date
 
 NoSort:
 
-    Call Output_Timer_Results("modGL_TB:GL_TB_Advanced_Filter_By_GL()", timerStart)
+    Call Output_Timer_Results("modGL_TB:GL_TB_AdvancedFilter_By_GL()", timerStart)
 
 End Sub
 
-Sub GL_TB_Sub_Totals(GLNo As String, GLDesc As String, s As Currency)
+Sub GL_TB_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Sub_Totals()")
 
@@ -284,7 +320,7 @@ Sub GL_TB_Sub_Totals(GLNo As String, GLDesc As String, s As Currency)
     With wshGL_BV
         r = .Range("B2").value + 1
         .Range("D" & r).HorizontalAlignment = xlCenter
-        .Range("D" & r).value = GLNo
+        .Range("D" & r).value = glNo
         .Range("E" & r).value = GLDesc
         If s > 0 Then
             .Range("F" & r).value = s
@@ -437,6 +473,8 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Integer)
 End Sub
 
 Sub GL_TB_Back_To_Menu()
+    
+    wshGL_BV.Visible = xlSheetHidden
     
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select

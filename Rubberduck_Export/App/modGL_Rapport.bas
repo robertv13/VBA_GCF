@@ -6,42 +6,318 @@ Public Sub GL_Report_For_Selected_Accounts()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Rapport:GL_Report_For_Selected_Accounts()")
    
     Dim ws As Worksheet
-    Dim lb As OLEObject
-    Dim selectedItems As Collection
-    Dim i As Integer
 
-    ' Reference the worksheet and ListBox
-    Set ws = ThisWorkbook.Sheets("GL_Rapport") ' Adjust to your sheet name
+    'Reference the worksheet and ListBox
+    Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    If ws.Range("F6").value = "" Or ws.Range("H6").value = "" Then
+        MsgBox "Vous devez saisir une date de début et une date de fin pour ce rapport!"
+        Exit Sub
+    End If
+    
+    If ws.Range("F6").value > ws.Range("H6").value = "" Then
+        MsgBox "La date de départ doit obligatoirement être antérieure à la date de fin!"
+        Exit Sub
+    End If
+    
+    Dim lb As OLEObject
     Set lb = ws.OLEObjects("ListBox1")
 
-    ' Ensure it is a ListBox
+    'Ensure it is a ListBox
+    Dim selectedItems As Collection
     If TypeName(lb.Object) = "ListBox" Then
         Set selectedItems = New Collection
 
-        ' Loop through ListBox items and collect selected ones
+        'Loop through ListBox items and collect selected ones
+        Dim i As Integer
         With lb.Object
             For i = 0 To .ListCount - 1
-                If .Selected(i) Then
+                If .Selected(i) And Trim(.List(i)) <> "" Then
                     selectedItems.add .List(i)
                 End If
             Next i
         End With
 
-        ' Output the selected items
+        'Is there any account selected ?
+        If selectedItems.count = 0 Then
+            MsgBox "Il n'y a aucune compte de sélectionné!"
+            Exit Sub
+        End If
+        
+        'Erase & Create output Worksheet
+        Call CreateOrReplaceWorksheet("GL_Rapport_Out")
+        
+        'Setup report header
+        Call Set_Up_Report_Headers_And_Columns
+        
+        'Prepare Variables
+        Dim dateDeb As Date, dateFin As Date, sortType As String
+        With wshGL_Rapport
+            dateDeb = CDate(.Range("F6").value)
+            dateFin = CDate(.Range("H6").value)
+            If .Range("B3").value = "Vrai" Then
+                sortType = "Date"
+            Else
+                sortType = "Transaction"
+            End If
+        End With
+        
+        Application.ScreenUpdating = False
+        
+        'Process one account at the time...
         Dim item As Variant
+        Dim compte As String
         For Each item In selectedItems
-            Debug.Print item
+            compte = item
+            
+            Call get_GL_Trans_With_AF(compte, dateDeb, dateFin, sortType)
+            
+            Call print_results_From_GL_Trans(compte)
+            
         Next item
+        
+        Application.ScreenUpdating = True
+        
     End If
+    
+    Call GL_Rapport_Wrap_Up
     
     Call Output_Timer_Results("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
 
 End Sub
 
+Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sortType As String)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Rapport:get_GL_Trans_With_AF()")
+
+    Dim glNo As String
+    glNo = Left(compte, InStr(compte, " ") - 1)
+    
+    'Setup ADVANCED FILTER with 3 ranges
+    
+    'Data source
+    With wshGL_Trans
+        Dim rgData As Range, rgCriteria As Range, rgCopyToRange As Range
+'        Set rgResult = .Range("P1").CurrentRegion
+'        rgResult.Offset(1).Clearcontents
+        Set rgData = .Range("A1").CurrentRegion
+        
+        'Assign Criteria (3)
+        .Range("L3").value = glNo
+        .Range("M3").value = ">=" & Format(dateDeb, "mm-dd-yyyy")
+        .Range("N3").value = "<=" & Format(dateFin, "mm-dd-yyyy")
+        Set rgCriteria = .Range("L2:N3")
+        
+        'Destination to copy (setup & clear previous results)
+        Set rgCopyToRange = .Range("P1").CurrentRegion
+        rgCopyToRange.Offset(1).Clearcontents
+        Set rgCopyToRange = .Range("P1").CurrentRegion
+        
+        'Do the Advanced Filter
+        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
+        
+        Dim lastResultUsedRow
+        lastResultUsedRow = .Range("P99999").End(xlUp).row
+        If lastResultUsedRow < 3 Then GoTo NoSort
+        With .Sort
+            .SortFields.clear
+            If sortType = "Date" Then
+                .SortFields.add key:=wshGL_Trans.Range("Q1"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortTextAsNumbers 'Sort Based Date
+            Else
+                .SortFields.add key:=wshGL_Trans.Range("P1"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortTextAsNumbers 'Sort on Transaction #
+            End If
+            .SetRange wshGL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+    End With
+
+NoSort:
+    
+    Call Output_Timer_Results("modGL_Rapport:get_GL_Details_For_A_Account()", timerStart)
+
+End Sub
+
+Sub print_results_From_GL_Trans(compte As String)
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets("GL_Rapport_Out")
+    
+    Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
+    Dim solde As Currency
+    lastRowUsed_A = ws.Range("A99999").End(xlUp).row
+    lastRowUsed_B = ws.Range("B99999").End(xlUp).row
+    If lastRowUsed_A > lastRowUsed_B Then
+        lastRowUsed_AB = lastRowUsed_A
+    Else
+        lastRowUsed_AB = lastRowUsed_B
+    End If
+    
+'    If lastRowUsed_AB < 2 Then lastRowUsed_AB = 2
+    lastRowUsed_AB = lastRowUsed_AB + 2
+    ws.Range("A" & lastRowUsed_AB).value = compte
+    ws.Range("A" & lastRowUsed_AB).Font.Bold = True
+    solde = 0
+    ws.Range("H" & lastRowUsed_AB).value = solde
+    ws.Range("H" & lastRowUsed_AB).Font.Bold = True
+    lastRowUsed_AB = lastRowUsed_AB + 1
+
+    If wshGL_Trans.Range("P2") = "" Then
+        Exit Sub
+    End If
+    
+    Dim rngSource As Variant
+    rngSource = GetCurrentRegion(wshGL_Trans.Range("P1"))
+    
+    'Read thru the array
+    Dim i As Long
+    For i = LBound(rngSource, 1) To UBound(rngSource, 1)
+        ws.Cells(lastRowUsed_AB, 2) = rngSource(i, gltDate)
+        ws.Cells(lastRowUsed_AB, 3) = rngSource(i, gltDescr)
+        ws.Cells(lastRowUsed_AB, 4) = rngSource(i, gltSource)
+        ws.Cells(lastRowUsed_AB, 5) = rngSource(i, gltEntryNo)
+        ws.Cells(lastRowUsed_AB, 6) = rngSource(i, gltdt)
+        ws.Cells(lastRowUsed_AB, 7) = rngSource(i, gltct)
+        ws.Cells(lastRowUsed_AB, 8) = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
+        solde = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
+        lastRowUsed_AB = lastRowUsed_AB + 1
+    Next i
+    
+    ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
+    
+End Sub
+
+Sub Set_Up_Report_Headers_And_Columns()
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets("GL_Rapport_out")
+    
+    With ws
+'        .Cells(1, 1) = "Date : " & Format(Now(), "dd-mm-yyyy")
+'        .Cells(1, 8) = "Heure: " & Format(Now(), "hh:mm:ss")
+'        With .Range("A1:H1")
+'            .Font.Italic = True
+'            .Font.Bold = True
+'            .Font.Size = 10
+'        End With
+'        .Range("A1").HorizontalAlignment = xlLeft
+'        .Range("H1").HorizontalAlignment = xlRight
+        
+        .Cells(1, 1) = "Compte"
+        .Cells(1, 2) = "Date"
+        .Cells(1, 3) = "Description"
+        .Cells(1, 4) = "Source"
+        .Cells(1, 5) = "No.Écr."
+        .Cells(1, 6) = "Débit"
+        .Cells(1, 7) = "Crédit"
+        .Cells(1, 8) = "SOLDE"
+        With .Range("A1:H1")
+            .Font.Italic = True
+            .Font.Bold = True
+            .Font.Size = 10
+            .HorizontalAlignment = xlCenter
+            With .Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorDark1
+                .TintAndShade = -0.149998474074526
+                .PatternTintAndShade = 0
+            End With
+        End With
+    
+        With .columns("A")
+            .ColumnWidth = 8
+        End With
+        
+        With .columns("B")
+            .ColumnWidth = 11
+            .HorizontalAlignment = xlCenter
+        End With
+        
+        With .columns("C")
+            .ColumnWidth = 50
+        End With
+        
+        With .columns("D")
+            .ColumnWidth = 20
+        End With
+        
+        With .columns("E")
+            .ColumnWidth = 9
+            .HorizontalAlignment = xlCenter
+        End With
+        
+        With .columns("F")
+            .ColumnWidth = 15
+        End With
+        
+        With .columns("G")
+            .ColumnWidth = 15
+        End With
+        
+        With .columns("H")
+            .ColumnWidth = 15
+        End With
+    End With
+
+End Sub
+
+Sub GL_Rapport_Wrap_Up()
+
+    Application.PrintCommunication = False
+    
+    'Determine the active cells & setup Print Area
+    Dim lastUsedRow As Long
+    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).row
+    Range("A3:H" & lastUsedRow).Select
+    
+    With ActiveSheet.PageSetup
+        .PrintArea = "$A$3:$H$" & lastUsedRow
+        .PrintTitleRows = "$1:$2"
+        
+        .LeftMargin = Application.InchesToPoints(0.15)
+        .RightMargin = Application.InchesToPoints(0.15)
+        .TopMargin = Application.InchesToPoints(0.6)
+        .BottomMargin = Application.InchesToPoints(0.4)
+        .HeaderMargin = Application.InchesToPoints(0.15)
+        .FooterMargin = Application.InchesToPoints(0.15)
+        
+        .LeftHeader = ""
+        .CenterHeader = "&""-,Gras""&16" & "GCF - Fiscalité inc." & Chr(10) & "&11Rapport des transactions du Grand Livre"
+        .RightHeader = ""
+        
+        .LeftFooter = "&9&D - &T"
+        .CenterFooter = ""
+        .RightFooter = "&9Page &P de &N"
+
+        .FitToPagesWide = 1
+        .FitToPagesTall = 99
+        
+    End With
+    
+    'Keep header rows always displayed
+    ActiveWindow.SplitRow = 2
+
+    Range("A" & lastUsedRow).Select
+    
+    MsgBox "Le rapport a été généré avec succès"
+    
+    Application.PrintCommunication = True
+
+End Sub
 Sub GL_Rapport_Back_To_Menu()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Rapport:GL_Rapport_Back_To_Menu()")
    
+    wshGL_Rapport.Visible = xlSheetHidden
+    On Error Resume Next
+    ThisWorkbook.Worksheets("GL_Rapport_Out").Visible = xlSheetHidden
+    On Error GoTo 0
+
     wshMenuCOMPTA.Activate
     wshMenuCOMPTA.Range("A1").Select
     

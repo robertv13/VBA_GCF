@@ -6,6 +6,20 @@ Global Const gAppVersion As String = "v3.6.6" '2024-06-06 @ 10:42
 Public userName As String
 
 Public isTab_Order_Activated As Boolean
+Public Enum GL_Trans_Data_Columns
+    gltFirst = 1
+    gltEntryNo = gltFirst
+    gltDate
+    gltDescr
+    gltSource
+    gltGLNo
+    gltCompte
+    gltdt
+    gltct
+    gltRem
+    gltTStamp
+    gltLast = gltTStamp
+End Enum
 
 Sub BackToMainMenu()
 

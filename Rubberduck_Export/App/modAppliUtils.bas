@@ -63,6 +63,49 @@ Sub Output_Timer_Results(subName As String, t As Double)
 
 End Sub
 
+Public Sub ArrayToRange(ByRef data As Variant _
+                        , ByVal outRange As Range _
+                        , Optional ByVal clearExistingData As Boolean = True _
+                        , Optional ByVal clearExistingHeaderSize As Long = 1)
+                        
+    If clearExistingData = True Then
+        outRange.CurrentRegion.Offset(clearExistingHeaderSize).Clearcontents
+    End If
+    
+    Dim rows As Long, columns As Long
+    rows = UBound(data, 1) - LBound(data, 1) + 1
+    columns = UBound(data, 2) - LBound(data, 2) + 1
+    outRange.Resize(rows, columns).value = data
+    
+End Sub
+
+Sub CreateOrReplaceWorksheet(wsName As String)
+    
+    Dim ws As Worksheet
+    Dim wsExists As Boolean
+    wsExists = False
+    
+    'Check if the worksheet exists
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.name = wsName Then
+            wsExists = True
+            Exit For
+        End If
+    Next ws
+    
+    ' If the worksheet exists, delete it
+    If wsExists Then
+        Application.DisplayAlerts = False
+        ws.delete
+        Application.DisplayAlerts = True
+    End If
+    
+    'Add the new worksheet
+    Set ws = ThisWorkbook.Worksheets.add
+    ws.name = wsName
+
+End Sub
+
 Private Sub IntegrityVerification()
 
     'wshBD_Clients

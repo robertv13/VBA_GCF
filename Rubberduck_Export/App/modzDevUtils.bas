@@ -386,10 +386,10 @@ Sub Add_Columns_To_Active_Worksheet()
     
     'Find the last column with data
     Dim lastColumn As Integer
-    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
+    lastColumn = ws.Cells(1, ws.columns.count).End(xlToLeft).Column
     
     'Add columns to the right of the last column
-    ws.Columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
+    ws.columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
     
     Debug.Print colToAdd & " columns added to the worksheet."
 End Sub
@@ -494,7 +494,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
         lastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(lastRow + 1)
+        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(lastRow + 1)
         tbl.ListRows(1).delete
     Wend
 
