@@ -49,10 +49,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If dynamicShape.Visible = True Then dynamicShape.Visible = False
     End If
     
+    'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And wshGL_BV.Range("J1").value = "" Then
         wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
     End If
     
+    'TB account has been selected
     If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value)) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
@@ -61,13 +63,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         GLDescription = Range("E" & Target.row).value
         DateLimite = Format(Range("J1").value, "dd-mm-yyyy")
         wshGL_BV.Range("B10").value = 0
-        Range("T4").value = "Toutes les dates"
-
+        Range("T2").value = "Toutes les dates"
+        'Display all transactions for the selected G/L
         Call GL_TB_Display_Trans_For_Selected_Account(GLAcct, GLDescription, "01-01-2023", DateLimite)
-        
         Application.EnableEvents = True
     End If
     
+    'Get the entire transaction, from a selected line
     If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing Then
         If wshGL_BV.Range("M" & Target.row) <> "" Then
             Dim noJE As Long
@@ -108,10 +110,10 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = True
     End If
 
-    If Not Intersect(Target, Range("T4")) Is Nothing Then 'Dates have changed
+    If Not Intersect(Target, Range("T2")) Is Nothing Then 'Dates have changed
         Application.EnableEvents = False
         
-        Call GL_TB_Determine_From_And_To_Date(Range("T4").value)
+        Call GL_TB_Determine_From_And_To_Date(Range("T2").value)
                 
         'Force redisplay of GL Transactions details
         Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
@@ -148,10 +150,6 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
-'            .SortFields.add key:=wshGL_Trans.Range("AF1"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortTextAsNumbers 'Sort Based On GLNo
             .SortFields.add key:=wshGL_Trans.Range("AF1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _

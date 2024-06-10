@@ -72,14 +72,18 @@ Public Sub GL_Report_For_Selected_Accounts()
             Call get_GL_Trans_With_AF(compte, dateDeb, dateFin, sortType)
             
             Call print_results_From_GL_Trans(compte)
-            
+        
         Next item
         
         Application.ScreenUpdating = True
         
     End If
     
-    Call GL_Rapport_Wrap_Up
+    Dim h1 As String, h2 As String, h3 As String
+    h1 = wshAdmin.Range("NomEntreprise")
+    h2 = "Rapport des transactions du Grand Livre"
+    h3 = "(Du " & dateDeb & " au " & dateFin & ")"
+    Call GL_Rapport_Wrap_Up(h1, h2, h3)
     
     Call Output_Timer_Results("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
 
@@ -121,12 +125,12 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         With .Sort
             .SortFields.clear
             If sortType = "Date" Then
-                .SortFields.add key:=wshGL_Trans.Range("Q1"), _
+                .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortTextAsNumbers 'Sort Based Date
             Else
-                .SortFields.add key:=wshGL_Trans.Range("P1"), _
+                .SortFields.add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortTextAsNumbers 'Sort on Transaction #
@@ -157,7 +161,6 @@ Sub print_results_From_GL_Trans(compte As String)
         lastRowUsed_AB = lastRowUsed_B
     End If
     
-'    If lastRowUsed_AB < 2 Then lastRowUsed_AB = 2
     lastRowUsed_AB = lastRowUsed_AB + 2
     ws.Range("A" & lastRowUsed_AB).value = compte
     ws.Range("A" & lastRowUsed_AB).Font.Bold = True
@@ -174,7 +177,7 @@ Sub print_results_From_GL_Trans(compte As String)
     rngSource = GetCurrentRegion(wshGL_Trans.Range("P1"))
     
     'Read thru the array
-    Dim i As Long
+    Dim i As Long, sumDT As Currency, sumCT As Currency
     For i = LBound(rngSource, 1) To UBound(rngSource, 1)
         ws.Cells(lastRowUsed_AB, 2) = rngSource(i, gltDate)
         ws.Cells(lastRowUsed_AB, 3) = rngSource(i, gltDescr)
@@ -184,10 +187,32 @@ Sub print_results_From_GL_Trans(compte As String)
         ws.Cells(lastRowUsed_AB, 7) = rngSource(i, gltct)
         ws.Cells(lastRowUsed_AB, 8) = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
         solde = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
+        sumDT = sumDT + rngSource(i, gltdt)
+        sumCT = sumCT + rngSource(i, gltct)
         lastRowUsed_AB = lastRowUsed_AB + 1
     Next i
     
     ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
+    With ws.Range("F" & lastRowUsed_AB)
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .colorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        ws.Range("F" & lastRowUsed_AB).value = sumDT
+    End With
+    
+    With ws.Range("G" & lastRowUsed_AB)
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .colorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        ws.Range("G" & lastRowUsed_AB).value = sumCT
+    
+    End With
     
 End Sub
 
@@ -197,16 +222,6 @@ Sub Set_Up_Report_Headers_And_Columns()
     Set ws = ThisWorkbook.Worksheets("GL_Rapport_out")
     
     With ws
-'        .Cells(1, 1) = "Date : " & Format(Now(), "dd-mm-yyyy")
-'        .Cells(1, 8) = "Heure: " & Format(Now(), "hh:mm:ss")
-'        With .Range("A1:H1")
-'            .Font.Italic = True
-'            .Font.Bold = True
-'            .Font.Size = 10
-'        End With
-'        .Range("A1").HorizontalAlignment = xlLeft
-'        .Range("H1").HorizontalAlignment = xlRight
-        
         .Cells(1, 1) = "Compte"
         .Cells(1, 2) = "Date"
         .Cells(1, 3) = "Description"
@@ -230,7 +245,7 @@ Sub Set_Up_Report_Headers_And_Columns()
         End With
     
         With .columns("A")
-            .ColumnWidth = 8
+            .ColumnWidth = 5
         End With
         
         With .columns("B")
@@ -266,7 +281,7 @@ Sub Set_Up_Report_Headers_And_Columns()
 
 End Sub
 
-Sub GL_Rapport_Wrap_Up()
+Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
 
     Application.PrintCommunication = False
     
@@ -281,13 +296,15 @@ Sub GL_Rapport_Wrap_Up()
         
         .LeftMargin = Application.InchesToPoints(0.15)
         .RightMargin = Application.InchesToPoints(0.15)
-        .TopMargin = Application.InchesToPoints(0.6)
-        .BottomMargin = Application.InchesToPoints(0.4)
+        .TopMargin = Application.InchesToPoints(0.75)
+        .BottomMargin = Application.InchesToPoints(0.45)
         .HeaderMargin = Application.InchesToPoints(0.15)
         .FooterMargin = Application.InchesToPoints(0.15)
         
         .LeftHeader = ""
-        .CenterHeader = "&""-,Gras""&16" & "GCF - Fiscalité inc." & Chr(10) & "&11Rapport des transactions du Grand Livre"
+        .CenterHeader = "&""-,Gras""&16" & h1 & _
+                        Chr(10) & "&11" & h2 & _
+                        Chr(10) & "&11" & h3
         .RightHeader = ""
         
         .LeftFooter = "&9&D - &T"

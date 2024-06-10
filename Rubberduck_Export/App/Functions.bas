@@ -371,7 +371,7 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As I
         
 End Function
 
-Function Fn_Get_Chart_Of_Accounts() As Variant '2024-06-07 @ 07:31
+Function Fn_Get_Chart_Of_Accounts(nbCol As Integer) As Variant '2024-06-07 @ 07:31
 
     'Reference the named range
     Dim planComptable As Range
@@ -380,14 +380,22 @@ Function Fn_Get_Chart_Of_Accounts() As Variant '2024-06-07 @ 07:31
     'Iterate through each row of the named range
     Dim rowNum As Long, row As Range, rowRange As Range
     Dim arr() As String
-    ReDim arr(1 To planComptable.rows.count + 1) As String
-    
-    For rowNum = 1 To planComptable.rows.count + 1
+    If nbCol = 1 Then
+        ReDim arr(1 To planComptable.rows.count) As String '1D array
+    Else
+        ReDim arr(1 To planComptable.rows.count, 1 To 2) As String '2D array
+    End If
+    For rowNum = 1 To planComptable.rows.count
         'Get the entire row as a range
         Set rowRange = planComptable.rows(rowNum)
         'Process each cell in the row
         For Each row In rowRange.rows
-            arr(rowNum) = row.Cells(1, 2) & " " & row.Cells(1, 1)
+            If nbCol = 1 Then
+                arr(rowNum) = row.Cells(1, 2)
+            Else
+                arr(rowNum, 1) = row.Cells(1, 2)
+                arr(rowNum, 2) = row.Cells(1, 1)
+            End If
         Next row
     Next rowNum
     

@@ -17,12 +17,12 @@ Private Sub Worksheet_Activate()
             .clear
 
             Dim arr As Variant
-            arr = Fn_Get_Chart_Of_Accounts()
+            arr = Fn_Get_Chart_Of_Accounts(2) 'Returns 2D array with 2 columns
             
             'Add items to the ListBox
             Dim i As Integer
             For i = LBound(arr, 1) To UBound(arr, 1)
-                .AddItem arr(i)
+                .AddItem arr(i, 1) & " " & arr(i, 2)
             Next i
         End With
     End If

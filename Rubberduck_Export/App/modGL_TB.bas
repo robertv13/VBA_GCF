@@ -8,11 +8,6 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    'Call GL_Trans_Import_All is it mandatory ???
-    
-'    Dim planComptable As Range
-'    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription") 'Contains Description + Account No.
-    
     'Clear TB cells - Contents & formats
     Dim lastUsedRow As Long
     lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
@@ -28,14 +23,15 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date, dateCutOff As Date
-    wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("B4").value, "dd-mm-yyyy"))
+    wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("J1").value, "dd-mm-yyyy"))
 
     minDate = CDate("01/01/2023")
     dateCutOff = CDate(wshGL_BV.Range("J1").value)
     wshGL_BV.Range("B2").value = 3
     wshGL_BV.Range("B10").value = 0
     
-    'Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
+    'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions
+    '           between the 2 dates
     Call GL_TB_AdvancedFilter_By_GL("", minDate, dateCutOff)
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     
@@ -44,7 +40,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
-    arr = Fn_Get_Chart_Of_Accounts()
+    arr = Fn_Get_Chart_Of_Accounts(2) 'Returns array with 2 columns (Code, Description)
     
     Dim dictSolde As Dictionary 'GLNo dictionary
     Set dictSolde = New Dictionary
@@ -53,13 +49,19 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Dim newRowID As Long: newRowID = 1
     Dim currRowID As Long
     
-    Dim i As Long, glNo As String, dtct As Currency
+    'Parse every line of the result (AdvancedFilter in GL_Trans)
+    Dim i As Long, glNo As String, dtct As Currency, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To lastUsedRow
-        glNo = wshGL_Trans.Range("T" & i).value & " " & wshGL_Trans.Range("U" & i).value
-        dtct = wshGL_Trans.Range("V" & i).value - wshGL_Trans.Range("W" & i).value
-        If dictSolde.Exists(glNo) = False Then
+        With wshGL_Trans
+            glNo = .Range("T" & i).value
+            dtct = .Range("V" & i).value - .Range("W" & i).value
+            t1 = t1 + .Range("V" & i).value
+            t2 = t2 + .Range("W" & i).value
+        End With
+        If Not dictSolde.Exists(glNo) Then
             dictSolde.add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
+            Debug.Print glNo & "   " & newRowID
             newRowID = newRowID + 1
         End If
         currRowID = dictSolde(glNo)
@@ -67,24 +69,28 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
         arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + dtct
     Next i
     
-    Dim sumDt1 As Currency, sumCt1 As Currency, GLNoPlusDesc As String
+    Dim sumDT As Currency, sumCT As Currency, GLNoPlusDesc As String
     Dim currRow As Long: currRow = 4
     wshGL_BV.Range("D4:D" & UBound(arrSolde, 1)).HorizontalAlignment = xlCenter
     wshGL_BV.Range("F4:G" & UBound(arrSolde, 1) + 3).HorizontalAlignment = xlRight
     
-    For i = LBound(arrSolde, 1) To UBound(arrSolde, 1)
-        GLNoPlusDesc = arrSolde(i, 1)
-        If GLNoPlusDesc <> "" Then
-            wshGL_BV.Range("D" & currRow).value = Left(GLNoPlusDesc, InStr(GLNoPlusDesc, " "))
-            wshGL_BV.Range("E" & currRow).value = Right(GLNoPlusDesc, Len(GLNoPlusDesc) - InStr(GLNoPlusDesc, " ") + 1)
-            If arrSolde(i, 2) >= 0 Then
-                wshGL_BV.Range("F" & currRow).value = Format(arrSolde(i, 2), "###,###,##0.00")
-                sumDt1 = sumDt1 + arrSolde(i, 2)
-            Else
-                wshGL_BV.Range("G" & currRow).value = Format(arrSolde(i, 2), "###,###,##0.00")
-                sumCt1 = sumCt1 - arrSolde(i, 2)
+    Dim r As Long
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        glNo = arr(i, 1)
+        If glNo <> "" Then
+            r = dictSolde.item(glNo) 'Get the value of the item associated with GLNo
+            If r <> 0 Then
+                wshGL_BV.Range("D" & currRow).value = glNo
+                wshGL_BV.Range("E" & currRow).value = arr(i, 2)
+                If arrSolde(r, 2) >= 0 Then
+                    wshGL_BV.Range("F" & currRow).value = Format(arrSolde(r, 2), "###,###,##0.00")
+                    sumDT = sumDT + arrSolde(r, 2)
+                Else
+                    wshGL_BV.Range("G" & currRow).value = Format(-arrSolde(r, 2), "###,###,##0.00")
+                    sumCT = sumCT - arrSolde(r, 2)
+                End If
+                currRow = currRow + 1
             End If
-            currRow = currRow + 1
         End If
     Next i
 
@@ -94,12 +100,14 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     'Output Debit total
     Dim rng As Range
     Set rng = wshGL_BV.Range("F" & currRow)
-    Call GL_TB_Display_TB_Totals(rng, sumDt1) 'Débit total - 2024-06-09 @ 07:51
+    Call GL_TB_Display_TB_Totals(rng, sumDT) 'Débit total - 2024-06-09 @ 07:51
     
     'Output Credit total
     Set rng = wshGL_BV.Range("G" & currRow)
-    Call GL_TB_Display_TB_Totals(rng, sumCt1) 'Débit total - 2024-06-09 @ 07:51
+    Call GL_TB_Display_TB_Totals(rng, sumCT) 'Débit total - 2024-06-09 @ 07:51
     
+    wshGL_BV.Range("B2").value = currRow
+
     'Setup page for printing purposes
     Dim CenterHeaderTxt As String
     CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
@@ -111,8 +119,6 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
         .FitToPagesTall = 1
     End With
 
-    wshGL_BV.Range("B2").value = currRow - 2
-  
     Application.EnableEvents = True
   
     Call Output_Timer_Results("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
@@ -288,23 +294,44 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         
         'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
         With .Sort
-            .SortFields.clear
-            .SortFields.add key:=wshGL_Trans.Range("T1"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On GLNo , incorrect since NUM & NUM + Letter
-            .SortFields.add key:=wshGL_Trans.Range("Q1"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshGL_Trans.Range("P1"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On JE Number
-            .SetRange wshGL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
-            .Apply 'Apply Sort
-         End With
+                .SortFields.clear
+                .SortFields.add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortTextAsNumbers 'Returns Numeric only (first), then numeric and letters
+                .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On Date
+                .SortFields.add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On JE Number
+                .SetRange wshGL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
+                .Apply 'Apply Sort
+        End With
     End With
+
+'    Range("P1:Y1063").Select
+'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.clear
+'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
+'        "T2:T1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
+'        xlSortTextAsNumbers
+'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
+'        "Q2:Q1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
+'        xlSortNormal
+'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
+'        "P2:P1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
+'        xlSortNormal
+'    With ActiveWorkbook.Worksheets("GL_Trans").Sort
+'        .SetRange Range("P1:Y1063")
+'        .Header = xlYes
+'        .MatchCase = False
+'        .Orientation = xlTopToBottom
+'        .SortMethod = xlPinYin
+'        .Apply
+'    End With
+
 
 NoSort:
 
