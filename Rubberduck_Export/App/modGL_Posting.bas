@@ -39,7 +39,6 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     Dim nextJENo As Long
     nextJENo = lastJE + 1
     wshAdmin.Range("B9").value = nextJENo '2024-06-06 @ 16:30
-    MsgBox "Numéro de l'écriture = " & nextJENo
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close

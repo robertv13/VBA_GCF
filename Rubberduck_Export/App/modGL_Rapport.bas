@@ -14,7 +14,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         Exit Sub
     End If
     
-    If ws.Range("F6").value > ws.Range("H6").value = "" Then
+    If Application.WorksheetFunction.Days(ws.Range("H6").value, ws.Range("F6").value) < 0 Then
         MsgBox "La date de départ doit obligatoirement être antérieure à la date de fin!"
         Exit Sub
     End If

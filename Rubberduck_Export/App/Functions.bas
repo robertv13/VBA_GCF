@@ -132,15 +132,29 @@ End Function
 Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
 
     paramDate = Trim(paramDate)
+    
     'User can enter / or - for separators
     Dim sDateDelimiter As String
     sDateDelimiter = "-"
     'Make sure that paramDate uses proper delimiter
     paramDate = Replace(paramDate, "/", sDateDelimiter)
     
-    Dim sDate As String, isValidDate As Boolean
+    paramDate = Replace(paramDate, "janv", Format(1, "00"))
+    paramDate = Replace(paramDate, "févr", Format(2, "00"))
+    paramDate = Replace(paramDate, "mars", Format(3, "00"))
+    paramDate = Replace(paramDate, "avr", Format(4, "00"))
+    paramDate = Replace(paramDate, "mai", Format(5, "00"))
+    paramDate = Replace(paramDate, "juin", Format(6, "00"))
+    paramDate = Replace(paramDate, "juil", Format(7, "00"))
+    paramDate = Replace(paramDate, "août", Format(8, "00"))
+    paramDate = Replace(paramDate, "sept", Format(9, "00"))
+    paramDate = Replace(paramDate, "oct", Format(10, "00"))
+    paramDate = Replace(paramDate, "nov", Format(11, "00"))
+    paramDate = Replace(paramDate, "déc", Format(12, "00"))
+    
+    Dim sDate As String, IsValidDate As Boolean
     sDate = ""
-    isValidDate = False
+    IsValidDate = False
 
     'Uses today's date as default
     Dim d, m, y As Integer
@@ -172,7 +186,6 @@ Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
             If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 6, 1) = sDateDelimiter Then
                 sDate = Format(Mid(paramDate, 7, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 2), "00") & sDateDelimiter & IIf(Left(paramDate, 2) >= 50, "19", "20") & Format(Left(paramDate, 2), "00")
             End If
-            
         Case 9                                       'dd/m/yyyy or d/mm/yyyy
             If Mid(paramDate, 2, 1) = sDateDelimiter And Mid(paramDate, 5, 1) = sDateDelimiter Then
                 sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 6, 4), "0000")
@@ -191,8 +204,8 @@ Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
     End Select
         
     'Is the 'built' date valid ?
-    isValidDate = IsDate(sDate)
-    If isValidDate Then
+    IsValidDate = IsDate(sDate)
+    If IsValidDate Then
         Fn_Build_A_Date = sDate
     Else
         Fn_Build_A_Date = ""
@@ -284,10 +297,12 @@ End Function
 Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
-    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("H26").value Then
+    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
         MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
-            "Total saisi = " & wshDEB_Saisie.Range("O6").value & " et Ventilation = " & wshDEB_Saisie.Range("H26").value & vbNewLine & vbNewLine & _
-            "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
+            "Total saisi = " & Format(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
+            & " vs. Ventilation = " & Format(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
+            & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
+            vbCritical, "Veuillez vérifier votre écriture!"
     Else
         Fn_Is_Debours_Balance = True
     End If

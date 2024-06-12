@@ -261,7 +261,7 @@ Sub SlideOut_Paiement()
             .Height = width
             ActiveSheet.Shapes("icoPaiement").Left = width - 32
         Next width
-        .TextFrame2.TextRange.Characters.text = "Paiement"
+        .TextFrame2.TextRange.Characters.text = "Déboursé"
     End With
 End Sub
 

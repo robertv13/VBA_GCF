@@ -34,12 +34,29 @@ Private Sub Worksheet_Activate()
         .Range("F4").value = "Dates manuelles"
         .Range("F6").value = ""
         .Range("H6").value = ""
+        .Range("F4").Activate
         .Range("F4").Select
     End With
     
     Application.EnableEvents = True
     
     Call Output_Timer_Results("wshGL_Rapport:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    'From Date has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing And _
+                             wshGL_Rapport.Range("F6").value = "" Then
+        wshGL_Rapport.Range("F6").value = Format(Now(), "dd-mm-yyyy")
+    End If
+    
+    'To Date has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing And _
+                             wshGL_Rapport.Range("H6").value = "" Then
+        wshGL_Rapport.Range("H6").value = Format(Now(), "dd-mm-yyyy")
+    End If
 
 End Sub
 
@@ -85,6 +102,39 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End Select
         Application.EnableEvents = True
     End If
+    
+    'From date has changed
+    If Not Intersect(Target, Range("F6")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim strFromDate As String
+        strFromDate = Fn_Build_A_Date(Range("F6").value)
+        If strFromDate = "" Then
+            Call Invalid_Date_Message
+            Range("F6").Activate
+            Range("F6").Select
+            GoTo Clean_Exit
+        Else
+            Range("F6").value = CDate(strFromDate)
+        End If
+    End If
+    
+    'To date has changed
+    If Not Intersect(Target, Range("H6")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim strToDate As String
+        strToDate = Fn_Build_A_Date(Range("H6").value)
+        If strToDate = "" Then
+            Call Invalid_Date_Message
+            Range("H6").Activate
+            Range("H6").Select
+            GoTo Clean_Exit
+        Else
+            Range("H6").value = CDate(strToDate)
+        End If
+    End If
+
+Clean_Exit:
+        Application.EnableEvents = True
 
 End Sub
 

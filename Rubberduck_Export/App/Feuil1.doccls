@@ -1,1 +1,114 @@
 ﻿Option Explicit
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets("Feuil1")
+    
+    'Date cell got focus
+    If Not Intersect(Target, ws.Range("B1")) Is Nothing Then
+        Application.EnableEvents = False
+        If ws.Range("B1") = "" Then ws.Range("B1").value = Format(Now(), "dd-mm-yyyy")
+        Application.EnableEvents = True
+    End If
+
+    End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets("Feuil1")
+    
+    'Date cell has changed
+    If Not Intersect(Target, ws.Range("B1")) Is Nothing Then
+        Application.EnableEvents = False
+        Dim strDate As String
+        strDate = IsValidDate(ws.Range("B1").value)
+'        strDate = Fn_Build_A_Date(ws.Range("B1").value)
+        If strDate = "" Then
+            Call Invalid_Date_Message
+            ws.Range("B1").Activate
+            ws.Range("B1").Select
+            GoTo Clean_Exit
+        Else
+            ws.Range("B1").value = strDate
+        End If
+Clean_Exit:
+        Application.EnableEvents = True
+    End If
+
+End Sub
+
+Function IsValidDate(sDate As String) As Boolean
+    
+    Dim dt As Date
+    Dim strDateFormat As String
+    Dim dayPart As Integer
+    Dim monthPart As Integer
+    Dim yearPart As Integer
+    Dim dateParts() As String
+    
+    On Error GoTo InvalidDate
+    
+    'Make sure that the date separator is '-'
+    sDate = Replace(sDate, "/", "-")
+
+    dateParts = Split(sDate, "-")
+    Debug.Print UBound(dateParts)
+    
+    Dim dd, dm, dy As Integer
+    dd = Day(Now())
+    dm = Month(Now())
+    dy = Year(Now())
+    
+    If UBound(dateParts) = 0 Then
+        dayPart = CInt(dateParts(0))
+        monthPart = dm
+        yearPart = dy
+    End If
+    
+    If UBound(dateParts) = 1 Then
+        dayPart = CInt(dateParts(0))
+        monthPart = CInt(dateParts(1))
+        yearPart = dy
+    End If
+    
+    If UBound(dateParts) = 2 Then
+        dayPart = CInt(dateParts(0))
+        monthPart = CInt(dateParts(1))
+        yearPart = CInt(dateParts(2))
+    Else
+'        IsValidDate = False
+'        Exit Function
+    End If
+    
+    'Ensure the extracted components match the converted date
+    If Day(dt) = dayPart And Month(dt) = monthPart And Year(dt) = yearPart Then
+        IsValidDate = True
+    Else
+        IsValidDate = False
+    End If
+    
+    Exit Function
+
+InvalidDate:
+
+    IsValidDate = False
+    
+End Function
+
+Sub TestDateValidation()
+    Dim testDate As String
+    Dim isValid As Boolean
+    
+    testDate = "12/31/2023" ' Change this to the date you want to test
+    
+    isValid = IsValidDate(testDate)
+    
+    If isValid Then
+        MsgBox testDate & " is a valid date."
+    Else
+        MsgBox testDate & " is not a valid date."
+    End If
+End Sub
+

@@ -364,8 +364,9 @@ Sub List_All_Shapes_Properties()
 End Sub
 
 Sub Protect_Unprotect_Worksheet()
+    
     Dim password As String
-    password = "GCmfp"
+    password = "GCMFPJA"
 
     'Unprotect the worksheet with the password
     ActiveSheet.Unprotect password:=password
@@ -374,6 +375,7 @@ Sub Protect_Unprotect_Worksheet()
 
     'Protect the worksheet again with the password
     ActiveSheet.Protect password:=password
+    
 End Sub
 
 Sub Add_Columns_To_Active_Worksheet()
@@ -456,6 +458,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
+        Application.EnableEvents = False
         .SortFields.clear
         .SortFields.Add2 _
             key:=Range("tblTests_And_Todo[Statut]"), _
@@ -480,8 +483,8 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
         .Header = xlYes
 '        .MatchCase = False
 '        .Orientation = xlTopToBottom
-'        .SortMethod = xlPinYin
         .Apply
+        Application.EnableEvents = True
     End With
     
     Dim tbl As ListObject: Set tbl = ws.ListObjects("tblTests_And_Todo")
@@ -491,6 +494,8 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim i As Long, lastRow As Long
     i = 2
 
+    Application.EnableEvents = False
+    
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
         lastRow = tbl.ListRows.count
@@ -499,6 +504,8 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Wend
 
     ws.Calculate
+    
+    Application.EnableEvents = False
     
     Set ws = Nothing
     Set rng = Nothing

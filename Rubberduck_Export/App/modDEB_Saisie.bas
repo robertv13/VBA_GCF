@@ -23,9 +23,9 @@ Sub DEB_Saisie_Update()
     'GL posting
     Call DEB_Saisie_GL_Posting_Preparation
     
-'    If wshDEB_Saisie.ckbRecurrente = True Then
-'        Call Save_EJ_Recurrente(rowEJLast)
-'    End If
+    If wshDEB_Saisie.ckbRecurrente = True Then
+        Call Save_DEB_Recurrent(rowDebSaisie)
+    End If
     
     'Retrieve the CurrentDebours number
     Dim CurrentDeboursNo As String
@@ -68,7 +68,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     rs.Open strSQL, conn
     
     'Get the last used row
-    Dim maxDebTransNo As Long, lastDebTrans As Long
+    Dim lastDebTrans As Long
     If IsNull(rs.Fields("MaxDebTransNo").value) Then
         'Handle empty table (assign a default value, e.g., 0)
         lastDebTrans = 0
@@ -77,10 +77,10 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     End If
     
     'Calculate the new JE number
-    Dim nextDebTransNo As Long
-    nextDebTransNo = lastDebTrans + 1
+    Dim currDebTransNo As Long
+    currDebTransNo = lastDebTrans + 1
     Application.EnableEvents = False
-    wshDEB_Saisie.Range("B1").value = nextDebTransNo
+    wshDEB_Saisie.Range("B1").value = currDebTransNo
     Application.EnableEvents = True
     
     'Build formula
@@ -96,7 +96,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("No_Entrée").value = nextDebTransNo
+            rs.Fields("No_Entrée").value = currDebTransNo
             rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
             rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
             rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("F6").value
@@ -104,12 +104,12 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Total").value = wshDEB_Saisie.Range("O6").value
             rs.Fields("No_Compte").value = wshDEB_Saisie.Range("Q" & l).value
             rs.Fields("Compte").value = wshDEB_Saisie.Range("E" & l).value
-            rs.Fields("Total").value = CDbl(wshDEB_Saisie.Range("H" & l).value)
-            rs.Fields("CodeTaxe").value = wshDEB_Saisie.Range("I" & l).value
+            rs.Fields("CodeTaxe").value = wshDEB_Saisie.Range("H" & l).value
+            rs.Fields("Total").value = CDbl(wshDEB_Saisie.Range("I" & l).value)
             rs.Fields("TPS").value = CDbl(wshDEB_Saisie.Range("J" & l).value)
-            rs.Fields("TVQ").value = wshDEB_Saisie.Range("K" & l).value
-            rs.Fields("Crédit_TPS").value = wshDEB_Saisie.Range("L" & l).value
-            rs.Fields("Crédit_TVQ").value = wshDEB_Saisie.Range("M" & l).value
+            rs.Fields("TVQ").value = CDbl(wshDEB_Saisie.Range("K" & l).value)
+            rs.Fields("Crédit_TPS").value = CDbl(wshDEB_Saisie.Range("L" & l).value)
+            rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
             rs.Fields("TimeStamp").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
         rs.update
@@ -248,6 +248,168 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
 End Sub
 
+Sub Save_DEB_Recurrent(ll As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:Save_DEB_Recurrent()")
+    
+    Dim rowDEBLast As Long
+    rowDEBLast = wshDEB_Saisie.Range("E99").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    
+    Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
+    Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
+    
+    Call Output_Timer_Results("modDEB_Saisie:Save_DEB_Recurrent()", timerStart)
+    
+End Sub
+
+Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()")
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "DEB_Recurrent"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object, rs As Object
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Set rs = CreateObject("ADODB.Recordset")
+
+    'SQL select command to find the next available ID
+    Dim strSQL As String, MaxDebRecNo As Long
+    strSQL = "SELECT MAX(No_Deb_Rec) AS MaxDebRecNo FROM [" & destinationTab & "$]"
+
+    'Open recordset to find out the MaxID
+    rs.Open strSQL, conn
+    
+    'Get the last used row
+    Dim lastDR As Long, nextDRNo As Long
+    If IsNull(rs.Fields("MaxDebRecNo").value) Then
+        ' Handle empty table (assign a default value, e.g., 1)
+        lastDR = 0
+    Else
+        lastDR = rs.Fields("MaxDebRecNo").value
+    End If
+    
+    'Calculate the new ID
+    nextDRNo = lastDR + 1
+    wshDEB_Saisie.Range("B2").value = nextDRNo
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim l As Long
+    For l = 9 To r
+        rs.AddNew
+            'Add fields to the recordset before updating it
+            rs.Fields("No_Deb_Rec").value = nextDRNo
+            rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
+            rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
+            rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("F6").value
+            rs.Fields("Reference").value = wshDEB_Saisie.Range("M6").value
+            
+            rs.Fields("No_Compte").value = wshDEB_Saisie.Range("Q" & l).value
+            rs.Fields("Compte").value = wshDEB_Saisie.Range("E" & l).value
+            rs.Fields("CodeTaxe").value = wshDEB_Saisie.Range("H" & l).value
+            rs.Fields("Total").value = wshDEB_Saisie.Range("I" & l).value
+            rs.Fields("TPS").value = wshDEB_Saisie.Range("J" & l).value
+            rs.Fields("TVQ").value = wshDEB_Saisie.Range("K" & l).value
+            rs.Fields("Crédit_TPS").value = wshDEB_Saisie.Range("L" & l).value
+            rs.Fields("Crédit_TVQ").value = wshDEB_Saisie.Range("M" & l).value
+        rs.update
+    Next l
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()", timerStart)
+
+End Sub
+
+Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'Get the JE number
+    Dim DEBRecNo As Long
+    DEBRecNo = wshDEB_Saisie.Range("B2").value
+    
+    'What is the last used row in EJ_AUto ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshDEB_Recurrent.Range("C999").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    Dim i As Integer
+    For i = 9 To r
+        wshDEB_Recurrent.Range("A" & rowToBeUsed).value = DEBRecNo
+        wshDEB_Recurrent.Range("B" & rowToBeUsed).value = wshDEB_Saisie.Range("O4").value
+        wshDEB_Recurrent.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
+        wshDEB_Recurrent.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
+        wshDEB_Recurrent.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
+        
+        wshDEB_Recurrent.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
+        wshDEB_Recurrent.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
+        wshDEB_Recurrent.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
+        wshDEB_Recurrent.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
+        wshDEB_Recurrent.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
+        wshDEB_Recurrent.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
+        wshDEB_Recurrent.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
+        wshDEB_Recurrent.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
+        rowToBeUsed = rowToBeUsed + 1
+    Next i
+    
+    Call DEB_Recurrent_Build_Summary '2024-03-14 @ 07:40
+    
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()", timerStart)
+    
+End Sub
+
+Sub DEB_Recurrent_Build_Summary()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Build_Summary()")
+    
+    'Build the summary at column K & L
+    Dim lastUsedRow1 As Long
+    lastUsedRow1 = wshDEB_Recurrent.Range("A9999").End(xlUp).row
+    
+    Dim lastUsedRow2 As Long
+    lastUsedRow2 = wshDEB_Recurrent.Range("N999").End(xlUp).row
+    If lastUsedRow2 > 1 Then
+        wshDEB_Recurrent.Range("N2:P" & lastUsedRow2).Clearcontents
+    End If
+    
+    With wshDEB_Recurrent
+        Dim i As Integer, k As Integer, oldEntry As String
+        k = 2
+        For i = 2 To lastUsedRow1
+            If .Range("A" & i).value <> oldEntry Then
+                .Range("O" & k).value = "'" & Fn_Pad_A_String(.Range("A" & i).value, " ", 5, "L")
+                .Range("P" & k).value = .Range("B6").value
+                .Range("Q" & k).value = .Range("D6").value
+                oldEntry = .Range("A" & i).value
+                k = k + 1
+            End If
+        Next i
+    End With
+
+    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Build_Summary()", timerStart)
+
+End Sub
+
 Public Sub DEB_Saisie_Clear_All_Cells()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()")
@@ -257,8 +419,9 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     With wshDEB_Saisie
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").Clearcontents
         .Range("O4").value = Format(Now(), "dd-mm-yyyy")
-        .Range("F4").Select
+        .ckbRecurrente = False
         .Range("F4").Activate
+        .Range("F4").Select
     End With
     Application.EnableEvents = True
     

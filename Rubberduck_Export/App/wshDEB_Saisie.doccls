@@ -36,30 +36,38 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Application.EnableEvents = False
-    
     'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 And InStr("FP^REP^F^", Range("I" & Target.row) & "^") <> 0 Then
-            Range("J" & Target.row).formula = "=round((RC[-2]/1.14975)*0.05,2)"
-        Else
-            Range("J" & Target.row).value = "0"
+        If Range("I" & Target.row).value <> 0 Then
+            If InStr("FP^REP^", Range("H" & Target.row) & "^") = 1 Or _
+                InStr("FP^REP^", Range("H" & Target.row) & "^") = 4 Then
+                    Range("J" & Target.row).formula = "=round((RC[-1]/1.14975)*0.05,2)"
+            ElseIf InStr("F^", Range("H" & Target.row) & "^") = 1 Then
+                Range("J" & Target.row).formula = "=round((RC[-1]/1.05)*0.05,2)"
+            Else
+                Range("J" & Target.row).value = "0"
+            End If
         End If
     End If
     
     'Force PST/TVQ calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 And InStr("FP^REP^P^", Range("I" & Target.row) & "^") <> 0 Then
-            Range("K" & Target.row).formula = "=round((RC[-3]/1.14975)*0.09975,2)"
-        Else
-            Range("K" & Target.row).value = "0"
+        If Range("I" & Target.row).value <> 0 Then
+            If InStr("FP^REP^", Range("H" & Target.row) & "^") = 1 Or _
+                InStr("FP^REP^", Range("H" & Target.row) & "^") = 4 Then
+                Range("K" & Target.row).formula = "=round((RC[-2]/1.14975)*0.09975,2)"
+            ElseIf InStr("P^", Range("H" & Target.row) & "^") = 1 Then
+                Range("K" & Target.row).formula = "=round((RC[-2]/1.09975)*0.09975,2)"
+            Else
+                Range("K" & Target.row).value = "0"
+            End If
         End If
     End If
     
     'Credit GST/TPS
     If Not Intersect(Target, Range("L9:L23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 Then
-            Select Case Range("I" & Target.row).value
+        If Range("I" & Target.row).value <> 0 Then
+            Select Case Range("H" & Target.row).value
                 Case "FP"
                     Target.value = Range("J" & Target.row).value
                 Case "REP"
@@ -78,8 +86,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Credit PST/TVQ
     If Not Intersect(Target, Range("M9:M23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 Then
-            Select Case Range("I" & Target.row).value
+        If Range("I" & Target.row).value <> 0 Then
+            Select Case Range("H" & Target.row).value
                 Case "FP"
                     Target.value = Range("K" & Target.row).value
                 Case "REP"
@@ -98,13 +106,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Calculate the NET amount (Expense), but also accept user input
     If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
-        If Range("H" & Target.row).value <> 0 Then
-            Range("N" & Target.row).formula = "=round(RC[-6]-rc[-2]-rc[-1],2)"
+        If Range("I" & Target.row).value <> 0 Then
+            Range("N" & Target.row).formula = "=round(RC[-5]-rc[-2]-rc[-1],2)"
 '        Else
 '            Range("N" & Target.row).value = ""
         End If
     End If
-
-    Application.EnableEvents = True
-
+    
 End Sub
