@@ -169,13 +169,16 @@ Sub Slide_In_All_Menu_Options()
 
 End Sub
 
-Sub HighlightActiveCell()
+Sub MsgBoxInvalidDate() '2024-06-12 @ 18:22
 
-'    'First remove highlight from the previous cell
-'    On Error Resume Next
-'    Cells.Interior.Color = xlNone
-'    'Highlight the new cell
-'    ActiveCell.Interior.Color = vbYellow
+    MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
+           "Elle doit être obligatoirement de format:" & vbNewLine & _
+           "     'jj', " & vbNewLine & _
+           "     'jj-mm' ou " & vbNewLine & _
+           "     'jj-mm-aaaa'" & vbNewLine & vbNewLine & _
+           "Veuillez saisir la date de nouveau SVP", _
+           vbCritical, _
+           "La date saisie est INVALIDE"
 
 End Sub
 

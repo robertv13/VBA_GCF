@@ -1,6 +1,7 @@
 ﻿Option Explicit
 
 Public startTime As Double
+Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
