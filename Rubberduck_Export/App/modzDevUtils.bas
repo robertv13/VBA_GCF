@@ -363,21 +363,6 @@ Sub List_All_Shapes_Properties()
     Next shp
 End Sub
 
-Sub Protect_Unprotect_Worksheet()
-    
-    Dim password As String
-    password = "GCMFPJA"
-
-    'Unprotect the worksheet with the password
-    ActiveSheet.Unprotect password:=password
-
-    'Your code to modify cells goes here
-
-    'Protect the worksheet again with the password
-    ActiveSheet.Protect password:=password
-    
-End Sub
-
 Sub Add_Columns_To_Active_Worksheet()
     Dim colToAdd As Integer
     colToAdd = 5

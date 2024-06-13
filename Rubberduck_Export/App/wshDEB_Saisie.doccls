@@ -1,41 +1,52 @@
 ﻿Option Explicit
 
+Public previousCellAddress As Variant
+
 Private Sub Worksheet_Activate()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshDEB_Saisie:Worksheet_Activate()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Débours_Saisie")
+    
+    'Import all transactions from Master
     Call GL_Trans_Import_All
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+    Application.EnableEvents = False
+    
+    'Hide column A & B
+    With ws
+        .Range("A:B").EntireColumn.Hidden = True
+        .Protect UserInterfaceOnly:=True
+        .EnableCalculation = True
+    End With
+    
     Call DEB_Saisie_Clear_All_Cells
 
-End Sub
+    Application.ScreenUpdating = True
 
-Private Sub Worksheet_Change(ByVal Target As Range)
+    Call Output_Timer_Results("wshDEB_Saisie:Worksheet_Activate()", timerStart)
 
-    'Date has changed
-    If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
-        Dim buildDate As String
-        buildDate = Fn_Build_A_Date(Range("O4").value)
-        If IsDate(buildDate) = True Then
-            Application.EnableEvents = False
-            Range("O4").value = buildDate
-            Application.EnableEvents = True
-        Else
-            Range("O4").Select
-        End If
-    End If
-
-    'Modification de la description du compte et sauvegarde du no de compte
-    If Not Intersect(Target, Range("E9:E23")) Is Nothing Then
-        If wshDEB_Saisie.Range("E" & Target.row).value <> "" Then
-            Application.EnableEvents = False
-            wshDEB_Saisie.Range("Q" & Target.row).value = _
-                Fn_Get_GL_Code_From_GL_Description(wshDEB_Saisie.Range("E" & Target.row).value)
-            Application.EnableEvents = True
-        End If
-    End If
-    
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
+    ActiveSheet.Unprotect
+    
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+    
+    'Highlight the current cell
+    If Not Intersect(Target, Range("O4")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
     'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
         If Range("I" & Target.row).value <> 0 Then
@@ -110,6 +121,48 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Range("N" & Target.row).formula = "=round(RC[-5]-rc[-2]-rc[-1],2)"
 '        Else
 '            Range("N" & Target.row).value = ""
+        End If
+    End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+    
+    ActiveSheet.Protect
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim fullDate As Variant
+    
+    'Date has changed
+    If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
+        'Temporarily disable events to prevent infinite loop
+        Application.EnableEvents = False
+        
+        'Try to convert the input to a complete valid date
+        fullDate = CompleteDate(CStr(Target.text))
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.Clearcontents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
+        End If
+        Application.EnableEvents = True
+    End If
+
+    'Modification de la description du compte et sauvegarde du no de compte
+    If Not Intersect(Target, Range("E9:E23")) Is Nothing Then
+        If wshDEB_Saisie.Range("E" & Target.row).value <> "" Then
+            Application.EnableEvents = False
+            wshDEB_Saisie.Range("Q" & Target.row).value = _
+                Fn_Get_GL_Code_From_GL_Description(wshDEB_Saisie.Range("E" & Target.row).value)
+            Application.EnableEvents = True
         End If
     End If
     

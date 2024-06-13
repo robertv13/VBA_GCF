@@ -1,11 +1,9 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.6.6" '2024-06-06 @ 10:42
+Global Const gAppVersion As String = "v3.6.C" '2024-06-13 @ 06:41
 
 Public userName As String
-
-Public isTab_Order_Activated As Boolean
 
 Public Enum GL_Trans_Data_Columns
     gltFirst = 1
@@ -42,11 +40,7 @@ End Sub
 
 Private Sub auto_open() '2024-03-06 @ 14:36
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
-    
     userName = Environ("Username") '2024-03-27 @ 06:54
-
-    Call Output_Timer_Results("modAppli:auto_open()", timerStart)
 
 End Sub
 
@@ -169,7 +163,7 @@ Sub Slide_In_All_Menu_Options()
 
 End Sub
 
-Sub MsgBoxInvalidDate() '2024-06-12 @ 18:22
+Sub MsgBoxInvalidDate() '2024-06-13 @ 12:40
 
     MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
            "Elle doit être obligatoirement de format:" & vbNewLine & _
@@ -180,6 +174,24 @@ Sub MsgBoxInvalidDate() '2024-06-12 @ 18:22
            vbCritical, _
            "La date saisie est INVALIDE"
 
+End Sub
+
+Sub ProtectWorksheet(ws As Worksheet)
+
+    'Protect the worksheet
+    ws.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True _
+        , AllowFormattingCells:=True, AllowFormattingColumns:=True, AllowFormattingRows:=True _
+        , AllowInsertingColumns:=True, AllowInsertingRows:=True, AllowInsertingHyperlinks:=True _
+        , AllowDeletingColumns:=True, AllowDeletingRows:=True, AllowSorting:=True, AllowFiltering:=True _
+        , AllowUsingPivotTables:=True
+        
+End Sub
+
+Sub UnprotectWorksheet(ws As Worksheet)
+
+    'Unprotect the worksheet
+    ws.Unprotect
+    
 End Sub
 
 Sub TEST_GetOneDrivePath()

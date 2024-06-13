@@ -14,6 +14,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
             MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
+        
         'Check For Mandatory Fields - Date de facture
         If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
@@ -54,6 +55,8 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     'Update TEC_DashBoard
     Call TEC_DB_Update_All '2024-03-21 @ 12:32
+    
+    Call FAC_Brouillon_Clear_All_TEC_Displayed
 
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _

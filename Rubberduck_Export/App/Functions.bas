@@ -156,87 +156,69 @@ Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) A
 
 End Function
 
-Public Function Fn_Build_A_Date(paramDate As String) '2024-03-02 @ 08:04
+Function CompleteDate(dateInput As String) As Variant
+    Dim defaultDay As Integer
+    Dim defaultMonth As Integer
+    Dim defaultYear As Integer
+    Dim dayPart As Integer
+    Dim monthPart As Integer
+    Dim yearPart As Integer
+    Dim parsedDate As Date
+    Dim parts() As String
+    
+    'Catch all errors
+    On Error GoTo InvalidDate
+    
+    'Get the current date components
+    defaultDay = Day(Date)
+    defaultMonth = Month(Date)
+    defaultYear = Year(Date)
+    
+    ' Split the input date into parts, considering different delimiters
+    dateInput = Replace(Replace(Replace(dateInput, "/", "-"), ".", "-"), " ", "")
+    parts = Split(Replace(dateInput, "-01-1900", ""), "-")
+    
+    Select Case UBound(parts)
+        Case -1
+            'Nothing provided
+            dayPart = defaultDay       'Use current day
+            monthPart = defaultMonth   'Use current month
+            yearPart = defaultYear     'Use current year
+        Case 0
+            'Only day provided
+            dayPart = CInt(parts(0))   'Use entered day
+            monthPart = defaultMonth   'Use current month
+            yearPart = defaultYear     'Use current year
+        Case 1
+            'Day and month provided
+            dayPart = CInt(parts(0))   'Use entered day
+            monthPart = CInt(parts(1)) 'Use entered month
+            yearPart = defaultYear     'Use current year
+        Case 2
+            'Day, month, and year provided
+            dayPart = CInt(parts(0))   'Use entered day
+            monthPart = CInt(parts(1)) 'Use entered month
+            yearPart = CInt(parts(2))  'Use entered year
+        Case Else
+            GoTo InvalidDate
+    End Select
+    
+    'Fine validation taking into consideration leap year AND 75 years (past or future)
+    If Fn_ValidateDaySpecificMonth(dayPart, monthPart, yearPart) = False Then
+        GoTo InvalidDate
+    End If
+    
+    'Construct the full date
+    parsedDate = DateSerial(yearPart, monthPart, dayPart)
+    
+    'Return a VALID date
+    CompleteDate = CDate(parsedDate)
+    Exit Function
 
-'    paramDate = Trim(paramDate)
-'
-'    'User can enter / or - for separators
-'    Dim sDateDelimiter As String
-'    sDateDelimiter = "-"
-'    'Make sure that paramDate uses proper delimiter
-'    paramDate = Replace(paramDate, "/", sDateDelimiter)
-'
-'    paramDate = Replace(paramDate, "janv", Format(1, "00"))
-'    paramDate = Replace(paramDate, "févr", Format(2, "00"))
-'    paramDate = Replace(paramDate, "mars", Format(3, "00"))
-'    paramDate = Replace(paramDate, "avr", Format(4, "00"))
-'    paramDate = Replace(paramDate, "mai", Format(5, "00"))
-'    paramDate = Replace(paramDate, "juin", Format(6, "00"))
-'    paramDate = Replace(paramDate, "juil", Format(7, "00"))
-'    paramDate = Replace(paramDate, "août", Format(8, "00"))
-'    paramDate = Replace(paramDate, "sept", Format(9, "00"))
-'    paramDate = Replace(paramDate, "oct", Format(10, "00"))
-'    paramDate = Replace(paramDate, "nov", Format(11, "00"))
-'    paramDate = Replace(paramDate, "déc", Format(12, "00"))
-'
-'    Dim sDate As String, IsValidDate As Boolean
-'    sDate = ""
-'    IsValidDate = False
-'
-'    'Uses today's date as default
-'    Dim d, m, y As Integer
-'    d = Day(Now())
-'    m = Month(Now())
-'    y = Year(Now())
-'
-'    Select Case Len(paramDate)
-'        Case 0                                       'Today's date
-'            sDate = Format(d, "00") & sDateDelimiter & Format(m, "00") & sDateDelimiter & Format(y, "0000")
-'        Case 1, 2                                    'Day only
-'            sDate = Format(paramDate, "00") & sDateDelimiter & Format(m, "00") & sDateDelimiter & Format(y, "0000")
-'        Case 3                                       'd/m only
-'            sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 1), "00") & sDateDelimiter & Format(y, "0000")
-'        Case 4                                       'd/mm or dd/m
-'            If InStr(paramDate, sDateDelimiter) = 2 Then
-'                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 2), "00") & sDateDelimiter & Format(y, "0000")
-'            ElseIf InStr(paramDate, sDateDelimiter) = 3 Then
-'                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 1), "00") & sDateDelimiter & Format(y, "0000")
-'            End If
-'        Case 5                                       'dd/mm
-'            If InStr(paramDate, sDateDelimiter) = 3 Then
-'                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 2), "00") & sDateDelimiter & Format(y, "0000")
-'            End If
-'        Case 8                                       'd/m/yyyy or yy/mm/dd
-'            If Mid(paramDate, 2, 1) = sDateDelimiter And Mid(paramDate, 4, 1) = sDateDelimiter Then
-'                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 5, 4), "0000")
-'            End If
-'            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 6, 1) = sDateDelimiter Then
-'                sDate = Format(Mid(paramDate, 7, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 2), "00") & sDateDelimiter & IIf(Left(paramDate, 2) >= 50, "19", "20") & Format(Left(paramDate, 2), "00")
-'            End If
-'        Case 9                                       'dd/m/yyyy or d/mm/yyyy
-'            If Mid(paramDate, 2, 1) = sDateDelimiter And Mid(paramDate, 5, 1) = sDateDelimiter Then
-'                sDate = Format(Left(paramDate, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 3, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 6, 4), "0000")
-'            End If
-'            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 5, 1) = sDateDelimiter Then
-'                sDate = Format(Left(paramDate, 2), "00") & sDateDelimiter & Format(Mid(paramDate, 4, 1), "00") & sDateDelimiter & Format(Mid(paramDate, 6, 4), "0000")
-'            End If
-'        Case 10                                      'dd/mm/yyyy or yyyy/mm/dd
-'            If Mid(paramDate, 3, 1) = sDateDelimiter And Mid(paramDate, 6, 1) = sDateDelimiter Then
-'                sDate = paramDate
-'            ElseIf Mid(paramDate, 5, 1) = sDateDelimiter And Mid(paramDate, 8, 1) = sDateDelimiter Then
-'                sDate = Mid(paramDate, 9, 2) & sDateDelimiter & Mid(paramDate, 6, 2) & sDateDelimiter & Left(paramDate, 4)
-'            End If
-'        Case Else
-'            sDate = ""
-'    End Select
-'
-'    'Is the 'built' date valid ?
-'    IsValidDate = IsDate(sDate)
-'    If IsValidDate Then
-'        Fn_Build_A_Date = sDate
-'    Else
-'        Fn_Build_A_Date = ""
-'    End If
+InvalidDate:
+
+    CompleteDate = "Invalid Date"
+    
 End Function
 
 Public Function Fn_TEC_Is_Data_Valid() As Boolean

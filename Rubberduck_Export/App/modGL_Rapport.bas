@@ -216,6 +216,23 @@ Sub print_results_From_GL_Trans(compte As String)
     
 End Sub
 
+Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Rapport:GL_Rapport_Clear_All_Cells()")
+    
+    With ws
+        .Range("B3").value = True 'Sort by Date
+        .Range("F4").value = "Dates manuelles"
+        .Range("F6").value = ""
+        .Range("H6").value = ""
+        .Range("F4").Activate
+        .Range("F4").Select
+    End With
+    
+    Call Output_Timer_Results("modGL_Rapport:GL_Rapport_Clear_All_Cells()", timerStart)
+
+End Sub
+
 Sub Set_Up_Report_Headers_And_Columns()
 
     Dim ws As Worksheet

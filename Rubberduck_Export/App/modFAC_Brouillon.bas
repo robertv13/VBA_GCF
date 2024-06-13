@@ -80,18 +80,19 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
     
     With wshFAC_Brouillon
+        ActiveSheet.Unprotect
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("K4").value = ClientName
-        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 5) 'Adresse1
-        If wshBD_Clients.Cells(myInfo(2), 6) <> "" Then
-            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse2
-            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
+        If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
+            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
         Else
-            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("K7").value = ""
         End If
     End With
@@ -99,16 +100,16 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     With wshFAC_Finale
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("B24").value = ClientName
-        .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 5) 'Adresse1
-        If wshBD_Clients.Cells(myInfo(2), 6) <> "" Then
-            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse2
-            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+        .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
+        If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
+            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
         Else
-            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 8) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) 'Ville, Province & Code postal
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("B27").value = ""
         End If
     End With
@@ -129,9 +130,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
 
     Application.EnableEvents = False
     
-    If d = "" Then d = Now()
-    
-    If InStr(1, wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
+    If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
         y = Right(Year(d), 2)
         wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
@@ -188,7 +187,13 @@ Sub FAC_Brouillon_Setup_All_Cells()
 
     Application.EnableEvents = False
     
+    Dim rng As Range
+    
     With wshFAC_Brouillon
+        Set rng = .Range("L11:O45")
+        rng.Clearcontents
+        Call Fill_Or_Empty_Range_Background(rng, False)
+
         .Range("J47:P60").Clearcontents
         
         Call FAC_Brouillon_Set_Labels(.Range("K47"), "FAC_Label_SubTotal_1")
@@ -199,7 +204,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("K57"), "FAC_Label_Deposit")
         Call FAC_Brouillon_Set_Labels(.Range("K59"), "FAC_Label_AmountDue")
         
-        .Range("M47").formula = "=IF(SUM(M11:M45),SOMME(M11:M45),B19)"   'Total hours entered OR TEC selected"
+        .Range("M47").formula = "=IF(SUM(M11:M45),SUM(M11:M45),B19)"   'Total hours entered OR TEC selected"
         .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=M47*N47"                               'Fees sub-total
         .Range("O47").Font.Bold = True
@@ -253,7 +258,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Application.EnableEvents = False
     
     Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Range("D999").End(xlUp).row
+    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row
     If lastRow > 7 Then
         wshFAC_Brouillon.Range("D8:I" & lastRow + 2).Clearcontents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow)

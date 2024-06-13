@@ -5,25 +5,30 @@ Sub Macro1()
 Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 ' Macro1 Macro
+'
 
-    Range("P1:Y1063").Select
-    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.clear
-    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-        "T2:T1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-        xlSortTextAsNumbers
-    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-        "Q2:Q1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-        xlSortNormal
-    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-        "P2:P1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-        xlSortNormal
-    With ActiveWorkbook.Worksheets("GL_Trans").Sort
-        .SetRange Range("P1:Y1063")
-        .Header = xlYes
-        .MatchCase = False
-        .Orientation = xlTopToBottom
-        .SortMethod = xlPinYin
-        .Apply
-    End With
-    ActiveWindow.SmallScroll Down:=524
+'
+    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True
+    Range("O3").Select
+End Sub
+Sub Macro3()
+Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro3 Macro
+'
+
+'
+    ActiveSheet.Unprotect
+    ActiveWindow.SmallScroll Down:=0
+    Range("L11").Select
+    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True
+End Sub
+Sub Macro4()
+Attribute Macro4.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro4 Macro
+'
+
+'
+    ActiveSheet.Unprotect
 End Sub

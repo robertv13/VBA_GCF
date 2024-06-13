@@ -1,13 +1,19 @@
 ﻿Option Explicit
 
 Public dynamicShape As Shape
+Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:Worksheet_Activate()")
 
-    'Set the zoom factor to 92% when this worksheet is activated
-    ActiveWindow.Zoom = 92
+    Application.ScreenUpdating = False
+    
+    'Hide column A & B
+    wshGL_BV.Range("A:B").EntireColumn.Hidden = True
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
     
     wshGL_BV.EnableCalculation = True
     
@@ -28,6 +34,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     
     Application.EnableEvents = True
+    Application.ScreenUpdating = True
     
     Call Output_Timer_Results("wshGL_BV:Worksheet_Activate()", timerStart)
 
@@ -50,8 +57,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Date selected
-    If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And wshGL_BV.Range("J1").value = "" Then
-        wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
+    If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And _
+        wshGL_BV.Range("J1").value = "" Then
+            Target.value = Format(Now(), "dd-mm-yyyy")
     End If
     
     'TB account has been selected
@@ -90,18 +98,25 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-31
 
+    Dim fullDate As Variant
+    
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         Application.EnableEvents = False
-        Dim strDate As String
-        strDate = Fn_Build_A_Date(Range("J1").value)
-        If strDate = "" Then
-            Call Invalid_Date_Message
-            Range("J1").Activate
-            Range("J1").Select
-            GoTo Clean_Exit
+        
+       'Try to convert the input to a complete valid date
+        fullDate = CompleteDate(CStr(Target.text))
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
         Else
-            Range("J1").value = strDate
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+                Target.Clearcontents
+            Application.EnableEvents = True
+                Application.Goto Range(Target.Address)
         End If
+        
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))
         Range("L2").value = ""
         
@@ -119,10 +134,11 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
             Format(Range("B8").value, "dd-mm-yyyy"), _
             Format(Range("B9").value, "dd-mm-yyyy"))
-        
-Clean_Exit:
-        Application.EnableEvents = True
     End If
+    
+Clean_Exit:
+
+        Application.EnableEvents = True
 
 End Sub
 

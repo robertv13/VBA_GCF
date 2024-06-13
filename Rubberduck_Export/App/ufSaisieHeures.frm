@@ -25,31 +25,6 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-'Private Sub cmbProfessionnel_Enter()
-'
-'    MsgBox userName
-'
-'End Sub
-'
-Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:lstboxNomClient_DblClick()")
-    
-    Dim i As Long
-    With Me.lstboxNomClient
-        For i = 0 To .ListCount - 1
-            If .Selected(i) Then
-                Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(Me.txtClient.value)
-                Exit For
-            End If
-        Next i
-    End With
-    
-    Call Output_Timer_Results("ufSaisieHeures:lstboxNomClient_DblClick()", timerStart)
-
-End Sub
-
 Sub UserForm_Activate()
 
     Dim timer3Start As Double: timer3Start = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Activate()")
@@ -83,6 +58,25 @@ Sub UserForm_Activate()
     
     Call Output_Timer_Results("ufSaisieHeures:UserForm_Activate()", timer3Start)
     
+End Sub
+
+Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:lstboxNomClient_DblClick()")
+    
+    Dim i As Long
+    With Me.lstboxNomClient
+        For i = 0 To .ListCount - 1
+            If .Selected(i) Then
+                Me.txtClient.value = .List(i, 0)
+                wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(Me.txtClient.value)
+                Exit For
+            End If
+        Next i
+    End With
+    
+    Call Output_Timer_Results("ufSaisieHeures:lstboxNomClient_DblClick()", timerStart)
+
 End Sub
 
 Private Sub UserForm_Initialize()
@@ -155,13 +149,18 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtDate_BeforeUpdate()")
     
-    Dim strDate As String
-    strDate = Fn_Build_A_Date(Me.txtDate.value) 'Returns a Valid date -OR- Empty string
+    Dim fullDate As Variant
     
-    If strDate = "" Then '2024-03-02 @ 09:36 - RMV_MSGBOX
-    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
-        Title:="Validation de la date", _
-        Buttons:=vbCritical
+    fullDate = CompleteDate(CStr(Me.txtDate.value))
+        
+    'Update the cell with the full date, if valid
+    If fullDate <> "Invalid Date" Then
+        Me.txtDate.value = fullDate
+    Else
+        Call MsgBoxInvalidDate
+        Application.EnableEvents = False
+        Me.txtDate.value = ""
+        Application.EnableEvents = True
         txtDate.SelStart = 0
         txtDate.SelLength = Len(Me.txtDate.value)
         txtDate.SetFocus
@@ -169,9 +168,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Me.txtDate.value = strDate
-    
-    If CDate(strDate) > Format(Now(), "dd-mm-yyyy") Then
+    If CDate(fullDate) > Format(Now(), "dd-mm-yyyy") Then
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)

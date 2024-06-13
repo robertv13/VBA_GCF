@@ -1,12 +1,17 @@
 ﻿Option Explicit
 
+Public previousCellAddress As Variant
+
 Private Sub Worksheet_Activate()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_Rapport:Worksheet_Activate()")
     
+    Application.ScreenUpdating = False
+    
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("GL_Rapport")
     
+    'Setup a listBox
     Dim lb As OLEObject
     Set lb = Me.OLEObjects("ListBox1")
     
@@ -27,16 +32,19 @@ Private Sub Worksheet_Activate()
         End With
     End If
 
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+
     Application.EnableEvents = False
     
+    'Hide column A & B
     With ws
-        .Range("B3").value = True 'Sort by Date
-        .Range("F4").value = "Dates manuelles"
-        .Range("F6").value = ""
-        .Range("H6").value = ""
-        .Range("F4").Activate
-        .Range("F4").Select
+        .Range("A:B").EntireColumn.Hidden = True
+        .Protect UserInterfaceOnly:=True
+        .EnableCalculation = True
     End With
+    
+    Call GL_Rapport_Clear_All_Cells(ws)
     
     Application.EnableEvents = True
     
@@ -46,22 +54,29 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+    
     'From Date has ben selected
-    If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing And _
-                             wshGL_Rapport.Range("F6").value = "" Then
-        wshGL_Rapport.Range("F6").value = Format(Now(), "dd-mm-yyyy")
+    If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing Then
+        Target.Interior.Color = vbYellow
     End If
     
     'To Date has ben selected
-    If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing And _
-                             wshGL_Rapport.Range("H6").value = "" Then
-        wshGL_Rapport.Range("H6").value = Format(Now(), "dd-mm-yyyy")
+    If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing Then
+        Target.Interior.Color = vbYellow
     End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
+    Dim fullDate As Variant
+    
     'Period change
     If Not Intersect(Target, Range("F4")) Is Nothing Then
         Application.EnableEvents = False
@@ -106,34 +121,38 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'From date has changed
     If Not Intersect(Target, Range("F6")) Is Nothing Then
         Application.EnableEvents = False
-        Dim strFromDate As String
-        strFromDate = Fn_Build_A_Date(Range("F6").value)
-        If strFromDate = "" Then
-            Call Invalid_Date_Message
-            Range("F6").Activate
-            Range("F6").Select
-            GoTo Clean_Exit
+        fullDate = CompleteDate(CStr(Target.text))
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
         Else
-            Range("F6").value = CDate(strFromDate)
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.Clearcontents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
         End If
     End If
     
     'To date has changed
     If Not Intersect(Target, Range("H6")) Is Nothing Then
         Application.EnableEvents = False
-        Dim strToDate As String
-        strToDate = Fn_Build_A_Date(Range("H6").value)
-        If strToDate = "" Then
-            Call Invalid_Date_Message
-            Range("H6").Activate
-            Range("H6").Select
-            GoTo Clean_Exit
+        fullDate = CompleteDate(CStr(Target.text))
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
         Else
-            Range("H6").value = CDate(strToDate)
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.Clearcontents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
         End If
     End If
 
 Clean_Exit:
+
         Application.EnableEvents = True
 
 End Sub

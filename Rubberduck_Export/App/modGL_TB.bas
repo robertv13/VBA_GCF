@@ -61,7 +61,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
         If Not dictSolde.Exists(glNo) Then
             dictSolde.add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
-            Debug.Print glNo & "   " & newRowID
+'            Debug.Print glNo & "   " & newRowID
             newRowID = newRowID + 1
         End If
         currRowID = dictSolde(glNo)
@@ -221,18 +221,12 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
             .Range("R" & rowGLDetail).value = wshGL_Trans.Range("W" & foundRow).value
             .Range("S" & rowGLDetail).value = wshGL_BV.Range("S" & rowGLDetail - 1).value + _
                 wshGL_Trans.Range("V" & foundRow).value - wshGL_Trans.Range("W" & foundRow).value
-'            With .Range("S" & rowGLDetail).Font
-'                .Name = "Aptos Narrow"
-'                .Size = 11
-'            End With
             .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).value
             foundRow = foundRow + 1
             rowGLDetail = rowGLDetail + 1
             OK = OK + 1
         Else
             foundRow = foundRow + 1
-'            If d < minDate Then Debug.Print Tab(5); d & " < " & minDate
-'            If d > maxDate Then Debug.Print Tab(5); d & " > " & maxDate
         End If
     Loop
     End With

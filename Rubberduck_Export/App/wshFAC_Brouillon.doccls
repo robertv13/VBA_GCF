@@ -1,12 +1,14 @@
 ﻿Option Explicit
-
-Private previousCellAddress As String
+Public FAC_previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Brouillon:Worksheet_Activate()")
 
     Application.ScreenUpdating = False
+    
+    'Hide column A & B
+    wshFAC_Brouillon.Range("A:B").EntireColumn.Hidden = True
     
     'Set the zoom factor to 93% when this worksheet is activated
     ActiveWindow.Zoom = 93
@@ -18,57 +20,58 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
     
-    Me.Range("E4").Select
+    ActiveSheet.Protect
+    
+    Me.Range("E4").Select 'The first input is the customer name
     
     Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2024-02-22 - Added to control TAB order
-'Establishes tab order for data entry. Hit Enter or Tab keys to jump to the next cell.
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
-    If Not Intersect(Target, Me.Range("E4" & " , " & "O3" & " , " & "L11:O45" & " , " & "L11:M45" & " , " & "M47:N47" & " , " & "M48:M50" & ", " & "O48:O50" & " , " & "O57")) Is Nothing Then
-        Dim tabOrderListOfCells As Variant, X As Variant
-        Dim addr As String
-        Dim rg As Range, targ As Range
-        
-        If isTab_Order_Activated = True Then Exit Sub
-        
-        tabOrderListOfCells = Array("E4", "O3", "L11:M45", "M47:N47", "M48:M50", "O48:O50", "O57") 'These are the CELLS to handle
-        For Each X In tabOrderListOfCells
-            If rg Is Nothing Then
-                Set rg = Range(X)
-            Else
-                Set rg = Union(rg, Range(X))
-            End If
-        Next
-        
-        Set targ = Intersect(rg, Target)
-        Call Fill_Or_Empty_Range_Background(rg, False)
-        rg.Select
-        If targ Is Nothing Then
-            addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
-            X = Application.Match(addr, tabOrderListOfCells, 0)
-            If IsError(X) Then Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
-        Else
-            targ.Activate
-        End If
-        
-        Set rg = Nothing
-        Set targ = Nothing
-        
-    End If
+'    If Not Intersect(Target, Me.Range("E4" & " , " & "O3" & " , " & "L11:O45" & " , " & "L11:M45" & " , " & "M47:N47" & " , " & "M48:M50" & ", " & "O48:O50" & " , " & "O57")) Is Nothing Then
+'        Dim tabOrderListOfCells As Variant, X As Variant
+'        Dim addr As String
+'        Dim rg As Range, targ As Range
+'
+'        If isTab_Order_Activated = True Then Exit Sub
+'
+'        tabOrderListOfCells = Array("E4", "O3", "L11:M45", "M47:N47", "M48:M50", "O48:O50", "O57") 'These are the CELLS to handle
+'        For Each X In tabOrderListOfCells
+'            If rg Is Nothing Then
+'                Set rg = Range(X)
+'            Else
+'                Set rg = Union(rg, Range(X))
+'            End If
+'        Next
+'
+'        Set targ = Intersect(rg, Target)
+'        Call Fill_Or_Empty_Range_Background(rg, False)
+'        rg.Select
+'        If targ Is Nothing Then
+'            addr = Target.Cells(1, 1).Address(ColumnAbsolute:=False, RowAbsolute:=False)
+'            X = Application.Match(addr, tabOrderListOfCells, 0)
+'            If IsError(X) Then Range(tabOrderListOfCells(LBound(tabOrderListOfCells))).Activate
+'        Else
+'            targ.Activate
+'        End If
+'
+'        Set rg = Nothing
+'        Set targ = Nothing
+'
+'    End If
     
-    If previousCellAddress <> "" Then
+    If FAC_previousCellAddress <> "" Then
         'Check if the user moved out of the invoice date cell
-        If previousCellAddress = "$O$3" Then
-            previousCellAddress = ""
+        If FAC_previousCellAddress = "$O$3" Then
+            FAC_previousCellAddress = ""
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         End If
     End If
 
     'Store the address of the currently selected cell for the next check
-    previousCellAddress = Target.Address
+    FAC_previousCellAddress = Target.Address
     
 End Sub
 
@@ -78,6 +81,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Application.EnableEvents = False
     
+    Dim fullDate As Variant
     Dim rng As Range
     
     'Client Name has changed
@@ -85,29 +89,32 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Call FAC_Brouillon_Client_Change(Me.Range("E4").value)
         Set rng = Me.Range("O3")
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
-        GoTo ExitSub
+'        Application.Goto rng
     End If
     
-    'Invoice Date has changed, try to build a valid date
+    'Invoice Date has changed
     If Not Intersect(Target, Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        Dim strDate As String
-        strDate = Fn_Build_A_Date(Range("O3").value)
-        If strDate = "" Then
-            Call Invalid_Date_Message
-            Range("O3").Activate
-            Range("O3").Select
+        fullDate = CompleteDate(CStr(Target.text))
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
         Else
-            Range("O3").value = strDate
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.Clearcontents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
         End If
+       
+        'Future date ?
         If CDate(Range("O3").value) > Format(Now(), "dd-mm-yyyy") Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
-                Range("O3").value = ""
-                Range("O3").Activate
-                Range("O3").Select
+                Application.EnableEvents = False
+                Target.Clearcontents
+                Application.EnableEvents = True
+                Application.Goto Range(Target.Address)
             End If
         End If
-        Application.EnableEvents = True
 
         Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         
@@ -123,9 +130,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         wshFAC_Finale.Range("B" & Target.row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & Target.row).value
         Set rng = wshFAC_Brouillon.Range("L" & Target.row) 'Service
         Call Fill_Or_Empty_Range_Background(rng, False)
-'        If rng.value = "- *" Then
-'            Call FAC_Brouillon_Input_Misc_Description(Target.row, Target.row + 23)
-'        End If
         Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
         Call Fill_Or_Empty_Range_Background(rng, True, 6)
         rng.Select
@@ -146,8 +150,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
         'MAXIMUM of 30 services lines per Invoice
         If Target.row < 40 Then
-            Set rng = wshFAC_Brouillon.Range("L" & Target.row + 2)
-            Debug.Print rng.Address
+            Set rng = wshFAC_Brouillon.Range("L" & Target.row + 1)
             Call Fill_Or_Empty_Range_Background(rng, True, 6)
             wshFAC_Brouillon.Range("L" & Target.row + 2).Select
         Else
