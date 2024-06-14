@@ -91,15 +91,17 @@ Sub wshGL_EJ_Clear_All_Cells()
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
+    ActiveSheet.Unprotect
     With wshGL_EJ
         .Range("F4,F6:K6").Clearcontents
         .Range("E9:G23,H9:H23,I9:I23,J9:L23").Clearcontents
         .ckbRecurrente = False
-    Application.EnableEvents = True
-    wshGL_EJ.Activate
-    wshGL_EJ.Range("F4").Select
+        Application.EnableEvents = True
+        wshGL_EJ.Activate
+        wshGL_EJ.Range("F4").Select
     End With
-
+    ActiveSheet.Protect UserInterfaceOnly:=True
+    
     Call Output_Timer_Results("modGL_JE:wshGL_EJ_Clear_All_Cells()", timerStart)
 
 End Sub

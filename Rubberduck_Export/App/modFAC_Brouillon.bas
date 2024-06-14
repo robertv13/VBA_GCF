@@ -506,19 +506,6 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
 
 End Sub
 
-'TBD - TO BE DELETED EVENTUALLY...
-
-'Sub FAC_Brouillon_Input_Misc_Description(rowBrouillon As Long, rowFinale As Long) - 2024-03-28 @ 14:16
-'
-'    Dim service As String
-'    service = Application.InputBox("", Title:="Description / Commentaire", Type:=2)
-'    wshFAC_Brouillon.Range("L" & rowBrouillon).value = "'- " & service
-'    wshFAC_Finale.Range("B" & rowFinale).value = "'- " & service
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-
 'Sub ExportAllFacInvList() '2024-03-28 @ 14:22
 '    Dim wb As Workbook
 '    Dim wsSource As Worksheet
@@ -562,29 +549,3 @@ End Sub
 'End Sub
 '
 '-----------------------------------------------------------------------------------------------------------
-
-'Sub test_AF_TEC() '2024-03-28 @ 14:55
-'
-'    Dim wb As Workbook
-'    Dim ws As Worksheet
-'    Dim data As Range
-'    Dim cRng As Range
-'    Dim dRng As Range
-'
-'    Set wb = ThisWorkbook
-'    Set ws = wb.Worksheets("TEC_Local")
-'    Set data = ws.Range("A2:P361")
-'    Set cRng = ws.Range("R7:V8")
-'    Set dRng = ws.Range("Y2:AN2")
-'
-'    'Clear prior results (if any)
-'    Dim lastResultRow As Long
-'    lastResultRow = ws.Range("Y999").End(xlUp).row
-'    If lastResultRow > 2 Then ws.Range("Y3:AN" & lastResultRow).clear
-'
-'    data.AdvancedFilter xlFilterCopy, cRng, dRng
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-

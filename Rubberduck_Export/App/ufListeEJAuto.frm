@@ -28,36 +28,9 @@ Private Sub UserForm_Initialize()
         .ColumnWidths = "275; 25"
         .RowSource = "EJ_Auto!K2:L" & lastUsedRow
     End With
-    
-    'Class (clsCListboxAlign) to align column within a lisbox
-'    MyListBoxClass2.Left Me.lsbDescEJAuto, 1
-'    MyListBoxClass2.Right Me.lsbDescEJAuto, 2
-    
+   
 End Sub
 
-'Private Sub UserForm_Activate()
-'
-'    Dim lastUsedRow As Long
-'    lastUsedRow = wshGL_EJ_Recurrente.Range("L999").End(xlUp).row  'Last Row Used in wshGL_EJ_Recurrente (Description Section)
-'
-'    Dim r As Integer
-'    Dim arr() As Variant
-'
-'    ' Resize the array to hold the data
-'    ReDim arr(1 To lastUsedRow - 1, 1 To 2)
-'
-'    On Error Resume Next
-'    For r = 2 To lastUsedRow
-'        'Store values in the array
-'        arr(r - 1, 1) = wshGL_EJ_Recurrente.Range("K" & r).value
-'        arr(r - 1, 2) = Fn_Pad_A_String(wshGL_EJ_Recurrente.Range("L" & r).value, " ", 2, "L")
-'    Next r
-'    On Error GoTo 0
-'
-'    'Assign the entire array to the listbox
-'    ufListeEJAuto.lsbEJ_Auto_Desc.List = arr
-'
-'End Sub
 
 Private Sub lsbEJ_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 

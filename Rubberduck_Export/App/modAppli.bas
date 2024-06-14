@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.6.C" '2024-06-13 @ 06:41
+Global Const gAppVersion As String = "v3.6.D" '2024-06-13 @ 19:17
 
 Public userName As String
 
@@ -174,24 +174,6 @@ Sub MsgBoxInvalidDate() '2024-06-13 @ 12:40
            vbCritical, _
            "La date saisie est INVALIDE"
 
-End Sub
-
-Sub ProtectWorksheet(ws As Worksheet)
-
-    'Protect the worksheet
-    ws.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True _
-        , AllowFormattingCells:=True, AllowFormattingColumns:=True, AllowFormattingRows:=True _
-        , AllowInsertingColumns:=True, AllowInsertingRows:=True, AllowInsertingHyperlinks:=True _
-        , AllowDeletingColumns:=True, AllowDeletingRows:=True, AllowSorting:=True, AllowFiltering:=True _
-        , AllowUsingPivotTables:=True
-        
-End Sub
-
-Sub UnprotectWorksheet(ws As Worksheet)
-
-    'Unprotect the worksheet
-    ws.Unprotect
-    
 End Sub
 
 Sub TEST_GetOneDrivePath()

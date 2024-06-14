@@ -16,7 +16,7 @@ Sub DEB_Saisie_Update()
     rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
-    'Transfert des données vers Débours_Trans, entête d'abord puis une ligne à la fois
+    'Transfert des données vers DEB_Trans, entête d'abord puis une ligne à la fois
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
     Call DEB_Trans_Add_Record_Locally(rowDebSaisie)
     
@@ -139,26 +139,26 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDébours_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshDEB_Trans.Range("A99999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Integer
     For i = 9 To r
-        wshDébours_Trans.Range("A" & rowToBeUsed).value = currentDebTransNo
-        wshDébours_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
-        wshDébours_Trans.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
-        wshDébours_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
-        wshDébours_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
-        wshDébours_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
-        wshDébours_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
-        wshDébours_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
-        wshDébours_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
-        wshDébours_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
-        wshDébours_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
-        wshDébours_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
-        wshDébours_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
-        wshDébours_Trans.Range("N" & rowToBeUsed).value = ""
-        wshDébours_Trans.Range("O" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        wshDEB_Trans.Range("A" & rowToBeUsed).value = currentDebTransNo
+        wshDEB_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
+        wshDEB_Trans.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
+        wshDEB_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
+        wshDEB_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
+        wshDEB_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
+        wshDEB_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
+        wshDEB_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
+        wshDEB_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
+        wshDEB_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
+        wshDEB_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
+        wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
+        wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
+        wshDEB_Trans.Range("N" & rowToBeUsed).value = ""
+        wshDEB_Trans.Range("O" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -246,6 +246,50 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 
+End Sub
+
+Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:Load_DEB_Auto_Into_JE()")
+    
+    'On copie l'écriture automatique vers wshDEB_Saisie
+    Dim rowDEBAuto, rowDEB As Long
+    rowDEBAuto = wshDEB_Recurrent.Range("C99999").End(xlUp).row  'Last Row used in wshDEB_Recuurent
+    
+    Call DEB_Saisie_Clear_All_Cells
+    
+    rowDEB = 9
+    
+    Application.EnableEvents = False
+    Dim r As Long, totAmount As Currency, typeDEB As String
+    For r = 2 To rowDEBAuto
+        If wshDEB_Recurrent.Range("A" & r).value = NoDEBAuto And wshDEB_Recurrent.Range("F" & r).value <> "" Then
+            wshDEB_Saisie.Range("E" & rowDEB).value = wshDEB_Recurrent.Range("G" & r).value
+            wshDEB_Saisie.Range("H" & rowDEB).value = wshDEB_Recurrent.Range("H" & r).value
+            wshDEB_Saisie.Range("I" & rowDEB).value = wshDEB_Recurrent.Range("I" & r).value
+            wshDEB_Saisie.Range("J" & rowDEB).value = wshDEB_Recurrent.Range("J" & r).value
+            wshDEB_Saisie.Range("K" & rowDEB).value = wshDEB_Recurrent.Range("K" & r).value
+            wshDEB_Saisie.Range("L" & rowDEB).value = wshDEB_Recurrent.Range("L" & r).value
+            wshDEB_Saisie.Range("M" & rowDEB).value = wshDEB_Recurrent.Range("M" & r).value
+'            wshDEB_Saisie.Range("N" & rowJE).value = wshDEB_Recurrent.Range("I" & r).value
+            wshDEB_Saisie.Range("Q" & rowDEBAuto).value = wshDEB_Recurrent.Range("F" & r).value
+            totAmount = totAmount + wshDEB_Recurrent.Range("I" & r).value
+            If typeDEB = "" Then
+                typeDEB = wshDEB_Recurrent.Range("C" & r).value
+            End If
+            rowDEB = rowDEB + 1
+        End If
+    Next r
+    wshDEB_Saisie.Range("F4").value = typeDEB
+    wshDEB_Saisie.Range("F6").value = "[Auto]-" & DEBAutoDesc
+    wshDEB_Saisie.Range("O6").value = Format(totAmount, "#,##0.00")
+    wshDEB_Saisie.Range("O4").Select
+    wshDEB_Saisie.Range("O4").Activate
+
+    Application.EnableEvents = True
+
+    Call Output_Timer_Results("modGL_JE:Load_JEAuto_Into_JE()", timerStart)
+    
 End Sub
 
 Sub Save_DEB_Recurrent(ll As Long)
@@ -387,9 +431,9 @@ Sub DEB_Recurrent_Build_Summary()
     lastUsedRow1 = wshDEB_Recurrent.Range("A9999").End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshDEB_Recurrent.Range("N999").End(xlUp).row
+    lastUsedRow2 = wshDEB_Recurrent.Range("O999").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshDEB_Recurrent.Range("N2:P" & lastUsedRow2).Clearcontents
+        wshDEB_Recurrent.Range("O2:Q" & lastUsedRow2).Clearcontents
     End If
     
     With wshDEB_Recurrent
@@ -398,8 +442,8 @@ Sub DEB_Recurrent_Build_Summary()
         For i = 2 To lastUsedRow1
             If .Range("A" & i).value <> oldEntry Then
                 .Range("O" & k).value = "'" & Fn_Pad_A_String(.Range("A" & i).value, " ", 5, "L")
-                .Range("P" & k).value = .Range("B6").value
-                .Range("Q" & k).value = .Range("D6").value
+                .Range("P" & k).value = .Range("D" & i).value
+                .Range("Q" & k).value = .Range("B" & i).value
                 oldEntry = .Range("A" & i).value
                 k = k + 1
             End If

@@ -20,7 +20,7 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
     
-    ActiveSheet.Protect
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
     Me.Range("E4").Select 'The first input is the customer name
     

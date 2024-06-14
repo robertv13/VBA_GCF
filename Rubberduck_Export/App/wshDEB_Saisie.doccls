@@ -9,7 +9,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Débours_Saisie")
+    Set ws = ThisWorkbook.Sheets("DEB_Saisie")
     
     'Import all transactions from Master
     Call GL_Trans_Import_All
@@ -21,9 +21,10 @@ Private Sub Worksheet_Activate()
     
     'Hide column A & B
     With ws
+        .Unprotect
         .Range("A:B").EntireColumn.Hidden = True
-        .Protect UserInterfaceOnly:=True
         .EnableCalculation = True
+        .Protect UserInterfaceOnly:=True
     End With
     
     Call DEB_Saisie_Clear_All_Cells
@@ -36,18 +37,58 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    ActiveSheet.Unprotect
-    
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = xlNone
     End If
     
-    'Highlight the current cell
+    'Type is selected
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
+    'Date is selected
     If Not Intersect(Target, Range("O4")) Is Nothing Then
         Target.Interior.Color = vbYellow
     End If
     
-    'Force GST/TPS calculation with a formula, but also accept user input
+    'Description is selected
+    If Not Intersect(Target, Range("$F$6:$K$6")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
+    'Reference is selected
+    If Not Intersect(Target, Range("M6")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
+    'Total Amount is selected
+    If Not Intersect(Target, Range("O6")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
+    'Account is selected
+    If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
+        Target.Interior.Color = vbYellow
+    End If
+    
+    'Tax code is selected (FP is the default)
+    If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
+        Application.EnableEvents = False
+        Target.value = "FP"
+        Application.EnableEvents = True
+    End If
+    
+     'Amount is selected (Amount to distribute by default)
+    If Not Intersect(Target, Range("I9:I23")) Is Nothing Then
+        If Target.value = "" Then
+            Application.EnableEvents = False
+            Target.value = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
+            Target.Interior.Color = vbYellow
+            Application.EnableEvents = True
+        End If
+    End If
+   
+   'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
         If Range("I" & Target.row).value <> 0 Then
             If InStr("FP^REP^", Range("H" & Target.row) & "^") = 1 Or _
@@ -127,13 +168,29 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Save the current cell Address
     previousCellAddress = Target.Address
     
-    ActiveSheet.Protect
-
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim fullDate As Variant
+    
+    'Si la cellule TYPE change, alors on vérifie si l'on essaie _
+    '                          d'appeler une transaction récurrente
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        If Target.CountLarge > 1 Then Exit Sub
+        Application.EnableEvents = False
+        If UCase(Trim(Range("F4").value)) = "AUTO" Then
+            wshDEB_Saisie.Range("B3").value = -1
+            ufListeDEBAuto.show
+            If wshDEB_Saisie.Range("B3").value >= 0 Then
+                wshDEB_Saisie.Range("O4").Activate
+                wshDEB_Saisie.Range("O4").Select
+            Else
+                Call DEB_Saisie_Clear_All_Cells
+            End If
+        End If
+        Application.EnableEvents = True
+    End If
     
     'Date has changed
     If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
