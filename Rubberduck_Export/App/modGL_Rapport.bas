@@ -179,16 +179,16 @@ Sub print_results_From_GL_Trans(compte As String)
     'Read thru the array
     Dim i As Long, sumDT As Currency, sumCT As Currency
     For i = LBound(rngSource, 1) To UBound(rngSource, 1)
-        ws.Cells(lastRowUsed_AB, 2) = rngSource(i, gltDate)
-        ws.Cells(lastRowUsed_AB, 3) = rngSource(i, gltDescr)
-        ws.Cells(lastRowUsed_AB, 4) = rngSource(i, gltSource)
-        ws.Cells(lastRowUsed_AB, 5) = rngSource(i, gltEntryNo)
-        ws.Cells(lastRowUsed_AB, 6) = rngSource(i, gltdt)
-        ws.Cells(lastRowUsed_AB, 7) = rngSource(i, gltct)
-        ws.Cells(lastRowUsed_AB, 8) = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
-        solde = solde + CCur(rngSource(i, gltdt)) - CCur(rngSource(i, gltct))
-        sumDT = sumDT + rngSource(i, gltdt)
-        sumCT = sumCT + rngSource(i, gltct)
+        ws.Cells(lastRowUsed_AB, 2) = rngSource(i, fgltDate)
+        ws.Cells(lastRowUsed_AB, 3) = rngSource(i, fgltDescr)
+        ws.Cells(lastRowUsed_AB, 4) = rngSource(i, fgltSource)
+        ws.Cells(lastRowUsed_AB, 5) = rngSource(i, fgltEntryNo)
+        ws.Cells(lastRowUsed_AB, 6) = rngSource(i, fgltdt)
+        ws.Cells(lastRowUsed_AB, 7) = rngSource(i, fgltct)
+        ws.Cells(lastRowUsed_AB, 8) = solde + CCur(rngSource(i, fgltdt)) - CCur(rngSource(i, fgltct))
+        solde = solde + CCur(rngSource(i, fgltdt)) - CCur(rngSource(i, fgltct))
+        sumDT = sumDT + rngSource(i, fgltdt)
+        sumCT = sumCT + rngSource(i, fgltct)
         lastRowUsed_AB = lastRowUsed_AB + 1
     Next i
     

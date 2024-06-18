@@ -10,7 +10,7 @@ Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Highlight the current cell
     If Not Intersect(Target, Range("B2")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Save the current cell Address

@@ -20,43 +20,40 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
-        
-        'Valid Invoice - Let's update it ******************************************
-        
-        Call FAC_Finale_Disable_Save_Button
-    
-        Call FAC_Finale_Add_Invoice_Header_to_DB
-        Call FAC_Finale_Add_Invoice_Header_Locally
-        
-        Call FAC_Finale_Add_Invoice_Details_to_DB
-        Call FAC_Finale_Add_Invoice_Details_Locally
-        
-        Call FAC_Finale_Add_Comptes_Clients_to_DB
-        Call FAC_Finale_Add_Comptes_Clients_Locally
-        
-        Dim lastResultRow As Integer
-        lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
-        
-        If lastResultRow > 2 Then
-            Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
-            Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
-        End If
-        
-        'Save Invoice total amount
-        Dim invoice_Total As Currency
-        invoice_Total = wshFAC_Brouillon.Range("O51").value
-        
-        Call FAC_Brouillon_Clear_All_TEC_Displayed
-        
     End With
+        
+    'Valid Invoice - Let's update it ******************************************
     
+    Call FAC_Finale_Disable_Save_Button
+
+    Call FAC_Finale_Add_Invoice_Header_to_DB
+    Call FAC_Finale_Add_Invoice_Header_Locally
+    
+    Call FAC_Finale_Add_Invoice_Details_to_DB
+    Call FAC_Finale_Add_Invoice_Details_Locally
+    
+    Call FAC_Finale_Add_Comptes_Clients_to_DB
+    Call FAC_Finale_Add_Comptes_Clients_Locally
+    
+    Dim lastResultRow As Integer
+    lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
+        
+    If lastResultRow > 2 Then
+        Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
+        Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
+    End If
+        
+'    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    
+    'Save Invoice total amount
+    Dim invoice_Total As Currency
+    invoice_Total = wshFAC_Brouillon.Range("O51").value
+        
     'GL stuff
     Call FAC_Finale_GL_Posting_Preparation
     
     'Update TEC_DashBoard
     Call TEC_DB_Update_All '2024-03-21 @ 12:32
-    
-    Call FAC_Brouillon_Clear_All_TEC_Displayed
 
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
@@ -425,7 +422,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = True
             rs.Fields("DateFacturee").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-            rs.Fields("VersionApp").value = gAppVersion
+            rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
         Else
@@ -469,13 +466,13 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     Dim r As Integer, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
         If wshTEC_Local.Range("BD" & r).value = False And _
-            wshFAC_Brouillon.Range("C" & r + 5) = True Then
+                wshFAC_Brouillon.Range("C" & r + 4) = True Then
             TECID = wshTEC_Local.Range("AT" & r).value
             rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
-            wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
+'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = True
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Now()
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
     Next r
@@ -636,6 +633,7 @@ Sub FAC_Finale_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("B79"), "FAC_Label_Deposit")
         Call FAC_Brouillon_Set_Labels(.Range("B81"), "FAC_Label_AmountDue")
 
+        'Establish formulas
         .Range("E69").formula = "=C66*D66"                           'Fees Sub-Total
         
         .Range("B70").value = "='" & wshFAC_Brouillon.name & "'!M48" 'Misc. Amount # 1 - Description
@@ -894,12 +892,12 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     Dim montant As Double
     Dim dateFact As Date
     Dim descGL_Trans As String, source As String
-    Dim GLTransNo As Long
+    Dim GL_TransNo As Long
     
     dateFact = wshFAC_Brouillon.Range("O3").value
     descGL_Trans = wshFAC_Brouillon.Range("E4").value
     source = "FACT-" & wshFAC_Brouillon.Range("O6").value
-    GLTransNo = wshFAC_Brouillon.Range("B41").value
+    GL_TransNo = wshFAC_Brouillon.Range("B41").value
     
     Dim myArray(1 To 8, 1 To 4) As String
     
@@ -976,7 +974,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     End If
     
     Call GL_Posting_To_DB(dateFact, descGL_Trans, source, myArray)
-    Call GL_Posting_Locally(dateFact, descGL_Trans, source, GLTransNo, myArray)
+    Call GL_Posting_Locally(dateFact, descGL_Trans, source, GL_TransNo, myArray)
     
     Call Output_Timer_Results("modFAC_Finale:modFAC_Finale()", timerStart)
 

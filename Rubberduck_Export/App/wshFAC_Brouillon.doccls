@@ -1,6 +1,5 @@
 ﻿Option Explicit
 
-'Public FAC_previousCellAddress As Variant
 Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
@@ -13,13 +12,15 @@ Private Sub Worksheet_Activate()
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
     
-   'Hide column A & B
-    With ws
-        .Unprotect
-        .Range("A:B").EntireColumn.Hidden = True
-    End With
+    ws.Unprotect
+
+'   'Hide column A & B
+'    With ws
+'        .Unprotect
+'        .Range("A:B").EntireColumn.Hidden = True
+'    End With
     
-    ws.Range("Q1").value = "Last activated on: " & Format(Now, "dd-mm-yyyy @ hh:mm:ss")
+    ws.Range("Q1").value = "Worksheet_Activate(): " & Format(Now, "dd-mm-yyyy @ hh:mm:ss")
         
     'Anything to import from Master workbook?
     
@@ -30,12 +31,12 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    Application.EnableEvents = False
-    Me.Range("E3").Activate 'The first input is the customer name
-    Me.Range("E3").Select
+    Call FAC_Brouillon_New_Invoice
     
-    Application.EnableEvents = True
     Application.ScreenUpdating = True
+    
+    Me.Range("E3").Activate 'The first input is the customer name
+    Application.EnableEvents = True
 
     Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
 
@@ -44,41 +45,44 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+        Range(previousCellAddress).Interior.Color = interior_color_current_cell
     End If
     
+    'Save the current cell address and color, before changing it
+    With Target
+        previousCellAddress = .Address
+        interior_color_current_cell = .Interior.Color
+    End With
+
     'Client has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Date has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Service description has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Hours has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("M11:M45")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Total hours has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("M47")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Rate has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("N47")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
-    
-    'Save the current cell Address
-    previousCellAddress = Target.Address
 
 End Sub
 
@@ -103,6 +107,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
+            Application.Goto wshFAC_Brouillon.Range("L11")
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
@@ -123,38 +128,29 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
         Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         
-        Set rng = wshFAC_Brouillon.Range("O3")
-        Call Fill_Or_Empty_Range_Background(rng, False)
         Set rng = wshFAC_Brouillon.Range("L11")
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         GoTo ExitSub
     End If
     
     'Services entry
     If Not Intersect(Target, Range("L11:L40")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFAC_Finale.Range("B" & Target.row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & Target.row).value
-        Set rng = wshFAC_Brouillon.Range("L" & Target.row) 'Service
-        Call Fill_Or_Empty_Range_Background(rng, False)
         Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         rng.Select
         GoTo ExitSub
     End If
   
     'Hours per service
-    If Not Intersect(Target, Range("M11:M40")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+    If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFAC_Brouillon.Range("N" & Target.row).value = wshAdmin.Range("TauxHoraireFacturation")
         wshFAC_Brouillon.Range("O" & Target.row).value = wshFAC_Brouillon.Range("M" & Target.row).value * wshFAC_Brouillon.Range("N" & Target.row).value
-        Set rng = wshFAC_Brouillon.Range("L" & Target.row)
-        Call Fill_Or_Empty_Range_Background(rng, False)
         Set rng = wshFAC_Brouillon.Range("M" & Target.row)
-        Call Fill_Or_Empty_Range_Background(rng, True, 6)
         wshFAC_Finale.Range("C" & Target.row + 23).value = wshFAC_Brouillon.Range("M" & Target.row).value
         wshFAC_Finale.Range("D" & Target.row + 23).value = wshFAC_Brouillon.Range("N" & Target.row).value
         wshFAC_Finale.Range("E" & Target.row + 23).value = wshFAC_Brouillon.Range("O" & Target.row).value
 
         'MAXIMUM of 30 services lines per Invoice
-        If Target.row < 40 Then
+        If Target.row < NB_MAX_LIGNE_FAC + 11 Then
             wshFAC_Brouillon.Range("L" & Target.row + 1).Select
         Else
             Set rng = wshFAC_Brouillon.Range("M47")

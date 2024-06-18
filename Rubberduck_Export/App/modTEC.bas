@@ -256,7 +256,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstDetruit").value = True
-            rs.Fields("VersionApp").value = gAppVersion
+            rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.update
         Else
             'Handle the case where the specified ID is not found
@@ -310,7 +310,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("EstFacturee").value = False
             rs.Fields("DateFacturee").value = Null
             rs.Fields("EstDetruit").value = False
-            rs.Fields("VersionApp").value = gAppVersion
+            rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.Fields("NoFacture").value = ""
         Else 'Update an existing record
             'Open the recordset for the specified ID
@@ -324,7 +324,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
                 rs.Fields("DateSaisie").value = Now
-                rs.Fields("VersionApp").value = gAppVersion
+                rs.Fields("VersionApp").value = APP_VERSION_NO
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", vbExclamation
@@ -384,7 +384,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("L" & nextRowNumber).value = False
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = False
-            .Range("O" & nextRowNumber).value = gAppVersion
+            .Range("O" & nextRowNumber).value = APP_VERSION_NO
             .Range("P" & nextRowNumber).value = ""
         End With
     Else
@@ -412,13 +412,13 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("L" & rowToBeUpdated).value = False
                 .Range("M" & rowToBeUpdated).value = ""
                 .Range("N" & rowToBeUpdated).value = False
-                .Range("O" & rowToBeUpdated).value = gAppVersion
+                .Range("O" & rowToBeUpdated).value = APP_VERSION_NO
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
             wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
             wshTEC_Local.Range("N" & rowToBeUpdated).value = True
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = gAppVersion
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
         End If
     End If
     

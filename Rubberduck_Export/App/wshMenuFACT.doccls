@@ -40,8 +40,8 @@ Sub PreparationFacture_Click()
     Application.EnableEvents = True
     
     wshFAC_Brouillon.Visible = xlSheetVisible
-    wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
+    wshFAC_Finale.Visible = xlSheetVisible
     
     Me.Application.Calculation = xlCalculationAutomatic
     

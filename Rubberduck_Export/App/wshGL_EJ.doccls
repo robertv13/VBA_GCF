@@ -48,37 +48,37 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Source has been selected
     If Not Intersect(Target, wshGL_EJ.Range("F4")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Date has been selected
     If Not Intersect(Target, wshGL_EJ.Range("K4")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Description has been selected
     If Not Intersect(Target, wshGL_EJ.Range("F6")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Compte has been selected
     If Not Intersect(Target, wshGL_EJ.Range("E9:E23")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Debit amount has been selected
     If Not Intersect(Target, wshGL_EJ.Range("H9:H23")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Credit amount has been selected
     If Not Intersect(Target, wshGL_EJ.Range("I9:I23")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Extra description has been selected
     If Not Intersect(Target, wshGL_EJ.Range("J9:J23")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Save the current cell Address
@@ -187,7 +187,7 @@ End Sub
 Private Sub ckbRecurrente_Click()
 
     If ckbRecurrente.value = True Then
-        ckbRecurrente.BackColor = HighlightColor
+        ckbRecurrente.BackColor = HIGHLIGHT_COLOR
     Else
         ckbRecurrente.BackColor = RGB(217, 217, 217)
     End If

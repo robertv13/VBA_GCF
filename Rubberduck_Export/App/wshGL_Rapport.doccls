@@ -60,12 +60,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'From Date has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'To Date has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing Then
-        Target.Interior.Color = HighlightColor
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Save the current cell Address

@@ -14,7 +14,6 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         With wshFAC_Brouillon
             .Range("B24").value = True
             .Range("K3:L7,O3,O5").Clearcontents 'Clear cells for a new Invoice
-'            .Range("J11:Q45").Clearcontents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
             
@@ -24,7 +23,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B20").value = ""
             .Range("B24").value = False
             .Range("B26").value = False
-            .Range("B27").value = True 'Set the value to TRUE
+            .Range("B27").value = True
             Application.EnableEvents = True
         End With
         
@@ -44,23 +43,17 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
-        'Move on to Client Name
-        wshFAC_Brouillon.Range("E3:F3").Clearcontents
-'        With wshFAC_Brouillon.Range("E3:F3").Interior
-'            .Pattern = xlSolid
-'            .PatternColorIndex = xlAutomatic
-'            .Color = 65535
-'            .TintAndShade = 0
-'            .PatternTintAndShade = 0
-'        End With
+        'Save button is disabled UNTIL the invoice is saved
+        Call FAC_Finale_Disable_Save_Button
+    
+        'Move to Client Name
+        Application.EnableEvents = False
         wshFAC_Brouillon.Select
         wshFAC_Brouillon.Range("E3").value = ""
         wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
+        Application.EnableEvents = False
     End If
 
-    'Save button is disabled UNTIL the invoice is saved
-    Call FAC_Finale_Disable_Save_Button
-    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
@@ -156,11 +149,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     
     Dim rng As Range
-    Set rng = wshFAC_Brouillon.Range("O3")
-    Call Fill_Or_Empty_Range_Background(rng, False)
-    
     Set rng = wshFAC_Brouillon.Range("L11")
-'    Call Fill_Or_Empty_Range_Background(rng, True, 6)
 
     On Error Resume Next
     wshFAC_Brouillon.Range("L11").Select 'Move on to Services Entry
@@ -193,13 +182,8 @@ Sub FAC_Brouillon_Setup_All_Cells()
 
     Application.EnableEvents = False
     
-    Dim rng As Range
-    
     With wshFAC_Brouillon
-        Set rng = .Range("L11:O45")
-        rng.Clearcontents
-'        Call Fill_Or_Empty_Range_Background(rng, False)
-
+        .Range("L11:O45").Clearcontents
         .Range("J47:P60").Clearcontents
         
         Call FAC_Brouillon_Set_Labels(.Range("K47"), "FAC_Label_SubTotal_1")
@@ -210,6 +194,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("K57"), "FAC_Label_Deposit")
         Call FAC_Brouillon_Set_Labels(.Range("K59"), "FAC_Label_AmountDue")
         
+        'Establish Formulas
         .Range("M47").formula = "=IF(SUM(M11:M45),SUM(M11:M45),B19)"   'Total hours entered OR TEC selected"
         .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=M47*N47"                               'Fees sub-total
@@ -264,10 +249,10 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Application.EnableEvents = False
     
     Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row
+    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
     If lastRow > 6 Then
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).Clearcontents
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow)
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
 
     Application.EnableEvents = True
@@ -402,11 +387,13 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
         
+        Application.EnableEvents = False
         .Range("G" & lastUsedRow + 2).value = totalHres
+        Application.EnableEvents = False
         .Range("G7:G" & lastUsedRow + 2).NumberFormat = "##0.00"
     End With
         
-    Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow)
+    Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow) 'Exclude totals row
 
     Application.ScreenUpdating = True
 
@@ -437,6 +424,8 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
    
+    wshFAC_Brouillon.Range("B27").value = False
+    
     wshMenuFACT.Activate
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
@@ -453,7 +442,15 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     
     Application.EnableEvents = False
     
-    Dim chkBoxRange As Range: Set chkBoxRange = wshFAC_Brouillon.Range("C7:C" & row)
+    Dim ws As Worksheet
+    Set ws = wshFAC_Brouillon
+    
+    'Unprotect the worksheet in order to be able to Unlock the cells associated with checkboxes
+    On Error Resume Next
+    ws.Unprotect
+    On Error GoTo 0
+    
+    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("C7:C" & row)
     
     Dim cell As Range
     Dim cbx As CheckBox
@@ -469,24 +466,17 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
             .LinkedCell = cell.Address
             .Display3DShading = True
         End With
+        ws.Range("C" & cell.row).Locked = False
     End If
     Next cell
-    
-    'Add a MASTER checkbox
-'    chkBoxRange = wshFAC_Brouillon.Range("C6")
-'    Dim cbxMaster As CheckBox
-'    For Each cell In chkBoxRange
-'        'Add a checkbox in the cell
-'        Set cbxMaster = cell.Parent.CheckBoxes.add(cell.Left, cell.Top, cell.width, cell.Height)
-'        With cbxMaster
-'            .name = "check_uncheck_all_checkBoxes"
-'            .value = False
-'            .text = ""  'Remove the default text (if any)
-'            .LinkedCell = cell.Address  'Link checkbox status to the cell
-'        End With
-'    Next cell
 
-    With wshFAC_Brouillon
+    'Unlock the checkbox to view Billed charges
+    ws.Range("B16").Locked = False
+    
+    'Protect the worksheet
+    ws.Protect UserInterfaceOnly:=True
+     
+    With ws
         .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"
         .Range("D7:D" & row).Font.Bold = False
         
@@ -520,9 +510,26 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
         End If
     Next cbx
     
+    'Unprotect the worksheet AND Lock the cells associated with checkbox
+    Dim ws As Worksheet
+    Set ws = wshFAC_Brouillon
+    
+    On Error Resume Next
+    ws.Unprotect
+    On Error GoTo 0
+    
+    'Lock the range
+    ws.Range("C7:C" & row).Locked = True
+    
+    'Protect the worksheet
+    ws.Protect UserInterfaceOnly:=True
+    
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
-    wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the total formula
-    wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the total formula
+    wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula
+    wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the Grand total formula
+    
+    'Unprotect the worksheet to LOCK the cells that were associated with checkbox
+    
 
     Application.EnableEvents = True
 

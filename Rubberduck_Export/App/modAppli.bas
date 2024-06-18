@@ -1,26 +1,79 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Global Const gAppVersion As String = "v3.6.D" '2024-06-13 @ 19:17
+Public Const APP_VERSION_NO As String = "v3.7.1" '2024-06-18 @ 09:28
+Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
+Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
+Public interior_color_current_cell As Long
 Public userName As String
 
-'Define the HighlihgtColor for the entire application
-Global Const HighlightColor As String = &HCCFFCC 'Light green (Pastel Green)
+'Using Enum to specify the column number of worksheets (data)
+Public Enum DEB_Trans_data_Columns
+    fdebtFirst = 1
+    fdebtNo_Entrée = fdebtFirst
+    fdebtDate
+    fdebtType
+    fdebtBeneficiaire
+    fdebtReference
+    fdebtNo_Compte
+    fdebtCodeTaxe
+    fdebtTOTAL
+    fdebtTPS
+    fdebtTVQ
+    fdebtCrédit_TPS
+    fdebtCrédit_TVQ
+    fdebtAutreRemarque
+    fdebtTimeStamp
+    fdebtLast = fdebtTimeStamp
+End Enum
+
+Public Enum GL_EJ_Auto_Data_Columns
+    fglejaFirst = 1
+    fglejaNo_EJA = fglejaFirst
+    fglejaDescription
+    fglejaNo_Compte
+    fglejaCompte
+    fglejaDébit
+    fglejaCrédit
+    fglejaAutreRemarque
+    fglejaLast = fglejaAutreRemarque
+End Enum
 
 Public Enum GL_Trans_Data_Columns
-    gltFirst = 1
-    gltEntryNo = gltFirst
-    gltDate
-    gltDescr
-    gltSource
-    gltGLNo
-    gltCompte
-    gltdt
-    gltct
-    gltRem
-    gltTStamp
-    gltLast = gltTStamp
+    fgltFirst = 1
+    fgltEntryNo = fgltFirst
+    fgltDate
+    fgltDescr
+    fgltSource
+    fgltGLNo
+    fgltCompte
+    fgltdt
+    fgltct
+    fgltRem
+    fgltTStamp
+    fgltLast = fgltTStamp
+End Enum
+
+Public Enum TEC_Data_Columns
+    ftecFirst = 1
+    ftec_ID = ftecFirst
+    ftecProf_ID
+    ftecProf
+    ftecDate
+    ftecClient_ID
+    ftecClientNom
+    ftecDescription
+    ftecHeures
+    ftecCommentaireNote
+    ftecEstFacturable
+    ftecDateSaisie
+    ftecEstFacturee
+    ftecDateFacturee
+    ftecEstDetruit
+    ftecVersionApp
+    ftecNoFacture
+    ftecLast = ftecNoFacture
 End Enum
 
 Sub BackToMainMenu()
@@ -93,16 +146,16 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone)
-    If fill Then
-        If IsMissing(colorIndex) Or colorIndex = xlNone Then
-            rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
-        Else
-            rng.Interior.colorIndex = colorIndex ' Fill with specified color
-        End If
-    Else
-        rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
-    End If
+Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone) 'TBD ??
+'    If fill Then
+'        If IsMissing(colorIndex) Or colorIndex = xlNone Then
+'            rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+'        Else
+'            rng.Interior.colorIndex = colorIndex ' Fill with specified color
+'        End If
+'    Else
+'        rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
+'    End If
 End Sub
 
 Sub Tab_Order_Toggle_Mode()
@@ -202,7 +255,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     Dim sortedCells As Range
     Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
-    Debug.Print ws.name & " - " & sortedCells.Address & " - " & sortedCells.count & " - " & Format(Now(), "dd-mm-yyyy hh:mm:ss")
+    Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd-mm-yyyy hh:mm:ss")
 
     'Enable TAB through unprotected cells
     Application.EnableEvents = False
@@ -215,6 +268,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
             sortedCells.Cells(i + 1).Activate
         End If
     Next i
+    
     Application.EnableEvents = True
 
     Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)

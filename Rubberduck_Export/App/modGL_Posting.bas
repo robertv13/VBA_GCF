@@ -78,7 +78,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df, desc, source, GLTransNo, arr As Variant) 'Write records locally
+Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Posting:GL_Posting_Locally()")
     
@@ -93,7 +93,7 @@ Sub GL_Posting_Locally(df, desc, source, GLTransNo, arr As Variant) 'Write recor
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = GLTransNo
+                .Range("A" & rowToBeUsed).value = GL_TransNo
                 .Range("B" & rowToBeUsed).value = CDate(df)
                 .Range("C" & rowToBeUsed).value = desc
                 .Range("D" & rowToBeUsed).value = source

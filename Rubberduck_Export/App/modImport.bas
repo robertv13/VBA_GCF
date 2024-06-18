@@ -175,7 +175,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     'Clear all cells, but the headers, in the target worksheet
     wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).Clearcontents
 
-    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
@@ -314,7 +314,7 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     'Clear all cells, but the headers, in the target worksheet
     wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
 
-    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx"
@@ -360,7 +360,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     'Clear all cells, but the headers, in the target worksheet
     wshFAC_Détails.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
 
-    'Import GLTrans from 'GCF_DB_Sortie.xlsx'
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx"

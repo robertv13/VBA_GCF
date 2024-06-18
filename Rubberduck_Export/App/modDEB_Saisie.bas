@@ -174,7 +174,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
     Dim montant As Double, dateDebours As Date
     Dim descGL_Trans As String, source As String, deboursType As String
-    Dim GLTransNo As Long
+    Dim GL_TransNo As Long
     
     dateDebours = wshDEB_Saisie.Range("O4").value
     deboursType = wshDEB_Saisie.Range("F4").value
@@ -241,8 +241,8 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Next l
     
     Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, myArray)
-    GLTransNo = wshAdmin.Range("B9").value
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GLTransNo, myArray)
+    GL_TransNo = wshAdmin.Range("B9").value
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GL_TransNo, myArray)
     
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 
