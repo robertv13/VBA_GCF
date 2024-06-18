@@ -36,13 +36,14 @@ Sub PreparationFacture_Click()
     Call FAC_Comptes_Clients_Import_All
     Call GL_Trans_Import_All
 
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
     
     Me.Application.Calculation = xlCalculationAutomatic
-    
-    Application.ScreenUpdating = True
     
     Call Output_Timer_Results("wshMenuFact:PreparationFacture_Click()", timerStart)
     

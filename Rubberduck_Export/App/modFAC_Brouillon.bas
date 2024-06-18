@@ -14,23 +14,27 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         With wshFAC_Brouillon
             .Range("B24").value = True
             .Range("K3:L7,O3,O5").Clearcontents 'Clear cells for a new Invoice
-            .Range("J8:Q46").Clearcontents
+'            .Range("J11:Q45").Clearcontents
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
             
             Call FAC_Brouillon_Setup_All_Cells
             
+            Application.EnableEvents = False
             .Range("B20").value = ""
             .Range("B24").value = False
             .Range("B26").value = False
             .Range("B27").value = True 'Set the value to TRUE
+            Application.EnableEvents = True
         End With
         
         With wshFAC_Finale
+            Application.EnableEvents = False
             .Range("B21,B23:C27,E28").Clearcontents
             .Range("A34:F68").Clearcontents
             .Range("E28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
             .Range("B69:F81").Clearcontents 'NOT the formulas
+            Application.EnableEvents = True
             
             Call FAC_Finale_Setup_All_Cells
         
@@ -40,17 +44,18 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
-        'Move on to CLient Name
-        wshFAC_Brouillon.Range("E4:F4").Clearcontents
-        With wshFAC_Brouillon.Range("E4:F4").Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .Color = 65535
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
+        'Move on to Client Name
+        wshFAC_Brouillon.Range("E3:F3").Clearcontents
+'        With wshFAC_Brouillon.Range("E3:F3").Interior
+'            .Pattern = xlSolid
+'            .PatternColorIndex = xlAutomatic
+'            .Color = 65535
+'            .TintAndShade = 0
+'            .PatternTintAndShade = 0
+'        End With
         wshFAC_Brouillon.Select
-        wshFAC_Brouillon.Range("E4").Select 'Start inputing values for a NEW invoice
+        wshFAC_Brouillon.Range("E3").value = ""
+        wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
     End If
 
     'Save button is disabled UNTIL the invoice is saved
@@ -77,10 +82,11 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
         GoTo Clean_Exit
     End If
         
+    ActiveSheet.Unprotect
+    
     wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
     
     With wshFAC_Brouillon
-        ActiveSheet.Unprotect
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("K4").value = ClientName
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
@@ -192,7 +198,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     With wshFAC_Brouillon
         Set rng = .Range("L11:O45")
         rng.Clearcontents
-        Call Fill_Or_Empty_Range_Background(rng, False)
+'        Call Fill_Or_Empty_Range_Background(rng, False)
 
         .Range("J47:P60").Clearcontents
         
@@ -259,11 +265,11 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row
-    If lastRow > 7 Then
-        wshFAC_Brouillon.Range("D8:I" & lastRow + 2).Clearcontents
+    If lastRow > 6 Then
+        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).Clearcontents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow)
     End If
-    
+
     Application.EnableEvents = True
 
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()", timerStart)
@@ -385,16 +391,19 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         'Copy array to worksheet
         Dim rng As Range
         'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
-        Set rng = wshFAC_Brouillon.Range("D8").Resize(lastUsedRow - 2, UBound(arr, 2))
-        rng.value = arr
+        Set rng = wshFAC_Brouillon.Range("D7").Resize(lastUsedRow - 2, UBound(arr, 2))
+        rng.value = arr 'RMV
     End With
     
+    lastUsedRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row
+    If lastUsedRow < 7 Then Exit Sub 'No rows
+
     With wshFAC_Brouillon
-        .Range("D8:H" & lastRow + 7).Font.Color = vbBlack
-        .Range("D8:H" & lastRow + 7).Font.Bold = False
+        .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
+        .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
         
-        .Range("G" & lastUsedRow + 7).value = totalHres
-        .Range("G8:G" & lastUsedRow + 7).NumberFormat = "##0.00"
+        .Range("G" & lastUsedRow + 2).value = totalHres
+        .Range("G7:G" & lastUsedRow + 2).NumberFormat = "##0.00"
     End With
         
     Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow)
@@ -444,34 +453,48 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     
     Application.EnableEvents = False
     
-    Dim chkBoxRange As Range: Set chkBoxRange = wshFAC_Brouillon.Range("C8:C" & row + 5)
+    Dim chkBoxRange As Range: Set chkBoxRange = wshFAC_Brouillon.Range("C7:C" & row)
     
     Dim cell As Range
     Dim cbx As CheckBox
-        For Each cell In chkBoxRange
-        ' Check if the cell is empty and doesn't have a checkbox already
-        If Cells(cell.row, 8).value = False Then 'IsInvoiced = False
-            'Create a checkbox linked to the cell
-            Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.width, cell.Height)
-            With cbx
-                .name = "chkBox - " & cell.row
-                .value = True
-                .text = ""
-                .LinkedCell = cell.Address
-                .Display3DShading = True
-            End With
-        End If
+    For Each cell In chkBoxRange
+    'Check if the cell is empty and doesn't have a checkbox already
+    If Cells(cell.row, 8).value = False Then 'IsInvoiced = False
+        'Create a checkbox linked to the cell
+        Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.width, cell.Height)
+        With cbx
+            .name = "chkBox - " & cell.row
+            .value = True
+            .text = ""
+            .LinkedCell = cell.Address
+            .Display3DShading = True
+        End With
+    End If
     Next cell
+    
+    'Add a MASTER checkbox
+'    chkBoxRange = wshFAC_Brouillon.Range("C6")
+'    Dim cbxMaster As CheckBox
+'    For Each cell In chkBoxRange
+'        'Add a checkbox in the cell
+'        Set cbxMaster = cell.Parent.CheckBoxes.add(cell.Left, cell.Top, cell.width, cell.Height)
+'        With cbxMaster
+'            .name = "check_uncheck_all_checkBoxes"
+'            .value = False
+'            .text = ""  'Remove the default text (if any)
+'            .LinkedCell = cell.Address  'Link checkbox status to the cell
+'        End With
+'    Next cell
 
     With wshFAC_Brouillon
-        .Range("D8:D" & row + 5).NumberFormat = "dd/mm/yyyy"
-        .Range("D8:D" & row + 5).Font.Bold = False
+        .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"
+        .Range("D7:D" & row).Font.Bold = False
         
-        .Range("D" & row + 7).formula = "=SUMIF(C8:C" & row + 5 & ",True,G8:G" & row + 5 & ")"
-        .Range("D" & row + 7).NumberFormat = "##0.00"
-        .Range("D" & row + 7).Font.Bold = True
+        .Range("D" & row + 2).formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
+        .Range("D" & row + 2).NumberFormat = "##0.00"
+        .Range("D" & row + 2).Font.Bold = True
         
-        .Range("B19").formula = "=SUMIF(C8:C" & row + 5 & ",True,G8:G" & row + 5 & ")"
+        .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
     End With
     
     Set chkBoxRange = Nothing
@@ -499,6 +522,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the total formula
+    wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the total formula
 
     Application.EnableEvents = True
 
@@ -506,46 +530,3 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
 
 End Sub
 
-'Sub ExportAllFacInvList() '2024-03-28 @ 14:22
-'    Dim wb As Workbook
-'    Dim wsSource As Worksheet
-'    Dim wsTarget As Worksheet
-'    Dim sourceRange As Range
-'
-'    Application.ScreenUpdating = False
-'
-'    'Work with the source range
-'    Set wsSource = wshFAC_Entête
-'    Dim lastUsedRow As Long
-'    lastUsedRow = wsSource.Range("A99999").End(xlUp).row
-'    wsSource.Range("A4:T" & lastUsedRow).Copy
-'
-'    'Open the target workbook
-'    Workbooks.Open fileName:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-'                   "GCF_BD_Sortie.xlsx"
-'
-'    'Set references to the target workbook and target worksheet
-'    Set wb = Workbooks("GCF_BD_Sortie.xlsx")
-'    Set wsTarget = wb.Sheets("FACTURES")
-'
-'    'PasteSpecial directly to the target range
-'    wsTarget.Range("A2").PasteSpecial Paste:=xlPasteValuesAndNumberFormats
-'    Application.CutCopyMode = False
-'
-'    wb.Close SaveChanges:=True
-'
-'    Application.ScreenUpdating = True
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-
-'Sub FAC_Brouillon_Prev_PDF() '2024-03-28 @ 14:49
-'
-'    Call FAC_Brouillon_Goto_Onglet_FAC_Finale
-'    Call FAC_Finale_Preview_PDF
-'    Call FAC_Finale_Goto_Onglet_FAC_Brouillon
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------

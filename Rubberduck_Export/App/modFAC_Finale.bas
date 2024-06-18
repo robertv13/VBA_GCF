@@ -63,6 +63,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         Trim(Format(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
+    wshFAC_Brouillon.Range("E3").value = "" 'Reset client to empty
     wshFAC_Brouillon.Range("B27").value = False
     Call FAC_Brouillon_New_Invoice '2024-03-12 @ 08:08 - Maybe ??
     
@@ -411,7 +412,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
         If wshTEC_Local.Range("BD" & r).value = True Or _
-            wshFAC_Brouillon.Range("C" & r + 5) <> True Then
+            wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
         TEC_ID = wshTEC_Local.Range("AT" & r).value
@@ -421,9 +422,9 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
-            rs.Fields("DateSaisie").value = Now
+'            rs.Fields("DateSaisie").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = True
-            rs.Fields("DateFacturee").value = Now
+            rs.Fields("DateFacturee").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
             rs.Fields("VersionApp").value = gAppVersion
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update

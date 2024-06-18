@@ -43,32 +43,32 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Type is selected
     If Not Intersect(Target, Range("F4")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Date is selected
     If Not Intersect(Target, Range("O4")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Description is selected
     If Not Intersect(Target, Range("$F$6:$K$6")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Reference is selected
     If Not Intersect(Target, Range("M6")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Total Amount is selected
     If Not Intersect(Target, Range("O6")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Account is selected
     If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
-        Target.Interior.Color = vbYellow
+        Target.Interior.Color = HighlightColor
     End If
     
     'Tax code is selected (FP is the default)
@@ -83,7 +83,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If Target.value = "" Then
             Application.EnableEvents = False
             Target.value = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
-            Target.Interior.Color = vbYellow
+            Target.Interior.Color = HighlightColor
             Application.EnableEvents = True
         End If
     End If

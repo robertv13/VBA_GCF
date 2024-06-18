@@ -5,6 +5,9 @@ Global Const gAppVersion As String = "v3.6.D" '2024-06-13 @ 19:17
 
 Public userName As String
 
+'Define the HighlihgtColor for the entire application
+Global Const HighlightColor As String = &HCCFFCC 'Light green (Pastel Green)
+
 Public Enum GL_Trans_Data_Columns
     gltFirst = 1
     gltEntryNo = gltFirst
@@ -173,6 +176,48 @@ Sub MsgBoxInvalidDate() '2024-06-13 @ 12:40
            "Veuillez saisir la date de nouveau SVP", _
            vbCritical, _
            "La date saisie est INVALIDE"
+
+End Sub
+
+Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:SetTabOrder()")
+    
+    'Clear previous settings AND protect the worksheet
+    ws.EnableSelection = xlNoRestrictions
+    ws.Protect UserInterfaceOnly:=True
+
+    'Collect all unprotected cells
+    Dim cell As Range, unprotectedCells As Range
+    For Each cell In ws.usedRange
+        If Not cell.Locked Then
+            If unprotectedCells Is Nothing Then
+                Set unprotectedCells = cell
+            Else
+                Set unprotectedCells = Union(unprotectedCells, cell)
+            End If
+        End If
+    Next cell
+
+    'Sort to ensure cells are sorted left-to-right, top-to-bottom
+    Dim sortedCells As Range
+    Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
+    Debug.Print ws.name & " - " & sortedCells.Address & " - " & sortedCells.count & " - " & Format(Now(), "dd-mm-yyyy hh:mm:ss")
+
+    'Enable TAB through unprotected cells
+    Application.EnableEvents = False
+    Dim i As Long
+    For i = 1 To sortedCells.count
+        If i = sortedCells.count Then
+            sortedCells.Cells(i).Next.Select
+        Else
+            sortedCells.Cells(i).Next.Select
+            sortedCells.Cells(i + 1).Activate
+        End If
+    Next i
+    Application.EnableEvents = True
+
+    Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
 
 End Sub
 
