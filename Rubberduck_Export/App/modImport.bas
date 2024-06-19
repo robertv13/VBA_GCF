@@ -16,6 +16,8 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Client_List_Import_All()")
     
+    Application.StatusBar = "J'importe la liste des clients"
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
@@ -72,6 +74,8 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:TEC_Import_All()")
     
+    Application.StatusBar = "J'importe tous les TEC"
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
@@ -93,7 +97,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     wshTEC_Local.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     'Arrange formats on all rows
     Dim lastRow As Long
@@ -121,6 +125,8 @@ End Sub
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ChartOfAccount_Import_All()")
+    
+    Application.StatusBar = "J'importe le plan comptable"
     
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).Clearcontents
@@ -167,6 +173,8 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_Trans_Import_All()")
     
+    Application.StatusBar = "J'importe les transactions du Grand-Livre"
+    
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
@@ -191,7 +199,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     Dim lastRow As Long
     lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
@@ -232,6 +240,8 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_EJ_Auto_Import_All()")
     
+    Application.StatusBar = "J'importe les écritures de journal récurrentes"
+    
     Application.ScreenUpdating = False
     
     Dim lastUsedRow1 As Long
@@ -258,7 +268,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshGL_EJ_Recurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     'Get the last used rows AFTER the copy
     lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
@@ -309,6 +319,8 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Entête_Import_All()")
     
+    Application.StatusBar = "J'importe les entêtes de Facture"
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
@@ -330,7 +342,7 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshFAC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     Dim lastRow As Long
     lastRow = wshFAC_Entête.Range("A99999").End(xlUp).row
@@ -355,6 +367,8 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Détails_Import_All()")
     
+    Application.StatusBar = "J'importe le détail des Factures"
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
@@ -376,7 +390,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshFAC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     Dim lastRow As Long
     lastRow = wshFAC_Détails.Range("A99999").End(xlUp).row
@@ -402,6 +416,8 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Comptes_Clients_Import_All()")
     
+    Application.StatusBar = "J'importe les comptes clients"
+    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
@@ -423,7 +439,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
 
     Dim lastRow As Long
     lastRow = wshCC.Range("A99999").End(xlUp).row

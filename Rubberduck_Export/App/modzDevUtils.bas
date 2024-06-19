@@ -333,11 +333,7 @@ Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
 End Sub
 
 Sub List_All_Shapes_Properties()
-    Dim ws As Worksheet
-    Dim shp As Shape
-    
-    ' Set the worksheet (change "Sheet1" to your sheet's name)
-    Set ws = ActiveSheet
+    Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
     Dim r As Integer
     r = 2
@@ -349,8 +345,9 @@ Sub List_All_Shapes_Properties()
     ws.Range("I" & r).value = "Width"
     ws.Range("J" & r).value = "Height"
     
-    r = 3
     'Loop through all shapes on the worksheet
+    Dim shp As Shape
+    r = 3
     For Each shp In ws.Shapes
         ws.Range("D" & r).value = shp.Type
         ws.Range("E" & r).value = shp.name

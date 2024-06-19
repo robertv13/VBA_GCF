@@ -15,6 +15,7 @@ Sub SlideOut_TEC()
 End Sub
 
 Sub SlideIn_TEC()
+    On Error GoTo err_handler
     With wshMenu.Shapes("btnTEC")
         For width = maxWidth To 32 Step -1
             .Height = width
@@ -23,6 +24,8 @@ Sub SlideIn_TEC()
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
+err_handler:
+
 End Sub
 
 Sub SlideOut_Facturation()
@@ -36,6 +39,7 @@ Sub SlideOut_Facturation()
 End Sub
 
 Sub SlideIn_Facturation()
+    On Err GoTo err_handler
     With wshMenu.Shapes("btnFacturation")
         For width = maxWidth To 32 Step -1
             .Height = width
@@ -44,6 +48,7 @@ Sub SlideIn_Facturation()
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
+err_handler:
 End Sub
 
 Sub SlideOut_Debours()
@@ -452,19 +457,34 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    Call SlideIn_Exit
+    Dim answer As VbMsgBoxResult
+    answer = MsgBox("Are you sure you want to exit?", vbYesNo + vbQuestion, "Exit Application")
     
-    Call Hide_All_Worksheets_Except_Menu
-
-    Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
-
-    ThisWorkbook.Close SaveChanges:=True
+    If answer = vbYes Then
+        Call SlideIn_Exit
+        Call Hide_All_Worksheets_Except_Menu
+        Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
     
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
-    
-    Call Output_Timer_Results("modMenu:EXIT_Click()", timerStart)
-    
-    Application.Quit
+        Application.ScreenUpdating = True
+        Application.EnableEvents = True
+        
+        Call Output_Timer_Results("modMenu:EXIT_Click()", timerStart)
+        
+        Dim wb As Workbook
+        Set wb = ActiveWorkbook
+'        ActiveWorkbook.Save
+        ActiveWorkbook.Close savechanges:=True
+        
+''        Dim w As Workbook
+''        For Each w In Application.Workbooks
+''            Debug.Print w.name
+''            If Not w.Saved Then
+''                w.Save
+''            End If
+'''            w.Close SaveChanges:=False
+''        Next w
+''
+''        Application.Application.Quit
+    End If
     
 End Sub

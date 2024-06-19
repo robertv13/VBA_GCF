@@ -10,6 +10,9 @@ Private Sub Workbook_Open()
     
     Application.ScreenUpdating = False
     
+'    Call DisableCloseButton
+'    Call AddCustomMenu
+    
     Call Hide_All_Worksheets_Except_Menu
     
     wshMenu.Activate
@@ -27,29 +30,11 @@ Private Sub Workbook_Open()
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
-    'Prevent closing the workbook
-    Cancel = True
-    MsgBox "Veuillez utiliser l'option du menu pour sortir" & _
-            vbNewLine & "de l'application.", vbExclamation
+    
+'    Dim answer As VbMsgBoxResult
+'    answer = MsgBox("Veuillez utiliser l'option du menu pour sortir" & _
+'                     vbNewLine & "de l'application", vbExclamation, "Sortir de l'application")
+    Cancel = False
+
 End Sub
-
-'Private Sub Workbook_Before_Close(Cancel As Boolean) '2024-01-10 @ 11:41
-'
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_open()")
-'
-'    Call Hide_All_Worksheets_Except_Menu
-'
-'    wshMenu.Activate
-'
-'    Cancel = False
-'
-'    Call Output_Timer_Results("Workbook_Before_Close()", timerStart)
-'
-'    Call Output_Timer_Results("ThisWorkbook - Session ended normally", sessionTimerStart)
-'
-'    MsgBox "Sub Workbook_Before_Close()"
-'
-'End Sub
-'
-
 

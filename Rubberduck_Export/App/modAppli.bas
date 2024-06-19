@@ -158,9 +158,9 @@ Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional color
 '    End If
 End Sub
 
-Sub Tab_Order_Toggle_Mode()
+Sub Tab_Order_Toggle_Mode() 'TBD ??
 
-    isTab_Order_Activated = Not isTab_Order_Activated
+'    isTab_Order_Activated = Not isTab_Order_Activated
 
 End Sub
 
@@ -175,11 +175,11 @@ Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
 
 End Sub
 
-Sub Invalid_Date_Message() '2024-03-03 @ 07:45
+Sub Invalid_Date_Message() '2024-03-03 @ 07:45 - TBD ??
 
-    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
-        Title:="Validation de la date", _
-        Buttons:=vbCritical
+''    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
+''        Title:="Validation de la date", _
+''        Buttons:=vbCritical
 
 End Sub
 
