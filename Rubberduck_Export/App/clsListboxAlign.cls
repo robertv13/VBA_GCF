@@ -44,7 +44,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
         vntColWidths = Split(LBox.ColumnWidths, ";")
         'Fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = Val(vntColWidths(intColumn - 1)) - 5
+            sngWidth(intColumn) = val(vntColWidths(intColumn - 1)) - 5
         Next
     Else
         'Assume default sizes
@@ -108,7 +108,7 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
         vntColWidths = Split(LBox.ColumnWidths, ";")
         'Fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = Val(vntColWidths(1)) - 5
+            sngWidth(intColumn) = val(vntColWidths(1)) - 5
         Next
     Else
         'Assume default sizes
@@ -155,7 +155,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
         vntColWidths = Split(LBox.ColumnWidths, ";")
         ' fudge for gap between cols
         For intColumn = 1 To LBox.ColumnCount
-            sngWidth(intColumn) = Val(vntColWidths(1)) - 10
+            sngWidth(intColumn) = val(vntColWidths(1)) - 10
         Next
     Else
         ' assume default sizes

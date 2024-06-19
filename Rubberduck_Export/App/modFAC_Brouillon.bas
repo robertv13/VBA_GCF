@@ -39,7 +39,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         End With
         
-        wshFAC_Brouillon.Range("B16").value = False '2024-03-14 @ 08:41
+        Application.EnableEvents = False
+        wshFAC_Brouillon.Range("B16").value = False 'Does not see billed charges
+        Application.EnableEvents = True
         
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
@@ -77,9 +79,12 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
         
     ActiveSheet.Unprotect
     
+    Application.EnableEvents = False
     wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
+    Application.EnableEvents = True
     
     With wshFAC_Brouillon
+        Application.EnableEvents = False
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("K4").value = ClientName
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
@@ -94,9 +99,11 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("K7").value = ""
         End If
+        Application.EnableEvents = True
     End With
     
     With wshFAC_Finale
+        Application.EnableEvents = False
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
         .Range("B24").value = ClientName
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
@@ -111,6 +118,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("B27").value = ""
         End If
+        Application.EnableEvents = True
     End With
     
     Call FAC_Brouillon_Clear_All_TEC_Displayed
@@ -266,13 +274,17 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()")
     
     'Set all criteria before calling FAC_Brouillon_TEC_Advanced_Filter_And_Sort
-    Dim c1 As Long, c2 As String, c3 As Boolean
-    Dim c4 As Boolean, c5 As Boolean
+    Dim c1 As Long, c2 As String
+    Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
     c2 = "<=" & Format(d, "mm-dd-yyyy")
-    c3 = True
-    If includeBilledTEC Then c4 = True Else c4 = False
-    c5 = False
+    c3 = ConvertValueBooleanToText(True)
+    If includeBilledTEC Then
+        c4 = ConvertValueBooleanToText(True)
+    Else
+        c4 = ConvertValueBooleanToText(False)
+    End If
+    c5 = ConvertValueBooleanToText(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
@@ -284,9 +296,9 @@ End Sub
 
 Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         cutoffDate As String, _
-        isBillable As Boolean, _
-        isInvoiced As Boolean, _
-        isDeleted As Boolean)
+        isBillable As String, _
+        isInvoiced As String, _
+        isDeleted As String)
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort()")
     
@@ -298,27 +310,37 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         lastSourceRow = .Range("A99999").End(xlUp).row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Clear the filtered rows area
-        lastResultRow = .Range("AT9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("AT3:BH" & lastResultRow).Clearcontents
+        'Define the source area Range
+        Dim sRng As Range
+        Set sRng = .Range("A2:P" & lastSourceRow)
         
-        Dim rngSource As Range, rngCriteria As Range, rngCopyToRange As Range
-        Set rngSource = wshTEC_Local.Range("A2:P" & lastSourceRow)
-        If clientID <> 0 Then .Range("AN3").value = clientID
-        .Range("AO3").value = cutoffDate
-        .Range("AP3").value = isBillable
-        If isInvoiced <> True Then
-            .Range("AQ3").value = isInvoiced
+        'Define and Clear the destination area Range
+        Dim dRng As Range
+        lastResultRow = .Range("AQ9999").End(xlUp).row
+        If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).Clearcontents
+        Set dRng = .Range("AQ2:BE2")
+        
+        'Define the Criteria Range
+        Dim cRng As Range
+        If clientID <> 0 Then
+            .Range("AK3").value = clientID
         Else
-            .Range("AQ3").value = ""
+            .Range("AK3").value = ""
         End If
-        .Range("AR3").value = isDeleted
-        Set rngCriteria = .Range("AN2:AR3")
-        Set rngCopyToRange = .Range("AT2:BH2")
+        .Range("AL3").value = cutoffDate
+        .Range("AM3").value = isBillable
+        If isInvoiced <> True Then
+            .Range("AN3").value = isInvoiced
+        Else
+            .Range("AN3").value = ""
+        End If
+        .Range("AO3").value = isDeleted
+        Set cRng = .Range("AK2:AO3")
         
-        rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngCopyToRange, Unique:=True
+        'Do the Advanced Filter
+        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, Unique:=True
         
-        lastResultRow = .Range("AT9999").End(xlUp).row
+        lastResultRow = .Range("AQ9999").End(xlUp).row
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -326,19 +348,19 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.clear
-            .SortFields.add key:=wshTEC_Local.Range("AW3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("AU3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Prof_ID
             .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Prof_ID
+            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshTEC_Local.Range("AT3:BH" & lastResultRow) 'Set Range
+            .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 No_Sort_Required:
@@ -355,7 +377,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()")
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("AT9999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Range("AQ9999").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -365,13 +387,13 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     With wshTEC_Local
         Dim i As Integer
         For i = 3 To lastUsedRow
-            arr(i - 2, 1) = .Range("AW" & i).value 'Date
-            arr(i - 2, 2) = .Range("AV" & i).value 'Prof
-            arr(i - 2, 3) = .Range("AY" & i).value 'Description
-            arr(i - 2, 4) = .Range("AZ" & i).value 'Heures
-            totalHres = totalHres + .Range("AZ" & i).value
-            arr(i - 2, 5) = .Range("BD" & i).value 'Facturée ou pas
-            arr(i - 2, 6) = .Range("AT" & i).value 'TEC_ID
+            arr(i - 2, 1) = .Range("AT" & i).value 'Date
+            arr(i - 2, 2) = .Range("AS" & i).value 'Prof
+            arr(i - 2, 3) = .Range("AV" & i).value 'Description
+            arr(i - 2, 4) = .Range("AW" & i).value 'Heures
+            totalHres = totalHres + .Range("AW" & i).value
+            arr(i - 2, 5) = .Range("BA" & i).value 'Facturée ou pas
+            arr(i - 2, 6) = .Range("AQ" & i).value 'TEC_ID
         Next i
         'Copy array to worksheet
         Dim rng As Range
@@ -471,10 +493,11 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     Next cell
 
     'Unlock the checkbox to view Billed charges
-    ws.Range("B16").Locked = False
-    
-    'Protect the worksheet
-    ws.Protect UserInterfaceOnly:=True
+    Call UnprotectCells(ws.Range("B16"))
+'    ws.Range("B16").Locked = False
+'
+'    'Protect the worksheet
+'    ws.Protect UserInterfaceOnly:=True
      
     With ws
         .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"

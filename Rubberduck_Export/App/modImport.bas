@@ -97,7 +97,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     wshTEC_Local.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Arrange formats on all rows
     Dim lastRow As Long
@@ -199,7 +199,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
     lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
@@ -268,7 +268,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshGL_EJ_Recurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Get the last used rows AFTER the copy
     lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
@@ -342,7 +342,7 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshFAC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
     lastRow = wshFAC_Entête.Range("A99999").End(xlUp).row
@@ -390,7 +390,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshFAC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
     lastRow = wshFAC_Détails.Range("A99999").End(xlUp).row
@@ -439,7 +439,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
     lastRow = wshCC.Range("A99999").End(xlUp).row

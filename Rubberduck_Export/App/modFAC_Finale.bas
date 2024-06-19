@@ -408,11 +408,11 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
 
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
-        If wshTEC_Local.Range("BD" & r).value = True Or _
+        If wshTEC_Local.Range("BA" & r).value = True Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
-        TEC_ID = wshTEC_Local.Range("AT" & r).value
+        TEC_ID = wshTEC_Local.Range("AQ" & r).value
         
         'Open the recordset for the specified ID
         SQL = "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TEC_ID
@@ -420,8 +420,8 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
         If Not rs.EOF Then
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-            rs.Fields("EstFacturee").value = True
-            rs.Fields("DateFacturee").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            rs.Fields("EstFacturee").value = "VRAI"
+            rs.Fields("DateFacturee").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -465,13 +465,13 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     
     Dim r As Integer, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
-        If wshTEC_Local.Range("BD" & r).value = False And _
+        If wshTEC_Local.Range("BA" & r).value = False And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
-            TECID = wshTEC_Local.Range("AT" & r).value
+            TECID = wshTEC_Local.Range("AQ" & r).value
             rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-            wshTEC_Local.Range("L" & rowToBeUpdated).value = True
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If

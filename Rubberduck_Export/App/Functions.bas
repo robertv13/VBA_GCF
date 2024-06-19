@@ -79,6 +79,8 @@ End Function
 
 Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_GL_Code_From_GL_Description()")
+    
     Dim dynamicRange As Range
     Dim result As Variant
     Dim ws As Worksheet
@@ -109,9 +111,13 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
     Set ws = Nothing
     Set dynamicRange = Nothing
 
+    Call Output_Timer_Results("Functions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
+
 End Function
 
 Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
     
     Dim matchResult As Variant
 
@@ -126,6 +132,8 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
         'If Match did not find a result, return 0
         Fn_Get_TEC_Row_Number_By_TEC_ID = 0
     End If
+    
+    Call Output_Timer_Results("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()", timerStart)
     
 End Function
 
@@ -437,6 +445,21 @@ Public Function GetCurrentRegion(ByVal dataRange As Range, Optional headerSize A
         End With
     End If
     
+End Function
+
+Public Function ConvertValueBooleanToText(val As Boolean) As String
+
+    Select Case val
+        Case 0, "False" 'False
+            ConvertValueBooleanToText = "FAUX"
+        Case -1, "True" 'True
+            ConvertValueBooleanToText = "VRAI"
+        Case "VRAI", "FAUX"
+            
+        Case Else
+            MsgBox val & " est une valeur INVALIDE !"
+    End Select
+
 End Function
 
 Public Function GetOneDrivePath(ByVal fullWorkbookName As String) As String '2024-05-27 @ 10:10

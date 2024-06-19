@@ -450,7 +450,7 @@ Sub menuParametres_Click() '2024-02-13 @ 13:48
     
 End Sub
 
-Sub EXIT_Click() '2024-02-13 @ 13:48
+Sub EXIT_Click() '2024-06-19 @ 10:13
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modMenu:EXIT_Click()")
     
@@ -458,33 +458,24 @@ Sub EXIT_Click() '2024-02-13 @ 13:48
     Application.ScreenUpdating = False
     
     Dim answer As VbMsgBoxResult
-    answer = MsgBox("Are you sure you want to exit?", vbYesNo + vbQuestion, "Exit Application")
+    answer = MsgBox("Êtes-vous certain de vouloir quitter l'application ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If answer = vbYes Then
         Call SlideIn_Exit
         Call Hide_All_Worksheets_Except_Menu
-        Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
     
         Application.ScreenUpdating = True
         Application.EnableEvents = True
         
         Call Output_Timer_Results("modMenu:EXIT_Click()", timerStart)
+        Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
         
         Dim wb As Workbook
         Set wb = ActiveWorkbook
 '        ActiveWorkbook.Save
-        ActiveWorkbook.Close savechanges:=True
+        ActiveWorkbook.Close SaveChanges:=True
         
-''        Dim w As Workbook
-''        For Each w In Application.Workbooks
-''            Debug.Print w.name
-''            If Not w.Saved Then
-''                w.Save
-''            End If
-'''            w.Close SaveChanges:=False
-''        Next w
-''
-''        Application.Application.Quit
+        Application.Application.Quit
     End If
     
 End Sub

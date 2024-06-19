@@ -1,6 +1,46 @@
 Attribute VB_Name = "modAppliUtils"
 Option Explicit
 
+Public Sub ConvertRangeBooleanToText(rng As Range)
+
+    Dim cell As Range
+    For Each cell In rng
+        Select Case cell.value
+            Case 0, "False" 'False
+                cell.value = "FAUX"
+            Case -1, "True" 'True
+                cell.value = "VRAI"
+            Case "VRAI", "FAUX"
+                
+            Case Else
+                MsgBox cell.value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
+        End Select
+    Next cell
+
+End Sub
+
+Public Sub ProtectCells(rng As Range)
+
+    'Lock the checkbox
+    rng.Locked = True
+    
+    'Protect the worksheet
+    rng.Parent.Protect UserInterfaceOnly:=True
+
+
+End Sub
+
+Public Sub UnprotectCells(rng As Range)
+
+    'Lock the checkbox
+    rng.Locked = False
+    
+    'Protect the worksheet
+    rng.Parent.Protect UserInterfaceOnly:=True
+
+
+End Sub
+
 Sub Start_Routine(subName As String) '2024-06-06 @ 10:12
 
     Dim modeOper As Integer
@@ -56,7 +96,7 @@ Sub Output_Timer_Results(subName As String, t As Double)
             .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
             .Range("B" & lastUsedRow).value = subName
             If t Then
-                .Range("C" & lastUsedRow).value = Timer - t
+                .Range("C" & lastUsedRow).value = Format(Round(Timer - t, 4), "##0.0000")
             End If
         End With
     End If

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.7.1" '2024-06-18 @ 09:28
+Public Const APP_VERSION_NO As String = "v3.7.3" '2024-06-19 @ 08:32
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -272,6 +272,43 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Application.EnableEvents = True
 
     Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
+
+End Sub
+
+Sub BackupMasterFile()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:BackupMasterFile()")
+    
+    Application.ScreenUpdating = False
+    
+    'Open the master file
+    Dim masterWorkbook As Workbook
+    Set masterWorkbook = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Sortie.xlsx")
+    
+    'Get the current date and time in the format YYYYMMDD_HHMMSS
+    Dim currentDateAndTime As String
+    currentDateAndTime = Format(Now, "YYYYMMDD_HHMMSS")
+
+    'Create the backup file name
+    Dim backupFileName As String
+    backupFileName = Left(masterWorkbook.name, InStrRev(masterWorkbook.name, ".") - 1) & "_" & currentDateAndTime & ".xlsx"
+
+    'Define the backup file path (same directory as the master file)
+    Dim backupFilePath As String
+    backupFilePath = masterWorkbook.Path & "\" & backupFileName
+
+    'Save a copy of the master workbook with the new name
+    masterWorkbook.SaveCopyAs backupFilePath
+
+    'Close the master workbook
+    masterWorkbook.Close SaveChanges:=False
+
+'    'Optional: Notify the user
+'    MsgBox "Backup created: " & vbNewLine & vbNewLine & "'" & backupFilePath & "'"
+
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("modAppli:BackupMasterFile()", timerStart)
 
 End Sub
 

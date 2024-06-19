@@ -334,7 +334,7 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     wshENC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
 '    'Arrange formats on all rows
 '    Dim lastRow As Long
@@ -378,7 +378,7 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     wshENC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close savechanges:=False
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
 '    'Arrange formats on all rows
 '    Dim lastRow As Long

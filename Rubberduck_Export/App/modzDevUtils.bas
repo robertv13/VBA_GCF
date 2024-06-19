@@ -1,6 +1,50 @@
 Attribute VB_Name = "modzDevUtils"
 Option Explicit
 
+Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer) As String
+    Dim startDate As Date
+    Dim endDate As Date
+    Dim quarterDates As String
+    Dim i As Integer
+    
+    'Initialize the quarterDates variable
+    quarterDates = ""
+
+    'Loop through the 4 quarters
+    For i = 0 To 3
+        'Calculate the start date of the quarter
+        startDate = DateSerial(fiscalYear, fiscalYearStartMonth + (i * 3), 1)
+        
+        'Calculate the end date of the quarter
+        endDate = DateAdd("m", 3, startDate) - 1
+        
+        'Add the quarter dates to the string
+        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format(startDate, "dd-mm-yyyy") & " to " & Format(endDate, "dd-mmm-yyyy") & vbCrLf
+    Next i
+    
+    'Return the quarter dates
+    GetQuarterDates = quarterDates
+    
+End Function
+
+Sub TestGetQuarterDates()
+    Dim fiscalYearStartMonth As Integer
+    Dim fiscalYear As Integer
+    Dim result As String
+    
+    ' Set the fiscal year start month (e.g., April is 4)
+    fiscalYearStartMonth = 8
+    
+    ' Set the fiscal year
+    fiscalYear = 2024
+    
+    ' Get the quarter dates
+    result = GetQuarterDates(fiscalYearStartMonth, fiscalYear)
+    
+    ' Display the result
+    MsgBox result
+End Sub
+
 Sub List_All_Worksheets()
     
     Dim ws As Worksheet

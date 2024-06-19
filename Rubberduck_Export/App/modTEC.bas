@@ -153,50 +153,68 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
 
     Application.ScreenUpdating = False
 
-    'Set criteria
-    wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date")
-    wshTEC_Local.Range("T3").value = "False"
-    
     'ProfID and Date are mandatory to execute this routine
-    If wshTEC_Local.Range("R3").value = "" Or wshTEC_Local.Range("S3").value = "" Then
+    If wshAdmin.Range("TEC_Prof_ID") = "" Or wshAdmin.Range("TEC_Date") = "" Then
         Exit Sub
     End If
+    
+    'Set criteria in worksheet
+    wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
+    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date")
+    wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
         lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
-        .Range("A2:P" & lastRow).AdvancedFilter _
-            xlFilterCopy, _
-            CriteriaRange:=.Range("R2:T3"), _
-            CopyToRange:=.Range("Y2:AL2"), _
-            Unique:=False
+        'Data Source
+        Dim sRng As Range
+        Set sRng = .Range("A2:P" & lastRow)
         
-        lastResultRow = .Range("Y99999").End(xlUp).row
+         'Criteria
+        Dim cRng As Range
+        Set cRng = .Range("R2:T3")
+        
+        'Destination
+        Dim dRng As Range
+        Set dRng = .Range("V2:AI2")
+        
+        'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
+        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
+        
+        lastResultRow = .Range("V99999").End(xlUp).row
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.clear
-            .SortFields.add key:=wshTEC_Local.Range("AA3"), _
+            .SortFields.add key:=wshTEC_Local.Range("X3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("Z3"), _
+            .SortFields.add key:=wshTEC_Local.Range("W3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add key:=wshTEC_Local.Range("Y3"), _
+                DataOption:=xlSortNormal 'Sort Based On Prof
+            .SortFields.add key:=wshTEC_Local.Range("V3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
-            .SetRange wshTEC_Local.Range("Y3:AL" & lastResultRow) 'Set Range
+            .SetRange wshTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
 
 No_Sort_Required:
     End With
+    
+    'Suddenly, I have to convert BOOLEAN value to TEXT !!!! - 2024-06-19 @ 14:20
+    If lastResultRow > 2 Then
+        Set dRng = wshTEC_Local.Range("AC3:AC" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+        Set dRng = wshTEC_Local.Range("AE3:AE" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+        Set dRng = wshTEC_Local.Range("AG3:AG" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+    End If
     
     Application.ScreenUpdating = True
     
@@ -204,9 +222,76 @@ No_Sort_Required:
 
 End Sub
 
+Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
+    
+    Application.ScreenUpdating = False
+
+    With wshTEC_Local
+        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        
+        'Data Source
+        Dim sRng As Range
+        Set sRng = .Range("A2:P" & lastRow)
+        .Range("S10").value = sRng.Address
+        
+        'Criteria
+        Dim cRng As Range
+        Set cRng = .Range("R2:T3")
+        .Range("S11").value = cRng.Address
+        
+        'Destination
+        Dim dRng As Range
+        Set dRng = .Range("V2:AI2")
+        .Range("S12").value = dRng.Address
+        
+        'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
+        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
+        
+        lastResultRow = .Range("V99999").End(xlUp).row
+        If lastResultRow < 4 Then GoTo No_Sort_Required
+        With .Sort 'Sort - Date / Prof / TEC_ID
+            .SortFields.clear
+            .SortFields.add key:=wshTEC_Local.Range("X3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.add key:=wshTEC_Local.Range("W3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Prof
+            .SortFields.add key:=wshTEC_Local.Range("V3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Tec_ID
+            .SetRange wshTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+
+No_Sort_Required:
+    End With
+    
+    'Suddenly, I have to convert BOOLEAN value to TEXT !!!! - 2024-06-19 @ 14:20
+    If lastResultRow > 2 Then
+        Set dRng = wshTEC_Local.Range("AC3:AC" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+        Set dRng = wshTEC_Local.Range("AE3:AE" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+        Set dRng = wshTEC_Local.Range("AG3:AG" & lastResultRow)
+        Call ConvertRangeBooleanToText(dRng)
+    End If
+    
+    wshTEC_Local.Range("S13").value = lastResultRow - 2 & " rows"
+    wshTEC_Local.Range("S14").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+    
+    Application.ScreenUpdating = True
+
+End Sub
+
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_AdvancedFilter_And_Sort()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Efface_Formulaire()")
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -255,7 +340,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = Now
-            rs.Fields("EstDetruit").value = True
+            rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
             rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.update
         Else
@@ -305,11 +390,11 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
             rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
             rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
-            rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
+            rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
             rs.Fields("DateSaisie").value = Now
-            rs.Fields("EstFacturee").value = False
+            rs.Fields("EstFacturee").value = ConvertValueBooleanToText(False)
             rs.Fields("DateFacturee").value = Null
-            rs.Fields("EstDetruit").value = False
+            rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
             rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.Fields("NoFacture").value = ""
         Else 'Update an existing record
@@ -322,7 +407,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
                 rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
-                rs.Fields("EstFacturable").value = ufSaisieHeures.chbFacturable.value
+                rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 rs.Fields("DateSaisie").value = Now
                 rs.Fields("VersionApp").value = APP_VERSION_NO
             Else
@@ -379,11 +464,11 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("G" & nextRowNumber).value = ufSaisieHeures.txtActivite.value
             .Range("H" & nextRowNumber).value = hoursValue
             .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
-            .Range("J" & nextRowNumber).value = ufSaisieHeures.chbFacturable.value
-            .Range("K" & nextRowNumber).value = Now()
-            .Range("L" & nextRowNumber).value = False
+            .Range("J" & nextRowNumber).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
+            .Range("K" & nextRowNumber).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("M" & nextRowNumber).value = ""
-            .Range("N" & nextRowNumber).value = False
+            .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("O" & nextRowNumber).value = APP_VERSION_NO
             .Range("P" & nextRowNumber).value = ""
         End With
@@ -407,17 +492,17 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
                 .Range("H" & rowToBeUpdated).value = hoursValue
                 .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
-                .Range("J" & rowToBeUpdated).value = ufSaisieHeures.chbFacturable.value
+                .Range("J" & rowToBeUpdated).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 .Range("K" & rowToBeUpdated).value = Now()
-                .Range("L" & rowToBeUpdated).value = False
+                .Range("L" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
                 .Range("M" & rowToBeUpdated).value = ""
-                .Range("N" & rowToBeUpdated).value = False
+                .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
                 .Range("O" & rowToBeUpdated).value = APP_VERSION_NO
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
             wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
-            wshTEC_Local.Range("N" & rowToBeUpdated).value = True
+            wshTEC_Local.Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
             wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
         End If
     End If
@@ -443,14 +528,14 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Range("Y999").End(xlUp).row
+    lastRow = wshTEC_Local.Range("V999").End(xlUp).row
     If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        .RowSource = "TEC_Local!Y3:AG" & lastRow
+        .RowSource = "TEC_Local!V3:AF" & lastRow
     End With
      
     'Add hours to totalHeures
@@ -533,9 +618,7 @@ Sub TEC_DB_Refresh_All_Pivot_Tables()
 
 End Sub
 
-Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:07
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Advanced_Filter_2()")
+Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:41
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -543,52 +626,51 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-03-15 @ 08:0
         Dim lastUsedRow As Long, sRng As Range
         lastUsedRow = .Range("A99999").End(xlUp).row
         Set sRng = .Range("A2:P" & lastUsedRow)
+        .Range("AL10").value = sRng.Address & " - " & _
+            .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
+            .Range("A2:P" & lastUsedRow).columns.count & " columns"
+        
+        Dim cRng As Range
+        Set cRng = .Range("AK2:AO3")
+        .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
         
         Dim dRng As Range
-        lastUsedRow = .Range("AT99999").End(xlUp).row
-        Set dRng = .Range("AT2:BH" & lastUsedRow)
+        lastUsedRow = .Range("AQ99999").End(xlUp).row
+        Set dRng = .Range("AQ2:BE" & lastUsedRow)
         dRng.Offset(1, 0).Clearcontents
-        .Range("AP10").value = ""
+        .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
         
-        Dim criteriaRng As Range
-        Set criteriaRng = .Range("AN2:AR3")
-        
-        sRng.AdvancedFilter _
-            action:=xlFilterCopy, _
-            CriteriaRange:=criteriaRng, _
-            CopyToRange:=dRng, _
-            Unique:=False
+        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
             
         Dim lastResultRow As Long
-        lastResultRow = .Range("AT99999").End(xlUp).row
-                If lastResultRow < 4 Then GoTo No_Sort_Required
+        lastResultRow = .Range("AQ99999").End(xlUp).row
+            If lastResultRow < 4 Then GoTo No_Sort_Required
             With .Sort
                 .SortFields.clear
-                .SortFields.add key:=wshTEC_Local.Range("AW3"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Sort Based On Date
-                .SortFields.add key:=wshTEC_Local.Range("AU3"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Sort Based On Prof_ID
                 .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On Date
+                .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Sort Based On Prof_ID
+                .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On TEC_ID
-                .SetRange wshTEC_Local.Range("AT3:BH" & lastResultRow) 'Set Range
+                .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
                 .Apply 'Apply Sort
              End With
     
 No_Sort_Required:
-        wshTEC_Local.Range("AP10").value = lastResultRow - 2
+        wshTEC_Local.Range("AL13").value = lastResultRow - 2 & " rows"
+        wshTEC_Local.Range("AL14").value = Format(Now(), "mm/dd/yyyy hh:mm:ss")
     End With
     
     Set sRng = Nothing
+    Set cRng = Nothing
     Set dRng = Nothing
-    Set criteriaRng = Nothing
-
-    Call Output_Timer_Results("modTEC:TEC_Advanced_Filter_2()", timerStart)
 
 End Sub
 
