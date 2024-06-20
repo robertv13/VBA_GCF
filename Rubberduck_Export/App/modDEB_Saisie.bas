@@ -288,7 +288,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
 
     Application.EnableEvents = True
 
-    Call Output_Timer_Results("modGL_JE:Load_JEAuto_Into_JE()", timerStart)
+    Call Output_Timer_Results("modGL_EJ:Load_JEAuto_Into_JE()", timerStart)
     
 End Sub
 

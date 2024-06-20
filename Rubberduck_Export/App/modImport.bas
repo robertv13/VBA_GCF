@@ -1,16 +1,16 @@
 Attribute VB_Name = "modImport"
 Option Explicit
 
-Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
-
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Import_Minimum_From_External_DB()")
-    
-    Call Client_List_Import_All
-    Call TEC_Import_All
-    
-    Call Output_Timer_Results("modImport:Import_Minimum_From_External_DB()", timerStart)
-
-End Sub
+'Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
+'
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Import_Minimum_From_External_DB()")
+'
+''    Call Client_List_Import_All
+''    Call TEC_Import_All - 2024-06-19 @ 20:48
+'
+'    Call Output_Timer_Results("modImport:Import_Minimum_From_External_DB()", timerStart)
+'
+'End Sub
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
@@ -65,6 +65,8 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     'Free up memory - 2024-02-23
     Set connStr = Nothing
     Set recSet = Nothing
+    
+    Application.StatusBar = ""
 
     Call Output_Timer_Results("modImport:Client_List_Import_All()", timerStart)
         
@@ -118,6 +120,8 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Set sourceRange = Nothing
     Set destinationRange = Nothing
 
+    Application.StatusBar = ""
+    
     Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
     
 End Sub
@@ -165,6 +169,8 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     
     Call Dynamic_Range_Redefine_Plan_Comptable
         
+    Application.StatusBar = ""
+    
     Call Output_Timer_Results("modImport:ChartOfAccount_Import_All()", timerStart)
 
 End Sub
@@ -231,6 +237,8 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Dim r As Long
     
     Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
     
     Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
 
@@ -311,6 +319,8 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 Clean_Exit:
     Application.ScreenUpdating = True
     
+    Application.StatusBar = ""
+    
     Call Output_Timer_Results("modImport:GL_EJ_Auto_Import_All()", timerStart)
 
 End Sub
@@ -358,6 +368,8 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     End With
 
     Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
     
     Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
 
@@ -408,6 +420,8 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
     Application.ScreenUpdating = True
     
+    Application.StatusBar = ""
+    
     Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
 
 End Sub
@@ -421,7 +435,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshCC.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
+    wshFAC.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -434,18 +448,18 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
     Dim destinationRange As Range
-    Set destinationRange = wshCC.Range("A2")
+    Set destinationRange = wshFAC.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshCC.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    wshFAC.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
-    lastRow = wshCC.Range("A99999").End(xlUp).row
+    lastRow = wshFAC.Range("A99999").End(xlUp).row
     
     'Adjust Formats for all new rows
-    With wshCC
+    With wshFAC
         .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J3:J" & lastRow).HorizontalAlignment = xlCenter
         .Range("C3:C" & lastRow).HorizontalAlignment = xlLeft
         .Range("G3:I" & lastRow).HorizontalAlignment = xlRight
@@ -454,6 +468,8 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     End With
 
     Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
     
     Call Output_Timer_Results("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
 

@@ -1,5 +1,18 @@
 ﻿Option Explicit
 
+Private Sub Worksheet_Activate()
+
+    Dim ws As Worksheet
+    Set ws = wshMenuTEC
+    With ws
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    Set ws = Nothing
+  
+End Sub
+
 Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuTEC:lblSaisieHeures_Hover_MouseMove()")
@@ -25,8 +38,8 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
    
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuTEC:lblMinAll_Hover_MouseMove()")
    
-    SlideIn_TEC_TDB
-    SlideIn_SaisieHeures
+    Call SlideIn_TEC_TDB
+    Call SlideIn_SaisieHeures
     
     Dim shp As Shape
     Set shp = wshMenuTEC.Shapes("grpSaisieHeures")
@@ -36,31 +49,31 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     shp.Height = 40
     
     Set shp = wshMenuTEC.Shapes("icoSaisieHeures")
-    shp.Top = 65
+    shp.Top = 75
     shp.Left = 0
     shp.width = 35
     shp.Height = 35
     
     Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
-    shp.Top = 65
+    shp.Top = 70
     shp.Left = 0
     shp.width = 35
     shp.Height = 35
 
     Set shp = wshMenuTEC.Shapes("grpTableauDeBord_TEC")
-    shp.Top = 130
+    shp.Top = 140
     shp.Left = 0
     shp.width = 40
     shp.Height = 40
 
     Set shp = wshMenuTEC.Shapes("icoTEC_TDB")
-    shp.Top = 125
+    shp.Top = 145
     shp.Left = 0
     shp.width = 32
     shp.Height = 32
     
     Set shp = wshMenuTEC.Shapes("btnTEC_TDB")
-    shp.Top = 130
+    shp.Top = 140
     shp.Left = 0
     shp.width = 35
     shp.Height = 35
@@ -85,9 +98,9 @@ Sub TEC_TDB_Click()
     
     Application.ScreenUpdating = False
     
-    wshTEC_DB.Application.Calculation = xlCalculationAutomatic
+    wshTEC_TDB.Application.Calculation = xlCalculationAutomatic
     
-    With wshTEC_DB
+    With wshTEC_TDB
         .Visible = xlSheetVisible
         .Select
     End With

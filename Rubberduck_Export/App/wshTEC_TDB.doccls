@@ -1,0 +1,27 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_TDB:Worksheet_Activate()")
+   
+    Application.ScreenUpdating = False
+    
+    Call TEC_DB_Update_All
+    
+    'Set the zoom factor to 98% when this worksheet is activated
+    ActiveWindow.Zoom = 98
+
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("wshTEC_TDB:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Sub Back_To_TEC_Menu()
+
+    wshTEC_TDB.Visible = xlSheetHidden
+    
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
+
+End Sub

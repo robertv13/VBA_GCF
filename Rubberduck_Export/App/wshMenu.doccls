@@ -1,44 +1,98 @@
 ﻿Option Explicit
 
+Private Sub Worksheet_Activate()
+
+    Dim ws As Worksheet
+    Set ws = wshMenu
+    With ws
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    Set ws = Nothing
+    
+End Sub
+
 Private Sub TECHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Facturation
-    SlideOut_TEC
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_Facturation
+    Call SlideOut_TEC
+
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub FACHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_TEC
-    SlideIn_Debours
-    SlideOut_Facturation
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_TEC
+    Call SlideIn_Debours
+    Call SlideOut_Facturation
+    
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub DEBHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Facturation
-    SlideIn_Comptabilite
-    SlideOut_Debours
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_Facturation
+    Call SlideIn_Comptabilite
+    Call SlideOut_Debours
+
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub GLHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Debours
-    SlideIn_Parametres
-    SlideOut_Comptabilite
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_Debours
+    Call SlideIn_Parametres
+    Call SlideOut_Comptabilite
+
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Comptabilite
-    SlideOut_Parametres
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_Comptabilite
+    Call SlideOut_Parametres
+
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub EXITHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_Parametres
-    SlideOut_Exit
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_Parametres
+    Call SlideOut_Exit
+
+    Application.EnableEvents = True
+
 End Sub
 
 Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
-    SlideIn_TEC
-    SlideIn_Facturation
-    SlideIn_Debours
-    SlideIn_Comptabilite
-    SlideIn_Parametres
-    SlideIn_Exit
-End Sub
+    
+    Application.EnableEvents = False
+    
+    Call SlideIn_TEC
+    Call SlideIn_Facturation
+    Call SlideIn_Debours
+    Call SlideIn_Comptabilite
+    Call SlideIn_Parametres
+    Call SlideIn_Exit
 
+    Application.EnableEvents = True
+
+End Sub

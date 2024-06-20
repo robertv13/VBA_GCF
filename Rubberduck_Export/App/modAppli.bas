@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.7.3" '2024-06-19 @ 08:32
+Public Const APP_VERSION_NO As String = "v3.7.4" '2024-06-19 @ 18:07
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -89,8 +89,8 @@ End Sub
 
 Sub DEBOURS_Back_To_Menu()
     
-    wshMenuDEBOURS.Activate
-    wshMenuDEBOURS.Range("A1").Select
+    wshMenuDEB.Activate
+    wshMenuDEB.Range("A1").Select
     
 End Sub
 
@@ -208,12 +208,12 @@ Sub Slide_In_All_Menu_Options()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Slide_In_All_Menu_Options()")
     
-    SlideIn_TEC
-    SlideIn_Facturation
-    SlideIn_Debours
-    SlideIn_Comptabilite
-    SlideIn_Parametres
-    SlideIn_Exit
+    Call SlideIn_TEC
+    Call SlideIn_Facturation
+    Call SlideIn_Debours
+    Call SlideIn_Comptabilite
+    Call SlideIn_Parametres
+    Call SlideIn_Exit
 
     Call Output_Timer_Results("modAppli:Slide_In_All_Menu_Options()", timerStart)
 
@@ -238,7 +238,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     
     'Clear previous settings AND protect the worksheet
     ws.EnableSelection = xlNoRestrictions
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect userInterfaceOnly:=True
 
     'Collect all unprotected cells
     Dim cell As Range, unprotectedCells As Range

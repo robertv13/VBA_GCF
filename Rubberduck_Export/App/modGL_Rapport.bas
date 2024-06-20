@@ -352,8 +352,8 @@ Sub GL_Rapport_Back_To_Menu()
     ThisWorkbook.Worksheets("GL_Rapport_Out").Visible = xlSheetHidden
     On Error GoTo 0
 
-    wshMenuCOMPTA.Activate
-    wshMenuCOMPTA.Range("A1").Select
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
     
     Call Output_Timer_Results("modGL_Rapport:GL_Rapport_Back_To_Menu()", timerStart)
     

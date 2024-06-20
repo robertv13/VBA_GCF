@@ -10,6 +10,7 @@ Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    ws.Unprotect
     
     'Setup a listBox
     Dim lb As OLEObject
@@ -40,7 +41,7 @@ Private Sub Worksheet_Activate()
     'Hide column A & B
     With ws
         .Range("A:B").EntireColumn.Hidden = True
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableCalculation = True
     End With
     
@@ -131,7 +132,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.Clearcontents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -147,7 +148,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.Clearcontents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

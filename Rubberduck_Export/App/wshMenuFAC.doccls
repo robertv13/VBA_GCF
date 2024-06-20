@@ -1,0 +1,103 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+    
+    Dim ws As Worksheet
+    Set ws = wshMenuFAC
+    With ws
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    Set ws = Nothing
+    
+End Sub
+
+Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_SuiviCC
+    Call SlideOut_PrepFact
+
+End Sub
+
+Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_PrepFact
+    Call SlideIn_Encaissement
+    Call SlideOut_SuiviCC
+
+End Sub
+
+Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_SuiviCC
+    Call SlideOut_Encaissement
+
+End Sub
+
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_PrepFact
+    Call SlideIn_SuiviCC
+    Call SlideIn_Encaissement
+
+End Sub
+
+'Option # 1
+Sub PreparationFacture_Click()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:PreparationFacture_Click()")
+
+    Call SlideIn_PrepFact
+    
+    Application.ScreenUpdating = False
+    
+    Call Client_List_Import_All
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+    Call FAC_Comptes_Clients_Import_All
+    Call GL_Trans_Import_All
+
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    wshFAC_Brouillon.Visible = xlSheetVisible
+    wshFAC_Brouillon.Activate
+    wshFAC_Finale.Visible = xlSheetVisible
+    
+    Me.Application.Calculation = xlCalculationAutomatic
+    
+    Call Output_Timer_Results("wshMenuFAC:PreparationFacture_Click()", timerStart)
+    
+End Sub
+
+'Option # 2
+Sub SuiviCC_Click()
+
+    Call SlideIn_SuiviCC
+    MsgBox "Ajouter la fonction 'Suivi des C/C'"
+
+End Sub
+
+'Option # 3
+Sub Encaissement_Click()
+
+    Application.ScreenUpdating = False
+    
+    Call SlideIn_PrepFact
+    Call SlideIn_SuiviCC
+    Call SlideIn_Encaissement
+    
+    Call Encaissement_Import_All
+    
+    wshFAC.Visible = xlSheetVisible
+    wshENC_Détails.Visible = xlSheetVisible
+    wshENC_Entête.Visible = xlSheetVisible
+    With wshENC_Saisie
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+    
+End Sub

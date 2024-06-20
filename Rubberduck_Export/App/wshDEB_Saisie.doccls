@@ -24,7 +24,7 @@ Private Sub Worksheet_Activate()
         .Unprotect
         .Range("A:B").EntireColumn.Hidden = True
         .EnableCalculation = True
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
     End With
     
     Call DEB_Saisie_Clear_All_Cells
@@ -208,7 +208,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.Clearcontents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

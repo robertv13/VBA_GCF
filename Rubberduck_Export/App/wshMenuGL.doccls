@@ -1,0 +1,120 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim ws As Worksheet
+    Set ws = wshMenuGL
+    With ws
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
+    Set ws = Nothing
+    
+End Sub
+
+Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_BV
+    Call SlideOut_EJ
+
+End Sub
+
+Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_EJ
+    Call SlideIn_GL_Report
+    Call SlideOut_BV
+
+End Sub
+
+Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_BV
+    Call SlideIn_EF
+    Call SlideOut_GL_Report
+
+End Sub
+
+Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_GL_Report
+    Call SlideOut_EF
+
+End Sub
+
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_EJ
+    Call SlideIn_BV
+    Call SlideIn_GL_Report
+    Call SlideIn_EF
+
+End Sub
+
+'Option # 1
+Sub JE_Click()
+    
+    Application.ScreenUpdating = False
+    
+    Call SlideIn_BV
+    Call SlideIn_EJ
+    
+    wshGL_EJ.Application.Calculation = xlCalculationAutomatic
+    With wshGL_EJ
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+
+End Sub
+
+'Option # 2
+Sub BV_Click()
+    
+    Application.ScreenUpdating = False
+    
+    Call SlideIn_EJ
+    Call SlideIn_BV
+    Call SlideIn_GL_Report
+    
+    With wshGL_BV
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+
+End Sub
+
+'Option # 3
+Sub GL_Report_Click()
+
+    Application.ScreenUpdating = False
+
+    Call SlideIn_BV
+    Call SlideIn_GL_Report
+    Call SlideIn_EF
+    
+    With wshGL_Rapport
+        .Visible = xlSheetVisible
+        .Select
+    End With
+
+    Application.ScreenUpdating = True
+
+End Sub
+
+'Option # 4
+Sub EF_Click()
+
+    Application.ScreenUpdating = False
+
+    Call SlideIn_GL_Report
+    Call SlideIn_EF
+    MsgBox "Ajouter la fonction 'États Financiers'"
+
+    Application.ScreenUpdating = True
+
+End Sub

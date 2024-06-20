@@ -365,9 +365,9 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshCC.Range("A9999").End(xlUp).row + 1
+    firstFreeRow = wshFAC.Range("A9999").End(xlUp).row + 1
    
-    With wshCC
+    With wshFAC
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value

@@ -587,7 +587,7 @@ Sub TEC_DB_Push_TEC_Local_To_DB_Data()
     Next i
 
     Dim rngTo As Range
-    Set rngTo = wshTEC_DB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
+    Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
     
     Call Output_Timer_Results("modTEC:TEC_DB_Push_TEC_Local_To_DB_Data()", timerStart)
@@ -610,7 +610,7 @@ Sub TEC_DB_Refresh_All_Pivot_Tables()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_DB_Refresh_All_Pivot_Tables()")
     
     Dim pt As PivotTable
-    For Each pt In wshTEC_DB_PivotTable.PivotTables
+    For Each pt In wshTEC_TDB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
 

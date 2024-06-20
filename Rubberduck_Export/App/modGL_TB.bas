@@ -497,8 +497,8 @@ Sub GL_TB_Back_To_Menu()
     
     wshGL_BV.Visible = xlSheetHidden
     
-    wshMenuCOMPTA.Activate
-    wshMenuCOMPTA.Range("A1").Select
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
     
 End Sub
 

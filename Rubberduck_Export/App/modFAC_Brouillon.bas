@@ -448,11 +448,11 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
    
     wshFAC_Brouillon.Range("B27").value = False
     
-    wshMenuFACT.Activate
+    wshMenuFAC.Activate
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
-    wshMenuFACT.Range("A1").Select
+    wshMenuFAC.Range("A1").Select
     
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
 
@@ -545,7 +545,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect userInterfaceOnly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula

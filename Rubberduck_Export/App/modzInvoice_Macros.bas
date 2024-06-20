@@ -12,18 +12,18 @@ Sub Dashboard_Invoice_SaveUpdate()
         
         'Deterermine New Invoice/Existing Invoice
         If .Range("B3").value = Empty Then       'new Invoice
-            invRow = wshCC_Invoice_List.Range("A99999").End(xlUp).row + 1 'First Avail Row
+            invRow = wshFAC_Invoice_List.Range("A99999").End(xlUp).row + 1 'First Avail Row
             .Range("J1").value = .Range("B5").value 'Next Inv. #
-            wshCC_Invoice_List.Range("A" & invRow).value = .Range("B5").value 'Next Inv. #
+            wshFAC_Invoice_List.Range("A" & invRow).value = .Range("B5").value 'Next Inv. #
         Else                                     'Existing Invoice
             invRow = .Range("B3").value          'Invoice Row
         End If
-        wshCC_Invoice_List.Range("B" & invRow).value = .Range("I3").value 'Date
-        wshCC_Invoice_List.Range("C" & invRow).value = .Range("G5").value 'Customer
-        wshCC_Invoice_List.Range("D" & invRow).value = .Range("I4").value 'Status
-        wshCC_Invoice_List.Range("E" & invRow).value = .Range("I5").value 'Terms
-        wshCC_Invoice_List.Range("F" & invRow).value = .Range("I6").value 'Due Date
-        wshCC_Invoice_List.Range("G" & invRow).value = .Range("J34").value 'Invoice Total
+        wshFAC_Invoice_List.Range("B" & invRow).value = .Range("I3").value 'Date
+        wshFAC_Invoice_List.Range("C" & invRow).value = .Range("G5").value 'Customer
+        wshFAC_Invoice_List.Range("D" & invRow).value = .Range("I4").value 'Status
+        wshFAC_Invoice_List.Range("E" & invRow).value = .Range("I5").value 'Terms
+        wshFAC_Invoice_List.Range("F" & invRow).value = .Range("I6").value 'Due Date
+        wshFAC_Invoice_List.Range("G" & invRow).value = .Range("J34").value 'Invoice Total
             
             
         'Add/Update Invoice Items
@@ -96,11 +96,11 @@ Sub Dashboard_Invoice_Load()
         invRow = .Range("B3").value              'Invoice Row
         .Range("B6").value = True                'Set Inv. Load to true
         .Range("I3:J6,G5:G7,B9:I31,K9:K31").Clearcontents
-        .Range("I3").value = wshCC_Invoice_List.Range("B" & invRow).value 'Inv. Date
-        .Range("G5").value = wshCC_Invoice_List.Range("C" & invRow).value 'Customer
-        .Range("I4").value = wshCC_Invoice_List.Range("D" & invRow).value 'Inv. Status
-        .Range("I5").value = wshCC_Invoice_List.Range("E" & invRow).value 'Terms
-        .Range("I6").value = wshCC_Invoice_List.Range("F" & invRow).value 'Due Date
+        .Range("I3").value = wshFAC_Invoice_List.Range("B" & invRow).value 'Inv. Date
+        .Range("G5").value = wshFAC_Invoice_List.Range("C" & invRow).value 'Customer
+        .Range("I4").value = wshFAC_Invoice_List.Range("D" & invRow).value 'Inv. Status
+        .Range("I5").value = wshFAC_Invoice_List.Range("E" & invRow).value 'Terms
+        .Range("I6").value = wshFAC_Invoice_List.Range("F" & invRow).value 'Due Date
     
         With InvoiceItems
             lastRow = .Range("A99999").End(xlUp).row
@@ -136,7 +136,7 @@ Sub Invoice_Delete()
     With Invoice
         If .Range("B3").value = Empty Then GoTo NotSaved
         invRow = .Range("B3").value              'Order Row
-        wshCC_Invoice_List.Range(invRow & ":" & invRow).EntireRow.delete
+        wshFAC_Invoice_List.Range(invRow & ":" & invRow).EntireRow.delete
         'Remove Invoice Items
         With InvoiceItems
             lastRow = .Range("A99999").End(xlUp).row
