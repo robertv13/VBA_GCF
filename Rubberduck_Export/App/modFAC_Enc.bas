@@ -564,3 +564,18 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     Call Output_Timer_Results("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
     
 End Sub
+
+Sub Back_To_FAC_Menu()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Back_To_FAC_Menu()")
+   
+    wshENC_Saisie.Visible = xlSheetHidden
+
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A1").Select
+    
+    Call Output_Timer_Results("modFAC_Enc:Back_To_FAC_Menu()", timerStart)
+    
+End Sub
+
+

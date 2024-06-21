@@ -42,7 +42,6 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     Call SlideIn_Encaissement
 
 End Sub
-
 'Option # 1
 Sub PreparationFacture_Click()
     
@@ -101,3 +100,5 @@ Sub Encaissement_Click()
     Application.ScreenUpdating = True
     
 End Sub
+
+

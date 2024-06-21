@@ -22,7 +22,7 @@ Sub SlideIn_TEC()
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoTEC").Left = width - 32
+            wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
         wshMenu.Unprotect
         .TextFrame2.TextRange.Characters.text = ""
@@ -49,7 +49,7 @@ Sub SlideIn_Facturation()
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFacturation").Left = width - 32
+            wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
@@ -158,20 +158,6 @@ End Sub
 'Second level (sub-menu) ---------------------------------------------------------------------------
 Sub SlideOut_SaisieHeures()
     
-    Dim shp As Shape
-    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
-    shp.LockAspectRatio = msoFalse 'Ensure aspect ratio is not locked
-    
-    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
-    
-    Do While shp.Height < maxWidth
-        shp.Height = shp.Height + 10
-        shp.Left = 0
-        shp.Top = 70
-    Debug.Print "H=" & Round(shp.Height, 0) & ", L=" & Round(shp.Left, 0) & ", T=" & Round(shp.Top, 0)
-    Loop
-    
-    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
 '    With wshMenuTEC.Shapes("btnSaisieHeures")
 '        For width = 32 To maxWidth
 '            .Height = width
@@ -184,18 +170,6 @@ End Sub
 
 Sub SlideIn_SaisieHeures()
     
-    Dim shp As Shape
-    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
-    
-    Debug.Print "In  " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", " & Round(shp.Left, 0) & ", " & Round(shp.width, 0)
-    
-    Do While shp.Height > 35
-        shp.Height = shp.Height - 10
-        shp.Left = 0
-'        DoEvents
-    Loop
-    
-    Debug.Print "In  " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", " & Round(shp.Left, 0) & ", " & Round(shp.width, 0)
 '    With wshMenuTEC.Shapes("btnSaisieHeures")
 '        For width = maxWidth To 32 Step -1
 '            .Height = width
@@ -209,26 +183,26 @@ End Sub
 
 Sub SlideOut_TEC_TDB()
     
-    With wshMenuTEC.Shapes("btnTEC_TDB")
-        For width = 32 To maxWidth
-            .Height = width
-            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Tableau de bord"
-    End With
+'    With wshMenuTEC.Shapes("btnTEC_TDB")
+'        For width = 32 To maxWidth
+'            .Height = width
+'            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = "Tableau de bord"
+'    End With
 
 End Sub
 
 Sub SlideIn_TEC_TDB()
     
-    With wshMenuTEC.Shapes("btnTEC_TDB")
-        For width = maxWidth To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+'    With wshMenuTEC.Shapes("btnTEC_TDB")
+'        For width = maxWidth To 32 Step -1
+'            .Height = width
+'            .Left = width - 32
+'            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = ""
+'    End With
 
 End Sub
 
