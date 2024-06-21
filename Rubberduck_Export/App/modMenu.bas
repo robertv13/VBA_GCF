@@ -6,8 +6,6 @@ Public Const maxWidth As Integer = 150
 
 Sub SlideOut_TEC()
     
-    Application.EnableEvents = False
-    
     With wshMenu.Shapes("btnTECMenu")
         For width = 32 To maxWidth
             .Height = width
@@ -16,14 +14,10 @@ Sub SlideOut_TEC()
         .TextFrame2.TextRange.Characters.text = "TEC"
     End With
     
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideIn_TEC()
         
-    Application.EnableEvents = False
-    
     With wshMenu.Shapes("btnTECMenu")
         For width = maxWidth To 32 Step -1
             .Height = width
@@ -35,13 +29,9 @@ Sub SlideIn_TEC()
         wshMenu.Protect userInterfaceOnly:=True
     End With
     
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideOut_Facturation()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnFacturationMenu")
         For width = 32 To maxWidth
@@ -51,13 +41,9 @@ Sub SlideOut_Facturation()
         .TextFrame2.TextRange.Characters.text = "Facturation"
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideIn_Facturation()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnFacturationMenu")
         For width = maxWidth To 32 Step -1
@@ -68,13 +54,9 @@ Sub SlideIn_Facturation()
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    Application.EnableEvents = True
-
 End Sub
 
 Sub SlideOut_Debours()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnDeboursMenu")
         For width = 32 To maxWidth
@@ -84,13 +66,9 @@ Sub SlideOut_Debours()
         .TextFrame2.TextRange.Characters.text = "Débours"
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideIn_Debours()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnDeboursMenu")
         For width = maxWidth To 32 Step -1
@@ -101,12 +79,8 @@ Sub SlideIn_Debours()
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 Sub SlideOut_Comptabilite()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = 32 To maxWidth
@@ -116,13 +90,9 @@ Sub SlideOut_Comptabilite()
         .TextFrame2.TextRange.Characters.text = "Comptabilité"
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideIn_Comptabilite()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = maxWidth To 32 Step -1
@@ -133,13 +103,9 @@ Sub SlideIn_Comptabilite()
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideOut_Parametres()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnParametresOption")
         For width = 32 To maxWidth
@@ -149,13 +115,9 @@ Sub SlideOut_Parametres()
         .TextFrame2.TextRange.Characters.text = "Paramètres"
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideIn_Parametres()
-    
-    Application.EnableEvents = False
     
     With wshMenu.Shapes("btnParametresOption")
         For width = maxWidth To 32 Step -1
@@ -166,13 +128,9 @@ Sub SlideIn_Parametres()
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 Sub SlideOut_Exit()
-    
-    Application.EnableEvents = False
     
     With ActiveSheet.Shapes("btnEXIT")
         For width = 32 To maxWidth
@@ -182,50 +140,70 @@ Sub SlideOut_Exit()
         .TextFrame2.TextRange.Characters.text = "Sortie"
     End With
 
-    Application.EnableEvents = True
-
 End Sub
 
 Sub SlideIn_Exit()
     
-    Application.EnableEvents = False
-    
-    With ActiveSheet.Shapes("btnEXIT")
+    With wshMenu.Shapes("btnEXIT")
         For width = maxWidth To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEXIT").Left = width - 32
+            wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    Application.EnableEvents = True
-    
 End Sub
 
 'Second level (sub-menu) ---------------------------------------------------------------------------
 Sub SlideOut_SaisieHeures()
     
-    With wshMenuTEC.Shapes("btnSaisieHeures")
-        For width = 32 To maxWidth
-            .Height = width
-            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Saisie des Heures"
-    End With
+    Dim shp As Shape
+    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
+    shp.LockAspectRatio = msoFalse 'Ensure aspect ratio is not locked
+    
+    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
+    
+    Do While shp.Height < maxWidth
+        shp.Height = shp.Height + 10
+        shp.Left = 0
+        shp.Top = 70
+    Debug.Print "H=" & Round(shp.Height, 0) & ", L=" & Round(shp.Left, 0) & ", T=" & Round(shp.Top, 0)
+    Loop
+    
+    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
+'    With wshMenuTEC.Shapes("btnSaisieHeures")
+'        For width = 32 To maxWidth
+'            .Height = width
+'            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = "Saisie des Heures"
+'    End With
 
 End Sub
 
 Sub SlideIn_SaisieHeures()
     
-    With wshMenuTEC.Shapes("btnSaisieHeures")
-        For width = maxWidth To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+    Dim shp As Shape
+    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
+    
+    Debug.Print "In  " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", " & Round(shp.Left, 0) & ", " & Round(shp.width, 0)
+    
+    Do While shp.Height > 35
+        shp.Height = shp.Height - 10
+        shp.Left = 0
+'        DoEvents
+    Loop
+    
+    Debug.Print "In  " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", " & Round(shp.Left, 0) & ", " & Round(shp.width, 0)
+'    With wshMenuTEC.Shapes("btnSaisieHeures")
+'        For width = maxWidth To 32 Step -1
+'            .Height = width
+'            .Left = width - 32
+'            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = ""
+'    End With
 
 End Sub
 
@@ -485,7 +463,6 @@ Sub menuTEC_Click()
     Call SlideIn_TEC
     
     wshMenuTEC.Visible = xlSheetVisible
-    
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
@@ -496,7 +473,6 @@ Sub menuFacturation_Click()
     Call SlideIn_Facturation
     
     wshMenuFAC.Visible = xlSheetVisible
-    
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
 
@@ -507,7 +483,6 @@ Sub menuDebours_Click()
     Call SlideIn_Debours
     
     wshMenuDEB.Visible = xlSheetVisible
-    
     wshMenuDEB.Activate
     wshMenuDEB.Range("A1").Select
 
@@ -518,7 +493,6 @@ Sub menuComptabilite_Click()
     Call SlideIn_Comptabilite
     
     wshMenuGL.Visible = xlSheetVisible
-        
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
 
@@ -530,6 +504,33 @@ Sub menuParametres_Click()
     
     wshAdmin.Visible = xlSheetVisible
     wshAdmin.Select
+    
+End Sub
+
+Sub EXIT_NO_SAVE() '2024-06-20 @ 13:48
+    
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    Dim confirmation As VbMsgBoxResult
+    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & _
+                        "l'application de gestion (sans sauvegarde) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
+    
+    If confirmation = vbYes Then
+        Call SlideIn_Exit
+        Call Hide_All_Worksheets_Except_Menu
+    
+        Application.ScreenUpdating = True
+        Application.EnableEvents = True
+        
+        Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
+        
+        Dim wb As Workbook
+        Set wb = ActiveWorkbook
+        ActiveWorkbook.Close SaveChanges:=False
+
+        Application.Application.Quit
+    End If
     
 End Sub
 
@@ -559,3 +560,33 @@ Sub EXIT_Click() '2024-06-20 @ 07:11
     End If
     
 End Sub
+Sub Test_SaisieHeures()
+    
+    Dim shp As Shape
+    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
+    
+    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
+    
+    shp.Left = 60
+    shp.Top = 10
+    shp.Height = 150
+    shp.width = 32
+    
+    MsgBox "On slide_in"
+    
+    shp.Left = 0
+    shp.Top = 10
+    shp.Height = 32
+    shp.width = 32
+    
+    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
+'    With wshMenuTEC.Shapes("btnSaisieHeures")
+'        For width = 32 To maxWidth
+'            .Height = width
+'            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = "Saisie des Heures"
+'    End With
+
+End Sub
+

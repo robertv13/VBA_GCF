@@ -15,78 +15,67 @@ End Sub
 
 Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuTEC:lblSaisieHeures_Hover_MouseMove()")
-
-    SlideOut_SaisieHeures
+    Call SlideOut_SaisieHeures
     
-    Call Output_Timer_Results("wshMenuTEC:lblSaisieHeures_Hover_MouseMove()", timerStart)
-
 End Sub
 
 Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuTEC:lblTDB_Hover_MouseMove()")
-
-    SlideIn_SaisieHeures
-    SlideOut_TEC_TDB
-
-    Call Output_Timer_Results("wshMenuTEC:lblTDB_Hover_MouseMove()", timerStart)
+    Call SlideIn_SaisieHeures
+    Call SlideOut_TEC_TDB
 
 End Sub
 
 Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuTEC:lblMinAll_Hover_MouseMove()")
-   
-    Call SlideIn_TEC_TDB
     Call SlideIn_SaisieHeures
+    Call SlideIn_TEC_TDB
     
-    Dim shp As Shape
-    Set shp = wshMenuTEC.Shapes("grpSaisieHeures")
-    shp.Top = 70
-    shp.Left = 0
-    shp.width = 40
-    shp.Height = 40
+'    Dim shp As Shape
+'    Set shp = wshMenuTEC.Shapes("grpSaisieHeures")
+'    shp.Top = 70
+'    shp.Left = 0
+'    shp.width = 40
+'    shp.Height = 40
+'
+'    Set shp = wshMenuTEC.Shapes("icoSaisieHeures")
+'    shp.Top = 75
+'    shp.Left = 0
+'    shp.width = 35
+'    shp.Height = 35
+'
+'    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
+'    shp.Top = 70
+'    shp.Left = 0
+'    shp.width = 35
+'    shp.Height = 35
+'
+'    Set shp = wshMenuTEC.Shapes("grpTableauDeBord_TEC")
+'    shp.Top = 140
+'    shp.Left = 0
+'    shp.width = 40
+'    shp.Height = 40
+'
+'    Set shp = wshMenuTEC.Shapes("icoTEC_TDB")
+'    shp.Top = 145
+'    shp.Left = 0
+'    shp.width = 32
+'    shp.Height = 32
+'
+'    Set shp = wshMenuTEC.Shapes("btnTEC_TDB")
+'    shp.Top = 140
+'    shp.Left = 0
+'    shp.width = 35
+'    shp.Height = 35
+'
+'    Set shp = Nothing
     
-    Set shp = wshMenuTEC.Shapes("icoSaisieHeures")
-    shp.Top = 75
-    shp.Left = 0
-    shp.width = 35
-    shp.Height = 35
-    
-    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
-    shp.Top = 70
-    shp.Left = 0
-    shp.width = 35
-    shp.Height = 35
-
-    Set shp = wshMenuTEC.Shapes("grpTableauDeBord_TEC")
-    shp.Top = 140
-    shp.Left = 0
-    shp.width = 40
-    shp.Height = 40
-
-    Set shp = wshMenuTEC.Shapes("icoTEC_TDB")
-    shp.Top = 145
-    shp.Left = 0
-    shp.width = 32
-    shp.Height = 32
-    
-    Set shp = wshMenuTEC.Shapes("btnTEC_TDB")
-    shp.Top = 140
-    shp.Left = 0
-    shp.width = 35
-    shp.Height = 35
-    
-    Set shp = Nothing
-    
-    Call Output_Timer_Results("wshMenuTEC:lblMinAll_Hover_MouseMove()", timerStart)
-
 End Sub
 
 Sub SaisieHeures_Click()
 
-    SlideIn_SaisieHeures
+    Call SlideIn_SaisieHeures
+    
     Load ufSaisieHeures
     ufSaisieHeures.show vbModal
     
