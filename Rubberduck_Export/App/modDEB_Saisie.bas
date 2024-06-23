@@ -433,7 +433,7 @@ Sub DEB_Recurrent_Build_Summary()
     Dim lastUsedRow2 As Long
     lastUsedRow2 = wshDEB_Recurrent.Range("O999").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshDEB_Recurrent.Range("O2:Q" & lastUsedRow2).Clearcontents
+        wshDEB_Recurrent.Range("O2:Q" & lastUsedRow2).ClearContents
     End If
     
     With wshDEB_Recurrent
@@ -461,7 +461,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     'Vide les cellules
     Application.EnableEvents = False
     With wshDEB_Saisie
-        .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").Clearcontents
+        .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
         .Range("O4").value = Format(Now(), "dd-mm-yyyy")
         .ckbRecurrente = False
         .Range("F4").Activate

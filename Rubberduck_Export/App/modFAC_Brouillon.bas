@@ -13,7 +13,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     If wshFAC_Brouillon.Range("B27").value = False Then
         With wshFAC_Brouillon
             .Range("B24").value = True
-            .Range("K3:L7,O3,O5").Clearcontents 'Clear cells for a new Invoice
+            .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
             .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
             .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
             
@@ -29,10 +29,10 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         With wshFAC_Finale
             Application.EnableEvents = False
-            .Range("B21,B23:C27,E28").Clearcontents
-            .Range("A34:F68").Clearcontents
+            .Range("B21,B23:C27,E28").ClearContents
+            .Range("A34:F68").ClearContents
             .Range("E28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
-            .Range("B69:F81").Clearcontents 'NOT the formulas
+            .Range("B69:F81").ClearContents 'NOT the formulas
             Application.EnableEvents = True
             
             Call FAC_Finale_Setup_All_Cells
@@ -191,8 +191,8 @@ Sub FAC_Brouillon_Setup_All_Cells()
     Application.EnableEvents = False
     
     With wshFAC_Brouillon
-        .Range("L11:O45").Clearcontents
-        .Range("J47:P60").Clearcontents
+        .Range("L11:O45").ClearContents
+        .Range("J47:P60").ClearContents
         
         Call FAC_Brouillon_Set_Labels(.Range("K47"), "FAC_Label_SubTotal_1")
         Call FAC_Brouillon_Set_Labels(.Range("K51"), "FAC_Label_SubTotal_2")
@@ -259,7 +259,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
     If lastRow > 6 Then
-        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).Clearcontents
+        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
 
@@ -317,7 +317,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         'Define and Clear the destination area Range
         Dim dRng As Range
         lastResultRow = .Range("AQ9999").End(xlUp).row
-        If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).Clearcontents
+        If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).ClearContents
         Set dRng = .Range("AQ2:BE2")
         
         'Define the Criteria Range

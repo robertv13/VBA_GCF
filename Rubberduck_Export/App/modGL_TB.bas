@@ -14,7 +14,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     wshGL_BV.Range("D4" & ":G" & lastUsedRow + 1).clear
 
     'Clear Detail transaction section
-    wshGL_BV.Range("L4:T99999").Clearcontents
+    wshGL_BV.Range("L4:T99999").ClearContents
     With wshGL_BV.Range("S4:S9999").Interior
         .Pattern = xlNone
         .TintAndShade = 0
@@ -270,7 +270,7 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("P2").CurrentRegion
 '        Call Fn_Clear_Range_Borders(rgResult)
-        rgResult.Offset(1).Clearcontents
+        rgResult.Offset(1).ClearContents
         
         Set rgData = .Range("A1").CurrentRegion
         .Range("L3").value = ""

@@ -504,8 +504,8 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
             End If
         End If
         .Range("B24").value = True 'Set Invoice Load to true
-        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").Clearcontents
-        wshFAC_Finale.Range("C34:F69").Clearcontents
+        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
+        wshFAC_Finale.Range("C34:F69").ClearContents
         Dim InvListRow As Long
         InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29

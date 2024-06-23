@@ -637,7 +637,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
         Dim dRng As Range
         lastUsedRow = .Range("AQ99999").End(xlUp).row
         Set dRng = .Range("AQ2:BE" & lastUsedRow)
-        dRng.Offset(1, 0).Clearcontents
+        dRng.Offset(1, 0).ClearContents
         .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
         
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False

@@ -113,7 +113,7 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         
         'Destination to copy (setup & clear previous results)
         Set rgCopyToRange = .Range("P1").CurrentRegion
-        rgCopyToRange.Offset(1).Clearcontents
+        rgCopyToRange.Offset(1).ClearContents
         Set rgCopyToRange = .Range("P1").CurrentRegion
         
         'Do the Advanced Filter

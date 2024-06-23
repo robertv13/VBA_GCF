@@ -90,7 +90,7 @@ Private Sub UserForm_Terminate()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Terminate()")
 
     'Clear the admin control cells
-    wshAdmin.Range("B3:B7").Clearcontents
+    wshAdmin.Range("B3:B7").ClearContents
     
     ThisWorkbook.Save
     

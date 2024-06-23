@@ -109,7 +109,7 @@ Public Sub ArrayToRange(ByRef data As Variant _
                         , Optional ByVal clearExistingHeaderSize As Long = 1)
                         
     If clearExistingData = True Then
-        outRange.CurrentRegion.Offset(clearExistingHeaderSize).Clearcontents
+        outRange.CurrentRegion.Offset(clearExistingHeaderSize).ClearContents
     End If
     
     Dim rows As Long, columns As Long

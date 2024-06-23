@@ -1,29 +1,396 @@
 Attribute VB_Name = "modzDevUtils"
 Option Explicit
 
-Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer) As String
-    Dim startDate As Date
-    Dim endDate As Date
-    Dim quarterDates As String
-    Dim i As Integer
+Sub Worksheets_List_All() '2024-06-22 @ 06:27
     
-    'Initialize the quarterDates variable
-    quarterDates = ""
-
-    'Loop through the 4 quarters
-    For i = 0 To 3
-        'Calculate the start date of the quarter
-        startDate = DateSerial(fiscalYear, fiscalYearStartMonth + (i * 3), 1)
-        
-        'Calculate the end date of the quarter
-        endDate = DateAdd("m", 3, startDate) - 1
-        
-        'Add the quarter dates to the string
-        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format(startDate, "dd-mm-yyyy") & " to " & Format(endDate, "dd-mmm-yyyy") & vbCrLf
+    'Loop through all worksheets in the active workbook
+    Dim ws As Worksheet
+    Dim arr() As Variant
+    ReDim arr(1 To 100, 1 To 2)
+    Dim i As Long
+    
+    For Each ws In ThisWorkbook.Sheets
+        i = i + 1
+        arr(i, 1) = ws.codeName
+        arr(i, 2) = ws.name
+    Next ws
+    
+    Call Array_2D_Resizer(arr, i, 2)
+    
+    Call Array_2D_Bubble_Sort(arr)
+    
+    'Display all worksheets, sorted alphabetically by codeName
+    Dim spaces As String
+    
+    For i = 1 To UBound(arr, 1)
+        spaces = Space(30 - Len(arr(i, 1)))
+        Debug.Print Format(i, "##0"); Tab(5); "codeName = " & arr(i, 1) & spaces & "worksheet name = " & arr(i, 2)
     Next i
     
-    'Return the quarter dates
-    GetQuarterDates = quarterDates
+    Set ws = Nothing
+    
+End Sub
+
+Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
+    
+    Dim posProcedure As Integer, posExitProcedure As Integer
+    Dim posFonction As Integer, posExitFonction As Integer
+    Dim posSpace As Integer, posREM As Integer, posParam As Integer
+    Dim scope As String, sType As String
+    
+    'Loop through all VBcomponents (modules, class and forms) in the active workbook
+    Dim VBComp As Object
+    Dim oName As String, oType As String
+    Dim arr() As Variant
+    ReDim arr(1 To 500, 1 To 10)
+    Dim trimmedLineOfCode As String, savedLineOfCode As String, remarks As String, params As String
+    Dim lineNum As Long, lRead As Long
+    Dim i As Integer
+
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        'Check if the component is a userForm (1), a module (2) or a class module (3)
+        If VBComp.Type <= 3 Then
+            oName = VBComp.name
+            oType = VBComp.Type
+            Select Case oType
+                Case 1
+                    oType = "1_Module"
+                Case 2
+                    oType = "2_Class"
+                Case 3
+                    oType = "3_userform"
+                Case Else
+                    oType = "4_Undefined"
+            End Select
+            'Get the code module for the component
+            Dim vbCodeMod As Object
+            Set vbCodeMod = VBComp.CodeModule
+            'Loop through all lines in the code module
+            For lineNum = 1 To vbCodeMod.CountOfLines
+                lRead = lRead + 1
+                'Check if the line contains 'Sub' or 'Function' without beeing a Remark line
+                savedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
+                trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
+                'Remove comments
+                If InStr(1, trimmedLineOfCode, "'") Then
+                    trimmedLineOfCode = RemoveComments(trimmedLineOfCode)
+                End If
+                
+                posProcedure = InStr(trimmedLineOfCode, "Sub ")
+                If posProcedure Then
+                    If posProcedure = InStr(trimmedLineOfCode, "Sub = ") Or _
+                        posProcedure = InStr(trimmedLineOfCode, "Sub As ") Then
+                        posProcedure = 0
+                    End If
+                End If
+                posFonction = InStr(trimmedLineOfCode, "Function ")
+                If posFonction Then
+                    If posFonction = InStr(trimmedLineOfCode, "Function = ") Or _
+                        posFonction = InStr(trimmedLineOfCode, "Function As ") Then
+                        posFonction = 0
+                    End If
+                End If
+                posExitProcedure = InStr(trimmedLineOfCode, "Exit Sub")
+                posExitFonction = InStr(trimmedLineOfCode, "Exit Function")
+                If (posProcedure <> 0 Or posFonction <> 0) And posExitProcedure = 0 And posExitFonction = 0 Then
+                    i = i + 1
+                    arr(i, 2) = oType
+                    arr(i, 3) = oName
+                    arr(i, 4) = lineNum
+                    'Goback to savedLineOfCode
+                    trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
+                    posREM = InStr(trimmedLineOfCode, ") '")
+                    If posREM > 0 Then
+                        remarks = Trim(Mid(trimmedLineOfCode, posREM + 2))
+                        trimmedLineOfCode = Trim(Left(trimmedLineOfCode, posREM))
+                    End If
+                    posParam = InStr(trimmedLineOfCode, "(")
+                    If posParam > 0 Then
+                        params = Trim(Mid(trimmedLineOfCode, posParam))
+                        trimmedLineOfCode = Trim(Left(trimmedLineOfCode, posParam - 1))
+                    End If
+                    
+                    If InStr(trimmedLineOfCode, "Sub ") > 1 Or InStr(trimmedLineOfCode, "Function ") > 1 Then
+                        posSpace = InStr(trimmedLineOfCode, " ")
+                        scope = Left(trimmedLineOfCode, posSpace - 1)
+                        trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, posSpace + 1))
+                    Else
+                        scope = ""
+                    End If
+                    arr(i, 5) = scope
+                    If scope = "posProcedure" Or scope = "posFonction" Then Stop
+                    If InStr(trimmedLineOfCode, "Sub ") = 1 Then
+                        sType = "Sub"
+                        trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, 5))
+                    Else
+                        If InStr(trimmedLineOfCode, "Function ") = 1 Then
+                            sType = "Function"
+                            trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, 10))
+                        End If
+                    End If
+                    arr(i, 6) = sType
+                    arr(i, 7) = trimmedLineOfCode
+                    arr(i, 1) = UCase(oType) & Chr(0) & UCase(oName) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
+                    If params <> "" Then arr(i, 8) = params
+                    If remarks <> "" Then arr(i, 9) = remarks
+                    arr(i, 10) = Format(Now(), "yyyy-mm-dd hh:mm")
+                    params = ""
+                    remarks = ""
+                End If
+            Next lineNum
+        End If
+    Next VBComp
+    
+    'Prepare the output worksheet
+    Dim lastUsedRow As Long
+    lastUsedRow = wshzDocSubsAndFunctions.Range("A9999").End(xlUp).row 'Last Used Row
+    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).ClearContents
+
+    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    
+    'Sort the 2D array based on column 1
+    Call Array_2D_Bubble_Sort(arr)
+    
+    'Transfer the array to the worksheet
+    wshzDocSubsAndFunctions.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    wshzDocSubsAndFunctions.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+    
+    MsgBox "J'ai trouvé " & r & " lignes Sub or Function" & vbNewLine & _
+                vbNewLine & "après avoir analysé un total de " & _
+                Format(lRead, "#,##0") & " Lignes de code"
+    
+    'Clean up memory
+    Set VBComp = Nothing
+    Set vbCodeMod = Nothing
+    
+End Sub
+
+Sub Formulas_List_All() '2024-06-22 @ 15:42
+    
+    Dim wb As Workbook: Set wb = ThisWorkbook
+    
+    'Prepare existing worksheet to receive data
+    Dim lastUsedRow As Long
+    lastUsedRow = wshzDocFormules.Range("A9999").End(xlUp).row 'Last used row
+    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).ClearContents
+    
+    'Create an Array to receive the formulas informations
+    Dim outputArray() As Variant
+    ReDim outputArray(1 To 7500, 1 To 8)
+    
+    'Loop through each worksheet
+    Dim ws As Worksheet
+    Dim codeName As String, name As String, usedRange As String, cellsCount As String
+    For Each ws In wb.Sheets
+        If ws.codeName = "wshzDocNamedRange" Or _
+            ws.codeName = "wshzDocFormules" Then
+                GoTo nextIteration
+        End If
+        'Save information for this worksheet
+        codeName = ws.codeName
+        name = ws.name
+        usedRange = ws.usedRange.Address
+        cellsCount = ws.usedRange.count
+        'Loop through all cells in the used range
+        Dim cell As Range
+        Dim i As Long
+        For Each cell In ws.usedRange
+            'Does the cell contain a Formula
+            If Left(cell.formula, 1) = "=" Then
+                'Write formula information to the destination worksheet
+                i = i + 1
+                outputArray(i, 1) = codeName & Chr(0) & cell.Address
+                outputArray(i, 2) = codeName
+                outputArray(i, 3) = name
+                outputArray(i, 4) = usedRange
+                outputArray(i, 5) = cellsCount
+                outputArray(i, 6) = cell.Address
+                outputArray(i, 7) = "'=" & Mid(cell.formula, 2) 'Add ' to preserve formulas
+                outputArray(i, 8) = Format(Now(), "yyyy-mm-dd hh:mm") 'Timestamp
+            End If
+        Next cell
+nextIteration:
+    Next ws
+    
+    Call Array_2D_Resizer(outputArray, r, UBound(outputArray, 2))
+    Call Array_2D_Bubble_Sort(outputArray)
+    
+    'Transfer the array data to the worksheet
+    wshzDocFormules.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
+    wshzDocFormules.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
+
+    MsgBox "J'ai trouvé " & Format(i, "#,##0") & " formules"
+    
+    'Clean up memory
+    Set wb = Nothing
+
+End Sub
+
+Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
+    
+    'Setup and clear the output worksheet
+    Dim ws As Worksheet: Set ws = wshzDocNamedRange
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    ws.Range("A2:F" & lastUsedRow).ClearContents
+    
+    'Loop through each named range in the workbook
+    Dim arr() As Variant
+    ReDim arr(1 To 200, 1 To 10)
+    Dim i As Long
+    Dim nr As name, rng As Range
+    Debug.Print ThisWorkbook.Names.count
+    For Each nr In ThisWorkbook.Names
+        i = i + 1
+        arr(i, 1) = UCase(nr.name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
+        arr(i, 2) = nr.name
+        arr(i, 3) = "'" & nr.RefersTo
+        If InStr(nr.RefersTo, "#REF!") Then
+            arr(i, 4) = "'#REF!"
+        End If
+        
+        'Check if the name refers to a range
+        On Error Resume Next
+        Set rng = nr.RefersToRange
+        On Error GoTo 0
+        
+        If Not rng Is Nothing Then
+            arr(i, 5) = rng.Worksheet.name
+            arr(i, 6) = rng.Address
+        End If
+        
+        If nr.Parent Is ThisWorkbook Then
+            arr(i, 7) = "Workbook"
+        Else
+            arr(i, 7) = "Worksheet (" & nr.Parent.name & ")"
+        End If
+
+        arr(i, 8) = nr.Comment
+        arr(i, 9) = nr.Visible
+        arr(i, 10) = Format(Now(), "yyyy-mm-dd hh:mm")
+
+        Set rng = Nothing
+    Next nr
+    Debug.Print r
+    
+    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    Call Array_2D_Bubble_Sort(arr)
+    
+    'Transfer the array data to the worksheet
+    wshzDocNamedRange.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    wshzDocNamedRange.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
+   
+    MsgBox "J'ai trouvé " & r & " named ranges"
+    
+    'Clean up memory
+    Set ws = Nothing
+    Set rng = Nothing
+    
+End Sub
+
+Sub Conditional_Formatting_List_All() '2024-06-23 @ 18:37
+
+    'Work in memory
+    Dim arr() As Variant
+    ReDim arr(1 To 100, 1 To 7)
+    
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim area As Range
+    Dim ruleIndex As Integer
+    Dim cf As FormatCondition
+    Dim i As Long
+    
+    'Loop through each worksheet in the current workbook
+    For Each ws In ThisWorkbook.Worksheets
+        
+        On Error Resume Next
+        'Attempt to get the range with conditional formatting
+        Application.EnableEvents = False
+        Set rng = ws.usedRange.SpecialCells(xlCellTypeAllFormatConditions)
+        Application.EnableEvents = True
+        On Error GoTo 0
+        
+        'Check if rng is not nothing, which means there are conditional formatting rules
+        If Not rng Is Nothing Then
+            'Loop through each area in the range
+            For Each area In rng.Areas
+                Debug.Print ws.name & " - " & area.FormatConditions.count
+                ' Loop through each conditional formatting rule in the area
+                For ruleIndex = 1 To area.FormatConditions.count
+                    Set cf = area.FormatConditions(ruleIndex)
+                    i = i + 1
+                    arr(i, 1) = ws.name & Chr(0) & area.Address
+                    arr(i, 2) = ws.name
+                    arr(i, 3) = area.Address
+                    arr(i, 4) = cf.Type
+                    arr(i, 5) = cf.Formula1
+                    
+                    On Error Resume Next
+                    If cf.Type = xlCellValue And (cf.Operator = xlBetween Or cf.Operator = xlNotBetween) Then
+                        arr(i, 6) = cf.Formula2
+                    End If
+                    On Error GoTo 0
+                    
+                    arr(i, 7) = Format(Now(), "yyyy-mm-dd hh:mm")
+                Next ruleIndex
+            Next area
+        End If
+        
+        'Reset the range variable for the next worksheet
+        Set rng = Nothing
+    Next ws
+    Set cf = Nothing
+    Set ws = Nothing
+    
+    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    Call Array_2D_Bubble_Sort(arr)
+
+    'Setup and prepare the output worksheet
+    Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
+    Dim lastUsedRow As Long
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    If lastUsedRow > 1 Then
+        wsOutput.Range("A2:F" & lastUsedRow).ClearContents
+    End If
+    
+    'Transfer the array data to the worksheet
+
+    'Assign array to range
+    wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
+   
+    MsgBox "J'ai trouvé " & i & " Conditional Formatting"
+    
+    'Clean up memory
+    Set wsOutput = Nothing
+
+End Sub
+
+Function RemoveComments(ByVal codeLine As String) As String '2024-06-22 @ 10:42
+    
+    Dim inString As Boolean: inString = False
+    Dim cleanLine As String
+    
+    Dim i As Long, char As String
+    For i = 1 To Len(codeLine)
+        char = Mid(codeLine, i, 1)
+        
+        'Toggle inString flag if a double quote is encountered
+        If char = """" Then
+            inString = Not inString
+        End If
+        
+        'If not inside a string and the character is a comment character, exit loop
+        If Not inString And char = "'" Then
+            Exit For
+        End If
+        
+        'Append character to cleanLine
+        cleanLine = cleanLine & char
+    Next i
+    
+    RemoveComments = Trim(cleanLine)
     
 End Function
 
@@ -45,279 +412,85 @@ Sub TestGetQuarterDates()
     MsgBox result
 End Sub
 
-Sub List_All_Worksheets()
+Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCols As Long)
     
-    Dim ws As Worksheet
+    Dim oRows As Long, oCols As Long
     
-    'Loop through all worksheets in the active workbook
-    For Each ws In ThisWorkbook.Sheets
-        Dim spaces As String
-        spaces = Space(25 - Len(ws.CodeName))
-        'Print the name of each worksheet to the Immediate Window
-        Debug.Print "codeName = " & ws.CodeName & spaces & "Name = " & ws.name; ""
-    Next ws
+    'Get the original dimensions of the input array
+    oRows = UBound(inputArray, 1)
+    oCols = UBound(inputArray, 2)
     
-End Sub
-
-Sub List_All_Formulas() '2024-03-26 @ 14:20 - ChatGPT
+    'Ensure the new dimensions are within the original array's bounds
+    If nRows > oRows Then nRows = oRows
+    If nCols > oCols Then nCols = oCols
     
-    'Set a reference to the current workbook
-    Dim wb As Workbook: Set wb = ThisWorkbook
+    'Create a new array with the specified dimensions
+    Dim tempArray() As Variant
+    ReDim tempArray(1 To nRows, 1 To nCols)
     
-    'Prepare existing worksheet to receive data
-    Dim lastUsedRow As Long, r As Long, c As Long
-    lastUsedRow = wshzDocFormules.Range("E99999").End(xlUp).row 'Last used row
-    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).Clearcontents
-    
-    'Create an Array to receive the formulas informations
-    Dim OutputArray(10000, 7) As Variant
-    
-    'Loop through each worksheet
-    Dim ws As Worksheet
-    Dim CodeName As String, name As String, usedRange As String, cellsCount As String
-    r = 0
-    For Each ws In wb.Sheets
-        If ws.CodeName = "wshzDocNamedRange" Or _
-            ws.CodeName = "wshzDocFormules" Then
-                GoTo Continue_for_each_ws
-        End If
-        Debug.Print r; ws.name; Tab(20); ws.CodeName; Tab(45); Now()
-        'Save information for this worksheet
-        CodeName = ws.CodeName
-        name = ws.name
-        usedRange = ws.usedRange.Address
-        cellsCount = ws.usedRange.count
-        'Loop through all cells in the used range
-        Dim cell As Range
-        For Each cell In ws.usedRange
-            'Does the cell contain a Formula
-            If Left(cell.formula, 1) = "=" Then
-                'Write formula information to the destination worksheet
-                OutputArray(r, 0) = CodeName
-                OutputArray(r, 1) = name
-                OutputArray(r, 2) = usedRange
-                OutputArray(r, 3) = cellsCount
-                OutputArray(r, 4) = cell.Address
-                OutputArray(r, 5) = "'=" & Mid(cell.formula, 2) 'Add ' to preserve formulas
-                OutputArray(r, 6) = Now() 'Timestamp
-                OutputArray(r, 7) = "=ROW()"
-                r = r + 1 'Move to the next row
-            End If
-        Next cell
-Continue_for_each_ws:
-    Next ws
-    'Transfer the array data to the worksheet
-    With wshzDocFormules
-        .Range(.Cells(2, 1), .Cells(r + 1, 8)).value = OutputArray
-    End With
-
-End Sub
-
-Sub List_All_Subs_And_Functions() '2024-03-26 @ 14:27
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modzDevUtils:List_All_Subs_And_Functions()")
-
-    Dim VBComp As Object
-
-    Dim posSub As Integer, posFunction As Integer, posExitSub As Integer, posExitFunction As Integer, posSpace As Integer
-    Dim posREM As Integer, posParam As Integer, scope As String, sType As String
-    Dim lineNum As Long
-    Dim trimLineOfCode As String, saveLineOfCode As String, remarks As String, params As String
-    Dim arr() As Variant
-    ReDim arr(1 To 300, 1 To 9)
-    'Loop through all VBcomponents (modules, class and forms) in the workbook
-    Dim oName As String, oType As String, r As Integer
-    r = 1
-    For Each VBComp In ThisWorkbook.VBProject.VBComponents
-        'Check if the component is a userForm (1), a module (2) or a class module (3)
-        If VBComp.Type <= 3 Then
-            oName = VBComp.name
-            oType = VBComp.Type
-            Select Case oType
-                Case 1
-                    oType = "1_Module"
-                Case 2
-                    oType = "2_Class"
-                Case 3
-                    oType = "3_userform"
-                Case Else
-                    oType = String(10, "*")
-            End Select
-            'Get the code module for the component
-            Dim vbCodeMod As Object
-            Set vbCodeMod = VBComp.CodeModule
-            'Loop through all lines in the code module
-            For lineNum = 1 To vbCodeMod.CountOfLines
-                'Check if the line contains 'Sub' or 'Function'
-                saveLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
-                trimLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
-                posSub = InStr(trimLineOfCode, "Sub ")
-                posFunction = InStr(trimLineOfCode, "Function ")
-                posExitSub = InStr(trimLineOfCode, "Exit Sub")
-                posExitFunction = InStr(trimLineOfCode, "Exit Function")
-                If (posSub <> 0 Or posFunction <> 0) And posExitSub = 0 And posExitFunction = 0 Then
-                    arr(r, 1) = oType
-                    arr(r, 2) = oName
-                    arr(r, 3) = lineNum
-                    posREM = InStr(trimLineOfCode, ") '")
-                    If posREM > 0 Then
-                        remarks = Trim(Mid(trimLineOfCode, posREM + 2))
-                        trimLineOfCode = Trim(Left(trimLineOfCode, posREM))
-                    End If
-                    posParam = InStr(trimLineOfCode, "(")
-                    If posParam > 0 Then
-                        params = Trim(Mid(trimLineOfCode, posParam))
-                        trimLineOfCode = Trim(Left(trimLineOfCode, posParam - 1))
-                    End If
-                    
-                    If InStr(trimLineOfCode, "Sub ") > 1 Or InStr(trimLineOfCode, "Function ") > 1 Then
-                        posSpace = InStr(trimLineOfCode, " ")
-'                        On Error Resume Next
-                        scope = Left(trimLineOfCode, posSpace - 1)
-                        trimLineOfCode = Trim(Mid(trimLineOfCode, posSpace + 1))
-                    Else
-                        scope = ""
-                    End If
-                    arr(r, 4) = scope
-'                    On Error GoTo 0
-'                    If Trim(scope) = "Sub" Or Trim(scope) = "Function" Then scope = ""
-                    If InStr(trimLineOfCode, "Sub ") = 1 Then
-                        sType = "Sub"
-                        trimLineOfCode = Trim(Mid(trimLineOfCode, 5))
-                    Else
-                        If InStr(trimLineOfCode, "Function ") = 1 Then
-                            sType = "Function"
-                            trimLineOfCode = Trim(Mid(trimLineOfCode, 10))
-                        End If
-                    End If
-                    arr(r, 5) = sType
-                    arr(r, 6) = trimLineOfCode
-                    If params <> "" Then arr(r, 7) = params
-                    If remarks <> "" Then arr(r, 8) = "'" & remarks
-                    arr(r, 9) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-                    params = ""
-                    remarks = ""
-                    r = r + 1
-                End If
-            Next lineNum
-        End If
-    Next VBComp
-    r = r - 1
-    Set vbCodeMod = Nothing
-    
-    'Prepare the output worksheet
-    Dim lastUsedRow As Long
-    lastUsedRow = wshzDocSubsAndFunctions.Range("A999").End(xlUp).row 'Last Used Row
-    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).Clearcontents
-
-    Dim numColumns As Long
-    numColumns = UBound(arr, 2)
-    Dim minArray() As Variant
-    ReDim minArray(1 To r, 1 To numColumns)
-    
-    'Copy the data from arr to minArray
-    Dim i As Integer, j As Integer
-    For i = 1 To r
-        For j = 1 To numColumns
-            minArray(i, j) = arr(i, j)
+    ' Copy the relevant data from the input array to the new array
+    Dim i As Long, j As Long
+    For i = 1 To nRows
+        For j = 1 To nCols
+            tempArray(i, j) = inputArray(i, j)
         Next j
     Next i
     
-    'Sort the array based on column 1 then column 1
-    Call BubbleSort_2D_Array(minArray)
+    ' Assign the trimmed array back to the input array
+    inputArray = tempArray
     
-    'Transfer the array to the worksheet
-    wshzDocSubsAndFunctions.Range("A2").Resize(UBound(minArray, 1), UBound(minArray, 2)).value = minArray
-
-    Call Output_Timer_Results("modzDevUtils:List_All_Subs_And_Functions()", timerStart)
-
 End Sub
 
-Sub List_All_Named_Ranges() '2024-03-26 @ 14:30 - From ChatGPT
+Sub TestArray_2D_Resizer()
+    Dim originalArray() As Variant
+    Dim i As Long, j As Long
     
-    Application.ScreenUpdating = False
+    ' Dimension the original array to a fixed size (e.g., 10 rows and 5 columns)
+    ReDim originalArray(1 To 10, 1 To 5)
     
-    Dim nr As name
+    ' Fill the original array with some example data
+    For i = 1 To 10
+        For j = 1 To 5
+            originalArray(i, j) = "R" & i & "C" & j
+        Next j
+    Next i
     
-    'Define the old workbook name and the new workbook name
-    Dim wbName As String
-    wbName = ThisWorkbook.name
-
-    'Setup and prepare the output worksheet
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Doc_NamedRanges")
-    Dim r As Long
-    r = ws.Range("A9999").End(xlUp).row 'Last Used Row
-    ws.Range("A2:F" & r).Clearcontents
-    r = 2
+    ' Output the original array to the immediate window
+    Debug.Print "Original Array:"
+    For i = 1 To 10
+        For j = 1 To 5
+            Debug.Print originalArray(i, j);
+        Next j
+        Debug.Print
+    Next i
     
-    'Loop through each named range in the workbook
-    For Each nr In ThisWorkbook.Names
-        Debug.Print nr.name
-        ws.Cells(r, 1).value = nr.name
-        ws.Cells(r, 2).value = "'" & nr.value
-'        ws.Cells(r, 3).value = "'" & nr.Parent
-        ws.Cells(r, 4).value = Now()
-        r = r + 1
-'        'Check if the named range refers to the old workbook
-'        If InStr(1, nr.RefersTo, oldWorkbookName) > 0 Then
-'            ' Replace the old workbook name with the new workbook name
-'            nr.RefersTo = Replace(nr.RefersTo, oldWorkbookName, newWorkbookName)
-'        End If
-    Next nr
+    ' Trim the array to 6 rows and 3 columns
+    Call Array_2D_Resizer(originalArray, 6, 3)
     
-    Application.ScreenUpdating = True
-
+    ' Output the trimmed array to the immediate window
+    Debug.Print "Trimmed Array:"
+    For i = 1 To 6
+        For j = 1 To 3
+            Debug.Print originalArray(i, j);
+        Next j
+        Debug.Print
+    Next i
 End Sub
 
-Sub List_All_Conditional_Formatting() '2024-03-26 @ 14:32
+Sub zArray_2D_Resizer(oArray As Variant, r As Long, c As Long, ByRef tArray)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modzDevUtils:List_All_Conditional_Formatting()")
-
-    Dim r As Integer: r = 1
-    Dim numRows As Integer, numCols As Integer
-    numRows = 100
-    numCols = 5
-    Dim arr(1 To 100, 1 To 5) As String
-
-    'Loop through each worksheet
-    Dim ws As Worksheet
-    Dim fc As FormatCondition
-    Dim rng As Range
-    Dim wsName As String
-    For Each ws In ThisWorkbook.Worksheets
-        wsName = ws.name
-        'Loop through each conditional formatting rule within the worksheet
-        For Each fc In ws.Cells.FormatConditions
-            'Debug.Print Tab(5); "Type: " & TypeName(fc)
-            arr(r, 1) = wsName
-            arr(r, 2) = fc.AppliesTo.Address
-            Set rng = fc.AppliesTo
-            arr(r, 3) = rng.Cells.count
-            arr(r, 4) = fc.Formula1
-            arr(r, 5) = Now()
-            r = r + 1
-        Next fc
-    Next ws
+    Dim i As Long, j As Long
     
-    Set fc = Nothing
-    Set ws = Nothing
-    Set rng = Nothing
+    'Copy the original data from the original array (oArray) to the trimmed array (tArray)
+    For i = 1 To r
+        For j = 1 To c
+            tArray(i, j) = oArray(i, j)
+        Next j
+    Next i
     
-    'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_ConditionalFormatting")
-    Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow).Clearcontents
-    
-    wsOutput.Range("A2").Resize(numRows, numCols).value = arr
-    
-    Set wsOutput = Nothing
-    
-    Call Output_Timer_Results("modzDevUtils:List_All_Conditional_Formatting()", timerStart)
- 
 End Sub
 
-Sub Array_Bubble_Sort(arr() As String)
+Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
     Dim temp As String
     
@@ -333,19 +506,29 @@ Sub Array_Bubble_Sort(arr() As String)
     Next i
 End Sub
 
-Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
+Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long
-    Dim numRows As Long, numCols As Long
+    Dim numRows As Long, numCols As Long, numCells As Long
     Dim temp As Variant
-    Dim sorted As Boolean
+    Dim sorted As Boolean, grosTri As Boolean
 
     numRows = UBound(arr, 1)
     numCols = UBound(arr, 2)
-
+    numCells = numRows * numCols
+    If numCells > 5000 Then grosTri = True
+    
+    If grosTri Then
+        Application.StatusBar = "Tri en cours - " & _
+            Trim(Format(numCells, "###,##0")) & " cellules à traiter..."
+    End If
+    
     'Bubble Sort Algorithm
-    Dim c As Integer
+    Dim c As Integer, cProcess As Long
     For i = 1 To numRows - 1
+        If grosTri And i Mod Round(numRows / 10, 0) = 0 Then
+            Application.StatusBar = "Tri en cours - " & Round(((i * 100) / numRows), 0) & " %"
+        End If
         sorted = True
         For j = 1 To numRows - i
             'Compare column 2 first
@@ -373,6 +556,10 @@ Sub BubbleSort_2D_Array(ByRef arr() As Variant) 'ChatGPT - 2024-02-26 @ 11:40
         'If no swaps were made, the array is sorted
         If sorted Then Exit For
     Next i
+
+    If grosTri Then
+        Application.StatusBar = ""
+    End If
 
 End Sub
 
@@ -464,7 +651,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
     Dim lastUsedRow As Long
     lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow + 1).Clearcontents
+    wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
     
     wsOutput.Range("A2").Resize(r, 5).value = output
     

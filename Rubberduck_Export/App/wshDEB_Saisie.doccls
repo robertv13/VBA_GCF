@@ -206,9 +206,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
-            Target.Clearcontents
+            Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

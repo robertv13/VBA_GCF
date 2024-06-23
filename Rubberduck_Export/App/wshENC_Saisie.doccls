@@ -5,7 +5,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Apply check
     If Not Intersect(Target, Range("D13:D42")) Is Nothing And Range("E" & Target.row).value <> "" Then
-        If Target.value = "" Then Target.value = Chr(252) Else Target.Clearcontents
+        If Target.value = "" Then Target.value = Chr(252) Else Target.ClearContents
         Range("F3").Select
         Dim MAA As Currency
         If Target.value = Chr(252) Then
@@ -21,7 +21,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 Target.value = ""
             End If
         Else
-            Range("J" & Target.row).Clearcontents
+            Range("J" & Target.row).ClearContents
         End If
     End If
 End Sub

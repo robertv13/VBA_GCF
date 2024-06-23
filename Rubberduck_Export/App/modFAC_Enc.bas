@@ -8,7 +8,7 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Load_Open_Invoices()")
     
-    wshENC_Saisie.Range("D13:K42").Clearcontents 'Clear the invoices area before loading it
+    wshENC_Saisie.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
     With wshFAC
         lastResultRow = .Range("A99999").End(xlUp).row 'Last row
         If lastResultRow < 3 Then Exit Sub
@@ -113,7 +113,7 @@ Sub Encaissement_Add_New() '2024-02-07 @ 12:39
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Add_New()")
 
     wshENC_Saisie.Range("B2").value = False
-    wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").Clearcontents 'Clear Fields
+    wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents 'Clear Fields
     wshENC_Saisie.Range("J3").value = Date 'Set Default Date
     wshENC_Saisie.Range("F5").value = "Banque" ' Set Default type
     
@@ -199,7 +199,7 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         End If
         payRow = .Range("B4").value 'Payment Row
         .Range("B2").value = True
-        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").Clearcontents
+        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents
         'Update worksheet fields
         .Range("J3").value = wshENC_Entête.Cells(payRow, 2).value
         .Range("F3").value = wshENC_Entête.Cells(payRow, 3).value
@@ -209,7 +209,7 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         
         'Load Pay Items
         With wshENC_Détails
-            .Range("M4:T999999").Clearcontents
+            .Range("M4:T999999").ClearContents
             lastRow = .Range("A999999").End(xlUp).row
             If lastRow < 4 Then GoTo NoData
             .Range("A3:G" & lastRow).AdvancedFilter _
@@ -248,6 +248,7 @@ Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     Call Output_Timer_Results("modFAC_Enc:Encaissement_Import_All()", timerStart)
     
 End Sub
+
 'Sub FAC_Comptes_Clients_Import_All() '2024-02-14 @ 09:50
 '
 '    'Clear all cells, but the headers, in the destination worksheet
@@ -316,7 +317,7 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_Encaissements_Entête_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
+    wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -360,7 +361,7 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_Encaissements_Détails_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).Clearcontents
+    wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String

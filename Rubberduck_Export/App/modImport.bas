@@ -21,7 +21,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshBD_Clients.Range("A1").CurrentRegion.Offset(1, 0).Clearcontents
+    wshBD_Clients.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
@@ -81,7 +81,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshTEC_Local.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
+    wshTEC_Local.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -133,7 +133,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Application.StatusBar = "J'importe le plan comptable"
     
     'Clear all cells, but the headers, in the target worksheet
-    wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).Clearcontents
+    wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
@@ -187,7 +187,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
     
     'Clear all cells, but the headers, in the target worksheet
-    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).Clearcontents
+    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -257,7 +257,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
     If lastUsedRow1 > 1 Then
-        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow1).Clearcontents
+        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow1).ClearContents
     End If
     
     'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
@@ -334,7 +334,7 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
+    wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -384,7 +384,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Détails.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
+    wshFAC_Détails.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -435,7 +435,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC.Range("A1").CurrentRegion.Offset(2, 0).Clearcontents
+    wshFAC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
