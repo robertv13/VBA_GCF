@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.7.6" '2024-06-21 @ 05:56
+Public Const APP_VERSION_NO As String = "v3.8.1" '2024-06-23 @ 18:46
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
