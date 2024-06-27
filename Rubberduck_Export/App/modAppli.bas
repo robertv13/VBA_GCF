@@ -87,13 +87,6 @@ Sub BackToMainMenu()
 
 End Sub
 
-Sub DEBOURS_Back_To_Menu()
-    
-    wshMenuDEB.Activate
-    wshMenuDEB.Range("A1").Select
-    
-End Sub
-
 Private Sub auto_open() '2024-03-06 @ 14:36
 
     userName = Environ("Username") '2024-03-27 @ 06:54
@@ -238,7 +231,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     
     'Clear previous settings AND protect the worksheet
     ws.EnableSelection = xlNoRestrictions
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
 
     'Collect all unprotected cells
     Dim cell As Range, unprotectedCells As Range

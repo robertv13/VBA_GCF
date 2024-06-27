@@ -545,7 +545,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula

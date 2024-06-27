@@ -7,29 +7,44 @@ Private Sub Worksheet_Activate()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshDEB_Saisie:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
+    Application.EnableEvents = False
     
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("DEB_Saisie")
-    
-    'Import all transactions from Master
-    Call GL_Trans_Import_All
+    'Import transactions from MASTER file
+    Call DEB_Trans_Import_All
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
     
-    Application.EnableEvents = False
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    
+    'Import all transactions from Master
+    Call DEB_Trans_Import_All
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
     
     'Hide column A & B
     With ws
         .Unprotect
-        .Range("A:B").EntireColumn.Hidden = True
-        .EnableCalculation = True
-        .Protect userInterfaceOnly:=True
+'        .Range("A:B").EntireColumn.Hidden = True
+        .Protect UserInterfaceOnly:=True
     End With
     
+    Call SetTabOrder(ws)
+    
     Call DEB_Saisie_Clear_All_Cells
-
+    
     Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    With ws
+        .Range("F4").Activate
+        .Range("F4").Select
+        previousCellAddress = .Range("F4").Address
+    End With
 
     Call Output_Timer_Results("wshDEB_Saisie:Worksheet_Activate()", timerStart)
 
@@ -69,11 +84,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Account is selected
     If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
+        wshDEB_Saisie.Range("B4").value = Target.Address
     End If
     
     'Tax code is selected (FP is the default)
     If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
         Application.EnableEvents = False
+        Target.Interior.Color = HIGHLIGHT_COLOR
         Target.value = "FP"
         Application.EnableEvents = True
     End If

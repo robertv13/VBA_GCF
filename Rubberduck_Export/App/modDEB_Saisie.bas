@@ -5,6 +5,11 @@ Sub DEB_Saisie_Update()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Update()")
     
+    'Remove highlight from last cell
+    If wshDEB_Saisie.Range("B4").value <> "" Then
+        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").value).Interior.Color = xlNone
+    End If
+    
     'Date is not valid OR the transaction does not balance
     If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").value) = False Or _
         Fn_Is_Debours_Balance = False Then
@@ -35,6 +40,12 @@ Sub DEB_Saisie_Update()
     
     'Get ready for a new one
     Call DEB_Saisie_Clear_All_Cells
+    
+    Application.EnableEvents = True
+    With wshDEB_Saisie
+        .Range("F4").Activate
+        .Range("F4").Select
+    End With
         
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Update()", timerStart)
         
@@ -464,12 +475,20 @@ Public Sub DEB_Saisie_Clear_All_Cells()
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
         .Range("O4").value = Format(Now(), "dd-mm-yyyy")
         .ckbRecurrente = False
-        .Range("F4").Activate
-        .Range("F4").Select
     End With
     Application.EnableEvents = True
     
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
 
 End Sub
+
+Sub DEBOURS_Back_To_Menu()
+    
+    wshDEB_Saisie.Visible = xlSheetHidden
+    
+    wshMenuDEB.Activate
+    wshMenuDEB.Range("A1").Select
+    
+End Sub
+
 

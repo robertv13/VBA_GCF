@@ -21,7 +21,7 @@ Private Sub Workbook_Open()
     wshMenu.Activate
     wshMenu.Unprotect
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
     
     Call Slide_In_All_Menu_Options
 

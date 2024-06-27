@@ -8,21 +8,28 @@ Private Sub Worksheet_Activate()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:Worksheet_Activate()")
 
     Application.ScreenUpdating = False
+    Application.EnableEvents = False
     
-    'Hide column A & B
-    wshGL_BV.Range("A:B").EntireColumn.Hidden = True
-    
+    'Import transactions from MASTER file
+    Call GL_Trans_Import_All
+
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
+
+    Me.Application.Calculation = xlCalculationAutomatic
     
-    wshGL_BV.EnableCalculation = True
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("GL_BV")
+    
+    'Hide column A & B
+'    ws.Range("A:B").EntireColumn.Hidden = True
+
+    Call SetTabOrder(ws)
     
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
-    wshGL_BV.Range("M4:T99999").ClearContents
-    wshGL_BV.Range("L2").value = ""
-    wshGL_BV.Range("J1").value = Format(Now(), "dd-mm-yyyy")
-    wshGL_BV.Range("B10").value = 0
+    ws.Range("L4:T99999").ClearContents
+    ws.Range("B10").value = 0
     
     Dim cbx As Shape
     For Each cbx In wshGL_BV.Shapes
@@ -31,10 +38,21 @@ Private Sub Worksheet_Activate()
         End If
     Next cbx
 
-    Set cbx = Nothing
-    
-    Application.EnableEvents = True
     Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    If ws.Range("J1").value = "" Then
+        ws.Range("J1").value = Format(Now(), "dd-mm-yyyy")
+    End If
+    
+    With ws
+        .Range("J1").Activate
+        .Range("J1").Select
+        previousCellAddress = .Range("J1").Address
+    End With
+    
+    Set cbx = Nothing
+    Set ws = Nothing
     
     Call Output_Timer_Results("wshGL_BV:Worksheet_Activate()", timerStart)
 
@@ -56,14 +74,20 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If dynamicShape.Visible = True Then dynamicShape.Visible = False
     End If
     
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+
     'Date selected
-    If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing And _
-        wshGL_BV.Range("J1").value = "" Then
-            Target.value = Format(Now(), "dd-mm-yyyy")
+    If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
+    ''        If wshGL_BV.Range("J1").value = "" Then
+    ''            Target.value = Format(Now(), "dd-mm-yyyy")
+    ''        End If
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
-    'TB account has been selected
-    If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value)) Is Nothing Then
+    'An account has been selected from Trial Balance
+    If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value - 2)) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
@@ -78,8 +102,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Get the entire transaction, from a selected line
-    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing Then
-        If wshGL_BV.Range("M" & Target.row) <> "" Then
+    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing And _
+        Target.Cells.count = 1 And _
+        wshGL_BV.Range("M" & Target.row) <> "" Then
             Dim noJE As Long
             noJE = wshGL_BV.Range("N" & Target.row).value
             Application.EnableEvents = False
@@ -87,9 +112,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = True
             Call wshGL_BV_Get_An_JE_Detail_Trans(noJE)
             Call wshGL_BV_Display_JE_Trans_With_Shape
-        Else
-        wshGL_BV.Range("B10").value = 0
-        End If
     Else
         wshGL_BV.Range("B10").value = 0
     End If
@@ -101,6 +123,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
     Dim fullDate As Variant
     
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
+        'Temporarily disable events to prevent infinite loop
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
@@ -112,9 +135,9 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
-                Target.ClearContents
+            Target.ClearContents
             Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))

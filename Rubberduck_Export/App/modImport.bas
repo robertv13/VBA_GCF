@@ -475,3 +475,56 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
 
 End Sub
 
+Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:DEB_Trans_Import_All()")
+    
+    Application.StatusBar = "J'importe les transactions de déboursés"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshDEB_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
+    sourceTab = "DEB_Trans"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range
+    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range
+    Set destinationRange = wshDEB_Trans.Range("A1")
+
+    'Copy data, using Range to Range, then close the Master file
+    sourceRange.Copy destinationRange
+    wshDEB_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastUsedRow As Long
+    lastUsedRow = wshDEB_Trans.Range("A999999").End(xlUp).row
+    
+    'Adjust Formats for all new rows
+    With wshDEB_Trans
+        .Range("A2:O" & lastUsedRow).HorizontalAlignment = xlCenter
+        .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+        .Range("C2:C" & lastUsedRow & _
+             ", D2:D" & lastUsedRow & _
+             ", E2:E" & lastUsedRow & _
+             ", G2:G" & lastUsedRow & _
+             ", N2:N" & lastUsedRow).HorizontalAlignment = xlLeft
+        With .Range("I2:M" & lastUsedRow)
+            .HorizontalAlignment = xlRight
+            .NumberFormat = "#,##0.00 $"
+        End With
+    End With
+    
+    Application.ScreenUpdating = True
+    Application.StatusBar = ""
+    
+    Call Output_Timer_Results("modImport:DEB_Trans_Import_All()", timerStart)
+
+End Sub

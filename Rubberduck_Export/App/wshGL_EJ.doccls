@@ -25,14 +25,17 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
    'Hide column A & B
     With ws
         .Unprotect
-        .Range("A:B").EntireColumn.Hidden = True
+'        .Range("A:B").EntireColumn.Hidden = True
     End With
     
     Call SetTabOrder(ws)
     
-    ws.Range("F4").Activate
-    ws.Range("F4").Select
-    previousCellAddress = ws.Range("F4").Address
+    With ws
+        .Range("K4").value = Now()
+        .Range("F4").Activate
+        .Range("F4").Select
+        previousCellAddress = .Range("F4").Address
+    End With
     
     Application.EnableEvents = True
     

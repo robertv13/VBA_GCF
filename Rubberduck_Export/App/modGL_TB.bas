@@ -11,7 +11,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     'Clear TB cells - Contents & formats
     Dim lastUsedRow As Long
     lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
-    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 1).clear
+    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).clear
 
     'Clear Detail transaction section
     wshGL_BV.Range("L4:T99999").ClearContents
@@ -120,6 +120,8 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     End With
 
     Application.EnableEvents = True
+    
+    ActiveWindow.ScrollRow = 1
   
     Call Output_Timer_Results("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
 
@@ -162,8 +164,10 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()")
     
+    Dim ws As Worksheet: Set ws = wshGL_BV
+    
     'Clear the display area & display the account number & description
-    With wshGL_BV
+    With ws
         .Range("L4:T99999").clear '2024-06-08 @ 15:28
         .Range("L2").value = "Du " & minDate & " au " & maxDate
     
@@ -176,11 +180,14 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     'Use the Advanced Filter Result already prepared for TB
     Dim row As Range, foundRow As Long, lastResultUsedRow As Long
     lastResultUsedRow = wshGL_Trans.Range("T99999").End(xlUp).row
+    If lastResultUsedRow <= 2 Then
+        GoTo Exit_Sub
+    End If
     foundRow = 0
     
     'Find the first occurence of GlACct in AdvancedFilter Results on GL_Trans
     Dim foundCell As Range, searchRange As Range
-    Set searchRange = wshGL_Trans.Range("T2:T" & lastResultUsedRow)
+    Set searchRange = wshGL_Trans.Range("T1:T" & lastResultUsedRow)
     Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
     foundRow = foundCell.row
     
@@ -192,7 +199,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     Dim rowGLDetail As Long
     rowGLDetail = 5
-    With wshGL_BV.Range("S4")
+    With ws.Range("S4")
         .value = 0
         .Font.Bold = True
         .NumberFormat = "#,##0.00 $"
@@ -207,31 +214,31 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     Dim d As Date, OK As Integer
     
-    With wshGL_BV
-    Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
-        'Traitement des transactions détaillées
-        d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd-mm-yyyy")
-        If d >= minDate And d <= maxDate Then
-            .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
-            .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
-            .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
-            .Range("O" & rowGLDetail).value = wshGL_Trans.Range("R" & foundRow).value
-            .Range("P" & rowGLDetail).value = wshGL_Trans.Range("S" & foundRow).value
-            .Range("Q" & rowGLDetail).value = wshGL_Trans.Range("V" & foundRow).value
-            .Range("R" & rowGLDetail).value = wshGL_Trans.Range("W" & foundRow).value
-            .Range("S" & rowGLDetail).value = wshGL_BV.Range("S" & rowGLDetail - 1).value + _
-                wshGL_Trans.Range("V" & foundRow).value - wshGL_Trans.Range("W" & foundRow).value
-            .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).value
-            foundRow = foundRow + 1
-            rowGLDetail = rowGLDetail + 1
-            OK = OK + 1
-        Else
-            foundRow = foundRow + 1
-        End If
-    Loop
+    With ws
+        Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
+            'Traitement des transactions détaillées
+            d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd-mm-yyyy")
+            If d >= minDate And d <= maxDate Then
+                .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
+                .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
+                .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
+                .Range("O" & rowGLDetail).value = wshGL_Trans.Range("R" & foundRow).value
+                .Range("P" & rowGLDetail).value = wshGL_Trans.Range("S" & foundRow).value
+                .Range("Q" & rowGLDetail).value = wshGL_Trans.Range("V" & foundRow).value
+                .Range("R" & rowGLDetail).value = wshGL_Trans.Range("W" & foundRow).value
+                .Range("S" & rowGLDetail).value = ws.Range("S" & rowGLDetail - 1).value + _
+                    wshGL_Trans.Range("V" & foundRow).value - wshGL_Trans.Range("W" & foundRow).value
+                .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).value
+                foundRow = foundRow + 1
+                rowGLDetail = rowGLDetail + 1
+                OK = OK + 1
+            Else
+                foundRow = foundRow + 1
+            End If
+        Loop
     End With
 
-    With wshGL_BV.Range("S" & rowGLDetail - 1)
+    With ws.Range("S" & rowGLDetail - 1)
         .Font.Bold = True
         With .Interior
             .Pattern = xlSolid
@@ -244,20 +251,47 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         
     'Set columns width for the detailled transactions list
     Dim rng As Range
-    lastResultUsedRow = wshGL_BV.Range("M9999").End(xlUp).row
-    Set rng = wshGL_BV.Range("M5:M" & lastResultUsedRow)
+    lastResultUsedRow = ws.Range("M9999").End(xlUp).row
+    Set rng = ws.Range("M5:M" & lastResultUsedRow)
     rng.ColumnWidth = 11
-    Set rng = wshGL_BV.Range("N5:N" & lastResultUsedRow)
-    rng.ColumnWidth = 10
-    Set rng = wshGL_BV.Range("O5:O" & lastResultUsedRow)
+    Set rng = ws.Range("N5:N" & lastResultUsedRow)
+    rng.ColumnWidth = 8
+    Set rng = ws.Range("O5:O" & lastResultUsedRow)
     rng.ColumnWidth = 40
-    Set rng = wshGL_BV.Range("P5:P" & lastResultUsedRow)
+    Set rng = ws.Range("P5:P" & lastResultUsedRow)
     rng.ColumnWidth = 16
-    Set rng = wshGL_BV.Range("Q5:S" & lastResultUsedRow)
-    rng.ColumnWidth = 15
-    Set rng = wshGL_BV.Range("T5:T" & lastResultUsedRow)
+    Set rng = ws.Range("Q5:S" & lastResultUsedRow)
+    rng.ColumnWidth = 16
+    Set rng = ws.Range("T5:T" & lastResultUsedRow)
     rng.ColumnWidth = 30
+
+    Dim visibleRows As Long
+    visibleRows = ActiveWindow.VisibleRange.rows.count
+    If lastResultUsedRow > visibleRows Then
+        ActiveWindow.ScrollRow = lastResultUsedRow - visibleRows + 3 'Move to the bottom of the worksheet
+    Else
+        ActiveWindow.ScrollRow = 1
+    End If
     
+    'Create a Conditional Formating for the displayed transactions
+    ws.Unprotect
+    With ws.Range("M5:T" & lastResultUsedRow)
+        .FormatConditions.add _
+            Type:=xlExpression, _
+            Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
+        .FormatConditions(.FormatConditions.count).SetFirstPriority
+        With .FormatConditions(1).Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorAccent1
+            .TintAndShade = 0.799981688894314
+        End With
+        .FormatConditions(1).StopIfTrue = False
+    End With
+    
+    ws.Protect UserInterfaceOnly:=True
+    
+Exit_Sub:
+
     Call Output_Timer_Results("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", timerStart)
 
 End Sub
@@ -269,7 +303,6 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("P2").CurrentRegion
-'        Call Fn_Clear_Range_Borders(rgResult)
         rgResult.Offset(1).ClearContents
         
         Set rgData = .Range("A1").CurrentRegion
@@ -305,27 +338,6 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
                 .Apply 'Apply Sort
         End With
     End With
-
-'    Range("P1:Y1063").Select
-'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.clear
-'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-'        "T2:T1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-'        xlSortTextAsNumbers
-'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-'        "Q2:Q1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-'        xlSortNormal
-'    ActiveWorkbook.Worksheets("GL_Trans").Sort.SortFields.Add2 key:=Range( _
-'        "P2:P1063"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
-'        xlSortNormal
-'    With ActiveWorkbook.Worksheets("GL_Trans").Sort
-'        .SetRange Range("P1:Y1063")
-'        .Header = xlYes
-'        .MatchCase = False
-'        .Orientation = xlTopToBottom
-'        .SortMethod = xlPinYin
-'        .Apply
-'    End With
-
 
 NoSort:
 

@@ -30,7 +30,7 @@ Sub BV_Click()
     
     With wshGL_BV
         .Visible = xlSheetVisible
-        .Select
+        .Activate
     End With
     
     Application.ScreenUpdating = True

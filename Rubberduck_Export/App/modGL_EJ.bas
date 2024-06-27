@@ -100,7 +100,7 @@ Sub wshGL_EJ_Clear_All_Cells()
         wshGL_EJ.Activate
         wshGL_EJ.Range("F4").Select
     End With
-    ActiveSheet.Protect userInterfaceOnly:=True
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
     Call Output_Timer_Results("modGL_EJ:wshGL_EJ_Clear_All_Cells()", timerStart)
 

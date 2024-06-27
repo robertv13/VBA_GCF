@@ -26,7 +26,7 @@ Sub SlideIn_TEC()
         Next width
         wshMenu.Unprotect
         .TextFrame2.TextRange.Characters.text = ""
-        wshMenu.Protect userInterfaceOnly:=True
+        wshMenu.Protect UserInterfaceOnly:=True
     End With
     
 End Sub

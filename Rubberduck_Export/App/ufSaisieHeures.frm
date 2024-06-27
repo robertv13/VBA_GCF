@@ -121,7 +121,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
 
-    If Me.cmbProfessionnel.value = "" Then GoTo exit_sub
+    If Me.cmbProfessionnel.value = "" Then GoTo Exit_Sub
     
     wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
     wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(Me.cmbProfessionnel.value)
@@ -131,7 +131,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
 
-exit_sub:
+Exit_Sub:
 
     Call Output_Timer_Results("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", timerStart)
 
@@ -391,7 +391,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         If isBilled Then
             MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
                         vbNewLine & "une charge déjà FACTURÉE", vbExclamation
-            GoTo exit_sub
+            GoTo Exit_Sub
         End If
         
         .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
@@ -422,7 +422,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .txtSavedFacturable.value = .chbFacturable.value
     End With
 
-exit_sub:
+Exit_Sub:
 
     Call Buttons_Enabled_True_Or_False(True, False, False, True)
     
