@@ -126,7 +126,7 @@ End Sub
 Sub Invoice_SaveAsPDF()
     Dim FilePath As String
     Dashboard_Invoice_SaveUpdate                           'Save invoice
-    FilePath = ThisWorkbook.Path & "\" & Invoice.Range("G5").value & "_" & Invoice.Range("J1").value 'File Path
+    FilePath = ThisWorkbook.path & "\" & Invoice.Range("G5").value & "_" & Invoice.Range("J1").value 'File Path
     If Dir(FilePath, vbDirectory) <> "" Then Kill (FilePath)
     Invoice.ExportAsFixedFormat xlTypePDF, FilePath, , , False, , , True
 End Sub

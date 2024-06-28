@@ -194,7 +194,7 @@ Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) A
     
     If m < 1 Or m > 12 Or _
        d > mdpm(m - 1) Or _
-       Abs(Year(Now()) - y) > 75 Then
+       Abs(year(Now()) - y) > 75 Then
             Exit Function
     Else
         Fn_ValidateDaySpecificMonth = True
@@ -216,9 +216,9 @@ Function CompleteDate(dateInput As String) As Variant
     On Error GoTo InvalidDate
     
     'Get the current date components
-    defaultDay = Day(Date)
-    defaultMonth = Month(Date)
-    defaultYear = Year(Date)
+    defaultDay = day(Date)
+    defaultMonth = month(Date)
+    defaultYear = year(Date)
     
     ' Split the input date into parts, considering different delimiters
     dateInput = Replace(Replace(Replace(dateInput, "/", "-"), ".", "-"), " ", "")

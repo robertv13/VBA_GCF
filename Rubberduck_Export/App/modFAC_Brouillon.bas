@@ -139,7 +139,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
-        y = Right(Year(d), 2)
+        y = Right(year(d), 2)
         wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If

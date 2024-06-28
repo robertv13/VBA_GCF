@@ -314,7 +314,7 @@ Sub BackupMasterFile()
 
     'Define the backup file path (same directory as the master file)
     Dim backupFilePath As String
-    backupFilePath = masterWorkbook.Path & "\" & backupFileName
+    backupFilePath = masterWorkbook.path & "\" & backupFileName
 
     'Save a copy of the master workbook with the new name
     masterWorkbook.SaveCopyAs backupFilePath
@@ -334,7 +334,7 @@ End Sub
 Sub TEST_GetOneDrivePath()
 
     On Error GoTo eh
-    Debug.Print "Original Path is: " & ThisWorkbook.Path & "/" & ThisWorkbook.name
+    Debug.Print "Original Path is: " & ThisWorkbook.path & "/" & ThisWorkbook.name
     Debug.Print "The Path is     : " & GetOneDrivePath(ThisWorkbook.FullName)
     Exit Sub
 eh:
