@@ -137,6 +137,44 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
     
 End Function
 
+Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
+
+    'Define the source data
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow < 4 Then Exit Function
+    Dim sourceRng As Range
+    Set sourceRng = ws.Range("A3:F" & lastUsedRow)
+    
+    'Define the criteria range
+    Dim criteriaRng As Range
+    Set criteriaRng = ws.Range("V2:V3")
+    ws.Range("V3").value = invNo
+    
+    'Define the destination range & clear the old data
+    Dim destinationRng As Range
+    Set destinationRng = ws.Range("X3:AC3")
+    lastUsedRow = ws.Range("X9999").End(xlUp).row
+    If lastUsedRow > 3 Then
+        ws.Range("X4:AB" & lastUsedRow).ClearContents
+    End If
+    
+    'Execute the AdvancedFilter
+    sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+    
+    lastUsedRow = ws.Range("X9999").End(xlUp).row
+    If lastUsedRow < 3 Then
+        Fn_Get_AR_Balance_For_Invoice = 0
+    Else
+        Dim i As Long, balanceFacture As Currency
+        For i = 4 To lastUsedRow
+            balanceFacture = balanceFacture + CCur(ws.Range("AB" & i).value)
+        Next i
+        Fn_Get_AR_Balance_For_Invoice = balanceFacture
+    End If
+
+End Function
+
 Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     

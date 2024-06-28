@@ -29,6 +29,8 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = True
     
+    Call Shape_Is_Visible(False)
+    
     Call Output_Timer_Results("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
 
 Clean_Exit:
@@ -86,6 +88,7 @@ End Sub
 Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws2 As Worksheet: Set ws2 = wshENC_Détails
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Range("Y9999").End(xlUp).row
@@ -95,13 +98,14 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     ReDim arr(1 To 250, 1 To 15)
     
     With ws
-        Dim i As Long, r As Long
+        Dim i As Long, r As Long, invNo As String
         For i = 3 To lastUsedRow
             If .Range("Z" & i).value < dateMin Or .Range("Z" & i).value > dateMax Then
                 GoTo nextIteration
             End If
             r = r + 1
-            arr(r, 1) = .Range("Y" & i).value
+            invNo = .Range("Y" & i).value
+            arr(r, 1) = invNo
             arr(r, 2) = .Range("Z" & i).value
             arr(r, 4) = .Range("AG" & i).value
             arr(r, 6) = .Range("AI" & i).value
@@ -111,6 +115,8 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
             arr(r, 10) = .Range("AQ" & i).value
             arr(r, 11) = .Range("AS" & i).value
             arr(r, 12) = .Range("AR" & i).value
+            arr(r, 13) = Round(Now() - arr(r, 2), 0)
+            arr(r, 14) = Fn_Get_AR_Balance_For_Invoice(ws2, invNo)
 nextIteration:
         Next i
     End With
@@ -121,7 +127,7 @@ nextIteration:
     End If
     
     'Transfer the arr to the worksheet, after resizing it
-    Call Array_2D_Resizer(arr, r, 12)
+    Call Array_2D_Resizer(arr, r, 14)
 
     With wshFAC_Historique
         For i = 1 To UBound(arr, 1)
@@ -135,10 +141,13 @@ nextIteration:
             .Range("N" & i + 8).value = arr(i, 10)
             .Range("O" & i + 8).value = arr(i, 11)
             .Range("P" & i + 8).value = arr(i, 12)
+            .Range("Q" & i + 8).value = Now() - arr(i, 2)
+            .Range("R" & i + 8).value = arr(i, 12) - arr(i, 14) 'Balance
         Next i
     End With
     
     lastUsedRow = i + 8
+    Call Remove_All_PDF_Pictures
     If lastUsedRow >= 9 Then
         Call Insert_PDF_Icons(lastUsedRow)
     End If
@@ -168,10 +177,10 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
             'Insert the icon
             Set pic = ws.Pictures.Insert(iconPath)
             With pic
-                .Top = cell.Top
+                .Top = cell.Top + 1
                 .Left = cell.Left + 5
-                .Height = cell.Height - 8
-                .width = cell.width - 8
+                .Height = cell.Height - 10
+                .width = cell.width - 10
                 .Placement = xlMoveAndSize
                 .OnAction = "Display_PDF_Invoice"
             End With
@@ -194,27 +203,17 @@ Sub Display_PDF_Invoice()
     
     'Assuming the invoice number is in column E (5th column)
     fullPDFFileName = wshAdmin.Range("FolderPDFInvoice").value & _
-        Application.PathSeparator & ws.Cells(rowNumber, 5).value
+        Application.PathSeparator & ws.Cells(rowNumber, 5).value & ".pdf"
     
     'Open the invoice using Adobe Acrobat Reader
     If fullPDFFileName <> "" Then
-        Dim AcrobatApp As Object
-        Set AcrobatApp = CreateObject("AcroExch.App")
-        Dim AcrobatDoc As Object
-        Set AcrobatDoc = CreateObject("AcroExch.PDDoc")
-        
-        If AcrobatDoc.Open(fullPDFFileName) Then
-            AcrobatApp.show
-''        Shell "AcroRd32.exe " & Chr(34) & fullPDFFileName & Chr(34), vbNormalFocus
-        Else
-            MsgBox "Je ne retrouve pas cette facture", vbExclamation
-        End If
+        Shell "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & fullPDFFileName & Chr(34), vbNormalFocus
+    Else
+        MsgBox "Je ne retrouve pas cette facture", vbExclamation
     End If
     
     Set ws = Nothing
     Set targetCell = Nothing
-    Set AcrobatApp = Nothing
-    Set AcrobatDoc = Nothing
     
 End Sub
 
@@ -280,13 +279,13 @@ Sub FAC_Historique_Clear_All_Cells()
     Application.EnableEvents = False
     ActiveSheet.Unprotect
     With wshFAC_Historique
-        .Range("F4:K4,F6:K6").ClearContents
+        .Range("F4:I4,F6:I6").ClearContents
         .Range("E9:R33").ClearContents
-        .Range("P6:R6").ClearContents
+        .Range("P6,R6").ClearContents
         Call Remove_All_PDF_Pictures
         Application.EnableEvents = True
-'        wshFAC_Historique.Activate
-'        wshFAC_Historique.Range("F4").Select
+        wshFAC_Historique.Activate
+        wshFAC_Historique.Range("F4").Select
     End With
     ActiveSheet.Protect UserInterfaceOnly:=True
     
@@ -294,9 +293,24 @@ Sub FAC_Historique_Clear_All_Cells()
 
 End Sub
 
+Sub Shape_Is_Visible(a As Boolean)
+
+    Dim shp As Shape
+    Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("Rectangle : coins arrondis 2")
+    
+    If a = True Then
+        shp.Visible = True
+    Else
+        shp.Visible = False
+    End If
+    
+End Sub
+
 Sub FAC_Historique_Back_To_FAC_Menu()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()")
+    
+    wshFAC_Historique.Visible = xlSheetHidden
     
     wshMenuFAC.Activate
     Call SlideIn_PrepFact

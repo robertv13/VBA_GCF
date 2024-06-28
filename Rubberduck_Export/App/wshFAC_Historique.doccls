@@ -15,6 +15,7 @@ Private Sub Worksheet_Activate()
     Call FAC_Détails_Import_All
     
     Call FAC_Historique_Clear_All_Cells
+    Call Shape_Is_Visible(False)
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
@@ -33,7 +34,6 @@ Private Sub Worksheet_Activate()
     Call SetTabOrder(ws)
     
     With ws
-'        .Range("F4").Activate
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -50,6 +50,26 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.Color = xlNone
     End If
 
+    Dim ws As Worksheet
+    Set ws = wshFAC_Historique
+    
+    'Is the worksheet protected ?
+    Dim cell As Range
+    If ws.ProtectContents Then
+        'Check to see if the selected cell is locked
+        For Each cell In Target.Cells
+            If cell.Locked Then
+                'Pick the next one, that is not locked
+                On Error Resume Next
+                Application.EnableEvents = False  'Prevent infinite looping
+                ws.Cells.SpecialCells(xlCellTypeVisible).Find(What:="", After:=cell, LookIn:=xlFormulas, LookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False).Activate
+                Application.EnableEvents = True
+                On Error GoTo 0
+                Exit For 'Once a unlockd cell is found, exit the for each loop
+            End If
+        Next cell
+    End If
+    
     'Client has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("F4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -120,6 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         If Not wshFAC_Historique.Range("B1").value = "VRAI" Then
             wshFAC_Historique.Range("E9:R33").ClearContents
+            Call Remove_All_PDF_Pictures
         End If
         
         Application.EnableEvents = True
@@ -140,7 +161,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -158,10 +179,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 
+    If IsDate(wshFAC_Historique.Range("P6").value) And IsDate(wshFAC_Historique.Range("R6").value) Then
+        Call Shape_Is_Visible(True)
+    End If
+    
+    If IsDate(wshFAC_Historique.Range("P6").value) = False Or _
+        IsDate(wshFAC_Historique.Range("R6").value) = False Or _
+        Trim(wshFAC_Historique.Range("F4").value) = "" Then
+        Call Shape_Is_Visible(False)
+    End If
+    
     Application.EnableEvents = True
 
 End Sub

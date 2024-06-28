@@ -564,7 +564,7 @@ Sub List_All_Shapes_Properties()
     ws.Range("J" & r).value = "Height"
     
     'Loop through all shapes on the worksheet
-    Dim shp As shape
+    Dim shp As Shape
     r = 3
     For Each shp In ws.Shapes
         ws.Range("D" & r).value = shp.Type

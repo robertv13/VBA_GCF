@@ -982,7 +982,7 @@ End Sub
 
 Sub FAC_Finale_Enable_Save_Button()
 
-    Dim shp As shape
+    Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
 
@@ -990,7 +990,7 @@ End Sub
 
 Sub FAC_Finale_Disable_Save_Button()
 
-    Dim shp As shape
+    Dim shp As Shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 

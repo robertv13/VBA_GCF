@@ -1,6 +1,6 @@
 ﻿Option Explicit
 
-Public dynamicShape As shape
+Public dynamicShape As Shape
 Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate()
     ws.Range("L4:T99999").ClearContents
     ws.Range("B10").value = 0
     
-    Dim cbx As shape
+    Dim cbx As Shape
     For Each cbx In wshGL_BV.Shapes
         If InStr(cbx.name, "GL_Trans") Then
             cbx.delete
@@ -137,7 +137,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").value = CDate(Format(Range("J1").value, "dd-mm-yyyy"))

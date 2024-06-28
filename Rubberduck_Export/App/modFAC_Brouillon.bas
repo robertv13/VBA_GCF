@@ -528,7 +528,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     Application.EnableEvents = False
     
-    Dim cbx As shape
+    Dim cbx As Shape
     For Each cbx In wshFAC_Brouillon.Shapes
         If InStr(cbx.name, "chkBox - ") Then
             cbx.delete

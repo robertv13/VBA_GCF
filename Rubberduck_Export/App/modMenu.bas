@@ -563,7 +563,7 @@ Sub EXIT_Click() '2024-06-20 @ 07:11
 End Sub
 Sub Test_SaisieHeures()
     
-    Dim shp As shape
+    Dim shp As Shape
     Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
     
     Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
