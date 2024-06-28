@@ -105,7 +105,7 @@ Sub Dashboard_Invoice_Load()
         With InvoiceItems
             lastRow = .Range("A99999").End(xlUp).row
             If lastRow < 3 Then GoTo NoItems
-            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
             lastResultRow = .Range("P99999").End(xlUp).row
             If lastResultRow < 3 Then GoTo NoItems
             For resultRow = 3 To lastResultRow
@@ -141,7 +141,7 @@ Sub Invoice_Delete()
         With InvoiceItems
             lastRow = .Range("A99999").End(xlUp).row
             If lastRow < 3 Then GoTo NotSaved
-            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
+            .Range("A2:K" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("M2:M3"), CopyToRange:=.Range("P2:Y2"), Unique:=True
             lastResultRow = .Range("P99999").End(xlUp).row
             If lastResultRow < 3 Then GoTo NotSaved
             If lastResultRow < 4 Then GoTo SingleRow

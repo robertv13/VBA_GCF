@@ -477,19 +477,6 @@ Sub TestArray_2D_Resizer()
     Next i
 End Sub
 
-Sub zArray_2D_Resizer(oArray As Variant, r As Long, c As Long, ByRef tArray)
-    
-    Dim i As Long, j As Long
-    
-    'Copy the original data from the original array (oArray) to the trimmed array (tArray)
-    For i = 1 To r
-        For j = 1 To c
-            tArray(i, j) = oArray(i, j)
-        Next j
-    Next i
-    
-End Sub
-
 Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
     Dim temp As String
@@ -577,7 +564,7 @@ Sub List_All_Shapes_Properties()
     ws.Range("J" & r).value = "Height"
     
     'Loop through all shapes on the worksheet
-    Dim shp As Shape
+    Dim shp As shape
     r = 3
     For Each shp In ws.Shapes
         ws.Range("D" & r).value = shp.Type

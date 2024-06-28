@@ -63,14 +63,14 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
 
 End Sub
 
-Sub FAC_Brouillon_Client_Change(ClientName As String)
+Sub FAC_Brouillon_Client_Change(clientName As String)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Client_Change()")
     
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, ClientName, 3)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 3)
     
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
@@ -86,7 +86,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     With wshFAC_Brouillon
         Application.EnableEvents = False
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("K4").value = ClientName
+        .Range("K4").value = clientName
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -105,7 +105,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     With wshFAC_Finale
         Application.EnableEvents = False
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("B24").value = ClientName
+        .Range("B24").value = clientName
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -452,6 +452,8 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
+    Call SlideIn_FAC_Historique
+    
     wshMenuFAC.Range("A1").Select
     
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
@@ -526,7 +528,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     Application.EnableEvents = False
     
-    Dim cbx As Shape
+    Dim cbx As shape
     For Each cbx In wshFAC_Brouillon.Shapes
         If InStr(cbx.name, "chkBox - ") Then
             cbx.delete

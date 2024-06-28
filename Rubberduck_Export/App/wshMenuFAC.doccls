@@ -1,5 +1,9 @@
 ﻿Option Explicit
 
+Private Sub Label1_Click()
+
+End Sub
+
 Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet
@@ -31,7 +35,15 @@ End Sub
 Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
     
     Call SlideIn_SuiviCC
+    Call SlideIn_FAC_Historique
     Call SlideOut_Encaissement
+
+End Sub
+
+Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+    
+    Call SlideIn_Encaissement
+    Call SlideOut_FAC_Historique
 
 End Sub
 
@@ -40,5 +52,6 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
+    Call SlideIn_FAC_Historique
 
 End Sub

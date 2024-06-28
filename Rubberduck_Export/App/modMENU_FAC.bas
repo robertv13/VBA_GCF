@@ -59,3 +59,30 @@ Sub Encaissement_Click()
     
 End Sub
 
+'Option # 4
+Sub FAC_Historique_Click()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:FAC_Historique_Click()")
+
+    Call SlideIn_FAC_Historique
+    
+    Application.ScreenUpdating = False
+    
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+    Call FAC_Comptes_Clients_Import_All
+
+    Application.EnableEvents = True
+    
+    wshFAC_Historique.Visible = xlSheetVisible
+    wshFAC_Historique.Activate
+    
+    wshFAC_Historique.Application.Calculation = xlCalculationAutomatic
+    
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("wshMenuFAC:FAC_Historique_Click()", timerStart)
+
+End Sub
+
+

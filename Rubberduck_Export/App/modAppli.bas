@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.8.1" '2024-06-23 @ 18:46
+Public Const APP_VERSION_NO As String = "v3.8.3" '2024-06-27 @ 09:08
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -26,6 +26,32 @@ Public Enum DEB_Trans_data_Columns
     fdebtAutreRemarque
     fdebtTimeStamp
     fdebtLast = fdebtTimeStamp
+End Enum
+
+Public Enum FAC_Entête_Data_Columns
+    ffacEntFirst = 1
+    ffacEntInv_No = ffacEntFirst
+    ffacEntDate_Facture
+    ffacEntCust_ID
+    ffacEntContact
+    ffacEntNom_Client
+    ffacEntAdresse1
+    ffacEntAdresse2
+    ffacEntAdresse3
+    ffacEntHonoraires
+    ffacEntAF1_Desc
+    ffacEntAutresFrais_1
+    ffacEntAF2_Desc
+    ffacEntAutresFrais_2
+    ffacEntAF3_Desc
+    ffacEntAutresFrais_3
+    ffacEntTaux_TPS
+    ffacEntMnt_TPS
+    ffacEntTaux_TVQ
+    ffacEntMntTVQ
+    ffacEntAR_Total
+    ffacEntDépôt
+    ffacEntLast = ffacEntDépôt
 End Enum
 
 Public Enum GL_EJ_Auto_Data_Columns

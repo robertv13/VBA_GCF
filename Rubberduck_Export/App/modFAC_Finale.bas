@@ -528,7 +528,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
             .Range("I3").value = wshFAC_Brouillon.Range("O6").value
             wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
             lastResultRow = .Range("O999").End(xlUp).row
             If lastResultRow < 3 Then GoTo NoItems
             For resultRow = 3 To lastResultRow
@@ -575,7 +575,7 @@ Sub InvoiceGetAllTrans(inv As String)
         .Range("V3").value = wshFAC_Brouillon.Range("O6").value
         'Advanced Filter setup
         .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("V2:V3"), _
+            criteriaRange:=.Range("V2:V3"), _
             CopyToRange:=.Range("X2:AQ2"), _
             Unique:=True
         lastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
@@ -982,7 +982,7 @@ End Sub
 
 Sub FAC_Finale_Enable_Save_Button()
 
-    Dim shp As Shape
+    Dim shp As shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
 
@@ -990,7 +990,7 @@ End Sub
 
 Sub FAC_Finale_Disable_Save_Button()
 
-    Dim shp As Shape
+    Dim shp As shape
     Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 

@@ -54,7 +54,7 @@ Sub wshFAC_Dashboard_Refresh()
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
         .Range("A2:D" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("L1:L2"), _
+            criteriaRange:=.Range("L1:L2"), _
             CopyToRange:=.Range("P2"), _
             Unique:=True
         lastResultRow = .Range("P99999").End(xlUp).row
@@ -94,7 +94,7 @@ Sub Aging_Refresh()
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
         'Very long to execute - 2024-02-16 @ 06:49
-        .Range("A2:D" & lastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("L1:L2"), CopyToRange:=.Range("P2"), Unique:=True
+        .Range("A2:D" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("L1:L2"), CopyToRange:=.Range("P2"), Unique:=True
         lastResultRow = .Range("P99999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         .Range("Q3:V" & lastResultRow).formula = .Range("Q1:W1").formula
@@ -113,7 +113,7 @@ Sub Aging_ShowCustDetail()
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
         .Range("A2:J" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("Y1:Z2"), _
+            criteriaRange:=.Range("Y1:Z2"), _
             CopyToRange:=.Range("AB2:AJ2"), _
             Unique:=True
         lastResultRow = .Range("AB99999").End(xlUp).row
@@ -142,7 +142,7 @@ Sub AgingDetail_Refresh()
         If lastRow < 3 Then Exit Sub
         .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
         .Range("A2:ND" & lastRow).AdvancedFilter xlFilterCopy, _
-            CriteriaRange:=.Range("AL1:AM2"), _
+            criteriaRange:=.Range("AL1:AM2"), _
             CopyToRange:=.Range("AB2:AJ2"), _
             Unique:=True
         lastResultRow = .Range("AB99999").End(xlUp).row

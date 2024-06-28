@@ -15,7 +15,7 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
         'Cells L3 contains a formula, no need to set it up
         .Range("A2:J" & lastResultRow).AdvancedFilter _
             xlFilterCopy, _
-            CriteriaRange:=.Range("L2:M3"), _
+            criteriaRange:=.Range("L2:M3"), _
             CopyToRange:=.Range("O2:S2")
         lastResultRow = .Range("O9999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
@@ -214,7 +214,7 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
             If lastRow < 4 Then GoTo NoData
             .Range("A3:G" & lastRow).AdvancedFilter _
                 xlFilterCopy, _
-                CriteriaRange:=.Range("J2:J3"), _
+                criteriaRange:=.Range("J2:J3"), _
                 CopyToRange:=.Range("O3:T3"), _
                 Unique:=True
             lastResultRow = .Range("O99999").End(xlUp).row

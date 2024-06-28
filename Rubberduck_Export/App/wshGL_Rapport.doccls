@@ -40,7 +40,7 @@ Private Sub Worksheet_Activate()
     
     'Hide column A & B
     With ws
-        .Range("A:B").EntireColumn.Hidden = True
+'        .Range("A:B").EntireColumn.Hidden = True
         .Protect UserInterfaceOnly:=True
         .EnableCalculation = True
     End With
@@ -58,7 +58,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = xlNone
     End If
-    
+ 
+    'Dates period has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("F4")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
     'From Date has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR

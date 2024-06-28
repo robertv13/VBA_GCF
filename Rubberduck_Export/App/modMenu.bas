@@ -24,7 +24,9 @@ Sub SlideIn_TEC()
             .Left = width - 32
             wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
+        On Error Resume Next
         wshMenu.Unprotect
+        On Error GoTo 0
         .TextFrame2.TextRange.Characters.text = ""
         wshMenu.Protect UserInterfaceOnly:=True
     End With
@@ -275,6 +277,31 @@ Sub SlideIn_Encaissement()
             .Height = width
             .Left = width - 32
             ActiveSheet.Shapes("icoEncaissement").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = ""
+    End With
+
+End Sub
+
+Sub SlideOut_FAC_Historique()
+
+    With wshMenuFAC.Shapes("btnFAC_Historique")
+        For width = 32 To maxWidth
+            .Height = width
+            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = "Historique factures"
+    End With
+
+End Sub
+
+Sub SlideIn_FAC_Historique()
+
+    With wshMenuFAC.Shapes("btnFAC_Historique")
+        For width = maxWidth To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
@@ -536,7 +563,7 @@ Sub EXIT_Click() '2024-06-20 @ 07:11
 End Sub
 Sub Test_SaisieHeures()
     
-    Dim shp As Shape
+    Dim shp As shape
     Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
     
     Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)

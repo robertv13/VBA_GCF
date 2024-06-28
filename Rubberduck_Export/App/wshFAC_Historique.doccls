@@ -1,0 +1,167 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Historique:Worksheet_Activate()")
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    Call FAC_Comptes_Clients_Import_All
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+    
+    Call FAC_Historique_Clear_All_Cells
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    
+    ws.Application.Calculation = xlCalculationAutomatic
+    
+   'Hide column A & B
+    With ws
+        .Unprotect
+'        .Range("A:B").EntireColumn.Hidden = True
+    End With
+    
+    Call SetTabOrder(ws)
+    
+    With ws
+'        .Range("F4").Activate
+        .Range("F4").Select
+        previousCellAddress = .Range("F4").Address
+    End With
+    
+    Application.EnableEvents = True
+    
+    Call Output_Timer_Results("wshFAC_Historique:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+
+    'Client has been selected
+    If Not Intersect(Target, wshFAC_Historique.Range("F4")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
+    'Dates period has bee selected
+    If Not Intersect(Target, wshFAC_Historique.Range("F6")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
+    'Dates from has been selected
+    If Not Intersect(Target, wshFAC_Historique.Range("P6")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
+    'Dates to has been selected
+    If Not Intersect(Target, wshFAC_Historique.Range("R6")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim fullDate As Variant
+    
+    'Dates Period change
+    If Not Intersect(Target, Range("F6")) Is Nothing Then
+        Application.EnableEvents = False
+        Select Case Range("F6").value
+            Case "Aujourd'hui"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("Aujourdhui")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("Aujourdhui")
+            Case "Mois Courant"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("MoisA")
+            Case "Mois Dernier"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisPrecDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("MoisPrecA")
+            Case "Trimestre courant"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("TrimA")
+            Case "Trimestre précédent"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimPrecDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("TrimPrecA")
+            Case "Année courante"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneeDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("AnneeA")
+            Case "Année précédente"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneePrecDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("AnneePrecA")
+            Case "7 derniers jours"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("SeptJoursDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("SeptJoursA")
+            Case "15 derniers jours"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("QuinzeJoursDe")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("QuinzeJoursA")
+            Case "Semaine"
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("DateDebutSemaine")
+                wshFAC_Historique.Range("R6").value = wshAdmin.Range("DateFinSemaine")
+            Case Else
+                wshFAC_Historique.Range("P6").value = ""
+                wshFAC_Historique.Range("R6").value = ""
+        End Select
+        
+        If Not wshFAC_Historique.Range("B1").value = "VRAI" Then
+            wshFAC_Historique.Range("E9:R33").ClearContents
+        End If
+        
+        Application.EnableEvents = True
+    End If
+    
+    'From date has changed
+    If Not Intersect(Target, Range("P6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = CompleteDate(CStr(Target.text))
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+            wshFAC_Historique.Range("E9:R33").ClearContents
+            Call Remove_All_PDF_Pictures
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
+        End If
+    End If
+    
+    'To date has changed
+    If Not Intersect(Target, Range("R6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = CompleteDate(CStr(Target.text))
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+            wshFAC_Historique.Range("E9:R33").ClearContents
+            Call Remove_All_PDF_Pictures
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
+        End If
+    End If
+
+    Application.EnableEvents = True
+
+End Sub

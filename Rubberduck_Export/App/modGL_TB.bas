@@ -406,7 +406,7 @@ Sub GL_TB_Setup_And_Print()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print()")
     
-    Dim lastRow As Long, printRange As Range, shp As Shape
+    Dim lastRow As Long, printRange As Range, shp As shape
     lastRow = Range("D999").End(xlUp).row + 2
     If lastRow < 4 Then Exit Sub
     Set printRange = wshGL_BV.Range("D1:G" & lastRow)
@@ -432,7 +432,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
-    Dim lastRow As Long, printRange As Range, shp As Shape
+    Dim lastRow As Long, printRange As Range, shp As shape
     lastRow = Range("M9999").End(xlUp).row
     If lastRow < 4 Then Exit Sub
     Set printRange = wshGL_BV.Range("L1:T" & lastRow)

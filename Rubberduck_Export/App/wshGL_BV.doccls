@@ -1,6 +1,6 @@
 ﻿Option Explicit
 
-Public dynamicShape As Shape
+Public dynamicShape As shape
 Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate()
     ws.Range("L4:T99999").ClearContents
     ws.Range("B10").value = 0
     
-    Dim cbx As Shape
+    Dim cbx As shape
     For Each cbx In wshGL_BV.Shapes
         If InStr(cbx.name, "GL_Trans") Then
             cbx.delete
