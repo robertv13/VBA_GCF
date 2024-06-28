@@ -155,7 +155,7 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
     wshzDocSubsAndFunctions.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wshzDocSubsAndFunctions.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
     
-    MsgBox "J'ai trouvé " & r & " lignes Sub or Function" & vbNewLine & _
+    MsgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
                 Format(lRead, "#,##0") & " Lignes de code"
     
