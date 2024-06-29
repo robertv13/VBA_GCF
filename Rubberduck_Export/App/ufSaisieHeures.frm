@@ -140,7 +140,7 @@ End Sub
 Private Sub txtDate_Enter()
 
     If Me.txtDate.value = "" Then
-        Me.txtDate.value = Format(Now(), "dd-mm-yyyy")
+        Me.txtDate.value = Format(Now(), "dd/mm/yyyy")
     End If
 
 End Sub
@@ -168,7 +168,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    If CDate(fullDate) > Format(Now(), "dd-mm-yyyy") Then
+    If CDate(fullDate) > Format(Now(), "dd/mm/yyyy") Then
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)

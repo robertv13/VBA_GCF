@@ -578,7 +578,7 @@ Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer)
         endDate = DateAdd("m", 3, startDate) - 1
         
         'Add the quarter dates to the string
-        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format(startDate, "dd-mm-yyyy") & " to " & Format(endDate, "dd-mmm-yyyy") & vbCrLf
+        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format(startDate, "dd/mm/yyyy") & " to " & Format(endDate, "dd-mmm-yyyy") & vbCrLf
     Next i
     
     'Return the quarter dates

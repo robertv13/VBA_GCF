@@ -465,7 +465,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("H" & nextRowNumber).value = hoursValue
             .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
             .Range("J" & nextRowNumber).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-            .Range("K" & nextRowNumber).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            .Range("K" & nextRowNumber).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)

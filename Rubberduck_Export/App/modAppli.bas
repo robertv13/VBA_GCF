@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.8.3" '2024-06-27 @ 09:08
+Public Const APP_VERSION_NO As String = "v3.9.0" '2024-06-28 @ 09:46
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -274,7 +274,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     Dim sortedCells As Range
     Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
-    Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd-mm-yyyy hh:mm:ss")
+    Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd/mm/yyyy hh:mm:ss")
 
     'Enable TAB through unprotected cells
     Application.EnableEvents = False

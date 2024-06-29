@@ -419,7 +419,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
-'            rs.Fields("DateSaisie").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+'            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
             rs.Fields("DateFacturee").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("VersionApp").value = APP_VERSION_NO
@@ -469,7 +469,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
             TECID = wshTEC_Local.Range("AQ" & r).value
             rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
-'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO

@@ -23,7 +23,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date, dateCutOff As Date
-    wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("J1").value, "dd-mm-yyyy"))
+    wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
 
     minDate = CDate("01/01/2023")
     dateCutOff = CDate(wshGL_BV.Range("J1").value)
@@ -217,7 +217,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd-mm-yyyy")
+            d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
             If d >= minDate And d <= maxDate Then
                 .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
@@ -391,11 +391,11 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B8").value = wshAdmin.Range("AnneePrecDe").value
             wshGL_BV.Range("B9").value = wshAdmin.Range("AnneePrecA").value
         Case "Dates Manuelles"
-            wshGL_BV.Range("B8").value = CDate(Format("01-01-2023", "dd-mm-yyyy"))
-            wshGL_BV.Range("B9").value = CDate(Format("12-31-2023", "dd-mm-yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format("01-01-2023", "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format("12-31-2023", "dd/mm/yyyy"))
         Case "Toutes les dates"
-            wshGL_BV.Range("B8").value = CDate(Format(wshGL_BV.Range("B3").value, "dd-mm-yyyy"))
-            wshGL_BV.Range("B9").value = CDate(Format(wshGL_BV.Range("B4").value, "dd-mm-yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format(wshGL_BV.Range("B3").value, "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
     End Select
     
     Call Output_Timer_Results("modGL_TB:GL_TB_Determine_From_And_To_Date()", timerStart)

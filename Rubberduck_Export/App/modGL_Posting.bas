@@ -61,7 +61,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                rs.Fields("TimeStamp") = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+                rs.Fields("TimeStamp") = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.update
 Nothing_to_Post:
     Next i
@@ -105,7 +105,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
                      .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
                 End If
                 .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+                .Range("J" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
             End If
         Next i

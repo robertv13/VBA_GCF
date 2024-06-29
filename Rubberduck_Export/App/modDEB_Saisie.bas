@@ -122,7 +122,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Crédit_TPS").value = CDbl(wshDEB_Saisie.Range("L" & l).value)
             rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
-            rs.Fields("TimeStamp").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            rs.Fields("TimeStamp").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
         rs.update
     Next l
     
@@ -169,7 +169,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
         wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
         wshDEB_Trans.Range("N" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("O" & rowToBeUsed).value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        wshDEB_Trans.Range("O" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -473,7 +473,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     Application.EnableEvents = False
     With wshDEB_Saisie
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").value = Format(Now(), "dd-mm-yyyy")
+        .Range("O4").value = Format(Now(), "dd/mm/yyyy")
         .ckbRecurrente = False
     End With
     Application.EnableEvents = True
