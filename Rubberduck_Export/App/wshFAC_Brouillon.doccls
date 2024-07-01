@@ -9,8 +9,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
     
     ws.Unprotect
 
@@ -38,6 +37,9 @@ Private Sub Worksheet_Activate()
     Me.Range("E3").Activate 'The first input is the customer name
     Application.EnableEvents = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
     Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
 
 End Sub
@@ -107,13 +109,13 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            Application.GoTo wshFAC_Brouillon.Range("L11")
+            Application.Goto wshFAC_Brouillon.Range("L11")
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -122,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -204,10 +206,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
 ExitSub:
 
-    Set rng = Nothing
-    
     Application.EnableEvents = True
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rng = Nothing
+
     Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Change()", timerStart)
   
 End Sub

@@ -20,8 +20,7 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
     
     ws.Application.Calculation = xlCalculationAutomatic
     
@@ -40,6 +39,9 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
     
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
     Call Output_Timer_Results("wshFAC_Historique:Worksheet_Activate()", timerStart)
 
 End Sub
@@ -50,8 +52,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.Color = xlNone
     End If
 
-    Dim ws As Worksheet
-    Set ws = wshFAC_Historique
+    Dim ws As Worksheet: Set ws = wshFAC_Historique
     
     'Is the worksheet protected ?
     Dim cell As Range
@@ -92,6 +93,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Save the current cell Address
     previousCellAddress = Target.Address
+
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set ws = Nothing
 
 End Sub
 
@@ -140,7 +145,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         If Not wshFAC_Historique.Range("B1").value = "VRAI" Then
             wshFAC_Historique.Range("E9:R33").ClearContents
-            Call Remove_All_PDF_Pictures
+            Call Remove_All_PDF_Icons
         End If
         
         Application.EnableEvents = True
@@ -155,13 +160,13 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
             wshFAC_Historique.Range("E9:R33").ClearContents
-            Call Remove_All_PDF_Pictures
+            Call Remove_All_PDF_Icons
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
@@ -173,13 +178,13 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
             wshFAC_Historique.Range("E9:R33").ClearContents
-            Call Remove_All_PDF_Pictures
+            Call Remove_All_PDF_Icons
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 

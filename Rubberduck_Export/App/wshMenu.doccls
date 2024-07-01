@@ -9,6 +9,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub

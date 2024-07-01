@@ -32,6 +32,9 @@ Private Sub Workbook_Open()
     
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set wb = Nothing
+    
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)

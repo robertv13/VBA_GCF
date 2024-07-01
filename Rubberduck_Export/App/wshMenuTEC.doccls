@@ -2,13 +2,13 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim ws As Worksheet
-    Set ws = wshMenuTEC
+    Dim ws As Worksheet: Set ws = wshMenuTEC
     With ws
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set ws = Nothing
   
 End Sub

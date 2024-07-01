@@ -27,6 +27,7 @@ Sub Worksheets_List_All() '2024-06-22 @ 06:27
         Debug.Print Format(i, "##0"); Tab(5); "codeName = " & arr(i, 1) & spaces & "worksheet name = " & arr(i, 2)
     Next i
     
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub
@@ -39,19 +40,19 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
     Dim scope As String, sType As String
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
-    Dim VBComp As Object
+    Dim vbComp As Object
     Dim oName As String, oType As String
     Dim arr() As Variant
     ReDim arr(1 To 500, 1 To 10)
     Dim trimmedLineOfCode As String, savedLineOfCode As String, remarks As String, params As String
-    Dim lineNum As Long, lRead As Long
+    Dim lineNum As Long, lread As Long
     Dim i As Integer
 
-    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
         'Check if the component is a userForm (1), a module (2) or a class module (3)
-        If VBComp.Type <= 3 Then
-            oName = VBComp.name
-            oType = VBComp.Type
+        If vbComp.Type <= 3 Then
+            oName = vbComp.name
+            oType = vbComp.Type
             Select Case oType
                 Case 1
                     oType = "1_Module"
@@ -63,17 +64,16 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
                     oType = "4_Undefined"
             End Select
             'Get the code module for the component
-            Dim vbCodeMod As Object
-            Set vbCodeMod = VBComp.CodeModule
+            Dim vbCodeMod As Object: Set vbCodeMod = vbComp.CodeModule
             'Loop through all lines in the code module
             For lineNum = 1 To vbCodeMod.CountOfLines
-                lRead = lRead + 1
+                lread = lread + 1
                 'Check if the line contains 'Sub' or 'Function' without beeing a Remark line
                 savedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
                 trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
                 'Remove comments
                 If InStr(1, trimmedLineOfCode, "'") Then
-                    trimmedLineOfCode = RemoveComments(trimmedLineOfCode)
+                    trimmedLineOfCode = HandleComments(trimmedLineOfCode)
                 End If
                 
                 posProcedure = InStr(trimmedLineOfCode, "Sub ")
@@ -118,7 +118,6 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
                         scope = ""
                     End If
                     arr(i, 5) = scope
-                    If scope = "posProcedure" Or scope = "posFonction" Then Stop
                     If InStr(trimmedLineOfCode, "Sub ") = 1 Then
                         sType = "Sub"
                         trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, 5))
@@ -139,7 +138,7 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
                 End If
             Next lineNum
         End If
-    Next VBComp
+    Next vbComp
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
@@ -157,11 +156,290 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
     
     MsgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format(lRead, "#,##0") & " Lignes de code"
+                Format(lread, "#,##0") & " Lignes de code"
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set vbComp = Nothing
+    Set vbCodeMod = Nothing
+    
+End Sub
+
+Sub Code_Search_In_Module() '2024-06-30 @ 12:47
+    
+    'Loop through all VBcomponents (modules, class and forms) in the active workbook
+    Dim vbComp As Object
+    Dim oName As String, oType As String
+    Dim arr() As Variant
+    ReDim arr(1 To 350, 1 To 7)
+    Dim trimmedLineOfCode As String, savedLineOfCode As String
+    Dim lineNum As Long, lread As Long
+    Dim i As Integer
+
+    Dim search As String
+    search = InputBox("Enter the search word ? ", "Search")
+    
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        'Check if the component is a userForm (1), a module (2) or a class module (3)
+        If vbComp.Type <= 3 Then
+            oName = vbComp.name
+            oType = vbComp.Type
+            Select Case oType
+                Case 1
+                    oType = "1_Module"
+                Case 2
+                    oType = "2_Class"
+                Case 3
+                    oType = "3_userform"
+                Case Else
+                    oType = "4_Undefined"
+            End Select
+            'Get the code module for the component
+            Dim vbCodeMod As Object: Set vbCodeMod = vbComp.CodeModule
+            Dim posProcedure As Integer, posFunction As Integer
+            Dim procedureName As String, functionName As String
+            'Loop through all lines in the code module
+            For lineNum = 1 To vbCodeMod.CountOfLines
+                lread = lread + 1
+                savedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
+                trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
+                
+                'Handle comments
+                If InStr(1, trimmedLineOfCode, "'") Then
+                    trimmedLineOfCode = HandleComments(trimmedLineOfCode, "R")
+                End If
+                
+                If trimmedLineOfCode = "" Then
+                    GoTo NextLineOfCode
+                End If
+                
+                posProcedure = InStr(trimmedLineOfCode, "Sub ")
+                If posProcedure And InStr(trimmedLineOfCode, "End Sub") = 0 Then
+                    If posProcedure = InStr(trimmedLineOfCode, "Sub = ") Or _
+                        posProcedure = InStr(trimmedLineOfCode, "Sub As ") Then
+                        posProcedure = 0
+                    Else
+                        procedureName = Mid(trimmedLineOfCode, posProcedure)
+                    End If
+                End If
+                
+                posFunction = InStr(trimmedLineOfCode, "Function ")
+                If posFunction Then
+                    If posFunction = InStr(trimmedLineOfCode, "Function = ") Or _
+                        posFunction = InStr(trimmedLineOfCode, "Function As ") Then
+                            posFunction = 0
+                    Else
+                        procedureName = Mid(trimmedLineOfCode, posFunction)
+                    End If
+                End If
+                
+'                posExitProcedure = InStr(trimmedLineOfCode, "Exit Sub")
+'                posExitFonction = InStr(trimmedLineOfCode, "Exit Function")
+
+                If trimmedLineOfCode = "" Or InStr(trimmedLineOfCode, search) = 0 Then
+                    GoTo NextLineOfCode
+                End If
+                
+                'Found an occurence
+                i = i + 1
+                arr(i, 2) = oType
+                arr(i, 3) = oName
+                arr(i, 4) = lineNum
+                arr(i, 5) = procedureName
+                arr(i, 6) = trimmedLineOfCode
+                arr(i, 1) = UCase(oType) & Chr(0) & UCase(oName) & Chr(0) & Format(lineNum, "0000") & Chr(0) & procedureName 'Future sort key
+                arr(i, 7) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+NextLineOfCode:
+            Next lineNum
+        End If
+    Next vbComp
+    
+    'Prepare the output worksheet
+    Dim lastUsedRow As Long
+    lastUsedRow = wshzDocSearchResults.Range("A9999").End(xlUp).row 'Last Used Row
+    wshzDocSearchResults.Range("A2:G" & lastUsedRow).ClearContents
+
+    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    
+    'Sort the 2D array based on column 1
+    Call Array_2D_Bubble_Sort(arr)
+    
+    'Transfer the array to the worksheet
+    wshzDocSearchResults.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    wshzDocSearchResults.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+    
+    lastUsedRow = wshzDocSearchResults.Range("B9999").End(xlUp).row
+    Dim j As Long, oldModule As String
+    oldModule = wshzDocSearchResults.Range("C" & lastUsedRow).value
+    For j = lastUsedRow To 2 Step -1
+        If wshzDocSearchResults.Range("C" & j).value <> oldModule Then
+            wshzDocSearchResults.rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+            oldModule = wshzDocSearchResults.Range("C" & j).value
+        End If
+    Next j
+    
+    With wshzDocSearchResults.Range("B2:G" & lastUsedRow)
+        On Error Resume Next
+        Cells.FormatConditions.delete
+        On Error GoTo 0
+    
+        .FormatConditions.add Type:=xlExpression, Formula1:= _
+            "=MOD(LIGNE();2)=0"
+        .FormatConditions(Selection.FormatConditions.count).SetFirstPriority
+        With .FormatConditions(1).Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorAccent1
+            .TintAndShade = 0.799981688894314
+        End With
+        .FormatConditions(1).StopIfTrue = False
+    End With
+    
+    MsgBox "J'ai trouvé " & i & " lignes avec le mot '" & search & "'" & vbNewLine & _
+                vbNewLine & "après avoir analysé un total de " & _
+                Format(lread, "#,##0") & " Lignes de code"
     
     'Clean up memory
-    Set VBComp = Nothing
+    Set vbComp = Nothing
     Set vbCodeMod = Nothing
+    
+End Sub
+
+Sub Code_Search_In_Worksheet() '2024-06-30 @ 20:14
+    
+    'Tools | Reference | Microsoft Visual Basic for Applications Extensibility 5.3
+    
+    Dim oName As String, oType As String
+    Dim savedLineOfCode As String, trimmedLineOfCode As String
+    Dim arr() As Variant
+    ReDim arr(1 To 350, 1 To 7)
+    Dim posProcedure As Long, posFunction As Long, procedureName As String
+
+    Dim i As Long, r As Long, lread As Long
+    
+    Dim search As String
+    search = InputBox("Enter the search word ? ", "Search")
+    
+    'Set the VBA project to the active workbook's project
+    Dim vbProj As VBIDE.VBProject: Set vbProj = ThisWorkbook.VBProject
+    
+    'Loop through all the components in the project
+    Dim vbComp As VBIDE.VBComponent
+    Dim codeMod As VBIDE.CodeModule
+    
+    For Each vbComp In vbProj.VBComponents
+        'Check if the component is a worksheet
+        If vbComp.Type = vbext_ct_Document Then
+            'Get the code module for the worksheet
+            oName = vbComp.name
+            oType = vbComp.Type
+            oType = "0_Worksheet_Module"
+            Set codeMod = vbComp.CodeModule
+            
+            Debug.Print "Worksheet: " & vbComp.name
+            
+            'Loop through the lines of code in the module
+            
+            For i = 1 To codeMod.CountOfLines
+                lread = lread + 1
+                
+                savedLineOfCode = codeMod.Lines(i, 1)
+                trimmedLineOfCode = Trim(savedLineOfCode)
+                
+                If trimmedLineOfCode = "" Then
+                    GoTo Next_line_Of_Code
+                End If
+                
+                'Handle comments
+                If InStr(1, trimmedLineOfCode, "'") Then
+                    trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
+                End If
+                
+                posProcedure = InStr(trimmedLineOfCode, "Sub ")
+                If posProcedure And InStr(trimmedLineOfCode, "End Sub") = 0 Then
+                    If posProcedure = InStr(trimmedLineOfCode, "Sub = ") Or _
+                        posProcedure = InStr(trimmedLineOfCode, "Sub As ") Then
+                        posProcedure = 0
+                    Else
+                        procedureName = Mid(trimmedLineOfCode, posProcedure)
+                    End If
+                End If
+                
+                posFunction = InStr(trimmedLineOfCode, "Function ")
+                If posFunction Then
+                    If posFunction = InStr(trimmedLineOfCode, "Function = ") Or _
+                        posFunction = InStr(trimmedLineOfCode, "Function As ") Then
+                            posFunction = 0
+                    Else
+                        procedureName = Mid(trimmedLineOfCode, posFunction)
+                    End If
+                End If
+                
+                If trimmedLineOfCode = "" Or InStr(trimmedLineOfCode, search) = 0 Then
+                    GoTo Next_line_Of_Code
+                End If
+
+                'Found an occurence
+                r = r + 1
+                arr(r, 2) = oType
+                arr(r, 3) = oName
+                arr(r, 4) = i
+                arr(r, 5) = procedureName
+                arr(r, 6) = trimmedLineOfCode
+                arr(r, 1) = UCase(oType) & Chr(0) & UCase(oName) & Chr(0) & Format(i, "0000") & Chr(0) & procedureName 'Future sort key
+                arr(r, 7) = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+
+Next_line_Of_Code:
+            Next i
+        End If
+    Next vbComp
+    
+    'Prepare the output worksheet
+    Dim lastUsedRow As Long
+    lastUsedRow = wshzDocSearchResults.Range("A9999").End(xlUp).row 'Last Used Row
+'    wshzDocSearchResults.Range("A2:F" & lastUsedRow).ClearContents
+
+    Call Array_2D_Resizer(arr, r, UBound(arr, 2))
+    
+    'Sort the 2D array based on column 1
+    Call Array_2D_Bubble_Sort(arr)
+    
+    'Transfer the array to the worksheet
+    wshzDocSearchResults.Range("A" & lastUsedRow + 1).Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    wshzDocSearchResults.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+    
+    Dim saveFirstRow As Long
+    saveFirstRow = lastUsedRow + 1
+    lastUsedRow = wshzDocSearchResults.Range("B9999").End(xlUp).row
+    Dim j As Long, oldModule As String
+    oldModule = wshzDocSearchResults.Range("C" & lastUsedRow).value
+    For j = lastUsedRow To saveFirstRow Step -1
+        If wshzDocSearchResults.Range("C" & j).value <> oldModule Then
+            wshzDocSearchResults.rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+            oldModule = wshzDocSearchResults.Range("C" & j).value
+        End If
+    Next j
+    
+    Cells.FormatConditions.delete
+    With wshzDocSearchResults.Range("B2:G" & lastUsedRow)
+        .FormatConditions.add _
+            Type:=xlExpression, _
+            Formula1:="=MOD(LIGNE();2)=1"
+        .FormatConditions(Selection.FormatConditions.count).SetFirstPriority
+        With .FormatConditions(1).Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorAccent1
+            .TintAndShade = 0.799981688894314
+        End With
+        Selection.FormatConditions(1).StopIfTrue = False
+    End With
+    
+    MsgBox "J'ai trouvé " & r & " lignes avec le mot '" & search & "'" & vbNewLine & _
+                vbNewLine & "après avoir analysé un total de " & _
+                Format(lread, "#,##0") & " Lignes de code"
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set vbProj = Nothing
+    Set vbComp = Nothing
+    Set codeMod = Nothing
     
 End Sub
 
@@ -221,8 +499,9 @@ nextIteration:
 
     MsgBox "J'ai trouvé " & Format(i, "#,##0") & " formules"
     
-    'Clean up memory
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
+    Set ws = Nothing
 
 End Sub
 
@@ -269,9 +548,7 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
         arr(i, 9) = nr.Visible
         arr(i, 10) = Format(Now(), "yyyy-mm-dd hh:mm")
 
-        Set rng = Nothing
     Next nr
-    Debug.Print r
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
     Call Array_2D_Bubble_Sort(arr)
@@ -282,9 +559,10 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
    
     MsgBox "J'ai trouvé " & r & " named ranges"
     
-    'Clean up memory
-    Set ws = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set nr = Nothing
     Set rng = Nothing
+    Set ws = Nothing
     
 End Sub
 
@@ -338,10 +616,7 @@ Sub Conditional_Formatting_List_All() '2024-06-23 @ 18:37
         End If
         
         'Reset the range variable for the next worksheet
-        Set rng = Nothing
     Next ws
-    Set cf = Nothing
-    Set ws = Nothing
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
     Call Array_2D_Bubble_Sort(arr)
@@ -354,23 +629,30 @@ Sub Conditional_Formatting_List_All() '2024-06-23 @ 18:37
         wsOutput.Range("A2:F" & lastUsedRow).ClearContents
     End If
     
-    'Transfer the array data to the worksheet
-
     'Assign array to range
     wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
    
     MsgBox "J'ai trouvé " & i & " Conditional Formatting"
     
-    'Clean up memory
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set area = Nothing
+    Set cf = Nothing
+    Set rng = Nothing
+    Set ws = Nothing
     Set wsOutput = Nothing
 
 End Sub
 
-Function RemoveComments(ByVal codeLine As String) As String '2024-06-22 @ 10:42
+Function HandleComments(ByVal codeLine As String, action As String) As String '2024-06-30 @ 10:45
+    
+    'R as action will remove the comments
+    'U as action will UPPERCASE the comments
     
     Dim inString As Boolean: inString = False
-    Dim cleanLine As String
+    Dim codePart As String, commentPart As String
+    
+    Debug.Assert action = "R" Or action = "U"
     
     Dim i As Long, char As String
     For i = 1 To Len(codeLine)
@@ -381,35 +663,48 @@ Function RemoveComments(ByVal codeLine As String) As String '2024-06-22 @ 10:42
             inString = Not inString
         End If
         
-        'If not inside a string and the character is a comment character, exit loop
-        If Not inString And char = "'" Then
-            Exit For
+        'If the current character is ' and we are not within a string...
+        If char = "'" Then
+            If Not inString Then
+                commentPart = Mid(codeLine, i)
+                Exit For
+            Else
+                codePart = codePart & char
+            End If
+        Else
+            codePart = codePart & char
         End If
-        
-        'Append character to cleanLine
-        cleanLine = cleanLine & char
     Next i
     
-    RemoveComments = Trim(cleanLine)
+    'Take action - R remove the comment from the code, L uppercase the comment
+    If action = "R" Then
+        commentPart = ""
+    Else
+        commentPart = Trim(UCase(commentPart))
+    End If
+    
+    HandleComments = codePart & commentPart
     
 End Function
 
 Sub TestGetQuarterDates()
+
     Dim fiscalYearStartMonth As Integer
     Dim fiscalYear As Integer
     Dim result As String
     
-    ' Set the fiscal year start month (e.g., April is 4)
+    'Set the fiscal year start month (e.g., April is 4)
     fiscalYearStartMonth = 8
     
-    ' Set the fiscal year
+    'Set the fiscal year
     fiscalYear = 2024
     
-    ' Get the quarter dates
+    'Get the quarter dates
     result = GetQuarterDates(fiscalYearStartMonth, fiscalYear)
     
-    ' Display the result
+    'Display the result
     MsgBox result
+    
 End Sub
 
 Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCols As Long)
@@ -495,27 +790,16 @@ End Sub
 
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
-    Dim i As Long, j As Long
-    Dim numRows As Long, numCols As Long, numCells As Long
+    Dim i As Long, j As Long, numRows As Long, numCols As Long
     Dim temp As Variant
-    Dim sorted As Boolean, grosTri As Boolean
-
+    Dim sorted As Boolean
+    
     numRows = UBound(arr, 1)
     numCols = UBound(arr, 2)
-    numCells = numRows * numCols
-    If numCells > 5000 Then grosTri = True
-    
-    If grosTri Then
-        Application.StatusBar = "Tri en cours - " & _
-            Trim(Format(numCells, "###,##0")) & " cellules à traiter..."
-    End If
     
     'Bubble Sort Algorithm
     Dim c As Integer, cProcess As Long
     For i = 1 To numRows - 1
-        If grosTri And i Mod Round(numRows / 10, 0) = 0 Then
-            Application.StatusBar = "Tri en cours - " & Round(((i * 100) / numRows), 0) & " %"
-        End If
         sorted = True
         For j = 1 To numRows - i
             'Compare column 2 first
@@ -544,13 +828,10 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
         If sorted Then Exit For
     Next i
 
-    If grosTri Then
-        Application.StatusBar = ""
-    End If
-
 End Sub
 
 Sub List_All_Shapes_Properties()
+
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
     Dim r As Integer
@@ -576,15 +857,20 @@ Sub List_All_Shapes_Properties()
         ws.Range("J" & r).value = shp.Height
         r = r + 1
     Next shp
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set shp = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub Add_Columns_To_Active_Worksheet()
+
     Dim colToAdd As Integer
     colToAdd = 5
     
     'Set the worksheet
-    Dim ws As Worksheet
-    Set ws = ActiveSheet
+    Dim ws As Worksheet: Set ws = ActiveSheet
     
     'Find the last column with data
     Dim lastColumn As Integer
@@ -594,6 +880,10 @@ Sub Add_Columns_To_Active_Worksheet()
     ws.columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
     
     Debug.Print colToAdd & " columns added to the worksheet."
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Sub Build_File_Layouts() '2024-03-26 @ 14:35
@@ -621,9 +911,9 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     Dim i As Long, colNo As Integer
     For i = 1 To UBound(arr, 1)
         If arr(i, 1) = "" Then Exit For
-        Dim rng As Range, rngAddress As String, cell As Range
-        Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
+        Dim rng As Range: Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
         colNo = 0
+        Dim cell As Range
         For Each cell In rng
             colNo = colNo + 1
             output(r, 2) = arr(i, 1)
@@ -642,6 +932,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     
     wsOutput.Range("A2").Resize(r, 5).value = output
     
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
     Set cell = Nothing
     Set wsOutput = Nothing
@@ -653,9 +944,9 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
-    Dim rng As Range, lastUsedRow As Long
+    Dim lastUsedRow As Long
     lastUsedRow = ws.Range("A999").End(xlUp).row
-    Set rng = ws.Range("A1:E" & lastUsedRow)
+    Dim rng As Range: Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
         Application.EnableEvents = False
@@ -707,19 +998,19 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Application.EnableEvents = False
     
-    Set ws = Nothing
-    Set rng = Nothing
-    Set tbl = Nothing
-    Set rowToMove = Nothing
-    
     Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rng = Nothing
+    Set rowToMove = Nothing
+    Set tbl = Nothing
+    Set ws = Nothing
     
 End Sub
 
 Sub Test_Array_To_Range() '2024-03-18 @ 17:34
 
-    Dim ws As Worksheet
-    Set ws = Feuil2
+    Dim ws As Worksheet: Set ws = Feuil2
     
     Dim arr() As Variant
     ReDim arr(1 To 1000, 1 To 20)
@@ -732,6 +1023,9 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     Next i
     
     ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
     
 End Sub
 

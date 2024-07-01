@@ -10,14 +10,10 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
                           "GCF_BD_Sortie.xlsx"
     destinationTab = "GL_Trans"
     
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object
-    Set conn = CreateObject("ADODB.Connection")
+    'Initialize connection, connection string, open the connection and declare rs Object
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
-    Dim rs As Object
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String
@@ -74,6 +70,10 @@ Nothing_to_Post:
     
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modGL_Posting:GL_Posting_To_DB()", timerStart)
 
 End Sub
@@ -128,14 +128,10 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
                           "GCF_BD_Sortie.xlsx"
     destinationTab = "GL_Trans"
     
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object
-    Set conn = CreateObject("ADODB.Connection")
+    'Initialize connection, connection string, open the connection & declare rs Object
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
-    Dim rs As Object
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String
@@ -194,6 +190,10 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
     conn.Close
     
     Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
     
     Call Output_Timer_Results("modGL_Posting:Encaissement_GL_Posting()", timerStart)
 

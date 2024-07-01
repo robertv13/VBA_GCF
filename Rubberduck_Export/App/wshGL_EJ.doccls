@@ -19,8 +19,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("EJ")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("EJ")
     
    'Hide column A & B
     With ws
@@ -38,6 +37,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     End With
     
     Application.EnableEvents = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
     
     Call Output_Timer_Results("wshGL_EJ:Worksheet_Activate()", timerStart)
 
@@ -123,7 +125,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Format(Now(), "dd/mm/yyyy") Then

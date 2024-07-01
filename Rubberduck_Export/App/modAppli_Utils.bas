@@ -17,6 +17,9 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
         End Select
     Next cell
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    
 End Sub
 
 Public Sub ProtectCells(rng As Range)
@@ -133,7 +136,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
         End If
     Next ws
     
-    ' If the worksheet exists, delete it
+    'If the worksheet exists, delete it
     If wsExists Then
         Application.DisplayAlerts = False
         ws.delete
@@ -144,6 +147,9 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     Set ws = ThisWorkbook.Worksheets.add
     ws.name = wsName
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Private Sub IntegrityVerification()
@@ -162,8 +168,7 @@ End Sub
 Private Sub check_Clients()
 
     'wshBD_Clients
-    Dim ws As Worksheet
-    Set ws = wshBD_Clients
+    Dim ws As Worksheet: Set ws = wshBD_Clients
     Debug.Print ws.name & " (wshBD_Clients)"
     
     Dim arr As Variant
@@ -203,13 +208,15 @@ Private Sub check_Clients()
     End If
     Debug.Print ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Private Sub check_GL_Trans()
 
     'wshGL_Trans
-    Dim ws As Worksheet
-    Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wshGL_Trans
     Debug.Print ws.name & " (wshGL_Trans)"
     
     Dim arr As Variant
@@ -264,13 +271,16 @@ Private Sub check_GL_Trans()
     Debug.Print Tab(10); "Ct = " & Format(sum_ct, "###,###,##0.00 $")
     Debug.Print ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set v = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Private Sub check_TEC()
 
     'wshTEC_Local
-    Dim ws As Worksheet
-    Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wshTEC_Local
     Debug.Print ws.name & " (wshTEC_Local)"
     
     Dim arr As Variant
@@ -389,18 +399,16 @@ Private Sub check_TEC()
         Debug.Print k, dict_prof(k)
     Next k
 
-'    'Loop over Keys and get item
-'    Dim d As Variant
-'    For Each d In dict_client.Keys()
-'        Debug.Print d, dict_client(d)
-'    Next d
-
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set k = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
 
-    Dim SharedFolder As FileDialog
-    Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    
     With SharedFolder
         .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
@@ -409,12 +417,15 @@ Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
         End If
     End With
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set SharedFolder = Nothing
+    
 End Sub
 
 Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
 
-    Dim PDFFolder As FileDialog
-    Set PDFFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    Dim PDFFolder As FileDialog: Set PDFFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    
     With PDFFolder
         .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
         .AllowMultiSelect = False
@@ -422,6 +433,9 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
             wshAdmin.Range("F6").value = .selectedItems(1)
         End If
     End With
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set PDFFolder = Nothing
 
 End Sub
 

@@ -12,14 +12,17 @@ Function Fn_GetID_From_Initials(i As String)
         End If
     Next cell
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    
 End Function
 
 Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-    Dim ws As Worksheet, dynamicRange As Range
+    Dim ws As Worksheet: Set ws = wshBD_Clients
+    
     On Error Resume Next
-    Set ws = wshBD_Clients
-    Set dynamicRange = ws.Range("dnrClients_All")
+    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrClients_All")
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
@@ -40,7 +43,8 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
     
-    'Free up memory - 2024-02-23
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set dynamicRange = Nothing
     Set ws = Nothing
 
 End Function
@@ -54,11 +58,10 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Find_Data_In_A_Range()")
     
     Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
-    Dim foundCell As Range
     Dim dataValue As Variant
     
     'Search for the string in a given range (r) at the column specified (cs)
-    Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
+    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
     
     'Check if the string was found
     If Not foundCell Is Nothing Then
@@ -71,8 +74,9 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     End If
     
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
-    
+
     Call Output_Timer_Results("Functions:Fn_Find_Data_In_A_Range()", timerStart)
 
 End Function
@@ -81,13 +85,10 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_GL_Code_From_GL_Description()")
     
-    Dim dynamicRange As Range
-    Dim result As Variant
-    Dim ws As Worksheet
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
     On Error Resume Next
-    Set ws = ThisWorkbook.Sheets("Admin")
-    Set dynamicRange = ws.Range("dnrPlanComptableDescription")
+    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrPlanComptableDescription")
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then
@@ -97,6 +98,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
     End If
     
     'Using XLOOKUP to find the result directly
+    Dim result As Variant
     result = Application.WorksheetFunction.XLookup(GLDescr, _
         dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
@@ -107,9 +109,9 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
-    'Free up memory - 2024-02-23
-    Set ws = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set dynamicRange = Nothing
+    Set ws = Nothing
 
     Call Output_Timer_Results("Functions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
 
@@ -143,17 +145,16 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow < 4 Then Exit Function
-    Dim sourceRng As Range
-    Set sourceRng = ws.Range("A3:F" & lastUsedRow)
+    
+    'Define the range for the source data
+    Dim sourceRng As Range: Set sourceRng = ws.Range("A3:F" & lastUsedRow)
     
     'Define the criteria range
-    Dim criteriaRng As Range
-    Set criteriaRng = ws.Range("V2:V3")
+    Dim criteriaRng As Range: Set criteriaRng = ws.Range("V2:V3")
     ws.Range("V3").value = invNo
     
     'Define the destination range & clear the old data
-    Dim destinationRng As Range
-    Set destinationRng = ws.Range("X3:AC3")
+    Dim destinationRng As Range: Set destinationRng = ws.Range("X3:AC3")
     lastUsedRow = ws.Range("X9999").End(xlUp).row
     If lastUsedRow > 3 Then
         ws.Range("X4:AB" & lastUsedRow).ClearContents
@@ -173,6 +174,11 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
         Fn_Get_AR_Balance_For_Invoice = balanceFacture
     End If
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set criteriaRng = Nothing
+    Set destinationRng = Nothing
+    Set sourceRng = Nothing
+    
 End Function
 
 Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) As Boolean
@@ -444,8 +450,7 @@ End Function
 Function Fn_Get_Chart_Of_Accounts(nbCol As Integer) As Variant '2024-06-07 @ 07:31
 
     'Reference the named range
-    Dim planComptable As Range
-    Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
+    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
     
     'Iterate through each row of the named range
     Dim rowNum As Long, row As Range, rowRange As Range
@@ -471,6 +476,11 @@ Function Fn_Get_Chart_Of_Accounts(nbCol As Integer) As Variant '2024-06-07 @ 07:
     
     Fn_Get_Chart_Of_Accounts = arr
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set planComptable = Nothing
+    Set row = Nothing
+    Set rowRange = Nothing
+    
 End Function
 
 Public Function GetCurrentRegion(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
@@ -482,6 +492,9 @@ Public Function GetCurrentRegion(ByVal dataRange As Range, Optional headerSize A
             Set GetCurrentRegion = .Offset(headerSize).Resize(.rows.count - headerSize)
         End With
     End If
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set GetCurrentRegion = Nothing
     
 End Function
 
@@ -538,7 +551,10 @@ continue:
     
     If GetOneDrivePath = "" Then Err.Raise 53, "GetOneDrivePath" _
                 , "Could not find the file [" & fullWorkbookName & "] on OneDrive."
-
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set key = Nothing
+    
 End Function
 
 Public Function GetEndPath(ByVal fullWorkbookName As String) As String

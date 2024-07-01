@@ -1,5 +1,6 @@
 Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
+
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
@@ -127,6 +128,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
 Clean_Exit:
 
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
     
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Client_Change()", timerStart)
@@ -156,14 +158,16 @@ Sub FAC_Brouillon_Date_Change(d As String)
     cutoffDate = d
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     
-    Dim rng As Range
-    Set rng = wshFAC_Brouillon.Range("L11")
+    Dim rng As Range: Set rng = wshFAC_Brouillon.Range("L11")
 
     On Error Resume Next
     wshFAC_Brouillon.Range("L11").Select 'Move on to Services Entry
     On Error GoTo 0
     
     Application.EnableEvents = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rng = Nothing
     
 End Sub
 
@@ -311,8 +315,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
         'Define the source area Range
-        Dim sRng As Range
-        Set sRng = .Range("A2:P" & lastSourceRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastSourceRow)
         
         'Define and Clear the destination area Range
         Dim dRng As Range
@@ -367,7 +370,12 @@ No_Sort_Required:
     End With
     
     Application.ScreenUpdating = True
-
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set sRng = Nothing
+    Set dRng = Nothing
+    Set cRng = Nothing
+    
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort()", timerStart)
 
 End Sub
@@ -418,6 +426,9 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow) 'Exclude totals row
 
     Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rng = Nothing
 
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()", timerStart)
     
@@ -466,8 +477,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     
     Application.EnableEvents = False
     
-    Dim ws As Worksheet
-    Set ws = wshFAC_Brouillon
+    Dim ws As Worksheet: Set ws = wshFAC_Brouillon
     
     'Unprotect the worksheet in order to be able to Unlock the cells associated with checkboxes
     On Error Resume Next
@@ -512,12 +522,14 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
         .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
     End With
     
-    Set chkBoxRange = Nothing
-    Set cell = Nothing
-    Set cbx = Nothing
-    
     Application.EnableEvents = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cbx = Nothing
+    Set cell = Nothing
+    Set chkBoxRange = Nothing
+    Set ws = Nothing
+    
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes()", timerStart)
 
 End Sub
@@ -536,8 +548,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     Next cbx
     
     'Unprotect the worksheet AND Lock the cells associated with checkbox
-    Dim ws As Worksheet
-    Set ws = wshFAC_Brouillon
+    Dim ws As Worksheet: Set ws = wshFAC_Brouillon
     
     On Error Resume Next
     ws.Unprotect
@@ -554,10 +565,13 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the Grand total formula
     
     'Unprotect the worksheet to LOCK the cells that were associated with checkbox
-    
 
     Application.EnableEvents = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cbx = Nothing
+    Set ws = Nothing
+    
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes()", timerStart)
 
 End Sub

@@ -24,6 +24,9 @@ Sub Main()
     'Fix columns width
     Call Set_Column_Width(ws)
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
 

@@ -8,13 +8,11 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = False
     
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_Rapport")
     ws.Unprotect
     
     'Setup a listBox
-    Dim lb As OLEObject
-    Set lb = Me.OLEObjects("ListBox1")
+    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
     
     'Ensure it is a ListBox
     If TypeName(lb.Object) = "ListBox" Then
@@ -48,6 +46,10 @@ Private Sub Worksheet_Activate()
     Call GL_Rapport_Clear_All_Cells(ws)
     
     Application.EnableEvents = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lb = Nothing
+    Set ws = Nothing
     
     Call Output_Timer_Results("wshGL_Rapport:Worksheet_Activate()", timerStart)
 
@@ -137,7 +139,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
@@ -153,7 +155,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 
@@ -165,8 +167,7 @@ End Sub
 
 Private Sub cbTous_Click()
 
-    Dim lb As OLEObject
-    Set lb = Me.OLEObjects("ListBox1")
+    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
     
     Dim i As Long
     With lb.Object
@@ -175,4 +176,7 @@ Private Sub cbTous_Click()
         Next i
     End With
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lb = Nothing
+    
 End Sub

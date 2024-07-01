@@ -137,10 +137,9 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 Clean_Exit:
 
     ufSaisieHeures.txtTEC_ID.value = ""
-
     ufSaisieHeures.txtClient.SetFocus
 
-    'Free up memory - 2024-02-23
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set sh = Nothing
 
     Call Output_Timer_Results("modTEC:TEC_Efface_Ligne()", timerStart)
@@ -169,16 +168,13 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range
-        Set sRng = .Range("A2:P" & lastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         
          'Criteria
-        Dim cRng As Range
-        Set cRng = .Range("R2:T3")
+        Dim cRng As Range: Set cRng = .Range("R2:T3")
         
         'Destination
-        Dim dRng As Range
-        Set dRng = .Range("V2:AI2")
+        Dim dRng As Range: Set dRng = .Range("V2:AI2")
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
@@ -218,6 +214,11 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cRng = Nothing
+    Set dRng = Nothing
+    Set sRng = Nothing
+    
     Call Output_Timer_Results("modTEC:TEC_AdvancedFilter_And_Sort()", timerStart)
 
 End Sub
@@ -232,18 +233,15 @@ Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range
-        Set sRng = .Range("A2:P" & lastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         .Range("S10").value = sRng.Address
         
         'Criteria
-        Dim cRng As Range
-        Set cRng = .Range("R2:T3")
+        Dim cRng As Range: Set cRng = .Range("R2:T3")
         .Range("S11").value = cRng.Address
         
         'Destination
-        Dim dRng As Range
-        Set dRng = .Range("V2:AI2")
+        Dim dRng As Range: Set dRng = .Range("V2:AI2")
         .Range("S12").value = dRng.Address
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
@@ -287,6 +285,11 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cRng = Nothing
+    Set dRng = Nothing
+    Set sRng = Nothing
+    
 End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
@@ -328,11 +331,10 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     destinationTab = "TEC"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     If TECID < 0 Then 'Soft delete a record
         'Open the recordset for the specified ID
@@ -428,12 +430,12 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     On Error GoTo 0
     conn.Close
     
-    'Free up memory - 2024-02-23
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
-    Application.ScreenUpdating = True
-
     Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_To_DB()", timerStart)
 
 End Sub
@@ -474,9 +476,9 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TEC_ID
-        Dim lookupRange As Range, rowToBeUpdated As Long
+        Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
-        Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
+        Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(Abs(TECID), lookupRange)
         If rowToBeUpdated = 0 Then
             'Handle the case where the specified TecID is not found !!
@@ -507,11 +509,11 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End If
     End If
     
-    'Free up memory - 2024-02-23
-    Set lookupRange = Nothing
-    
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lookupRange = Nothing
+    
     Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_Locally()", timerStart)
 
 End Sub
@@ -586,9 +588,12 @@ Sub TEC_DB_Push_TEC_Local_To_DB_Data()
         End With
     Next i
 
-    Dim rngTo As Range
-    Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
+    Dim rngTo As Range: Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rngTo = Nothing
+    Set wsFrom = Nothing
     
     Call Output_Timer_Results("modTEC:TEC_DB_Push_TEC_Local_To_DB_Data()", timerStart)
 
@@ -616,6 +621,9 @@ Sub TEC_DB_Refresh_All_Pivot_Tables()
 
     Call Output_Timer_Results("modTEC:TEC_DB_Refresh_All_Pivot_Tables()", timerStart)
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set pt = Nothing
+    
 End Sub
 
 Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:41
@@ -623,20 +631,18 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
     With wshTEC_Local
-        Dim lastUsedRow As Long, sRng As Range
+        Dim lastUsedRow As Long
         lastUsedRow = .Range("A99999").End(xlUp).row
-        Set sRng = .Range("A2:P" & lastUsedRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
         .Range("AL10").value = sRng.Address & " - " & _
             .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
             .Range("A2:P" & lastUsedRow).columns.count & " columns"
         
-        Dim cRng As Range
-        Set cRng = .Range("AK2:AO3")
+        Dim cRng As Range: Set cRng = .Range("AK2:AO3")
         .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
         
-        Dim dRng As Range
         lastUsedRow = .Range("AQ99999").End(xlUp).row
-        Set dRng = .Range("AQ2:BE" & lastUsedRow)
+        Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
         dRng.Offset(1, 0).ClearContents
         .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
         
@@ -668,9 +674,11 @@ No_Sort_Required:
         wshTEC_Local.Range("AL14").value = Format(Now(), "mm/dd/yyyy hh:mm:ss")
     End With
     
-    Set sRng = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set cRng = Nothing
     Set dRng = Nothing
+    Set sRng = Nothing
+    Set ws = Nothing
 
 End Sub
 

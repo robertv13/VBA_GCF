@@ -508,7 +508,7 @@ Sub menuParametres_Click()
     
 End Sub
 
-Sub EXIT_NO_SAVE() '2024-06-20 @ 13:48
+Sub Exit_Without_Saving() '2024-06-20 @ 13:48
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -526,16 +526,18 @@ Sub EXIT_NO_SAVE() '2024-06-20 @ 13:48
         
         Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
         
-        Dim wb As Workbook
-        Set wb = ActiveWorkbook
+        Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close SaveChanges:=False
 
         Application.Application.Quit
     End If
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set wb = Nothing
+    
 End Sub
 
-Sub EXIT_Click() '2024-06-20 @ 07:11
+Sub Exit_Click() '2024-06-20 @ 07:11
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -553,41 +555,13 @@ Sub EXIT_Click() '2024-06-20 @ 07:11
         
         Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
         
-        Dim wb As Workbook
-        Set wb = ActiveWorkbook
+        Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close SaveChanges:=True
 
         Application.Application.Quit
     End If
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set wb = Nothing
+    
 End Sub
-Sub Test_SaisieHeures()
-    
-    Dim shp As Shape
-    Set shp = wshMenuTEC.Shapes("btnSaisieHeures")
-    
-    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
-    
-    shp.Left = 60
-    shp.Top = 10
-    shp.Height = 150
-    shp.width = 32
-    
-    MsgBox "On slide_in"
-    
-    shp.Left = 0
-    shp.Top = 10
-    shp.Height = 32
-    shp.width = 32
-    
-    Debug.Print "Out - " & shp.name & " H=" & Round(shp.Height, 0) & ", T=" & Round(shp.Top, 0) & ", L=" & Round(shp.Left, 0) & ", W=" & Round(shp.width, 0)
-'    With wshMenuTEC.Shapes("btnSaisieHeures")
-'        For width = 32 To maxWidth
-'            .Height = width
-'            ActiveSheet.Shapes("icoSaisieHeures").Left = width - 32
-'        Next width
-'        .TextFrame2.TextRange.Characters.text = "Saisie des Heures"
-'    End With
-
-End Sub
-

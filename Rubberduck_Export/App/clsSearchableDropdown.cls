@@ -10,7 +10,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 'clsSearchableDropdown - 2023-03-01
-'
+
 'Author: Paul Kelly - https://ExcelMacroMastery.com/
 'Version: 2.1 Updated 30-01-2023
 'YouTube video: https://youtu.be/gkLB-xu_JTU

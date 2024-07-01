@@ -1,17 +1,6 @@
 Attribute VB_Name = "modImport"
 Option Explicit
 
-'Sub Import_Minimum_From_External_DB() '2024-03-11 @ 09:54
-'
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Import_Minimum_From_External_DB()")
-'
-''    Call Client_List_Import_All
-''    Call TEC_Import_All - 2024-06-19 @ 20:48
-'
-'    Call Output_Timer_Results("modImport:Import_Minimum_From_External_DB()", timerStart)
-'
-'End Sub
-
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Client_List_Import_All()")
@@ -62,12 +51,12 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
 '        Title:="Vérification du nombre de clients", _
 '        Buttons:=vbInformation
 
-    'Free up memory - 2024-02-23
+    Application.StatusBar = ""
+
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Application.StatusBar = ""
-
     Call Output_Timer_Results("modImport:Client_List_Import_All()", timerStart)
         
 End Sub
@@ -90,9 +79,8 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     sourceTab = "TEC"
     
     'Set up source and destination ranges
-    Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Set destinationRange = wshTEC_Local.Range("A2")
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim destinationRange As Range: Set destinationRange = wshTEC_Local.Range("A2")
 
     'Copy data, using Range to Range and Autofit all columns
     sourceRange.Copy destinationRange
@@ -116,12 +104,12 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     Application.ScreenUpdating = True
     
-    'Free up memory - 2024-02-23
-    Set sourceRange = Nothing
-    Set destinationRange = Nothing
-
     Application.StatusBar = ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+
     Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
     
 End Sub
@@ -142,8 +130,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     sourceWorksheet = "PlanComptable"
     
     'ADODB connection
-    Dim connStr As ADODB.Connection
-    Set connStr = New ADODB.Connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
     
     'Connection String specific to EXCEL
     connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
@@ -152,8 +139,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     connStr.Open
     
     'Recordset
-    Dim recSet As ADODB.Recordset
-    Set recSet = New ADODB.Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
     recSet.source = "SELECT * FROM [" & sourceWorksheet & "$]"
@@ -170,6 +156,10 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Call Dynamic_Range_Redefine_Plan_Comptable
         
     Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set connStr = Nothing
+    Set recSet = Nothing
     
     Call Output_Timer_Results("modImport:ChartOfAccount_Import_All()", timerStart)
 
@@ -196,11 +186,9 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     sourceTab = "GL_Trans"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshGL_Trans.Range("A1")
+    Dim destinationRange As Range: Set destinationRange = wshGL_Trans.Range("A1")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -240,6 +228,10 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
     Application.StatusBar = ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
     Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
 
 End Sub
@@ -267,11 +259,9 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     sourceTab = "GL_EJ_Auto"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshGL_EJ_Recurrente.Range("C1")
+    Dim destinationRange As Range: Set destinationRange = wshGL_EJ_Recurrente.Range("C1")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -296,30 +286,14 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
     Call GL_EJ_Auto_Build_Summary '2024-03-14 @ 07:38
     
-'    'Build the summary at column K & L
-'    Dim lastUsedRow2 As Long
-'    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).row
-'    If lastUsedRow2 > 1 Then
-'        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
-'    End If
-'
-'    With wshGL_EJ_Recurrente
-'        Dim i As Integer, k As Integer, oldEntry As String
-'        k = 2
-'        For i = 2 To lastUsedRow1
-'            If .Range("D" & i).value <> oldEntry Then
-'                .Range("K" & k).value = .Range("D" & i).value
-'                .Range("L" & k).value = .Range("C" & i).value
-'                oldEntry = .Range("D" & i).value
-'                k = k + 1
-'            End If
-'        Next i
-'    End With
-    
 Clean_Exit:
     Application.ScreenUpdating = True
     
     Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:GL_EJ_Auto_Import_All()", timerStart)
 
@@ -343,11 +317,9 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     sourceTab = "FAC_Entête"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshFAC_Entête.Range("A2")
+    Dim destinationRange As Range: Set destinationRange = wshFAC_Entête.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -371,6 +343,10 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     
     Application.StatusBar = ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
     Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
 
 End Sub
@@ -393,11 +369,9 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     sourceTab = "FAC_Détails"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshFAC_Détails.Range("A2")
+    Dim destinationRange As Range: Set destinationRange = wshFAC_Détails.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -422,6 +396,10 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
     Application.StatusBar = ""
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
     Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
 
 End Sub
@@ -444,11 +422,9 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     sourceTab = "FAC_Comptes_Clients"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshFAC.Range("A2")
+    Dim destinationRange As Range: Set destinationRange = wshFAC.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
@@ -470,6 +446,10 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = True
     
     Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
 
@@ -493,11 +473,9 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     sourceTab = "DEB_Trans"
                      
     'Set up source and destination ranges
-    Dim sourceRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range
-    Set destinationRange = wshDEB_Trans.Range("A1")
+    Dim destinationRange As Range: Set destinationRange = wshDEB_Trans.Range("A1")
 
     'Copy data, using Range to Range, then close the Master file
     sourceRange.Copy destinationRange
@@ -524,6 +502,10 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:DEB_Trans_Import_All()", timerStart)
 

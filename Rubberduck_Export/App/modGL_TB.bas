@@ -42,8 +42,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Dim arr As Variant
     arr = Fn_Get_Chart_Of_Accounts(2) 'Returns array with 2 columns (Code, Description)
     
-    Dim dictSolde As Dictionary 'GLNo dictionary
-    Set dictSolde = New Dictionary
+    Dim dictSolde As Dictionary: Set dictSolde = New Dictionary
     Dim arrSolde() As Variant 'GLbalance
     ReDim arrSolde(1 To UBound(arr, 1), 1 To 2)
     Dim newRowID As Long: newRowID = 1
@@ -123,6 +122,10 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     ActiveWindow.ScrollRow = 1
   
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set dictSolde = Nothing
+    Set rng = Nothing
+    
     Call Output_Timer_Results("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
 
 End Sub
@@ -186,9 +189,8 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     foundRow = 0
     
     'Find the first occurence of GlACct in AdvancedFilter Results on GL_Trans
-    Dim foundCell As Range, searchRange As Range
-    Set searchRange = wshGL_Trans.Range("T1:T" & lastResultUsedRow)
-    Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
+    Dim searchRange As Range: Set searchRange = wshGL_Trans.Range("T1:T" & lastResultUsedRow)
+    Dim foundCell As Range: Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
     foundRow = foundCell.row
     
     'Check if the target value was found
@@ -292,6 +294,12 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
 Exit_Sub:
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set foundCell = Nothing
+    Set rng = Nothing
+    Set searchRange = Nothing
+    Set ws = Nothing
+    
     Call Output_Timer_Results("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", timerStart)
 
 End Sub
@@ -301,17 +309,16 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_AdvancedFilter_By_GL()")
 
     With wshGL_Trans
-        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-        Set rgResult = .Range("P2").CurrentRegion
+        Dim rgResult As Range: Set rgResult = .Range("P2").CurrentRegion
         rgResult.Offset(1).ClearContents
         
-        Set rgData = .Range("A1").CurrentRegion
+        Dim rgData As Range: Set rgData = .Range("A1").CurrentRegion
         .Range("L3").value = ""
         .Range("M3").value = ">=" & Format(minDate, "mm-dd-yyyy")
         .Range("N3").value = "<=" & Format(maxDate, "mm-dd-yyyy")
         
-        Set rgCriteria = .Range("L2:N3")
-        Set rgCopyToRange = .Range("P1:Y1")
+        Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
+        Dim rgCopyToRange: Set rgCopyToRange = .Range("P1:Y1")
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
@@ -341,6 +348,12 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
 
 NoSort:
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rgCopyToRange = Nothing
+    Set rgCriteria = Nothing
+    Set rgData = Nothing
+    Set rgResult = Nothing
+    
     Call Output_Timer_Results("modGL_TB:GL_TB_AdvancedFilter_By_GL()", timerStart)
 
 End Sub
@@ -406,14 +419,17 @@ Sub GL_TB_Setup_And_Print()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print()")
     
-    Dim lastRow As Long, printRange As Range, shp As Shape
+    Dim lastRow As Long
     lastRow = Range("D999").End(xlUp).row + 2
     If lastRow < 4 Then Exit Sub
+    
+    Dim printRange As Range
     Set printRange = wshGL_BV.Range("D1:G" & lastRow)
     
     Dim pagesRequired As Integer
     pagesRequired = Int((lastRow - 1) / 60) + 1
     
+    Dim shp As Range
     Set shp = ActiveSheet.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
     
@@ -421,6 +437,7 @@ Sub GL_TB_Setup_And_Print()
     
     shp.Visible = msoTrue
     
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -432,20 +449,26 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
-    Dim lastRow As Long, printRange As Range, shp As Shape
+    Dim lastRow As Long
     lastRow = Range("M9999").End(xlUp).row
     If lastRow < 4 Then Exit Sub
+    
+    Dim printRange As Range
     Set printRange = wshGL_BV.Range("L1:T" & lastRow)
     
     Dim pagesRequired As Integer
     pagesRequired = Int((lastRow - 1) / 80) + 1
     
-    Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
+    Dim shp As Range: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
     shp.Visible = msoFalse
     
     Call GL_TB_SetUp_And_Print_Document(printRange, pagesRequired)
     
     shp.Visible = msoTrue
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set printRange = Nothing
+    Set shp = Nothing
     
     Call Output_Timer_Results("modGL_TB:GL_TB_Setup_And_Print_Trans()", timerStart)
 

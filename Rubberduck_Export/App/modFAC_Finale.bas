@@ -84,11 +84,10 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     destinationTab = "FAC_Entête"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Can only ADD to the file, no modification is allowed
     
@@ -150,12 +149,12 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     On Error GoTo 0
     conn.Close
     
-    'Release objects from memory
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set rs = Nothing
     Set conn = Nothing
     
-    Application.ScreenUpdating = True
-
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
 
 End Sub
@@ -221,11 +220,10 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     destinationTab = "FAC_Détails"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
@@ -255,14 +253,14 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     On Error GoTo 0
     conn.Close
     
-    'Release objects from memory
-    Set rs = Nothing
-    Set conn = Nothing
-    
 nothing_to_update:
 
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
 
 End Sub
@@ -314,11 +312,10 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     destinationTab = "FAC_Comptes_Clients"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
@@ -347,12 +344,12 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     On Error GoTo 0
     conn.Close
     
-    'Release objects from memory
-    Set rs = Nothing
-    Set conn = Nothing
-    
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
 
 End Sub
@@ -400,11 +397,10 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
     destinationTab = "TEC"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim r As Integer, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
@@ -445,11 +441,12 @@ next_iteration:
     On Error GoTo 0
     conn.Close
     
-    Set rs = Nothing
-    Set conn = Nothing
-    
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()", timerStart)
 
 End Sub
@@ -459,9 +456,9 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
     
     'Set the range to look for
-    Dim lookupRange As Range, lastTECRow As Long
+    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
+    Dim lastTECRow As Long
     lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
-    Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Integer, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
@@ -476,6 +473,9 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
     Next r
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lookupRange = Nothing
     
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
 
@@ -720,8 +720,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
     If action = "CreateEmail" Then
         On Error GoTo SaveOnly
         
-        Dim outlookApp As Outlook.Application
-        Set outlookApp = New Outlook.Application
+        Dim outlookApp As Outlook.Application: Set outlookApp = New Outlook.Application
         
         'Where are the email templates ? - 2024-03-27 @ 07:28
         Dim FullTemplatePathAndFile As String
@@ -731,8 +730,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
             FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
         End If
 
-        Dim myMail As Outlook.MailItem
-        Set myMail = outlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
+        Dim myMail As Outlook.MailItem: Set myMail = outlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
 '        Set myMail = outlookApp.CreateItem(olMailItem)
 
         Dim source_file As String
@@ -753,9 +751,6 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
             'myMail.Send
         End With
         
-        Set outlookApp = Nothing
-        Set myMail = Nothing
-
     End If
     
 SaveOnly:
@@ -764,11 +759,15 @@ SaveOnly:
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-    FAC_Finale_Create_PDF_Email_Func = False 'Return value
+    FAC_Finale_Create_PDF_Email_Func = False 'Function return value
 
 EndMacro:
     Application.ScreenUpdating = True
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set myMail = Nothing
+    Set outlookApp = Nothing
+
 End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
@@ -982,18 +981,22 @@ End Sub
 
 Sub FAC_Finale_Enable_Save_Button()
 
-    Dim shp As Shape
-    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set shp = Nothing
+    
 End Sub
 
 Sub FAC_Finale_Disable_Save_Button()
 
-    Dim shp As Shape
-    Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
+    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set shp = Nothing
+    
 End Sub
 
 'Sub ExportAllFacInvList() '2024-03-28 @ 14:22

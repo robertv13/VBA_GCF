@@ -5,10 +5,9 @@ Public Sub GL_Report_For_Selected_Accounts()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Rapport:GL_Report_For_Selected_Accounts()")
    
-    Dim ws As Worksheet
+    'Reference the worksheet
+    Dim ws As Worksheet:  Set ws = wshGL_Rapport
 
-    'Reference the worksheet and ListBox
-    Set ws = ThisWorkbook.Sheets("GL_Rapport")
     If ws.Range("F6").value = "" Or ws.Range("H6").value = "" Then
         MsgBox "Vous devez saisir une date de début et une date de fin pour ce rapport!"
         Exit Sub
@@ -19,8 +18,8 @@ Public Sub GL_Report_For_Selected_Accounts()
         Exit Sub
     End If
     
-    Dim lb As OLEObject
-    Set lb = ws.OLEObjects("ListBox1")
+    'Reference the listBox
+    Dim lb As OLEObject: Set lb = ws.OLEObjects("ListBox1")
 
     'Ensure it is a ListBox
     Dim selectedItems As Collection
@@ -85,6 +84,11 @@ Public Sub GL_Report_For_Selected_Accounts()
     h3 = "(Du " & dateDeb & " au " & dateFin & ")"
     Call GL_Rapport_Wrap_Up(h1, h2, h3)
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lb = Nothing
+    Set selectedItems = Nothing
+    Set ws = Nothing
+    
     Call Output_Timer_Results("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
 
 End Sub
@@ -100,21 +104,17 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
     
     'Data source
     With wshGL_Trans
-        Dim rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-'        Set rgResult = .Range("P1").CurrentRegion
-'        rgResult.Offset(1).Clearcontents
-        Set rgData = .Range("A1").CurrentRegion
+        Dim rgData As Range: Set rgData = .Range("A1").CurrentRegion
         
         'Assign Criteria (3)
         .Range("L3").value = glNo
         .Range("M3").value = ">=" & Format(dateDeb, "mm-dd-yyyy")
         .Range("N3").value = "<=" & Format(dateFin, "mm-dd-yyyy")
-        Set rgCriteria = .Range("L2:N3")
+        Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
         
         'Destination to copy (setup & clear previous results)
-        Set rgCopyToRange = .Range("P1").CurrentRegion
+        Dim rgCopyToRange As Range: Set rgCopyToRange = .Range("P1").CurrentRegion
         rgCopyToRange.Offset(1).ClearContents
-        Set rgCopyToRange = .Range("P1").CurrentRegion
         
         'Do the Advanced Filter
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
@@ -142,14 +142,18 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
 
 NoSort:
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rgCriteria = Nothing
+    Set rgCopyToRange = Nothing
+    Set rgData = Nothing
+    
     Call Output_Timer_Results("modGL_Rapport:get_GL_Details_For_A_Account()", timerStart)
 
 End Sub
 
 Sub print_results_From_GL_Trans(compte As String)
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Worksheets("GL_Rapport_Out")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("GL_Rapport_Out")
     
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
     Dim solde As Currency
@@ -214,6 +218,9 @@ Sub print_results_From_GL_Trans(compte As String)
     
     End With
     
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
@@ -235,8 +242,7 @@ End Sub
 
 Sub Set_Up_Report_Headers_And_Columns()
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Worksheets("GL_Rapport_out")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("GL_Rapport_out")
     
     With ws
         .Cells(1, 1) = "Compte"
@@ -296,6 +302,9 @@ Sub Set_Up_Report_Headers_And_Columns()
         End With
     End With
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)

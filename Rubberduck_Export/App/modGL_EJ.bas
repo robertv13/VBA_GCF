@@ -149,13 +149,9 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     destinationTab = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
-    Dim rs As Object
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String
@@ -211,6 +207,10 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     conn.Close
     
     Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
     
     Call Output_Timer_Results("modGL_EJ:GL_Trans_Add_Record_To_DB()", timerStart)
 
@@ -268,10 +268,9 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     destinationTab = "GL_EJ_Auto"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJANo As Long
@@ -319,6 +318,10 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()", timerStart)
 
 End Sub

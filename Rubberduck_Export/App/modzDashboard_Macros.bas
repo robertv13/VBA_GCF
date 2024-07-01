@@ -35,16 +35,17 @@ Sub wshFAC_Dashboard_TabChange()
 End Sub
 
 Sub wshFAC_Dashboard_Refresh()
+
     'Get Current Data
     With wshFAC_Invoice_List 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
         lastRow = .Range("A999999").End(xlUp).row
         .Range("A3:J" & lastRow).ClearContents
         
         'Copy AR_Entête to Invoice List
-        Dim sourceRange As Range, targetRange As Range, maxRow As Long
+        Dim maxRow As Long
         lastRow = wshFAC.Range("A999999").End(xlUp).row
-        Set sourceRange = wshFAC.Range("A3:J" & lastRow)
-        Set targetRange = wshFAC_Invoice_List.Range("A3:J" & lastRow)
+        Dim sourceRange As Range: Set sourceRange = wshFAC.Range("A3:J" & lastRow)
+        Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & lastRow)
         'Copy values from source range to target range
         targetRange.value = sourceRange.value
 
@@ -61,31 +62,38 @@ Sub wshFAC_Dashboard_Refresh()
         If lastResultRow < 3 Then Exit Sub
         .Range("Q3:W" & lastResultRow).formula = .Range("Q1:W1").formula
         'Define a table - 2024-02-17 @ 08:15
-        Dim ws As Worksheet
-        Dim tbl As ListObject
-        Dim rng As Range
     End With
     
         'Set the worksheet where you want to create the table
-        Set ws = wshFAC_Invoice_List
+        Dim ws As Worksheet: Set ws = wshFAC_Invoice_List
     
         'Define the range for the table and create the table
-        Set rng = ws.Range("P1:W" & lastResultRow)
-        Set tbl = ws.ListObjects.add(xlSrcRange, rng, , xlYes)
+        Dim rng As Range: Set rng = ws.Range("P1:W" & lastResultRow)
+        Dim tbl As ListObject: Set tbl = ws.ListObjects.add(xlSrcRange, rng, , xlYes)
     
         'Define table properties
         tbl.name = "AgingSummary"
 '        tbl.TableStyle = "TableStyleMedium2" ' Style of the table
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rng = Nothing
+    Set sourceRange = Nothing
+    Set targetRange = Nothing
+    Set tbl = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub wshFAC_Dashboard_SelectAgingDetails()
+
     detailNumb = Replace(Application.Caller, "Aging", "")
     wshFAC_Dashboard.Range("AA504").value = detailNumb  'Set Detail level #
     wshFAC_Dashboard.Range("E2").Select                 'Select to trigger macro
+    
 End Sub
 
 Sub Aging_Refresh()
+
     wshFAC_Dashboard.Range("B35:R499").ClearContents    'Clear Previous Results
     With wshFAC_Invoice_List
         'Clear Prior Results
@@ -100,9 +108,11 @@ Sub Aging_Refresh()
         .Range("Q3:V" & lastResultRow).formula = .Range("Q1:W1").formula
         wshFAC_Dashboard.Range("B35:H" & lastResultRow + 32).value = .Range("P3:V" & lastResultRow).value 'Bring over Aging Data
     End With
+    
 End Sub
 
 Sub Aging_ShowCustDetail()
+
     wshFAC_Dashboard.Range("J34:R499").ClearContents    'Clear Previous Results
     selRow = wshFAC_Dashboard.Range("AA1").value        'Set Selected Row
     With wshFAC_Invoice_List
@@ -121,9 +131,11 @@ Sub Aging_ShowCustDetail()
         wshFAC_Dashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).value = .Range("AB1:AJ" & lastResultRow).value 'Bring over Customer Details
             wshFAC_Dashboard.Range("J" & selRow & ":R" & selRow).HorizontalAlignment = xlCenterAcrossSelection
     End With
+    
 End Sub
 
 Sub Aging_GoToInvoice()
+
     With wshFAC_Dashboard
         selRow = .Range("AA2").value             'Selected Row
         If selRow = 0 Then Exit Sub
@@ -131,9 +143,11 @@ Sub Aging_GoToInvoice()
         Invoice.Activate
         Invoice.Range("L1").value = .Range("J" & selRow).value 'set Invoice #
     End With
+    
 End Sub
 
 Sub AgingDetail_Refresh()
+
     wshFAC_Dashboard.Range("B507:J9999").ClearContents  'Clear Existing Data
     With wshFAC_Invoice_List
         'Clear Prior Results

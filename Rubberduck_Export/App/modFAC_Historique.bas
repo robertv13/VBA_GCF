@@ -34,8 +34,10 @@ Sub Affiche_Liste_Factures()
     Call Output_Timer_Results("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
 
 Clean_Exit:
-    Set ws = Nothing
+    
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set rng = Nothing
+    Set ws = Nothing
     
 End Sub
 
@@ -45,18 +47,16 @@ Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
     
     With ws
         'Setup source data including headers
-        Dim lastUsedRow As Long, sourceRng As Range
+        Dim lastUsedRow As Long
         lastUsedRow = .Range("A99999").End(xlUp).row
         If lastUsedRow < 3 Then Exit Sub 'No data to filter
-        Set sourceRng = .Range("A2:U" & lastUsedRow)
+        Dim sourceRng As Range: Set sourceRng = .Range("A2:U" & lastUsedRow)
         
         'Define the criteria range including headers
-        Dim criteriaRng As Range
-        Set criteriaRng = ws.Range("W2:W3")
+        Dim criteriaRng As Range: Set criteriaRng = ws.Range("W2:W3")
     
         'Setup the destination Range and clear it before applying AdvancedFilter
-        Dim destinationRng As Range
-        Set destinationRng = .Range("Y2:AS2")
+        Dim destinationRng As Range: Set destinationRng = .Range("Y2:AS2")
         lastUsedRow = .Range("Y99999").End(xlUp).row
         If lastUsedRow > 2 Then
             ws.Range("Y3:AS" & lastUsedRow).ClearContents
@@ -78,10 +78,11 @@ Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
          End With
      End With
 
-    Set ws = Nothing
-    Set sourceRng = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
+    Set sourceRng = Nothing
+    Set ws = Nothing
 
 End Sub
 
@@ -147,20 +148,21 @@ nextIteration:
     End With
     
     lastUsedRow = i + 8
-    Call Remove_All_PDF_Pictures
+    Call Remove_All_PDF_Icons
     If lastUsedRow >= 9 Then
         Call Insert_PDF_Icons(lastUsedRow)
     End If
 Clean_Exit:
 
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    Set ws2 = Nothing
     
 End Sub
 
 Sub Insert_PDF_Icons(lastUsedRow As Long)
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
     
     Dim i As Long
     Dim iconPath As String
@@ -187,17 +189,22 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
         End If
     Next i
     
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set pic = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub Display_PDF_Invoice()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
     
-    Dim targetCell As Range
     Dim rowNumber As Long
     Dim fullPDFFileName As String
     
     'Determine which icon was clicked and get the corresponding row number
+    Dim targetCell As Range
     Set targetCell = ActiveSheet.Shapes(Application.Caller).TopLeftCell
     rowNumber = targetCell.row
     
@@ -212,48 +219,44 @@ Sub Display_PDF_Invoice()
         MsgBox "Je ne retrouve pas cette facture", vbExclamation
     End If
     
-    Set ws = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set targetCell = Nothing
+    Set ws = Nothing
     
 End Sub
 
-Sub Remove_All_PDF_Pictures()
+Sub Remove_All_PDF_Icons()
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
     
     Dim pic As Picture
     For Each pic In ws.Pictures
         pic.delete
     Next pic
     
-    Set ws = Nothing
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
+    Set ws = Nothing
     
 End Sub
 
 Sub Test_Advanced_Filter_Factures_Entête() '2024-06-27 @ 14:51
 
-    Dim ws As Worksheet
-'    Set ws = ThisWorkbook.Sheets("Factures_Entête")
-    Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
     
-    ' Clear previous results
+    'Clear previous results
     ws.Range("Y3:AS157").ClearContents
 
-    ' Define the source range including headers
-    Dim srcRange As Range
-    Set srcRange = ws.Range("$A$2:$U$157")
+    'Define the source range including headers
+    Dim srcRange As Range: Set srcRange = ws.Range("$A$2:$U$157")
 
-    ' Define the criteria range including headers
-    Dim criteriaRange As Range
-    Set criteriaRange = ws.Range("$W$2:$W$3")
+    'Define the criteria range including headers
+    Dim criteriaRange As Range: Set criteriaRange = ws.Range("$W$2:$W$3")
 
-    ' Define the destination range starting from Y3
-    Dim destRange As Range
-    Set destRange = ws.Range("$Y$2:$AS$2")
+    'Define the destination range starting from Y3
+    Dim destRange As Range: Set destRange = ws.Range("$Y$2:$AS$2")
 
-    ' Apply the advanced filter
+    'Apply the advanced filter
     srcRange.AdvancedFilter action:=xlFilterCopy, criteriaRange:=criteriaRange, CopyToRange:=destRange, Unique:=False
     
     Dim lastResultRow As Long
@@ -269,6 +272,12 @@ Sub Test_Advanced_Filter_Factures_Entête() '2024-06-27 @ 14:51
         .Apply 'Apply Sort
      End With
 
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set criteriaRange = Nothing
+    Set destRange = Nothing
+    Set srcRange = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub FAC_Historique_Clear_All_Cells()
@@ -282,7 +291,7 @@ Sub FAC_Historique_Clear_All_Cells()
         .Range("F4:I4,F6:I6").ClearContents
         .Range("E9:R33").ClearContents
         .Range("P6,R6").ClearContents
-        Call Remove_All_PDF_Pictures
+        Call Remove_All_PDF_Icons
         Application.EnableEvents = True
         wshFAC_Historique.Activate
         wshFAC_Historique.Range("F4").Select
@@ -295,14 +304,16 @@ End Sub
 
 Sub Shape_Is_Visible(a As Boolean)
 
-    Dim shp As Shape
-    Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("Rectangle : coins arrondis 2")
+    Dim shp As Shape: Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("Rectangle : coins arrondis 2")
     
     If a = True Then
         shp.Visible = True
     Else
         shp.Visible = False
     End If
+    
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set shp = Nothing
     
 End Sub
 

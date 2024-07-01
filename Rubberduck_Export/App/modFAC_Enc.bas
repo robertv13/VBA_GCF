@@ -326,9 +326,8 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     sourceTab = "FAC_Encaissements_Entête"
     
     'Set up source and destination ranges
-    Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Set destinationRange = wshENC_Entête.Range("A3")
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim destinationRange As Range: Set destinationRange = wshENC_Entête.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns
     sourceRange.Copy destinationRange
@@ -337,20 +336,9 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-'    'Arrange formats on all rows
-'    Dim lastRow As Long
-'    lastRow = wshENC_Entête.Range("A999999").End(xlUp).row
-'
-'    With wshENC_Entête
-'        .Range("A4" & ":B" & lastRow).HorizontalAlignment = xlCenter
-'        With .Range("C4:C" & lastRow & ",D4:D" & lastRow & ",F4:F" & lastRow)
-'            .HorizontalAlignment = xlLeft
-'        End With
-'        .Range("E4:E" & lastRow).HorizontalAlignment = xlRight
-'        .Range("G4:H" & lastRow).NumberFormat = "#,##0.00 $"
-'        .Range("B4:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-'        .Range("F4:F" & lastRow).NumberFormat = "dd/mm/yyyy"
-'    End With
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modFAC_Enc:FAC_Encaissements_Entête_Import_All()", timerStart)
   
@@ -370,9 +358,8 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     sourceTab = "FAC_Encaissements_Détails"
     
     'Set up source and destination ranges
-    Dim sourceRange As Range, destinationRange As Range
-    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Set destinationRange = wshENC_Détails.Range("A3")
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim destinationRange As Range: Set destinationRange = wshENC_Détails.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns
     sourceRange.Copy destinationRange
@@ -380,18 +367,10 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
 
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
-'    'Arrange formats on all rows
-'    Dim lastRow As Long
-'    lastRow = wshENC_Détails.Range("A999999").End(xlUp).row
-'
-'    With wshENC_Détails
-'        .Range("A4:B" & lastRow & ",D4:D" & lastRow & ",F4:F" & lastRow).HorizontalAlignment = xlCenter
-'        .Range("C4:C" & lastRow).HorizontalAlignment = xlLeft
-'        .Range("D3:D" & lastRow).NumberFormat = "dd/mm/yyyy"
-'        .Range("E3:E" & lastRow).HorizontalAlignment = xlRight
-'        .Range("E3:E" & lastRow).NumberFormat = "#,##0.00 $"
-'    End With
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modFAC_Enc:FAC_Encaissements_Détails_Import_All()", timerStart)
     
@@ -494,11 +473,10 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     destinationTab = "FAC_Encaissements_Détails"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'If r is 0, add a new record, otherwise, update an existing record
     If r = 0 Then 'Add a record
@@ -562,6 +540,10 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
     Call Output_Timer_Results("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
     
 End Sub

@@ -17,8 +17,7 @@ Private Sub Worksheet_Activate()
     
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
     
     'Import all transactions from Master
     Call DEB_Trans_Import_All
@@ -46,6 +45,9 @@ Private Sub Worksheet_Activate()
         previousCellAddress = .Range("F4").Address
     End With
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
     Call Output_Timer_Results("wshDEB_Saisie:Worksheet_Activate()", timerStart)
 
 End Sub
@@ -225,7 +227,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

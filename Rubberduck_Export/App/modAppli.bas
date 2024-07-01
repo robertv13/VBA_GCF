@@ -111,6 +111,9 @@ Sub BackToMainMenu()
     wshMenu.Activate
     wshMenu.Range("A1").Select
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Private Sub auto_open() '2024-03-06 @ 14:36
@@ -153,34 +156,19 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Hide_All_Worksheets_Except_Menu()")
     
-    Dim wsh As Worksheet
-    For Each wsh In ThisWorkbook.Worksheets
-        If wsh.codeName <> "wshMenu" And _
-            InStr(wsh.codeName, "wshzDoc") = 0 Then
-                wsh.Visible = xlSheetHidden
+    Dim ws As Worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.codeName <> "wshMenu" And _
+            InStr(ws.codeName, "wshzDoc") = 0 Then
+                ws.Visible = xlSheetHidden
         End If
-    Next wsh
+    Next ws
     
     Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
     
-End Sub
-
-Sub Fill_Or_Empty_Range_Background(rng As Range, fill As Boolean, Optional colorIndex As Variant = xlNone) 'TBD ??
-'    If fill Then
-'        If IsMissing(colorIndex) Or colorIndex = xlNone Then
-'            rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
-'        Else
-'            rng.Interior.colorIndex = colorIndex ' Fill with specified color
-'        End If
-'    Else
-'        rng.Interior.colorIndex = xlColorIndexNone ' Clear the background color
-'    End If
-End Sub
-
-Sub Tab_Order_Toggle_Mode() 'TBD ??
-
-'    isTab_Order_Activated = Not isTab_Order_Activated
-
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
 End Sub
 
 Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
@@ -272,8 +260,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Next cell
 
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
-    Dim sortedCells As Range
-    Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
+    Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
     Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd/mm/yyyy hh:mm:ss")
 
     'Enable TAB through unprotected cells
@@ -290,8 +277,16 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     
     Application.EnableEvents = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set unprotectedCells = Nothing
+    Set sortedCells = Nothing
+    
     Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    
 End Sub
 
 Sub BackupMasterFile()
@@ -327,6 +322,9 @@ Sub BackupMasterFile()
 
     Application.ScreenUpdating = True
 
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set masterWorkbook = Nothing
+    
     Call Output_Timer_Results("modAppli:BackupMasterFile()", timerStart)
 
 End Sub
