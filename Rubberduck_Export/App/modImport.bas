@@ -61,6 +61,61 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
         
 End Sub
 
+Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
+    
+    Application.StatusBar = "J'importe la feuille 'Admin'"
+    
+    'Save the shared data folder name
+    Dim saveDataPath As String
+    saveDataPath = ThisWorkbook.Worksheets("Admin").Range("FolderSharedData").value
+    
+    'Define the target workbook and sheet names
+    Dim targetWorkbook As Workbook: Set targetWorkbook = ThisWorkbook
+    Dim targetSheetName As String
+    targetSheetName = "Admin"
+    Dim sourceSheetName As String
+    sourceSheetName = "Admin_Master"
+    
+    'Open the source workbook
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Dim sourceWorkbook As Workbook: Set sourceWorkbook = _
+        Workbooks.Open(saveDataPath & Application.PathSeparator & "GCF_BD_Sortie.xlsx")
+    
+    Debug.Print "Source     : " & sourceWorkbook.name & " with " & sourceSheetName
+    Debug.Print "Destination: " & targetWorkbook.name & " with " & targetSheetName
+    
+    'Copy the source worksheet
+    sourceWorkbook.Sheets(sourceSheetName).Copy Before:=targetWorkbook.Sheets(2)
+    Debug.Print "The new sheet is created..."
+    Dim tempSheet As Worksheet: Set tempSheet = targetWorkbook.Sheets(2)
+    tempSheet.name = "TempSheetName"
+    Debug.Print "The new sheet is now called 'TempSheetName'"
+
+    'Delete the old (target) worksheet
+    Debug.Print "About to delete '" & targetSheetName & "'"
+    targetWorkbook.Sheets(targetSheetName).delete
+
+    'Rename the copied worksheet to the target worksheet name
+    tempSheet.name = targetSheetName
+
+'    'Change the code name of the worksheet
+'    Dim vbaProject As Object: Set vbaProject = targetWorkbook.VBProject
+'    Dim vbaComponent As Object: Set vbaComponent = vbaProject.VBComponents("Feuil2")
+'    vbaComponent.Properties("_CodeName").value = "wshADMIN"
+    
+    'Close the source workbook
+    sourceWorkbook.Close SaveChanges:=False
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+
+    'Cleaning - 2024-07-02 @ 14:27
+    Set sourceWorkbook = Nothing
+    Set targetWorkbook = Nothing
+    Set tempSheet = Nothing
+    
+End Sub
+
 Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:TEC_Import_All()")

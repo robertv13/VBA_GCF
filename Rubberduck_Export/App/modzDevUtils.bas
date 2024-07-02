@@ -284,7 +284,7 @@ NextLineOfCode:
     
         .FormatConditions.add Type:=xlExpression, Formula1:= _
             "=MOD(LIGNE();2)=0"
-        .FormatConditions(Selection.FormatConditions.count).SetFirstPriority
+        .FormatConditions(.FormatConditions.count).SetFirstPriority
         With .FormatConditions(1).Interior
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorAccent1
@@ -397,7 +397,9 @@ Next_line_Of_Code:
     lastUsedRow = wshzDocSearchResults.Range("A9999").End(xlUp).row 'Last Used Row
 '    wshzDocSearchResults.Range("A2:F" & lastUsedRow).ClearContents
 
-    Call Array_2D_Resizer(arr, r, UBound(arr, 2))
+    If r > 1 Then
+        Call Array_2D_Resizer(arr, r, UBound(arr, 2))
+    End If
     
     'Sort the 2D array based on column 1
     Call Array_2D_Bubble_Sort(arr)
@@ -418,18 +420,20 @@ Next_line_Of_Code:
         End If
     Next j
     
-    Cells.FormatConditions.delete
     With wshzDocSearchResults.Range("B2:G" & lastUsedRow)
-        .FormatConditions.add _
-            Type:=xlExpression, _
-            Formula1:="=MOD(LIGNE();2)=1"
-        .FormatConditions(Selection.FormatConditions.count).SetFirstPriority
+        On Error Resume Next
+        Cells.FormatConditions.delete
+        On Error GoTo 0
+    
+        .FormatConditions.add Type:=xlExpression, Formula1:= _
+            "=MOD(LIGNE();2)=0"
+        .FormatConditions(.FormatConditions.count).SetFirstPriority
         With .FormatConditions(1).Interior
             .PatternColorIndex = xlAutomatic
             .ThemeColor = xlThemeColorAccent1
             .TintAndShade = 0.799981688894314
         End With
-        Selection.FormatConditions(1).StopIfTrue = False
+        .FormatConditions(1).StopIfTrue = False
     End With
     
     MsgBox "J'ai trouvé " & r & " lignes avec le mot '" & search & "'" & vbNewLine & _
