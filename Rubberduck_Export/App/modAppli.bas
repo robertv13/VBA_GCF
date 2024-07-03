@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.1" '2024-07-01 @ 09:37
+Public Const APP_VERSION_NO As String = "v3.9.3" '2024-07-02 @ 20:17
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -327,6 +327,101 @@ Sub BackupMasterFile()
     
     Call Output_Timer_Results("modAppli:BackupMasterFile()", timerStart)
 
+End Sub
+
+Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
+                                  total As Currency, _
+                                  gst As Currency, pst As Currency, _
+                                  gstCredit As Currency, pstCredit As Currency, _
+                                  netAmount As Currency)
+
+    Dim gstRate As Double, pstRate As Double
+    gstRate = Fn_Get_Tax_Rate(d, "F")
+    pstRate = Fn_Get_Tax_Rate(d, "P")
+    
+    If total <> 0 Then 'Calculate the amount before taxes
+        'GST calculation
+        If taxCode = "FP" Or taxCode = "REP" Then
+            gst = Round(total / (1 + gstRate + pstRate) * gstRate, 2)
+        ElseIf taxCode = "F" Then
+            gst = Round(total / (1 + gstRate) * gstRate, 2)
+        Else
+            gst = 0
+        End If
+        
+        'PST calculation
+        If taxCode = "FP" Or taxCode = "REP" Then
+            pst = Round(total / (1 + gstRate + pstRate) * pstRate, 2)
+        ElseIf taxCode = "P" Then
+            pst = Round(total / (1 + pstRate) * pstRate, 2)
+        Else
+            pst = 0
+        End If
+        
+        'Tax credits
+        If taxCode <> "REP" Then
+            gstCredit = gst
+            pstCredit = pst
+        Else
+            gstCredit = Round(gst / 2, 2)
+            pstCredit = Round(pst / 2, 2)
+        End If
+        
+        netAmount = total - gstCredit - pstCredit
+        Exit Sub
+    End If
+    
+    If netAmount <> 0 Then 'Calculate the taxes from the net amount
+        'gst calculation
+        If taxCode = "FP" Or taxCode = "REP" Or taxCode = "F" Then
+            gst = Round(netAmount * gstRate, 2)
+        Else
+            gst = 0
+        End If
+        'PST calculation
+        If taxCode = "FP" Or taxCode = "REP" Or taxCode = "P" Then
+            pst = Round(netAmount * pstRate, 2)
+        Else
+            pst = 0
+        End If
+        If taxCode <> "REP" Then
+            gstCredit = gst
+            pstCredit = pst
+        Else
+            gstCredit = Round(gst / 2, 2)
+            pstCredit = Round(pst / 2, 2)
+        End If
+        
+        total = netAmount + gst + pst
+    End If
+    
+End Sub
+
+Sub Test_Calcul_Taxes()
+
+    Dim d As Date
+    Dim taxCode As String
+    Dim total As Currency, gst As Currency, pst As Currency
+    Dim gstCredit As Currency, pstCredit As Currency
+    Dim netAmount As Currency
+    
+    d = #7/3/2024#
+    taxCode = "REP"
+    total = 0
+    netAmount = 217.39
+    
+    Call Calculate_gst_PST_And_Credits(d, taxCode, total, gst, pst, gstCredit, pstCredit, netAmount)
+    
+    Debug.Print vbNewLine & "Date   : " & d
+    Debug.Print "TaxCode: " & taxCode
+    Debug.Print "Gross  : " & Format(total, "#,##0.00")
+    Debug.Print "Net    : " & Format(netAmount, "#,##0.00") & vbNewLine
+    
+    Debug.Print "TPS    : " & Format(gst, "#,##0.00")
+    Debug.Print "TVQ    : " & Format(pst, "#,##0.00")
+    Debug.Print "TPS_CT : " & Format(gstCredit, "#,##0.00")
+    Debug.Print "TVQ_CT : " & Format(pstCredit, "#,##0.00")
+    
 End Sub
 
 Sub TEST_GetOneDrivePath()

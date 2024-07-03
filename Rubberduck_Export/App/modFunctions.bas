@@ -49,6 +49,38 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 End Function
 
+Function Fn_FournID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
+
+    Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
+    
+    On Error Resume Next
+    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrSuppliers_All")
+    On Error GoTo 0
+
+    If ws Is Nothing Or dynamicRange Is Nothing Then
+        MsgBox "La feuille 'Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
+            vbExclamation
+        Exit Function
+    End If
+    
+    'Using XLOOKUP to find the result directly
+    Dim result As Variant
+    result = Application.WorksheetFunction.XLookup(nomFournisseur, _
+        dynamicRange.columns(1), dynamicRange.columns(2), _
+        "Not Found", 0, 1)
+    
+    If result <> "Not Found" Then
+        Fn_FournID_From_Fourn_Name = result
+    Else
+        Fn_FournID_From_Fourn_Name = 0
+    End If
+    
+    'Cleaning memory - 2024-07-03 @ 16:13
+    Set dynamicRange = Nothing
+    Set ws = Nothing
+
+End Function
+
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
     'This function is used to retrieve information from a range
@@ -317,16 +349,19 @@ End Function
 Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
     Dim row As Integer
+    Dim rate As Double
     With wshAdmin
         For row = 18 To 11 Step -1
             If .Range("L" & row).value = taxType Then
                 If d >= .Range("M" & row).value Then
-                    Fn_Get_Tax_Rate = .Range("N" & row).value
+                    rate = .Range("N" & row).value
                     Exit For
                 End If
             End If
         Next row
     End With
+    
+    Fn_Get_Tax_Rate = rate
     
 End Function
 
@@ -512,6 +547,29 @@ Public Function ConvertValueBooleanToText(val As Boolean) As String
     End Select
 
 End Function
+
+Sub Fn_Get_Tax_RateZ(r As Range, d As Date, tx As String)
+    
+'    'Set the range to search
+'    Dim dataRange As Range: Set dataRange = r
+'
+'    'Setup return value (rate)
+'    Dim rate As Double
+'    rate = 0
+'
+'    'Loop through the data range
+'    Dim cell As Range
+'    For Each cell In dataRange.columns(1).Cells
+'        If cell.value = tx And cell.Offset(0, 1).value < d Then
+'            'If the code matches and the date is smaller, store the result
+'            rate = cell.value
+'            rate = cell.Offset(0, 1).value
+'        End If
+'    Next cell
+'
+'    MsgBox "Search complete. Results are in columns D and E."
+    
+End Sub
 
 Public Function GetOneDrivePath(ByVal fullWorkbookName As String) As String '2024-05-27 @ 10:10
     

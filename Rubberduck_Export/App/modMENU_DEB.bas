@@ -6,12 +6,19 @@ Sub DEB_Saisie_Click()
     
     Call SlideIn_Paiement
     
-    wshDEB_Saisie.Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = False
+    
+    Call Fournisseur_List_Import_All
+    
+    Application.EnableEvents = True
+    
     With wshDEB_Saisie
         .Visible = xlSheetVisible
-        .Select
+        .Activate
     End With
+    
+    wshDEB_Saisie.Application.Calculation = xlCalculationAutomatic
+    
     Application.ScreenUpdating = True
 
 End Sub

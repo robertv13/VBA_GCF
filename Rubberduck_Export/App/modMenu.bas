@@ -28,7 +28,9 @@ Sub SlideIn_TEC()
         wshMenu.Unprotect
         On Error GoTo 0
         .TextFrame2.TextRange.Characters.text = ""
+        On Error Resume Next
         wshMenu.Protect UserInterfaceOnly:=True
+        On Error GoTo 0
     End With
     
 End Sub

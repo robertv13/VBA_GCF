@@ -21,6 +21,9 @@ Sub DEB_Saisie_Update()
     rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
+    'Get the Fourn_ID
+    wshDEB_Saisie.Range("B5").value = Fn_FournID_From_Fourn_Name(wshDEB_Saisie.Range("F6").value)
+
     'Transfert des données vers DEB_Trans, entête d'abord puis une ligne à la fois
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
     Call DEB_Trans_Add_Record_Locally(rowDebSaisie)
@@ -42,10 +45,8 @@ Sub DEB_Saisie_Update()
     Call DEB_Saisie_Clear_All_Cells
     
     Application.EnableEvents = True
-    With wshDEB_Saisie
-        .Range("F4").Activate
-        .Range("F4").Select
-    End With
+    
+    wshDEB_Saisie.Range("F4").Select
         
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Update()", timerStart)
         
@@ -109,6 +110,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
             rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
             rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("F6").value
+            rs.Fields("FournID").value = wshDEB_Saisie.Range("B5").value
             rs.Fields("Reference").value = wshDEB_Saisie.Range("M6").value
             rs.Fields("Total").value = wshDEB_Saisie.Range("O6").value
             rs.Fields("No_Compte").value = wshDEB_Saisie.Range("Q" & l).value
@@ -161,17 +163,18 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
         wshDEB_Trans.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
         wshDEB_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
-        wshDEB_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
-        wshDEB_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
-        wshDEB_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
-        wshDEB_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
-        wshDEB_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
-        wshDEB_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
-        wshDEB_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
-        wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
-        wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
-        wshDEB_Trans.Range("N" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("O" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshDEB_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("B5").value
+        wshDEB_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
+        wshDEB_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
+        wshDEB_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
+        wshDEB_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
+        wshDEB_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
+        wshDEB_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
+        wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
+        wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
+        wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
+        wshDEB_Trans.Range("O" & rowToBeUsed).value = ""
+        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     

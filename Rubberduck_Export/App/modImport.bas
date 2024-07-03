@@ -61,6 +61,66 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
         
 End Sub
 
+Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Fournisseur_List_Import_All()")
+    
+    Application.StatusBar = "J'importe la liste des fournisseurs"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the destination worksheet
+    wshBD_Fournisseurs.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
+    sourceTab = "Fournisseurs"
+    
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
+    wshBD_Fournisseurs.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Close resource
+    recSet.Close
+    connStr.Close
+    
+    Application.ScreenUpdating = True
+    
+'    MsgBox _
+'        Prompt:="J'ai importé un total de " & _
+'            Format(wshBD_Fournisseurs.Range("A1").CurrentRegion.rows.count - 1, _
+'            "##,##0") & " fournisseurs", _
+'        Title:="Vérification du nombre de fournisseurs", _
+'        Buttons:=vbInformation
+
+    Application.StatusBar = ""
+
+    'Cleaning memory - 2024-07-03 @ 15:45
+    Set connStr = Nothing
+    Set recSet = Nothing
+    
+    Call Output_Timer_Results("modImport:Fournisseur_List_Import_All()", timerStart)
+        
+End Sub
+
 Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     
     Application.StatusBar = "J'importe la feuille 'Admin'"
