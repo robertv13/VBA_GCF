@@ -196,8 +196,8 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
                    wshDEB_Saisie.Range("M6").value & "]"
     source = "DÉBOURS-" & Format(wshDEB_Saisie.Range("B1").value, "000000")
     
-    Dim myArray() As String
-    ReDim myArray(1 To 16, 1 To 4)
+    Dim MyArray() As String
+    ReDim MyArray(1 To 16, 1 To 4)
     
     'Based on Disbursement type, the CREDIT account will be different
     'Disbursement Total (wshDEB_Saisie.Range("O6"))
@@ -207,21 +207,21 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Select Case deboursType
         Case "Chèque", "Virement", "Paiement pré-autorisé"
-            myArray(1, 1) = "1000"
-            myArray(1, 2) = "Encaisse-1"
+            MyArray(1, 1) = "1000"
+            MyArray(1, 2) = "Encaisse-1"
         Case "VISA", "MCARD", "AMEX"
-            myArray(1, 1) = "1000"
-            myArray(1, 2) = "Encaisse-2"
+            MyArray(1, 1) = "1000"
+            MyArray(1, 2) = "Encaisse-2"
         Case "Autre"
-            myArray(1, 1) = "1000"
-            myArray(1, 2) = "Encaisse-3"
+            MyArray(1, 1) = "1000"
+            MyArray(1, 2) = "Encaisse-3"
         Case Else
-            myArray(1, 1) = "1000"
-            myArray(1, 2) = "Encaisse-4"
+            MyArray(1, 1) = "1000"
+            MyArray(1, 2) = "Encaisse-4"
     End Select
     
-    myArray(1, 3) = -montant
-    myArray(1, 4) = ""
+    MyArray(1, 3) = -montant
+    MyArray(1, 4) = ""
     
     'Process every lines
     Dim lastUsedRow As Long
@@ -230,32 +230,32 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Dim l As Long, arrRow As Long
     arrRow = 2 '1 is already used
     For l = 9 To lastUsedRow
-        myArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).value
-        myArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).value
-        myArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).value
-        myArray(arrRow, 4) = ""
+        MyArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).value
+        MyArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).value
+        MyArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).value
+        MyArray(arrRow, 4) = ""
         arrRow = arrRow + 1
         
         If wshDEB_Saisie.Range("L" & l).value <> 0 Then
-            myArray(arrRow, 1) = "1200"
-            myArray(arrRow, 2) = "TPS payée"
-            myArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).value
-            myArray(arrRow, 4) = ""
+            MyArray(arrRow, 1) = "1200"
+            MyArray(arrRow, 2) = "TPS payée"
+            MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).value
+            MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
         End If
 
         If wshDEB_Saisie.Range("M" & l).value <> 0 Then
-            myArray(arrRow, 1) = "1201"
-            myArray(arrRow, 2) = "TVQ payée"
-            myArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).value
-            myArray(arrRow, 4) = ""
+            MyArray(arrRow, 1) = "1201"
+            MyArray(arrRow, 2) = "TVQ payée"
+            MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).value
+            MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
         End If
     Next l
     
-    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, myArray)
+    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray)
     GL_TransNo = wshAdmin.Range("B9").value
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GL_TransNo, myArray)
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GL_TransNo, MyArray)
     
     Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 

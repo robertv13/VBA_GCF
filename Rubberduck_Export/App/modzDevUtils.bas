@@ -778,15 +778,15 @@ End Sub
 
 Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
-    Dim temp As String
+    Dim Temp As String
     
     For i = LBound(arr) To UBound(arr) - 1
         For j = i + 1 To UBound(arr)
             If arr(i) > arr(j) Then
                 'Swap elements if they are in the wrong order
-                temp = arr(i)
+                Temp = arr(i)
                 arr(i) = arr(j)
-                arr(j) = temp
+                arr(j) = Temp
             End If
         Next j
     Next i
@@ -795,7 +795,7 @@ End Sub
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     Dim sorted As Boolean
     
     numRows = UBound(arr, 1)
@@ -810,9 +810,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
             If arr(j, 1) > arr(j + 1, 1) Then
                 'Swap rows
                 For c = 1 To numCols
-                    temp = arr(j, c)
+                    Temp = arr(j, c)
                     arr(j, c) = arr(j + 1, c)
-                    arr(j + 1, c) = temp
+                    arr(j + 1, c) = Temp
                 Next c
                 sorted = False
             ElseIf arr(j, 1) = arr(j + 1, 1) Then
@@ -820,9 +820,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
                 If arr(j, 2) > arr(j + 1, 2) Then
                     'Swap rows
                     For c = 1 To numCols
-                        temp = arr(j, c)
+                        Temp = arr(j, c)
                         arr(j, c) = arr(j + 1, c)
-                        arr(j + 1, c) = temp
+                        arr(j + 1, c) = Temp
                     Next c
                     sorted = False
                 End If
@@ -1030,6 +1030,138 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    
+End Sub
+
+Sub Check_Invoice_Template()
+
+    Dim ws As Worksheet: Set ws = wshAdmin
+    Dim firstUsedRow As Long, lastUsedRow As Long
+    firstUsedRow = 12
+    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    Dim rng As Range
+    Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
+    
+    'First - Determine which templates are used
+    Dim arr As Variant
+    Dim strTemplates As String
+    Dim i As Integer, j As Integer
+    For i = 1 To lastUsedRow - firstUsedRow + 1
+        If Not rng.Cells(i, 2) = "" Then
+            arr = Split(rng.Cells(i, 2), ",")
+            For j = 0 To UBound(arr)
+                strTemplates = strTemplates & Trim(arr(j)) & "-" & i & "|"
+            Next j
+        End If
+    Next i
+    
+    'Second - Sort all the found templates
+    Dim tt() As String
+    tt = Split(strTemplates, "|")
+    Call BubbleSort(tt)
+    
+    'Third - Prepare the worksheet to receive information
+    Call Erase_And_Create_Worksheet("Gabarits_Facture")
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
+    wsOutput.Range("A1").value = "Gabarit"
+    wsOutput.Range("B1").value = "Code"
+    wsOutput.Range("C1").value = "Service"
+    Dim outputRow As Integer: outputRow = 1
+    
+    'Third - Build the list of services associated to each template (First Letter)
+    Dim rowNo As Integer
+    Dim template As String, oldTemplate As String
+    
+    With wsOutput
+        For i = 0 To UBound(tt)
+            If tt(i) <> "" Then
+                template = Left(tt(i), 1)
+                If template <> oldTemplate Then
+                    outputRow = outputRow + 2
+                    .Range("A" & outputRow).value = "Gabarit '" & template & "'"
+                    oldTemplate = template
+                End If
+                rowNo = Mid(tt(i), InStr(1, tt(i), "-") + 1)
+                outputRow = outputRow + 1
+                .Range("B" & outputRow).value = tt(i)
+                .Range("C" & outputRow).value = rng.Cells(rowNo, 1)
+            End If
+        Next i
+        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    End With
+    
+    With wsOutput.Range("A1:C1")
+        With .Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 12611584
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        
+        With .Font
+            .ThemeColor = xlThemeColorDark1
+            .TintAndShade = 0
+            .Size = 10
+            .Italic = True
+            .Bold = True
+        End With
+    End With
+    
+    With wsOutput.Range("A2:A" & outputRow)
+        .Font.Bold = True
+    End With
+
+    'Cleaning - 2024-07-02 @ 20:12
+    Set rng = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    
+End Sub
+
+Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
+    'Sorts a one-dimensional VBA array from smallest to largest 'using the bubble sort algorithm.
+    'HOW TO USE: Call BubbleSort(MyArray())
+    
+    Dim i As Long, j As Long
+    Dim Temp As Variant
+    For i = LBound(MyArray) To UBound(MyArray) - 1
+        For j = i + 1 To UBound(MyArray)
+            If MyArray(i) > MyArray(j) Then
+                Temp = MyArray(j)
+                MyArray(j) = MyArray(i)
+                MyArray(i) = Temp
+            End If
+        Next j
+    Next i
+    
+End Sub
+
+Sub Erase_And_Create_Worksheet(sheetName As String)
+
+    Dim ws As Worksheet
+    Dim wsExists As Boolean
+
+    'Check if the worksheet exists
+    wsExists = False
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.name = sheetName Then
+            wsExists = True
+            Exit For
+        End If
+    Next ws
+
+    'If the worksheet exists, delete it
+    If wsExists Then
+        Application.DisplayAlerts = False
+        ws.delete
+        Application.DisplayAlerts = True
+    End If
+
+    'Create a new worksheet with the specified name
+    Set ws = ThisWorkbook.Worksheets.add
+    ws.name = sheetName
     
 End Sub
 
