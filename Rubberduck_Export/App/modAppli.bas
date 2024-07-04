@@ -393,6 +393,7 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
         End If
         
         total = netAmount + gst + pst
+        
     End If
     
 End Sub

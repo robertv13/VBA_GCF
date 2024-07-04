@@ -602,14 +602,14 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
     'Adjust Formats for all new rows
     With wshDEB_Trans
-        .Range("A2:O" & lastUsedRow).HorizontalAlignment = xlCenter
+        .Range("A2:P" & lastUsedRow).HorizontalAlignment = xlCenter
         .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
         .Range("C2:C" & lastUsedRow & _
              ", D2:D" & lastUsedRow & _
-             ", E2:E" & lastUsedRow & _
-             ", G2:G" & lastUsedRow & _
-             ", N2:N" & lastUsedRow).HorizontalAlignment = xlLeft
-        With .Range("I2:M" & lastUsedRow)
+             ", F2:F" & lastUsedRow & _
+             ", H2:H" & lastUsedRow & _
+             ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
+        With .Range("J2:N" & lastUsedRow)
             .HorizontalAlignment = xlRight
             .NumberFormat = "#,##0.00 $"
         End With

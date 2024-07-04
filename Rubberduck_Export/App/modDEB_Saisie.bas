@@ -174,7 +174,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
         wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
         wshDEB_Trans.Range("O" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format(Now(), "mm/dd/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
