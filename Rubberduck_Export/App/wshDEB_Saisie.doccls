@@ -128,9 +128,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Calculate the NET amount (Expense), but also accept user input
     If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
-        If Range("I" & Target.row).value <> 0 Then
-            Range("N" & Target.row).formula = "=round(RC[-5]-rc[-2]-rc[-1],2)"
-        End If
+'        If Range("I" & Target.row).value <> 0 Then
+'            Range("N" & Target.row).formula = "=round(RC[-5]-rc[-2]-rc[-1],2)"
+'        End If
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -161,14 +161,36 @@ Private Sub Process_Change(ByVal Target As Range)
     
     Dim startCell As Range: Set startCell = ws.Range("E9")
     
-    Dim GLRange As Range: Set GLRange = ws.Range(startCell.Offset(0, -4), startCell.Offset(14, -4))
+    Dim GLRange As Range: Set GLRange = ws.Range(startCell.Offset(0, 0), startCell.Offset(14, 0))
     Dim amountRange As Range: Set amountRange = ws.Range(startCell.Offset(0, 2), startCell.Offset(14, 2))
     Dim netAmountRange As Range: Set netAmountRange = ws.Range(startCell.Offset(0, 7), startCell.Offset(14, 7))
     
+    Dim fullDate As Variant
     Dim amount As Currency
     Dim gst As Currency, pst As Currency
     Dim gstCredit As Currency, pstCredit As Currency
     Dim netAmount As Currency
+    
+    'Date has changed
+    If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
+        'Temporarily disable events to prevent infinite loop
+        Application.EnableEvents = False
+        
+        'Try to convert the input to a complete valid date
+        fullDate = CompleteDate(CStr(Target.text))
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.Goto Range(Target.Address)
+        End If
+        Application.EnableEvents = True
+    End If
     
     'Description has changed
     If Not Intersect(Target, GLRange) Is Nothing Then
@@ -197,6 +219,10 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.Offset(0, 4).value = "" 'Clear PST_Credit
                 cell.Offset(0, 5).value = "" 'Clear netAmount
                 'Move focus to netAmount
+                If previousCellAddress <> "" Then
+                    Debug.Print "Previous cell address = " & previousCellAddress
+                    Range(previousCellAddress).Interior.Color = xlNone
+                End If
                 cell.Offset(0, 5).Select
             Else
                 Debug.Print "Amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.row).value & " " & _
@@ -217,6 +243,10 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.Offset(0, 5).value = netAmount
                 Application.EnableEvents = True
                 'Move to the next line
+                Debug.Print "Previous cell address = " & previousCellAddress
+                If previousCellAddress <> "" Then
+                    Range(previousCellAddress).Interior.Color = xlNone
+                End If
                 cell.Offset(1, -4).Select
             End If
         Next cell

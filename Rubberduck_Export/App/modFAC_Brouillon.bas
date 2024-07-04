@@ -148,12 +148,33 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     wshFAC_Finale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
     
-    'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column
+    'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
     DateTaxRates = d
     wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "F")
     wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "P")
         
+    'Adjust hourly rate base on the date
+    Dim lastUsedProfInSummary As Integer
+    lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).row
+    
+    Dim i As Integer
+    For i = 25 To lastUsedProfInSummary
+        Dim ProfID As Integer
+        ProfID = wshFAC_Brouillon.Range("W" & i).value
+        Dim hRate As Currency
+        hRate = 0
+        Dim j As Integer
+        For j = 19 To 26
+            If wshAdmin.Range("D" & j).value = wshFAC_Brouillon.Range("W" & i).value Then
+                If CDate(d) >= CDate(wshAdmin.Range("E" & j).value) Then
+                    hRate = wshAdmin.Range("F" & j).value
+                End If
+            End If
+        Next j
+        wshFAC_Brouillon.Range("T" & i).value = hRate
+    Next i
+    
     Dim cutoffDate As Date
     cutoffDate = d
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
@@ -232,6 +253,9 @@ Sub FAC_Brouillon_Setup_All_Cells()
         .Range("O57").value = ""
         .Range("O59").formula = "=O55-O57"                              'Deposit Amount
         
+        'Setup the hours summary to handle different rates
+        Call Setup_Hours_Summary
+        
     End With
     
     Application.EnableEvents = True
@@ -266,7 +290,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
-
+    
     Application.EnableEvents = True
 
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()", timerStart)
@@ -390,8 +414,10 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     
     Application.ScreenUpdating = False
     
-    Dim arr() As Variant, totalHres As Double
+    Dim totalHres As Double
+    Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As Variant
+    
     With wshTEC_Local
         Dim i As Integer
         For i = 3 To lastUsedRow
@@ -425,6 +451,17 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         
     Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow) 'Exclude totals row
 
+    'Adjust the formula in the hours summary
+    
+    For i = 25 To 34
+        If wshFAC_Brouillon.Range("R" & i).value <> "" Then
+            Dim f As String
+            f = wshFAC_Brouillon.Range("S" & i).formula
+            f = Replace(f, "999", lastUsedRow)
+            wshFAC_Brouillon.Range("S" & i).formula = f
+        End If
+    Next i
+    
     Application.ScreenUpdating = True
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -576,3 +613,39 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
 
 End Sub
 
+Sub Setup_Hours_Summary()
+
+    Dim ws As Worksheet: Set ws = wshFAC_Brouillon
+    Dim lastUsedRow As Integer
+    lastUsedRow = ws.Range("R999").End(xlUp).row
+    Application.EnableEvents = False
+    If lastUsedRow > 24 Then ws.Range("R25:U" & lastUsedRow).ClearContents
+    Application.EnableEvents = False
+    
+    Dim r As Integer
+    r = 11
+    With wshAdmin
+        Do While .Range("D" & r).value <> ""
+            ws.Range("R" & r + 14).value = .Range("D" & r).value
+            ws.Range("W" & r + 14).value = .Range("E" & r).value
+            r = r + 1
+        Loop
+        ws.Range("R35").value = "Totals"
+    End With
+    
+    With ws
+        r = 25
+        Do While .Range("R" & r).value <> ""
+            .Range("S" & r).formula = "=SUMIFS(G7:G999, C7:C999, TRUE, E7:E999, R" & r & ")"
+            .Range("U" & r).formula = "=S" & r & " * T" & r
+            r = r + 1
+        Loop
+        ws.Range("S" & 35).formula = "=sum(S25:S34)"
+        ws.Range("U" & 35).formula = "=sum(U25:U34)"
+        
+    End With
+    
+    'Cleaning - 2024-07-04 @ 16:15
+    Set ws = Nothing
+    
+End Sub

@@ -122,7 +122,9 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Crédit_TPS").value = CDbl(wshDEB_Saisie.Range("L" & l).value)
             rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
-            rs.Fields("TimeStamp").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+'            rs.Fields("TimeStamp").value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields("TimeStamp").value = CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Debug.Print "DEB_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         rs.update
     Next l
     
@@ -194,9 +196,10 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     dateDebours = wshDEB_Saisie.Range("O4").value
     deboursType = wshDEB_Saisie.Range("F4").value
-    descGL_Trans = deboursType & " - " & _
-                   wshDEB_Saisie.Range("F6").value & " [" & _
-                   wshDEB_Saisie.Range("M6").value & "]"
+    descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").value
+    If Trim(wshDEB_Saisie.Range("M6").value) <> "" Then
+        descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
+    End If
     source = "DÉBOURS-" & Format(wshDEB_Saisie.Range("B1").value, "000000")
     
     Dim MyArray() As String
@@ -211,16 +214,16 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Select Case deboursType
         Case "Chèque", "Virement", "Paiement pré-autorisé"
             MyArray(1, 1) = "1000"
-            MyArray(1, 2) = "Encaisse-1"
+            MyArray(1, 2) = "Encaisse"
         Case "VISA", "MCARD", "AMEX"
             MyArray(1, 1) = "1000"
-            MyArray(1, 2) = "Encaisse-2"
+            MyArray(1, 2) = "Encaisse"
         Case "Autre"
             MyArray(1, 1) = "1000"
-            MyArray(1, 2) = "Encaisse-3"
+            MyArray(1, 2) = "Encaisse"
         Case Else
             MyArray(1, 1) = "1000"
-            MyArray(1, 2) = "Encaisse-4"
+            MyArray(1, 2) = "Encaisse"
     End Select
     
     MyArray(1, 3) = -montant
@@ -481,7 +484,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     Application.EnableEvents = False
     With wshDEB_Saisie
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").value = Format(Now(), "dd/mm/yyyy")
+        .Range("O4").value = Format(Now(), "mm/dd/yyyy")
         .ckbRecurrente = False
     End With
     Application.EnableEvents = True

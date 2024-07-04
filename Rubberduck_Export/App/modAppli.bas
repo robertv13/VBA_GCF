@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.3" '2024-07-02 @ 20:17
+Public Const APP_VERSION_NO As String = "v3.9.5" '2024-07-04 @ 10:25
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -132,21 +132,34 @@ Private Sub auto_close() '2024-03-06 @ 14:36
     
 End Sub
 
-Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-06-06 @ 07:41
+Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Dynamic_Range_Redefine_Plan_Comptable()")
 
+    'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
     On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptableDescription").delete
+    ThisWorkbook.Names("dnrPlanComptable_Description_Only").delete
     On Error GoTo 0
     
-    'Define a new dynamic named range for 'dnrPlanComptableDescription'
+    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
     Dim newRangeFormula As String
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
-    'Create a new dynamic named range
-    ThisWorkbook.Names.add name:="dnrPlanComptableDescription", RefersTo:=newRangeFormula
+    'Create the new dynamic named range
+    ThisWorkbook.Names.add name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    
+    'Redefine - dnrPlanComptable_All
+    'Delete existing dynamic named range (assuming it could exists)
+    On Error Resume Next
+    ThisWorkbook.Names("dnrPlanComptable_All").delete
+    On Error GoTo 0
+    
+    'Define a new dynamic named range for 'dnrPlanComptable_All'
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
+    
+    'Create the new dynamic named range
+    ThisWorkbook.Names.add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
     Call Output_Timer_Results("modAppli:Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
     
@@ -284,9 +297,6 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     
     Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
 
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set cell = Nothing
-    
 End Sub
 
 Sub BackupMasterFile()

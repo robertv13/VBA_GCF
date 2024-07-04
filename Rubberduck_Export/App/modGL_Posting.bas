@@ -57,7 +57,9 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                rs.Fields("TimeStamp") = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+'                rs.Fields("TimeStamp") = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                rs.Fields("TimeStamp").value = CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+                Debug.Print "GL_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             rs.update
 Nothing_to_Post:
     Next i

@@ -21,7 +21,7 @@ Private Sub Worksheet_Activate()
             .clear
 
             Dim arr As Variant
-            arr = Fn_Get_Chart_Of_Accounts(2) 'Returns 2D array with 2 columns
+            arr = Fn_Get_Chart_Of_Accounts(2) 'Returns an array with 2 columns
             
             'Add items to the ListBox
             Dim i As Integer

@@ -456,9 +456,9 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
     
     'Set the range to look for
-    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     Dim lastTECRow As Long
     lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Integer, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow

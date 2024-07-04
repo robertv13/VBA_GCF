@@ -120,7 +120,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
     On Error Resume Next
-    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrPlanComptableDescription")
+    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrPlanComptable_All")
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then
@@ -485,7 +485,7 @@ End Function
 Function Fn_Get_Chart_Of_Accounts(nbCol As Integer) As Variant '2024-06-07 @ 07:31
 
     'Reference the named range
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptableDescription")
+    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     
     'Iterate through each row of the named range
     Dim rowNum As Long, row As Range, rowRange As Range

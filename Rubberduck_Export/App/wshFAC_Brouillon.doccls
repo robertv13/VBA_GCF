@@ -23,8 +23,8 @@ Private Sub Worksheet_Activate()
         
     'Anything to import from Master workbook?
     
-    'Set the zoom factor to 93% when this worksheet is activated
-    ActiveWindow.Zoom = 93
+    'Set the zoom factor to 92% when this worksheet is activated
+    ActiveWindow.Zoom = 92
     
     Application.Calculation = xlCalculationAutomatic
     
