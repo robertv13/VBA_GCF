@@ -216,6 +216,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     Application.EnableEvents = False
     
     With wshFAC_Brouillon
+        .Range("O9").value = "" 'Clear the template code
         .Range("L11:O45").ClearContents
         .Range("J47:P60").ClearContents
         
@@ -228,22 +229,23 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("K59"), "FAC_Label_AmountDue")
         
         'Establish Formulas
-        .Range("M47").formula = "=IF(SUM(M11:M45),SUM(M11:M45),B19)"   'Total hours entered OR TEC selected"
+        .Range("M47").formula = "=SUM(M11:M45)"                          'Total hours entered OR TEC selected"
+        .Range("N47").formula = "=T25"                                   'Uses the first professional rate
         .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
-        .Range("O47").formula = "=M47*N47"                               'Fees sub-total
+        .Range("O47").formula = "=U35"                                   'Fees sub-total from hours summary
         .Range("O47").Font.Bold = True
         
-        .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value 'Misc. # 1 - Descr.
-        .Range("O48").value = ""                                        'Misc. # 1 - Amount
-        .Range("M49").value = wshAdmin.Range("FAC_Label_Frais_2").value 'Misc. # 2 - Descr.
-        .Range("O49").value = ""                                        'Misc. # 2 - Amount
-        .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value 'Misc. # 3 - Descr.
-        .Range("O50").value = ""                                        'Misc. # 3 - Amount
+        .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value   'Misc. # 1 - Descr.
+        .Range("O48").value = ""                                          'Misc. # 1 - Amount
+        .Range("M49").value = wshAdmin.Range("FAC_Label_Frais_2").value   'Misc. # 2 - Descr.
+        .Range("O49").value = ""                                          'Misc. # 2 - Amount
+        .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value   'Misc. # 3 - Descr.
+        .Range("O50").value = ""                                          'Misc. # 3 - Amount
         
-        .Range("O51").formula = "=sum(O47:O50)"                         'Sub-total
+        .Range("O51").formula = "=sum(O47:O50)"                           'Sub-total
         .Range("O51").Font.Bold = True
         
-        .Range("N52").value = wshFAC_Brouillon.Range("B29").value       'GST Rate
+        .Range("N52").value = wshFAC_Brouillon.Range("B29").value         'GST Rate
         .Range("N52").NumberFormat = "0.00%"
         .Range("O52").formula = "=round(o51*n52,2)"                     'GST Amnt
         .Range("N53").value = wshFAC_Brouillon.Range("B30").value       'PST Rate
@@ -452,15 +454,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow) 'Exclude totals row
 
     'Adjust the formula in the hours summary
-    
-    For i = 25 To 34
-        If wshFAC_Brouillon.Range("R" & i).value <> "" Then
-            Dim f As String
-            f = wshFAC_Brouillon.Range("S" & i).formula
-            f = Replace(f, "999", lastUsedRow)
-            wshFAC_Brouillon.Range("S" & i).formula = f
-        End If
-    Next i
+    Call Adjust_Formulas_In_The_Summary(lastUsedRow)
     
     Application.ScreenUpdating = True
     
@@ -648,4 +642,65 @@ Sub Setup_Hours_Summary()
     'Cleaning - 2024-07-04 @ 16:15
     Set ws = Nothing
     
+End Sub
+
+Sub Adjust_Formulas_In_The_Summary(lur As Long)
+
+    Dim i As Integer, p As Integer
+    Application.EnableEvents = False
+    For i = 25 To 34
+        If wshFAC_Brouillon.Range("R" & i).value <> "" Then
+            Dim f As String
+            f = wshFAC_Brouillon.Range("S" & i).formula
+            If InStr(1, f, "999") Then
+                f = Replace(f, "999", lur)
+            Else
+                f = "=SUMIFS(G7:G" & lur & ", C7:C" & lur & ", " & "TRUE, E7:E" & lur & ", R" & i & ")"
+            End If
+            wshFAC_Brouillon.Range("S" & i).formula = f
+        End If
+    Next i
+    Application.EnableEvents = True
+
+End Sub
+
+Sub Load_Invoice_Template(t As String)
+
+    'Is there a template letter supplied ?
+    If t = "" Then
+        Exit Sub
+    End If
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wshAdmin.Range("Z999").End(xlUp).row
+    
+    'Get the services with the appropriate template letter
+    Dim strServices As String
+    Dim i As Long
+    For i = 12 To lastUsedRow
+        If InStr(1, wshAdmin.Range("AA" & i), t) Then
+            'Build a string with 2 digits + Service description
+            strServices = strServices & Right(wshAdmin.Range("AA" & i).value, 2) & wshAdmin.Range("Z" & i).value & "|"
+        End If
+    Next i
+    
+    'Is there anything for that template ?
+    If strServices = "" Then
+        Exit Sub
+    End If
+    
+    'Sort the services based on the two digits in front of the service description
+    Dim arr() As String
+    arr = Split(strServices, "|")
+    Call BubbleSort(arr)
+
+    'Go thru all the services for the template
+    Dim facRow As Integer
+    facRow = 11
+    For i = LBound(arr) + 1 To UBound(arr)
+        wshFAC_Brouillon.Range("L" & facRow).value = Mid(arr(i), 3)
+        wshFAC_Finale.Range("B" & facRow + 23).value = "   - " & Mid(arr(i), 3)
+        facRow = facRow + 2
+    Next i
+        
 End Sub

@@ -198,6 +198,8 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
     End With
     
+    wshFAC_Brouillon.Range("B11").value = firstFreeRow
+    
     Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
 
     Application.ScreenUpdating = True
@@ -228,24 +230,44 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
+    Dim noFacture As String
+    noFacture = wshFAC_Finale.Range("E28").value
     Dim r As Integer
     For r = 34 To rowLastService
         'Add fields to the recordset before updating it
         rs.AddNew
         With wshFAC_Finale
-            rs.Fields("Inv_No") = .Range("E28").value
+            rs.Fields("Inv_No") = noFacture
             rs.Fields("Description") = .Range("B" & r).value
             rs.Fields("Heures") = .Range("C" & r).value
             rs.Fields("Taux") = .Range("D" & r).value
             If .Range("E" & r).value <> "" Then
                 rs.Fields("Honoraires") = .Range("E" & r).value
             End If
-            rs.Fields("Inv_Row") = r
-            'rs.Fields("Row") = ""
+            rs.Fields("Inv_Row") = wshFAC_Brouillon.Range("B11").value
         End With
     'Update the recordset (create the record)
     rs.update
     Next r
+    
+    'Create Summary By Rates lines
+    Dim i As Integer
+    For i = 25 To 34
+        If wshFAC_Brouillon.Range("R" & i).value <> "" And _
+            wshFAC_Brouillon.Range("S" & i).value <> 0 Then
+                rs.AddNew
+                With wshFAC_Brouillon
+                    rs.Fields("Inv_No") = noFacture
+                    rs.Fields("Description") = "*** Sommaire des TEC pour la facture - " & _
+                                                wshFAC_Brouillon.Range("R" & i).value
+                    rs.Fields("Heures") = .Range("S" & i).value
+                    rs.Fields("Taux") = .Range("T" & i).value
+                    rs.Fields("Honoraires") = .Range("S" & i).value * .Range("T" & i).value
+                    rs.Fields("Inv_Row") = wshFAC_Brouillon.Range("B11").value
+                End With
+                rs.update
+        End If
+    Next i
     
     'Close recordset and connection
     On Error Resume Next
@@ -634,27 +656,27 @@ Sub FAC_Finale_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("B81"), "FAC_Label_AmountDue")
 
         'Establish formulas
-        .Range("E69").formula = "=C66*D66"                           'Fees Sub-Total
+        .Range("E69").formula = "=" & wshFAC_Brouillon.name & "!O47" 'Fees Sub-Total
         
-        .Range("B70").value = "='" & wshFAC_Brouillon.name & "'!M48" 'Misc. Amount # 1 - Description
-        .Range("E70").value = "='" & wshFAC_Brouillon.name & "'!O48" 'Misc. Amount # 1
+        .Range("B70").formula = "=" & wshFAC_Brouillon.name & "!M48" 'Misc. Amount # 1 - Description
+        .Range("E70").formula = "=" & wshFAC_Brouillon.name & "!O48" 'Misc. Amount # 1
         
-        .Range("B71").value = "='" & wshFAC_Brouillon.name & "'!M49" 'Misc. Amount # 2 - Description
-        .Range("E71").value = "='" & wshFAC_Brouillon.name & "'!O49" 'Misc. Amount # 2
+        .Range("B71").formula = "=" & wshFAC_Brouillon.name & "!M49" 'Misc. Amount # 2 - Description
+        .Range("E71").formula = "=" & wshFAC_Brouillon.name & "!O49" 'Misc. Amount # 2
         
-        .Range("B72").value = "='" & wshFAC_Brouillon.name & "'!M50" 'Misc. Amount # 3 - Description
-        .Range("E72").value = "='" & wshFAC_Brouillon.name & "'!O50" 'Misc. Amount # 3
+        .Range("B72").formula = "=" & wshFAC_Brouillon.name & "!M50" 'Misc. Amount # 3 - Description
+        .Range("E72").formula = "=" & wshFAC_Brouillon.name & "!O50" 'Misc. Amount # 3
         
         .Range("E73").formula = "=SUM(E69:E72)"                      'Invoice Sub-Total
         
-        .Range("C74").value = "='" & wshFAC_Brouillon.name & "'!N52" 'GST Rate
+        .Range("C74").formula = "=" & wshFAC_Brouillon.name & "!N52" 'GST Rate
         .Range("E74").formula = "=round(E73*C74,2)"                  'GST Amount"
-        .Range("C75").value = "='" & wshFAC_Brouillon.name & "'!N53" 'PST Rate
+        .Range("C75").formula = "=" & wshFAC_Brouillon.name & "!N53" 'PST Rate
         .Range("E75").formula = "=round(E73*C75,2)"                  'PST Amount
         
-        .Range("E77").value = "=SUM(E73:E75)"                        'Total including taxes
-        .Range("E79").value = "='" & wshFAC_Brouillon.name & "'!O57" 'Deposit Amount
-        .Range("E81").value = "=E77-E79"                             'Total due on that invoice
+        .Range("E77").formula = "=SUM(E73:E75)"                        'Total including taxes
+        .Range("E79").formula = "=" & wshFAC_Brouillon.name & "!O57" 'Deposit Amount
+        .Range("E81").formula = "=E77-E79"                             'Total due on that invoice
     End With
     
     Application.EnableEvents = True

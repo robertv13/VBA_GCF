@@ -66,6 +66,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
+    'Template has been selected
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+
     'Service description has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -109,7 +114,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            Application.Goto wshFAC_Brouillon.Range("L11")
+            Application.Goto wshFAC_Brouillon.Range("O9")
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
@@ -130,8 +135,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
         Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         
-        Set rng = wshFAC_Brouillon.Range("L11")
+        Set rng = wshFAC_Brouillon.Range("O9")
         GoTo ExitSub
+    End If
+    
+    'Template has changed
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
+        If Target.value <> "" Then
+            Call Load_Invoice_Template(Target.value)
+        End If
+        Set rng = wshFAC_Brouillon.Range("L11")
     End If
     
     'Services entry
@@ -193,17 +206,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         GoTo ExitSub
     End If
     
-'    'Invoice search - Removed temporary - 2024-02-22
-'    If Not Intersect(Target, Range("S2")) Is Nothing And Range("S2").value <> Empty Then
-'        If Range("B22").value = Empty Then
-'            MsgBox "Veuillez saisir un numéro de facture VALIDE pour rechercher"
-'            GoTo ExitSub
-'        End If
-'        Range("O6").value = Range("S2").value 'Set Invoice #
-'        Range("S2").ClearContents
-'        Call Invoice_Load 'Load Invoice from file
-'    End If
-
 ExitSub:
 
     Application.EnableEvents = True

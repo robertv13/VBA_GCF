@@ -123,7 +123,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
 '            rs.Fields("TimeStamp").value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields("TimeStamp").value = CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("TimeStamp").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             Debug.Print "DEB_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         rs.update
     Next l
