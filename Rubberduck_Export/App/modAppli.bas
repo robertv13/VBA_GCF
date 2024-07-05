@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.6" '2024-07-04 @ 17:10
+Public Const APP_VERSION_NO As String = "v3.9.7" '2024-07-05 @ 06:11
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -122,16 +122,16 @@ Private Sub auto_open() '2024-03-06 @ 14:36
 
 End Sub
 
-Private Sub auto_close() '2024-03-06 @ 14:36
-
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_close()")
-
-    MsgBox "Auto_Close..."
-    
-    Call Output_Timer_Results("modAppli:auto_close()", timerStart)
-    
-End Sub
-
+'Private Sub auto_close() '2024-03-06 @ 14:36 - RMV - 2024-07-05
+'
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:auto_close()")
+'
+'    MsgBox "Auto_Close..."
+'
+'    Call Output_Timer_Results("modAppli:auto_close()", timerStart)
+'
+'End Sub
+'
 Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Dynamic_Range_Redefine_Plan_Comptable()")

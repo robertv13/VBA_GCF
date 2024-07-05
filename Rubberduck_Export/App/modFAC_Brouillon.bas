@@ -671,6 +671,18 @@ Sub Load_Invoice_Template(t As String)
         Exit Sub
     End If
     
+    'Confirm use of Template
+    Dim userResponse As String
+    userResponse = MsgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
+    'If user confirms, delete the worksheets
+    If userResponse <> vbYes Then
+        Exit Sub
+    End If
+    
+    'Clear whatever was there (both Brouillon & Finale)
+    wshFAC_Brouillon.Range("L11:M45").ClearContents
+    wshFAC_Finale.Range("B34:E63").ClearContents
+    
     Dim lastUsedRow As Long
     lastUsedRow = wshAdmin.Range("Z999").End(xlUp).row
     
@@ -703,4 +715,6 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    
 End Sub

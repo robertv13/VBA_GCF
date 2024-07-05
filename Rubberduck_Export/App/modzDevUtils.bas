@@ -32,6 +32,32 @@ Sub Worksheets_List_All() '2024-06-22 @ 06:27
     
 End Sub
 
+Sub ListWorksheetsInClosedWorkbook() '2024-07-05 @ 07:40
+    Dim wsNames As String
+    
+    'Specify the full path and name to the closed workbook
+    Dim wbPath As String
+    wbPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Sortie.xlsx"
+    
+    'Open the workbook in read-only mode
+    Dim wb As Workbook
+    Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
+    
+    'Initialize the message
+    Dim msg As String
+    Debug.Print "Worksheets in " & wbPath & ":" & vbCrLf
+    
+    'Loop through each worksheet in the workbook and add its name to the message
+    Dim ws As Worksheet
+    For Each ws In wb.Worksheets
+        Debug.Print ws.codeName & "       " & ws.name
+    Next ws
+    
+    'Close the workbook without saving changes
+    wb.Close SaveChanges:=False
+    
+End Sub
+
 Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
     
     Dim posProcedure As Integer, posExitProcedure As Integer

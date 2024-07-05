@@ -8,33 +8,31 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Range("A1:C1").Select
-    With Selection.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .Color = 12611584
+    Range("B27:B40").Select
+    With Selection.Font
+        .name = "Courier New"
+        .Size = 11
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ThemeColor = xlThemeColorLight1
         .TintAndShade = 0
-        .PatternTintAndShade = 0
+        .ThemeFont = xlThemeFontNone
     End With
     With Selection.Font
-        .ThemeColor = xlThemeColorDark1
+        .name = "Courier New"
+        .Size = 10
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ThemeColor = xlThemeColorLight1
         .TintAndShade = 0
+        .ThemeFont = xlThemeFontNone
     End With
-    Selection.Font.Size = 10
-    Selection.Font.Italic = True
-    Selection.Font.Bold = True
-    With Selection
-        .HorizontalAlignment = xlCenter
-        .VerticalAlignment = xlBottom
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
-    End With
-    Range("A3,A11").Select
-    Range("A11").Activate
-    Selection.Font.Bold = True
 End Sub

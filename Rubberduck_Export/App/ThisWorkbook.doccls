@@ -41,10 +41,8 @@ End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
-'    Dim answer As VbMsgBoxResult
-'    answer = MsgBox("Veuillez utiliser l'option du menu pour sortir" & _
-'                     vbNewLine & "de l'application", vbExclamation, "Sortir de l'application")
-    Cancel = False
+    Cancel = True
+    ufExitDisable.show
 
 End Sub
 

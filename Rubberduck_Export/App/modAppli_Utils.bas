@@ -212,6 +212,11 @@ Private Sub IntegrityVerification()
     
     Call check_TEC(r)
     
+    With wsOutput.Range("A2:C" & r).Font
+        .name = "Courier New"
+        .Size = 10
+    End With
+    
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -265,20 +270,20 @@ Private Sub check_Clients(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     If cas_doublon_nom = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucun doublon de nom")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_doublon_code = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucun doublon de code")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_doublon_code & " cas de doublons pour les codes")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
@@ -336,20 +341,20 @@ Private Sub check_Fournisseurs(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     If cas_doublon_nom = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucun doublon de nom")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_doublon_code = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucun doublon de code")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_doublon_code & " cas de doublons pour les codes")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
@@ -421,16 +426,16 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "- Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     If cas_hors_balance = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "- Chacune des écritures balancent au niveau de l'écriture")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Chacune des écritures balancent au niveau de l'écriture")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
@@ -438,16 +443,16 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Dt = " & Format(sum_dt, "###,###,##0.00 $"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Dt = " & Format(sum_dt, "###,###,##0.00 $"))
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Ct = " & Format(sum_ct, "###,###,##0.00 $"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Ct = " & Format(sum_ct, "###,###,##0.00 $"))
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     If sum_dt - sum_ct <> 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Hors-Balance de " & Format(sum_dt - sum_ct, "###,###,##0.00 $"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Hors-Balance de " & Format(sum_dt - sum_ct, "###,###,##0.00$"))
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
@@ -478,7 +483,6 @@ Private Sub check_TEC(ByRef r As Long)
     arr = wshTEC_Local.Range("A1").CurrentRegion.Offset(2)
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
-    Dim dict_client As New Dictionary
     
     Dim i As Long, TECID As Long, ProfID As String, Prof As String, dateTEC As Date, testDate As Boolean
     Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -506,28 +510,28 @@ Private Sub check_TEC(ByRef r As Long)
         hres = arr(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_hres_invalide = cas_date_invalide + 1
         End If
         estFacturable = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 12)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
-        estDetruit = arr(i, 12)
+        estDetruit = arr(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
@@ -544,7 +548,7 @@ Private Sub check_TEC(ByRef r As Long)
         If dict_TEC_ID.Exists(TECID) = False Then
             dict_TEC_ID.add TECID, 0
         Else
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
@@ -552,95 +556,109 @@ Private Sub check_TEC(ByRef r As Long)
         If dict_prof.Exists(Prof & "-" & ProfID) = False Then
             dict_prof.add Prof & "-" & ProfID, 0
         End If
-        If dict_client.Exists(nom & "-" & code) = False Then
-            dict_client.add nom & "-" & code, 0
-        End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de" & Format(UBound(arr, 1) - 2, "##,##0") & " charges de temps ont été analysées!")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " charges de temps ont été analysées!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     If cas_doublon_TECID = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucun doublon de TEC_ID")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_date_invalide = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune date INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_date_invalide & " cas de date INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_hres_invalide = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune heures INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_estFacturable_invalide = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune valeur 'estFacturable' n'est INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_estFacturee_invalide = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune valeur 'estFacturee' n'est INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_estDetruit_invalide = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune valeur 'estDetruit' n'est INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce resultat:")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Heures inscrites       : " & Format(total_hres_inscrites, "#,##0.00"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Heures détruites       : " & Format(total_hres_detruites, "#,##0.00"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Heures restantes       : " & Format(total_hres_inscrites - total_hres_detruites, "#,##0.00"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Heures facturables     : " & Format(total_hres_facturable, "#,##0.00"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Heures non_facturables : " & Format(total_hres_non_facturable, "#,##0.00"))
+    
+    Dim formattedHours As String
+    formattedHours = Format(total_hres_inscrites, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    'Loop over Keys and get item
-    Dim k As Variant
-    For Each k In dict_prof.Keys()
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, k & " - " & dict_prof(k))
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
-        r = r + 1
-    Next k
+    formattedHours = Format(total_hres_detruites, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures détruites       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    formattedHours = Format(total_hres_inscrites - total_hres_detruites, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    formattedHours = Format(total_hres_facturable, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    formattedHours = Format(total_hres_non_facturable, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
 
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set k = Nothing
     Set ws = Nothing
     
     Application.ScreenUpdating = True
