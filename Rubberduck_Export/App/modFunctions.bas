@@ -113,7 +113,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_GL_Code_From_GL_Description()")
     
@@ -131,7 +131,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(GLDescr As String) 'XLOOKUP -
     
     'Using XLOOKUP to find the result directly
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(GLDescr, _
+    result = Application.WorksheetFunction.XLookup(glDescr, _
         dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
     

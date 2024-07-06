@@ -444,14 +444,14 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     Dim lastRow As Long
     lastRow = wshFAC_Entête.Range("A99999").End(xlUp).row
     
-    'Adjust Formats for all new rows
+    'Adjust Formats for all rows
     With wshFAC_Entête
-        .Range("A4:C" & lastRow).HorizontalAlignment = xlCenter
-        .Range("B4:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("D4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:N" & lastRow).HorizontalAlignment = xlLeft
-        .Range("I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow & ",O4:U" & lastRow).HorizontalAlignment = xlRight
-        .Range("I4:I" & lastRow & ",K4:K" & lastRow & ",M4:M" & lastRow & ",O4:U" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("P4:P" & lastRow & ",R4:R" & lastRow).NumberFormat = "#0.000 %"
+        .Range("A3:C" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"
+        .Range("D3:H" & lastRow & ",J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow).HorizontalAlignment = xlLeft
+        .Range("I3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:U" & lastRow).HorizontalAlignment = xlRight
+        .Range("I3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:U" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("P3:P" & lastRow & ",R3:R" & lastRow).NumberFormat = "#0.000 %"
     End With
 
     Application.ScreenUpdating = True

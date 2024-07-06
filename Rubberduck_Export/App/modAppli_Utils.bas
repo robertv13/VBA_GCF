@@ -152,7 +152,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
 End Sub
 
-Private Sub IntegrityVerification()
+Private Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Application.ScreenUpdating = False
     
@@ -164,9 +164,8 @@ Private Sub IntegrityVerification()
     wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
-    Dim lastUsedRow As Long, r As Long
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
-    r = lastUsedRow + 1
+    'Data starts at row 2
+    Dim r As Long: r = 2
     
     'wshBD_Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "clientsImportés")
@@ -189,6 +188,28 @@ Private Sub IntegrityVerification()
     r = r + 1
     
     Call check_Fournisseurs(r)
+    
+    'wshFAC_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Détails")
+    r = r + 1
+    
+    Call FAC_Détails_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures_Détails a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call check_FAC_Détails(r)
+    
+    'wshFAC_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Entête")
+    r = r + 1
+    
+    Call FAC_Entête_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures_Entête a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call check_FAC_Entête(r)
     
     'wshGL_Trans
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "GL_Trans")
@@ -234,6 +255,11 @@ Private Sub check_Clients(ByRef r As Long)
     
     'wshBD_Clients
     Dim ws As Worksheet: Set ws = wshBD_Clients
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Clients'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -305,6 +331,11 @@ Private Sub check_Fournisseurs(ByRef r As Long)
     
     'wshBD_fournisseurs
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Fournisseurs'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -368,6 +399,136 @@ Private Sub check_Fournisseurs(ByRef r As Long)
     
 End Sub
 
+Private Sub check_FAC_Détails(ByRef r As Long)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'wshFAC_Détails
+    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
+    Dim lastUsedRow As Long
+    lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A3:A" & lastUsedRow)
+    Debug.Print rngMaster.Address
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    'Transfer data from Worksheet into an Array (arr)
+    Dim arr As Variant
+    arr = wshFAC_Détails.Range("A1").CurrentRegion.Offset(1, 0).value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim Inv_No As String, oldInv_No As String
+    Dim result As Variant
+    For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
+        Inv_No = arr(i, 1)
+        If Inv_No <> oldInv_No Then
+            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1).value, _
+                                                       rngMaster, _
+                                                       rngMaster, _
+                                                       "Not Found", _
+                                                       0, _
+                                                       1)
+
+            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
+            oldInv_No = Inv_No
+        End If
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 3)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 4)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 5)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 2
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rngMaster = Nothing
+    Set ws = Nothing
+    Set wsMaster = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Private Sub check_FAC_Entête(ByRef r As Long)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'wshGL_Trans
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Entête'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Dim arr As Variant
+    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(1, 0).value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim Inv_No As String
+    For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
+        Inv_No = arr(i, 1)
+        If IsDate(arr(i, 2)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 2
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
 Private Sub check_GL_Trans(ByRef r As Long)
 
     Application.ScreenUpdating = False
@@ -376,10 +537,31 @@ Private Sub check_GL_Trans(ByRef r As Long)
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshGL_Trans'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
+    Dim planComptable As Range
+    Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim strCodeGL As String, strDescGL As String
+    Dim ligne As Range
+    For Each ligne In planComptable
+        Debug.Print ligne.Address
+        strCodeGL = strCodeGL + ligne(5).value
+        strDescGL = strDescGL + ligne(6).value
+    Next ligne
+    
+    'Check if the named range was set correctly
+    If planComptable Is Nothing Then
+        MsgBox "The named range 'dnrPlanComptable_All' does not exist or is not defined correctly.", vbCritical
+        Exit Sub
+    End If
+
     Dim arr As Variant
     arr = wshGL_Trans.Range("A1").CurrentRegion.value
     Dim dict_GL_Entry As New Dictionary
@@ -390,19 +572,41 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Dim row As Long: row = 1
     Dim currentRow As Long
         
-    Dim i As Long, GL_Entry_No As String, dt As Double, ct As Double
+    Dim i As Long
+    Dim dt As Double, ct As Double
+    Dim GL_Entry_No As String, glCode As String, glDescr As String
+    Dim result As Variant
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
-        dt = arr(i, 7)
-        ct = arr(i, 8)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
             dict_GL_Entry.add GL_Entry_No, row
             sum_arr(row, 1) = GL_Entry_No
             row = row + 1
         End If
+        If IsDate(arr(i, 2)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        glCode = arr(i, 5)
+        glDescr = arr(i, 6)
+        'Validate Code and Description
+        On Error Resume Next
+        result = Application.WorksheetFunction.VLookup(glCode, planComptable.columns(2).Resize(planComptable.rows.count, 2), 2, False)
+        On Error GoTo 0
+        Debug.Print result
+        
+        dt = arr(i, 7)
+        ct = arr(i, 8)
         currentRow = dict_GL_Entry(GL_Entry_No)
         sum_arr(currentRow, 2) = sum_arr(currentRow, 2) + dt
         sum_arr(currentRow, 3) = sum_arr(currentRow, 3) + ct
+        If IsDate(arr(i, 2)) = False Then Stop
+        If arr(i, 10) <> "" Then
+            If IsDate(arr(i, 10)) = False Then
+                Debug.Print GL_Entry_No & " " & arr(i, 2) & " " & arr(i, 10)
+            End If
+        End If
     Next i
     
     Dim sum_dt As Currency, sum_ct As Currency
@@ -413,7 +617,7 @@ Private Sub check_GL_Trans(ByRef r As Long)
         dt = Round(sum_arr(v, 2), 2)
         ct = Round(sum_arr(v, 3), 2)
         If dt <> ct Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Écriture # " & v & " ne balance pas... Dt = " & Format(dt, "###,###,##0.00") & " et Ct = " & Format(ct, "###,###,##0.00"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Écriture # " & v & " ne balance pas... Dt = " & Format(dt, "###,###,##0.00") & " et Ct = " & Format(ct, "###,###,##0.00"))
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_hors_balance = cas_hors_balance + 1
@@ -475,6 +679,11 @@ Private Sub check_TEC(ByRef r As Long)
     
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -500,7 +709,7 @@ Private Sub check_TEC(ByRef r As Long)
         dateTEC = arr(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
@@ -725,4 +934,43 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
 
 End Sub
 
+Sub CopyToClipboard() '2024-07-06 @ 07:37
+
+    'Reference:
+    
+    Dim objData As Object
+    Dim strText As String
+    
+    ' Create a new DataObject
+    Set objData = CreateObject("MSForms.DataObject")
+    
+    ' Text to copy
+    strText = "Hello, Clipboard!"
+    
+    ' Set text to DataObject
+    objData.SetText strText
+    ' Put text to Clipboard
+    objData.PutInClipboard
+    
+    MsgBox "Text copied to clipboard!"
+End Sub
+
+Sub PasteFromClipboard() '2024-07-06 @ 07:37
+
+    Dim objData As Object
+    Dim strText As String
+    
+    ' Create a new DataObject
+    Set objData = CreateObject("MSForms.DataObject")
+    
+    ' Get data from Clipboard
+    objData.GetFromClipboard
+    ' Get text from DataObject
+    strText = objData.GetText
+    
+    ' Paste text into cell A1
+    Range("A1").value = strText
+    
+    MsgBox "Text pasted from clipboard!"
+End Sub
 

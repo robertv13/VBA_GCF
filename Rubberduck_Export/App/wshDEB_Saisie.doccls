@@ -86,10 +86,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         wshDEB_Saisie.Range("B4").value = Target.Address
     End If
     
-    'Tax code is selected (FP is the default)
+    'Tax code is selected (TPS/TVQ is the default)
     If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
-        Target.value = "FP"
+        Target.value = "TPS/TVQ"
     End If
     
     'Amount is selected (Amount to distribute by default)

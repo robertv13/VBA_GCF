@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.7" '2024-07-05 @ 06:11
+Public Const APP_VERSION_NO As String = "v3.9.8" '2024-07-05 @ 08:47
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -351,19 +351,15 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
     
     If total <> 0 Then 'Calculate the amount before taxes
         'GST calculation
-        If taxCode = "FP" Or taxCode = "REP" Then
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             gst = Round(total / (1 + gstRate + pstRate) * gstRate, 2)
-        ElseIf taxCode = "F" Then
-            gst = Round(total / (1 + gstRate) * gstRate, 2)
         Else
             gst = 0
         End If
         
         'PST calculation
-        If taxCode = "FP" Or taxCode = "REP" Then
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             pst = Round(total / (1 + gstRate + pstRate) * pstRate, 2)
-        ElseIf taxCode = "P" Then
-            pst = Round(total / (1 + pstRate) * pstRate, 2)
         Else
             pst = 0
         End If
@@ -383,13 +379,13 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
     
     If netAmount <> 0 Then 'Calculate the taxes from the net amount
         'gst calculation
-        If taxCode = "FP" Or taxCode = "REP" Or taxCode = "F" Then
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             gst = Round(netAmount * gstRate, 2)
         Else
             gst = 0
         End If
         'PST calculation
-        If taxCode = "FP" Or taxCode = "REP" Or taxCode = "P" Then
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             pst = Round(netAmount * pstRate, 2)
         Else
             pst = 0

@@ -16,11 +16,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             For Each cell In intersectRange
                 'Check if the changed cell is in columns A, B, and C
                 If Not Intersect(cell, Me.columns("A:C")) Is Nothing Then
-                    If Me.Cells(cell.row, "D").value = "" Then
+                    If Me.Cells(cell.row, "D").value = "a" Then
                         'Check if the cell in column E (timestamp column) is empty
                         If IsEmpty(Me.Cells(cell.row, "E").value) Then
                             'If it's empty, insert the timestamp
-                            Me.Cells(cell.row, "E").value = Now
+                            Me.Cells(cell.row, "E").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
                         End If
                     End If
                 End If
@@ -33,8 +33,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Set intersectRange = Nothing
     Set rng = Nothing
     
-End Sub
-
-Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-
 End Sub
