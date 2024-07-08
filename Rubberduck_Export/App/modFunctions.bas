@@ -58,7 +58,7 @@ Function Fn_FournID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:1
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
+        MsgBox "La feuille 'BD_Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If

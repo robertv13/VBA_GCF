@@ -240,8 +240,8 @@ Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
     '3 sheets to import
     Call FAC_Comptes_Clients_Import_All
-    Call FAC_Encaissements_Entête_Import_All
-    Call FAC_Encaissements_Détails_Import_All
+    Call FAC_ENC_Entête_Import_All
+    Call FAC_ENC_Détails_Import_All
     
     Application.ScreenUpdating = True
     
@@ -312,9 +312,9 @@ End Sub
 '
 'End Sub
 '
-Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
+Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_Encaissements_Entête_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_ENC_Entête_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
@@ -323,7 +323,7 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceTab = "FAC_Encaissements_Entête"
+    sourceTab = "FAC_ENC_Entête"
     
     'Set up source and destination ranges
     Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
@@ -340,13 +340,13 @@ Sub FAC_Encaissements_Entête_Import_All() '2024-02-14 @ 10:05
     Set destinationRange = Nothing
     Set sourceRange = Nothing
     
-    Call Output_Timer_Results("modFAC_Enc:FAC_Encaissements_Entête_Import_All()", timerStart)
+    Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Entête_Import_All()", timerStart)
   
 End Sub
 
-Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
+Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_Encaissements_Détails_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_ENC_Détails_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
@@ -355,7 +355,7 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceTab = "FAC_Encaissements_Détails"
+    sourceTab = "FAC_ENC_Détails"
     
     'Set up source and destination ranges
     Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
@@ -372,7 +372,7 @@ Sub FAC_Encaissements_Détails_Import_All() '2024-02-14 @ 10:14
     Set destinationRange = Nothing
     Set sourceRange = Nothing
     
-    Call Output_Timer_Results("modFAC_Enc:FAC_Encaissements_Détails_Import_All()", timerStart)
+    Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Détails_Import_All()", timerStart)
     
 End Sub
 
@@ -385,7 +385,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                           "GCF_BD_Sortie.xlsx"
-    destinationTab = "FAC_Encaissements_Entête"
+    destinationTab = "FAC_ENC_Entête"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
@@ -470,7 +470,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                           "GCF_BD_Sortie.xlsx"
-    destinationTab = "FAC_Encaissements_Détails"
+    destinationTab = "FAC_ENC_Détails"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")

@@ -19,7 +19,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("EJ")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_EJ")
     
    'Hide column A & B
     With ws

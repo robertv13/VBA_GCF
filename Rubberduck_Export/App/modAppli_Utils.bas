@@ -168,7 +168,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim r As Long: r = 2
     
     'wshBD_Clients
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "clientsImportés")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
     r = r + 1
     
     Call Client_List_Import_All
@@ -176,7 +176,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_Clients(r)
+    Call check_Clients(r) '------------------------------------------------------- Clients
 
     'wshBD_Fournisseurs
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Fournisseurs")
@@ -187,7 +187,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_Fournisseurs(r)
+    Call check_Fournisseurs(r) '--------------------------------------------- Fournisseurs
     
     'wshFAC_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Détails")
@@ -198,7 +198,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Détails(r)
+    Call check_FAC_Détails(r) '----------------------------------------------- FAC_Détails
     
     'wshFAC_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Entête")
@@ -209,7 +209,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Entête(r)
+    Call check_FAC_Entête(r) '------------------------------------------------- FAC_Entête
     
     'wshGL_Trans
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "GL_Trans")
@@ -220,7 +220,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_GL_Trans(r)
+    Call check_GL_Trans(r) '----------------------------------------------------- GL_Trans
     
     'wshTEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
@@ -231,7 +231,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_TEC(r)
+    Call check_TEC(r) '--------------------------------------------------------- TEC_Local
     
     With wsOutput.Range("A2:C" & r).Font
         .name = "Courier New"
@@ -240,6 +240,8 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
+    MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'Analyse_Intégrité'", vbInformation
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wsOutput = Nothing
     
@@ -546,22 +548,25 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Dim planComptable As Range
-    Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
-    Dim strCodeGL As String, strDescGL As String
-    Dim ligne As Range
-    For Each ligne In planComptable
-        Debug.Print ligne.Address
-        strCodeGL = strCodeGL + ligne(5).value
-        strDescGL = strDescGL + ligne(6).value
-    Next ligne
-    
-    'Check if the named range was set correctly
+    On Error Resume Next
+    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    On Error GoTo 0
+
     If planComptable Is Nothing Then
-        MsgBox "The named range 'dnrPlanComptable_All' does not exist or is not defined correctly.", vbCritical
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
         Exit Sub
     End If
-
+    
+    Dim strCodeGL As String, strDescGL As String
+    Dim ligne As Range
+    For Each ligne In planComptable.rows
+        strCodeGL = strCodeGL + ligne.Cells(1, 2).value + "|:|"
+        strDescGL = strDescGL + ligne.Cells(1, 1).value + "|:|"
+    Next ligne
+    
     Dim arr As Variant
     arr = wshGL_Trans.Range("A1").CurrentRegion.value
     Dim dict_GL_Entry As New Dictionary
@@ -589,22 +594,37 @@ Private Sub check_GL_Trans(ByRef r As Long)
             r = r + 1
         End If
         glCode = arr(i, 5)
+        If InStr(1, strCodeGL, glCode + "|:|") = 0 Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
         glDescr = arr(i, 6)
-        'Validate Code and Description
-        On Error Resume Next
-        result = Application.WorksheetFunction.VLookup(glCode, planComptable.columns(2).Resize(planComptable.rows.count, 2), 2, False)
-        On Error GoTo 0
-        Debug.Print result
-        
+        If InStr(1, strDescGL, glDescr + "|:|") = 0 Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La description du compte '" & glDescr & "' à la ligne " & i & " est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
         dt = arr(i, 7)
+        If IsNumeric(dt) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant du débit '" & dt & "' à la ligne " & i & " n'est pas une valeur numérique")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
         ct = arr(i, 8)
+        If IsNumeric(ct) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant du débit '" & ct & "' à la ligne " & i & " n'est pas une valeur numérique")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
         currentRow = dict_GL_Entry(GL_Entry_No)
         sum_arr(currentRow, 2) = sum_arr(currentRow, 2) + dt
         sum_arr(currentRow, 3) = sum_arr(currentRow, 3) + ct
-        If IsDate(arr(i, 2)) = False Then Stop
         If arr(i, 10) <> "" Then
             If IsDate(arr(i, 10)) = False Then
-                Debug.Print GL_Entry_No & " " & arr(i, 2) & " " & arr(i, 10)
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
+                Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+                r = r + 1
             End If
         End If
     Next i
@@ -663,6 +683,7 @@ Private Sub check_GL_Trans(ByRef r As Long)
     r = r + 1
     
     'Cleaning memory - 2024-07-01 @ 09:34
+    Set planComptable = Nothing
     Set v = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -869,6 +890,7 @@ Private Sub check_TEC(ByRef r As Long)
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
@@ -974,3 +996,30 @@ Sub PasteFromClipboard() '2024-07-06 @ 07:37
     MsgBox "Text pasted from clipboard!"
 End Sub
 
+Sub Apply_Conditional_Formatting(rng As Range, headerRows As Long)
+
+    Dim ws As Worksheet: Set ws = rng.Worksheet
+    Dim dataRange As Range
+    
+    'Remove the worksheet conditional formatting
+    ws.Cells.FormatConditions.delete
+    
+    'Determine the range excluding header rows
+    Set dataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).row, rng.columns.count))
+
+    'Add the standard conditional formatting
+    dataRange.FormatConditions.add Type:=xlExpression, Formula1:= _
+        "=ET($A2<>"""";MOD(LIGNE();2)=1)"
+    dataRange.FormatConditions(dataRange.FormatConditions.count).SetFirstPriority
+    With dataRange.FormatConditions(1).Font
+        .Strikethrough = False
+        .TintAndShade = 0
+    End With
+    With dataRange.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent1
+        .TintAndShade = 0.799981688894314
+    End With
+    dataRange.FormatConditions(1).StopIfTrue = False
+
+End Sub

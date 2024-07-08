@@ -923,18 +923,18 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     Dim r As Long
     r = 0
     r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "ClientsImportés": arr(r, 2) = "A1:J1"
+    r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:J1"
     r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
     r = r + 1: arr(r, 1) = "Doc_Log_Appli": arr(r, 2) = "A1:C1"
     r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
     r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
-    r = r + 1: arr(r, 1) = "Encaissements_Entête": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "Encaissements_Détail": arr(r, 2) = "A3:F3"
+    r = r + 1: arr(r, 1) = "ENC_Entête": arr(r, 2) = "A3:F3"
+    r = r + 1: arr(r, 1) = "ENC_Détail": arr(r, 2) = "A3:F3"
     r = r + 1: arr(r, 1) = "Factures_Entête": arr(r, 2) = "A3:T3"
     r = r + 1: arr(r, 1) = "Factures_Détails": arr(r, 2) = "A3:G3"
     r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
-    r = r + 1: arr(r, 1) = "EJ_Auto": arr(r, 2) = "C1:J1"
+    r = r + 1: arr(r, 1) = "GL_EJ_Auto": arr(r, 2) = "C1:J1"
     r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
     r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
     r = 1
