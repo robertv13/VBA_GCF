@@ -305,6 +305,45 @@ InvalidDate:
     
 End Function
 
+Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Boolean = False) As Variant '2024-07-11 @ 15:16
+    
+    'Sort a dictionary by its values and return keys in an array
+    Dim keys() As Variant
+    Dim values() As Variant
+    Dim i As Long, j As Long
+    Dim temp As Variant
+    
+    ReDim keys(0 To dict.count - 1)
+    ReDim values(0 To dict.count - 1)
+    
+    Dim key As Variant
+    i = 0
+    For Each key In dict.keys
+        keys(i) = key
+        values(i) = dict(key)
+        i = i + 1
+    Next key
+    
+    For i = LBound(values) To UBound(values) - 1
+        For j = i + 1 To UBound(values)
+            If (values(i) < values(j) And descending) Or (values(i) > values(j) And Not descending) Then
+                'Swap values
+                temp = values(i)
+                values(i) = values(j)
+                values(j) = temp
+                
+                'Swap keys accordingly
+                temp = keys(i)
+                keys(i) = keys(j)
+                keys(j) = temp
+            End If
+        Next j
+    Next i
+    
+    Fn_Sort_Dictionary_By_Value = keys
+    
+End Function
+
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     Fn_TEC_Is_Data_Valid = False

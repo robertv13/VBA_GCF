@@ -514,7 +514,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
 End Sub
 
-Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
+Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Entête_Import_All()")
     
@@ -546,12 +546,12 @@ Sub FAC_Entête_Import_All() '2024-03-13 @ 09:56
     
     'Adjust Formats for all rows
     With wshFAC_Entête
-        .Range("A3:C" & lastRow).HorizontalAlignment = xlCenter
+        .Range("A3:D" & lastRow).HorizontalAlignment = xlCenter
         .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("D3:H" & lastRow & ",J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow).HorizontalAlignment = xlLeft
-        .Range("I3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:U" & lastRow).HorizontalAlignment = xlRight
-        .Range("I3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:U" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("P3:P" & lastRow & ",R3:R" & lastRow).NumberFormat = "#0.000 %"
+        .Range("E3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:O" & lastRow).HorizontalAlignment = xlLeft
+        .Range("J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow & ",P3:V" & lastRow).HorizontalAlignment = xlRight
+        .Range("J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow & ",P3:V" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("Q3:Q" & lastRow & ",S3:S" & lastRow).NumberFormat = "#0.000 %"
     End With
 
     'Apply standard conditional formatting - 2024-07-08 @ 08:39

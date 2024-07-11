@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.A" '2024-07-08 @ 09:31
+Public Const APP_VERSION_NO As String = "v3.9.B" '2024-07-11 @ 09:14
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 
@@ -32,6 +32,7 @@ Public Enum FAC_Entête_Data_Columns
     ffacEntFirst = 1
     ffacEntInv_No = ffacEntFirst
     ffacEntDate_Facture
+    ffacEntFouP
     ffacEntCust_ID
     ffacEntContact
     ffacEntNom_Client
@@ -83,7 +84,7 @@ End Enum
 
 Public Enum TEC_Data_Columns
     ftecFirst = 1
-    ftec_ID = ftecFirst
+    ftecTEC_ID = ftecFirst
     ftecProf_ID
     ftecProf
     ftecDate

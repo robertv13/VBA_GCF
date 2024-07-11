@@ -140,13 +140,13 @@ Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
     With rng
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
-            .colorIndex = 0
+            .ColorIndex = 0
             .TintAndShade = 0
             .Weight = xlThin
         End With
         With .Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
-            .colorIndex = 0
+            .ColorIndex = 0
             .TintAndShade = 0
             .Weight = xlThick
         End With

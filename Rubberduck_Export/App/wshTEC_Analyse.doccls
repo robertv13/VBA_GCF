@@ -1,0 +1,64 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_Activate()")
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    Call TEC_Import_All
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Analyse")
+    
+   'Hide column A & B for end users
+    With ws
+'        .Unprotect
+'        .Range("A:B").EntireColumn.Hidden = True
+    End With
+    
+    Call SetTabOrder(ws)
+    
+    With ws
+'        .Range("K4").value = Now()
+'        .Range("F4").Activate
+'        .Range("F4").Select
+        previousCellAddress = .Range("F4").Address
+    End With
+    
+    Application.EnableEvents = True
+    
+    'Cleaning memory - 2024-07-11 @ 10:14
+    Set ws = Nothing
+    
+    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    'Is the selected Cell in column B ?
+    If Not Intersect(Target, wshTEC_Analyse.Range("B:B")) Is Nothing Then
+        If Target.Offset(0, 1).value = "" Then
+            Debug.Print Target.Address
+            Debug.Print Target.rows(1).OutlineLevel
+            Call Build_Hours_Summary(Target.value, Target.row)
+        End If
+    End If
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+
+
+End Sub
+

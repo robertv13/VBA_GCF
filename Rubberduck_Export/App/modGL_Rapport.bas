@@ -200,7 +200,7 @@ Sub print_results_From_GL_Trans(compte As String)
     With ws.Range("F" & lastRowUsed_AB)
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
-            .colorIndex = 0
+            .ColorIndex = 0
             .TintAndShade = 0
             .Weight = xlThin
         End With
@@ -210,7 +210,7 @@ Sub print_results_From_GL_Trans(compte As String)
     With ws.Range("G" & lastRowUsed_AB)
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
-            .colorIndex = 0
+            .ColorIndex = 0
             .TintAndShade = 0
             .Weight = xlThin
         End With
