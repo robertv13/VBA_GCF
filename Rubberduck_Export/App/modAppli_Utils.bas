@@ -190,22 +190,22 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call check_Fournisseurs(r) '--------------------------------------------- Fournisseurs
     
     'wshFAC_Détails
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Détails")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
     r = r + 1
     
     Call FAC_Détails_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures_Détails a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importé du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Détails(r) '----------------------------------------------- FAC_Détails
     
     'wshFAC_Entête
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Factures_Entête")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
     r = r + 1
     
     Call FAC_Entête_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures_Entête a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importé du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -930,6 +930,7 @@ Sub Make_It_As_Header(r As Range)
             .Italic = True
             .Bold = True
         End With
+        .HorizontalAlignment = xlCenter
     End With
     
 End Sub

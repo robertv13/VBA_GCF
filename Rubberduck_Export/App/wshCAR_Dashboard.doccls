@@ -1,0 +1,30 @@
+﻿Option Explicit
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    
+    If Target.CountLarge > 2 Then Exit Sub
+    'Tab Selection
+    If Not Intersect(Target, Range("B2:E2")) Is Nothing Then
+        Range("AA3").value = Target.Column
+        wshCAR_Dashboard_TabChange                      'Run Macro to switch tabs
+    End If
+
+    If Shapes("ViewInvBtn").Visible = True Then Shapes("ViewInvBtn").Visible = msoFalse 'Hide View Inv. Button if Visible
+    If Not Intersect(Target, Range("B35:H9999")) Is Nothing And Range("B" & Target.row).value <> Empty Then
+        Range("AA1").value = Target.row
+        Aging_ShowCustDetail
+    End If
+
+    If Not Intersect(Target, Range("J37:R99999")) Is Nothing And Range("J" & Target.row).value <> Empty And IsNumeric(Range("J" & Target.row).value) = True Then
+        Range("AA2").value = Target.row
+        With Shapes("ViewInvBtn")
+            .Left = Range("S" & Target.row).Left
+            .Top = Range("S" & Target.row).Top
+            .Visible = msoCTrue
+        End With
+    Else
+        Range("AA2").ClearContents
+    End If
+
+End Sub
+

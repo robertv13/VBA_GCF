@@ -9,7 +9,7 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Load_Open_Invoices()")
     
     wshENC_Saisie.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
-    With wshFAC
+    With wshCAR
         lastResultRow = .Range("A99999").End(xlUp).row 'Last row
         If lastResultRow < 3 Then Exit Sub
         'Cells L3 contains a formula, no need to set it up
@@ -252,7 +252,7 @@ End Sub
 'Sub FAC_Comptes_Clients_Import_All() '2024-02-14 @ 09:50
 '
 '    'Clear all cells, but the headers, in the destination worksheet
-'    wshFAC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+'    wshCAR.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 '
 '    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
 '    Dim sourceWorkbook As String, sourceTab As String
@@ -263,24 +263,24 @@ End Sub
 '    'Set up source and destination ranges
 '    Dim sourceRange As Range, destinationRange As Range
 '    Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-'    Set destinationRange = wshFAC.Range("A2")
+'    Set destinationRange = wshCAR.Range("A2")
 '
 '    'Copy data, using Range to Range and Autofit all columns
 '    sourceRange.Copy destinationRange
-'    wshFAC.Range("A1").CurrentRegion.EntireColumn.AutoFit
+'    wshCAR.Range("A1").CurrentRegion.EntireColumn.AutoFit
 '
 '    'Close the source workbook, without saving it
 '    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 '
 '    'Insert Formula in column H
 '    Dim lastRow As Long
-'    lastRow = wshFAC.Range("A99999").End(xlUp).row
+'    lastRow = wshCAR.Range("A99999").End(xlUp).row
 '    'Check if there is data in column A
 '    If lastRow < 3 Then
 '        MsgBox "No data found in column A.", vbExclamation
 '        Exit Sub
 '    End If
-'    wshFAC.Range("H3:H" & lastRow).formula = "=SUMIFS(pmnt_Amount,pmnt_invNumb, $A3)"
+'    wshCAR.Range("H3:H" & lastRow).formula = "=SUMIFS(pmnt_Amount,pmnt_invNumb, $A3)"
 '
 ''    'Define the named ranges for Pmnt_Amount and Pmnt_invNumb outside of the loop
 ''    Dim pmnt_Amount_Range As Range
@@ -292,15 +292,15 @@ End Sub
 ''
 ''    Dim cell As Range
 ''    'Loop through each cell in the range H3 to H[lastRow]
-''    For Each cell In wshFAC.Range("H3:H" & lastRow)
+''    For Each cell In wshCAR.Range("H3:H" & lastRow)
 ''        'Assign the formula to each cell individually using the Formula property
 ''        cell.formula = "=SUMIFS('" & wshENC_Détails.name & "'!" & pmnt_Amount_Range.Address & "," & _
 ''                               "'" & wshENC_Détails.name & "'!" & Pmnt_invNumb_Range.Address & "," & _
-''                               "'" & wshFAC.name & "'!$A" & cell.row & ")"
+''                               "'" & wshCAR.name & "'!$A" & cell.row & ")"
 ''        Debug.Print cell.Address
 ''    Next cell
 '
-''    With wshFAC
+''    With wshCAR
 ''        .Range("A3" & ":F" & lastRow).HorizontalAlignment = xlCenter
 ''        With .Range("C3:C" & lastRow & ",D3:D" & lastRow & ",E3:E" & lastRow)
 ''            .HorizontalAlignment = xlLeft

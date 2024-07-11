@@ -50,30 +50,30 @@ Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
         Dim lastUsedRow As Long
         lastUsedRow = .Range("A99999").End(xlUp).row
         If lastUsedRow < 3 Then Exit Sub 'No data to filter
-        Dim sourceRng As Range: Set sourceRng = .Range("A2:U" & lastUsedRow)
+        Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
         
         'Define the criteria range including headers
-        Dim criteriaRng As Range: Set criteriaRng = ws.Range("W2:W3")
+        Dim criteriaRng As Range: Set criteriaRng = ws.Range("X2:X3")
     
         'Setup the destination Range and clear it before applying AdvancedFilter
-        Dim destinationRng As Range: Set destinationRng = .Range("Y2:AS2")
-        lastUsedRow = .Range("Y99999").End(xlUp).row
+        Dim destinationRng As Range: Set destinationRng = .Range("Z2:AU2")
+        lastUsedRow = .Range("Z99999").End(xlUp).row
         If lastUsedRow > 2 Then
-            ws.Range("Y3:AS" & lastUsedRow).ClearContents
+            ws.Range("Z3:AU" & lastUsedRow).ClearContents
         End If
     
         ' Apply the advanced filter
         sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
         
-        lastUsedRow = .Range("Y99999").End(xlUp).row
+        lastUsedRow = .Range("Z99999").End(xlUp).row
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.clear
-            .SortFields.add key:=wshTEC_Local.Range("Y3"), _
+            .SortFields.add key:=wshTEC_Local.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
-            .SetRange ws.Range("Y3:AS" & lastUsedRow) 'Set Range
+            .SetRange ws.Range("Z3:AU" & lastUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
      End With
@@ -92,7 +92,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     Dim ws2 As Worksheet: Set ws2 = wshENC_Détails
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("Y9999").End(xlUp).row
+    lastUsedRow = ws.Range("Z9999").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
     
     Dim arr() As Variant
@@ -101,21 +101,21 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     With ws
         Dim i As Long, r As Long, invNo As String
         For i = 3 To lastUsedRow
-            If .Range("Z" & i).value < dateMin Or .Range("Z" & i).value > dateMax Then
+            If .Range("AA" & i).value < dateMin Or .Range("AA" & i).value > dateMax Then
                 GoTo nextIteration
             End If
             r = r + 1
-            invNo = .Range("Y" & i).value
+            invNo = .Range("Z" & i).value
             arr(r, 1) = invNo
-            arr(r, 2) = .Range("Z" & i).value
-            arr(r, 4) = .Range("AG" & i).value
-            arr(r, 6) = .Range("AI" & i).value
-            arr(r, 7) = .Range("AK" & i).value
-            arr(r, 8) = .Range("AM" & i).value
-            arr(r, 9) = .Range("AO" & i).value
-            arr(r, 10) = .Range("AQ" & i).value
-            arr(r, 11) = .Range("AS" & i).value
-            arr(r, 12) = .Range("AR" & i).value
+            arr(r, 2) = .Range("AA" & i).value
+            arr(r, 4) = .Range("AI" & i).value
+            arr(r, 6) = .Range("AK" & i).value
+            arr(r, 7) = .Range("AM" & i).value
+            arr(r, 8) = .Range("AO" & i).value
+            arr(r, 9) = .Range("AQ" & i).value
+            arr(r, 10) = .Range("AS" & i).value
+            arr(r, 11) = .Range("AU" & i).value
+            arr(r, 12) = .Range("AT" & i).value
             arr(r, 13) = Round(Now() - arr(r, 2), 0)
             arr(r, 14) = Fn_Get_AR_Balance_For_Invoice(ws2, invNo)
 nextIteration:
@@ -240,35 +240,38 @@ Sub Remove_All_PDF_Icons()
     
 End Sub
 
-Sub Test_Advanced_Filter_Factures_Entête() '2024-06-27 @ 14:51
+Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     'Clear previous results
-    ws.Range("Y3:AS157").ClearContents
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    ws.Range("Z3:AU" & lastUsedRow).ClearContents
 
     'Define the source range including headers
-    Dim srcRange As Range: Set srcRange = ws.Range("$A$2:$U$157")
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
 
     'Define the criteria range including headers
-    Dim criteriaRange As Range: Set criteriaRange = ws.Range("$W$2:$W$3")
+    Dim criteriaRange As Range: Set criteriaRange = ws.Range("X2:X3")
 
     'Define the destination range starting from Y3
-    Dim destRange As Range: Set destRange = ws.Range("$Y$2:$AS$2")
+    Dim destRange As Range: Set destRange = ws.Range("Z2:AU2")
 
     'Apply the advanced filter
     srcRange.AdvancedFilter action:=xlFilterCopy, criteriaRange:=criteriaRange, CopyToRange:=destRange, Unique:=False
     
     Dim lastResultRow As Long
-    lastResultRow = ws.Range("Y99999").End(xlUp).row
+    lastResultRow = ws.Range("Z9999").End(xlUp).row
     If lastResultRow < 4 Then Exit Sub
     With ws.Sort 'Sort - Inv_No
         .SortFields.clear
-        .SortFields.add key:=wshTEC_Local.Range("Y3"), _
+        .SortFields.add key:=wshTEC_Local.Range("Z3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Invoice Number
-        .SetRange ws.Range("Y3:AS" & lastResultRow) 'Set Range
+        .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
         .Apply 'Apply Sort
      End With
 

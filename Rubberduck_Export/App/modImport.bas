@@ -217,7 +217,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
 
     'Apply standard conditional formatting - 2024-07-08 @ 08:39
     Dim rng As Range: Set rng = wshDEB_Recurrent.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 2)
+    Call Apply_Conditional_Formatting(rng, 1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
@@ -278,7 +278,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
     'Apply standard conditional formatting - 2024-07-08 @ 08:39
     Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 2)
+    Call Apply_Conditional_Formatting(rng, 1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
@@ -291,6 +291,117 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
 
 End Sub
 
+Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ENC_Détails_Import_All()")
+    
+    Application.StatusBar = "J'importe le détail des Encaissements"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshENC_Détails.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "ENC_Détails"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range: Set destinationRange = wshENC_Détails.Range("A1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshENC_Détails.Range("A99999").End(xlUp).row
+    
+    'Adjust Formats for all rows
+    With wshENC_Détails
+        .Range("A4:A" & lastRow & ", C4:C" & lastRow & ", F4:F" & lastRow & ", G4:G" & lastRow).HorizontalAlignment = xlCenter
+        .Range("B4:B" & lastRow).HorizontalAlignment = xlLeft
+        .Range("D4:E" & lastRow).HorizontalAlignment = xlRight
+        .Range("C4:C" & lastRow).NumberFormat = "#,##0.00"
+        .Range("D4:E" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
+        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
+        .Range("A1").CurrentRegion.EntireColumn.AutoFit
+    End With
+
+    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+    Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
+    Call Apply_Conditional_Formatting(rng, 1)
+    
+    Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
+    Call Output_Timer_Results("modImport:ENC_Détails_Import_All()", timerStart)
+
+End Sub
+
+Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ENC_Entête_Import_All()")
+    
+    Application.StatusBar = "J'importe le détail des Encaissements"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshENC_Entête.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "ENC_Entête"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range: Set destinationRange = wshENC_Entête.Range("A1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshENC_Entête.Range("A99999").End(xlUp).row
+    
+    'Adjust Formats for all rows
+    With wshENC_Entête
+        .Range("A2:F" & lastRow).HorizontalAlignment = xlCenter
+        .Range("A2:B" & lastRow).HorizontalAlignment = xlLeft
+        .Range("E2:E" & lastRow).HorizontalAlignment = xlRight
+        .Range("E2:E" & lastRow).NumberFormat = "#,##0.00$"
+        .Range("A1").CurrentRegion.EntireColumn.AutoFit
+    End With
+
+    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+    Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
+    Call Apply_Conditional_Formatting(rng, 1)
+    
+    Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
+    Call Output_Timer_Results("modImport:ENC_Entête_Import_All()", timerStart)
+
+End Sub
+
 Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Comptes_Clients_Import_All()")
@@ -300,7 +411,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    wshCAR.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -311,17 +422,17 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     'Set up source and destination ranges
     Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
 
-    Dim destinationRange As Range: Set destinationRange = wshFAC.Range("A2")
+    Dim destinationRange As Range: Set destinationRange = wshCAR.Range("A2")
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     Dim lastRow As Long
-    lastRow = wshFAC.Range("A99999").End(xlUp).row
+    lastRow = wshCAR.Range("A99999").End(xlUp).row
     
     'Adjust Formats for all new rows
-    With wshFAC
+    With wshCAR
         .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J3:J" & lastRow).HorizontalAlignment = xlCenter
         .Range("C3:C" & lastRow).HorizontalAlignment = xlLeft
         .Range("G3:I" & lastRow).HorizontalAlignment = xlRight
@@ -331,7 +442,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     End With
 
     'Apply standard conditional formatting - 2024-07-08 @ 08:39
-    Dim rng As Range: Set rng = wshFAC.Range("A1").CurrentRegion
+    Dim rng As Range: Set rng = wshCAR.Range("A1").CurrentRegion
     Call Apply_Conditional_Formatting(rng, 2)
     
     Application.ScreenUpdating = True

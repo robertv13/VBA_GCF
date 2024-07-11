@@ -26,7 +26,7 @@ Private Sub UserForm_Initialize()
         .ColumnHeads = True
         .ColumnCount = 2
         .ColumnWidths = "275; 25"
-        .RowSource = "EJ_Auto!K2:L" & lastUsedRow
+        .RowSource = "GL_EJ_Auto!K2:L" & lastUsedRow
     End With
    
 End Sub

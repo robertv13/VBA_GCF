@@ -14,14 +14,14 @@ Private Sub Worksheet_Activate()
     
 End Sub
 
-Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_SuiviCC
     Call SlideOut_PrepFact
 
 End Sub
 
-Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_PrepFact
     Call SlideIn_Encaissement
@@ -29,7 +29,7 @@ Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift
 
 End Sub
 
-Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_SuiviCC
     Call SlideIn_FAC_Historique
@@ -37,14 +37,14 @@ Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal S
 
 End Sub
 
-Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_Encaissement
     Call SlideOut_FAC_Historique
 
 End Sub
 
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal y As Single)
+Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC

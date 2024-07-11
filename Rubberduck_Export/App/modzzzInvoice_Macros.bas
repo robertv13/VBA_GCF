@@ -3,7 +3,7 @@ Option Explicit
 Dim invRow As Long, invitemRow As Long, lastRow As Long, lastItemRow As Long
 Dim resultRow As Long, lastResultRow As Long, itemRow As Long, termRow As Long, statusRow As Long
 
-Sub Dashboard_Invoice_SaveUpdate()
+Sub CAR_Dashboard_Invoice_SaveUpdate()
     With Invoice
         If .Range("G5").value = Empty Then
             MsgBox "Please make sure to add a customer before saving invoice"
@@ -69,7 +69,7 @@ Sub Customer_AddNew()
     AddCustForm.show
 End Sub
 
-Sub Dashboard_Invoice_New()
+Sub CAR_Dashboard_Invoice_New()
     With Invoice
         .Range("B6").value = True                'Set Inv. Load to true
         .Range("I3:J6,G5:G7,B9:I31,K9:K31").ClearContents
@@ -87,7 +87,7 @@ Sub Dashboard_Invoice_New()
     End With
 End Sub
 
-Sub Dashboard_Invoice_Load()
+Sub CAR_Dashboard_Invoice_Load()
     With Invoice
         If .Range("B3").value = Empty Then
             MsgBox "Please entere a correct invoice #"
@@ -125,7 +125,7 @@ End Sub
 
 Sub Invoice_SaveAsPDF()
     Dim FilePath As String
-    Dashboard_Invoice_SaveUpdate                           'Save invoice
+    CAR_Dashboard_Invoice_SaveUpdate                           'Save invoice
     FilePath = ThisWorkbook.path & "\" & Invoice.Range("G5").value & "_" & Invoice.Range("J1").value 'File Path
     If Dir(FilePath, vbDirectory) <> "" Then Kill (FilePath)
     Invoice.ExportAsFixedFormat xlTypePDF, FilePath, , , False, , , True
@@ -159,7 +159,7 @@ SingleRow:
             Next resultRow
         End With
 NotSaved:
-        Dashboard_Invoice_New                              'Clear Out All Invoice Fields
+        CAR_Dashboard_Invoice_New                              'Clear Out All Invoice Fields
     End With
 End Sub
 

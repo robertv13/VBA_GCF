@@ -99,6 +99,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     With wshFAC_Finale
         rs.Fields("Inv_No") = .Range("E28").value
         rs.Fields("Date_Facture") = CDate(wshFAC_Brouillon.Range("O3").value)
+        rs.Fields("FouP") = "F"
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
         rs.Fields("Nom_Client") = .Range("B24").value
@@ -172,30 +173,30 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = Format(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy")
-        .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
-        .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
-        .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
-        .Range("F" & firstFreeRow).value = wshFAC_Finale.Range("B25").value
-        .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("B26").value
-        .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("B27").value
+        .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
+        .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
+        .Range("F" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
+        .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("B25").value
+        .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("B26").value
+        .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("B27").value
         
-        .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("E69").value
+        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("E69").value
         
-        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("B70").value
-        .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("E70").value
-        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("B71").value
-        .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("E71").value
-        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("B72").value
-        .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("E72").value
+        .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("B70").value
+        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("E70").value
+        .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("B71").value
+        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("E71").value
+        .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("B72").value
+        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("E72").value
         
-        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
-        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("E74").value
-        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("C75").value
-        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("E75").value
+        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
+        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("E74").value
+        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("C75").value
+        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("E75").value
         
-        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("E77").value
+        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E77").value
         
-        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
+        .Range("V" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
     End With
     
     wshFAC_Brouillon.Range("B11").value = firstFreeRow
@@ -384,9 +385,9 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC.Range("A9999").End(xlUp).row + 1
+    firstFreeRow = wshCAR.Range("A9999").End(xlUp).row + 1
    
-    With wshFAC
+    With wshCAR
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
