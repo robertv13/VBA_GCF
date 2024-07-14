@@ -1,141 +1,128 @@
 Attribute VB_Name = "Module1"
 Option Explicit
 
-Sub Macro1()
-Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub Macro6()
+Attribute Macro6.VB_ProcData.VB_Invoke_Func = " \n14"
 '
-' Macro1 Macro
+' Macro6 Macro
 '
 
 '
-    With Selection.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -0.149998474074526
-        .PatternTintAndShade = 0
+    Application.PrintCommunication = False
+    With ActiveSheet.PageSetup
+        .PrintTitleRows = "$1:$1"
+        .PrintTitleColumns = ""
     End With
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
+    Application.PrintCommunication = True
+    ActiveSheet.PageSetup.PrintArea = "$B$2:$G$3"
+    Application.PrintCommunication = False
+    With ActiveSheet.PageSetup
+        .LeftHeader = ""
+        .CenterHeader = _
+        "&""-,Gras""&14Recherche&""-,Normal""&11" & Chr(10) & "&""-,Gras""&12Chaine"
+        .RightHeader = ""
+        .LeftFooter = ""
+        .CenterFooter = ""
+        .RightFooter = ""
+        .LeftMargin = Application.InchesToPoints(0.708661417322835)
+        .RightMargin = Application.InchesToPoints(0.708661417322835)
+        .TopMargin = Application.InchesToPoints(0.748031496062992)
+        .BottomMargin = Application.InchesToPoints(0.748031496062992)
+        .HeaderMargin = Application.InchesToPoints(0.31496062992126)
+        .FooterMargin = Application.InchesToPoints(0.31496062992126)
+        .PrintHeadings = False
+        .PrintGridlines = False
+        .PrintComments = xlPrintNoComments
+        .PrintQuality = 600
+        .CenterHorizontally = False
+        .CenterVertically = False
+        .orientation = xlPortrait
+        .Draft = False
+        .PaperSize = xlPaperLetter
+        .FirstPageNumber = xlAutomatic
+        .Order = xlDownThenOver
+        .BlackAndWhite = False
+        .Zoom = 100
+        .PrintErrors = xlPrintErrorsDisplayed
+        .OddAndEvenPagesHeaderFooter = False
+        .DifferentFirstPageHeaderFooter = False
+        .ScaleWithDocHeaderFooter = True
+        .AlignMarginsHeaderFooter = True
+        .EvenPage.LeftHeader.text = ""
+        .EvenPage.CenterHeader.text = ""
+        .EvenPage.RightHeader.text = ""
+        .EvenPage.LeftFooter.text = ""
+        .EvenPage.CenterFooter.text = ""
+        .EvenPage.RightFooter.text = ""
+        .FirstPage.LeftHeader.text = ""
+        .FirstPage.CenterHeader.text = ""
+        .FirstPage.RightHeader.text = ""
+        .FirstPage.LeftFooter.text = ""
+        .FirstPage.CenterFooter.text = ""
+        .FirstPage.RightFooter.text = ""
     End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    Selection.Borders(xlInsideVertical).LineStyle = xlNone
-    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
-    Range("B98").Select
-    ActiveWorkbook.Save
-    Range("B7").Select
-    Range("B3").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
-    Selection.Borders(xlEdgeTop).LineStyle = xlNone
-    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
-    Selection.Borders(xlEdgeRight).LineStyle = xlNone
-    Selection.Borders(xlInsideVertical).LineStyle = xlNone
-    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
-    Range("J15").Select
+    Application.PrintCommunication = True
 End Sub
-Sub Macro2()
-Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub Macro7()
+Attribute Macro7.VB_ProcData.VB_Invoke_Func = " \n14"
 '
-' Macro2 Macro
-'
-
-'
-    Range("I3:J4").Select
-    With Selection.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -0.149998474074526
-        .PatternTintAndShade = 0
-    End With
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    With Selection.Borders(xlEdgeLeft)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    With Selection.Borders(xlEdgeRight)
-        .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
-        .Weight = xlMedium
-    End With
-    Selection.Borders(xlInsideVertical).LineStyle = xlNone
-    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
-End Sub
-Sub Macro3()
-Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro3 Macro
+' Macro7 Macro
 '
 
 '
-    Range("I35:J39").Select
-    With Selection.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorAccent1
-        .TintAndShade = 0.599993896298105
-        .PatternTintAndShade = 0
+    Application.PrintCommunication = False
+    With ActiveSheet.PageSetup
+        .PrintTitleRows = "$1:$1"
+        .PrintTitleColumns = ""
     End With
-End Sub
-Sub Macro4()
-Attribute Macro4.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro4 Macro
-'
-
-'
-    Range("J11").Select
-    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
-    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
-    With Selection.Borders(xlEdgeTop)
-        .LineStyle = xlContinuous
-        .ColorIndex = xlAutomatic
-        .TintAndShade = 0
-        .Weight = xlThin
+    Application.PrintCommunication = True
+    ActiveSheet.PageSetup.PrintArea = "$B$2:$G$12"
+    Application.PrintCommunication = False
+    With ActiveSheet.PageSetup
+        .LeftHeader = ""
+        .CenterHeader = "&""-,Gras""&14&K0070C0Recherche"
+        .RightHeader = ""
+        .LeftFooter = "&11&D - &T"
+        .CenterFooter = "&11&KFF0000&A"
+        .RightFooter = "&11Page &P de &N"
+        .LeftMargin = Application.InchesToPoints(0.15748031496063)
+        .RightMargin = Application.InchesToPoints(0.15748031496063)
+        .TopMargin = Application.InchesToPoints(0.551181102362205)
+        .BottomMargin = Application.InchesToPoints(0.551181102362205)
+        .HeaderMargin = Application.InchesToPoints(0.15748031496063)
+        .FooterMargin = Application.InchesToPoints(0.15748031496063)
+        .PrintHeadings = False
+        .PrintGridlines = False
+        .PrintComments = xlPrintNoComments
+        .PrintQuality = 600
+        .CenterHorizontally = True
+        .CenterVertically = False
+        .orientation = xlLandscape
+        .Draft = False
+        .PaperSize = xlPaperLetter
+        .FirstPageNumber = xlAutomatic
+        .Order = xlDownThenOver
+        .BlackAndWhite = False
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = 4
+        .PrintErrors = xlPrintErrorsDisplayed
+        .OddAndEvenPagesHeaderFooter = False
+        .DifferentFirstPageHeaderFooter = False
+        .ScaleWithDocHeaderFooter = True
+        .AlignMarginsHeaderFooter = True
+        .EvenPage.LeftHeader.text = ""
+        .EvenPage.CenterHeader.text = ""
+        .EvenPage.RightHeader.text = ""
+        .EvenPage.LeftFooter.text = ""
+        .EvenPage.CenterFooter.text = ""
+        .EvenPage.RightFooter.text = ""
+        .FirstPage.LeftHeader.text = ""
+        .FirstPage.CenterHeader.text = ""
+        .FirstPage.RightHeader.text = ""
+        .FirstPage.LeftFooter.text = ""
+        .FirstPage.CenterFooter.text = ""
+        .FirstPage.RightFooter.text = ""
     End With
-    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
-    Selection.Borders(xlEdgeRight).LineStyle = xlNone
-    Selection.Borders(xlInsideVertical).LineStyle = xlNone
-    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+    Application.PrintCommunication = True
 End Sub

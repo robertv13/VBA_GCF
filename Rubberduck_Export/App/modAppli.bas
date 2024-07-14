@@ -172,9 +172,10 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
-        If ws.codeName <> "wshMenu" And _
-            InStr(ws.codeName, "wshzDoc") = 0 Then
+        If ws.CodeName <> "wshMenu" Then
+            If userName <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
+            End If
         End If
     Next ws
     
@@ -308,7 +309,8 @@ Sub BackupMasterFile()
     
     'Open the master file
     Dim masterWorkbook As Workbook
-    Set masterWorkbook = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Sortie.xlsx")
+    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("FolderSharedData").value _
+                                & Application.PathSeparator & "GCF_BD_Sortie.xlsx")
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS
     Dim currentDateAndTime As String

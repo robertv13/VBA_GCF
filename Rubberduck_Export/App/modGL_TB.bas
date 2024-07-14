@@ -113,7 +113,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     With ActiveSheet.PageSetup
         .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
         .PrintArea = "$D$1:$G$" & currRow
-        .Orientation = xlPortrait
+        .orientation = xlPortrait
         .FitToPagesWide = 1
         .FitToPagesTall = 1
     End With
@@ -482,7 +482,7 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Integer)
         .PrintTitleRows = ""
         .PrintTitleColumns = ""
         .PaperSize = xlPaperLetter
-        .Orientation = xlPortrait
+        .orientation = xlPortrait
         .PrintArea = myPrintRange.Address 'Parameter 1
         .FitToPagesWide = 1
         .FitToPagesTall = pagesTall 'Parameter 2

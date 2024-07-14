@@ -22,6 +22,77 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
     
 End Sub
 
+Sub Printer_Page_Setup(ws As Worksheet, _
+                       rng As Range, _
+                       header1 As String, _
+                       header2 As String, _
+                       Optional orient As String = "L") '2024-07-14 @ 06:51
+
+    Application.PrintCommunication = False
+    
+    With ws.PageSetup
+        .PrintArea = rng.Address
+        .PrintTitleRows = "$1:$1"
+        .PrintTitleColumns = ""
+        
+        .LeftHeader = ""
+        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
+        .RightHeader = ""
+        .LeftFooter = "&11&D - &T"
+        .CenterFooter = "&11&KFF0000&A"
+        .RightFooter = "&11Page &P de &N"
+        
+        .TopMargin = Application.InchesToPoints(0.55)
+        .LeftMargin = Application.InchesToPoints(0.15)
+        .RightMargin = Application.InchesToPoints(0.15)
+        .HeaderMargin = Application.InchesToPoints(0.15)
+        .FooterMargin = Application.InchesToPoints(0.15)
+        .BottomMargin = Application.InchesToPoints(0.4)
+        
+        .PrintHeadings = False
+        .PrintGridlines = False
+        .PrintComments = xlPrintNoComments
+        .PrintQuality = 600
+        .CenterHorizontally = True
+        .CenterVertically = False
+        If orient = "L" Then
+            .orientation = xlLandscape
+        Else
+            .orientation = xlPortrait
+        End If
+        .Draft = False
+        .PaperSize = xlPaperLetter
+        .FirstPageNumber = xlAutomatic
+        .Order = xlDownThenOver
+        .BlackAndWhite = False
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+        .PrintErrors = xlPrintErrorsDisplayed
+        .OddAndEvenPagesHeaderFooter = False
+        .DifferentFirstPageHeaderFooter = False
+        .ScaleWithDocHeaderFooter = True
+        .AlignMarginsHeaderFooter = True
+        
+        .EvenPage.LeftHeader.text = ""
+        .EvenPage.CenterHeader.text = ""
+        .EvenPage.RightHeader.text = ""
+        .EvenPage.LeftFooter.text = ""
+        .EvenPage.CenterFooter.text = ""
+        .EvenPage.RightFooter.text = ""
+        
+        .FirstPage.LeftHeader.text = ""
+        .FirstPage.CenterHeader.text = ""
+        .FirstPage.RightHeader.text = ""
+        .FirstPage.LeftFooter.text = ""
+        .FirstPage.CenterFooter.text = ""
+        .FirstPage.RightFooter.text = ""
+    End With
+    
+    Application.PrintCommunication = True
+
+End Sub
+
 Public Sub ProtectCells(rng As Range)
 
     'Lock the checkbox

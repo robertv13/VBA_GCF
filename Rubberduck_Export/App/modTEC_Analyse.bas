@@ -1,10 +1,10 @@
 Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
-Sub Sort_And_Subtotal_To_New_Sheet()
-    Dim lastUsedRow As Long, lastUsedCol As Long
+Sub TEC_Sort_Group_And_Subtotal()
+
+    Dim lastUsedRow As Long
     Dim firstEmptyCol As Long
-    Dim includeRow As Boolean
     
     'Set the source worksheet, lastUsedRow and lastUsedCol
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
@@ -15,6 +15,7 @@ Sub Sort_And_Subtotal_To_New_Sheet()
     Do Until IsEmpty(wsSource.Cells(2, firstEmptyCol))
         firstEmptyCol = firstEmptyCol + 1
     Loop
+    Dim lastUsedCol As Long
     lastUsedCol = firstEmptyCol - 1
     
     'Set the current worksheet as the result
@@ -23,7 +24,7 @@ Sub Sort_And_Subtotal_To_New_Sheet()
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
-    wsDest.Range("A2:G" & destLastUsedRow).ClearContents
+    wsDest.Range("A2:H" & destLastUsedRow).ClearContents
     
     Dim i As Long, r As Long
     r = 1
@@ -36,11 +37,11 @@ Sub Sort_And_Subtotal_To_New_Sheet()
                 r = r + 1
                 wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecProf_ID).value
                 wsDest.Cells(r, 2).value = wsSource.Cells(i, ftecClientNom).value
-                wsDest.Cells(r, 3).value = wsSource.Cells(i, ftecDate).value
-                wsDest.Cells(r, 4).value = wsSource.Cells(i, ftecProf).value
-                wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecDescription).value
-                wsDest.Cells(r, 6).value = wsSource.Cells(i, ftecHeures).value
-                wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecCommentaireNote).value
+                wsDest.Cells(r, 4).value = wsSource.Cells(i, ftecDate).value
+                wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecProf).value
+                wsDest.Cells(r, 6).value = wsSource.Cells(i, ftecDescription).value
+                wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecHeures).value
+                wsDest.Cells(r, 8).value = wsSource.Cells(i, ftecCommentaireNote).value
         End If
     Next i
     Application.EnableEvents = False
@@ -51,102 +52,28 @@ Sub Sort_And_Subtotal_To_New_Sheet()
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.clear
     wsDest.Sort.SortFields.add key:=wsDest.Range("B2:B" & destLastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.add key:=wsDest.Range("C2:C" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.add key:=wsDest.Range("D2:D" & destLastUsedRow), Order:=xlAscending
     wsDest.Sort.SortFields.add key:=wsDest.Range("A2:A" & destLastUsedRow), Order:=xlAscending
     
     With wsDest.Sort
         .SetRange wsDest.Range("A1:P" & destLastUsedRow)
-        .Header = xlYes
+        .header = xlYes
         .MatchCase = False
-        .Orientation = xlTopToBottom
+        .orientation = xlTopToBottom
         .SortMethod = xlPinYin
         .Apply
     End With
 
     'Add subtotals for hours (column F) at each change in ClientNom_ID (column B) in the destination worksheet
     wsDest.Range("A1:P" & destLastUsedRow).Subtotal GroupBy:=2, Function:=xlSum, _
-        TotalList:=Array(6), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
+        TotalList:=Array(7), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
 
     'Group the data to show subtotals in the destination worksheet
     wsDest.Outline.ShowLevels RowLevels:=2
-
-End Sub
-
-Sub Build_Analysis()
-
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
-    Dim wsDest As Worksheet: Set wsDest = wshTEC_Analyse
-    
-    Application.EnableEvents = False
-    
-    Dim lastUsedRow As Long, lastUsedCol As Long
-
-    Dim i As Long
-    Dim includeRow As Boolean
-    
-    'Find the last row and column with data in the source worksheet
-    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).row
-    'HARDCODING - lastUsedCol
-    lastUsedCol = 16
-    
-    For i = 3 To lastUsedRow
-        includeRow = True
-        
-        'Conditions for exclusion (adjust as needed)
-        If wsSource.Cells(i, 14).value = "VRAI" Or _
-            wsSource.Cells(i, 12).value = "VRAI" Or _
-            wsSource.Cells(i, 10).value = "FAUX" Then
-            includeRow = False 'EstFacturable
-        End If
-        'Mark the row in the helper column
-        wsSource.Cells(i, firstEmptyCol).value = includeRow
-    Next i
-    
-    'Copy the data from the source to the destination worksheet, only including marked rows
-    With wsSource
-        .Range(wsSource.Cells(1, 1), .Cells(lastUsedRow, firstEmptyCol - 1)).AutoFilter Field:=firstEmptyCol, Criteria1:="VRAI"
-        .Range(.Cells(1, 1), .Cells(lastUsedRow, firstEmptyCol - 1)).SpecialCells(xlCellTypeVisible).Copy Destination:=wsDest.Range("A1")
-        .AutoFilterMode = False
-    End With
-    
-    'Remove the helper column in the destination worksheet
-    wsSource.columns.Cells(firstEmptyCol).clear
-    wsDest.columns(firstEmptyCol).delete
-    
-    'Find the last row in the destination worksheet
-    lastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
-    
-    'Sort by Client_ID (column F), Date (column D) and Prof_ID (column B) in the destination worksheet
-    wsDest.Sort.SortFields.clear
-    wsDest.Sort.SortFields.add key:=wsDest.Range("F2:F" & lastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.add key:=wsDest.Range("D2:D" & lastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.add key:=wsDest.Range("B2:B" & lastUsedRow), Order:=xlAscending
-    
-    With wsDest.Sort
-        .SetRange wsDest.Range("A1:P" & lastUsedRow)
-        .Header = xlYes
-        .MatchCase = False
-        .Orientation = xlTopToBottom
-        .SortMethod = xlPinYin
-        .Apply
-    End With
-    
-    'Remove existing subtotals in the destination worksheet
-    wsDest.Cells.RemoveSubtotal
-    
-    'Add subtotals for hours (column H) at each change in ClientName (column F) in the destination worksheet
-    wsDest.Range("A1:P" & lastUsedRow).Subtotal GroupBy:=6, Function:=xlSum, TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=True
-    
-    'Group the data to show subtotals in the destination worksheet
-    wsDest.Outline.ShowLevels RowLevels:=2
-    
-    Application.EnableEvents = True
 
 End Sub
 
 Sub Build_Hours_Summary(client As String, r As Long)
-
-    Debug.Print client & " @ " & " row " & r
 
     If r < 3 Then Exit Sub
     
@@ -170,7 +97,6 @@ Sub Build_Hours_Summary(client As String, r As Long)
         End If
         i = i + 1
     Loop
-    Debug.Print "Dictionary : " & dictHours.count
 
     Dim Prof As Variant
     For Each Prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order

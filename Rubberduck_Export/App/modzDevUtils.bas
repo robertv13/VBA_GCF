@@ -11,7 +11,7 @@ Sub Worksheets_List_All() '2024-06-22 @ 06:27
     
     For Each ws In ThisWorkbook.Sheets
         i = i + 1
-        arr(i, 1) = ws.codeName
+        arr(i, 1) = ws.CodeName
         arr(i, 2) = ws.name
     Next ws
     
@@ -32,29 +32,33 @@ Sub Worksheets_List_All() '2024-06-22 @ 06:27
     
 End Sub
 
-Sub ListWorksheetsInClosedWorkbook() '2024-07-05 @ 07:40
-    Dim wsNames As String
+Sub Closed_Workbook_List_All_Worksheets() '2024-07-14 @ 07:02
     
-    'Specify the full path and name to the closed workbook
+    'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Sortie.xlsx"
+    wbPath = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
     
     'Open the workbook in read-only mode
-    Dim wb As Workbook
-    Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
+    Dim wb As Workbook: Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
     
     'Initialize the message
     Dim msg As String
     Debug.Print "Worksheets in " & wbPath & ":" & vbCrLf
     
-    'Loop through each worksheet in the workbook and add its name to the message
+    'Loop through each worksheet in the workbook and add its name to the immediate window
     Dim ws As Worksheet
     For Each ws In wb.Worksheets
-        Debug.Print ws.codeName & "       " & ws.name
+        Debug.Print ws.CodeName; Tab(20); ws.name
     Next ws
+    
+    Debug.Print "End of list"
     
     'Close the workbook without saving changes
     wb.Close SaveChanges:=False
+    
+    'Cleanup - 2024-07-14 @ 07:03
+    Set wb = Nothing
     
 End Sub
 
@@ -190,7 +194,7 @@ Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
     
 End Sub
 
-Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
+Sub Code_Search_Everywhere()                     '2024-07-11 @ 06:27
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
@@ -206,17 +210,17 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     Dim vbComp As Object
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         Select Case vbComp.Type
-            Case 1
-                oType = "1_Module"
-            Case 2
-                oType = "2_Class"
-            Case 3
-                oType = "3_userform"
-            Case 100
-                oType = "0_Worksheet"
-            Case Else
-                oType = oType & "_?????"
-                Stop
+        Case 1
+            oType = "1_Module"
+        Case 2
+            oType = "2_Class"
+        Case 3
+            oType = "3_userform"
+        Case 100
+            oType = "0_Worksheet"
+        Case Else
+            oType = oType & "_?????"
+            Stop
         End Select
         
         'Get the code module for the component
@@ -373,6 +377,16 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search As String)
         wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
     End If
     
+    'Result print setup - 2024-07-14 2 06:24
+    If lastUsedRow > 1 Then
+        Dim header1 As String: header1 = "Search Utility Results"
+        Dim header2 As String: header2 = "Searched characters '" & search & "'"
+        Call Printer_Page_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
+                               header1, _
+                               header2, _
+                               "L")
+    End If
+    
     'Display the final message
     If xr Then
         MsgBox "J'ai trouvé " & xr & " lignes avec le mot '" & search & "'" & vbNewLine & _
@@ -383,6 +397,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search As String)
                 vbNewLine & "après avoir analysé un total de " & _
                 Format(x, "#,##0") & " lignes de code"
     End If
+    
+    'Clean up - 2024-07-13 @ 08:02
+    Set wsOutput = Nothing
     
 End Sub
 
@@ -403,8 +420,8 @@ Sub Formulas_List_All() '2024-06-22 @ 15:42
     Dim ws As Worksheet
     Dim name As String, usedRange As String, cellsCount As String
     For Each ws In wb.Sheets
-        If ws.codeName = "wshzDocNamedRange" Or _
-            ws.codeName = "wshzDocFormules" Then
+        If ws.CodeName = "wshzDocNamedRange" Or _
+            ws.CodeName = "wshzDocFormules" Then
                 GoTo nextIteration
         End If
         'Save information for this worksheet
@@ -419,8 +436,8 @@ Sub Formulas_List_All() '2024-06-22 @ 15:42
             If Left(cell.formula, 1) = "=" Then
                 'Write formula information to the destination worksheet
                 i = i + 1
-                outputArray(i, 1) = ws.codeName & Chr(0) & cell.Address
-                outputArray(i, 2) = ws.codeName
+                outputArray(i, 1) = ws.CodeName & Chr(0) & cell.Address
+                outputArray(i, 2) = ws.CodeName
                 outputArray(i, 3) = name
                 outputArray(i, 4) = usedRange
                 outputArray(i, 5) = cellsCount
@@ -453,14 +470,14 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
     Dim lastUsedRow As Long
     lastUsedRow = ws.Range("A9999").End(xlUp).row
-    ws.Range("A2:F" & lastUsedRow).ClearContents
+    ws.Range("A2:I" & lastUsedRow).ClearContents
     
     'Loop through each named range in the workbook
     Dim arr() As Variant
-    ReDim arr(1 To 200, 1 To 10)
+    ReDim arr(1 To 300, 1 To 9)
     Dim i As Long
     Dim nr As name, rng As Range
-    Debug.Print ThisWorkbook.Names.count
+    Dim timeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
         arr(i, 1) = UCase(nr.name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
@@ -480,16 +497,12 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
             arr(i, 6) = rng.Address
         End If
         
-        If nr.Parent Is ThisWorkbook Then
-            arr(i, 7) = "Workbook"
-        Else
-            arr(i, 7) = "Worksheet (" & nr.Parent.name & ")"
+        arr(i, 7) = nr.Comment
+        If nr.Visible = False Then
+            arr(i, 8) = nr.Visible
         End If
-
-        arr(i, 8) = nr.Comment
-        arr(i, 9) = nr.Visible
-        arr(i, 10) = Format(Now(), "yyyy-mm-dd hh:mm")
-
+        timeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(i, 9) = timeStamp
     Next nr
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -498,8 +511,18 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
     'Transfer the array data to the worksheet
     wshzDocNamedRange.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wshzDocNamedRange.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
+    
+    'Result print setup - 2024-07-14 2 07:10
+    If i > 1 Then
+        Dim header1 As String: header1 = "List all Named Ranges"
+        Dim header2 As String: header2 = ""
+        Call Printer_Page_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
+                               header1, _
+                               header2, _
+                               "L")
+    End If
    
-    MsgBox "J'ai trouvé " & r & " named ranges"
+    MsgBox "J'ai trouvé " & i & " named ranges"
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set nr = Nothing
@@ -913,7 +936,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
-        .Header = xlYes
+        .header = xlYes
 '        .MatchCase = False
 '        .Orientation = xlTopToBottom
         .Apply

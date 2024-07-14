@@ -47,7 +47,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Is the selected Cell in column B ?
     If Not Intersect(Target, wshTEC_Analyse.Range("B:B")) Is Nothing Then
-        If Target.Offset(0, 1).value = "" Then
+        If Target.Offset(0, 2).value = "" Then
             Debug.Print Target.Address
             Debug.Print Target.rows(1).OutlineLevel
             Call Build_Hours_Summary(Target.value, Target.row)

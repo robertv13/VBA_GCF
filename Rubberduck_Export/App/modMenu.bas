@@ -555,7 +555,7 @@ Sub Exit_Click() '2024-07-05 @ 06:37
         'Delete temporary Worksheet (Feuil*)
         Dim ws As Worksheet
         For Each ws In ThisWorkbook.Worksheets
-            If InStr(1, ws.codeName, "Feuil") > 0 Then
+            If InStr(1, ws.CodeName, "Feuil") > 0 Then
                 Application.DisplayAlerts = False
                 ws.delete
                 Application.DisplayAlerts = True
