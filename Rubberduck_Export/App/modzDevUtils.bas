@@ -378,14 +378,14 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search As String)
     End If
     
     'Result print setup - 2024-07-14 2 06:24
-    If lastUsedRow > 1 Then
-        Dim header1 As String: header1 = "Search Utility Results"
-        Dim header2 As String: header2 = "Searched characters '" & search & "'"
-        Call Printer_Page_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
-                               header1, _
-                               header2, _
-                               "L")
-    End If
+    lastUsedRow = lastUsedRow + 2
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format(x, "###,##0") & " lignes de code dans l'application ***"
+    Dim header1 As String: header1 = "Search Utility Results"
+    Dim header2 As String: header2 = "Searched characters '" & search & "'"
+    Call Printer_Page_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
+                           header1, _
+                           header2, _
+                           "L")
     
     'Display the final message
     If xr Then
