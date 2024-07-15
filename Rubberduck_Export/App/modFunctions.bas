@@ -113,6 +113,13 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
+Function GetCheckBoxPosition(chkBox As OLEObject) As String
+
+    'Get the cell that contains the top-left corner of the CheckBox
+    GetCheckBoxPosition = chkBox.TopLeftCell.Address
+    
+End Function
+
 Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_GL_Code_From_GL_Description()")
@@ -382,6 +389,36 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     Fn_TEC_Is_Data_Valid = True
+
+End Function
+
+Public Function Fn_Get_Hourly_Rate(ProfID As Integer, dte As Date)
+
+        'Use the Dynamic Named Range
+        Dim rng As Range
+        On Error Resume Next
+        Set rng = ThisWorkbook.Names("dnrTauxHoraire").RefersToRange
+        On Error GoTo 0
+
+        'Check if the range is set correctly
+        If Not rng Is Nothing Then
+            Dim rowRange As Range
+            Dim i As Long
+            'Loop through each row in the range
+            For i = rng.rows.count To 1 Step -1
+                'Set the row range
+                Set rowRange = rng.rows(i)
+                If rowRange.Cells(1, 1).value = ProfID Then
+                    If CDate(dte) >= CDate(rowRange.Cells(1, 2).value) Then
+                        Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).value
+                        Exit Function
+                    End If
+                End If
+                'Loop through each cell in the row
+            Next i
+        Else
+            MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
+        End If
 
 End Function
 

@@ -158,20 +158,23 @@ Sub FAC_Brouillon_Date_Change(d As String)
     Dim lastUsedProfInSummary As Integer
     lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).row
     
+    Dim dateTauxHoraire As Date
+    dateTauxHoraire = d
     Dim i As Integer
     For i = 25 To lastUsedProfInSummary
         Dim ProfID As Integer
         ProfID = wshFAC_Brouillon.Range("W" & i).value
         Dim hRate As Currency
-        hRate = 0
-        Dim j As Integer
-        For j = 19 To 26
-            If wshAdmin.Range("D" & j).value = wshFAC_Brouillon.Range("W" & i).value Then
-                If CDate(d) >= CDate(wshAdmin.Range("E" & j).value) Then
-                    hRate = wshAdmin.Range("F" & j).value
-                End If
-            End If
-        Next j
+        hRate = Fn_Get_Hourly_Rate(ProfID, dateTauxHoraire)
+        
+'        Dim j As Integer
+'        For j = 19 To 26
+'            If wshAdmin.Range("D" & j).value = wshFAC_Brouillon.Range("W" & i).value Then
+'                If CDate(d) >= CDate(wshAdmin.Range("E" & j).value) Then
+'                    hRate = wshAdmin.Range("F" & j).value
+'                End If
+'            End If
+'        Next j
         wshFAC_Brouillon.Range("T" & i).value = hRate
     Next i
     
@@ -518,7 +521,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("C7:C" & row)
     
     Dim cell As Range
-    Dim cbx As CheckBox
+    Dim cbx As checkBox
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
     If Cells(cell.row, 8).value = False Then 'IsInvoiced = False
@@ -717,4 +720,12 @@ Sub Load_Invoice_Template(t As String)
         
     Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
+End Sub
+
+Sub test_fn_get_hourly_rate()
+
+    Dim hr As Currency
+    hr = Fn_Get_Hourly_Rate(2, "2024-08-01")
+    Debug.Print hr
+
 End Sub

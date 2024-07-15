@@ -282,6 +282,15 @@ Private Sub Process_Change(ByVal Target As Range)
         Next cellNet
     End If
     
+    'Cleanup - 2024-07-14 @ 08:26
+    Set amountRange = Nothing
+    Set cell = Nothing
+    Set cellNet = Nothing
+    Set GLRange = Nothing
+    Set netAmountRange = Nothing
+    Set startCell = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 'Example subroutine to suggest an amount and trigger processing

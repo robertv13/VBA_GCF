@@ -1,28 +1,6 @@
 Attribute VB_Name = "Module3"
 Option Explicit
 
-Sub Macro1()
-Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro1 Macro
-'
-
-'
-    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True
-    Range("O3").Select
-End Sub
-Sub Macro3()
-Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro3 Macro
-'
-
-'
-    ActiveSheet.Unprotect
-    ActiveWindow.SmallScroll Down:=0
-    Range("L11").Select
-    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True
-End Sub
 Sub Macro4()
 Attribute Macro4.VB_ProcData.VB_Invoke_Func = " \n14"
 '
@@ -30,5 +8,35 @@ Attribute Macro4.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    ActiveSheet.Unprotect
+    ActiveWindow.Panes(1).Activate
+    Range("D6").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .Color = -16776961
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = False
+    Selection.Font.Bold = True
+    Range("H6").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .Color = -16776961
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = True
+    Selection.Font.Size = 12
+    Range("D6").Select
+    Selection.Font.Size = 12
 End Sub

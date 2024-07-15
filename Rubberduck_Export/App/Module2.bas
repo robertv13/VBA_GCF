@@ -1,6 +1,22 @@
 Attribute VB_Name = "Module2"
 Option Explicit
 
+Sub Macro1()
+Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro1 Macro
+'
+
+'
+    Range("J8:M12").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent1
+        .TintAndShade = 0.799981688894314
+        .PatternTintAndShade = 0
+    End With
+End Sub
 Sub Macro2()
 Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
 '
@@ -8,14 +24,17 @@ Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Range("M5:S21").Select
-    Sheets("Menu").Select
-    Sheets("Doc_Formules").Visible = True
-    ActiveWindow.SmallScroll Down:=140
-    Sheets("Menu").Select
-    Sheets("Doc_ConditionalFormatting").Visible = True
-    Range("E2").Select
-    Application.CutCopyMode = False
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent1
+        .TintAndShade = -0.249977111117893
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = 0
+    End With
 End Sub
 Sub Macro3()
 Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
@@ -24,14 +43,17 @@ Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Sheets("GL_BV").Select
-    Selection.FormatConditions.add Type:=xlExpression, Formula1:= _
-        "=ET($M5<>"""";MOD(LIGNE();3)=1)"
-    Selection.FormatConditions(Selection.FormatConditions.count).SetFirstPriority
-    With Selection.FormatConditions(1).Interior
+    Range("B3,G3").Select
+    Range("G3").Activate
+    With Selection.Interior
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent1
-        .TintAndShade = 0.799981688894314
+        .TintAndShade = -0.249977111117893
+        .PatternTintAndShade = 0
     End With
-    Selection.FormatConditions(1).StopIfTrue = False
+    With Selection.Font
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = 0
+    End With
 End Sub
