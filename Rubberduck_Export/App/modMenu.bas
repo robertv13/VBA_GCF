@@ -210,6 +210,19 @@ Sub SlideIn_TEC_TDB()
 
 End Sub
 
+Sub SlideIn_TEC_Analyse()
+    
+'    With wshMenuTEC.Shapes("btnTEC_TDB")
+'        For width = maxWidth To 32 Step -1
+'            .Height = width
+'            .Left = width - 32
+'            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = ""
+'    End With
+
+End Sub
+
 Sub SlideOut_PrepFact()
 
     With wshMenuFAC.Shapes("btnPrepFact")

@@ -89,7 +89,9 @@ Sub Printer_Page_Setup(ws As Worksheet, _
         .FirstPage.RightFooter.text = ""
     End With
     
+    On Error Resume Next
     Application.PrintCommunication = True
+    On Error GoTo 0
 
 End Sub
 

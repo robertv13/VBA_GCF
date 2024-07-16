@@ -266,6 +266,63 @@ Sub Build_Hours_Summary(client As String, r As Long)
     
 End Sub
     
+Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record to MASTER.xlsx file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Projet_Détails"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Initialize recordset
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    
+    'Read all line from TEC_Analyse
+    Dim clientID As Long
+    clientID = Fn_GetID_From_Client_Name(wshTEC_Analyse.Range("C" & fr).value)
+    Dim dateTEC As String, timeStamp As String
+    Dim l As Long
+    For l = fr To lr
+        rs.AddNew
+            'Add fields to the recordset before updating it
+            rs.Fields("ClientName").value = wshTEC_Analyse.Range("C" & l).value
+            rs.Fields("ClientID").value = clientID
+            rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
+            rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
+            dateTEC = Format(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
+            rs.Fields("Date").value = dateTEC
+            rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
+            rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
+            timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("TimeStamp").value = timeStamp
+        rs.update
+    Next l
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call Output_Timer_Results("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
+
+End Sub
+
 Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
