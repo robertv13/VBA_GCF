@@ -78,7 +78,7 @@ Sub TEC_Sort_Group_And_Subtotal()
 
     'Group the data to show subtotals in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
-    wsDest.Outline.ShowLevels RowLevels:=2
+    wsDest.Outline.ShowLevels ROwLevels:=2
     
     'Add a formula to sum the billed amounts
     wshTEC_Analyse.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
@@ -266,7 +266,7 @@ Sub Build_Hours_Summary(client As String, r As Long)
     
 End Sub
     
-Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record to MASTER.xlsx file
+Sub FAC_Projet_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long) 'Write a record to MASTER.xlsx file
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()")
     
@@ -275,7 +275,7 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                           "GCF_BD_Sortie.xlsx"
-    destinationTab = "FAC_Projet_Détails"
+    destinationTab = "FAC_Projets_Détails"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -287,8 +287,6 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record 
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     'Read all line from TEC_Analyse
-    Dim clientID As Long
-    clientID = Fn_GetID_From_Client_Name(wshTEC_Analyse.Range("C" & fr).value)
     Dim dateTEC As String, timeStamp As String
     Dim l As Long
     For l = fr To lr
@@ -301,6 +299,7 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record 
             dateTEC = Format(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
             rs.Fields("Date").value = dateTEC
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
+            rs.Fields("estDétruite").value = False
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
             timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("TimeStamp").value = timeStamp
@@ -320,6 +319,40 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(fr As Long, lr As Long) 'Write a record 
     Set rs = Nothing
     
     Call Output_Timer_Results("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
+
+End Sub
+
+Sub FAC_Projet_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As Long) 'Write records locally
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'What is the last used row in FAC_Projets_Détails?
+    Dim lastUsedRow As Long, rn As Long
+    lastUsedRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    rn = lastUsedRow + 1
+    
+    Dim dateTEC As String, timeStamp As String
+    Dim i As Integer
+    For i = fr To lr
+        wshFAC_Projets_Détails.Range("A" & rn).value = wshTEC_Analyse.Range("C" & i).value
+        wshFAC_Projets_Détails.Range("B" & rn).value = clientID
+        wshFAC_Projets_Détails.Range("C" & rn).value = wshTEC_Analyse.Range("A" & i).value
+        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("B" & i).value
+        dateTEC = Format(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
+        wshFAC_Projets_Détails.Range("E" & rn).value = dateTEC
+        wshFAC_Projets_Détails.Range("F" & rn).value = wshTEC_Analyse.Range("F" & i).value
+        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("H" & i).value
+        wshFAC_Projets_Détails.Range("H" & rn).value = False
+        timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshFAC_Projets_Détails.Range("I" & rn).value = timeStamp
+        rn = rn + 1
+    Next i
+    
+    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
+
+    Application.ScreenUpdating = True
 
 End Sub
 
@@ -369,6 +402,26 @@ Sub Delete_CheckBox()
     Next i
 End Sub
 
+Sub Groups_SubTotals_Collapse_A_Client(r As Long)
+
+    'Set the worksheet you want to work on
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+
+    'Loop through each row starting at row r
+    Dim saveR As Long
+    saveR = r
+    Do While wshTEC_Analyse.Range("A" & r).value <> ""
+        r = r + 1
+    Loop
+
+    r = r - 1
+    ws.rows.ClearOutline
+    
+    ws.rows(saveR & ":" & r).Group
+    ws.rows(saveR & ":" & r).Hidden = True
+    
+End Sub
+
 'Sub ExpandAllGroups()
 '
 '    Dim ws As Worksheet
@@ -382,23 +435,6 @@ End Sub
 '        ' If the row is part of a group and can be expanded
 '        If r.OutlineLevel > 1 Then
 '            r.ShowDetail = True
-'        End If
-'    Next r
-'End Sub
-'
-'Sub Groups_Collapse_All()
-'
-'    'Set the worksheet you want to work on
-'    Dim ws As Worksheet: Set ws = wshTEC_Analyse
-'
-'    'Loop through each row in the used range of the worksheet
-'    Dim r As Range
-'    Debug.Print ws.usedRange.rows.count
-'    For Each r In ws.usedRange.rows
-'        'If the row is part of a group and can be collapsed
-'        If r.OutlineLevel = 3 Then
-'            Debug.Print r.Address
-'            r.ShowDetail = False
 '        End If
 '    Next r
 'End Sub

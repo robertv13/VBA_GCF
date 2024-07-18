@@ -33,6 +33,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 '        .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
+    ActiveWindow.Panes(2).Activate
+    ws.Cells(7, 3).Select
+    ws.Outline.ShowLevels ROwLevels:=2
     
     Application.EnableEvents = True
     
@@ -74,7 +77,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
 End Sub
 
-Private Sub CheckBox1_Click()
+Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
     'Reference your checkbox by name
     Dim chkBox As OLEObject
@@ -99,14 +102,41 @@ Private Sub CheckBox1_Click()
     
     ' Additional code based on the checkbox state
     If chkBox.Object.value = True Then
-        wshTEC_Analyse.Range("D" & totalRow).value = wshTEC_Analyse.Range("N" & chkboxRow).value
         
-        Dim firstRow As Long: firstRow = totalRow + 1
-        Dim lastRow As Long
-        lastRow = wshTEC_Analyse.Range("B99999").End(xlUp).row
+        'Is there a billing project that already exist for this customer ?
+        Dim cell As String
+        cell = Verify_And_Delete_Rows_If_Value_Is_Found(wshTEC_Analyse.Range("C" & totalRow + 1).value)
         
-        Call FAC_Projet_Détails_Add_Record_To_DB(firstRow, lastRow)
-'        Call FAC_Projet_Détails_Add_Record_Locally(firstRow, lastRow)
+        Debug.Print cell
+        
+        Select Case cell
+            Case "REMPLACER"
+                wshTEC_Analyse.Range("D" & totalRow).value = wshTEC_Analyse.Range("N" & chkboxRow).value
+                
+                Dim firstRow As Long: firstRow = totalRow + 1
+                Dim lastRow As Long, r As Long
+                r = firstRow
+                Do While wshTEC_Analyse.Range("A" & r).value <> ""
+                    lastRow = r
+                    r = r + 1
+                Loop
+                
+                Dim clientID As Long
+                clientID = Fn_GetID_From_Client_Name(wshTEC_Analyse.Range("C" & firstRow).value)
+                
+                Call FAC_Projet_Détails_Add_Record_To_DB(clientID, firstRow, lastRow)
+                Call FAC_Projet_Détails_Add_Record_Locally(clientID, firstRow, lastRow)
+                
+            Case "SUPPRIMER"
+                wshTEC_Analyse.Range("D" & totalRow).value = 0
+'                firstRow = totalRow + 1
+'                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                
+            Case "RIEN_CHANGER"
+'                firstRow = totalRow + 1
+'                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+            
+        End Select
     Else
         wshTEC_Analyse.Range("D" & totalRow).value = 0
         'Perform actions when checkbox is unchecked

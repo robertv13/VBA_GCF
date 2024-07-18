@@ -113,6 +113,159 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
+Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant) As String '2024-07-18 @ 16:32
+    
+    'Define the worksheet
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    
+    'Define the range to search in (Column 1)
+    Dim searchRange As Range: Set searchRange = ws.columns(1)
+    
+    'Search for the first occurrence of the value
+    Dim cell As Range
+    Set cell = searchRange.Find(What:=valueToFind, _
+                                LookIn:=xlValues, _
+                                LookAt:=xlWhole)
+    
+    'Check if the value is found
+    Dim firstAddress As String
+    Dim rowsToDelete As Collection: Set rowsToDelete = New Collection
+
+    If Not cell Is Nothing Then
+        firstAddress = cell.Address
+        Verify_And_Delete_Rows_If_Value_Is_Found = firstAddress
+        
+        'Loop to collect all rows with the value
+        Do
+            rowsToDelete.add cell.row
+            Set cell = searchRange.FindNext(cell)
+        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+        
+        'Confirm with the user
+        Dim reponse As Long
+        reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
+                  vbNewLine & vbNewLine & "Désirez-vous..." & vbNewLine & vbNewLine & _
+                  "   1) REMPLACER cette demande (OUI)" & vbNewLine & vbNewLine & _
+                  "   2) NE RIEN CHANGER à la demande (NON)" & vbNewLine & vbNewLine & _
+                  "   3) ANNULER la demande (ANNULER)", vbYesNoCancel, "Confirmation")
+        Select Case reponse
+            Case vbYes, vbCancel
+                If reponse = vbYes Then
+                    Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
+                End If
+                If reponse = vbCancel Then
+                    Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
+                End If
+                
+                'Delete all collected rows from the current workbook
+                Dim i As Long
+                For i = rowsToDelete.count To 1 Step -1
+                    ws.rows(rowsToDelete(i)).delete
+                Next i
+                'Update rows from MASTER file
+                Dim destinationFileName As String, destinationTab As String
+                destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                                      "GCF_BD_Sortie.xlsx"
+                destinationTab = "FAC_Projets_Détails"
+                Dim columnName As String
+                columnName = "ClientName"
+                Call Soft_Delete_If_Value_Is_Found_In_Master(destinationFileName, _
+                                                             destinationTab, _
+                                                             columnName, _
+                                                             valueToFind)
+            Case vbNo
+                Verify_And_Delete_Rows_If_Value_Is_Found = "RIEN_CHANGER"
+        End Select
+    Else
+        Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
+    End If
+End Function
+
+'Function Delete_Rows_If_Value_is_Found_Master(filePath As String, _
+'                                              sheetName As String, _
+'                                              valueToFind As Variant) As String '2024-07-18 @ 16:32
+'
+'    'Create a new ADODB connection
+'    Dim cn As Object
+'    Set cn = CreateObject("ADODB.Connection")
+'
+'    'Open the connection to the closed workbook
+'    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+'
+'    'Define the SQL query to check if the value exists in column 1
+'    Dim strSQL As String
+'    strSQL = "SELECT * FROM [" & sheetName & "$] WHERE [F1] = '" & valueToFind & "'"
+'
+'    'Create a new recordset
+'    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+'    rs.Open strSQL, cn, 1, 3
+'
+'    'Check if any records were found
+'    Dim found As Boolean
+'    found = Not rs.EOF
+'
+'    'If found, delete the rows
+'    If found Then
+'        ' Define the SQL query to delete rows where the value is found in column 1
+'        strSQL = "DELETE FROM [" & sheetName & "$] WHERE [F1] = '" & valueToFind & "'"
+'        cn.Execute strSQL
+'    End If
+'
+'    'Close the recordset and connection
+'    rs.Close
+'    cn.Close
+'
+'    'Cleanup - 2024-07-18 @ 16:39
+'    Set rs = Nothing
+'    Set cn = Nothing
+'
+'    'Return whether the value was found
+'    Verify_And_Delete_Rows_If_Value_is_Found_Master = found
+'
+'End Function
+'
+Sub Soft_Delete_If_Value_Is_Found_In_Master(filePath As String, _
+                                            sheetName As String, _
+                                            columnName As String, _
+                                            valueToFind As Variant) '2024-07-18 @ 18:58
+
+    'Create a new ADODB connection
+    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+    'Open the connection to the closed workbook
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    
+    'Update the rows to mark as deleted (soft delete)
+    Dim strSQL As String
+    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    cn.Execute strSQL
+    
+    'Close the connection
+    cn.Close
+    Set cn = Nothing
+    
+End Sub
+
+'Function Verify_Client_Already_Exists(valueToFind As Variant) As String
+'
+'    'Define the worksheet
+'    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+'
+'    'Define the range to search in (Column 1)
+'    Dim searchRange As Range: Set searchRange = ws.columns(1)
+'
+'    'Search for the value
+'    Dim cell As Range
+'    Set cell = searchRange.Find(What:=valueToFind, LookIn:=xlValues, LookAt:=xlWhole)
+'
+'    'Check if the value is found and return the address
+'    If Not cell Is Nothing Then
+'        Verify_Client_Already_Exists = cell.Address
+'    Else
+'        Verify_Client_Already_Exists = ""
+'    End If
+'
+'End Function
+
 Function GetCheckBoxPosition(chkBox As OLEObject) As String
 
     'Get the cell that contains the top-left corner of the CheckBox
