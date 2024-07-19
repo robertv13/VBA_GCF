@@ -85,17 +85,17 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
         Next payItemRow
         
         'Prepare G/L posting
-        Dim noEnc As String, nomCLient As String, typeEnc As String, descEnc As String
+        Dim noEnc As String, NomClient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
         noEnc = wshENC_Saisie.Range("B5").value
         dateEnc = wshENC_Saisie.Range("J3").value
-        nomCLient = wshENC_Saisie.Range("F3").value
+        NomClient = wshENC_Saisie.Range("F3").value
         typeEnc = wshENC_Saisie.Range("F5").value
         montantEnc = wshENC_Saisie.Range("J5").value
         descEnc = wshENC_Saisie.Range("F7").value
 
-        Call Encaissement_GL_Posting(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
+        Call Encaissement_GL_Posting(noEnc, dateEnc, NomClient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
         
         Call Encaissement_Import_All   'Bring back locally three worksheets
         

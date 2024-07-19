@@ -462,7 +462,7 @@ Sub Data_Validations_List_All() '2024-07-15 @ 06:52
     Dim dvType As String
     Dim ws As Worksheet
     Dim cell As Range
-    Dim timeStamp As String
+    Dim TimeStamp As String
     Dim x As Long: x = 1
     Dim xAnalyzed As Long
     For Each ws In ThisWorkbook.Worksheets
@@ -502,8 +502,8 @@ Sub Data_Validations_List_All() '2024-07-15 @ 06:52
                 arr(x, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
-                timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-                arr(x, 8) = timeStamp
+                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                arr(x, 8) = TimeStamp
 
                 'Increment the output row counter
                 x = x + 1
@@ -761,7 +761,7 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
     ReDim arr(1 To 300, 1 To 9)
     Dim i As Long
     Dim nr As name
-    Dim timeStamp As String
+    Dim TimeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
         arr(i, 1) = UCase(nr.name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
@@ -787,8 +787,8 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
         If nr.Visible = False Then
             arr(i, 8) = nr.Visible
         End If
-        timeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
-        arr(i, 9) = timeStamp
+        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(i, 9) = TimeStamp
     Next nr
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -894,7 +894,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
-    Dim timeStamp As String
+    Dim TimeStamp As String
     Dim x As Long, xr As Long
     For x = LBound(arr, 1) To UBound(arr, 1)
         trimmedLineOfCode = arr(x, 4)
@@ -945,8 +945,8 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(x, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-                arrResult(xr, 7) = timeStamp
+                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                arrResult(xr, 7) = TimeStamp
                 arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If

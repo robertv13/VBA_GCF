@@ -17,7 +17,7 @@ Function Fn_GetID_From_Initials(i As String)
     
 End Function
 
-Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
+Function Fn_GetID_From_Client_Name(NomClient As String) '2024-02-14 @ 06:07
 
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -33,7 +33,7 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     
     'Using XLOOKUP to find the result directly
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(nomCLient, _
+    result = Application.WorksheetFunction.XLookup(NomClient, _
         dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
     
@@ -113,13 +113,13 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant) As String '2024-07-18 @ 16:32
+Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
     
     'Define the worksheet
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     
     'Define the range to search in (Column 1)
-    Dim searchRange As Range: Set searchRange = ws.columns(1)
+    Dim searchRange As Range: Set searchRange = ws.columns(2)
     
     'Search for the first occurrence of the value
     Dim cell As Range
@@ -144,10 +144,11 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant) As Str
         'Confirm with the user
         Dim reponse As Long
         reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
+                  vbNewLine & "au montant de " & Format(hono, "#,##0.00$") & _
                   vbNewLine & vbNewLine & "Désirez-vous..." & vbNewLine & vbNewLine & _
-                  "   1) REMPLACER cette demande (OUI)" & vbNewLine & vbNewLine & _
-                  "   2) NE RIEN CHANGER à la demande (NON)" & vbNewLine & vbNewLine & _
-                  "   3) ANNULER la demande (ANNULER)", vbYesNoCancel, "Confirmation")
+                  "   1) (OUI) REMPLACER cette demande" & vbNewLine & vbNewLine & _
+                  "   2) (NON) pour NE RIEN CHANGER à la demande existante" & vbNewLine & vbNewLine & _
+                  "   3) (ANNULER) pour ANNULER la demande", vbYesNoCancel, "Confirmation pour un projet existant")
         Select Case reponse
             Case vbYes, vbCancel
                 If reponse = vbYes Then
@@ -168,7 +169,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant) As Str
                                       "GCF_BD_Sortie.xlsx"
                 destinationTab = "FAC_Projets_Détails"
                 Dim columnName As String
-                columnName = "ClientName"
+                columnName = "NomClient"
                 Call Soft_Delete_If_Value_Is_Found_In_Master(destinationFileName, _
                                                              destinationTab, _
                                                              columnName, _
@@ -181,49 +182,6 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant) As Str
     End If
 End Function
 
-'Function Delete_Rows_If_Value_is_Found_Master(filePath As String, _
-'                                              sheetName As String, _
-'                                              valueToFind As Variant) As String '2024-07-18 @ 16:32
-'
-'    'Create a new ADODB connection
-'    Dim cn As Object
-'    Set cn = CreateObject("ADODB.Connection")
-'
-'    'Open the connection to the closed workbook
-'    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
-'
-'    'Define the SQL query to check if the value exists in column 1
-'    Dim strSQL As String
-'    strSQL = "SELECT * FROM [" & sheetName & "$] WHERE [F1] = '" & valueToFind & "'"
-'
-'    'Create a new recordset
-'    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-'    rs.Open strSQL, cn, 1, 3
-'
-'    'Check if any records were found
-'    Dim found As Boolean
-'    found = Not rs.EOF
-'
-'    'If found, delete the rows
-'    If found Then
-'        ' Define the SQL query to delete rows where the value is found in column 1
-'        strSQL = "DELETE FROM [" & sheetName & "$] WHERE [F1] = '" & valueToFind & "'"
-'        cn.Execute strSQL
-'    End If
-'
-'    'Close the recordset and connection
-'    rs.Close
-'    cn.Close
-'
-'    'Cleanup - 2024-07-18 @ 16:39
-'    Set rs = Nothing
-'    Set cn = Nothing
-'
-'    'Return whether the value was found
-'    Verify_And_Delete_Rows_If_Value_is_Found_Master = found
-'
-'End Function
-'
 Sub Soft_Delete_If_Value_Is_Found_In_Master(filePath As String, _
                                             sheetName As String, _
                                             columnName As String, _

@@ -9,14 +9,14 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = False
     
-    Dim clientName As String: clientName = ws.Range("F4").value
+    Dim ClientName As String: ClientName = ws.Range("F4").value
     Dim dateFrom As Date: dateFrom = ws.Range("P6").value
     Dim dateTo As Date: dateTo = ws.Range("R6").value
     
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 2)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, ClientName, 2)
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit

@@ -266,7 +266,7 @@ Sub Build_Hours_Summary(client As String, r As Long)
     
 End Sub
     
-Sub FAC_Projet_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long) 'Write a record to MASTER.xlsx file
+Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Long, ByRef ProjetID As Long) 'Write a record to MASTER.xlsx file
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()")
     
@@ -283,17 +283,37 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long
 
     'Initialize recordset
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    
+    'First SQL - SQL query to find the maximum value in the first column
+    Dim strSQL As String
+    strSQL = "SELECT MAX(ProjetID) AS MaxValue FROM [" & destinationTab & "$]"
+    rs.Open strSQL, conn
 
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    'Get the maximum value
+    Dim MaxValue As Long
+    If IsNull(rs.Fields("MaxValue").value) Then
+        'Handle empty table (assign a default value, e.g., 1)
+        ProjetID = 1
+    Else
+        ProjetID = rs.Fields("MaxValue").value + 1
+    End If
+    
+    'Close the previous recordset (no longer needed)
+    rs.Close
+    
+    'Second SQL - SQL query to add the new records
+    strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE 1=0"
+    rs.Open strSQL, conn, 2, 3
     
     'Read all line from TEC_Analyse
-    Dim dateTEC As String, timeStamp As String
+    Dim dateTEC As String, TimeStamp As String
     Dim l As Long
     For l = fr To lr
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("ClientName").value = wshTEC_Analyse.Range("C" & l).value
-            rs.Fields("ClientID").value = clientID
+            rs.Fields("ProjetID").value = ProjetID
+            rs.Fields("NomClient").value = wshTEC_Analyse.Range("C" & l).value
+            rs.Fields("ClientID").value = ClientID
             rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
             rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
             dateTEC = Format(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
@@ -301,8 +321,8 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
             rs.Fields("estDétruite").value = False
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
-            timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-            rs.Fields("TimeStamp").value = timeStamp
+            TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("TimeStamp").value = TimeStamp
         rs.update
     Next l
     
@@ -322,7 +342,7 @@ Sub FAC_Projet_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long
 
 End Sub
 
-Sub FAC_Projet_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As Long) 'Write records locally
+Sub FAC_Projets_Détails_Add_Record_Locally(ClientID As Long, fr As Long, lr As Long, ProjetID As Long) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
     
@@ -333,24 +353,148 @@ Sub FAC_Projet_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As Lo
     lastUsedRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
     rn = lastUsedRow + 1
     
-    Dim dateTEC As String, timeStamp As String
+    Dim dateTEC As String, TimeStamp As String
     Dim i As Integer
     For i = fr To lr
-        wshFAC_Projets_Détails.Range("A" & rn).value = wshTEC_Analyse.Range("C" & i).value
-        wshFAC_Projets_Détails.Range("B" & rn).value = clientID
-        wshFAC_Projets_Détails.Range("C" & rn).value = wshTEC_Analyse.Range("A" & i).value
-        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("B" & i).value
+        wshFAC_Projets_Détails.Range("A" & rn).value = ProjetID
+        wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
+        wshFAC_Projets_Détails.Range("C" & rn).value = ClientID
+        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
+        wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
         dateTEC = Format(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
-        wshFAC_Projets_Détails.Range("E" & rn).value = dateTEC
-        wshFAC_Projets_Détails.Range("F" & rn).value = wshTEC_Analyse.Range("F" & i).value
-        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("H" & i).value
-        wshFAC_Projets_Détails.Range("H" & rn).value = False
-        timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-        wshFAC_Projets_Détails.Range("I" & rn).value = timeStamp
+        wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
+        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
+        wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
+        wshFAC_Projets_Détails.Range("I" & rn).value = False
+        TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
         rn = rn + 1
     Next i
     
     Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
+
+    Application.ScreenUpdating = True
+
+End Sub
+
+Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
+                                        NomClient As String, _
+                                        ClientID As Long, _
+                                        dte As String, _
+                                        hono As Double, _
+                                        ByRef arr As Variant) 'Write a record to MASTER.xlsx file
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_ANalyse:FAC_Projet_Entête_Add_Record_To_DB()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Projets_Entête"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    
+    Dim strSQL As String
+    strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE 1=0"
+    
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    rs.Open strSQL, conn, 2, 3
+    
+    Dim TimeStamp As String
+    Dim c As Integer
+    Dim l As Long
+    rs.AddNew
+        'Add fields to the recordset before updating it
+        rs.Fields("ProjetID").value = ProjetID
+        rs.Fields("NomClient").value = NomClient
+        rs.Fields("ClientID").value = ClientID
+        rs.Fields("Date").value = dte
+        rs.Fields("HonoTotal").value = hono
+        For c = 1 To UBound(arr, 1)
+            rs.Fields("Prof" & c).value = arr(c, 1)
+            rs.Fields("Hres" & c).value = arr(c, 2)
+            rs.Fields("TauxH" & c).value = arr(c, 3)
+            rs.Fields("Hono" & c).value = arr(c, 4)
+        Next c
+        rs.Fields("estDétruite").value = False
+        TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        rs.Fields("TimeStamp").value = TimeStamp
+    rs.update
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call Output_Timer_Results("modTEC_ANalyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
+
+End Sub
+
+Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String, ClientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'What is the last used row in FAC_Projets_Détails?
+    Dim lastUsedRow As Long, rn As Long
+    lastUsedRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    rn = lastUsedRow + 1
+    
+    Dim dateTEC As String, TimeStamp As String
+    wshFAC_Projets_Entête.Range("A" & rn).value = ProjetID
+    wshFAC_Projets_Entête.Range("B" & rn).value = NomClient
+    wshFAC_Projets_Entête.Range("C" & rn).value = ClientID
+    wshFAC_Projets_Entête.Range("D" & rn).value = dte
+    wshFAC_Projets_Entête.Range("E" & rn).value = hono
+    'Assign values from the array to the worksheet using .Cells
+    Dim i As Integer, j As Integer
+    For i = 1 To UBound(arr, 1)
+        For j = 1 To UBound(arr, 2)
+            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
+        Next j
+    Next i
+    
+'    wshFAC_Projets_Entête.Range("F" & rn).value = arr(1, 1)
+'    wshFAC_Projets_Entête.Range("G" & rn).value = arr(1, 2)
+'    wshFAC_Projets_Entête.Range("H" & rn).value = arr(1, 3)
+'    wshFAC_Projets_Entête.Range("I" & rn).value = arr(1, 4)
+'
+'    wshFAC_Projets_Entête.Range("J" & rn).value = arr(2, 1)
+'    wshFAC_Projets_Entête.Range("K" & rn).value = arr(2, 2)
+'    wshFAC_Projets_Entête.Range("L" & rn).value = arr(2, 3)
+'    wshFAC_Projets_Entête.Range("M" & rn).value = arr(2, 4)
+'
+'    wshFAC_Projets_Entête.Range("N" & rn).value = arr(3, 1)
+'    wshFAC_Projets_Entête.Range("O" & rn).value = arr(3, 2)
+'    wshFAC_Projets_Entête.Range("P" & rn).value = arr(3, 3)
+'    wshFAC_Projets_Entête.Range("Q" & rn).value = arr(3, 4)
+'
+'    wshFAC_Projets_Entête.Range("R" & rn).value = arr(4, 1)
+'    wshFAC_Projets_Entête.Range("S" & rn).value = arr(4, 2)
+'    wshFAC_Projets_Entête.Range("T" & rn).value = arr(4, 3)
+'    wshFAC_Projets_Entête.Range("U" & rn).value = arr(4, 4)
+'
+'    wshFAC_Projets_Entête.Range("V" & rn).value = arr(5, 1)
+'    wshFAC_Projets_Entête.Range("W" & rn).value = arr(5, 2)
+'    wshFAC_Projets_Entête.Range("X" & rn).value = arr(5, 3)
+'    wshFAC_Projets_Entête.Range("Y" & rn).value = arr(5, 4)
+    
+    wshFAC_Projets_Entête.Range("Z" & rn).value = False
+    TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+    wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
+    
+    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -422,25 +566,3 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     
 End Sub
 
-'Sub ExpandAllGroups()
-'
-'    Dim ws As Worksheet
-'    Dim r As Range
-'
-'    ' Set the worksheet you want to work on
-'    Set ws = ThisWorkbook.Sheets("Sheet1")
-'
-'    ' Loop through each row in the used range of the worksheet
-'    For Each r In ws.usedRange.rows
-'        ' If the row is part of a group and can be expanded
-'        If r.OutlineLevel > 1 Then
-'            r.ShowDetail = True
-'        End If
-'    Next r
-'End Sub
-'
-'Sub Fix_Format(rng As Range, value As Variant)
-'
-'    Debug.Print rng.Address & " - " & value
-'
-'End Sub

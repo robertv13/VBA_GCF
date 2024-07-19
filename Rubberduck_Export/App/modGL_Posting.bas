@@ -40,7 +40,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
-    Dim timeStamp As String
+    Dim TimeStamp As String
     Dim i As Integer, j As Integer
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
@@ -58,8 +58,8 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                timeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-                rs.Fields("TimeStamp") = timeStamp
+                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                rs.Fields("TimeStamp") = TimeStamp
                 Debug.Print "GL_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             rs.update
 Nothing_to_Post:

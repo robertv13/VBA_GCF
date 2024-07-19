@@ -100,14 +100,13 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Dim totalRow As Long
     totalRow = i
     
-    ' Additional code based on the checkbox state
+    'Additional code based on the checkbox state
     If chkBox.Object.value = True Then
         
         'Is there a billing project that already exist for this customer ?
         Dim cell As String
-        cell = Verify_And_Delete_Rows_If_Value_Is_Found(wshTEC_Analyse.Range("C" & totalRow + 1).value)
-        
-        Debug.Print cell
+        cell = Verify_And_Delete_Rows_If_Value_Is_Found(wshTEC_Analyse.Range("C" & totalRow + 1).value, _
+                                                        wshTEC_Analyse.Range("D" & totalRow).value)
         
         Select Case cell
             Case "REMPLACER"
@@ -121,11 +120,36 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                     r = r + 1
                 Loop
                 
-                Dim clientID As Long
-                clientID = Fn_GetID_From_Client_Name(wshTEC_Analyse.Range("C" & firstRow).value)
+                Dim NomClient As String
+                Dim ClientID As Long
+                NomClient = wshTEC_Analyse.Range("C" & firstRow).value
+                ClientID = Fn_GetID_From_Client_Name(NomClient)
                 
-                Call FAC_Projet_Détails_Add_Record_To_DB(clientID, firstRow, lastRow)
-                Call FAC_Projet_Détails_Add_Record_Locally(clientID, firstRow, lastRow)
+                Dim ProjetID As Long 'ProjetID is establised by the next procedure
+                Call FAC_Projets_Détails_Add_Record_To_DB(ClientID, firstRow, lastRow, ProjetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(ClientID, firstRow, lastRow, ProjetID)
+                
+                r = firstRow
+                Do While wshTEC_Analyse.Range("K" & r).value <> ""
+                    r = r + 1
+                Loop
+                r = r - 1 'Last line of summary, excluding totals
+                
+                Dim arr() As Variant
+                ReDim arr(1 To (r - firstRow + 1), 1 To 4)
+                Dim rngSummary As Range: Set rngSummary = wshTEC_Analyse.Range("K" & firstRow & ":N" & r)
+                arr = rngSummary.value
+                
+                'Set the date
+                Dim dateProjet As String
+                dateProjet = Format(Now(), "dd/mm/yyyy")
+                
+                'Determine the summary total
+                Dim hono As Double
+                hono = wshTEC_Analyse.Range("N" & r + 1).value
+                
+                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, NomClient, ClientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, NomClient, ClientID, dateProjet, hono, arr)
                 
             Case "SUPPRIMER"
                 wshTEC_Analyse.Range("D" & totalRow).value = 0
