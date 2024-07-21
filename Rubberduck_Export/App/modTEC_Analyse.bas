@@ -505,7 +505,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
-                                        NomClient As String, _
+                                        nomClient As String, _
                                         clientID As Long, _
                                         dte As String, _
                                         hono As Double, _
@@ -536,7 +536,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
     rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("ProjetID").value = ProjetID
-        rs.Fields("NomClient").value = NomClient
+        rs.Fields("NomClient").value = nomClient
         rs.Fields("ClientID").value = clientID
         rs.Fields("Date").value = dte
         rs.Fields("HonoTotal").value = hono
@@ -570,7 +570,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String, clientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, nomClient As String, clientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
     
@@ -583,7 +583,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String,
     
     Dim dateTEC As String, TimeStamp As String
     wshFAC_Projets_Entête.Range("A" & rn).value = ProjetID
-    wshFAC_Projets_Entête.Range("B" & rn).value = NomClient
+    wshFAC_Projets_Entête.Range("B" & rn).value = nomClient
     wshFAC_Projets_Entête.Range("C" & rn).value = clientID
     wshFAC_Projets_Entête.Range("D" & rn).value = dte
     wshFAC_Projets_Entête.Range("E" & rn).value = hono

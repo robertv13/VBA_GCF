@@ -31,7 +31,6 @@ Private Sub UserForm_Initialize()
    
 End Sub
 
-
 Private Sub lsbEJ_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim rowSelected As Integer, DescEJAuto As String, NoEJAuto As Long

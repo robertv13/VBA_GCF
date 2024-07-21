@@ -11,13 +11,11 @@ Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
     
-    ws.Unprotect
-
-'   'Hide column A & B
-'    With ws
-'        .Unprotect
+   'Hide column A & B
+    With ws
+        .Unprotect
 '        .Range("A:B").EntireColumn.Hidden = True
-'    End With
+    End With
     
     ws.Range("Q1").value = "Worksheet_Activate(): " & Format(Now, "dd/mm/yyyy @ hh:mm:ss")
         
@@ -29,6 +27,9 @@ Private Sub Worksheet_Activate()
     Application.Calculation = xlCalculationAutomatic
     
     Call SetTabOrder(ws)
+    
+    'Ensure all pending events are processed - 2024-07-21 @ 17:16
+    DoEvents
     
     Call FAC_Brouillon_New_Invoice
     

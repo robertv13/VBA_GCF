@@ -17,7 +17,7 @@ Function Fn_GetID_From_Initials(i As String)
     
 End Function
 
-Function Fn_GetID_From_Client_Name(NomClient As String) '2024-02-14 @ 06:07
+Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -33,7 +33,7 @@ Function Fn_GetID_From_Client_Name(NomClient As String) '2024-02-14 @ 06:07
     
     'Using XLOOKUP to find the result directly
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(NomClient, _
+    result = Application.WorksheetFunction.XLookup(nomClient, _
                                                    dynamicRange.columns(1), _
                                                    dynamicRange.columns(2), _
                                                    "Not Found", _

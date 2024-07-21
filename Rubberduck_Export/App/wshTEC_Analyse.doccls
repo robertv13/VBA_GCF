@@ -119,10 +119,10 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                     r = r + 1
                 Loop
                 
-                Dim NomClient As String
+                Dim nomClient As String
                 Dim clientID As Long
-                NomClient = wshTEC_Analyse.Range("C" & firstRow).value
-                clientID = Fn_GetID_From_Client_Name(NomClient)
+                nomClient = wshTEC_Analyse.Range("C" & firstRow).value
+                clientID = Fn_GetID_From_Client_Name(nomClient)
                 
                 Dim ProjetID As Long 'ProjetID is establised by the next procedure
                 Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, ProjetID)
@@ -147,8 +147,8 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = wshTEC_Analyse.Range("N" & r + 1).value
                 
-                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, NomClient, clientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, NomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, nomClient, clientID, dateProjet, hono, arr)
                 
             Case "SUPPRIMER"
                 wshTEC_Analyse.Range("D" & totalRow).value = 0

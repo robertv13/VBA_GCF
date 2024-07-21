@@ -11,6 +11,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
+    'Are we entering a NEW invoice ?
     If wshFAC_Brouillon.Range("B27").value = False Then
         With wshFAC_Brouillon
             .Range("B24").value = True
@@ -25,6 +26,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B24").value = False
             .Range("B26").value = False
             .Range("B27").value = True
+            .Range("B51, B52, B53").value = "" 'Requests for invoice
             Application.EnableEvents = True
         End With
         
@@ -44,17 +46,34 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         wshFAC_Brouillon.Range("B16").value = False 'Does not see billed charges
         Application.EnableEvents = True
         
+        Application.ScreenUpdating = True
+        
+        'Ensure all pending events are processed
+        DoEvents
+
         Call FAC_Brouillon_Clear_All_TEC_Displayed
         
         'Save button is disabled UNTIL the invoice is saved
         Call FAC_Finale_Disable_Save_Button
     
+        'Ensure all pending events are processed
+        DoEvents
+
+        'Introduce a small delay to ensure the worksheet is fully updated
+        Application.Wait (Now + TimeValue("0:00:03"))
+        
+        'Do we have pending requests for invoice ?
+        ufListeProjetsFacture.show
+        If wshFAC_Brouillon.Range("B51").value <> "" Then
+            wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
+            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B52").value
+        End If
+        
         'Move to Client Name
         Application.EnableEvents = False
         wshFAC_Brouillon.Select
-        wshFAC_Brouillon.Range("E3").value = ""
         wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
-        Application.EnableEvents = False
+        
     End If
 
     Application.ScreenUpdating = True
@@ -178,6 +197,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         wshFAC_Brouillon.Range("T" & i).value = hRate
     Next i
     
+    'Get all TEC for the client at a certain date
     Dim cutoffDate As Date
     cutoffDate = d
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
@@ -489,11 +509,16 @@ End Sub
 
 Sub FAC_Brouillon_Back_To_FAC_Menu()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
    
+    Application.EnableEvents = False
     wshFAC_Brouillon.Range("B27").value = False
+    Application.EnableEvents = True
+    
+    wshFAC_Brouillon.Visible = xlSheetHidden
     
     wshMenuFAC.Activate
+    
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
@@ -501,7 +526,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshMenuFAC.Range("A1").Select
     
-    Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
+'    Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
 
 End Sub
 
@@ -725,7 +750,7 @@ End Sub
 Sub test_fn_get_hourly_rate()
 
     Dim hr As Currency
-    hr = Fn_Get_Hourly_Rate(2, "2024-08-01")
+    hr = Fn_Get_Hourly_Rate(2, "2024-07-21")
     Debug.Print hr
 
 End Sub
