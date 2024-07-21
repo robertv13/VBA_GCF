@@ -247,13 +247,8 @@ Sub Output_Timer_Results(subName As String, t As Double)
             .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
             .Range("B" & lastUsedRow).value = subName
             If t Then
-'                Debug.Print "Output_Timer_Results - "; subName & " : " & Timer & " - " & t & " = " & Timer - t
-                If Timer - t > 1 Then
-                    Debug.Print subName & " > 1 secondes - " & Format(Timer - t, "#,##0.0000")
-                End If
-                Dim elapsedTime As Double
-                elapsedTime = Round(Timer - t, 4)
-                .Range("C" & lastUsedRow).value = Format(elapsedTime, "#,##0.0000")
+                .Range("C" & lastUsedRow).value = Round(Timer - t, 4)
+                .Range("C" & lastUsedRow).NumberFormat = "#,##0.0000"
             End If
         End With
     End If

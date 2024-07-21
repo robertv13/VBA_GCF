@@ -181,21 +181,31 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     'Clear all cells, but the headers, in the target worksheet
     wshDEB_Recurrent.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
-    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx', in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Recurrent"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshDEB_Recurrent.Range("A1")
-
-    'Copy data, using Range to Range, then close the Master file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
     
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshDEB_Recurrent workbook
+    wshDEB_Recurrent.Range("A2").CopyFromRecordset recSet
+
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Recurrent.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshDEB_Recurrent, rng, 1)
@@ -204,9 +214,9 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
     Set rng = Nothing
-    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:DEB_Recurrent_Import_All()", timerStart)
 
@@ -229,15 +239,25 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Trans"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshDEB_Trans.Range("A1")
-
-    'Copy data, using Range to Range, then close the Master file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshDEB_Trans.Range("A2").CopyFromRecordset recSet
+    
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshDEB_Trans, rng, 1)
@@ -246,8 +266,9 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:DEB_Trans_Import_All()", timerStart)
 
@@ -270,14 +291,24 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "ENC_Détails"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshENC_Détails.Range("A1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshENC_Détails.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
@@ -287,8 +318,9 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:ENC_Détails_Import_All()", timerStart)
 
@@ -311,14 +343,24 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "ENC_Entête"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshENC_Entête.Range("A1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshENC_Entête.Range("A3").CopyFromRecordset recSet
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
     Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
@@ -328,8 +370,9 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:ENC_Entête_Import_All()", timerStart)
 
@@ -352,14 +395,24 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "FAC_Comptes_Clients"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshCAR.Range("A2")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshCAR.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshCAR.Range("A1").CurrentRegion
@@ -369,8 +422,9 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
 
@@ -392,14 +446,24 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "FAC_Détails"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshFAC_Détails.Range("A2")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshBD_Clients workbook
+    wshFAC_Détails.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshFAC_Détails.Range("A1").CurrentRegion
@@ -409,9 +473,9 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
     Set rng = Nothing
-    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
 
@@ -434,26 +498,36 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "FAC_Entête"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshFAC_Entête.Range("A2")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshFAC_Entête workbook
+    wshFAC_Entête.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshFAC_Entête, rng, 2)
     
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
 
@@ -476,14 +550,24 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "FAC_Projets_Détails"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshFAC_Projets_Détails.Range("A1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshFAC_Projets_Détails workbook
+    wshFAC_Projets_Détails.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
     lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
@@ -504,9 +588,9 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-20 @ 13:30
-    Set destinationRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
     Set rng = Nothing
-    Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Projets_Détails_Import_All()", timerStart)
 
@@ -529,14 +613,24 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
                      "GCF_BD_Sortie.xlsx"
     sourceTab = "FAC_Projets_Entête"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshFAC_Projets_Entête.Range("A1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshFAC_Projets_Entête workbook
+    wshFAC_Projets_Entête.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
     lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
@@ -554,12 +648,12 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
     
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Projets_Entête_Import_All()", timerStart)
 
@@ -623,6 +717,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     'Cleaning memory - 2024-07-03 @ 15:45
     Set connStr = Nothing
     Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:Fournisseur_List_Import_All()", timerStart)
         
@@ -636,12 +731,12 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
     Application.ScreenUpdating = False
     
-    Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    Dim lastUsedRow As Long
+    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
-    If lastUsedRow1 > 1 Then
-        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow1).ClearContents
+    If lastUsedRow > 1 Then
+        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow).ClearContents
     End If
     
     'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
@@ -650,14 +745,24 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_EJ_Auto"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshGL_EJ_Recurrente.Range("C1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshGL_EJ_Recurrente workbook
+    wshGL_EJ_Recurrente.Range("A2").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
@@ -670,8 +775,9 @@ Clean_Exit:
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:GL_EJ_Auto_Import_All()", timerStart)
 
@@ -689,7 +795,9 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
     
     'Clear all cells, but the headers, in the target worksheet
-    wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    If saveLastRow > 1 Then
+        wshGL_Trans.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    End If
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -697,14 +805,24 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
                      "GCF_BD_Sortie.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_Trans"
                      
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-
-    Dim destinationRange As Range: Set destinationRange = wshGL_Trans.Range("A1")
-
-    'Copy data, using Range to Range, then close the BD_Sortie file
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshGL_Trans workbook
+    wshGL_Trans.Range("A2").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshGL_Trans.Range("A1").CurrentRegion
@@ -714,8 +832,9 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
     
     Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
 
@@ -738,27 +857,37 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
                      "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
     sourceTab = "TEC"
     
-    'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Dim destinationRange As Range: Set destinationRange = wshTEC_Local.Range("A2")
-
-    'Copy data, using Range to Range and Autofit all columns
-    sourceRange.Copy destinationRange
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshTEC_Local workbook
+    wshTEC_Local.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshTEC_Local.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshTEC_Local, rng, 2)
     
-    
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
-
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
+    
     Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
     
 End Sub
