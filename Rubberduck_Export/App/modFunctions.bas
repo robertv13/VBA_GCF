@@ -163,66 +163,49 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                 For i = rowsToDelete.count To 1 Step -1
                     ws.rows(rowsToDelete(i)).delete
                 Next i
-                'Update rows from MASTER file
+                
+                'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
                 destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                                       "GCF_BD_Sortie.xlsx"
                 destinationTab = "FAC_Projets_Détails"
                 Dim columnName As String
                 columnName = "NomClient"
-                Call Soft_Delete_If_Value_Is_Found_In_Master(destinationFileName, _
-                                                             destinationTab, _
-                                                             columnName, _
-                                                             valueToFind)
+                Call Soft_Delete_If_Value_Is_Found_In_Master_Details(destinationFileName, _
+                                                                     destinationTab, _
+                                                                     columnName, _
+                                                                     valueToFind)
+                                                                     
+                'Update row from MASTER file (entête)
+                destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                                      "GCF_BD_Sortie.xlsx"
+                destinationTab = "FAC_Projets_Entête"
+                Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
+                                                                    destinationTab, _
+                                                                    columnName, _
+                                                                    valueToFind) '2024-07-19 @ 15:31
+                'Create a new ADODB connection
+'                Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+                'Open the connection to the closed workbook
+'                cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+                
+                'Update the rows to mark as deleted (soft delete)
+'                Dim strSQL As String
+'                strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+'                cn.Execute strSQL
+                
+                'Close the connection
+'                cn.Close
+                'Set cn = Nothing
+            
             Case vbNo
                 Verify_And_Delete_Rows_If_Value_Is_Found = "RIEN_CHANGER"
         End Select
     Else
         Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
     End If
+    
 End Function
-
-Sub Soft_Delete_If_Value_Is_Found_In_Master(filePath As String, _
-                                            sheetName As String, _
-                                            columnName As String, _
-                                            valueToFind As Variant) '2024-07-18 @ 18:58
-
-    'Create a new ADODB connection
-    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
-    'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
-    
-    'Update the rows to mark as deleted (soft delete)
-    Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
-    cn.Execute strSQL
-    
-    'Close the connection
-    cn.Close
-    Set cn = Nothing
-    
-End Sub
-
-'Function Verify_Client_Already_Exists(valueToFind As Variant) As String
-'
-'    'Define the worksheet
-'    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
-'
-'    'Define the range to search in (Column 1)
-'    Dim searchRange As Range: Set searchRange = ws.columns(1)
-'
-'    'Search for the value
-'    Dim cell As Range
-'    Set cell = searchRange.Find(What:=valueToFind, LookIn:=xlValues, LookAt:=xlWhole)
-'
-'    'Check if the value is found and return the address
-'    If Not cell Is Nothing Then
-'        Verify_Client_Already_Exists = cell.Address
-'    Else
-'        Verify_Client_Already_Exists = ""
-'    End If
-'
-'End Function
 
 Function GetCheckBoxPosition(chkBox As OLEObject) As String
 

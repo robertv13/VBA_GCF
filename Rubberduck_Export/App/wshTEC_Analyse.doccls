@@ -12,6 +12,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Import transactions from MASTER file
     Call TEC_Import_All
     
+    
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
 

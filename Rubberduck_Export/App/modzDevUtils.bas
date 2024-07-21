@@ -748,6 +748,24 @@ Sub List_All_Shapes_Properties()
     
 End Sub
 
+Sub ListAllTables()
+
+    'Loop through each worksheet
+    Dim ws As Worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        'Loop through each ListObject (table) in the worksheet
+        Dim lo As ListObject
+        For Each lo In ws.ListObjects
+            Debug.Print "Sheet: " & ws.name; Tab(40); "Table: " & lo.name & vbCrLf
+        Next lo
+    Next ws
+    
+    'Cleanup - 2024-07-14 @ 12:05
+    Set lo = Nothing
+    Set ws = Nothing
+    
+End Sub
+
 Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
     
     'Setup and clear the output worksheet
@@ -1253,6 +1271,15 @@ Sub TestGetQuarterDates()
     
 End Sub
 
+Sub Toggle_A1_R1C1_Reference()
+
+    If Application.ReferenceStyle = xlA1 Then
+        Application.ReferenceStyle = xlR1C1
+    Else
+        Application.ReferenceStyle = xlA1
+    End If
+
+End Sub
 Sub Worksheets_List_All() '2024-06-22 @ 06:27
     
     'Loop through all worksheets in the active workbook
@@ -1280,24 +1307,6 @@ Sub Worksheets_List_All() '2024-06-22 @ 06:27
     Next i
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set ws = Nothing
-    
-End Sub
-
-Sub ListAllTables()
-
-    'Loop through each worksheet
-    Dim ws As Worksheet
-    For Each ws In ThisWorkbook.Worksheets
-        'Loop through each ListObject (table) in the worksheet
-        Dim lo As ListObject
-        For Each lo In ws.ListObjects
-            Debug.Print "Sheet: " & ws.name; Tab(40); "Table: " & lo.name & vbCrLf
-        Next lo
-    Next ws
-    
-    'Cleanup - 2024-07-14 @ 12:05
-    Set lo = Nothing
     Set ws = Nothing
     
 End Sub

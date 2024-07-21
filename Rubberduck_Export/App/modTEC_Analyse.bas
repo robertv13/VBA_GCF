@@ -63,7 +63,7 @@ Sub TEC_Sort_Group_And_Subtotal()
         .SetRange wsDest.Range("A5:H" & destLastUsedRow)
         .header = xlYes
         .MatchCase = False
-        .orientation = xlTopToBottom
+        .Orientation = xlTopToBottom
         .SortMethod = xlPinYin
         .Apply
     End With
@@ -297,6 +297,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Lon
     Else
         ProjetID = rs.Fields("MaxValue").value + 1
     End If
+    Debug.Print "ProjetID = " & ProjetID
     
     'Close the previous recordset (no longer needed)
     rs.Close
@@ -375,6 +376,26 @@ Sub FAC_Projets_Détails_Add_Record_Locally(ClientID As Long, fr As Long, lr As L
 
     Application.ScreenUpdating = True
 
+End Sub
+
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
+                                                    sheetName As String, _
+                                                    columnName As String, _
+                                                    valueToFind As Variant) '2024-07-19 @ 15:31
+    'Create a new ADODB connection
+    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+    'Open the connection to the closed workbook
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    
+    'Update the rows to mark as deleted (soft delete)
+    Dim strSQL As String
+    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    cn.Execute strSQL
+    
+    'Close the connection
+    cn.Close
+    Set cn = Nothing
+    
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
@@ -464,32 +485,6 @@ Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String,
             wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
         Next j
     Next i
-    
-'    wshFAC_Projets_Entête.Range("F" & rn).value = arr(1, 1)
-'    wshFAC_Projets_Entête.Range("G" & rn).value = arr(1, 2)
-'    wshFAC_Projets_Entête.Range("H" & rn).value = arr(1, 3)
-'    wshFAC_Projets_Entête.Range("I" & rn).value = arr(1, 4)
-'
-'    wshFAC_Projets_Entête.Range("J" & rn).value = arr(2, 1)
-'    wshFAC_Projets_Entête.Range("K" & rn).value = arr(2, 2)
-'    wshFAC_Projets_Entête.Range("L" & rn).value = arr(2, 3)
-'    wshFAC_Projets_Entête.Range("M" & rn).value = arr(2, 4)
-'
-'    wshFAC_Projets_Entête.Range("N" & rn).value = arr(3, 1)
-'    wshFAC_Projets_Entête.Range("O" & rn).value = arr(3, 2)
-'    wshFAC_Projets_Entête.Range("P" & rn).value = arr(3, 3)
-'    wshFAC_Projets_Entête.Range("Q" & rn).value = arr(3, 4)
-'
-'    wshFAC_Projets_Entête.Range("R" & rn).value = arr(4, 1)
-'    wshFAC_Projets_Entête.Range("S" & rn).value = arr(4, 2)
-'    wshFAC_Projets_Entête.Range("T" & rn).value = arr(4, 3)
-'    wshFAC_Projets_Entête.Range("U" & rn).value = arr(4, 4)
-'
-'    wshFAC_Projets_Entête.Range("V" & rn).value = arr(5, 1)
-'    wshFAC_Projets_Entête.Range("W" & rn).value = arr(5, 2)
-'    wshFAC_Projets_Entête.Range("X" & rn).value = arr(5, 3)
-'    wshFAC_Projets_Entête.Range("Y" & rn).value = arr(5, 4)
-    
     wshFAC_Projets_Entête.Range("Z" & rn).value = False
     TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
@@ -498,6 +493,26 @@ Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String,
 
     Application.ScreenUpdating = True
 
+End Sub
+
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
+                                                   sheetName As String, _
+                                                   columnName As String, _
+                                                   valueToFind As Variant) '2024-07-19 @ 15:31
+    'Create a new ADODB connection
+    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+    'Open the connection to the closed workbook
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    
+    'Update the rows to mark as deleted (soft delete)
+    Dim strSQL As String
+    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    cn.Execute strSQL
+    
+    'Close the connection
+    cn.Close
+    Set cn = Nothing
+    
 End Sub
 
 Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)

@@ -26,9 +26,27 @@ Sub Printer_Page_Setup(ws As Worksheet, _
                        rng As Range, _
                        header1 As String, _
                        header2 As String, _
-                       Optional orient As String = "L") '2024-07-14 @ 06:51
+                       Optional Orient As String = "L") '2024-07-14 @ 06:51
 
-    Application.PrintCommunication = False
+    Dim retries As Integer
+
+    On Error GoTo CleanUp
+    
+    'Retry loop for setting PrintCommunication to False
+    retries = 3
+    Do While retries > 0
+        On Error Resume Next
+        Application.PrintCommunication = False
+        If Err.Number = 0 Then Exit Do
+        retries = retries - 1
+        Application.Wait (Now + TimeValue("0:00:01"))
+        On Error GoTo CleanUp
+    Loop
+
+    If retries = 0 Then
+        MsgBox "Failed to set PrintCommunication to False after multiple attempts", vbCritical
+        Exit Sub
+    End If
     
     With ws.PageSetup
         .PrintArea = rng.Address
@@ -55,17 +73,17 @@ Sub Printer_Page_Setup(ws As Worksheet, _
         .PrintQuality = 600
         .CenterHorizontally = True
         .CenterVertically = False
-        If orient = "L" Then
-            .orientation = xlLandscape
+        If Orient = "L" Then
+            .Orientation = xlLandscape
         Else
-            .orientation = xlPortrait
+            .Orientation = xlPortrait
         End If
         .Draft = False
         .PaperSize = xlPaperLetter
         .FirstPageNumber = xlAutomatic
         .Order = xlDownThenOver
         .BlackAndWhite = False
-        .Zoom = False
+        .Zoom = 100
         .FitToPagesWide = 1
         .FitToPagesTall = False
         .PrintErrors = xlPrintErrorsDisplayed
@@ -74,7 +92,9 @@ Sub Printer_Page_Setup(ws As Worksheet, _
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
         
-        .EvenPage.LeftHeader.text = ""
+        'Clear EvenPage headers and footers if they exist
+        On Error Resume Next
+       .EvenPage.LeftHeader.text = ""
         .EvenPage.CenterHeader.text = ""
         .EvenPage.RightHeader.text = ""
         .EvenPage.LeftFooter.text = ""
@@ -89,10 +109,65 @@ Sub Printer_Page_Setup(ws As Worksheet, _
         .FirstPage.RightFooter.text = ""
     End With
     
+CleanUp:
+    'Retry loop for setting PrintCommunication to True
+    retries = 3
+    Do While retries > 0
+        On Error Resume Next
+        Application.PrintCommunication = True
+        If Err.Number = 0 Then Exit Do
+        retries = retries - 1
+        Application.Wait (Now + TimeValue("0:00:01"))
+        On Error GoTo CleanUp
+    Loop
+    If retries = 0 Then
+        MsgBox "Failed to set PrintCommunication to True after multiple attempts", vbCritical
+    End If
+    On Error GoTo 0
+    
+End Sub
+
+Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
+                       header2 As String, Optional Orient As String = "L")
+    
+    On Error GoTo CleanUp
+    
+    Application.PrintCommunication = False
+    
+    With ws.PageSetup
+        .PrintArea = rng.Address
+        .PrintTitleRows = "$1:$1"
+        .PrintTitleColumns = ""
+        
+        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
+        
+        .LeftFooter = "&11&D - &T"
+        .CenterFooter = "&11&KFF0000&A"
+        .RightFooter = "Page &P of &N"
+        
+        .TopMargin = Application.InchesToPoints(0.65)
+        .LeftMargin = Application.InchesToPoints(0.15)
+        .RightMargin = Application.InchesToPoints(0.15)
+        .BottomMargin = Application.InchesToPoints(0.55)
+        
+        If Orient = "L" Then
+            .Orientation = xlLandscape
+        Else
+            .Orientation = xlPortrait
+        End If
+        .PaperSize = xlPaperLetter
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+    End With
+    
+CleanUp:
     On Error Resume Next
     Application.PrintCommunication = True
+    If Err.Number <> 0 Then
+        MsgBox "Error setting PrintCommunication to True: " & Err.Description, vbCritical
+    End If
     On Error GoTo 0
-
+    
 End Sub
 
 Public Sub ProtectCells(rng As Range)
@@ -167,12 +242,18 @@ Sub Output_Timer_Results(subName As String, t As Double)
     If modeOper = 2 Then
         With wshzDocLogAppli
             Dim lastUsedRow As Long
-            lastUsedRow = .Range("A9999").End(xlUp).row
+            lastUsedRow = .Range("A99999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
             .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
             .Range("B" & lastUsedRow).value = subName
             If t Then
-                .Range("C" & lastUsedRow).value = Format(Round(Timer - t, 4), "##0.0000")
+'                Debug.Print "Output_Timer_Results - "; subName & " : " & Timer & " - " & t & " = " & Timer - t
+                If Timer - t > 1 Then
+                    Debug.Print subName & " > 1 secondes - " & Format(Timer - t, "#,##0.0000")
+                End If
+                Dim elapsedTime As Double
+                elapsedTime = Round(Timer - t, 4)
+                .Range("C" & lastUsedRow).value = Format(elapsedTime, "#,##0.0000")
             End If
         End With
     End If
@@ -225,7 +306,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
 End Sub
 
-Private Sub Integrity_Verification() '2024-07-06 @ 12:56
+Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Application.ScreenUpdating = False
     
@@ -239,8 +320,9 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     'Data starts at row 2
     Dim r As Long: r = 2
+    Dim readRows As Long
     
-    'wshBD_Clients
+    'wshBD_Clients --------------------------------------------------------------- Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
     r = r + 1
     
@@ -249,9 +331,9 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_Clients(r) '------------------------------------------------------- Clients
+    Call check_Clients(r, readRows)
 
-    'wshBD_Fournisseurs
+    'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Fournisseurs")
     r = r + 1
     
@@ -260,9 +342,9 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_Fournisseurs(r) '--------------------------------------------- Fournisseurs
+    Call check_Fournisseurs(r, readRows)
     
-    'wshFAC_Détails
+    'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
     r = r + 1
     
@@ -271,9 +353,9 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Détails(r) '----------------------------------------------- FAC_Détails
+    Call check_FAC_Détails(r, readRows)
     
-    'wshFAC_Entête
+    'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
     r = r + 1
     
@@ -282,9 +364,31 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Entête(r) '------------------------------------------------- FAC_Entête
+    Call check_FAC_Entête(r, readRows)
     
-    'wshGL_Trans
+    'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
+    r = r + 1
+    
+    Call FAC_Projets_Détails_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call check_FAC_Projets_Détails(r, readRows)
+    
+    'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
+    r = r + 1
+    
+    Call FAC_Projets_Entête_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call check_FAC_Projets_Entête(r, readRows)
+    
+    'wshGL_Trans ---------------------------------------------------------------- GL_Trans
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "GL_Trans")
     r = r + 1
     
@@ -292,10 +396,10 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importé du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
+
+    Call check_GL_Trans(r, readRows)
     
-    Call check_GL_Trans(r) '----------------------------------------------------- GL_Trans
-    
-    'wshTEC_Local
+    'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
     r = r + 1
     
@@ -304,8 +408,9 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call check_TEC(r) '--------------------------------------------------------- TEC_Local
+    Call check_TEC(r, readRows)
     
+    'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
         .name = "Courier New"
         .Size = 10
@@ -313,6 +418,22 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
+   'Result print setup - 2024-07-20 @ 14:31
+    Dim lastUsedRow As Long
+    lastUsedRow = r + 1
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(readRows, "###,##0") & _
+                                    " lignes analysées dans l'ensemble de l'application ***"
+'    Call Printer_Page_Setup(wsOutput, wsOutput.Range("A2:C" & lastUsedRow), _
+'                           header1, _
+'                           header2, _
+'                           "P")
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
+    Dim header1 As String: header1 = "Vérification d'intégrité des tables"
+    Dim header2 As String: header2 = ""
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    
+    ThisWorkbook.Worksheets("Analyse_Intégrité").Activate
+    
     MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'Analyse_Intégrité'", vbInformation
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -322,7 +443,7 @@ Private Sub Integrity_Verification() '2024-07-06 @ 12:56
     
 End Sub
 
-Private Sub check_Clients(ByRef r As Long)
+Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -370,6 +491,10 @@ Private Sub check_Clients(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
     If cas_doublon_nom = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -398,7 +523,7 @@ Private Sub check_Clients(ByRef r As Long)
     
 End Sub
 
-Private Sub check_Fournisseurs(ByRef r As Long)
+Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
 
@@ -446,6 +571,10 @@ Private Sub check_Fournisseurs(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
     If cas_doublon_nom = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -474,7 +603,7 @@ Private Sub check_Fournisseurs(ByRef r As Long)
     
 End Sub
 
-Private Sub check_FAC_Détails(ByRef r As Long)
+Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -491,7 +620,6 @@ Private Sub check_FAC_Détails(ByRef r As Long)
     Dim lastUsedRow As Long
     lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A3:A" & lastUsedRow)
-    Debug.Print rngMaster.Address
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -547,6 +675,9 @@ Private Sub check_FAC_Détails(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 2
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rngMaster = Nothing
     Set ws = Nothing
@@ -557,7 +688,7 @@ Private Sub check_FAC_Détails(ByRef r As Long)
     
 End Sub
 
-Private Sub check_FAC_Entête(ByRef r As Long)
+Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -596,6 +727,9 @@ Private Sub check_FAC_Entête(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 2
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -604,7 +738,236 @@ Private Sub check_FAC_Entête(ByRef r As Long)
     
 End Sub
 
-Private Sub check_GL_Trans(ByRef r As Long)
+Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'wshFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
+    Dim lastUsedRow As Long
+    lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    'Transfer data from Worksheet into an Array (arr)
+    Dim numRows As Long
+    numRows = ws.Range("A1").CurrentRegion.rows.count - 1
+    Dim arr As Variant
+    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim ProjetID As String, oldProjetID As String
+    Dim lookUpValue As Long, result As Variant
+    For i = LBound(arr, 1) To UBound(arr, 1) - 1 'One line of header !
+        ProjetID = arr(i, 1)
+        lookUpValue = ProjetID
+        If ProjetID <> oldProjetID Then
+            result = Application.WorksheetFunction.XLookup(lookUpValue, _
+                                                           rngMaster, _
+                                                           rngMaster, _
+                                                           "Not Found", _
+                                                           0, _
+                                                           1)
+            oldProjetID = ProjetID
+        End If
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 3)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 4)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 5)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 8)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " lignes ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 1
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rngMaster = Nothing
+    Set ws = Nothing
+    Set wsMaster = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'wshGL_Trans
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Entête'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    'Establish the number of rows before transferring it to an Array
+    Dim numRows As Long
+    numRows = ws.Range("A1").CurrentRegion.rows.count - 1
+    Dim arr As Variant
+    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim ProjetID As String
+    For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
+        ProjetID = arr(i, 1)
+        If IsNumeric(arr(i, 3)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsDate(arr(i, 4)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 5)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 7)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 8)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 9)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+        If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 1
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -640,11 +1003,14 @@ Private Sub check_GL_Trans(ByRef r As Long)
         strDescGL = strDescGL + ligne.Cells(1, 1).value + "|:|"
     Next ligne
     
+    Dim numRows As Long
+    numRows = ws.Range("A1").CurrentRegion.rows.count - 1 'Remove the header row
     Dim arr As Variant
-    arr = wshGL_Trans.Range("A1").CurrentRegion.value
+    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
+    
     Dim dict_GL_Entry As New Dictionary
     Dim sum_arr() As Double
-    ReDim sum_arr(1 To 5000, 1 To 3)
+    ReDim sum_arr(1 To 2500, 1 To 3)
     
     'Array pointer
     Dim row As Long: row = 1
@@ -654,7 +1020,7 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Dim dt As Double, ct As Double
     Dim GL_Entry_No As String, glCode As String, glDescr As String
     Dim result As Variant
-    For i = LBound(arr, 1) + 1 To UBound(arr, 1)
+    For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
             dict_GL_Entry.add GL_Entry_No, row
@@ -723,6 +1089,9 @@ Private Sub check_GL_Trans(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -765,7 +1134,7 @@ Private Sub check_GL_Trans(ByRef r As Long)
     
 End Sub
 
-Private Sub check_TEC(ByRef r As Long)
+Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -773,8 +1142,10 @@ Private Sub check_TEC(ByRef r As Long)
     
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim lastUsedCol As Long
+    lastUsedCol = ws.Range("A2").End(xlToRight).Column
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
-        " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+        " lignes et " & Format(lastUsedCol, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -783,7 +1154,7 @@ Private Sub check_TEC(ByRef r As Long)
     r = r + 1
     
     Dim arr As Variant
-    arr = wshTEC_Local.Range("A1").CurrentRegion.Offset(2)
+    arr = ws.Range("A1").CurrentRegion.Offset(2)
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
     
@@ -864,6 +1235,10 @@ Private Sub check_TEC(ByRef r As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " charges de temps ont été analysées!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - 2
+    
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1068,6 +1443,7 @@ Sub PasteFromClipboard() '2024-07-06 @ 07:37
     Range("A1").value = strText
     
     MsgBox "Text pasted from clipboard!"
+
 End Sub
 
 Sub Apply_Conditional_Formatting(rng As Range, headerRows As Long)
@@ -1097,3 +1473,194 @@ Sub Apply_Conditional_Formatting(rng As Range, headerRows As Long)
     dataRange.FormatConditions(1).StopIfTrue = False
 
 End Sub
+
+Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Integer)
+
+    'Common stuff to all worksheets
+    rng.EntireColumn.AutoFit 'Autofit all columns
+    
+    'Conditional Formatting (many steps)
+    '1) Remove existing conditional formatting
+        rng.Cells.FormatConditions.delete 'Remove the worksheet conditional formatting
+    
+    '2) Define the usedRange to data only (exclude header row(s))
+        Dim numRows As Long
+        numRows = rng.CurrentRegion.rows.count - headerRow
+        Dim usedRange As Range: Set usedRange = rng.Offset(headerRow, 0).Resize(numRows, rng.columns.count)
+    
+    '3) Add the standard conditional formatting
+        usedRange.FormatConditions.add Type:=xlExpression, _
+            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
+        usedRange.FormatConditions(usedRange.FormatConditions.count).SetFirstPriority
+        With usedRange.FormatConditions(1).Font
+            .Strikethrough = False
+            .TintAndShade = 0
+        End With
+        With usedRange.FormatConditions(1).Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorAccent1
+            .TintAndShade = 0.799981688894314
+        End With
+        usedRange.FormatConditions(1).StopIfTrue = False
+
+    'Specific formats to worksheets
+    Dim lastUsedRow As Long
+    lastUsedRow = rng.rows.count
+    Dim firstDataRow As Long
+    firstDataRow = headerRow + 1
+    
+    Select Case rng.Worksheet.CodeName
+        Case "wshBD_Clients"
+            
+        Case "wshBD_Fournisseurs"
+            
+        Case "wshFAC_Détails"
+            With usedRange
+                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":C" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("D" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("C" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("D" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("H" & firstDataRow & ":H" & lastUsedRow & ",J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("O" & firstDataRow & ":O" & lastUsedRow & ",Q" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
+            End With
+        
+        Case "wshFAC_Entête"
+            With wshFAC_Entête
+                .Range("A" & firstDataRow & ":D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("E" & firstDataRow & ":I" & lastUsedRow & ",K" & firstDataRow & ":K" & lastUsedRow & ",M" & firstDataRow & ":M" & lastUsedRow & ",O" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":N" & lastUsedRow & ",P" & firstDataRow & ":V" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":N" & lastUsedRow & ",P" & firstDataRow & ":V" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("Q" & firstDataRow & ":Q" & lastUsedRow & ",S" & firstDataRow & ":S" & lastUsedRow).NumberFormat = "#0.000 %"
+            End With
+
+        Case "wshFAC_Projets_Détails"
+            With wshFAC_Projets_Détails
+                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":G" & lastUsedRow & ", I" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H" & firstDataRow & ":I" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("H" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"
+            End With
+        
+        Case "wshFAC_Projets_Entête"
+            With wshFAC_Projets_Entête
+                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":D" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & _
+                       ", J" & firstDataRow & ":J" & lastUsedRow & ", N" & firstDataRow & ":N" & lastUsedRow & ", R" & firstDataRow & ":R" & lastUsedRow & _
+                       ", V" & firstDataRow & ":V" & lastUsedRow & ", Z" & firstDataRow & ":AA" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow) = xlLeft
+                .Range("E" & firstDataRow & ":E" & lastUsedRow & ", I" & firstDataRow & ":I" & lastUsedRow & ", M" & firstDataRow & ":M" & lastUsedRow & _
+                        ", Q" & firstDataRow & ":Q" & lastUsedRow & ", U" & firstDataRow & ":U" & lastUsedRow & ", Y" & firstDataRow & ":Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("G" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"
+            End With
+        
+        Case "wshDEB_Recurrent"
+            With wshDEB_Recurrent
+                .Range("A" & firstDataRow & ":M" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
+                     ", D" & firstDataRow & ":D" & lastUsedRow & _
+                     ", E" & firstDataRow & ":E" & lastUsedRow & _
+                     ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("I" & firstDataRow & ":N" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+            End With
+       
+        Case "wshDEB_Trans"
+            With wshDEB_Trans
+                .Range("A2" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C2" & firstDataRow & ":C" & lastUsedRow & _
+                     ", D2" & firstDataRow & ":D" & lastUsedRow & _
+                     ", F2" & firstDataRow & ":F" & lastUsedRow & _
+                     ", H2" & firstDataRow & ":H" & lastUsedRow & _
+                     ", O2" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("J2" & firstDataRow & ":N" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+                .Range("A1").CurrentRegion.EntireColumn.AutoFit
+            End With
+        
+        Case "wshENC_Détails"
+            With wshENC_Détails
+                .Range("A4" & firstDataRow & ":A" & lastUsedRow & ", C4" & firstDataRow & ":C" & lastUsedRow & ", F4" & firstDataRow & ":F" & lastUsedRow & ", G4" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B4" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("D4" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("C4" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("D4" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("H4" & firstDataRow & ":H" & lastUsedRow & ",J4" & firstDataRow & ":J" & lastUsedRow & ",L4" & firstDataRow & ":L" & lastUsedRow & ",N4" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("O4" & firstDataRow & ":O" & lastUsedRow & ",Q4" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
+            End With
+        
+        Case "wshENC_Entête"
+            With wshENC_Entête
+                .Range("A2" & firstDataRow & ":F" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("A2" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("E2" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("E2" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00$"
+            End With
+        
+        Case "wshCAR"
+            With wshCAR
+                .Range("A3" & firstDataRow & ":B" & lastUsedRow & ", D3" & firstDataRow & ":F" & lastUsedRow & ", J3" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("C3" & firstDataRow & ":C" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("G3" & firstDataRow & ":I" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("B3" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("G3" & firstDataRow & ":I" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("A1").CurrentRegion.EntireColumn.AutoFit
+            End With
+        
+        Case "wshGL_EJ_Recurrente"
+            With wshGL_EJ_Recurrente
+                Union(.Range("C" & firstDataRow & ":C" & lastUsedRow), _
+                      .Range("E" & firstDataRow & ":E" & lastUsedRow)).HorizontalAlignment = xlCenter
+                Union(.Range("D" & firstDataRow & ":D" & lastUsedRow), _
+                      .Range("F" & firstDataRow & ":F" & lastUsedRow), _
+                      .Range("I" & firstDataRow & ":I" & lastUsedRow)).HorizontalAlignment = xlLeft
+                With .Range("G" & firstDataRow & ":H" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+            End With
+        
+        Case "wshGL_Trans"
+            With wshGL_Trans
+                .Range("A" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
+                    ", D" & firstDataRow & ":D" & lastUsedRow & _
+                    ", F" & firstDataRow & ":F" & lastUsedRow & _
+                    ", I" & firstDataRow & ":I" & lastUsedRow) _
+                        .HorizontalAlignment = xlLeft
+                With .Range("G" & firstDataRow & ":H" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+                With .Range("A" & firstDataRow & ":A" & lastUsedRow) _
+                    .Range("J" & firstDataRow & ":J" & lastUsedRow).Interior
+                    .Pattern = xlSolid
+                    .PatternColorIndex = xlAutomatic
+                    .ThemeColor = xlThemeColorAccent5
+                    .TintAndShade = 0.799981688894314
+                    .PatternTintAndShade = 0
+                End With
+            End With
+        
+        Case "wshTEC_Local"
+            With wshTEC_Local
+                .Range("A" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("F" & firstDataRow & ":F" & lastUsedRow & ", G" & firstDataRow & _
+                                            ":G" & lastUsedRow & ", I" & firstDataRow & _
+                                            ":I" & lastUsedRow & ", O" & firstDataRow & _
+                                            ":O" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#0.00"
+                .Range("K" & firstDataRow & ":K" & lastUsedRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+            End With
+
+    End Select
+
+End Sub
+

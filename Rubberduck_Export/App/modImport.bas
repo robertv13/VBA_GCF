@@ -142,15 +142,14 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Copy to wshBD_Clients workbook
     wshBD_Clients.Range("A2").CopyFromRecordset recSet
-    wshBD_Clients.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Setup the format of the worksheet - 2024-07-20 @ 18:31
+    Dim rng As Range: Set rng = wshBD_Clients.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshBD_Clients, rng, 1)
     
     'Close resource
     recSet.Close
     connStr.Close
-    
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
-    Dim rng As Range: Set rng = wshBD_Clients.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -196,28 +195,10 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     'Copy data, using Range to Range, then close the Master file
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
-    Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Recurrent.Range("A999999").End(xlUp).row
     
-    'Adjust Formats for all new rows
-    With wshDEB_Recurrent
-        .Range("A2:M" & lastUsedRow).HorizontalAlignment = xlCenter
-        .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-        .Range("C2:C" & lastUsedRow & _
-             ", D2:D" & lastUsedRow & _
-             ", E2:E" & lastUsedRow & _
-             ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
-        With .Range("I2:N" & lastUsedRow)
-            .HorizontalAlignment = xlRight
-            .NumberFormat = "#,##0.00 $"
-        End With
-        .Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Recurrent.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
+    Call Apply_Worksheet_Format(wshDEB_Recurrent, rng, 1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
@@ -257,29 +238,10 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Trans.Range("A999999").End(xlUp).row
-    
-    'Adjust Formats for all new rows
-    With wshDEB_Trans
-        .Range("A2:P" & lastUsedRow).HorizontalAlignment = xlCenter
-        .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-        .Range("C2:C" & lastUsedRow & _
-             ", D2:D" & lastUsedRow & _
-             ", F2:F" & lastUsedRow & _
-             ", H2:H" & lastUsedRow & _
-             ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
-        With .Range("J2:N" & lastUsedRow)
-            .HorizontalAlignment = xlRight
-            .NumberFormat = "#,##0.00 $"
-        End With
-        .Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-    
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
-    
+    Call Apply_Worksheet_Format(wshDEB_Trans, rng, 1)
+
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
@@ -317,27 +279,11 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshENC_Détails.Range("A99999").End(xlUp).row
-    
-    'Adjust Formats for all rows
-    With wshENC_Détails
-        .Range("A4:A" & lastRow & ", C4:C" & lastRow & ", F4:F" & lastRow & ", G4:G" & lastRow).HorizontalAlignment = xlCenter
-        .Range("B4:B" & lastRow).HorizontalAlignment = xlLeft
-        .Range("D4:E" & lastRow).HorizontalAlignment = xlRight
-        .Range("C4:C" & lastRow).NumberFormat = "#,##0.00"
-        .Range("D4:E" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
-        .Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
+    Call Apply_Worksheet_Format(wshENC_Détails, rng, 1)
     
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -373,25 +319,12 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
-
-    Dim lastRow As Long
-    lastRow = wshENC_Entête.Range("A99999").End(xlUp).row
     
-    'Adjust Formats for all rows
-    With wshENC_Entête
-        .Range("A2:F" & lastRow).HorizontalAlignment = xlCenter
-        .Range("A2:B" & lastRow).HorizontalAlignment = xlLeft
-        .Range("E2:E" & lastRow).HorizontalAlignment = xlRight
-        .Range("E2:E" & lastRow).NumberFormat = "#,##0.00$"
-        .Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
     Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
-    
+    Call Apply_Worksheet_Format(wshENC_Entête, rng, 1)
+
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -428,25 +361,11 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     sourceRange.Copy destinationRange
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshCAR.Range("A99999").End(xlUp).row
-    
-    'Adjust Formats for all new rows
-    With wshCAR
-        .Range("A3:B" & lastRow & ", D3:F" & lastRow & ", J3:J" & lastRow).HorizontalAlignment = xlCenter
-        .Range("C3:C" & lastRow).HorizontalAlignment = xlLeft
-        .Range("G3:I" & lastRow).HorizontalAlignment = xlRight
-        .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("G3:I" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshCAR.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 2)
+    Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
     
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -462,7 +381,6 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Détails_Import_All()")
     
     Application.StatusBar = "J'importe le détail des Factures"
-    
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
@@ -481,33 +399,18 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshFAC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshFAC_Détails.Range("A99999").End(xlUp).row
-    
-    'Adjust Formats for all rows
-    With wshFAC_Détails
-        .Range("A4:A" & lastRow & ", C4:C" & lastRow & ", F4:F" & lastRow & ", G4:G" & lastRow).HorizontalAlignment = xlCenter
-        .Range("B4:B" & lastRow).HorizontalAlignment = xlLeft
-        .Range("D4:E" & lastRow).HorizontalAlignment = xlRight
-        .Range("C4:C" & lastRow).NumberFormat = "#,##0.00"
-        .Range("D4:E" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("H4:H" & lastRow & ",J4:J" & lastRow & ",L4:L" & lastRow & ",N4:T" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("O4:O" & lastRow & ",Q4:Q" & lastRow).NumberFormat = "#0.000 %"
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshFAC_Détails.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 2)
-    
+    Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
+
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set destinationRange = Nothing
+    Set rng = Nothing
     Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
@@ -538,25 +441,11 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshFAC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshFAC_Entête.Range("A99999").End(xlUp).row
-    
-    'Adjust Formats for all rows
-    With wshFAC_Entête
-        .Range("A3:D" & lastRow).HorizontalAlignment = xlCenter
-        .Range("B3:B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("E3:I" & lastRow & ",K3:K" & lastRow & ",M3:M" & lastRow & ",O3:O" & lastRow).HorizontalAlignment = xlLeft
-        .Range("J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow & ",P3:V" & lastRow).HorizontalAlignment = xlRight
-        .Range("J3:J" & lastRow & ",L3:L" & lastRow & ",N3:N" & lastRow & ",P3:V" & lastRow).NumberFormat = "#,##0.00 $"
-        .Range("Q3:Q" & lastRow & ",S3:S" & lastRow).NumberFormat = "#0.000 %"
-    End With
-
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 2)
+    Call Apply_Worksheet_Format(wshFAC_Entête, rng, 2)
     
     Application.ScreenUpdating = True
     
@@ -567,6 +456,112 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Set sourceRange = Nothing
     
     Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
+
+End Sub
+
+Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Projets_Détails_Import_All()")
+    
+    Application.StatusBar = "J'importe le détail des Projets de Factures"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshFAC_Projets_Détails.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "FAC_Projets_Détails"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range: Set destinationRange = wshFAC_Projets_Détails.Range("A1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    
+    'Delete the rows that column (isDétruite) is set to TRUE
+    Dim i As Long
+    For i = 2 To lastRow
+        If wshFAC_Projets_Détails.Cells(i, 9) = "VRAI" Then
+            wshFAC_Projets_Détails.rows(i).delete
+        End If
+    Next i
+    
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
+    Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
+    
+    Application.ScreenUpdating = True
+    Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-20 @ 13:30
+    Set destinationRange = Nothing
+    Set rng = Nothing
+    Set sourceRange = Nothing
+    
+    Call Output_Timer_Results("modImport:FAC_Projets_Détails_Import_All()", timerStart)
+
+End Sub
+
+Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Projets_Entête_Import_All()")
+    
+    Application.StatusBar = "J'importe les entêtes de Facture"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshFAC_Projets_Entête.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                     "GCF_BD_Sortie.xlsx"
+    sourceTab = "FAC_Projets_Entête"
+                     
+    'Set up source and destination ranges
+    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+
+    Dim destinationRange As Range: Set destinationRange = wshFAC_Projets_Entête.Range("A1")
+
+    'Copy data, using Range to Range, then close the BD_Sortie file
+    sourceRange.Copy destinationRange
+    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+
+    Dim lastRow As Long
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    
+    'Delete the rows that column (isDétruite) is set to TRUE
+    Dim i As Long
+    For i = 2 To lastRow
+        If wshFAC_Projets_Entête.Cells(i, 26) = "VRAI" Then
+            wshFAC_Projets_Entête.rows(i).delete
+        End If
+    Next i
+    
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
+    Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
+    
+    Application.ScreenUpdating = True
+    
+    Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set destinationRange = Nothing
+    Set sourceRange = Nothing
+    
+    Call Output_Timer_Results("modImport:FAC_Projets_Entête_Import_All()", timerStart)
 
 End Sub
 
@@ -605,15 +600,14 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
     'Copy to wshBD_Clients workbook
     wshBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
-    wshBD_Fournisseurs.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
+    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
+    Dim rng As Range: Set rng = wshBD_Fournisseurs.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshBD_Fournisseurs, rng, 1)
     
     'Close resource
     recSet.Close
     connStr.Close
-    
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
-    Dim rng As Range: Set rng = wshBD_Fournisseurs.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -663,34 +657,16 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshGL_EJ_Recurrente.Range("C1").CurrentRegion.Offset(0, 2).EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    'Get the last used rows AFTER the copy
-    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
-    
-    'Adjust Formats for all rows
-    With wshGL_EJ_Recurrente
-        Union(.Range("C2:C" & lastUsedRow1), _
-              .Range("E2:E" & lastUsedRow1)).HorizontalAlignment = xlCenter
-        Union(.Range("D2:D" & lastUsedRow1), _
-              .Range("F2:F" & lastUsedRow1), _
-              .Range("I2:I" & lastUsedRow1)).HorizontalAlignment = xlLeft
-        With .Range("G2:H" & lastUsedRow1)
-            .HorizontalAlignment = xlRight
-            .NumberFormat = "#,##0.00 $"
-        End With
-    End With
+   'Setup the format of the worksheet using a Sub
+    Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshGL_EJ_Recurrente, rng, 1)
     
     Call GL_EJ_Auto_Build_Summary '2024-03-14 @ 07:38
     
 Clean_Exit:
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
-    Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
-    
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -728,44 +704,13 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
     'Copy data, using Range to Range, then close the BD_Sortie file
     sourceRange.Copy destinationRange
-    wshGL_Trans.Range("A1").CurrentRegion.EntireColumn.AutoFit
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    Dim lastRow As Long
-    lastRow = wshGL_Trans.Range("A999999").End(xlUp).row
-    
-    'Adjust Formats for all the rows
-    With wshGL_Trans
-        .Range("A" & 2 & ":J" & lastRow).HorizontalAlignment = xlCenter
-        .Range("B" & 2 & ":B" & lastRow).NumberFormat = "dd/mm/yyyy"
-        .Range("C" & 2 & ":C" & lastRow & _
-            ", D" & 2 & ":D" & lastRow & _
-            ", F" & 2 & ":F" & lastRow & _
-            ", I" & 2 & ":I" & lastRow) _
-                .HorizontalAlignment = xlLeft
-        With .Range("G" & 2 & ":H" & lastRow)
-            .HorizontalAlignment = xlRight
-            .NumberFormat = "#,##0.00 $"
-        End With
-        With .Range("A" & 2 & ":A" & lastRow) _
-            .Range("J" & 2 & ":J" & lastRow).Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorAccent5
-            .TintAndShade = 0.799981688894314
-            .PatternTintAndShade = 0
-        End With
-    End With
-    
-    Dim firstRowJE As Long, lastRowJE As Long
-    Dim r As Long
-    
-    'Apply standard conditional formatting - 2024-07-08 @ 08:39
+   'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshGL_Trans.Range("A1").CurrentRegion
-    Call Apply_Conditional_Formatting(rng, 1)
-    
+    Call Apply_Worksheet_Format(wshGL_Trans, rng, 1)
+
     Application.ScreenUpdating = True
-    
     Application.StatusBar = ""
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -799,23 +744,12 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
 
     'Copy data, using Range to Range and Autofit all columns
     sourceRange.Copy destinationRange
-    wshTEC_Local.Range("A1").CurrentRegion.EntireColumn.AutoFit
-
-    'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
-    'Arrange formats on all rows
-    Dim lastRow As Long
-    lastRow = wshTEC_Local.Range("A99999").End(xlUp).row
+   'Setup the format of the worksheet using a Sub
+    Dim rng As Range: Set rng = wshTEC_Local.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshTEC_Local, rng, 2)
     
-    With wshTEC_Local
-        .Range("A3" & ":P" & lastRow).HorizontalAlignment = xlCenter
-        With .Range("F3:F" & lastRow & ",G3:G" & lastRow & ",I3:I" & lastRow & ",O3:O" & lastRow)
-            .HorizontalAlignment = xlLeft
-        End With
-        .Range("H3:H" & lastRow).NumberFormat = "#0.00"
-        .Range("K3:K" & lastRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
-    End With
     
     Application.ScreenUpdating = True
     
