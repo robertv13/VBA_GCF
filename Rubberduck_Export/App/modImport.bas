@@ -89,7 +89,6 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     
     'Copy to wshAdmin workbook
     wshAdmin.Range("T11").CopyFromRecordset recSet
-'    wshBD_Clients.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
     'Close resource
     recSet.Close
@@ -255,7 +254,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshDEB_Trans workbook
     wshDEB_Trans.Range("A2").CopyFromRecordset recSet
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
@@ -307,7 +306,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshENC_Détails workbook
     wshENC_Détails.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
@@ -359,7 +358,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshENC_Entête workbook
     wshENC_Entête.Range("A3").CopyFromRecordset recSet
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
@@ -411,7 +410,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshCAR workbook
     wshCAR.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
@@ -462,7 +461,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshFAC_Détails workbook
     wshFAC_Détails.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet - 2024-07-20 @ 18:35
@@ -574,8 +573,8 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = 2 To lastRow
-        If wshFAC_Projets_Détails.Cells(i, 9) = "VRAI" Then
+    For i = lastRow To 2 Step -1
+        If wshFAC_Projets_Détails.Cells(i, 9).value = True Then
             wshFAC_Projets_Détails.rows(i).delete
         End If
     Next i
@@ -637,8 +636,8 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = 2 To lastRow
-        If wshFAC_Projets_Entête.Cells(i, 26) = "VRAI" Then
+    For i = lastRow To 2 Step -1
+        If wshFAC_Projets_Entête.Cells(i, 26).value = True Then
             wshFAC_Projets_Entête.rows(i).delete
         End If
     Next i
@@ -692,7 +691,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshBD_Fournisseurs workbook
     wshBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38

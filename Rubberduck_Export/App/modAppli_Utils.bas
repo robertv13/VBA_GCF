@@ -1,6 +1,35 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
+Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As String, numberRows As Long)
+
+    'Open the workbook
+    Dim wb As Workbook: Set wb = Workbooks.Open(workbookPath)
+    Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
+
+    'Find the last row with data in column A
+    Dim lastRow As Long
+    lastRow = ws.Range("A9999").End(xlUp).row
+    Dim firstNewRow As Long
+    firstNewRow = lastRow - numberRows + 1
+
+    'Set the range for new rows
+    Dim newRows As Range
+    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
+
+    'Copy formatting from the row above the first new row to the new rows
+    ws.rows(firstNewRow - 1).Copy
+    newRows.PasteSpecial Paste:=xlPasteFormats
+
+    'Clear the clipboard to avoid Excel's cut-copy mode
+    Application.CutCopyMode = False
+
+    'Save and close the workbook
+    wb.Close SaveChanges:=True
+
+End Sub
+
+
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
@@ -1543,7 +1572,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Integer)
                 .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":D" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & _
                        ", J" & firstDataRow & ":J" & lastUsedRow & ", N" & firstDataRow & ":N" & lastUsedRow & ", R" & firstDataRow & ":R" & lastUsedRow & _
                        ", V" & firstDataRow & ":V" & lastUsedRow & ", Z" & firstDataRow & ":AA" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow) = xlLeft
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("E" & firstDataRow & ":E" & lastUsedRow & ", I" & firstDataRow & ":I" & lastUsedRow & ", M" & firstDataRow & ":M" & lastUsedRow & _
                         ", Q" & firstDataRow & ":Q" & lastUsedRow & ", U" & firstDataRow & ":U" & lastUsedRow & ", Y" & firstDataRow & ":Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
                 .Range("G" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"

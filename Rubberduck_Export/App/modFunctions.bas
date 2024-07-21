@@ -34,8 +34,11 @@ Function Fn_GetID_From_Client_Name(NomClient As String) '2024-02-14 @ 06:07
     'Using XLOOKUP to find the result directly
     Dim result As Variant
     result = Application.WorksheetFunction.XLookup(NomClient, _
-        dynamicRange.columns(1), dynamicRange.columns(2), _
-        "Not Found", 0, 1)
+                                                   dynamicRange.columns(1), _
+                                                   dynamicRange.columns(2), _
+                                                   "Not Found", _
+                                                   0, _
+                                                   1)
     
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result

@@ -78,13 +78,13 @@ Sub TEC_Sort_Group_And_Subtotal()
 
     'Group the data to show subtotals in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
-    wsDest.Outline.ShowLevels ROwLevels:=2
+    wsDest.Outline.ShowLevels RowLevels:=2
     
     'Add a formula to sum the billed amounts
-    wshTEC_Analyse.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
+    wsDest.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
     
     'Change the format of 'Total general' row
-    With wshTEC_Analyse.Range("D6")
+    With wsDest.Range("D6")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -99,7 +99,7 @@ Sub TEC_Sort_Group_And_Subtotal()
             .Size = 12
         End With
     End With
-    With wshTEC_Analyse.Range("H6")
+    With wsDest.Range("H6")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -107,7 +107,7 @@ Sub TEC_Sort_Group_And_Subtotal()
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
-        With Selection.Font
+        With .Font
             .Color = -16776961
             .TintAndShade = 0
             .Bold = True
@@ -129,24 +129,90 @@ Sub TEC_Sort_Group_And_Subtotal()
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = 0
             End With
-            With wsDest.Range("H" & r).Interior
-                .Pattern = xlSolid
-                .PatternColorIndex = xlAutomatic
-                .ThemeColor = xlThemeColorAccent1
-                .TintAndShade = -0.249977111117893
-                .PatternTintAndShade = 0
-            End With
-            With wsDest.Range("H" & r).Font
-                .Bold = True
-                .ThemeColor = xlThemeColorDark1
-                .TintAndShade = 0
-            End With
         End If
     Next r
+    
+    'Set conditional formats for total hours (Client's total)
+    Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
+    Call Apply_Conditional_Formatting_On_Column_H(rngTotals, destLastUsedRow)
+    
+    'Bring in all the invoice requests
+    Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
+    
+    'Clean up the summary aera of the worksheet
+    Call Clean_Up_Summary_Area(wsDest)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
+End Sub
+
+Sub Clean_Up_Summary_Area(ws As Worksheet)
+
+    Application.EnableEvents = False
+    
+    'Cleanup the summary area (columns K to Q)
+    ws.Range("K:Q").clear
+    'Erase any checkbox left over
+    Call Delete_CheckBox
+    
+    Application.EnableEvents = True
+
+End Sub
+
+Sub Apply_Conditional_Formatting_On_Column_H(rng As Range, lastUsedRow As Long)
+
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    
+    'Loop each cell in column C to find Totals row
+    Dim totalRange As Range, cell As Range
+    For Each cell In rng
+        If InStr(1, cell.value, "Total ", vbTextCompare) > 0 Then
+            If totalRange Is Nothing Then
+                Set totalRange = ws.Cells(cell.row, 8) 'Column H
+            Else
+                Set totalRange = Union(totalRange, ws.Cells(cell.row, 8))
+            End If
+        End If
+    Next cell
+    
+    'Check if any total rows were found
+    rng.FormatConditions.delete
+
+    'Define conditional formatting rules for the total rows
+    If Not totalRange Is Nothing Then
+        'Clear existing conditional formatting rules in the totalRange
+        totalRange.FormatConditions.delete
+        
+        'Define conditional formatting rules for the totalRange
+        With totalRange.FormatConditions
+    
+            'Rule for values > 50 (Highest priority)
+            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
+            With .item(.count)
+                .Interior.Color = RGB(255, 0, 0) 'Red color
+            End With
+    
+            'Rule for values > 25
+            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
+            With .item(.count)
+                .Interior.Color = RGB(255, 165, 0) 'Orange color
+            End With
+    
+            'Rule for values > 10
+            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
+            With .item(.count)
+                .Interior.Color = RGB(255, 255, 0) 'Yellow color
+            End With
+    
+            'Rule for values > 5
+            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
+            With .item(.count)
+                .Interior.Color = RGB(144, 238, 144) 'Light green color
+            End With
+        End With
+    End If
+    
 End Sub
 
 Sub Build_Hours_Summary(client As String, r As Long)
@@ -266,7 +332,45 @@ Sub Build_Hours_Summary(client As String, r As Long)
     
 End Sub
     
-Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Long, ByRef ProjetID As Long) 'Write a record to MASTER.xlsx file
+Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
+
+    Dim wsSource As Worksheet: Set wsSource = wshFAC_Projets_Entête
+    Dim sourceLastUsedRow As Long
+    sourceLastUsedRow = wsSource.Range("A9999").End(xlUp).row
+    
+    Dim wsActive As Worksheet: Set wsActive = wshTEC_Analyse
+    Dim rngTotal As Range: Set rngTotal = wsActive.Range("C1:C" & activeLastUsedRow)
+    
+    'Analyze all Invoice Requests (one row at the time)
+    
+    Dim clientName As String
+    Dim clientID As Long
+    Dim honoTotal As Double
+    Dim result As Variant
+    Dim i As Long, r As Long
+    For i = 2 To sourceLastUsedRow
+        If wsSource.Cells(i, 26).value <> "True" Then
+            clientName = wsSource.Cells(i, 2).value
+            clientID = wsSource.Cells(i, 3).value
+            honoTotal = wsSource.Cells(i, 5).value
+            'Using XLOOKUP to find the result directly
+            result = Application.WorksheetFunction.XLookup("Total " & clientName, _
+                                                           rngTotal, _
+                                                           rngTotal, _
+                                                           "Not Found", _
+                                                           0, _
+                                                           1)
+            
+            If result <> "Not Found" Then
+                r = Application.WorksheetFunction.Match(result, rngTotal, 0)
+                wsActive.Cells(r, 4).value = honoTotal
+            End If
+        End If
+    Next i
+
+End Sub
+
+Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long, ByRef ProjetID As Long) 'Write a record to MASTER.xlsx file
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_ANalyse:FAC_Projet_Détails_Add_Record_To_DB()")
     
@@ -297,7 +401,6 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Lon
     Else
         ProjetID = rs.Fields("MaxValue").value + 1
     End If
-    Debug.Print "ProjetID = " & ProjetID
     
     'Close the previous recordset (no longer needed)
     rs.Close
@@ -314,7 +417,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Lon
             'Add fields to the recordset before updating it
             rs.Fields("ProjetID").value = ProjetID
             rs.Fields("NomClient").value = wshTEC_Analyse.Range("C" & l).value
-            rs.Fields("ClientID").value = ClientID
+            rs.Fields("ClientID").value = clientID
             rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
             rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
             dateTEC = Format(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
@@ -333,6 +436,9 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Lon
     On Error GoTo 0
     conn.Close
     
+    'Open the MASTER file to clone the format to newly added lines
+    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
+    
     Application.ScreenUpdating = True
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -343,7 +449,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(ClientID As Long, fr As Long, lr As Lon
 
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_Locally(ClientID As Long, fr As Long, lr As Long, ProjetID As Long) 'Write records locally
+Sub FAC_Projets_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As Long, ProjetID As Long) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
     
@@ -359,7 +465,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(ClientID As Long, fr As Long, lr As L
     For i = fr To lr
         wshFAC_Projets_Détails.Range("A" & rn).value = ProjetID
         wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
-        wshFAC_Projets_Détails.Range("C" & rn).value = ClientID
+        wshFAC_Projets_Détails.Range("C" & rn).value = clientID
         wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
         wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
         dateTEC = Format(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
@@ -400,7 +506,7 @@ End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
                                         NomClient As String, _
-                                        ClientID As Long, _
+                                        clientID As Long, _
                                         dte As String, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
@@ -431,7 +537,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
         'Add fields to the recordset before updating it
         rs.Fields("ProjetID").value = ProjetID
         rs.Fields("NomClient").value = NomClient
-        rs.Fields("ClientID").value = ClientID
+        rs.Fields("ClientID").value = clientID
         rs.Fields("Date").value = dte
         rs.Fields("HonoTotal").value = hono
         For c = 1 To UBound(arr, 1)
@@ -451,6 +557,9 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
     On Error GoTo 0
     conn.Close
     
+    'Open the MASTER file to clone the format to newly added lines
+    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
+    
     Application.ScreenUpdating = True
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -461,7 +570,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(ProjetID As Long, _
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String, ClientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String, clientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
     
@@ -475,7 +584,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(ProjetID As Long, NomClient As String,
     Dim dateTEC As String, TimeStamp As String
     wshFAC_Projets_Entête.Range("A" & rn).value = ProjetID
     wshFAC_Projets_Entête.Range("B" & rn).value = NomClient
-    wshFAC_Projets_Entête.Range("C" & rn).value = ClientID
+    wshFAC_Projets_Entête.Range("C" & rn).value = clientID
     wshFAC_Projets_Entête.Range("D" & rn).value = dte
     wshFAC_Projets_Entête.Range("E" & rn).value = hono
     'Assign values from the array to the worksheet using .Cells

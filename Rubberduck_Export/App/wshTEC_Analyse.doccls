@@ -11,7 +11,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Import transactions from MASTER file
     Call TEC_Import_All
-    
+    Call FAC_Projets_Détails_Import_All
+    Call FAC_Projets_Entête_Import_All
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
@@ -20,24 +21,20 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Analyse")
     
-   'Hide column A & B for end users
-    With ws
-'        .Unprotect
-'        .Range("A:B").EntireColumn.Hidden = True
-    End With
+    Call TEC_Sort_Group_And_Subtotal
     
-'    Call SetTabOrder(ws)
+    Call SetTabOrder(ws)
     
     With ws
-'        .Range("K4").value = Now()
-'        .Range("F4").Activate
-'        .Range("F4").Select
-        previousCellAddress = .Range("F4").Address
+        .Unprotect
+        previousCellAddress = .Range("I3").Address
     End With
-    ActiveWindow.Panes(2).Activate
-    ws.Cells(7, 3).Select
-    ws.Outline.ShowLevels ROwLevels:=2
     
+    ws.Outline.ShowLevels RowLevels:=2
+    
+'    ActiveWindow.Panes(2).Activate
+    Application.EnableEvents = False
+    ws.Cells(9, 3).Select
     Application.EnableEvents = True
     
     'Cleaning memory - 2024-07-11 @ 10:14
@@ -49,8 +46,9 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    ' Check if the selected cell is in column B
-    If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Then
+    ' Check if the selected cell is in column C
+    If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Or _
+        Not Intersect(Target, wshTEC_Analyse.columns("H")) Is Nothing Then
         
         If Target.Cells.count = 1 And Target.row > 6 Then
             If Target.value <> "" Then
@@ -59,17 +57,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 Dim cell As Range
                 Dim rowRange As Range
                 For Each cell In Target
-                    ' Define the range for the entire row
+                    'Define the range for the entire row
                     Set rowRange = cell.EntireRow
-                    ' Check if the row is part of a group
+                    'Check if the row is part of a group
                     If rowRange.OutlineLevel > 1 Then
-                        ' Expand the group
+                        'Expand the group
                         If rowRange.ShowDetail = False Then
                             rowRange.ShowDetail = True
                         End If
                     End If
                 Next cell
-                If Target.Offset(0, -1) = "" Then
+                If Me.Cells(Target.row, 2) = "" Then
                     Call Build_Hours_Summary(Target.value, Target.row)
                 End If
             End If
@@ -122,13 +120,13 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Loop
                 
                 Dim NomClient As String
-                Dim ClientID As Long
+                Dim clientID As Long
                 NomClient = wshTEC_Analyse.Range("C" & firstRow).value
-                ClientID = Fn_GetID_From_Client_Name(NomClient)
+                clientID = Fn_GetID_From_Client_Name(NomClient)
                 
                 Dim ProjetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(ClientID, firstRow, lastRow, ProjetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(ClientID, firstRow, lastRow, ProjetID)
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, ProjetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, ProjetID)
                 
                 r = firstRow
                 Do While wshTEC_Analyse.Range("K" & r).value <> ""
@@ -149,8 +147,8 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = wshTEC_Analyse.Range("N" & r + 1).value
                 
-                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, NomClient, ClientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, NomClient, ClientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, NomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, NomClient, clientID, dateProjet, hono, arr)
                 
             Case "SUPPRIMER"
                 wshTEC_Analyse.Range("D" & totalRow).value = 0

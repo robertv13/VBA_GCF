@@ -275,20 +275,22 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Next cell
 
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
-    Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
-    Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd/mm/yyyy hh:mm:ss")
-
-    'Enable TAB through unprotected cells
-    Application.EnableEvents = False
-    Dim i As Long
-    For i = 1 To sortedCells.count
-        If i = sortedCells.count Then
-            sortedCells.Cells(i).Next.Select
-        Else
-            sortedCells.Cells(i).Next.Select
-            sortedCells.Cells(i + 1).Activate
-        End If
-    Next i
+    If Not unprotectedCells Is Nothing Then
+        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
+        Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd/mm/yyyy hh:mm:ss")
+    
+        'Enable TAB through unprotected cells
+        Application.EnableEvents = False
+        Dim i As Long
+        For i = 1 To sortedCells.count
+            If i = sortedCells.count Then
+                sortedCells.Cells(i).Next.Select
+            Else
+                sortedCells.Cells(i).Next.Select
+                sortedCells.Cells(i + 1).Activate
+            End If
+        Next i
+    End If
     
     Application.EnableEvents = True
 

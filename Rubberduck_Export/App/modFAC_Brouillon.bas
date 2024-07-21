@@ -64,14 +64,14 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
 
 End Sub
 
-Sub FAC_Brouillon_Client_Change(ClientName As String)
+Sub FAC_Brouillon_Client_Change(clientName As String)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Client_Change()")
     
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, ClientName, 3)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 3)
     
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
@@ -87,7 +87,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     With wshFAC_Brouillon
         Application.EnableEvents = False
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("K4").value = ClientName
+        .Range("K4").value = clientName
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -106,7 +106,7 @@ Sub FAC_Brouillon_Client_Change(ClientName As String)
     With wshFAC_Finale
         Application.EnableEvents = False
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("B24").value = ClientName
+        .Range("B24").value = clientName
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -327,7 +327,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(ClientID As Long, _
+Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         cutoffDate As String, _
         isBillable As String, _
         isInvoiced As String, _
@@ -354,8 +354,8 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(ClientID As Long, _
         
         'Define the Criteria Range
         Dim cRng As Range
-        If ClientID <> 0 Then
-            .Range("AK3").value = ClientID
+        If clientID <> 0 Then
+            .Range("AK3").value = clientID
         Else
             .Range("AK3").value = ""
         End If
