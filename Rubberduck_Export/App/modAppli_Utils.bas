@@ -330,6 +330,78 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
 End Sub
 
+Sub Fees_Summary_Borders_Invisible(rng As Range)
+
+        With rng.Interior
+            .Pattern = xlNone
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        With rng
+            .ClearContents
+            .Borders(xlEdgeLeft).LineStyle = xlNone
+            .Borders(xlEdgeTop).LineStyle = xlNone
+            .Borders(xlEdgeBottom).LineStyle = xlNone
+            .Borders(xlEdgeRight).LineStyle = xlNone
+            .Borders(xlInsideVertical).LineStyle = xlNone
+            .Borders(xlInsideHorizontal).LineStyle = xlNone
+            .Font.ThemeColor = xlThemeColorDark1
+            .Font.TintAndShade = 0
+        End With
+
+End Sub
+Sub Fees_Summary_Borders_Visible(rng As Range)
+
+    With rng
+        With .Borders(xlEdgeLeft)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeRight)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlInsideVertical)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        With .Borders(xlInsideHorizontal)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        With .Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorDark1
+            .TintAndShade = -4.99893185216834E-02
+            .PatternTintAndShade = 0
+        End With
+        .Font.ThemeColor = xlThemeColorLight1
+        .Font.Bold = True
+        .Font.TintAndShade = 0
+    End With
+
+End Sub
+
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Application.ScreenUpdating = False
@@ -795,42 +867,42 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim currentRow As Long
         
     Dim i As Long
-    Dim ProjetID As String, oldProjetID As String
+    Dim projetID As String, oldProjetID As String
     Dim lookUpValue As Long, result As Variant
     For i = LBound(arr, 1) To UBound(arr, 1) - 1 'One line of header !
-        ProjetID = arr(i, 1)
-        lookUpValue = ProjetID
-        If ProjetID <> oldProjetID Then
+        projetID = arr(i, 1)
+        lookUpValue = projetID
+        If projetID <> oldProjetID Then
             result = Application.WorksheetFunction.XLookup(lookUpValue, _
                                                            rngMaster, _
                                                            rngMaster, _
                                                            "Not Found", _
                                                            0, _
                                                            1)
-            oldProjetID = ProjetID
+            oldProjetID = projetID
         End If
         If result = "Not Found" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 3)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
@@ -881,96 +953,96 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim currentRow As Long
         
     Dim i As Long
-    Dim ProjetID As String
+    Dim projetID As String
     For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
-        ProjetID = arr(i, 1)
+        projetID = arr(i, 1)
         If IsNumeric(arr(i, 3)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsDate(arr(i, 4)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 7)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 9)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & ProjetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
         End If

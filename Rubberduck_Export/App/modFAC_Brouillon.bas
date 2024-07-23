@@ -26,7 +26,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B24").value = False
             .Range("B26").value = False
             .Range("B27").value = True
-            .Range("B51, B52, B53").value = "" 'Requests for invoice
+            .Range("B51, B52, B53, B54").value = "" 'Requests for invoice
+            .Range("R44:T48").ClearContents 'Hours & Fees summary from request for invoice
             Application.EnableEvents = True
         End With
         
@@ -60,20 +61,61 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         DoEvents
 
         'Introduce a small delay to ensure the worksheet is fully updated
-        Application.Wait (Now + TimeValue("0:00:03"))
+        Application.Wait (Now + TimeValue("0:00:01"))
         
         'Do we have pending requests for invoice ?
         ufListeProjetsFacture.show
+        Dim projetID As Long
         If wshFAC_Brouillon.Range("B51").value <> "" Then
+            Application.EnableEvents = False
+            projetID = wshFAC_Brouillon.Range("B52").value
+            'Get the Entête for this projetID
+            Dim lastUsedRow As Long
+            lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
+            Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
+            Dim result As Variant
+            result = Application.WorksheetFunction.XLookup(projetID, _
+                                                           rngToSearch, _
+                                                           rngToSearch, _
+                                                           "Not Found", _
+                                                           0, _
+                                                           1)
+
+            If result <> "Not Found" Then
+                Dim matchedRow As Long
+                matchedRow = Application.Match(projetID, rngToSearch, 0)
+                Dim arr() As Variant
+                ReDim arr(1 To 5, 1 To 3)
+                Dim ii As Long
+                For ii = 1 To 5
+                    arr(ii, 1) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 6).value
+                    arr(ii, 2) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 7).value
+                    arr(ii, 3) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 8).value
+                Next ii
+                'Update the summary for billing
+                'Transfer data to the worksheet
+                Application.EnableEvents = False
+                For ii = 44 To 48
+                    If arr(ii - 43, 1) <> "" Then
+                        wshFAC_Brouillon.Range("R" & ii).value = arr(ii - 43, 1)
+                        wshFAC_Brouillon.Range("S" & ii).value = arr(ii - 43, 2)
+                        wshFAC_Brouillon.Range("T" & ii).value = arr(ii - 43, 3)
+                    End If
+                Next ii
+                Application.EnableEvents = True
+            End If
+            Application.EnableEvents = True
             wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
-            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B52").value
+            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
+            wshFAC_Brouillon.Range("O9").Select
+       End If
+        
+        'Move to Client Name if we invoicing manually
+        If wshFAC_Brouillon.Range("B51").value = "" Then
+            Application.EnableEvents = True
+            wshFAC_Brouillon.Select
+            wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
         End If
-        
-        'Move to Client Name
-        Application.EnableEvents = False
-        wshFAC_Brouillon.Select
-        wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
-        
     End If
 
     Application.ScreenUpdating = True
@@ -638,10 +680,9 @@ End Sub
 Sub Setup_Hours_Summary()
 
     Dim ws As Worksheet: Set ws = wshFAC_Brouillon
-    Dim lastUsedRow As Integer
-    lastUsedRow = ws.Range("R999").End(xlUp).row
+    
     Application.EnableEvents = False
-    If lastUsedRow > 24 Then ws.Range("R25:U" & lastUsedRow).ClearContents
+    ws.Range("R25:U34").ClearContents
     Application.EnableEvents = False
     
     Dim r As Integer
@@ -659,7 +700,7 @@ Sub Setup_Hours_Summary()
         r = 25
         Do While .Range("R" & r).value <> ""
             .Range("S" & r).formula = "=SUMIFS(G7:G999, C7:C999, TRUE, E7:E999, R" & r & ")"
-            .Range("U" & r).formula = "=S" & r & " * T" & r
+            .Range("U" & r).formula = "=S" & r & "*T" & r
             r = r + 1
         Loop
         ws.Range("S" & 35).formula = "=sum(S25:S34)"

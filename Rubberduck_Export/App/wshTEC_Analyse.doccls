@@ -46,7 +46,24 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    ' Check if the selected cell is in column C
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_SelectionChange()")
+    
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = interior_color_current_cell
+    End If
+    
+    'Save the current cell address and color, before changing it
+    With Target
+        previousCellAddress = .Address
+        interior_color_current_cell = .Interior.Color
+    End With
+
+    'Is date been selected ?
+    If Not Intersect(Target, wshTEC_Analyse.Range("I3")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Check if the selected cell is in column C or H
     If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Or _
         Not Intersect(Target, wshTEC_Analyse.columns("H")) Is Nothing Then
         
@@ -68,31 +85,81 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                     End If
                 Next cell
                 If Me.Cells(Target.row, 2) = "" Then
-                    Call Build_Hours_Summary(Target.value, Target.row)
+                    Call Build_Hours_Summary(Target.row)
                 End If
             End If
         End If
     End If
     
+    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_SelectionChange()", timerStart)
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_Change()")
+    
+    Dim fullDate As Variant
+    
+    'CutOffDate has changed
+    If Not Intersect(Target, Range("I3")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = CompleteDate(CStr(Target.text))
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+'            Application.GoTo wshTEC_Analyse.Range("O9")
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+       
+        'Future date ?
+        If CDate(Range("I3").value) > Format(Now(), "dd/mm/yyyy") Then
+            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Application.EnableEvents = False
+                Target.ClearContents
+                Application.EnableEvents = True
+                Application.GoTo Range(Target.Address)
+            End If
+        End If
+
+'        Set rng = wshTEC_Analyse.Range("O9")
+        GoTo ExitSub
+    End If
+
+ExitSub:
+
+    Application.EnableEvents = True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+
+    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_Change()", timerStart)
+  
 End Sub
 
 Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    
     'Reference your checkbox by name
     Dim chkBox As OLEObject
-    Set chkBox = wshTEC_Analyse.OLEObjects("CheckBox1")
+    Set chkBox = ws.OLEObjects("CheckBox1")
     
-    ' Get the position of the checkbox
+    'Get the address of the checkbox
     Dim chkBoxPosition As String
     chkBoxPosition = GetCheckBoxPosition(chkBox)
     
+    'Get the row number of the checkBox
     Dim chkboxRow As Long
     chkboxRow = CLng(Replace(chkBoxPosition, "$O$", ""))
 
     'Getting to the Total Row (which is the line before the start of the summary)
     Dim i As Long
     For i = chkboxRow To 7 Step -1
-        If wshTEC_Analyse.Range("N" & i).value = "" Then
+        If ws.Range("N" & i).value = "" Then
             Exit For
         End If
     Next i
@@ -104,54 +171,54 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
         
         'Is there a billing project that already exist for this customer ?
         Dim cell As String
-        cell = Verify_And_Delete_Rows_If_Value_Is_Found(wshTEC_Analyse.Range("C" & totalRow + 1).value, _
-                                                        wshTEC_Analyse.Range("D" & totalRow).value)
+        cell = Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).value, _
+                                                        ws.Range("D" & totalRow).value)
         
         Select Case cell
             Case "REMPLACER"
-                wshTEC_Analyse.Range("D" & totalRow).value = wshTEC_Analyse.Range("N" & chkboxRow).value
+                ws.Range("D" & totalRow).value = ws.Range("N" & chkboxRow).value
                 
                 Dim firstRow As Long: firstRow = totalRow + 1
                 Dim lastRow As Long, r As Long
                 r = firstRow
-                Do While wshTEC_Analyse.Range("A" & r).value <> ""
+                Do While ws.Range("A" & r).value <> ""
                     lastRow = r
                     r = r + 1
                 Loop
                 
                 Dim nomClient As String
                 Dim clientID As Long
-                nomClient = wshTEC_Analyse.Range("C" & firstRow).value
+                nomClient = ws.Range("C" & firstRow).value
                 clientID = Fn_GetID_From_Client_Name(nomClient)
                 
-                Dim ProjetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, ProjetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, ProjetID)
+                Dim projetID As Long 'ProjetID is establised by the next procedure
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
-                Do While wshTEC_Analyse.Range("K" & r).value <> ""
+                Do While ws.Range("K" & r).value <> ""
                     r = r + 1
                 Loop
                 r = r - 1 'Last line of summary, excluding totals
                 
                 Dim arr() As Variant
                 ReDim arr(1 To (r - firstRow + 1), 1 To 4)
-                Dim rngSummary As Range: Set rngSummary = wshTEC_Analyse.Range("K" & firstRow & ":N" & r)
+                Dim rngSummary As Range: Set rngSummary = ws.Range("K" & firstRow & ":N" & r)
                 arr = rngSummary.value
                 
                 'Set the date
                 Dim dateProjet As String
-                dateProjet = Format(Now(), "dd/mm/yyyy")
+                dateProjet = Format(ws.Range("I3").value, "dd/mm/yyyy")
                 
                 'Determine the summary total
                 Dim hono As Double
-                hono = wshTEC_Analyse.Range("N" & r + 1).value
+                hono = ws.Range("N" & r + 1).value
                 
-                Call FAC_Projets_Entête_Add_Record_To_DB(ProjetID, nomClient, clientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(ProjetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
             Case "SUPPRIMER"
-                wshTEC_Analyse.Range("D" & totalRow).value = 0
+                ws.Range("D" & totalRow).value = 0
 '                firstRow = totalRow + 1
 '                Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 
@@ -161,7 +228,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
             
         End Select
     Else
-        wshTEC_Analyse.Range("D" & totalRow).value = 0
+        ws.Range("D" & totalRow).value = 0
         'Perform actions when checkbox is unchecked
     End If
     

@@ -268,7 +268,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     rng.ColumnWidth = 30
 
     Dim visibleRows As Long
-    visibleRows = ActiveWindow.VisibleRange.rows.count
+    visibleRows = ActiveWindow.visibleRange.rows.count
     If lastResultUsedRow > visibleRows Then
         ActiveWindow.ScrollRow = lastResultUsedRow - visibleRows + 3 'Move to the bottom of the worksheet
     Else

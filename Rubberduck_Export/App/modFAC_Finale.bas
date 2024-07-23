@@ -873,21 +873,63 @@ Sub FAC_Finale_Montrer_Heures()
     
 End Sub
 
-Sub FAC_Finale_Cacher_Sommaire_Heures()
+Sub FAC_Finale_Cacher_Sommaire_Taux()
 
-    With wshFAC_Finale.Range("C65:D66")
-        .Font.ThemeColor = xlThemeColorDark1
-        .Font.TintAndShade = 0
-    End With
+    'First determine how many rows there is in the Fees Summary
+    Dim nbItems As Integer
+    Dim i As Integer
+    For i = 67 To 63 Step -1
+        If wshFAC_Finale.Range("C" & i).value <> "" Then
+            nbItems = nbItems + 1
+        End If
+    Next i
+    
+    If nbItems > 0 Then
+        Dim rngFeesSummary As Range: Set rngFeesSummary = _
+            wshFAC_Finale.Range("C" & (67 - nbItems) + 1 & ":D67")
+        
+        Call Fees_Summary_Borders_Invisible(rngFeesSummary)
+        
+        'Clear the contents of the 'Sommaire' cell
+        wshFAC_Finale.Range("B" & (67 - nbItems) + 1).ClearContents
+    End If
     
 End Sub
 
-Sub FAC_Finale_Montrer_Sommaire_Heures()
+Sub FAC_Finale_Montrer_Sommaire_Taux()
 
-    With wshFAC_Finale.Range("C65:D66")
-        .Font.ThemeColor = xlThemeColorLight1
-        .Font.TintAndShade = 0
-    End With
+    'First, determine how many rows there is in the summary
+    Dim nbItems As Integer
+    Dim rowSummary As Integer
+    For rowSummary = 44 To 48
+        If wshFAC_Brouillon.Range("R" & rowSummary).value <> "" Then
+            nbItems = nbItems + 1
+        End If
+    Next rowSummary
+    
+    Dim rowFAC_Finale As Integer
+    rowFAC_Finale = (67 - nbItems) + 1
+    Dim rngFeesSummary As Range: Set rngFeesSummary = _
+        wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
+    
+    Call Fees_Summary_Borders_Visible(rngFeesSummary)
+
+    Dim rowFAC_Brouillon As Integer
+    rowFAC_Brouillon = 44
+
+    Dim i As Integer
+    For i = rowFAC_Finale To 67
+        wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
+        wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
+        wshFAC_Finale.Range("D" & i).value = wshFAC_Brouillon.Range("T" & rowFAC_Brouillon).value
+        rowFAC_Brouillon = rowFAC_Brouillon + 1
+    Next i
+    
+    'Label 'Sommaire'
+    wshFAC_Finale.Range("B" & rowFAC_Finale).HorizontalAlignment = xlRight
+    wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Color = RGB(0, 0, 0) 'Black Font
+    wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Bold = True
+    wshFAC_Finale.Range("B" & rowFAC_Finale).value = "Sommaire:"
     
 End Sub
 

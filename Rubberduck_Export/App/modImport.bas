@@ -654,6 +654,8 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Set recSet = Nothing
     Set rng = Nothing
     
+    Application.StatusBar = ""
+    
     Call Output_Timer_Results("modImport:FAC_Projets_Entête_Import_All()", timerStart)
 
 End Sub

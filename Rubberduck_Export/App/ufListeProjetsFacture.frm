@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
-   Caption         =   "Projets de Facture"
+   Caption         =   "Factures à préparer"
    ClientHeight    =   6300
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8115
+   ClientWidth     =   8730.001
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -28,7 +28,7 @@ Private Sub UserForm_Initialize()
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     Dim arr() As Variant
-    ReDim arr(1 To lastUsedRow - 1, 1 To 3)
+    ReDim arr(1 To lastUsedRow - 1, 1 To 4)
     
     'Populate the array with non-contiguous columns
     Dim i As Integer
@@ -36,6 +36,7 @@ Private Sub UserForm_Initialize()
         arr(i - 1, 1) = ws.Cells(i, 2).value 'nomClient
         arr(i - 1, 2) = ws.Cells(i, 4).value 'date
         arr(i - 1, 3) = Fn_Pad_A_String(Format(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
+        arr(i - 1, 4) = ws.Cells(i, 1).value 'ProjetID
     Next i
     
     'Sort the list
@@ -46,8 +47,8 @@ Private Sub UserForm_Initialize()
 
     With lsbProjetsFacture
         .ColumnHeads = True
-        .ColumnCount = 3
-        .ColumnWidths = "225; 68; 90"
+        .ColumnCount = 4
+        .ColumnWidths = "225; 68; 90; 15"
     End With
         
     'Populate the ListBox with the array
@@ -69,15 +70,18 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     Dim rowSelected As Integer
     Dim nomClient As String, dte As String
     Dim honorairesTotal As Double
+    Dim projetID As Long
     
     rowSelected = lsbProjetsFacture.ListIndex
     nomClient = lsbProjetsFacture.List(rowSelected, 0)
     dte = lsbProjetsFacture.List(rowSelected, 1)
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
+    projetID = lsbProjetsFacture.List(rowSelected, 3)
     
     wshFAC_Brouillon.Range("B51").value = nomClient
-    wshFAC_Brouillon.Range("B52").value = dte
-    wshFAC_Brouillon.Range("B53").value = honorairesTotal
+    wshFAC_Brouillon.Range("B52").value = projetID
+    wshFAC_Brouillon.Range("B53").value = dte
+    wshFAC_Brouillon.Range("B54").value = honorairesTotal
     
     Unload ufListeProjetsFacture
 

@@ -288,7 +288,7 @@ Sub wshGL_BV_Adjust_The_Shape()
         'Set shape properties
         With dynamicShape
             .name = "JE_Detail_Trans"
-            .fill.ForeColor.RGB = RGB(249, 255, 229)
+            .Fill.ForeColor.RGB = RGB(249, 255, 229)
             .Line.Weight = 2
             .Line.ForeColor.RGB = vbBlue
             .TextFrame.Characters.text = texteFull

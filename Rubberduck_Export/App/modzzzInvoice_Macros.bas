@@ -53,7 +53,7 @@ Sub Invoice_SavedMsg()
         Dim i As Long, Delay As Double, startTime As Double
         .Visible = msoCTrue
         For i = 1 To 150
-            .fill.Transparency = i / 150
+            .Fill.Transparency = i / 150
             Delay = 0.009
             startTime = Timer
             Do
