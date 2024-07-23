@@ -42,6 +42,17 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
         Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
     End If
+    
+    'Update FAC_Projets_Entête & FAC_Projets_Détails, if necessary
+    Dim projetID As Long
+    projetID = wshFAC_Brouillon.Range("B52").value
+    If projetID <> 0 Then
+        Call FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_Détails_Locally(projetID)
+        
+        Call FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
+    End If
         
 '    Call FAC_Brouillon_Clear_All_TEC_Displayed
     
@@ -55,13 +66,18 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     'Update TEC_DashBoard
     Call TEC_DB_Update_All '2024-03-21 @ 12:32
 
+    Application.ScreenUpdating = True
+    
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim(Format(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
+    wshFAC_Brouillon.Select
+    Application.Wait (Now + TimeValue("0:00:02"))
     wshFAC_Brouillon.Range("E3").value = "" 'Reset client to empty
     wshFAC_Brouillon.Range("B27").value = False
+    
     Call FAC_Brouillon_New_Invoice '2024-03-12 @ 08:08 - Maybe ??
     
 Fast_Exit_Sub:
@@ -474,6 +490,168 @@ next_iteration:
 
 End Sub
 
+Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()")
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    
+    Dim projetIDColumn As String, isDétruiteColumn As String
+    projetIDColumn = "A"
+    isDétruiteColumn = "I"
+
+    'Find the last used row
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    
+    'Use Range.Find to locate the first cell with the projetID
+    Dim cell As Range
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
+
+    'Check if the projetID was found at all
+    Dim firstAddress As String
+    If Not cell Is Nothing Then
+        firstAddress = cell.Address
+        Do
+            'Update the isDétruite column for the found projetID
+            ws.Cells(cell.row, isDétruiteColumn).value = True
+            'Find the next cell with the projetID
+            Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
+        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+    End If
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set ws = Nothing
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()", timerStart)
+
+End Sub
+
+Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()")
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Projets_Détails"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    'Build the query
+    Dim strSQL As String
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE projetID = '" & projetID & "'"
+    
+    'Execute the SQL query
+    conn.Execute strSQL
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", timerStart)
+
+End Sub
+
+Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()")
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    
+    Dim projetIDColumn As String, isDétruiteColumn As String
+    projetIDColumn = "A"
+    isDétruiteColumn = "Z"
+
+    'Find the last used row
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    
+    'Use Range.Find to locate the first cell with the projetID
+    Dim cell As Range
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
+
+    'Check if the projetID was found at all
+    Dim firstAddress As String
+    If Not cell Is Nothing Then
+        firstAddress = cell.Address
+        Do
+            'Update the isDétruite column for the found projetID
+            ws.Cells(cell.row, isDétruiteColumn).value = True
+            'Find the next cell with the projetID
+            Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
+        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+    End If
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set ws = Nothing
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", timerStart)
+
+End Sub
+Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()")
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Projets_Entête"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Build the query
+    Dim strSQL As String
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE ProjetID = " & projetID
+
+    'Execute the SQL query
+    On Error GoTo eh
+    conn.Execute strSQL
+    On Error GoTo 0
+    
+    'Close recordset and connection
+    On Error Resume Next
+    conn.Close
+    On Error GoTo 0
+    
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-23 @ 15:32
+    Set conn = Nothing
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()", timerStart)
+    Exit Sub
+
+eh:
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error"
+    If Not conn Is Nothing Then
+        conn.Close
+        Set conn = Nothing
+    End If
+
+End Sub
+
 Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
@@ -719,6 +897,21 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
     SaveAs = wshAdmin.Range("FolderPDFInvoice").value & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
+    'Check if the file already exists
+    Dim FileExists As Boolean
+    FileExists = Dir(SaveAs) <> ""
+    
+    'If the file exists, prompt the user for confirmation
+    Dim reponse As VbMsgBoxResult
+    If FileExists Then
+        reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
+                          "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
+                          "Cette facture existe déjà en formt PDF")
+        If reponse = vbNo Then
+            GoTo EndMacro
+        End If
+    End If
+
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
@@ -887,11 +1080,12 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
     If nbItems > 0 Then
         Dim rngFeesSummary As Range: Set rngFeesSummary = _
             wshFAC_Finale.Range("C" & (67 - nbItems) + 1 & ":D67")
+        rngFeesSummary.ClearContents
         
-        Call Fees_Summary_Borders_Invisible(rngFeesSummary)
+'        Call Fees_Summary_Borders_Invisible(rngFeesSummary)
         
         'Clear the contents of the 'Sommaire' cell
-        wshFAC_Finale.Range("B" & (67 - nbItems) + 1).ClearContents
+'        wshFAC_Finale.Range("B" & 67 - nbItems).ClearContents
     End If
     
 End Sub
@@ -907,29 +1101,33 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         End If
     Next rowSummary
     
-    Dim rowFAC_Finale As Integer
-    rowFAC_Finale = (67 - nbItems) + 1
-    Dim rngFeesSummary As Range: Set rngFeesSummary = _
-        wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
+    If nbItems > 0 Then
+        Dim rowFAC_Finale As Integer
+        rowFAC_Finale = 67 - nbItems
+        Dim rngFeesSummary As Range: Set rngFeesSummary = _
+            wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
+        wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Nombre d'heures"
+        wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux Horaire"
+        
+    '    Call Fees_Summary_Borders_Visible(rngFeesSummary)
     
-    Call Fees_Summary_Borders_Visible(rngFeesSummary)
-
-    Dim rowFAC_Brouillon As Integer
-    rowFAC_Brouillon = 44
-
-    Dim i As Integer
-    For i = rowFAC_Finale To 67
-        wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
-        wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
-        wshFAC_Finale.Range("D" & i).value = wshFAC_Brouillon.Range("T" & rowFAC_Brouillon).value
-        rowFAC_Brouillon = rowFAC_Brouillon + 1
-    Next i
+        Dim rowFAC_Brouillon As Integer
+        rowFAC_Brouillon = 44
     
-    'Label 'Sommaire'
-    wshFAC_Finale.Range("B" & rowFAC_Finale).HorizontalAlignment = xlRight
-    wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Color = RGB(0, 0, 0) 'Black Font
-    wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Bold = True
-    wshFAC_Finale.Range("B" & rowFAC_Finale).value = "Sommaire:"
+        Dim i As Integer
+        For i = rowFAC_Finale + 1 To 67
+            wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
+            wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
+            wshFAC_Finale.Range("D" & i).value = wshFAC_Brouillon.Range("T" & rowFAC_Brouillon).value
+            rowFAC_Brouillon = rowFAC_Brouillon + 1
+        Next i
+        
+        'Label 'Sommaire'
+'        wshFAC_Finale.Range("B" & rowFAC_Finale).HorizontalAlignment = xlRight
+'        wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Color = RGB(0, 0, 0) 'Black Font
+'        wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Bold = True
+'        wshFAC_Finale.Range("B" & rowFAC_Finale).value = "Sommaire:"
+    End If
     
 End Sub
 

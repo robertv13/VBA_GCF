@@ -7,18 +7,14 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     Application.ScreenUpdating = False
     
-    'Determine the used range
-    Dim visibleRange As Range: Set visibleRange = ActiveWindow.visibleRange
-    
     'Calculate the center of the used range
     Dim centerX As Double, centerY As Double
     centerX = 410
     centerY = 58
-'    MsgBox visibleRange.width & " - " & visibleRange.Height & vbNewLine & vbNewLine & centerX & " - " & centerY
 
     'Set the dimensions of the progress bar
     Dim barWidth As Double, barHeight As Double
-    barWidth = visibleRange.width / 5 'Width is a fith of the visible range width
+    barWidth = 300
     barHeight = 25  'Height of the progress bar
 
     'Create the background shape of the progress bar positioned in the center of the visible range
@@ -70,7 +66,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).row
-    wsDest.Range("A6:H" & destLastUsedRow).ClearContents
+    wsDest.Range("A6:I" & destLastUsedRow).ClearContents
     
     'Update the progress bar fill
     progressBarFill.width = 0.2 * barWidth  '20 %
@@ -125,7 +121,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     wsDest.Sort.SortFields.add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
     
     With wsDest.Sort
-        .SetRange wsDest.Range("A5:H" & destLastUsedRow)
+        .SetRange wsDest.Range("A5:I" & destLastUsedRow)
         .header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -244,7 +240,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.95, "0%")
     
     'Introduce a small delay to ensure the worksheet is fully updated
-    Application.Wait (Now + TimeValue("0:00:01"))
+    Application.Wait (Now + TimeValue("0:00:01")) '2024-07-23 @ 16:13 - Slowdown the application
         
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True

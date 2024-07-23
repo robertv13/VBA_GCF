@@ -580,8 +580,11 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    If lastRow > 1 Then
+        Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
+        Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
+    End If
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
@@ -643,8 +646,11 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    If lastRow > 1 Then
+        Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
+        Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
+    End If
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""

@@ -1,11 +1,11 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.9.I" '2024-07-21 @ 15:16
+Public Const APP_VERSION_NO As String = "v3.A.0" '2024-07-23 @ 08:11
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
+Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
 
-Public interior_color_current_cell As Long
 Public userName As String
 
 'Using Enum to specify the column number of worksheets (data)

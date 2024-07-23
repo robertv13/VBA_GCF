@@ -34,7 +34,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
 '    ActiveWindow.Panes(2).Activate
     Application.EnableEvents = False
-    ws.Cells(9, 3).Select
+    ws.Select
+    ws.Range("I3").Select
     Application.EnableEvents = True
     
     'Cleaning memory - 2024-07-11 @ 10:14
@@ -49,15 +50,15 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_SelectionChange()")
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = interior_color_current_cell
+        Range(previousCellAddress).Interior.Color = BASIC_COLOR
     End If
     
-    'Save the current cell address and color, before changing it
-    With Target
-        previousCellAddress = .Address
-        interior_color_current_cell = .Interior.Color
-    End With
-
+'    'Save the current cell address and color, before changing it
+'    With Target
+'        previousCellAddress = .Address
+'        interior_color_current_cell = .Interior.Color
+'    End With
+'
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Analyse.Range("I3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -113,7 +114,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -122,7 +123,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

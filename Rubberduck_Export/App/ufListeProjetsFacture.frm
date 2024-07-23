@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Factures à préparer"
-   ClientHeight    =   6300
+   ClientHeight    =   5010
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8730.001
+   ClientWidth     =   8700.001
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -14,10 +14,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Sub lsbProjetsFacture_Click()
-
-End Sub
 
 Private Sub UserForm_Initialize()
     
@@ -31,38 +27,49 @@ Private Sub UserForm_Initialize()
     ReDim arr(1 To lastUsedRow - 1, 1 To 4)
     
     'Populate the array with non-contiguous columns
-    Dim i As Integer
+    Dim i As Integer, nbRows As Integer
     For i = 2 To lastUsedRow
-        arr(i - 1, 1) = ws.Cells(i, 2).value 'nomClient
-        arr(i - 1, 2) = ws.Cells(i, 4).value 'date
-        arr(i - 1, 3) = Fn_Pad_A_String(Format(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
-        arr(i - 1, 4) = ws.Cells(i, 1).value 'ProjetID
+        If ws.Cells(i, 26).value <> "Vrai" Then 'Exclude those projects with isDétruite set to True
+            nbRows = nbRows + 1
+            arr(nbRows, 1) = ws.Cells(i, 2).value 'nomClient
+            arr(nbRows, 2) = ws.Cells(i, 4).value 'date
+            arr(nbRows, 3) = Fn_Pad_A_String(Format(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
+            arr(nbRows, 4) = ws.Cells(i, 1).value 'ProjetID
+        End If
     Next i
     
-    'Sort the list
-    Call Array_2D_Bubble_Sort(arr)
+    If nbRows > 0 Then
     
-    'Clear the ListBox
-    Me.lsbProjetsFacture.clear
-
-    With lsbProjetsFacture
-        .ColumnHeads = True
-        .ColumnCount = 4
-        .ColumnWidths = "225; 68; 90; 15"
-    End With
+        Call Array_2D_Resizer(arr, nbRows, UBound(arr, 2))
+    
+        'Sort the list
+        Call Array_2D_Bubble_Sort(arr)
         
-    'Populate the ListBox with the array
-    Dim j As Integer
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        Me.lsbProjetsFacture.AddItem
-        For j = LBound(arr, 2) To UBound(arr, 2)
-            Me.lsbProjetsFacture.List(i - 1, j - 1) = arr(i, j)
-        Next j
-    Next i
-
+        'Clear the ListBox
+        Me.lsbProjetsFacture.clear
+    
+        With lsbProjetsFacture
+            .ColumnHeads = True
+            .ColumnCount = 4
+            .ColumnWidths = "225; 68; 90; 15"
+        End With
+            
+        'Populate the ListBox with the array
+        Dim j As Integer
+        For i = LBound(arr, 1) To UBound(arr, 1)
+            Me.lsbProjetsFacture.AddItem
+            For j = LBound(arr, 2) To UBound(arr, 2)
+                Me.lsbProjetsFacture.List(i - 1, j - 1) = arr(i, j)
+            Next j
+        Next i
+    Else
+        Unload Me
+    End If
+    
     'Cleanup Memory
     Set ws = Nothing
-    
+    Exit Sub
+
 End Sub
 
 Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38

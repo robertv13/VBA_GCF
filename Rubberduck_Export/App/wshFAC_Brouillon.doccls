@@ -48,15 +48,9 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = interior_color_current_cell
+        Range(previousCellAddress).Interior.Color = BASIC_COLOR
     End If
     
-    'Save the current cell address and color, before changing it
-    With Target
-        previousCellAddress = .Address
-        interior_color_current_cell = .Interior.Color
-    End With
-
     'Client has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -115,13 +109,13 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            Application.GoTo wshFAC_Brouillon.Range("O9")
+'            Application.Goto wshFAC_Brouillon.Range("O9")
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -130,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

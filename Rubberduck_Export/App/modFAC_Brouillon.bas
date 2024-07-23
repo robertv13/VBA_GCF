@@ -64,13 +64,26 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         Application.Wait (Now + TimeValue("0:00:01"))
         
         'Do we have pending requests for invoice ?
-        ufListeProjetsFacture.show
+        Dim lastUsedRow As Long, liveOne As Integer
+        lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
+        If lastUsedRow > 1 Then
+            Dim i As Long
+            For i = 2 To lastUsedRow
+                If wshFAC_Projets_Entête.Range("Z" & i).value = "Faux" Then
+                    liveOne = liveOne + 1
+                End If
+            Next i
+        End If
+        
+        If liveOne Then
+            ufListeProjetsFacture.show
+        End If
+        
         Dim projetID As Long
         If wshFAC_Brouillon.Range("B51").value <> "" Then
             Application.EnableEvents = False
             projetID = wshFAC_Brouillon.Range("B52").value
             'Get the Entête for this projetID
-            Dim lastUsedRow As Long
             lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
             Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
             Dim result As Variant
@@ -95,12 +108,14 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 'Update the summary for billing
                 'Transfer data to the worksheet
                 Application.EnableEvents = False
+                Dim r As Integer: r = 44
                 For ii = 44 To 48
-                    If arr(ii - 43, 1) <> "" Then
-                        wshFAC_Brouillon.Range("R" & ii).value = arr(ii - 43, 1)
-                        wshFAC_Brouillon.Range("S" & ii).value = arr(ii - 43, 2)
-                        wshFAC_Brouillon.Range("T" & ii).value = arr(ii - 43, 3)
-                    End If
+                    If arr(ii - 43, 1) <> "" And arr(ii - 43, 2) <> 0 Then
+                        wshFAC_Brouillon.Range("R" & r).value = arr(ii - 43, 1)
+                        wshFAC_Brouillon.Range("S" & r).value = arr(ii - 43, 2)
+                        wshFAC_Brouillon.Range("T" & r).value = arr(ii - 43, 3)
+                        r = r + 1
+                   End If
                 Next ii
                 Application.EnableEvents = True
             End If
@@ -108,10 +123,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
             wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
             wshFAC_Brouillon.Range("O9").Select
-       End If
-        
-        'Move to Client Name if we invoicing manually
-        If wshFAC_Brouillon.Range("B51").value = "" Then
+        Else
             Application.EnableEvents = True
             wshFAC_Brouillon.Select
             wshFAC_Brouillon.Range("E3").Select 'Start inputing values for a NEW invoice
@@ -185,7 +197,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
-    wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
+'    wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
 
 Clean_Exit:
 
@@ -212,8 +224,8 @@ Sub FAC_Brouillon_Date_Change(d As String)
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
     DateTaxRates = d
-    wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "F")
-    wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "P")
+    wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "TPS")
+    wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "TVQ")
         
     'Adjust hourly rate base on the date
     Dim lastUsedProfInSummary As Integer
@@ -537,7 +549,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Application.ScreenUpdating = False
     
     Call FAC_Finale_Cacher_Heures
-    Call FAC_Finale_Cacher_Sommaire_Heures
+    Call FAC_Finale_Cacher_Sommaire_Taux
     
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Finale.Activate
@@ -784,7 +796,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 
