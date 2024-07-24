@@ -34,7 +34,17 @@ End Sub
 Sub SuiviCC_Click()
 
     Call SlideIn_SuiviCC
-    MsgBox "Ajouter la fonction 'Suivi des C/C'"
+    
+    Application.ScreenUpdating = False
+    
+    wshCC_Analyse.Application.Calculation = xlCalculationAutomatic
+    
+    With wshCC_Analyse
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
 
 End Sub
 
@@ -47,7 +57,7 @@ Sub Encaissement_Click()
     
     Call Encaissement_Import_All
     
-'    wshCAR.Visible = xlSheetVisible
+'    wshFAC_Comptes_Clients.Visible = xlSheetVisible
 '    wshENC_Détails.Visible = xlSheetVisible
 '    wshENC_Entête.Visible = xlSheetVisible
     With wshENC_Saisie

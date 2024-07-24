@@ -401,9 +401,9 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshCAR.Range("A9999").End(xlUp).row + 1
+    firstFreeRow = wshFAC_Comptes_Clients.Range("A9999").End(xlUp).row + 1
    
-    With wshCAR
+    With wshFAC_Comptes_Clients
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
@@ -433,7 +433,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                           "GCF_BD_Sortie.xlsx"
-    destinationTab = "TEC"
+    destinationTab = "TEC_Local"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -816,15 +816,15 @@ Sub FAC_Finale_Setup_All_Cells()
         .Range("B23:B27").value = ""
         .Range("E28").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
         
-        .Range("C65").value = "Heures"                               'Summary Heading
-        .Range("D65").value = "Taux"                                 'Summary Heading
-        .Range("C66").formula = "=" & wshFAC_Brouillon.name & "!M47" 'Hours summary
-        .Range("D66").formula = "=" & wshFAC_Brouillon.name & "!N47" 'Hourly Rate
-        
-        With .Range("C65:D66")
-            .Font.ThemeColor = xlThemeColorLight1
-            .Font.TintAndShade = 0
-        End With
+'        .Range("C65").value = "Heures"                               'Summary Heading
+'        .Range("D65").value = "Taux"                                 'Summary Heading
+'        .Range("C66").formula = "=" & wshFAC_Brouillon.name & "!M47" 'Hours summary
+'        .Range("D66").formula = "=" & wshFAC_Brouillon.name & "!N47" 'Hourly Rate
+'
+'        With .Range("C65:D66")
+'            .Font.ThemeColor = xlThemeColorLight1
+'            .Font.TintAndShade = 0
+'        End With
 
         Call FAC_Brouillon_Set_Labels(.Range("B69"), "FAC_Label_SubTotal_1")
         Call FAC_Brouillon_Set_Labels(.Range("B73"), "FAC_Label_SubTotal_2")

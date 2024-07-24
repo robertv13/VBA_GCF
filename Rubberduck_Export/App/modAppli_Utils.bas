@@ -51,110 +51,110 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
     
 End Sub
 
-Sub Printer_Page_Setup(ws As Worksheet, _
-                       rng As Range, _
-                       header1 As String, _
-                       header2 As String, _
-                       Optional Orient As String = "L") '2024-07-14 @ 06:51
-
-    Dim retries As Integer
-
-    On Error GoTo CleanUp
-    
-    'Retry loop for setting PrintCommunication to False
-    retries = 3
-    Do While retries > 0
-        On Error Resume Next
-        Application.PrintCommunication = False
-        If Err.Number = 0 Then Exit Do
-        retries = retries - 1
-        Application.Wait (Now + TimeValue("0:00:01"))
-        On Error GoTo CleanUp
-    Loop
-
-    If retries = 0 Then
-        MsgBox "Failed to set PrintCommunication to False after multiple attempts", vbCritical
-        Exit Sub
-    End If
-    
-    With ws.PageSetup
-        .PrintArea = rng.Address
-        .PrintTitleRows = "$1:$1"
-        .PrintTitleColumns = ""
-        
-        .LeftHeader = ""
-        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
-        .RightHeader = ""
-        .LeftFooter = "&11&D - &T"
-        .CenterFooter = "&11&KFF0000&A"
-        .RightFooter = "&11Page &P de &N"
-        
-        .TopMargin = Application.InchesToPoints(0.55)
-        .LeftMargin = Application.InchesToPoints(0.15)
-        .RightMargin = Application.InchesToPoints(0.15)
-        .HeaderMargin = Application.InchesToPoints(0.15)
-        .FooterMargin = Application.InchesToPoints(0.15)
-        .BottomMargin = Application.InchesToPoints(0.4)
-        
-        .PrintHeadings = False
-        .PrintGridlines = False
-        .PrintComments = xlPrintNoComments
-        .PrintQuality = 600
-        .CenterHorizontally = True
-        .CenterVertically = False
-        If Orient = "L" Then
-            .Orientation = xlLandscape
-        Else
-            .Orientation = xlPortrait
-        End If
-        .Draft = False
-        .PaperSize = xlPaperLetter
-        .FirstPageNumber = xlAutomatic
-        .Order = xlDownThenOver
-        .BlackAndWhite = False
-        .Zoom = 100
-        .FitToPagesWide = 1
-        .FitToPagesTall = False
-        .PrintErrors = xlPrintErrorsDisplayed
-        .OddAndEvenPagesHeaderFooter = False
-        .DifferentFirstPageHeaderFooter = False
-        .ScaleWithDocHeaderFooter = True
-        .AlignMarginsHeaderFooter = True
-        
-        'Clear EvenPage headers and footers if they exist
-        On Error Resume Next
-       .EvenPage.LeftHeader.text = ""
-        .EvenPage.CenterHeader.text = ""
-        .EvenPage.RightHeader.text = ""
-        .EvenPage.LeftFooter.text = ""
-        .EvenPage.CenterFooter.text = ""
-        .EvenPage.RightFooter.text = ""
-        
-        .FirstPage.LeftHeader.text = ""
-        .FirstPage.CenterHeader.text = ""
-        .FirstPage.RightHeader.text = ""
-        .FirstPage.LeftFooter.text = ""
-        .FirstPage.CenterFooter.text = ""
-        .FirstPage.RightFooter.text = ""
-    End With
-    
-CleanUp:
-    'Retry loop for setting PrintCommunication to True
-    retries = 3
-    Do While retries > 0
-        On Error Resume Next
-        Application.PrintCommunication = True
-        If Err.Number = 0 Then Exit Do
-        retries = retries - 1
-        Application.Wait (Now + TimeValue("0:00:01"))
-        On Error GoTo CleanUp
-    Loop
-    If retries = 0 Then
-        MsgBox "Failed to set PrintCommunication to True after multiple attempts", vbCritical
-    End If
-    On Error GoTo 0
-    
-End Sub
+'Sub Printer_Page_Setup(ws As Worksheet, _
+'                       rng As Range, _
+'                       header1 As String, _
+'                       header2 As String, _
+'                       Optional Orient As String = "L") '2024-07-14 @ 06:51
+'
+'    Dim retries As Integer
+'
+'    On Error GoTo CleanUp
+'
+'    'Retry loop for setting PrintCommunication to False
+'    retries = 3
+'    Do While retries > 0
+'        On Error Resume Next
+'        Application.PrintCommunication = False
+'        If Err.Number = 0 Then Exit Do
+'        retries = retries - 1
+'        Application.Wait (Now + TimeValue("0:00:01"))
+'        On Error GoTo CleanUp
+'    Loop
+'
+'    If retries = 0 Then
+'        MsgBox "Failed to set PrintCommunication to False after multiple attempts", vbCritical
+'        Exit Sub
+'    End If
+'
+'    With ws.PageSetup
+'        .PrintArea = rng.Address
+'        .PrintTitleRows = "$1:$1"
+'        .PrintTitleColumns = ""
+'
+'        .LeftHeader = ""
+'        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
+'        .RightHeader = ""
+'        .LeftFooter = "&11&D - &T"
+'        .CenterFooter = "&11&KFF0000&A"
+'        .RightFooter = "&11Page &P de &N"
+'
+'        .TopMargin = Application.InchesToPoints(0.55)
+'        .LeftMargin = Application.InchesToPoints(0.15)
+'        .RightMargin = Application.InchesToPoints(0.15)
+'        .HeaderMargin = Application.InchesToPoints(0.15)
+'        .FooterMargin = Application.InchesToPoints(0.15)
+'        .BottomMargin = Application.InchesToPoints(0.4)
+'
+'        .PrintHeadings = False
+'        .PrintGridlines = False
+'        .PrintComments = xlPrintNoComments
+'        .PrintQuality = 600
+'        .CenterHorizontally = True
+'        .CenterVertically = False
+'        If Orient = "L" Then
+'            .Orientation = xlLandscape
+'        Else
+'            .Orientation = xlPortrait
+'        End If
+'        .Draft = False
+'        .PaperSize = xlPaperLetter
+'        .FirstPageNumber = xlAutomatic
+'        .Order = xlDownThenOver
+'        .BlackAndWhite = False
+'        .Zoom = 100
+'        .FitToPagesWide = 1
+'        .FitToPagesTall = False
+'        .PrintErrors = xlPrintErrorsDisplayed
+'        .OddAndEvenPagesHeaderFooter = False
+'        .DifferentFirstPageHeaderFooter = False
+'        .ScaleWithDocHeaderFooter = True
+'        .AlignMarginsHeaderFooter = True
+'
+'        'Clear EvenPage headers and footers if they exist
+'        On Error Resume Next
+'       .EvenPage.LeftHeader.text = ""
+'        .EvenPage.CenterHeader.text = ""
+'        .EvenPage.RightHeader.text = ""
+'        .EvenPage.LeftFooter.text = ""
+'        .EvenPage.CenterFooter.text = ""
+'        .EvenPage.RightFooter.text = ""
+'
+'        .FirstPage.LeftHeader.text = ""
+'        .FirstPage.CenterHeader.text = ""
+'        .FirstPage.RightHeader.text = ""
+'        .FirstPage.LeftFooter.text = ""
+'        .FirstPage.CenterFooter.text = ""
+'        .FirstPage.RightFooter.text = ""
+'    End With
+'
+'CleanUp:
+'    'Retry loop for setting PrintCommunication to True
+'    retries = 3
+'    Do While retries > 0
+'        On Error Resume Next
+'        Application.PrintCommunication = True
+'        If Err.Number = 0 Then Exit Do
+'        retries = retries - 1
+'        Application.Wait (Now + TimeValue("0:00:01"))
+'        On Error GoTo CleanUp
+'    Loop
+'    If retries = 0 Then
+'        MsgBox "Failed to set PrintCommunication to True after multiple attempts", vbCritical
+'    End If
+'    On Error GoTo 0
+'
+'End Sub
 
 Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
                        header2 As String, Optional Orient As String = "L")
@@ -168,13 +168,13 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
         .PrintTitleRows = "$1:$1"
         .PrintTitleColumns = ""
         
-        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
+        .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr(10) & "&11" & header2
         
         .LeftFooter = "&11&D - &T"
         .CenterFooter = "&11&KFF0000&A"
         .RightFooter = "Page &P of &N"
         
-        .TopMargin = Application.InchesToPoints(0.65)
+        .TopMargin = Application.InchesToPoints(0.75)
         .LeftMargin = Application.InchesToPoints(0.15)
         .RightMargin = Application.InchesToPoints(0.15)
         .BottomMargin = Application.InchesToPoints(0.55)
@@ -186,7 +186,7 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
         End If
         .PaperSize = xlPaperLetter
         .FitToPagesWide = 1
-        .FitToPagesTall = False
+        .FitToPagesTall = 10
     End With
     
 CleanUp:
@@ -327,6 +327,44 @@ Sub CreateOrReplaceWorksheet(wsName As String)
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    
+End Sub
+
+Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
+    
+    Dim circRef As String
+    circRef = ""
+    Dim circRefCount As Integer
+    circRefCount = 0
+    
+    Dim ws As Worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        On Error Resume Next
+        Dim formulaCells As Range
+        Set formulaCells = ws.usedRange.SpecialCells(xlCellTypeFormulas)
+        On Error GoTo 0
+        
+        Dim cell As Range
+        Dim cellCount As Integer
+        If Not formulaCells Is Nothing Then
+            For Each cell In formulaCells
+                On Error Resume Next
+                cellCount = Application.CircularReference.count
+                On Error GoTo 0
+                
+                If cellCount > 0 Then
+                    circRef = circRef & ws.name & "!" & cell.Address & vbCrLf
+                    circRefCount = circRefCount + 1
+                End If
+            Next cell
+        End If
+    Next ws
+    
+    If circRefCount > 0 Then
+        MsgBox "Il existe des références circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
+    Else
+        MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
+    End If
     
 End Sub
 
@@ -519,10 +557,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     lastUsedRow = r + 1
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(readRows, "###,##0") & _
                                     " lignes analysées dans l'ensemble de l'application ***"
-'    Call Printer_Page_Setup(wsOutput, wsOutput.Range("A2:C" & lastUsedRow), _
-'                           header1, _
-'                           header2, _
-'                           "P")
+    
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
     Dim header2 As String: header2 = ""
@@ -558,6 +593,11 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Dim arr As Variant
     arr = wshBD_Clients.Range("A1").CurrentRegion.value
+    If UBound(arr, 1) < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
     
@@ -611,6 +651,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     End If
     r = r + 1
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -638,6 +679,11 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     
     Dim arr As Variant
     arr = wshBD_Fournisseurs.Range("A1").CurrentRegion.value
+    If UBound(arr, 1) < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
     Dim dict_code_fournisseur As New Dictionary
     Dim dict_nom_fournisseur As New Dictionary
     
@@ -691,6 +737,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     End If
     r = r + 1
     
+Clean_Exit:
     'Cleaning memory - 2024-07-04 @ 12:37
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -715,6 +762,11 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
     Dim lastUsedRow As Long
     lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
+    If lastUsedRow < 3 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A3:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
@@ -774,6 +826,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - 2
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rngMaster = Nothing
     Set ws = Nothing
@@ -801,16 +854,22 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
     Dim arr As Variant
-    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(1, 0).value
-    
+    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.columns.count - 2).value
+    If UBound(arr, 1) < 3 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
     'Array pointer
     Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
     Dim Inv_No As String
-    For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
+    For i = LBound(arr, 1) + 2 To UBound(arr, 1) 'Two lines of header !
         Inv_No = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
@@ -819,13 +878,14 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - 2
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -842,7 +902,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     
     'wshFAC_Projets_Détails
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -850,6 +910,11 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
     Dim lastUsedRow As Long
     lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
+    If lastUsedRow < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
@@ -859,6 +924,11 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     'Transfer data from Worksheet into an Array (arr)
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.rows.count - 1
+    If numRows < 1 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -915,6 +985,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - 1
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rngMaster = Nothing
     Set ws = Nothing
@@ -945,6 +1016,11 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     'Establish the number of rows before transferring it to an Array
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.rows.count - 1
+    If numRows < 1 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -1055,6 +1131,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - 1
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -1101,6 +1178,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.rows.count - 1 'Remove the header row
+    If numRows < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -1220,6 +1302,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     r = r + 1
     
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set planComptable = Nothing
     Set v = Nothing
@@ -1240,7 +1323,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim lastUsedCol As Long
     lastUsedCol = ws.Range("A2").End(xlToRight).Column
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
         " lignes et " & Format(lastUsedCol, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -1248,6 +1331,11 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
+    
+    If ws.usedRange.rows.count < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
     
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(2)
@@ -1432,6 +1520,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
 
+Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -1586,7 +1675,9 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Integer)
     
     '3) Add the standard conditional formatting
         usedRange.FormatConditions.add Type:=xlExpression, _
-            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
+            Formula1:="=ET($A2<>"""";mod(LIGNE();2)=1)"
+'        usedRange.FormatConditions.add Type:=xlExpression, _
+'            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
         usedRange.FormatConditions(usedRange.FormatConditions.count).SetFirstPriority
         With usedRange.FormatConditions(1).Font
             .Strikethrough = False
@@ -1699,8 +1790,8 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Integer)
                 .Range("E2" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00$"
             End With
         
-        Case "wshCAR"
-            With wshCAR
+        Case "wshFAC_Comptes_Clients"
+            With wshFAC_Comptes_Clients
                 .Range("A3" & firstDataRow & ":B" & lastUsedRow & ", D3" & firstDataRow & ":F" & lastUsedRow & ", J3" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("C3" & firstDataRow & ":C" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("G3" & firstDataRow & ":I" & lastUsedRow).HorizontalAlignment = xlRight

@@ -43,8 +43,8 @@ Sub wshCAR_Dashboard_Refresh()
         
         'Copy AR_Entête to Invoice List
         Dim maxRow As Long
-        lastRow = wshCAR.Range("A999999").End(xlUp).row
-        Dim sourceRange As Range: Set sourceRange = wshCAR.Range("A3:J" & lastRow)
+        lastRow = wshFAC_Comptes_Clients.Range("A999999").End(xlUp).row
+        Dim sourceRange As Range: Set sourceRange = wshFAC_Comptes_Clients.Range("A3:J" & lastRow)
         Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & lastRow)
         'Copy values from source range to target range
         targetRange.value = sourceRange.value

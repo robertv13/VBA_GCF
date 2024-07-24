@@ -386,7 +386,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshCAR.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    wshFAC_Comptes_Clients.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -410,11 +410,11 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshCAR workbook
-    wshCAR.Range("A3").CopyFromRecordset recSet
+    'Copy to wshFAC_Comptes_Clients workbook
+    wshFAC_Comptes_Clients.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    Dim rng As Range: Set rng = wshCAR.Range("A1").CurrentRegion
+    Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
     
     Application.ScreenUpdating = True
@@ -862,7 +862,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
                      "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
-    sourceTab = "TEC"
+    sourceTab = "TEC_Local"
     
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection

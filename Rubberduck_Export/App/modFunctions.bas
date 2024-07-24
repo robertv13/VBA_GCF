@@ -275,6 +275,34 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
     
 End Function
 
+Sub test()
+
+    Dim dueDate As Date: dueDate = #7/1/2024#
+    Dim cutoffDate As Date: cutoffDate = Now()
+    Dim days1 As Integer: days1 = 30
+    Dim days2 As Integer: days2 = 60
+    Dim days3 As Integer: days3 = 90
+    Dim days4 As Integer: days4 = 120
+    Dim b As Integer
+    b = Fn_Get_Bucket_For_Aging(dueDate, cutoffDate, days1, days2, days3, days4)
+    
+End Sub
+Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Integer, days2 As Integer, days3 As Integer, days4 As Integer)
+
+    Select Case age
+        Case Is < days1
+            Fn_Get_Bucket_For_Aging = 0
+        Case Is < days2
+            Fn_Get_Bucket_For_Aging = 1
+        Case Is < days3
+            Fn_Get_Bucket_For_Aging = 2
+        Case Is < days4
+            Fn_Get_Bucket_For_Aging = 3
+        Case Else
+            Fn_Get_Bucket_For_Aging = 4
+    End Select
+    
+End Function
 Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
 
     'Define the source data

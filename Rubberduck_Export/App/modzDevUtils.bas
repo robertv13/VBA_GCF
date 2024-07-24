@@ -268,8 +268,16 @@ Sub Check_Invoice_Template()
     
 End Sub
 
-Sub Closed_Workbook_List_All_Worksheets() '2024-07-14 @ 07:02
+Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
+    Call Erase_And_Create_Worksheet("Feuilles_du_Classeur")
+
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Feuilles_du_Classeur")
+    wsOutput.Range("A1").value = "Feuille"
+    wsOutput.Range("B1").value = "CodeName"
+    wsOutput.Range("C1").value = "TimeStamp"
+    Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
     wbPath = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
@@ -278,23 +286,58 @@ Sub Closed_Workbook_List_All_Worksheets() '2024-07-14 @ 07:02
     'Open the workbook in read-only mode
     Dim wb As Workbook: Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
     
-    'Initialize the message
-    Dim msg As String
-    Debug.Print "Worksheets in " & wbPath & ":" & vbCrLf
+    Dim wbName As String
+    wbName = wb.name
     
     'Loop through each worksheet in the workbook and add its name to the immediate window
+    Dim arr() As Variant
+    ReDim arr(1 To 100, 1 To 3)
     Dim ws As Worksheet
+    Dim TimeStamp As String
+    Dim r As Integer
+    Dim f As Integer
     For Each ws In wb.Worksheets
-        Debug.Print ws.CodeName; Tab(20); ws.name
+        r = r + 1
+        arr(r, 1) = ws.name
+        arr(r, 2) = ws.CodeName
+        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(r, 3) = TimeStamp
     Next ws
-    
-    Debug.Print "End of list"
     
     'Close the workbook without saving changes
     wb.Close SaveChanges:=False
     
+    Call Array_2D_Resizer(arr, r, UBound(arr, 2))
+    
+    Call Array_2D_Bubble_Sort(arr)
+    
+    For r = 1 To UBound(arr, 1)
+        wsOutput.Cells(r + 1, 1) = arr(r, 1)
+        wsOutput.Cells(r + 1, 2) = arr(r, 2)
+        wsOutput.Cells(r + 1, 3) = arr(r, 3)
+        f = f + 1
+    Next r
+    
+    wsOutput.columns.AutoFit
+    
+   'Result print setup - 2024-07-20 @ 14:31
+    Dim lastUsedRow As Long
+    lastUsedRow = r + 2
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(f, "###,##0") & _
+                                    " feuilles pour le workbook '" & wbName & "' ***"
+    
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
+    Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
+    Dim header2 As String: header2 = wbName
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    
+    ThisWorkbook.Worksheets("Feuilles_du_Classeur").Activate
+    
     'Cleanup - 2024-07-14 @ 07:03
+    Set rngToPrint = Nothing
     Set wb = Nothing
+    Set wsOutput = Nothing
     
 End Sub
 
@@ -437,7 +480,7 @@ Sub Conditional_Formatting_List_All() '2024-06-23 @ 18:37
 
 End Sub
 
-Sub Data_Validations_List_All() '2024-07-15 @ 06:52
+Sub List_Data_Validations_All() '2024-07-15 @ 06:52
 
     'Prepare the result worksheet (wsOutput)
     Call Erase_And_Create_Worksheet("Doc_Data_Validations")
@@ -570,7 +613,7 @@ Sub Data_Validations_List_All() '2024-07-15 @ 06:52
                                     " cellules analysées dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
-    Call Printer_Page_Setup(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
+    Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
                            header1, _
                            header2, _
                            "L")
@@ -578,7 +621,6 @@ Sub Data_Validations_List_All() '2024-07-15 @ 06:52
     MsgBox "Data validation list were created in worksheet: " & wsOutput.name
     
 End Sub
-
 
 Sub Erase_And_Create_Worksheet(sheetName As String)
 
@@ -610,7 +652,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     
 End Sub
 
-Sub Formulas_List_All() '2024-06-22 @ 15:42
+Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     Dim wb As Workbook: Set wb = ThisWorkbook
     
@@ -748,7 +790,7 @@ Sub List_All_Shapes_Properties()
     
 End Sub
 
-Sub ListAllTables()
+Sub List_All_Tables()
 
     'Loop through each worksheet
     Dim ws As Worksheet
@@ -766,7 +808,7 @@ Sub ListAllTables()
     
 End Sub
 
-Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
+Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
@@ -820,7 +862,7 @@ Sub Named_Ranges_List_All() '2024-06-23 @ 07:40
     If i > 1 Then
         Dim header1 As String: header1 = "List all Named Ranges"
         Dim header2 As String: header2 = ""
-        Call Printer_Page_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
+        Call Simple_Print_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
                                header1, _
                                header2, _
                                "L")
@@ -1041,7 +1083,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     header2 = "Searched strings '" & search1 & "'"
     If search2 <> "" Then header2 = header2 & " '" & search2 & "'"
     If search3 <> "" Then header2 = header2 & " '" & search3 & "'"
-    Call Printer_Page_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
+    Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
                            header1, _
                            header2, _
                            "L")
@@ -1062,7 +1104,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
 End Sub
 
-Sub Subs_And_Functions_List_All() '2024-06-22 @ 10:41
+Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     
     Dim posProcedure As Integer, posExitProcedure As Integer
     Dim posFonction As Integer, posExitFonction As Integer
@@ -1280,34 +1322,63 @@ Sub Toggle_A1_R1C1_Reference()
     End If
 
 End Sub
-Sub Worksheets_List_All() '2024-06-22 @ 06:27
+
+Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
+    Call Erase_And_Create_Worksheet("Feuilles_du_Classeur")
+
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Feuilles_du_Classeur")
+    wsOutput.Range("A1").value = "Feuille"
+    wsOutput.Range("B1").value = "CodeName"
+    wsOutput.Range("C1").value = "TimeStamp"
+    Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+
     'Loop through all worksheets in the active workbook
-    Dim ws As Worksheet
     Dim arr() As Variant
-    ReDim arr(1 To 100, 1 To 2)
-    Dim i As Long
+    ReDim arr(1 To 100, 1 To 3)
     
+    Dim ws As Worksheet
+    Dim TimeStamp As String
+    Dim i As Long
     For Each ws In ThisWorkbook.Sheets
         i = i + 1
-        arr(i, 1) = ws.CodeName
-        arr(i, 2) = ws.name
+        arr(i, 1) = ws.name
+        arr(i, 2) = ws.CodeName
+        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(i, 3) = TimeStamp
     Next ws
     
-    Call Array_2D_Resizer(arr, i, 2)
+    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
     
     Call Array_2D_Bubble_Sort(arr)
     
-    'Display all worksheets, sorted alphabetically by codeName
-    Dim spaces As String
-    
+    Dim f As Integer
     For i = 1 To UBound(arr, 1)
-        spaces = Space(30 - Len(arr(i, 1)))
-        Debug.Print Format(i, "##0"); Tab(5); "codeName = " & arr(i, 1) & spaces & "worksheet name = " & arr(i, 2)
+        wsOutput.Cells(i + 1, 1) = arr(i, 1)
+        wsOutput.Cells(i + 1, 2) = arr(i, 2)
+        wsOutput.Cells(i + 1, 3) = arr(i, 3)
+        f = f + 1
     Next i
     
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set ws = Nothing
+    wsOutput.columns.AutoFit
     
+   'Result print setup - 2024-07-20 @ 14:31
+    Dim lastUsedRow As Long
+    lastUsedRow = i + 2
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(f, "###,##0") & _
+                                    " feuilles pour le workbook '" & ThisWorkbook.name & "' ***"
+    
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
+    Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
+    Dim header2 As String: header2 = ThisWorkbook.name
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    
+    ThisWorkbook.Worksheets("Feuilles_du_Classeur").Activate
+    
+    'Cleanup - 2024-07-14 @ 07:03
+    Set rngToPrint = Nothing
+    Set wsOutput = Nothing
+
 End Sub
 
