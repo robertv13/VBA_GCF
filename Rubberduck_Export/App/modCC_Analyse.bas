@@ -132,7 +132,7 @@ Sub CC_Sort_Group_And_Subtotal()
     
     With wsDest.Sort
         .SetRange wsDest.Range("A5:K" & destLastUsedRow)
-        .header = xlYes
+        .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
         .SortMethod = xlPinYin
@@ -218,7 +218,7 @@ Sub CC_Sort_Group_And_Subtotal()
     
 '    'Set conditional formats for total hours (Client's total)
 '    Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
-'    Call Apply_Conditional_Formatting_On_Column_H(rngTotals, destLastUsedRow)
+'    Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
 '
 '    'Bring in all the invoice requests
 '    Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)

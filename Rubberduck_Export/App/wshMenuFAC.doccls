@@ -40,6 +40,7 @@ End Sub
 Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_Encaissement
+    Call SlideIn_FAC_Annulation
     Call SlideOut_FAC_Historique
 
 End Sub

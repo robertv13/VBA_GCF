@@ -402,7 +402,7 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     
 End Sub
 
-Sub Conditional_Formatting_List_All() '2024-06-23 @ 18:37
+Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
 
     'Work in memory
     Dim arr() As Variant
@@ -909,7 +909,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
-        .header = xlYes
+        .Header = xlYes
 '        .MatchCase = False
 '        .Orientation = xlTopToBottom
         .Apply
@@ -1101,6 +1101,160 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Clean up - 2024-07-13 @ 08:02
     Set wsOutput = Nothing
+    
+End Sub
+
+Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
+    
+    'Prepare the result worksheet
+    Call Erase_And_Create_Worksheet("Doc_All_Macros_Used_With_Object")
+
+    Dim wsOutputSheet As Worksheet
+    Set wsOutputSheet = ThisWorkbook.Worksheets("Doc_All_Macros_Used_With_Object")
+    
+    wsOutputSheet.Cells(1, 1).value = "Worksheet"
+    wsOutputSheet.Cells(1, 2).value = "Object Type"
+    wsOutputSheet.Cells(1, 3).value = "Object Name"
+    wsOutputSheet.Cells(1, 4).value = "Macro Name"
+    
+    Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"))
+
+    Dim outputRow As Long
+    outputRow = 2 'Start writing from the second row
+
+    'Iterate through each worksheet in the workbook
+    Dim ws As Worksheet
+    Dim shp As Shape
+    Dim macroName As String
+
+    For Each ws In ThisWorkbook.Worksheets
+        'Skip the output sheet to avoid listing its own shapes
+        If ws.name <> "Doc_All_Macros_Used_With_Object" Then
+            'Check for macros assigned to shapes
+            For Each shp In ws.Shapes
+                On Error Resume Next
+                macroName = shp.OnAction
+                On Error GoTo 0
+                If macroName <> "" Then
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.name
+                    wsOutputSheet.Cells(outputRow, 2).value = "Shape"
+                    wsOutputSheet.Cells(outputRow, 3).value = shp.name
+                    wsOutputSheet.Cells(outputRow, 4).value = macroName
+                    outputRow = outputRow + 1
+                End If
+            Next shp
+
+            'Check for macros assigned to ActiveX controls
+            Dim obj As OLEObject
+            For Each obj In ws.OLEObjects
+                On Error Resume Next
+                If TypeOf obj.Object Is MSForms.CommandButton Then
+                    macroName = obj.Object.OnClick
+                ElseIf TypeOf obj.Object Is MSForms.ComboBox Then
+                    macroName = obj.Object.OnChange
+                ElseIf TypeOf obj.Object Is MSForms.ListBox Then
+                    macroName = obj.Object.OnClick
+                End If
+                On Error GoTo 0
+                If macroName <> "" Then
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.name
+                    wsOutputSheet.Cells(outputRow, 2).value = "ActiveX Control"
+                    wsOutputSheet.Cells(outputRow, 3).value = obj.name
+                    wsOutputSheet.Cells(outputRow, 4).value = macroName
+                    outputRow = outputRow + 1
+                End If
+            Next obj
+        End If
+    Next ws
+
+'    'Part # 2 - Analyze the code itself
+'
+'    'Iterate through the VBA project to identify all callable subs/functions
+'    Dim lineNum As Long
+'    Dim procName As String
+'    Dim procType As VBIDE.vbext_ProcKind
+'    Dim lineText As String
+'    Dim oType As String
+'
+'    Dim vbComp As Object
+'    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+'        Select Case vbComp.Type
+'            Case 1
+'                oType = "1_Module"
+'            Case 2
+'                oType = "2_Class"
+'            Case 3
+'                oType = "3_userForm"
+'            Case Else
+'                oType = oType & "_????"
+'        End Select
+'
+'       'Get the code module for the component
+'        Dim vbMod As Object: Set vbMod = vbComp.CodeModule
+'        lineNum = 1
+'
+'        'Loop through all lines in the code module to save all the lines in memory
+'        For lineNum = 1 To vbMod.CountOfLines
+'            lineText = Trim(vbMod.Lines(lineNum, 1))
+'            If Left(lineText, 1) <> "'" And Left(lineText, 3) <> "Rem" Then
+'                procName = vbMod.ProcOfLine(lineNum, procType)
+'                wsOutputSheet.Cells(outputRow, 1).value = vbComp.name
+'                wsOutputSheet.Cells(outputRow, 2).value = "Procedure"
+'                wsOutputSheet.Cells(outputRow, 3).value = procName
+'                wsOutputSheet.Cells(outputRow, 4).value = "Called in code"
+'                outputRow = outputRow + 1
+'            End If
+'        Next lineNum
+'    Next vbComp
+
+    'Autofit columns for better readability
+    wsOutputSheet.columns("A:D").AutoFit
+    outputRow = outputRow - 1 'Did not use the last line
+    
+    'Sort the results, based on column 1, 2, 3 & 4
+    If outputRow > 2 Then
+        'Sort the data by columns 1, 2, 3, and 4
+        With wsOutputSheet.Sort
+            .SortFields.clear
+            .SortFields.add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
+            .SetRange wsOutputSheet.Range("A1:D" & outputRow - 1)
+            .Header = xlYes
+            .Apply
+        End With
+        
+        'Automatically insert a empty line between worksheet
+        Dim i As Long
+        For i = outputRow To 2 Step -1
+            If wsOutputSheet.Cells(i, 1).value <> wsOutputSheet.Cells(i + 1, 1).value Then
+                wsOutputSheet.rows(i + 1).Insert Shift:=xlDown
+            End If
+        Next i
+    End If
+    
+    'Set conditional formatting for the worksheet (alternate colors)
+    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
+    Debug.Print rngArea.Address
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True) 'There are blankrows to account for
+    
+    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
+    Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
+    Dim header2 As String: header2 = ThisWorkbook.name
+    Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "P")
+    
+    MsgBox "La liste des macros assignées à des contrôles est dans " & _
+                vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
+                
+    'Cleanup - 2024-07-25 @ 11:07
+    Set obj = Nothing
+    Set wsOutputSheet = Nothing
+    Set rngArea = Nothing
+    Set shp = Nothing
+    Set ws = Nothing
     
 End Sub
 

@@ -122,7 +122,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     With wsDest.Sort
         .SetRange wsDest.Range("A5:I" & destLastUsedRow)
-        .header = xlYes
+        .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
         .SortMethod = xlPinYin
@@ -226,7 +226,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     'Set conditional formats for total hours (Client's total)
     Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
-    Call Apply_Conditional_Formatting_On_Column_H(rngTotals, destLastUsedRow)
+    Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
     
     'Bring in all the invoice requests
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
@@ -272,7 +272,7 @@ Sub Clean_Up_Summary_Area(ws As Worksheet)
 
 End Sub
 
-Sub Apply_Conditional_Formatting_On_Column_H(rng As Range, lastUsedRow As Long)
+Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow As Long)
 
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -347,7 +347,6 @@ Sub Build_Hours_Summary(rowSelected As Long)
     i = rowSelected
     Do Until Cells(i, 5) = ""
         If Cells(i, 6).value <> "" Then
-'            t = t + Cells(i, 7).value
             If dictHours.Exists(Cells(i, 6).value) Then
                 dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
             Else
@@ -357,31 +356,31 @@ Sub Build_Hours_Summary(rowSelected As Long)
         i = i + 1
     Loop
 
-    Dim Prof As Variant
-    Dim ProfID As Integer
+    Dim prof As Variant
+    Dim profID As Integer
     ws.Range("Q" & rowSelected).value = 0 'Reset the total WIP value
-    For Each Prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 11).value = Prof
+    For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
+        Cells(rowSelected, 11).value = prof
         Dim strProf As String
-        strProf = Prof
-        ProfID = Fn_GetID_From_Initials(strProf)
+        strProf = prof
+        profID = Fn_GetID_From_Initials(strProf)
         Cells(rowSelected, 12).HorizontalAlignment = xlRight
         Cells(rowSelected, 12).NumberFormat = "#,##0.00"
-        Cells(rowSelected, 12).value = dictHours(Prof)
+        Cells(rowSelected, 12).value = dictHours(prof)
         Dim tauxHoraire As Currency
-        tauxHoraire = Fn_Get_Hourly_Rate(ProfID, ws.Range("I3").value)
+        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("I3").value)
         Cells(rowSelected, 13).value = tauxHoraire
         Cells(rowSelected, 14).NumberFormat = "#,##0.00$"
         Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, 14).HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
-    Next Prof
+    Next prof
     
     'Sort the summary by rate (descending value) if required
     If rowSelected - 1 > saveR Then
         Dim rngSort As Range
         Set rngSort = ws.Range(ws.Cells(saveR, 11), ws.Cells(rowSelected - 1, 14))
-        rngSort.Sort Key1:=ws.Cells(saveR, 13), Order1:=xlDescending, header:=xlNo
+        rngSort.Sort Key1:=ws.Cells(saveR, 13), Order1:=xlDescending, Header:=xlNo
     End If
     
     'Add totals to the summary

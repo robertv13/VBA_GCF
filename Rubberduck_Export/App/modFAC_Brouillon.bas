@@ -235,10 +235,10 @@ Sub FAC_Brouillon_Date_Change(d As String)
     dateTauxHoraire = d
     Dim i As Integer
     For i = 25 To lastUsedProfInSummary
-        Dim ProfID As Integer
-        ProfID = wshFAC_Brouillon.Range("W" & i).value
+        Dim profID As Integer
+        profID = wshFAC_Brouillon.Range("W" & i).value
         Dim hRate As Currency
-        hRate = Fn_Get_Hourly_Rate(ProfID, dateTauxHoraire)
+        hRate = Fn_Get_Hourly_Rate(profID, dateTauxHoraire)
         
 '        Dim j As Integer
 '        For j = 19 To 26
@@ -796,7 +796,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

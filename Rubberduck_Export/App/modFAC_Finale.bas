@@ -32,6 +32,9 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Invoice_Details_to_DB
     Call FAC_Finale_Add_Invoice_Details_Locally
     
+    Call FAC_Finale_Add_Invoice_Somm_Taux_to_DB
+    Call FAC_Finale_Add_Invoice_Somm_Taux_Locally
+    
     Call FAC_Finale_Add_Comptes_Clients_to_DB
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
@@ -339,6 +342,106 @@ nothing_to_update:
 
 End Sub
 
+Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()")
+
+    Application.ScreenUpdating = False
+    
+    'Fees summary from wshFAC_Brouillon
+    Dim firstRow As Integer, lastRow As Integer
+    firstRow = 44
+    lastRow = 48
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+                          "GCF_BD_Sortie.xlsx"
+    destinationTab = "FAC_Sommaire_Taux"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    'Create an empty recordset
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    
+    Dim noFacture As String
+    noFacture = wshFAC_Finale.Range("E28").value
+    Dim seq As Integer
+    Dim r As Integer
+    For r = firstRow To lastRow
+        'Add fields to the recordset before updating it
+        If wshFAC_Brouillon.Range("R" & r).value <> "" Then
+            rs.AddNew
+            With wshFAC_Finale
+                rs.Fields("Inv_No") = noFacture
+                rs.Fields("Séquence") = seq
+                rs.Fields("Prof") = wshFAC_Brouillon.Range("R" & r).value
+                rs.Fields("Heures") = wshFAC_Brouillon.Range("S" & r).value
+                rs.Fields("Taux") = wshFAC_Brouillon.Range("T" & r).value
+                seq = seq + 1
+            End With
+            'Update the recordset (create the record)
+            rs.update
+        End If
+    Next r
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    conn.Close
+    On Error GoTo 0
+   
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()", timerStart)
+
+End Sub
+
+Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'Fees summary from wshFAC_Brouillon
+    Dim firstRow As Integer, lastRow As Integer
+    firstRow = 44
+    lastRow = 48
+    
+    'Get the first free row
+    Dim firstFreeRow As Long
+    firstFreeRow = wshFAC_Sommaire_Taux.Range("A99999").End(xlUp).row + 1
+   
+    Dim noFacture As String
+    noFacture = wshFAC_Finale.Range("E28").value
+    Dim seq As Integer
+    Dim i As Integer
+    For i = firstRow To lastRow
+        If wshFAC_Brouillon.Range("R" & i).value <> "" Then
+            With wshFAC_Sommaire_Taux
+                .Range("A" & firstFreeRow).value = noFacture
+                .Range("B" & firstFreeRow).value = seq
+                .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("R" & i).value
+                .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("S" & i).value
+                .Range("E" & firstFreeRow).value = wshFAC_Brouillon.Range("T" & i).value
+                firstFreeRow = firstFreeRow + 1
+                seq = seq + 1
+            End With
+        End If
+    Next i
+
+    Application.ScreenUpdating = True
+    
+    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()", timerStart)
+
+End Sub
 Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()")

@@ -253,6 +253,37 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
 
 End Function
 
+Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
+
+    Debug.Print "*** " & invNo
+    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wsTEC.Range("A99999").End(xlUp).row
+    
+    Dim resultArr() As Variant
+    ReDim resultArr(1 To 1000)
+    
+    Dim rowCount As Long
+    
+    Dim i As Long
+    For i = 3 To lastUsedRow
+        If wsTEC.Cells(i, 16).value = invNo Then
+            rowCount = rowCount + 1
+            resultArr(rowCount) = i
+        End If
+    Next i
+    
+    ReDim Preserve resultArr(1 To rowCount)
+    
+    If rowCount = 0 Then
+        Fn_Get_TEC_Invoiced_By_This_Invoice = Array()
+    Else
+        Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
+    End If
+    
+End Function
+
 Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
@@ -517,7 +548,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
 End Function
 
-Public Function Fn_Get_Hourly_Rate(ProfID As Integer, dte As Date)
+Public Function Fn_Get_Hourly_Rate(profID As Integer, dte As Date)
 
         'Use the Dynamic Named Range
         Dim rng As Range
@@ -533,7 +564,7 @@ Public Function Fn_Get_Hourly_Rate(ProfID As Integer, dte As Date)
             For i = rng.rows.count To 1 Step -1
                 'Set the row range
                 Set rowRange = rng.rows(i)
-                If rowRange.Cells(1, 1).value = ProfID Then
+                If rowRange.Cells(1, 1).value = profID Then
                     If CDate(dte) >= CDate(rowRange.Cells(1, 2).value) Then
                         Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).value
                         Exit Function
@@ -860,7 +891,6 @@ Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer)
     GetQuarterDates = quarterDates
     
 End Function
-
 
 
 

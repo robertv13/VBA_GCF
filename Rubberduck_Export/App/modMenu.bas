@@ -2,7 +2,6 @@ Attribute VB_Name = "modMenu"
 Option Explicit
 
 Dim width As Long
-Public Const MAXWIDTH As Integer = 200
 
 Sub SlideOut_TEC()
     
@@ -28,9 +27,6 @@ Sub SlideIn_TEC()
         wshMenu.Unprotect
         On Error GoTo 0
         .TextFrame2.TextRange.Characters.text = ""
-        On Error Resume Next
-        wshMenu.Protect UserInterfaceOnly:=True
-        On Error GoTo 0
     End With
     
 End Sub
@@ -455,7 +451,7 @@ Sub SlideOut_GL_Report()
             .Height = width
             ActiveSheet.Shapes("icoGL").Left = width - 32
         Next width
-        .TextFrame2.TextRange.Characters.text = "Rapport - GL"
+        .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
     End With
 
 End Sub

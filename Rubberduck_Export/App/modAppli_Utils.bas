@@ -1342,7 +1342,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
     
-    Dim i As Long, TECID As Long, ProfID As String, Prof As String, dateTEC As Date, testDate As Boolean
+    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
@@ -1353,8 +1353,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     For i = LBound(arr, 1) To UBound(arr, 1) - 2
         TECID = arr(i, 1)
-        ProfID = arr(i, 2)
-        Prof = arr(i, 3)
+        profID = arr(i, 2)
+        prof = arr(i, 3)
         dateTEC = arr(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
@@ -1411,8 +1411,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
-        If dict_prof.Exists(Prof & "-" & ProfID) = False Then
-            dict_prof.add Prof & "-" & ProfID, 0
+        If dict_prof.Exists(prof & "-" & profID) = False Then
+            dict_prof.add prof & "-" & profID, 0
         End If
     Next i
     
@@ -1631,7 +1631,7 @@ Sub PasteFromClipboard() '2024-07-06 @ 07:37
 
 End Sub
 
-Sub Apply_Conditional_Formatting(rng As Range, headerRows As Long)
+Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
 
     Dim ws As Worksheet: Set ws = rng.Worksheet
     Dim dataRange As Range
@@ -1643,8 +1643,15 @@ Sub Apply_Conditional_Formatting(rng As Range, headerRows As Long)
     Set dataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).row, rng.columns.count))
 
     'Add the standard conditional formatting
+    Dim formula As String
+    If EmptyLine = False Then
+        formula = "=ET($A2<>"""";MOD(LIGNE();2)=1)"
+    Else
+        formula = "=MOD(LIGNE();2)=1"
+    End If
+    
     dataRange.FormatConditions.add Type:=xlExpression, Formula1:= _
-        "=ET($A2<>"""";MOD(LIGNE();2)=1)"
+        formula
     dataRange.FormatConditions(dataRange.FormatConditions.count).SetFirstPriority
     With dataRange.FormatConditions(1).Font
         .Strikethrough = False

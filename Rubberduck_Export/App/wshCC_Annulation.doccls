@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshCC_Update:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshCC_Annulation:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -16,9 +16,6 @@ Private Sub Worksheet_Activate()
     
     Me.Application.Calculation = xlCalculationAutomatic
 
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
-    
     Dim ws As Worksheet: Set ws = wshCC_Annulation
     
     ws.Unprotect
@@ -31,9 +28,11 @@ Private Sub Worksheet_Activate()
     
     ws.Activate
     
-    Call CC_Annulation_Clear_Cells(ws)
+    Call CC_Annulation_Clear_Cells_And_PDF_Icon(ws)
     
-    previousCellAddress = ws.Range("F5").Address
+'    previousCellAddress = ws.Range("F5").Address
+    ws.Range("F5").ClearContents
+    ws.Range("F5").Select
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -41,7 +40,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshCC_Update:Worksheet_Activate()", timerStart)
+    Call Output_Timer_Results("wshCC_Annulation:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -67,31 +66,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim noFacture As String
     If Not Intersect(Target, Range("F5")) Is Nothing Then
         noFacture = Target.value
-        Call Get_Invoice(noFacture)
+        Call Get_Invoice_From_FAC_Entête(noFacture)
     End If
 
 End Sub
 
-Sub CC_Annulation_Clear_Cells(ws As Worksheet)
-
-    ws.Range("F5,K5").ClearContents
+Sub CC_Annulation_Back_To_FAC_Menu()
     
-    ws.Range("F7:I11").ClearContents
-    
-    ws.Range("K12:K18").ClearContents
-    
-    ws.Range("K20,K22,K24").ClearContents
-
-End Sub
-Sub CC_Update_Back_To_FAC_Menu()
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Update:Back_To_FAC_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Annulation:Back_To_FAC_Menu()")
    
     wshENC_Saisie.Visible = xlSheetHidden
 
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Output_Timer_Results("modCC_Update:Back_To_FAC_Menu()", timerStart)
+    Call Output_Timer_Results("modCC_Annulation:Back_To_FAC_Menu()", timerStart)
     
 End Sub
