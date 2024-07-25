@@ -225,9 +225,9 @@ Sub Display_PDF_Invoice()
     
 End Sub
 
-Sub Remove_All_PDF_Icons()
+Sub Remove_All_PDF_Icons() 'RMV - 2024-07-24 @ 19:58
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = wshFAC_Historique
     
     Dim pic As Picture
     For Each pic In ws.Pictures

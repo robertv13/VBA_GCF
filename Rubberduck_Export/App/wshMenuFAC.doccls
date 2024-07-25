@@ -44,6 +44,13 @@ Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shi
 
 End Sub
 
+Private Sub lblFAC_Annulation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+    
+    Call SlideIn_FAC_Historique
+    Call SlideOut_FAC_Annulation
+
+End Sub
+
 Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_PrepFact

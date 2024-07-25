@@ -1,0 +1,97 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshCC_Update:Worksheet_Activate()")
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+    Dim ws As Worksheet: Set ws = wshCC_Annulation
+    
+    ws.Unprotect
+'    ws.Range("A:B").EntireColumn.Hidden = True 'Hide column A & B
+    ws.Protect UserInterfaceOnly:=True
+    
+    Call SetTabOrder(ws)
+    
+    Application.EnableEvents = False
+    
+    ws.Activate
+    
+    Call CC_Annulation_Clear_Cells(ws)
+    
+    previousCellAddress = ws.Range("F5").Address
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
+    Call Output_Timer_Results("wshCC_Update:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+    
+    'Date is selected
+    If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    'Saisie du numéro de facture
+    Dim noFacture As String
+    If Not Intersect(Target, Range("F5")) Is Nothing Then
+        noFacture = Target.value
+        Call Get_Invoice(noFacture)
+    End If
+
+End Sub
+
+Sub CC_Annulation_Clear_Cells(ws As Worksheet)
+
+    ws.Range("F5,K5").ClearContents
+    
+    ws.Range("F7:I11").ClearContents
+    
+    ws.Range("K12:K18").ClearContents
+    
+    ws.Range("K20,K22,K24").ClearContents
+
+End Sub
+Sub CC_Update_Back_To_FAC_Menu()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Update:Back_To_FAC_Menu()")
+   
+    wshENC_Saisie.Visible = xlSheetHidden
+
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A1").Select
+    
+    Call Output_Timer_Results("modCC_Update:Back_To_FAC_Menu()", timerStart)
+    
+End Sub

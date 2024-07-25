@@ -95,4 +95,31 @@ Sub FAC_Historique_Click()
 
 End Sub
 
+'Option # 5
+Sub CC_Annulation_Click()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:CC_Annulation_Click()")
+
+    Call SlideIn_FAC_Annulation
+    
+    Application.ScreenUpdating = False
+    
+    'Import data files from MASTER
+    Call FAC_Comptes_Clients_Import_All
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+
+    Application.EnableEvents = True
+    
+    wshCC_Annulation.Visible = xlSheetVisible
+    wshCC_Annulation.Activate
+    
+    wshCC_Annulation.Application.Calculation = xlCalculationAutomatic
+    
+    Application.ScreenUpdating = True
+
+    Call Output_Timer_Results("wshMenuFAC:CC_Annulation_Click()", timerStart)
+
+End Sub
+
 

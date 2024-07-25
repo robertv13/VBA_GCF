@@ -21,7 +21,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
             GoTo Fast_Exit_Sub
         End If
     End With
-        
+            
     'Valid Invoice - Let's update it ******************************************
     
     Call FAC_Finale_Disable_Save_Button

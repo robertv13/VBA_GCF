@@ -308,10 +308,10 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     'Define the source data
     Dim lastUsedRow As Long
     lastUsedRow = ws.Range("A99999").End(xlUp).row
-    If lastUsedRow < 4 Then Exit Function
+    If lastUsedRow < 2 Then Exit Function
     
     'Define the range for the source data
-    Dim sourceRng As Range: Set sourceRng = ws.Range("A3:F" & lastUsedRow)
+    Dim sourceRng As Range: Set sourceRng = ws.Range("A1:F" & lastUsedRow)
     
     'Define the criteria range
     Dim criteriaRng As Range: Set criteriaRng = ws.Range("V2:V3")
