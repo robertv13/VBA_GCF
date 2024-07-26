@@ -26,12 +26,15 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
+    'Hide the OK and CANCEL buttons
+    ws.Shapes("CC_Annulation_OK_Button").Visible = False
+    ws.Shapes("CC_Annulation_Delete_Button").Visible = False
+    
     ws.Activate
     
-    Call CC_Annulation_Clear_Cells_And_PDF_Icon(ws)
+'    Call CC_Annulation_Clear_Cells_And_PDF_Icon(ws)
     
-'    previousCellAddress = ws.Range("F5").Address
-    ws.Range("F5").ClearContents
+    previousCellAddress = ws.Range("F5").Address
     ws.Range("F5").Select
     
     Application.ScreenUpdating = True
@@ -50,8 +53,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.Color = xlNone
     End If
     
-    'Date is selected
+    'Invoice Number is selected
     If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
+        Call CC_Annulation_Clear_Cells_And_PDF_Icon
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -63,10 +67,39 @@ End Sub
 Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Saisie du numéro de facture
-    Dim noFacture As String
     If Not Intersect(Target, Range("F5")) Is Nothing Then
-        noFacture = Target.value
-        Call Get_Invoice_From_FAC_Entête(noFacture)
+        invNo = Trim(Target.value)
+        If invNo <> "" Then
+            Call Get_Invoice_Data(invNo)
+            Call CC_Annulation_ShowButtons
+            
+            'Simulate waiting for user input
+            Do
+                DoEvents
+                If Range("B2").value = "OK" Or Range("B2").value = "DELETE" Then
+                    Exit Do
+                End If
+            Loop
+            
+            'Handle the user interaction result
+            Select Case Range("B2").value
+                Case "OK"
+                    Call CC_Annulation_OK_Button_Click
+                Case "DELETE"
+                    Call CC_Annulation_Delete_Button_Click
+                    Application.EnableEvents = False
+                    Target.ClearContents ' Clear the cell value
+                    Application.EnableEvents = True
+            End Select
+            
+            'Reset flag cell
+            Range("B2").value = ""
+            
+            Application.ScreenUpdating = True
+        
+        Else
+            Target.Select
+        End If
     End If
 
 End Sub
@@ -75,7 +108,9 @@ Sub CC_Annulation_Back_To_FAC_Menu()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Annulation:Back_To_FAC_Menu()")
    
-    wshENC_Saisie.Visible = xlSheetHidden
+    wshCC_Annulation.Range("F5").ClearContents
+    
+    wshCC_Annulation.Visible = xlSheetHidden
 
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select

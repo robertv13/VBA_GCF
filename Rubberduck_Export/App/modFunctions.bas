@@ -253,9 +253,8 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
 
 End Function
 
-Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
+Function Fn_Get_TEC_Invoiced_By_This_Invoice(tempSheet As Worksheet, invNo As String) As Variant
 
-    Debug.Print "*** " & invNo
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     Dim lastUsedRow As Long
@@ -271,6 +270,7 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
         If wsTEC.Cells(i, 16).value = invNo Then
             rowCount = rowCount + 1
             resultArr(rowCount) = i
+            Call AddRecordToTempSheet(tempSheet, wsTEC.name, i)
         End If
     Next i
     

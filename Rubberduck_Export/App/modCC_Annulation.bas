@@ -1,9 +1,12 @@
 Attribute VB_Name = "modCC_Annulation"
 Option Explicit
 
-Sub Get_Invoice_From_FAC_Entête(noFact As String)
+Public invNo As String
 
-    noFact = Trim(noFact)
+Sub Get_Invoice_Data(noFact As String)
+
+    'Save original worksheet
+    Dim oWorkSheet As Worksheet: Set oWorkSheet = ActiveSheet
     
     'Reference to A/R master file
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -21,26 +24,37 @@ Sub Get_Invoice_From_FAC_Entête(noFact As String)
                                                    1)
     
     If result <> "Not Found" Then
+        'Setup the worksheet for cancellation update (kind of clipboard)
+        Call Erase_And_Create_Worksheet("Clipboard")
+        Dim tempSheet As Worksheet: Set tempSheet = ThisWorkbook.Worksheets("Clipboard")
+        Worksheets("Clipboard").Visible = xlSheetVeryHidden
+
         Dim matchedRow As Long
         matchedRow = Application.Match(noFact, rngToSearch, 0)
+        Call AddRecordToTempSheet(tempSheet, ws.name, matchedRow)
+
+        Call Display_Invoice_info(tempSheet, ws.name, matchedRow)
         
-        Call Display_Invoice_info(ws, matchedRow)
-        
-        Call Insert_Big_PDF_Icon
+        Call Insert_Big_PDF_Icon(tempSheet)
         
         Dim resultArr As Variant
-        resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(noFact)
+        resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(tempSheet, noFact)
         
         If Not IsEmpty(resultArr) Then
             Dim TECSummary() As Variant
             ReDim TECSummary(1 To 10, 1 To 3)
-            Call Get_TEC_Summary_For_That_Invoice(resultArr, TECSummary)
+            Call Get_TEC_Summary_For_That_Invoice(tempSheet, resultArr, TECSummary)
             
             Dim FeesSummary() As Variant
             ReDim FeesSummary(1 To 5, 1 To 3)
-            Call Get_Fees_Summary_For_That_Invoice(resultArr, FeesSummary)
+            Call Get_Fees_Summary_For_That_Invoice(tempSheet, resultArr, FeesSummary)
             
         End If
+        
+        Call CC_Annulation_Get_GL_Posting(tempSheet, noFact)
+
+'        oWorkSheet.Activate
+        
     Else
         MsgBox "La facture n'existe pas"
         Exit Sub
@@ -48,7 +62,7 @@ Sub Get_Invoice_From_FAC_Entête(noFact As String)
     
 End Sub
 
-Sub Insert_Big_PDF_Icon()
+Sub Insert_Big_PDF_Icon(tempSheet As Worksheet)
 
     Dim ws As Worksheet: Set ws = wshCC_Annulation
     
@@ -101,33 +115,36 @@ Sub CC_Annulation_Display_PDF_Invoice()
     
 End Sub
 
-Sub Display_Invoice_info(ws As Worksheet, r As Long)
+Sub Display_Invoice_info(tempSheet As Worksheet, ws As String, r As Long)
 
+        Application.EnableEvents = False
         'Display all fields from FAC_Entête
-        wshCC_Annulation.Range("L5").value = Format(ws.Cells(r, 2), "dd-mm-yyyy")
+        wshCC_Annulation.Range("L5").value = Format(wshFAC_Entête.Cells(r, 2), "dd-mm-yyyy")
         
-        wshCC_Annulation.Range("F7").value = ws.Cells(r, 5)
-        wshCC_Annulation.Range("F8").value = ws.Cells(r, 6)
-        wshCC_Annulation.Range("F9").value = ws.Cells(r, 7)
-        wshCC_Annulation.Range("F10").value = ws.Cells(r, 8)
-        wshCC_Annulation.Range("F11").value = ws.Cells(r, 9)
+        wshCC_Annulation.Range("F7").value = wshFAC_Entête.Cells(r, 5)
+        wshCC_Annulation.Range("F8").value = wshFAC_Entête.Cells(r, 6)
+        wshCC_Annulation.Range("F9").value = wshFAC_Entête.Cells(r, 7)
+        wshCC_Annulation.Range("F10").value = wshFAC_Entête.Cells(r, 8)
+        wshCC_Annulation.Range("F11").value = wshFAC_Entête.Cells(r, 9)
         
-        wshCC_Annulation.Range("L13").value = ws.Cells(r, 10)
-        wshCC_Annulation.Range("L14").value = ws.Cells(r, 12)
-        wshCC_Annulation.Range("L15").value = ws.Cells(r, 14)
-        wshCC_Annulation.Range("L16").value = ws.Cells(r, 16)
+        wshCC_Annulation.Range("L13").value = wshFAC_Entête.Cells(r, 10)
+        wshCC_Annulation.Range("L14").value = wshFAC_Entête.Cells(r, 12)
+        wshCC_Annulation.Range("L15").value = wshFAC_Entête.Cells(r, 14)
+        wshCC_Annulation.Range("L16").value = wshFAC_Entête.Cells(r, 16)
         wshCC_Annulation.Range("L17").formula = "=SUM(L13:L16)"
         
-        wshCC_Annulation.Range("L18").value = ws.Cells(r, 18)
-        wshCC_Annulation.Range("L19").value = ws.Cells(r, 20)
+        wshCC_Annulation.Range("L18").value = wshFAC_Entête.Cells(r, 18)
+        wshCC_Annulation.Range("L19").value = wshFAC_Entête.Cells(r, 20)
         wshCC_Annulation.Range("L21").formula = "=SUM(L17:L19)"
         
-        wshCC_Annulation.Range("L23").value = ws.Cells(r, 22)
+        wshCC_Annulation.Range("L23").value = wshFAC_Entête.Cells(r, 22)
         wshCC_Annulation.Range("L25").formula = "=L21 - L23"
+        
+        Application.EnableEvents = True
 
 End Sub
 
-Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant)
+Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByRef TECSummary As Variant)
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
@@ -174,7 +191,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     
 End Sub
 
-Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Variant)
+Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByRef FeesSummary As Variant)
 
     Dim wsFees As Worksheet: Set wsFees = wshFAC_Sommaire_Taux
     
@@ -201,6 +218,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
             wshCC_Annulation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
             wshCC_Annulation.Range("G" & rowFeesSummary).value = wsFees.Cells(cell.row, 4).value
             wshCC_Annulation.Range("H" & rowFeesSummary).value = wsFees.Cells(cell.row, 5).value
+            Call AddRecordToTempSheet(tempSheet, wsFees.name, cell.row)
             rowFeesSummary = rowFeesSummary + 1
             'Find the next cell with the invNo
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
@@ -214,9 +232,15 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     
 End Sub
 
-Sub CC_Annulation_Clear_Cells_And_PDF_Icon(ws As Worksheet)
+Sub CC_Annulation_Clear_Cells_And_PDF_Icon()
 
-    ws.Range("F5,K5").ClearContents
+    Application.EnableEvents = False
+    
+    Dim ws As Worksheet: Set ws = wshCC_Annulation
+    
+    ws.Range("B3:B17, B21:B35, A38:B52").ClearContents
+    
+    ws.Range("F5,L5").ClearContents
     
     ws.Range("F7:I11").ClearContents
     
@@ -235,62 +259,69 @@ Sub CC_Annulation_Clear_Cells_And_PDF_Icon(ws As Worksheet)
     
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
+    Set ws = Nothing
 
-End Sub
-
-Sub CC_Annulation_Button_OK_Click()
-
-    Dim ws As Worksheet: Set ws = wshCC_Annulation
-    
-    Application.EnableEvents = False
-    
-    Call CC_Annulation_Clear_Cells_And_PDF_Icon(ws)
-    
     Application.EnableEvents = True
     
     wshCC_Annulation.Range("F5").Select
     
 End Sub
 
-Sub CC_Annulation_Button_Delete_Click()
+Sub CC_Annulation_OK_Button_Click()
 
     Dim ws As Worksheet: Set ws = wshCC_Annulation
     
-    Application.EnableEvents = False
+    Call CC_Annulation_HideButtons
     
-    'Save information
-    Dim i As Integer
-    Dim r As Integer
-    'TEC Summary
-    r = 3
-    For i = 13 To 17
-        ws.Cells(r, 2) = ws.Cells(i, 6)
-        ws.Cells(r + 1, 2) = ws.Cells(i, 7)
-        ws.Cells(r + 2, 2) = ws.Cells(i, 8)
-        r = r + 3
-    Next i
-    'Fees Summary
-    r = 21
-    For i = 20 To 24
-        ws.Cells(r, 2) = ws.Cells(i, 6)
-        ws.Cells(r + 1, 2) = ws.Cells(i, 7)
-        ws.Cells(r + 2, 2) = ws.Cells(i, 8)
-        r = r + 3
-    Next i
+    Call CC_Annulation_Clear_Cells_And_PDF_Icon
+    
+    ws.Range("F5").Select
+    
+    'Cleanup - 2024-07-26 @ 00:55
+    Set ws = Nothing
+    
+End Sub
+
+Sub CC_Annulation_Delete_Button_Click()
+
+    Dim ws As Worksheet: Set ws = wshCC_Annulation
     
     Dim invNo As String
     invNo = ws.Range("F5").value
-    Call CC_Annulation_Get_GL_Posting(invNo)
     
-    Call CC_Annulation_Clear_Cells_And_PDF_Icon(ws)
+    Call CC_Annulation_HideButtons
     
-    Application.EnableEvents = True
+    Dim answerYesNo As Integer
+    answerYesNo = MsgBox("Êtes-vous certain de vouloir ANNULER cette facture ? ", _
+                         vbYesNo + vbQuestion, "Confirmation d'ANNULATION de facture")
+    If answerYesNo = vbNo Then
+        MsgBox _
+            Prompt:="Cette facture ne sera PAS DÉTRUITE ! ", _
+            Title:="Confirmation d'annulation", _
+            Buttons:=vbCritical
+            GoTo Clean_Exit
+    End If
     
+    If answerYesNo = vbYes Then
+        Call CC_Annulation_Annule_Facture(invNo)
+        
+        MsgBox "La facture a été annulée" & vbNewLine & vbNewLine & _
+                "Cependant le numéro est perdu à jamais", vbInformation
+        
+    End If
+    
+Clean_Exit:
+
+    Call CC_Annulation_Clear_Cells_And_PDF_Icon
+
     wshCC_Annulation.Range("F5").Select
+    
+    'Cleanup - 2024-07-26 @ 00:55
+    Set ws = Nothing
     
 End Sub
 
-Sub CC_Annulation_Get_GL_Posting(invNo)
+Sub CC_Annulation_Get_GL_Posting(tempSheet As Worksheet, invNo)
 
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
@@ -298,17 +329,67 @@ Sub CC_Annulation_Get_GL_Posting(invNo)
     lastUsedRow = wsGL.Range("A99999").End(xlUp).row
     Dim rngToSearch As Range: Set rngToSearch = wsGL.Range("D1:D" & lastUsedRow)
     
-    Dim result As Variant
-    'Using XLOOKUP to find the result directly
-    result = Application.WorksheetFunction.XLookup("FACT-" & invNo, _
-                                                   rngToSearch, _
-                                                   rngToSearch, _
-                                                   "Not Found", _
-                                                   0, _
-                                                   1)
+    'Use Range.Find to locate the first cell with the invNo
+    Dim cell As Range
+    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACT-" & invNo, LookIn:=xlValues, LookAt:=xlWhole)
     
-    If result <> "Not Found" Then
-        Dim r  As Long
-        r = Application.WorksheetFunction.Match(result, rngToSearch, 0)
+    'Check if the invNo was found at all
+    Dim firstAddress As String
+    If Not cell Is Nothing Then
+        firstAddress = cell.Address
+        Dim r As Long
+        r = 38
+        Application.EnableEvents = False
+        Do
+            'Save the information for invoice deletion
+            Call AddRecordToTempSheet(tempSheet, wsGL.name, cell.row)
+            r = r + 1
+            'Find the next cell with the invNo
+            Set cell = wsGL.Range("D2:D" & lastUsedRow).FindNext(After:=cell)
+        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+        Application.EnableEvents = True
     End If
+
 End Sub
+
+Sub AddRecordToTempSheet(tempSheet As Worksheet, worksheetData As String, s1 As Long)
+
+    'Find the next available row in the temporary worksheet
+    Dim nextRow As Long
+    With tempSheet
+        If Application.WorksheetFunction.CountA(.Cells) = 0 Then
+            'If the sheet is empty, start from row 1
+            nextRow = 1
+        Else
+            'Find the last row with data and move to the next row
+            nextRow = .Cells(.rows.count, 1).End(xlUp).row + 1
+        End If
+        
+        'Add the record to the next available row
+        .Cells(nextRow, 1).value = worksheetData
+        .Cells(nextRow, 2).value = s1
+    End With
+    
+End Sub
+
+Sub CC_Annulation_Annule_Facture(invNo As String)
+
+    MsgBox "Code à ajouter pour annuler la facture '" & invNo & "'"
+
+End Sub
+Sub CC_Annulation_ShowButtons()
+
+    'Show the OK and CANCEL buttons
+    wshCC_Annulation.Shapes("CC_Annulation_OK_Button").Visible = True
+    wshCC_Annulation.Shapes("CC_Annulation_DELETE_Button").Visible = True
+    
+End Sub
+
+Sub CC_Annulation_HideButtons()
+
+    'Hide the OK and CANCEL buttons
+    wshCC_Annulation.Shapes("CC_Annulation_OK_Button").Visible = False
+    wshCC_Annulation.Shapes("CC_Annulation_DELETE_Button").Visible = False
+    
+End Sub
+
