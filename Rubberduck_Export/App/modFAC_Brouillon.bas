@@ -49,7 +49,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         Application.ScreenUpdating = True
         
-        'Ensure all pending events are processed
+        'Ensure all pending events could be processed
         DoEvents
 
         Call FAC_Brouillon_Clear_All_TEC_Displayed
@@ -57,7 +57,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         'Save button is disabled UNTIL the invoice is saved
         Call FAC_Finale_Disable_Save_Button
     
-        'Ensure all pending events are processed
+        'Ensure all pending events could be processed
         DoEvents
 
         'Introduce a small delay to ensure the worksheet is fully updated
@@ -69,7 +69,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
-                If wshFAC_Projets_Entête.Range("Z" & i).value = "Faux" Then
+                Debug.Print wshFAC_Projets_Entête.Range("Z" & i).value
+                If UCase(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Then
                     liveOne = liveOne + 1
                 End If
             Next i
@@ -307,9 +308,9 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("K59"), "FAC_Label_AmountDue")
         
         'Establish Formulas
-        .Range("M47").formula = "=SUM(M11:M45)"                          'Total hours entered OR TEC selected"
-        .Range("N47").formula = "=T25"                                   'Uses the first professional rate
-        .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
+'        .Range("M47").formula = "=SUM(M11:M45)"                          'Total hours entered OR TEC selected"
+'        .Range("N47").formula = "=T25"                                   'Uses the first professional rate
+'        .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=U35"                                   'Fees sub-total from hours summary
         .Range("O47").Font.Bold = True
         
@@ -402,7 +403,7 @@ End Sub
 Sub FAC_Brouillon_Goto_Misc_Charges()
     
     ActiveWindow.SmallScroll Down:=6
-    wshFAC_Brouillon.Range("M47").Select 'Hours Summary
+    wshFAC_Brouillon.Range("O47").Select 'Hours Summary
     
 End Sub
 

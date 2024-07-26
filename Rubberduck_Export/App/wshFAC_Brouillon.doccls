@@ -154,8 +154,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If Target.row < NB_MAX_LIGNE_FAC + 11 Then
             wshFAC_Brouillon.Range("L" & Target.row + 1).Select
         Else
-            Set rng = wshFAC_Brouillon.Range("M47")
-            wshFAC_Brouillon.Range("M47").Select
+            Set rng = wshFAC_Brouillon.Range("O47")
+            wshFAC_Brouillon.Range("O47").Select
         End If
         GoTo ExitSub
       End If

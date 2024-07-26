@@ -1209,11 +1209,9 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         rowFAC_Finale = 67 - nbItems
         Dim rngFeesSummary As Range: Set rngFeesSummary = _
             wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
-        wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Nombre d'heures"
-        wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux Horaire"
+        wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Heures"
+        wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux"
         
-    '    Call Fees_Summary_Borders_Visible(rngFeesSummary)
-    
         Dim rowFAC_Brouillon As Integer
         rowFAC_Brouillon = 44
     
