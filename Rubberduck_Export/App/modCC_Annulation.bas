@@ -25,9 +25,12 @@ Sub Get_Invoice_Data(noFact As String)
     
     If result <> "Not Found" Then
         'Setup the worksheet for cancellation update (kind of clipboard)
+        On Error Resume Next
+        Worksheets("Clipboard").Visible = xlSheetVisible
+        On Error GoTo 0
         Call Erase_And_Create_Worksheet("Clipboard")
         Dim tempSheet As Worksheet: Set tempSheet = ThisWorkbook.Worksheets("Clipboard")
-        Worksheets("Clipboard").Visible = xlSheetVeryHidden
+        Worksheets("Clipboard").Visible = xlHidden
 
         Dim matchedRow As Long
         matchedRow = Application.Match(noFact, rngToSearch, 0)
@@ -53,7 +56,7 @@ Sub Get_Invoice_Data(noFact As String)
         
         Call CC_Annulation_Get_GL_Posting(tempSheet, noFact)
 
-'        oWorkSheet.Activate
+        oWorkSheet.Activate
         
     Else
         MsgBox "La facture n'existe pas"

@@ -326,19 +326,19 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     sourceTab = "FAC_ENC_Entête"
     
     'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Dim destinationRange As Range: Set destinationRange = wshENC_Entête.Range("A3")
+    Dim SourceRange As Range: Set SourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim DestinationRange As Range: Set DestinationRange = wshENC_Entête.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns
-    sourceRange.Copy destinationRange
+    SourceRange.Copy DestinationRange
     wshENC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
 
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set DestinationRange = Nothing
+    Set SourceRange = Nothing
     
     Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Entête_Import_All()", timerStart)
   
@@ -358,19 +358,19 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     sourceTab = "FAC_ENC_Détails"
     
     'Set up source and destination ranges
-    Dim sourceRange As Range: Set sourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
-    Dim destinationRange As Range: Set destinationRange = wshENC_Détails.Range("A3")
+    Dim SourceRange As Range: Set SourceRange = Workbooks.Open(sourceWorkbook).Worksheets(sourceTab).usedRange
+    Dim DestinationRange As Range: Set DestinationRange = wshENC_Détails.Range("A3")
 
     'Copy data, using Range to Range and Autofit all columns
-    sourceRange.Copy destinationRange
+    SourceRange.Copy DestinationRange
     wshENC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
     Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set destinationRange = Nothing
-    Set sourceRange = Nothing
+    Set DestinationRange = Nothing
+    Set SourceRange = Nothing
     
     Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Détails_Import_All()", timerStart)
     

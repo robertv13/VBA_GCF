@@ -293,6 +293,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     Application.EnableEvents = False
     
     With wshFAC_Brouillon
+        .Range("B9").value = False
         .Range("O9").value = "" 'Clear the template code
         .Range("L11:O45").ClearContents
         .Range("J47:P60").ClearContents
@@ -341,6 +342,54 @@ Sub FAC_Brouillon_Setup_All_Cells()
     
     Call Output_Timer_Results("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells()", timerStart)
 
+End Sub
+
+Sub FAC_Brouillon_Open_Copy_Paste()
+
+    Dim wbSource As Workbook
+    Dim wsSource As Worksheet
+    Dim wbDestination As Workbook
+    Dim wsDestination As Worksheet
+    Dim SourceRange As Range
+    Dim DestinationRange As Range
+    Dim FilePath As String
+    
+    'Step 1: Open the Excel file
+    FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If FilePath = "False" Then Exit Sub 'User canceled
+    
+    Set wbSource = Workbooks.Open(FilePath)
+    Set wsSource = wbSource.Sheets(1) 'Adjust if needed
+    
+    'Step 2: Let the user select the cells to be copied
+    MsgBox "Please select the cells you want to copy, then press Enter.", vbInformation
+    On Error Resume Next
+    Set SourceRange = Application.InputBox("Select the cells to copy", Type:=8)
+    On Error GoTo 0
+    
+    If SourceRange Is Nothing Then
+        MsgBox "No cells selected. Operation canceled.", vbExclamation
+        wbSource.Close SaveChanges:=False
+        Set wbSource = Nothing
+        Exit Sub
+    End If
+    
+    'Step 3: Copy the selected cells
+    SourceRange.Copy
+    
+    'Step 4: Paste the copied cells at a predefined location
+    Set wbDestination = ThisWorkbook
+    Set wsDestination = wshFAC_Brouillon ' Adjust to your destination sheet
+    wsDestination.Activate
+    Set DestinationRange = wsDestination.Range("L11")
+    DestinationRange.Select
+    wsDestination.Paste DestinationRange 'Use the Paste method to paste the copied data
+    
+    'Step 5: Close and release the Excel file
+    wbSource.Close SaveChanges:=False
+    Set wbSource = Nothing
+    Application.CutCopyMode = False
+    
 End Sub
 
 Sub FAC_Brouillon_Set_Labels(r As Range, l As String)
@@ -547,6 +596,15 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale()")
    
     Application.ScreenUpdating = False
+    
+    'Copy all services line from FAC_Brouillon to FAC_Finale
+    Dim i As Long
+    Dim iFacFinale As Long: iFacFinale = 34
+    For i = 11 To 45
+        wshFAC_Finale.Range("B" & iFacFinale).value = wshFAC_Brouillon.Range("L" & i).value
+        iFacFinale = iFacFinale + 1
+        Debug.Print wshFAC_Brouillon.Range("L" & i).value
+    Next i
     
     Call FAC_Finale_Cacher_Heures
     Call FAC_Finale_Cacher_Sommaire_Taux

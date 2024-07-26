@@ -71,19 +71,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
-    'Hours has been selected
-    If Not Intersect(Target, wshFAC_Brouillon.Range("M11:M45")) Is Nothing Then
+    'Honoraires has been selected
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O47")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
-    End If
-    
-    'Total hours has been selected
-    If Not Intersect(Target, wshFAC_Brouillon.Range("M47")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
-    End If
-
-    'Rate has been selected
-    If Not Intersect(Target, wshFAC_Brouillon.Range("N47")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        wshFAC_Brouillon.Unprotect
     End If
 
 End Sub
@@ -168,6 +159,12 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         GoTo ExitSub
       End If
+    
+    'Fees summary has changed
+    If Not Intersect(Target, Range("R44:T48")) Is Nothing Then
+        wshFAC_Brouillon.Range("B9").value = True
+        wshFAC_Brouillon.Range("O47").value = wshFAC_Brouillon.Range("U49").value
+    End If
     
     'Miscellaneous Amounts
     If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then

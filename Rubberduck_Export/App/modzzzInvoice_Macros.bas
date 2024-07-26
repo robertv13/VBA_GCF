@@ -124,11 +124,11 @@ Sub Invoice_Print()
 End Sub
 
 Sub Invoice_SaveAsPDF()
-    Dim filePath As String
+    Dim FilePath As String
     CAR_Dashboard_Invoice_SaveUpdate                           'Save invoice
-    filePath = ThisWorkbook.path & "\" & Invoice.Range("G5").value & "_" & Invoice.Range("J1").value 'File Path
-    If Dir(filePath, vbDirectory) <> "" Then Kill (filePath)
-    Invoice.ExportAsFixedFormat xlTypePDF, filePath, , , False, , , True
+    FilePath = ThisWorkbook.path & "\" & Invoice.Range("G5").value & "_" & Invoice.Range("J1").value 'File Path
+    If Dir(FilePath, vbDirectory) <> "" Then Kill (FilePath)
+    Invoice.ExportAsFixedFormat xlTypePDF, FilePath, , , False, , , True
 End Sub
 
 Sub Invoice_Delete()
