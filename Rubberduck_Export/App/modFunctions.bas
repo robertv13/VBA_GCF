@@ -306,18 +306,19 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
     
 End Function
 
-Sub test()
+'Sub test()
+'
+'    Dim dueDate As Date: dueDate = #7/1/2024#
+'    Dim cutoffDate As Date: cutoffDate = Now()
+'    Dim days1 As Integer: days1 = 30
+'    Dim days2 As Integer: days2 = 60
+'    Dim days3 As Integer: days3 = 90
+'    Dim days4 As Integer: days4 = 120
+'    Dim b As Integer
+'    b = Fn_Get_Bucket_For_Aging(dueDate, cutoffDate, days1, days2, days3, days4)
+'
+'End Sub
 
-    Dim dueDate As Date: dueDate = #7/1/2024#
-    Dim cutoffDate As Date: cutoffDate = Now()
-    Dim days1 As Integer: days1 = 30
-    Dim days2 As Integer: days2 = 60
-    Dim days3 As Integer: days3 = 90
-    Dim days4 As Integer: days4 = 120
-    Dim b As Integer
-    b = Fn_Get_Bucket_For_Aging(dueDate, cutoffDate, days1, days2, days3, days4)
-    
-End Sub
 Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Integer, days2 As Integer, days3 As Integer, days4 As Integer)
 
     Select Case age

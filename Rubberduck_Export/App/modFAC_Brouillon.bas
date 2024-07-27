@@ -345,51 +345,62 @@ Sub FAC_Brouillon_Setup_All_Cells()
 
 End Sub
 
-Sub FAC_Brouillon_Open_Copy_Paste()
+Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
-    Dim wbSource As Workbook
-    Dim wsSource As Worksheet
-    Dim wbDestination As Workbook
-    Dim wsDestination As Worksheet
-    Dim SourceRange As Range
-    Dim DestinationRange As Range
+    'Step 1 - Open the Excel file
     Dim FilePath As String
-    
-    'Step 1: Open the Excel file
     FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
     If FilePath = "False" Then Exit Sub 'User canceled
     
+    Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(FilePath)
-    Set wsSource = wbSource.Sheets(1) 'Adjust if needed
+    Dim wsSource As Worksheet
+    Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
     
-    'Step 2: Let the user select the cells to be copied
-    MsgBox "Please select the cells you want to copy, then press Enter.", vbInformation
+    'Step 2 - Let the user selects the cells to be copied
+    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
+         & "et par la suite, pesez sur <Enter>.", vbInformation
     On Error Resume Next
-    Set SourceRange = Application.InputBox("Select the cells to copy", Type:=8)
+    Dim rngSource As Range
+    Set rngSource = Application.InputBox("Sélectionnez les cellules à copier", Type:=8)
     On Error GoTo 0
     
-    If SourceRange Is Nothing Then
-        MsgBox "No cells selected. Operation canceled.", vbExclamation
+    If rngSource Is Nothing Then
+        MsgBox "Aucune cellule de sélectionnées. L'Opération est annulée.", vbExclamation
         wbSource.Close SaveChanges:=False
         Set wbSource = Nothing
         Exit Sub
     End If
     
-    'Step 3: Copy the selected cells
-    SourceRange.Copy
+    'Step 3 - Copy the selected cells
+    rngSource.Copy
+    If rngSource.MergeCells Then
+        'Unmerged cells
+        rngSource.UnMerge
+    End If
     
-    'Step 4: Paste the copied cells at a predefined location
+    'Step 4 - Paste the copied cells at a predefined location
+    Dim wbDestination As Workbook
     Set wbDestination = ThisWorkbook
-    Set wsDestination = wshFAC_Brouillon ' Adjust to your destination sheet
+    Dim wsDestination As Worksheet
+    Set wsDestination = wshFAC_Brouillon
     wsDestination.Activate
-    Set DestinationRange = wsDestination.Range("L11")
-    DestinationRange.Select
-    wsDestination.Paste DestinationRange 'Use the Paste method to paste the copied data
+    Dim rngDestination As Range
+    Set rngDestination = wsDestination.Range("L11")
+    rngDestination.Select
+    wsDestination.Paste rngDestination 'Use the Paste method to paste the copied data
     
-    'Step 5: Close and release the Excel file
+    'Step 5 - Close and release the Excel file
     wbSource.Close SaveChanges:=False
-    Set wbSource = Nothing
     Application.CutCopyMode = False
+    
+    'Cleanup - 2024-07-27 @ 07:39
+    Set rngDestination = Nothing
+    Set rngSource = Nothing
+    Set wbDestination = Nothing
+    Set wbSource = Nothing
+    Set wsDestination = Nothing
+    Set wsSource = Nothing
     
 End Sub
 

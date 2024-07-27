@@ -658,8 +658,8 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocFormules.Range("A9999").End(xlUp).row 'Last used row
-    If lastUsedRow > 1 Then wshzDocFormules.Range("A2:G" & lastUsedRow).ClearContents
+    lastUsedRow = wshzDocFormulas.Range("A9999").End(xlUp).row 'Last used row
+    If lastUsedRow > 1 Then wshzDocFormulas.Range("A2:G" & lastUsedRow).ClearContents
     
     'Create an Array to receive the formulas informations
     Dim outputArray() As Variant
@@ -698,12 +698,12 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
 nextIteration:
     Next ws
     
-    Call Array_2D_Resizer(outputArray, r, UBound(outputArray, 2))
+    Call Array_2D_Resizer(outputArray, i, UBound(outputArray, 2))
     Call Array_2D_Bubble_Sort(outputArray)
     
     'Transfer the array data to the worksheet
-    wshzDocFormules.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
-    wshzDocFormules.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
+    wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
+    wshzDocFormulas.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
 
     MsgBox "J'ai trouvé " & Format(i, "#,##0") & " formules"
     
@@ -1299,7 +1299,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                 trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
                 'Remove comments
                 If InStr(1, trimmedLineOfCode, "'") Then
-                    trimmedLineOfCode = HandleComments(trimmedLineOfCode)
+                    trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
                 End If
                 
                 posProcedure = InStr(trimmedLineOfCode, "Sub ")
@@ -1392,7 +1392,7 @@ End Sub
 
 Sub Test_Array_To_Range() '2024-03-18 @ 17:34
 
-    Dim ws As Worksheet: Set ws = Feuil2
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets(2)
     
     Dim arr() As Variant
     ReDim arr(1 To 1000, 1 To 20)

@@ -86,6 +86,7 @@ End Sub
 
 Sub wshCAR_Dashboard_SelectAgingDetails()
 
+    Dim detailNumb As String
     detailNumb = Replace(Application.Caller, "Aging", "")
     wshCAR_Dashboard.Range("AA504").value = detailNumb  'Set Detail level #
     wshCAR_Dashboard.Range("E2").Select                 'Select to trigger macro
@@ -130,18 +131,6 @@ Sub Aging_ShowCustDetail()
         If lastResultRow < 3 Then Exit Sub
         wshCAR_Dashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).value = .Range("AB1:AJ" & lastResultRow).value 'Bring over Customer Details
             wshCAR_Dashboard.Range("J" & selRow & ":R" & selRow).HorizontalAlignment = xlCenterAcrossSelection
-    End With
-    
-End Sub
-
-Sub Aging_GoToInvoice()
-
-    With wshCAR_Dashboard
-        selRow = .Range("AA2").value             'Selected Row
-        If selRow = 0 Then Exit Sub
-        If .Range("J" & selRow).value = "" Then Exit Sub
-        Invoice.Activate
-        Invoice.Range("L1").value = .Range("J" & selRow).value 'set Invoice #
     End With
     
 End Sub
