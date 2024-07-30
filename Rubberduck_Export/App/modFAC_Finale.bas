@@ -99,7 +99,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Entête"
     
     'Initialize connection, connection string & open the connection
@@ -238,7 +238,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Détails"
     
     'Initialize connection, connection string & open the connection
@@ -355,7 +355,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Sommaire_Taux"
     
     'Initialize connection, connection string & open the connection
@@ -450,7 +450,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients"
     
     'Initialize connection, connection string & open the connection
@@ -535,7 +535,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local"
     
     'Initialize connection, connection string & open the connection
@@ -639,7 +639,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails"
     
     'Initialize connection, connection string & open the connection
@@ -716,7 +716,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête"
     
     'Initialize connection, connection string & open the connection
@@ -1379,10 +1379,10 @@ End Sub
 '
 '    'Open the target workbook
 '    Workbooks.Open fileName:=wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-'                   "GCF_BD_Sortie.xlsx"
+'                   "GCF_BD_MASTER.xlsx"
 '
 '    'Set references to the target workbook and target worksheet
-'    Set wb = Workbooks("GCF_BD_Sortie.xlsx")
+'    Set wb = Workbooks("GCF_BD_MASTER.xlsx")
 '    Set wsTarget = wb.Sheets("FACTURES")
 '
 '    'PasteSpecial directly to the target range

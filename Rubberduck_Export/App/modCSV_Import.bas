@@ -55,7 +55,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     lastUsedRow = ws.Range("A9999").End(xlUp).row
     Call Fix_Columns(ws, firstAvailRow, lastUsedRow)
     
-    Debug.Print fn & " a été importé avec succès, " & lastUsedRow - firstAvailRow & " lignes"
+    Debug.Print fn & " a été importée avec succès, " & lastUsedRow - firstAvailRow & " lignes"
 
 End Sub
 

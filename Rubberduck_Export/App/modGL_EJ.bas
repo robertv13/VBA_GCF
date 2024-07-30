@@ -145,7 +145,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     
     'Initialize connection, connection string & open the connection
@@ -264,7 +264,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_EJ_Auto"
     
     'Initialize connection, connection string & open the connection

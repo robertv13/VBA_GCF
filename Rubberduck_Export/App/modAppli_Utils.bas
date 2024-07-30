@@ -389,7 +389,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call Client_List_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -400,7 +400,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call Fournisseur_List_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -411,7 +411,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call FAC_Détails_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -422,7 +422,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call FAC_Entête_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -433,7 +433,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call FAC_Projets_Détails_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -444,7 +444,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call FAC_Projets_Entête_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -455,7 +455,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call GL_Trans_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
 
@@ -466,7 +466,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call TEC_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importé du fichier BD_Sortie.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_Sortie.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -682,20 +682,24 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     
     'wshFAC_Détails
     Dim ws As Worksheet: Set ws = wshFAC_Détails
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+    Dim headerRow As Long: headerRow = 2
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
-    Dim lastUsedRow As Long
-    lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
-    If lastUsedRow < 3 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-
-    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A3:A" & lastUsedRow)
+    
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -773,7 +777,17 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshFAC_Entête
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+    Dim headerRow As Long: headerRow = 2
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -782,10 +796,8 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
     Dim arr As Variant
-    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.columns.count - 2).value
+    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count - headerRow).value
     If UBound(arr, 1) < 3 Then
         r = r + 1
         GoTo Clean_Exit
@@ -811,7 +823,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - 2
+    readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -830,19 +842,23 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     
     'wshFAC_Projets_Détails
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
-    Dim lastUsedRow As Long
     lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
-    If lastUsedRow < 2 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
@@ -866,7 +882,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         
     Dim i As Long
     Dim projetID As String, oldProjetID As String
-    Dim lookUpValue As Long, result As Variant
+    Dim lookUpValue As String, result As Variant
     For i = LBound(arr, 1) To UBound(arr, 1) - 1 'One line of header !
         projetID = arr(i, 1)
         lookUpValue = projetID
@@ -906,12 +922,12 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " lignes ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - headerRow, "##,##0") & " lignes ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - 1
+    readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -932,7 +948,17 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -943,12 +969,13 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     
     'Establish the number of rows before transferring it to an Array
     Dim numRows As Long
-    numRows = ws.Range("A1").CurrentRegion.rows.count - 1
-    If numRows < 1 Then
-        r = r + 1
+    numRows = ws.Range("A1").CurrentRegion.rows.count
+    If numRows <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
         GoTo Clean_Exit
     End If
-    
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -1052,12 +1079,12 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - headerRow, "##,##0") & " lignes de transactions ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - 1
+    readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -1076,7 +1103,17 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 1, "###,##0") & _
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -1191,12 +1228,12 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         sum_ct = sum_ct + ct
     Next v
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 1, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - headerRow, "##,##0") & " lignes de transactions ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - 1
+    readRows = readRows + UBound(arr, 1) - headerRow
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1249,9 +1286,20 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim headerRow As Long: headerRow = 2
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "*** Cette feuille est vide !!!")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
     Dim lastUsedCol As Long
     lastUsedCol = ws.Range("A2").End(xlToRight).Column
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(ws.usedRange.rows.count - 2, "###,##0") & _
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format(lastUsedCol, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
@@ -1259,11 +1307,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
-    
-    If ws.usedRange.rows.count < 2 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
     
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(2)
@@ -1344,12 +1387,12 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - 2, "##,##0") & " charges de temps ont été analysées!")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - 2
+    readRows = readRows + UBound(arr, 1) - headerRow
     
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
@@ -1606,28 +1649,39 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Integer)
     '2) Define the usedRange to data only (exclude header row(s))
         Dim numRows As Long
         numRows = rng.CurrentRegion.rows.count - headerRow
-        Dim usedRange As Range: Set usedRange = rng.Offset(headerRow, 0).Resize(numRows, rng.columns.count)
+        Dim usedRange As Range
+        If numRows > 0 Then
+            On Error Resume Next
+            Set usedRange = rng.Offset(headerRow, 0).Resize(numRows, rng.columns.count)
+            On Error GoTo 0
+        End If
     
     '3) Add the standard conditional formatting
-        usedRange.FormatConditions.add Type:=xlExpression, _
-            Formula1:="=ET($A2<>"""";mod(LIGNE();2)=1)"
-'        usedRange.FormatConditions.add Type:=xlExpression, _
-'            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
-        usedRange.FormatConditions(usedRange.FormatConditions.count).SetFirstPriority
-        With usedRange.FormatConditions(1).Font
-            .Strikethrough = False
-            .TintAndShade = 0
-        End With
-        With usedRange.FormatConditions(1).Interior
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorAccent1
-            .TintAndShade = 0.799981688894314
-        End With
-        usedRange.FormatConditions(1).StopIfTrue = False
-
+        If Not usedRange Is Nothing Then
+            usedRange.FormatConditions.add Type:=xlExpression, _
+                Formula1:="=ET($A2<>"""";mod(LIGNE();2)=1)"
+    '        usedRange.FormatConditions.add Type:=xlExpression, _
+    '            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
+            usedRange.FormatConditions(usedRange.FormatConditions.count).SetFirstPriority
+            With usedRange.FormatConditions(1).Font
+                .Strikethrough = False
+                .TintAndShade = 0
+            End With
+            With usedRange.FormatConditions(1).Interior
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorAccent1
+                .TintAndShade = 0.799981688894314
+            End With
+            usedRange.FormatConditions(1).StopIfTrue = False
+        End If
+        
     'Specific formats to worksheets
     Dim lastUsedRow As Long
     lastUsedRow = rng.rows.count
+    If lastUsedRow = headerRow Then
+        Exit Sub
+    End If
+    
     Dim firstDataRow As Long
     firstDataRow = headerRow + 1
     

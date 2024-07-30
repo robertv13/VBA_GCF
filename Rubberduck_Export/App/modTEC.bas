@@ -327,7 +327,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local"
     
     'Initialize connection, connection string & open the connection

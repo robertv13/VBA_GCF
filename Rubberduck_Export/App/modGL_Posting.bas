@@ -7,7 +7,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     
     'Initialize connection, connection string, open the connection and declare rs Object
@@ -120,7 +120,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
 
 End Sub
 
-Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_Sortie.xlsx / GL_Trans
+Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_Posting:Encaissement_GL_Posting()")
     
@@ -128,7 +128,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     
     'Initialize connection, connection string, open the connection & declare rs Object

@@ -286,7 +286,7 @@ Sub BackupMasterFile()
     'Open the master file
     Dim masterWorkbook As Workbook
     Set masterWorkbook = Workbooks.Open(wshAdmin.Range("FolderSharedData").value _
-                                & Application.PathSeparator & "GCF_BD_Sortie.xlsx")
+                                & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS
     Dim currentDateAndTime As String

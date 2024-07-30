@@ -281,7 +281,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
     wbPath = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                     "GCF_BD_Sortie.xlsx"
+                     "GCF_BD_MASTER.xlsx"
     
     'Open the workbook in read-only mode
     Dim wb As Workbook: Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)

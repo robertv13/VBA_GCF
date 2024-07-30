@@ -257,7 +257,7 @@ End Sub
 '    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
 '    Dim sourceWorkbook As String, sourceTab As String
 '    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-'                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+'                     "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
 '    sourceTab = "FAC_Comptes_Clients"
 '
 '    'Set up source and destination ranges
@@ -270,7 +270,7 @@ End Sub
 '    wshFAC_Comptes_Clients.Range("A1").CurrentRegion.EntireColumn.AutoFit
 '
 '    'Close the source workbook, without saving it
-'    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+'    Workbooks("GCF_BD_MASTER.xlsx").Close SaveChanges:=False
 '
 '    'Insert Formula in column H
 '    Dim lastRow As Long
@@ -322,7 +322,7 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+                     "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Entête"
     
     'Set up source and destination ranges
@@ -334,7 +334,7 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     wshENC_Entête.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_MASTER.xlsx").Close SaveChanges:=False
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set DestinationRange = Nothing
@@ -354,7 +354,7 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                     "GCF_BD_Sortie.xlsx" '2024-02-14 @ 06:22
+                     "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Détails"
     
     'Set up source and destination ranges
@@ -366,7 +366,7 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     wshENC_Détails.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     'Close the source workbook, without saving it
-    Workbooks("GCF_BD_Sortie.xlsx").Close SaveChanges:=False
+    Workbooks("GCF_BD_MASTER.xlsx").Close SaveChanges:=False
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set DestinationRange = Nothing
@@ -384,7 +384,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Entête"
     
     'Initialize connection, connection string & open the connection
@@ -469,7 +469,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Détails"
     
     'Initialize connection, connection string & open the connection

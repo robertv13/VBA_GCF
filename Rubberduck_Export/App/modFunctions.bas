@@ -170,7 +170,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
                 destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                                      "GCF_BD_Sortie.xlsx"
+                                      "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Détails"
                 Dim columnName As String
                 columnName = "NomClient"
@@ -181,7 +181,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                                                                      
                 'Update row from MASTER file (entête)
                 destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                                      "GCF_BD_Sortie.xlsx"
+                                      "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête"
                 Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
                                                                     destinationTab, _

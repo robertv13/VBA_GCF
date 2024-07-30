@@ -494,7 +494,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Lon
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails"
     
     'Initialize connection, connection string & open the connection
@@ -633,7 +633,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
-                          "GCF_BD_Sortie.xlsx"
+                          "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête"
     
     'Initialize connection, connection string & open the connection
