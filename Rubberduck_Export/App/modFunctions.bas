@@ -680,20 +680,6 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
 
 End Function
 
-Public Function Fn_Clear_Range_Borders(r As Range)
-
-    'MsgBox "Range to clear = " & r.Address
-    With r
-        .Borders(xlEdgeTop).LineStyle = xlNone
-        .Borders(xlEdgeRight).LineStyle = xlNone
-        .Borders(xlEdgeBottom).LineStyle = xlNone
-        .Borders(xlEdgeLeft).LineStyle = xlNone
-        .Borders(xlInsideVertical).LineStyle = xlNone
-        .Borders(xlInsideHorizontal).LineStyle = xlNone
-    End With
-
-End Function
-
 Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As Integer, leftOrRight As String) As String
 
     Dim paddedString As String

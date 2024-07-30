@@ -1,6 +1,8 @@
 Attribute VB_Name = "modCC_Analyse"
 Option Explicit
 
+Dim previousCellAddress As Variant
+
 Sub CC_Sort_Group_And_Subtotal()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Analyse:CC_Sort_Group_And_Subtotal()")

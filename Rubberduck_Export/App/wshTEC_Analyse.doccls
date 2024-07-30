@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder(GC_FISCALITÉ.1TEC)
+
+Option Explicit
 
 Public previousCellAddress As Variant
 

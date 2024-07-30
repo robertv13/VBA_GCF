@@ -574,7 +574,9 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
     For i = lastRow To 2 Step -1
-        If wshFAC_Projets_Détails.Cells(i, 9).value = True Then
+        Debug.Print "modImport - wshFAC_Projets_Détails - row=" & i & " (" & wshFAC_Projets_Détails.Cells(i, 1).value & ") - '" & wshFAC_Projets_Détails.Cells(i, 9).value & "'"
+        If wshFAC_Projets_Détails.Cells(i, 9).value = "VRAI" Then
+            Debug.Print "Deletinig row " & i
             wshFAC_Projets_Détails.rows(i).delete
         End If
     Next i

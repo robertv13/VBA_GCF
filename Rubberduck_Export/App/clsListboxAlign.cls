@@ -19,6 +19,7 @@ Option Explicit
 '--- I don't recall the sources.------------------------------------------------------
 '-------------------------------------------------------------------------------------
 
+'@EntryPoint
 Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     '
     ' PURPOSE: Center align the text in a listbox column

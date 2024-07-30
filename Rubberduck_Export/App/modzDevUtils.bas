@@ -402,6 +402,7 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     
 End Sub
 
+'@EntryPoint
 Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
 
     'Work in memory
@@ -1535,4 +1536,5 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Set wsOutput = Nothing
 
 End Sub
+
 

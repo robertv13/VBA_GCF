@@ -1,7 +1,9 @@
 Attribute VB_Name = "modAppli"
+'@Folder(GC_FISCALITÉ.Main)
+
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.B.1" '2024-07-26 @ 10:53
+Public Const APP_VERSION_NO As String = "v3.B.2" '2024-07-27 @ 08:29
 Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
@@ -104,6 +106,12 @@ Public Enum TEC_Data_Columns
     ftecLast = ftecNoFacture
 End Enum
 
+Private Sub auto_open() '2024-03-06 @ 14:36
+
+    userName = Environ("Username") '2024-03-27 @ 06:54
+
+End Sub
+
 Sub BackToMainMenu()
 
     Dim ws As Worksheet
@@ -116,12 +124,6 @@ Sub BackToMainMenu()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-End Sub
-
-Private Sub auto_open() '2024-03-06 @ 14:36
-
-    userName = Environ("Username") '2024-03-27 @ 06:54
-
 End Sub
 
 'Private Sub auto_close() '2024-03-06 @ 14:36 - RMV - 2024-07-05
@@ -198,35 +200,6 @@ Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
 
 End Sub
 
-Sub Invalid_Date_Message() '2024-03-03 @ 07:45 - TBD ??
-
-''    MsgBox Prompt:="La valeur saisie ne peut être utilisée comme une date valide", _
-''        Title:="Validation de la date", _
-''        Buttons:=vbCritical
-
-End Sub
-
-Sub Erreur_Totaux_DT_CT()
-
-    MsgBox Prompt:="Les totaux (Débit vs. Crédit) sont différents !!!", _
-        Title:="Validation des totaux du G/L", _
-        Buttons:=vbCritical
-
-End Sub
-
-Sub Pause_Application(s As Double)
-    
-    If s > 5 Then Stop
-    
-    Dim endTime As Double
-    endTime = Timer + s 'Set end time to 's' seconds from now
-    
-    Do While Timer < endTime
-        'Sleep
-    Loop
-    
-End Sub
-
 Sub Slide_In_All_Menu_Options()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli:Slide_In_All_Menu_Options()")
@@ -278,7 +251,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
-        Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -317,7 +290,7 @@ Sub BackupMasterFile()
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS
     Dim currentDateAndTime As String
-    currentDateAndTime = Format(Now, "YYYYMMDD_HHMMSS")
+    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
 
     'Create the backup file name
     Dim backupFileName As String
@@ -410,41 +383,44 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
     
 End Sub
 
-Sub Test_Calcul_Taxes()
+'@EntryPoint
+'Sub Test_Calcul_Taxes()
+'
+'    Dim d As Date
+'    Dim taxCode As String
+'    Dim total As Currency, gst As Currency, pst As Currency
+'    Dim gstCredit As Currency, pstCredit As Currency
+'    Dim netAmount As Currency
+'
+'    d = #7/3/2024#
+'    taxCode = "REP"
+'    total = 0
+'    netAmount = 217.39
+'
+'    Call Calculate_gst_PST_And_Credits(d, taxCode, total, gst, pst, gstCredit, pstCredit, netAmount)
+'
+'    Debug.Print vbNewLine & "Date   : " & d
+'    Debug.Print "TaxCode: " & taxCode
+'    Debug.Print "Gross  : " & Format(total, "#,##0.00")
+'    Debug.Print "Net    : " & Format(netAmount, "#,##0.00") & vbNewLine
+'
+'    Debug.Print "TPS    : " & Format(gst, "#,##0.00")
+'    Debug.Print "TVQ    : " & Format(pst, "#,##0.00")
+'    Debug.Print "TPS_CT : " & Format(gstCredit, "#,##0.00")
+'    Debug.Print "TVQ_CT : " & Format(pstCredit, "#,##0.00")
+'
+'End Sub
 
-    Dim d As Date
-    Dim taxCode As String
-    Dim total As Currency, gst As Currency, pst As Currency
-    Dim gstCredit As Currency, pstCredit As Currency
-    Dim netAmount As Currency
-    
-    d = #7/3/2024#
-    taxCode = "REP"
-    total = 0
-    netAmount = 217.39
-    
-    Call Calculate_gst_PST_And_Credits(d, taxCode, total, gst, pst, gstCredit, pstCredit, netAmount)
-    
-    Debug.Print vbNewLine & "Date   : " & d
-    Debug.Print "TaxCode: " & taxCode
-    Debug.Print "Gross  : " & Format(total, "#,##0.00")
-    Debug.Print "Net    : " & Format(netAmount, "#,##0.00") & vbNewLine
-    
-    Debug.Print "TPS    : " & Format(gst, "#,##0.00")
-    Debug.Print "TVQ    : " & Format(pst, "#,##0.00")
-    Debug.Print "TPS_CT : " & Format(gstCredit, "#,##0.00")
-    Debug.Print "TVQ_CT : " & Format(pstCredit, "#,##0.00")
-    
-End Sub
+'Sub TEST_GetOneDrivePath()
+'
+'    On Error GoTo eh
+'    Debug.Print "Original Path is: " & ThisWorkbook.path & "/" & ThisWorkbook.name
+'    Debug.Print "The Path is     : " & GetOneDrivePath(ThisWorkbook.FullName)
+'    Exit Sub
+'eh:
+'    MsgBox Err.Description
+'
+'End Sub
+'
 
-Sub TEST_GetOneDrivePath()
-
-    On Error GoTo eh
-    Debug.Print "Original Path is: " & ThisWorkbook.path & "/" & ThisWorkbook.name
-    Debug.Print "The Path is     : " & GetOneDrivePath(ThisWorkbook.FullName)
-    Exit Sub
-eh:
-    MsgBox Err.Description
-    
-End Sub
 
