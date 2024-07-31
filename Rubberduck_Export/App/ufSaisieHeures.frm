@@ -25,8 +25,9 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Sub UserForm_Activate()
+Sub UserForm_Activate() '2024-07-31 @ 07:57
 
+    'Special timer for log purpose
     Dim timer3Start As Double: timer3Start = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Activate()")
     
     Call Client_List_Import_All
@@ -56,6 +57,7 @@ Sub UserForm_Activate()
    
     rmv_state = rmv_modeInitial
     
+    'Close the special timer (log purpose)
     Call Output_Timer_Results("ufSaisieHeures:UserForm_Activate()", timer3Start)
     
 End Sub
@@ -121,17 +123,15 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
 
-    If Me.cmbProfessionnel.value = "" Then GoTo Exit_Sub
-    
-    wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
-    wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(Me.cmbProfessionnel.value)
-    
-    If wshAdmin.Range("TEC_Date").value <> "" Then
-        Call TEC_AdvancedFilter_And_Sort
-        Call TEC_Refresh_ListBox_And_Add_Hours
+    If Me.cmbProfessionnel.value <> "" Then
+        wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
+        wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(Me.cmbProfessionnel.value)
+        
+        If wshAdmin.Range("TEC_Date").value <> "" Then
+            Call TEC_AdvancedFilter_And_Sort
+            Call TEC_Refresh_ListBox_And_Add_Hours
+        End If
     End If
-
-Exit_Sub:
 
     Call Output_Timer_Results("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", timerStart)
 
@@ -343,31 +343,29 @@ End Sub
 
 Private Sub cmdUpdate_Click()
 
-    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+    If wshAdmin.Range("TEC_Current_ID").value <> "" Then
+        Call TEC_Modifie_Ligne
+    Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:="", _
                Buttons:=vbCritical
-        Exit Sub
     End If
-
-    Call TEC_Modifie_Ligne
 
 End Sub
 
 Private Sub cmdDelete_Click()
 
-    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+    If wshAdmin.Range("TEC_Current_ID").value <> "" Then
+        Call TEC_Efface_Ligne
+    Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
                Title:="", _
                Buttons:=vbCritical
-        Exit Sub
     End If
-    
-    Call TEC_Efface_Ligne
 
 End Sub
 
-'****************************************** Get a row and display it in the form
+'Get a specific row from listBox and display it in the userform
 Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     rmv_state = rmv_modeAffichage
@@ -388,46 +386,45 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         isBilled = wshTEC_Local.Range("L" & rowTecID).value
 
         'Has this charge beeing INVOICED ?
-        If isBilled Then
+        If Not isBilled Then
+            .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
+            .cmbProfessionnel.Enabled = False
+    
+            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
+            .txtDate.Enabled = False
+    
+            .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
+            savedClient = .txtClient.value
+            .txtSavedClient.value = .txtClient.value
+            wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(savedClient)
+    
+            .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
+            savedActivite = .txtActivite.value
+            .txtSavedActivite.value = .txtActivite.value
+    
+            .txtHeures.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
+            savedHeures = .txtHeures.value
+            .txtSavedHeures.value = .txtHeures.value
+    
+            .txtCommNote.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
+            savedCommNote = .txtCommNote.value
+            .txtSavedCommNote.value = .txtCommNote.value
+    
+            .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
+            savedFacturable = .chbFacturable.value
+            .txtSavedFacturable.value = .chbFacturable.value
+        Else
             MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
                         vbNewLine & "une charge déjà FACTURÉE", vbExclamation
-            GoTo Exit_Sub
         End If
         
-        .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
-        .cmbProfessionnel.Enabled = False
-
-        .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
-        .txtDate.Enabled = False
-
-        .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
-        savedClient = .txtClient.value
-        .txtSavedClient.value = .txtClient.value
-        wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(savedClient)
-
-        .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
-        savedActivite = .txtActivite.value
-        .txtSavedActivite.value = .txtActivite.value
-
-        .txtHeures.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
-        savedHeures = .txtHeures.value
-        .txtSavedHeures.value = .txtHeures.value
-
-        .txtCommNote.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
-        savedCommNote = .txtCommNote.value
-        .txtSavedCommNote.value = .txtCommNote.value
-
-        .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
-        savedFacturable = .chbFacturable.value
-        .txtSavedFacturable.value = .chbFacturable.value
     End With
-
-Exit_Sub:
 
     Call Buttons_Enabled_True_Or_False(True, False, False, True)
     
     rmv_state = rmv_modeModification
     
+    'Cleaning memory - 2024-07-31 2 08:34
     Set lookupRange = Nothing
     
 End Sub

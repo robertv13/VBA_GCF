@@ -465,7 +465,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TDB_Data")
     r = r + 1
     
-    Call check_TEC_DB_Data(r, readRows)
+    Call check_TEC_TDB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
@@ -1284,7 +1284,7 @@ Clean_Exit:
     
 End Sub
 
-Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
+Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
@@ -1320,6 +1320,7 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim dict_prof As New Dictionary
     
     Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date
+    Dim minDate As Date, maxDate As Date
     Dim hres As Double, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
@@ -1328,6 +1329,7 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
     Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
     
+    minDate = "12/31/2999"
     For i = LBound(arr, 1) To UBound(arr, 1) - 1
         TECID = arr(i, 1)
         prof = arr(i, 2)
@@ -1337,13 +1339,16 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
+        Else
+            If dateTEC < minDate Then minDate = dateTEC
+            If dateTEC > maxDate Then maxDate = dateTEC
         End If
         hres = arr(i, 5)
         If IsNumeric(hres) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
-            cas_hres_invalide = cas_date_invalide + 1
+            cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 6)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
@@ -1404,13 +1409,21 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1420,6 +1433,7 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1429,6 +1443,7 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1438,6 +1453,7 @@ Private Sub check_TEC_DB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1537,6 +1553,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim dict_prof As New Dictionary
     
     Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
+    Dim minDate As Date, maxDate As Date
     Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
@@ -1545,6 +1562,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
     Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
     
+    minDate = "12/31/2999"
     For i = LBound(arr, 1) To UBound(arr, 1) - 2
         TECID = arr(i, 1)
         profID = arr(i, 2)
@@ -1556,6 +1574,9 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
+        Else
+            If dateTEC < minDate Then minDate = dateTEC
+            If dateTEC > maxDate Then maxDate = dateTEC
         End If
         code = arr(i, 5)
         nom = arr(i, 6)
@@ -1565,7 +1586,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
-            cas_hres_invalide = cas_date_invalide + 1
+            cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
@@ -1626,13 +1647,21 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1642,6 +1671,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1651,6 +1681,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1660,6 +1691,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1669,6 +1701,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce resultat:")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1

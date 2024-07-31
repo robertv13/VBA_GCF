@@ -18,34 +18,34 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_Ajoute_Ligne()")
 
-    If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
+    If Fn_TEC_Is_Data_Valid() = True Then
+        'Get the Client_ID
+        wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
+        
+        Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
+        Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
+        
+        'Clear the fields after saving
+        With ufSaisieHeures
+            .txtTEC_ID.value = ""
+            .txtClient.value = ""
+            .txtActivite.value = ""
+            .txtHeures.value = ""
+            .txtCommNote.value = ""
+            .chbFacturable = True
+        End With
     
-    'Get the Client_ID
-    wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
-    
-    Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to external XLSX file - 2023-12-23 @ 07:03
-    Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
-    
-    'Clear the fields after saving
-    With ufSaisieHeures
-        .txtTEC_ID.value = ""
-        .txtClient.value = ""
-        .txtActivite.value = ""
-        .txtHeures.value = ""
-        .txtCommNote.value = ""
-        .chbFacturable = True
-    End With
-
-    Call TEC_AdvancedFilter_And_Sort
-    Call TEC_Refresh_ListBox_And_Add_Hours
-    
-    Call TEC_DB_Update_All
-    
-    'Reset command buttons
-    Call Buttons_Enabled_True_Or_False(False, False, False, False)
-    
-    'Back to client
-    ufSaisieHeures.txtClient.SetFocus
+        Call TEC_AdvancedFilter_And_Sort
+        Call TEC_Refresh_ListBox_And_Add_Hours
+        
+        Call TEC_DB_Update_All
+        
+        'Reset command buttons
+        Call Buttons_Enabled_True_Or_False(False, False, False, False)
+        
+        'Back to client
+        ufSaisieHeures.txtClient.SetFocus
+    End If
     
     Call Output_Timer_Results("modTEC:TEC_Ajoute_Ligne()", timerStart)
 
