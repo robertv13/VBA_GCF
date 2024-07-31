@@ -123,8 +123,8 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
 '            rs.Fields("TimeStamp").value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields("TimeStamp").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-            Debug.Print "DEB_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            Debug.Print "DEB_Trans - " & CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         rs.update
     Next l
     
@@ -159,7 +159,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     lastUsedRow = wshDEB_Trans.Range("A99999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    Dim i As Integer
+    Dim i As Long
     For i = 9 To r
         wshDEB_Trans.Range("A" & rowToBeUsed).value = currentDebTransNo
         wshDEB_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
@@ -176,7 +176,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
         wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
         wshDEB_Trans.Range("O" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format(Now(), "mm/dd/yyyy hh:mm:ss")
+        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -200,7 +200,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     If Trim(wshDEB_Saisie.Range("M6").value) <> "" Then
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
     End If
-    source = "DÉBOURS-" & Format(wshDEB_Saisie.Range("B1").value, "000000")
+    source = "DÉBOURS-" & Format$(wshDEB_Saisie.Range("B1").value, "000000")
     
     Dim MyArray() As String
     ReDim MyArray(1 To 16, 1 To 4)
@@ -301,7 +301,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     Next r
     wshDEB_Saisie.Range("F4").value = typeDEB
     wshDEB_Saisie.Range("F6").value = "[Auto]-" & DEBAutoDesc
-    wshDEB_Saisie.Range("O6").value = Format(totAmount, "#,##0.00")
+    wshDEB_Saisie.Range("O6").value = Format$(totAmount, "#,##0.00")
     wshDEB_Saisie.Range("O4").Select
     wshDEB_Saisie.Range("O4").Activate
 
@@ -417,7 +417,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     lastUsedRow = wshDEB_Recurrent.Range("C999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    Dim i As Integer
+    Dim i As Long
     For i = 9 To r
         wshDEB_Recurrent.Range("A" & rowToBeUsed).value = DEBRecNo
         wshDEB_Recurrent.Range("B" & rowToBeUsed).value = wshDEB_Saisie.Range("O4").value
@@ -459,7 +459,7 @@ Sub DEB_Recurrent_Build_Summary()
     End If
     
     With wshDEB_Recurrent
-        Dim i As Integer, k As Integer, oldEntry As String
+        Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
             If .Range("A" & i).value <> oldEntry Then
@@ -484,7 +484,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     Application.EnableEvents = False
     With wshDEB_Saisie
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").value = Format(Now(), "mm/dd/yyyy")
+        .Range("O4").value = Format$(Now(), "mm/dd/yyyy")
         .ckbRecurrente = False
     End With
     Application.EnableEvents = True

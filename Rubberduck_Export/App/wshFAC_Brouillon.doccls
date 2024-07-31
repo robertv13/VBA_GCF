@@ -19,7 +19,7 @@ Private Sub Worksheet_Activate()
 '        .Range("A:B").EntireColumn.Hidden = True
     End With
     
-    ws.Range("Q1").value = "Worksheet_Activate(): " & Format(Now, "dd/mm/yyyy @ hh:mm:ss")
+    ws.Range("Q1").value = "Worksheet_Activate(): " & Format$(Now, "dd/mm/yyyy @ hh:mm:ss")
         
     'Anything to import from Master workbook?
     
@@ -112,7 +112,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("O3").value) > Format(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("O3").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

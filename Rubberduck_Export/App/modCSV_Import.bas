@@ -89,7 +89,7 @@ Sub Set_Column_Width(ws As Worksheet)
     ws.Range("I:I").NumberFormat = "#,##0.00"
     ws.Range("N:N").NumberFormat = "#,##0.00"
     
-    Dim col As Integer, lastUsedColumn As Integer
+    Dim col As Long, lastUsedColumn As Long
     lastUsedColumn = ws.Cells(1, ws.columns.count).End(xlToLeft).Column
     For col = 1 To lastUsedColumn
         ws.columns(col).AutoFit
@@ -104,18 +104,17 @@ Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
     Dim arr() As String
     arr = Split(wrongFormatDate, "/")
     
-    Dim year As Integer, month As Integer, day As Integer
-    year = Format(arr(2), "0000")
+    Dim year As Long, month As Long, day As Long
+    year = Format$(arr(2), "0000")
     Select Case arr(1)
         Case "mai"
             month = 5
     End Select
-    month = Format(month, "00")
-    day = Format(arr(0), "00")
+    month = Format$(month, "00")
+    day = Format$(arr(0), "00")
     
     Fn_Correct_Date_Format = DateSerial(year, month, day)
     Debug.Print DateSerial(year, month, day)
     
 End Function
-
 

@@ -40,7 +40,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.1 * barWidth   '10 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.1, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.1, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -76,7 +76,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.25 * barWidth  '25 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.25, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.25, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -117,7 +117,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.5 * barWidth   '50 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.5, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.5, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -144,7 +144,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.65 * barWidth  '65 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.65, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.65, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -167,7 +167,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.75 * barWidth  '75 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.75, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.75, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -211,7 +211,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.85 * barWidth  '85 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.85, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.85, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -231,7 +231,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.95, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.95, "0%")
     
     'Introduce a small delay to ensure the worksheet is fully updated
     Application.Wait (Now + TimeValue("0:00:01")) '2024-07-23 @ 16:13 - Slowdown the application
@@ -261,3 +261,4 @@ Sub CC_Analyse_Back_To_FAC_Menu()
     wshMenuFAC.Range("A1").Select
 
 End Sub
+

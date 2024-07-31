@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     If ws.Range("J1").value = "" Then
-        ws.Range("J1").value = Format(Now(), "dd/mm/yyyy")
+        ws.Range("J1").value = Format$(Now(), "dd/mm/yyyy")
     End If
     
     With ws
@@ -93,7 +93,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
         GLAcct = CStr(Range("D" & Target.row).value)
         GLDescription = Range("E" & Target.row).value
-        DateLimite = Format(Range("J1").value, "dd/mm/yyyy")
+        DateLimite = Format$(Range("J1").value, "dd/mm/yyyy")
         wshGL_BV.Range("B10").value = 0
         Range("T2").value = "Toutes les dates"
         'Display all transactions for the selected G/L
@@ -140,7 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.Goto Range(Target.Address)
         End If
         
-        Range("B9").value = CDate(Format(Range("J1").value, "dd/mm/yyyy"))
+        Range("B9").value = CDate(Format$(Range("J1").value, "dd/mm/yyyy"))
         Range("L2").value = ""
         
         Call GL_TB_Build_Trial_Balance 'Automatically recalculate Trial Balance
@@ -155,8 +155,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
                 
         'Force redisplay of GL Transactions details
         Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
-            Format(Range("B8").value, "dd/mm/yyyy"), _
-            Format(Range("B9").value, "dd/mm/yyyy"))
+            Format$(Range("B8").value, "dd/mm/yyyy"), _
+            Format$(Range("B9").value, "dd/mm/yyyy"))
     End If
     
 Clean_Exit:
@@ -247,7 +247,7 @@ Sub wshGL_BV_Adjust_The_Shape()
         
         Dim texteOneLine As String, texteFull As String
         
-        Dim i As Integer, maxLength As Integer
+        Dim i As Long, maxLength As Long
         With wshGL_Trans
             For i = 2 To lastResultRow
 '                If Len(.Range("AD2").value) > maxLength Then
@@ -263,8 +263,8 @@ Sub wshGL_BV_Adjust_The_Shape()
                 End If
                 texteOneLine = Fn_Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
                                 " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
-                                "  " & Fn_Pad_A_String(Format(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
-                                "  " & Fn_Pad_A_String(Format(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
+                                "  " & Fn_Pad_A_String(Format$(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
+                                "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
                 If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
                     texteOneLine = " * " & texteOneLine
                 Else
@@ -325,3 +325,4 @@ Sub wshGL_BV_Hide_Dynamic_Shape()
     End If
     
 End Sub
+

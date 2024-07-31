@@ -33,7 +33,7 @@ End Sub
 
 Private Sub lsbEJ_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim rowSelected As Integer, DescEJAuto As String, NoEJAuto As Long
+    Dim rowSelected As Long, DescEJAuto As String, NoEJAuto As Long
     rowSelected = lsbEJ_Auto_Desc.ListIndex
     DescEJAuto = lsbEJ_Auto_Desc.List(rowSelected, 0)
     NoEJAuto = lsbEJ_Auto_Desc.List(rowSelected, 1)

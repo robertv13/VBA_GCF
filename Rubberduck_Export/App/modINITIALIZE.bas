@@ -18,7 +18,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
 
     'Ouvrir le workbook
     Dim wb As Workbook: Set wb = Workbooks.Open(sourcePath)
-    
+
     'Boucle à travers chaque feuille
     Dim ws As Worksheet
     Dim lastUsedRow As Long
@@ -27,15 +27,43 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
         If InStr(ws.name, "Admin") <> 1 Then
             lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
             'Supprimer toutes les lignes sauf la première (en-tête)
-            Debug.Print "modINITIALIZE - Delete_All_Rows_But_Keep_Headers - Deleting rows from 2 to " & lastUsedRow
             If lastUsedRow > 1 Then
                 ws.rows("2:" & lastUsedRow).delete
             End If
         End If
     Next ws
-    
-    ' Sauvegarder et fermer le workbook
+
+    'Sauvegarder et fermer le workbook
     wb.Close SaveChanges:=True
+
+    'Step 2 - Enlève les rangées d'une feuille locale
+    Set ws = wshTEC_TDB_Data
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    'Supprimer toutes les lignes sauf la première (en-tête)
+    If lastUsedRow > 1 Then
+        ws.rows("2:" & lastUsedRow).delete
+        
+        'Requires a minimum of one line (values)
+        ws.Range("A2").value = 0
+        ws.Range("B2").value = ""
+        ws.Range("C2").value = Format$(Now(), "dd-mm-yyyy")
+        ws.Range("E2").value = 0
+        ws.Range("F2").value = "VRAI"
+        ws.Range("G2").value = "FAUX"
+        ws.Range("H2").value = "FAUX"
+        'Formulas for other columns
+        ws.Range("I2").formula = "=IF([@EstDetruite],E2,0)"
+        ws.Range("J2").formula = "=[@[H_Saisies]]-[@[H_Détruites]]"
+        ws.Range("K2").formula = "=IF([@EstFacturable]=""VRAI"",(E2-I2),0)"
+        ws.Range("L2").formula = "=(E2-I2)-K2"
+        ws.Range("M2").formula = "=IF(G2=""VRAI"",J2,0)"
+        ws.Range("N2").formula = "=MAX([@[H_Facturables]]-[@[H_Facturées]],0)"
+        ws.Range("O2").formula = "=ROUND(INT(NOW()-[@Date]),0)"
+        ws.Range("P2").formula = "=IF([@Âge]<=30,N2,0)"
+        ws.Range("Q2").formula = "=IF(AND([@Âge]>30,[@Âge]<=60),N2,0)"
+        ws.Range("R2").formula = "=IF(AND([@Âge]>60,[@Âge]<=90),N2,0)"
+        ws.Range("S2").formula = "=IF([@Âge]>90,N2,0)"
+    End If
     
     'Step # 2 - Import all worksheets from Sortie.xlsx
     Call Client_List_Import_All
@@ -98,10 +126,11 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Application.EnableEvents = True
     
     'Cleanup - 2024-07-30 @ 11:56
-    Set wb = Nothing
+'    Set wb = Nothing
     Set ws = Nothing
     
     MsgBox "Toutes les données ont été supprimées avec succès, en gardant les en-têtes !"
     
 End Sub
+
 

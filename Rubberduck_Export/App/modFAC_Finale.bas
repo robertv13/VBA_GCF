@@ -38,7 +38,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_to_DB
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
-    Dim lastResultRow As Integer
+    Dim lastResultRow As Long
     lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
         
     If lastResultRow > 2 Then
@@ -73,7 +73,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
-        Trim(Format(invoice_Total, "### ##0.00 $")) & _
+        Trim(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
     wshFAC_Brouillon.Select
@@ -191,7 +191,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
-        .Range("B" & firstFreeRow).value = Format(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy")
+        .Range("B" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy")
         .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
         .Range("F" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
@@ -252,7 +252,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
-    Dim r As Integer
+    Dim r As Long
     For r = 34 To rowLastService
         'Add fields to the recordset before updating it
         rs.AddNew
@@ -271,7 +271,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Next r
     
     'Create Summary By Rates lines
-    Dim i As Integer
+    Dim i As Long
     For i = 25 To 34
         If wshFAC_Brouillon.Range("R" & i).value <> "" And _
             wshFAC_Brouillon.Range("S" & i).value <> 0 Then
@@ -322,7 +322,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     Dim firstFreeRow As Long
     firstFreeRow = wshFAC_Détails.Range("A99999").End(xlUp).row + 1
    
-    Dim i As Integer
+    Dim i As Long
     For i = 34 To lastEnteredService
         With wshFAC_Détails
             .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
@@ -349,7 +349,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Integer, lastRow As Integer
+    Dim firstRow As Long, lastRow As Long
     firstRow = 44
     lastRow = 48
     
@@ -369,8 +369,8 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
-    Dim seq As Integer
-    Dim r As Integer
+    Dim seq As Long
+    Dim r As Long
     For r = firstRow To lastRow
         'Add fields to the recordset before updating it
         If wshFAC_Brouillon.Range("R" & r).value <> "" Then
@@ -411,7 +411,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Integer, lastRow As Integer
+    Dim firstRow As Long, lastRow As Long
     firstRow = 44
     lastRow = 48
     
@@ -421,8 +421,8 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
    
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
-    Dim seq As Integer
-    Dim i As Integer
+    Dim seq As Long
+    Dim i As Long
     For i = firstRow To lastRow
         If wshFAC_Brouillon.Range("R" & i).value <> "" Then
             With wshFAC_Sommaire_Taux
@@ -527,7 +527,7 @@ nothing_to_update:
 
 End Sub
 
-Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Integer) 'Update Billed Status in DB
+Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()")
 
@@ -544,7 +544,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    Dim r As Integer, TEC_ID As Long, SQL As String
+    Dim r As Long, TEC_ID As Long, SQL As String
     For r = firstRow To lastRow
         If wshTEC_Local.Range("BA" & r).value = True Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
@@ -559,7 +559,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Integer, lastRow As Intege
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
-            rs.Fields("DateFacturee").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("VersionApp").value = APP_VERSION_NO
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -755,7 +755,7 @@ eh:
 
 End Sub
 
-Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResultRow As Integer)
+Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
     
@@ -764,7 +764,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
     lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
-    Dim r As Integer, rowToBeUpdated As Long, TECID As Long
+    Dim r As Long, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
         If wshTEC_Local.Range("BA" & r).value = False And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
@@ -772,7 +772,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Integer, lastResul
             rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
@@ -796,7 +796,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         End If
         'Could that invoice been cancelled (more than 1 row) ?
         Call InvoiceGetAllTrans(wshFAC_Brouillon.Range("O6").value)
-        Dim NbTrans As Integer
+        Dim NbTrans As Long
         NbTrans = .Range("B31").value
         If NbTrans = 0 Then
             MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
@@ -819,7 +819,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
         .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-        wshFAC_Finale.Range("B21").value = "Le " & Format(wshFAC_Entête.Range("B" & InvListRow).value, "d mmmm yyyy")
+        wshFAC_Finale.Range("B21").value = "Le " & Format$(wshFAC_Entête.Range("B" & InvListRow).value, "d mmmm yyyy")
         wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
         wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
         wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
@@ -1172,8 +1172,8 @@ End Sub
 Sub FAC_Finale_Cacher_Sommaire_Taux()
 
     'First determine how many rows there is in the Fees Summary
-    Dim nbItems As Integer
-    Dim i As Integer
+    Dim nbItems As Long
+    Dim i As Long
     For i = 67 To 63 Step -1
         If wshFAC_Finale.Range("C" & i).value <> "" Then
             nbItems = nbItems + 1
@@ -1196,8 +1196,8 @@ End Sub
 Sub FAC_Finale_Montrer_Sommaire_Taux()
 
     'First, determine how many rows there is in the summary
-    Dim nbItems As Integer
-    Dim rowSummary As Integer
+    Dim nbItems As Long
+    Dim rowSummary As Long
     For rowSummary = 44 To 48
         If wshFAC_Brouillon.Range("R" & rowSummary).value <> "" Then
             nbItems = nbItems + 1
@@ -1205,17 +1205,17 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
     Next rowSummary
     
     If nbItems > 0 Then
-        Dim rowFAC_Finale As Integer
+        Dim rowFAC_Finale As Long
         rowFAC_Finale = 67 - nbItems
         Dim rngFeesSummary As Range: Set rngFeesSummary = _
             wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
         wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Heures"
         wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux"
         
-        Dim rowFAC_Brouillon As Integer
+        Dim rowFAC_Brouillon As Long
         rowFAC_Brouillon = 44
     
-        Dim i As Integer
+        Dim i As Long
         For i = rowFAC_Finale + 1 To 67
             wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
             wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
@@ -1406,4 +1406,5 @@ End Sub
 'End Sub
 '
 '-----------------------------------------------------------------------------------------------------------
+
 

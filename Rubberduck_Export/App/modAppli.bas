@@ -3,11 +3,11 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.B.2" '2024-07-27 @ 08:29
-Public Const NB_MAX_LIGNE_FAC As Integer = 35 '2024-06-18 @ 12:18
+Public Const APP_VERSION_NO As String = "v3.B.3" '2024-07-30 @ 13:13
+Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
-Public Const MAXWIDTH As Integer = 192
+Public Const MAXWIDTH As Long = 192
 
 Public userName As String
 

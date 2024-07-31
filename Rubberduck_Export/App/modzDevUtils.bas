@@ -3,14 +3,14 @@ Option Explicit
 
 Sub Add_Columns_To_Active_Worksheet()
 
-    Dim colToAdd As Integer
+    Dim colToAdd As Long
     colToAdd = 5
     
     'Set the worksheet
     Dim ws As Worksheet: Set ws = ActiveSheet
     
     'Find the last column with data
-    Dim lastColumn As Integer
+    Dim lastColumn As Long
     lastColumn = ws.Cells(1, ws.columns.count).End(xlToLeft).Column
     
     'Add columns to the right of the last column
@@ -33,7 +33,7 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     numCols = UBound(arr, 2)
     
     'Bubble Sort Algorithm
-    Dim c As Integer, cProcess As Long
+    Dim c As Long, cProcess As Long
     For i = 1 To numRows - 1
         sorted = True
         For j = 1 To numRows - i
@@ -150,7 +150,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
     r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
     r = 1
-    Dim i As Long, colNo As Integer
+    Dim i As Long, colNo As Long
     For i = 1 To UBound(arr, 1)
         If arr(i, 1) = "" Then Exit For
         Dim rng As Range: Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
@@ -193,7 +193,7 @@ Sub Check_Invoice_Template()
     'First - Determine which templates are used
     Dim arr As Variant
     Dim strTemplates As String
-    Dim i As Integer, j As Integer
+    Dim i As Long, j As Long
     For i = 1 To lastUsedRow - firstUsedRow + 1
         If Not rng.Cells(i, 2) = "" Then
             arr = Split(rng.Cells(i, 2), ",")
@@ -215,10 +215,10 @@ Sub Check_Invoice_Template()
     wsOutput.Range("A1").value = "Gabarit"
     wsOutput.Range("B1").value = "Code"
     wsOutput.Range("C1").value = "Service"
-    Dim outputRow As Integer: outputRow = 1
+    Dim outputRow As Long: outputRow = 1
     
     'Third - Build the list of services associated to each template (First Letter)
-    Dim rowNo As Integer
+    Dim rowNo As Long
     Dim template As String, oldTemplate As String
     
     With wsOutput
@@ -294,13 +294,13 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     ReDim arr(1 To 100, 1 To 3)
     Dim ws As Worksheet
     Dim TimeStamp As String
-    Dim r As Integer
-    Dim f As Integer
+    Dim r As Long
+    Dim f As Long
     For Each ws In wb.Worksheets
         r = r + 1
         arr(r, 1) = ws.name
         arr(r, 2) = ws.CodeName
-        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
         arr(r, 3) = TimeStamp
     Next ws
     
@@ -323,7 +323,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = r + 2
-    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(f, "###,##0") & _
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & wbName & "' ***"
     
     lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
@@ -358,7 +358,7 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
     Dim oType As String
     Dim lineNum As Long
-    Dim x As Integer
+    Dim x As Long
     Dim vbComp As Object
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         Select Case vbComp.Type
@@ -412,7 +412,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     Dim ws As Worksheet
     Dim rng As Range
     Dim area As Range
-    Dim ruleIndex As Integer
+    Dim ruleIndex As Long
     Dim cf As FormatCondition
     Dim i As Long
     
@@ -447,7 +447,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
                     End If
                     On Error GoTo 0
                     
-                    arr(i, 7) = Format(Now(), "yyyy-mm-dd hh:mm")
+                    arr(i, 7) = Format$(Now(), "yyyy-mm-dd hh:mm")
                 Next ruleIndex
             Next area
         End If
@@ -546,7 +546,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                 arr(x, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
-                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 arr(x, 8) = TimeStamp
 
                 'Increment the output row counter
@@ -610,7 +610,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     
     'Result print setup - 2024-07-15 @ 09:22
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format(xAnalyzed, "###,##0") & _
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(xAnalyzed, "###,##0") & _
                                     " cellules analysées dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
@@ -693,7 +693,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
                 outputArray(i, 5) = cellsCount
                 outputArray(i, 6) = cell.Address
                 outputArray(i, 7) = "'=" & Mid(cell.formula, 2) 'Add ' to preserve formulas
-                outputArray(i, 8) = Format(Now(), "yyyy-mm-dd hh:mm") 'Timestamp
+                outputArray(i, 8) = Format$(Now(), "yyyy-mm-dd hh:mm") 'Timestamp
             End If
         Next cell
 nextIteration:
@@ -706,7 +706,7 @@ nextIteration:
     wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
     wshzDocFormulas.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
 
-    MsgBox "J'ai trouvé " & Format(i, "#,##0") & " formules"
+    MsgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
@@ -761,7 +761,7 @@ Sub List_All_Shapes_Properties()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
-    Dim r As Integer
+    Dim r As Long
     r = 2
     ws.Range("D" & r).value = "Type"
     ws.Range("E" & r).value = "Shape Name"
@@ -848,7 +848,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         If nr.Visible = False Then
             arr(i, 8) = nr.Visible
         End If
-        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
         arr(i, 9) = TimeStamp
     Next nr
     
@@ -1006,9 +1006,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(x, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 arrResult(xr, 7) = TimeStamp
-                arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
+                arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
     Next x
@@ -1078,7 +1078,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Result print setup - 2024-07-14 2 06:24
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format(x, "###,##0") & " lignes de code dans l'application ***"
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(x, "###,##0") & " lignes de code dans l'application ***"
     Dim header1 As String: header1 = "Search Utility Results"
     Dim header2 As String
     header2 = "Searched strings '" & search1 & "'"
@@ -1093,11 +1093,11 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     If xr Then
         MsgBox "J'ai trouvé " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format(x, "#,##0") & " lignes de code"
+                Format$(x, "#,##0") & " lignes de code"
     Else
         MsgBox "Je n'ai trouvé aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format(x, "#,##0") & " lignes de code"
+                Format$(x, "#,##0") & " lignes de code"
     End If
     
     'Clean up - 2024-07-13 @ 08:02
@@ -1261,9 +1261,9 @@ End Sub
 
 Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     
-    Dim posProcedure As Integer, posExitProcedure As Integer
-    Dim posFonction As Integer, posExitFonction As Integer
-    Dim posSpace As Integer, posREM As Integer, posParam As Integer
+    Dim posProcedure As Long, posExitProcedure As Long
+    Dim posFonction As Long, posExitFonction As Long
+    Dim posSpace As Long, posREM As Long, posParam As Long
     Dim scope As String, sType As String
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
@@ -1273,7 +1273,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     ReDim arr(1 To 500, 1 To 10)
     Dim trimmedLineOfCode As String, savedLineOfCode As String, remarks As String, params As String
     Dim lineNum As Long, lread As Long
-    Dim i As Integer
+    Dim i As Long
 
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         'Check if the component is a userForm (1), a module (2) or a class module (3)
@@ -1359,7 +1359,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                     arr(i, 1) = UCase(oType) & Chr(0) & UCase(vbComp.name) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
                     If params <> "" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
-                    arr(i, 10) = Format(Now(), "yyyy-mm-dd hh:mm")
+                    arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
                     params = ""
                     remarks = ""
                 End If
@@ -1383,7 +1383,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     
     MsgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format(lread, "#,##0") & " Lignes de code"
+                Format$(lread, "#,##0") & " Lignes de code"
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set vbComp = Nothing
@@ -1398,7 +1398,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     Dim arr() As Variant
     ReDim arr(1 To 1000, 1 To 20)
     
-    Dim i As Integer, j As Integer
+    Dim i As Long, j As Long
     For i = 1 To UBound(arr, 1)
         For j = 1 To UBound(arr, 2)
             arr(i, j) = "i = " & i & " and j = " & j & " - *********"
@@ -1450,8 +1450,8 @@ End Sub
 
 Sub TestGetQuarterDates()
 
-    Dim fiscalYearStartMonth As Integer
-    Dim fiscalYear As Integer
+    Dim fiscalYearStartMonth As Long
+    Dim fiscalYear As Long
     Dim result As String
     
     'Set the fiscal year start month (e.g., April is 4)
@@ -1499,7 +1499,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
         i = i + 1
         arr(i, 1) = ws.name
         arr(i, 2) = ws.CodeName
-        TimeStamp = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
         arr(i, 3) = TimeStamp
     Next ws
     
@@ -1507,7 +1507,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
     Call Array_2D_Bubble_Sort(arr)
     
-    Dim f As Integer
+    Dim f As Long
     For i = 1 To UBound(arr, 1)
         wsOutput.Cells(i + 1, 1) = arr(i, 1)
         wsOutput.Cells(i + 1, 2) = arr(i, 2)
@@ -1520,7 +1520,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = i + 2
-    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format(f, "###,##0") & _
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & ThisWorkbook.name & "' ***"
     
     lastUsedRow = wsOutput.Range("A9999").End(xlUp).row

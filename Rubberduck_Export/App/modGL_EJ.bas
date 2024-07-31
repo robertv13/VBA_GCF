@@ -121,7 +121,7 @@ Sub GL_EJ_Auto_Build_Summary()
     End If
     
     With wshGL_EJ_Recurrente
-        Dim i As Integer, k As Integer, oldEntry As String
+        Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
             If .Range("D" & i).value <> oldEntry Then
@@ -196,7 +196,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields("Débit").value = wshGL_EJ.Range("H" & l).value
             rs.Fields("Crédit").value = wshGL_EJ.Range("I" & l).value
             rs.Fields("AutreRemarque").value = wshGL_EJ.Range("J" & l).value
-            rs.Fields("TimeStamp").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         rs.update
     Next l
     
@@ -231,7 +231,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    Dim i As Integer
+    Dim i As Long
     For i = 9 To r
         wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
         wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
@@ -246,7 +246,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
         wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -341,7 +341,7 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    Dim i As Integer
+    Dim i As Long
     For i = 9 To r
         wshGL_EJ_Recurrente.Range("C" & rowToBeUsed).value = JENo
         wshGL_EJ_Recurrente.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
@@ -364,4 +364,5 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     Call Output_Timer_Results("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()", timerStart)
     
 End Sub
+
 

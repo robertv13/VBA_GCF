@@ -23,7 +23,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date, dateCutOff As Date
-    wshGL_BV.Range("C2").value = "Au " & CDate(Format(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
+    wshGL_BV.Range("C2").value = "Au " & CDate(Format$(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
 
     minDate = CDate("01/01/2023")
     dateCutOff = CDate(wshGL_BV.Range("J1").value)
@@ -82,10 +82,10 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
                 wshGL_BV.Range("D" & currRow).value = glNo
                 wshGL_BV.Range("E" & currRow).value = arr(i, 2)
                 If arrSolde(r, 2) >= 0 Then
-                    wshGL_BV.Range("F" & currRow).value = Format(arrSolde(r, 2), "###,###,##0.00")
+                    wshGL_BV.Range("F" & currRow).value = Format$(arrSolde(r, 2), "###,###,##0.00")
                     sumDT = sumDT + arrSolde(r, 2)
                 Else
-                    wshGL_BV.Range("G" & currRow).value = Format(-arrSolde(r, 2), "###,###,##0.00")
+                    wshGL_BV.Range("G" & currRow).value = Format$(-arrSolde(r, 2), "###,###,##0.00")
                     sumCT = sumCT - arrSolde(r, 2)
                 End If
                 currRow = currRow + 1
@@ -214,12 +214,12 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         End With
     End With
     
-    Dim d As Date, OK As Integer
+    Dim d As Date, OK As Long
     
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            d = Format(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
+            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
             If d >= minDate And d <= maxDate Then
                 .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
@@ -314,8 +314,8 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         
         Dim rgData As Range: Set rgData = .Range("A1").CurrentRegion
         .Range("L3").value = ""
-        .Range("M3").value = ">=" & Format(minDate, "mm-dd-yyyy")
-        .Range("N3").value = "<=" & Format(maxDate, "mm-dd-yyyy")
+        .Range("M3").value = ">=" & Format$(minDate, "mm-dd-yyyy")
+        .Range("N3").value = "<=" & Format$(maxDate, "mm-dd-yyyy")
         
         Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
         Dim rgCopyToRange: Set rgCopyToRange = .Range("P1:Y1")
@@ -404,11 +404,11 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B8").value = wshAdmin.Range("AnneePrecDe").value
             wshGL_BV.Range("B9").value = wshAdmin.Range("AnneePrecA").value
         Case "Dates Manuelles"
-            wshGL_BV.Range("B8").value = CDate(Format("01-01-2023", "dd/mm/yyyy"))
-            wshGL_BV.Range("B9").value = CDate(Format("12-31-2023", "dd/mm/yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format$("01-01-2023", "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format$("12-31-2023", "dd/mm/yyyy"))
         Case "Toutes les dates"
-            wshGL_BV.Range("B8").value = CDate(Format(wshGL_BV.Range("B3").value, "dd/mm/yyyy"))
-            wshGL_BV.Range("B9").value = CDate(Format(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format$(wshGL_BV.Range("B3").value, "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format$(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
     End Select
     
     Call Output_Timer_Results("modGL_TB:GL_TB_Determine_From_And_To_Date()", timerStart)
@@ -426,7 +426,7 @@ Sub GL_TB_Setup_And_Print()
     Dim printRange As Range
     Set printRange = wshGL_BV.Range("D1:G" & lastRow)
     
-    Dim pagesRequired As Integer
+    Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 60) + 1
     
     Dim shp As Range
@@ -456,7 +456,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     Dim printRange As Range
     Set printRange = wshGL_BV.Range("L1:T" & lastRow)
     
-    Dim pagesRequired As Integer
+    Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 80) + 1
     
     Dim shp As Range: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
@@ -474,7 +474,7 @@ Sub GL_TB_Setup_And_Print_Trans()
 
 End Sub
 
-Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Integer)
+Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_SetUp_And_Print_Document()")
     
@@ -536,4 +536,5 @@ Sub GL_TB_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
+
 

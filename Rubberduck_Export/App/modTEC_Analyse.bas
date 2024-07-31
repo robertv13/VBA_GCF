@@ -38,7 +38,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.15 * barWidth  '15 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.15, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.15, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -71,7 +71,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.2 * barWidth  '20 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.2, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.2, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -104,7 +104,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.45 * barWidth  '45 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.45, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.45, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -132,7 +132,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.6 * barWidth  '60 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.6, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.6, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -157,7 +157,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.75 * barWidth  '75 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.75, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.75, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -217,7 +217,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.85 * barWidth  '85 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.85, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.85, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -237,7 +237,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Update the progress bar fill
     progressBarFill.width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format(0.95, "0%")
+    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.95, "0%")
     
     'Introduce a small delay to ensure the worksheet is fully updated
     Application.Wait (Now + TimeValue("0:00:01")) '2024-07-23 @ 16:13 - Slowdown the application
@@ -357,7 +357,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     Loop
 
     Dim prof As Variant
-    Dim profID As Integer
+    Dim profID As Long
     ws.Range("Q" & rowSelected).value = 0 'Reset the total WIP value
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
         Cells(rowSelected, 11).value = prof
@@ -536,12 +536,12 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Lon
             rs.Fields("ClientID").value = clientID
             rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
             rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
-            dateTEC = Format(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
+            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
             rs.Fields("Date").value = dateTEC
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
             rs.Fields("estDétruite").value = False
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
-            TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("TimeStamp").value = TimeStamp
         rs.update
     Next l
@@ -577,19 +577,19 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As L
     rn = lastUsedRow + 1
     
     Dim dateTEC As String, TimeStamp As String
-    Dim i As Integer
+    Dim i As Long
     For i = fr To lr
         wshFAC_Projets_Détails.Range("A" & rn).value = projetID
         wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
         wshFAC_Projets_Détails.Range("C" & rn).value = clientID
         wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
         wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
-        dateTEC = Format(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
+        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
         wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
         wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
         wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
         wshFAC_Projets_Détails.Range("I" & rn).value = False
-        TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
         rn = rn + 1
     Next i
@@ -647,7 +647,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     rs.Open strSQL, conn, 2, 3
     
     Dim TimeStamp As String
-    Dim c As Integer
+    Dim c As Long
     Dim l As Long
     rs.AddNew
         'Add fields to the recordset before updating it
@@ -663,7 +663,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
             rs.Fields("Hono" & c).value = arr(c, 4)
         Next c
         rs.Fields("estDétruite").value = False
-        TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         rs.Fields("TimeStamp").value = TimeStamp
     rs.update
     
@@ -704,14 +704,14 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     wshFAC_Projets_Entête.Range("D" & rn).value = dte
     wshFAC_Projets_Entête.Range("E" & rn).value = hono
     'Assign values from the array to the worksheet using .Cells
-    Dim i As Integer, j As Integer
+    Dim i As Long, j As Long
     For i = 1 To UBound(arr, 1)
         For j = 1 To UBound(arr, 2)
             wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
         Next j
     Next i
     wshFAC_Projets_Entête.Range("Z" & rn).value = False
-    TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+    TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
     Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
@@ -775,7 +775,7 @@ Sub Delete_CheckBox()
     
     'Check if CheckBox1 exists and then delete it
     Dim checkBox As OLEObject
-    Dim i As Integer
+    Dim i As Long
     For i = 1 To 5
         On Error Resume Next
         Set checkBox = ws.OLEObjects("CheckBox" & i)
@@ -805,4 +805,5 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     ws.rows(saveR & ":" & r).Hidden = True
     
 End Sub
+
 

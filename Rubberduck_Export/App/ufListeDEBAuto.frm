@@ -32,7 +32,7 @@ End Sub
 
 Private Sub lsbDEB_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim rowSelected As Integer, DescDEBAuto As String, NoDEBAuto As Long
+    Dim rowSelected As Long, DescDEBAuto As String, NoDEBAuto As Long
     rowSelected = lsbDEB_Auto_Desc.ListIndex
     NoDEBAuto = lsbDEB_Auto_Desc.List(rowSelected, 0)
     DescDEBAuto = lsbDEB_Auto_Desc.List(rowSelected, 1)
@@ -47,5 +47,4 @@ Private Sub UserForm_Terminate()
     'Clear the class declaration
 '    Set MyListBoxClass2 = Nothing
 End Sub
-
 

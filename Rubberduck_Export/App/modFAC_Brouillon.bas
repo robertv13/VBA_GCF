@@ -64,7 +64,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         Application.Wait (Now + TimeValue("0:00:01"))
         
         'Do we have pending requests for invoice ?
-        Dim lastUsedRow As Long, liveOne As Integer
+        Dim lastUsedRow As Long, liveOne As Long
         lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
         If lastUsedRow > 1 Then
             Dim i As Long
@@ -109,7 +109,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 'Update the summary for billing
                 'Transfer data to the worksheet
                 Application.EnableEvents = False
-                Dim r As Integer: r = 44
+                Dim r As Long: r = 44
                 For ii = 44 To 48
                     If arr(ii - 43, 1) <> "" And arr(ii - 43, 2) <> 0 Then
                         wshFAC_Brouillon.Range("R" & r).value = arr(ii - 43, 1)
@@ -220,7 +220,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
     
-    wshFAC_Finale.Range("B21").value = "Le " & Format(d, "d mmmm yyyy")
+    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d mmmm yyyy")
     
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
@@ -229,14 +229,14 @@ Sub FAC_Brouillon_Date_Change(d As String)
     wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "TVQ")
         
     'Adjust hourly rate base on the date
-    Dim lastUsedProfInSummary As Integer
+    Dim lastUsedProfInSummary As Long
     lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).row
     
     Dim dateTauxHoraire As Date
     dateTauxHoraire = d
-    Dim i As Integer
+    Dim i As Long
     For i = 25 To lastUsedProfInSummary
-        Dim profID As Integer
+        Dim profID As Long
         profID = wshFAC_Brouillon.Range("W" & i).value
         Dim hRate As Currency
         hRate = Fn_Get_Hourly_Rate(profID, dateTauxHoraire)
@@ -445,7 +445,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim c1 As Long, c2 As String
     Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
-    c2 = "<=" & Format(d, "mm-dd-yyyy")
+    c2 = "<=" & Format$(d, "mm-dd-yyyy")
     c3 = ConvertValueBooleanToText(True)
     If includeBilledTEC Then
         c4 = ConvertValueBooleanToText(True)
@@ -559,7 +559,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As Variant
     
     With wshTEC_Local
-        Dim i As Integer
+        Dim i As Long
         For i = 3 To lastUsedRow
             arr(i - 2, 1) = .Range("AT" & i).value 'Date
             arr(i - 2, 2) = .Range("AS" & i).value 'Prof
@@ -767,7 +767,7 @@ Sub Setup_Hours_Summary()
     ws.Range("R25:U34").ClearContents
     Application.EnableEvents = False
     
-    Dim r As Integer
+    Dim r As Long
     r = 11
     With wshAdmin
         Do While .Range("D" & r).value <> ""
@@ -797,7 +797,7 @@ End Sub
 
 Sub Adjust_Formulas_In_The_Summary(lur As Long)
 
-    Dim i As Integer, p As Integer
+    Dim i As Long, p As Long
     Application.EnableEvents = False
     For i = 25 To 34
         If wshFAC_Brouillon.Range("R" & i).value <> "" Then
@@ -858,7 +858,7 @@ Sub Load_Invoice_Template(t As String)
     Call BubbleSort(arr)
 
     'Go thru all the services for the template
-    Dim facRow As Integer
+    Dim facRow As Long
     facRow = 11
     For i = LBound(arr) + 1 To UBound(arr)
         wshFAC_Brouillon.Range("L" & facRow).value = Mid(arr(i), 3)
@@ -877,3 +877,5 @@ Sub test_fn_get_hourly_rate()
     Debug.Print hr
 
 End Sub
+
+

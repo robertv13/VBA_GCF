@@ -147,7 +147,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         'Confirm with the user
         Dim reponse As Long
         reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
-                  vbNewLine & "au montant de " & Format(hono, "#,##0.00$") & _
+                  vbNewLine & "au montant de " & Format$(hono, "#,##0.00$") & _
                   vbNewLine & vbNewLine & "Désirez-vous..." & vbNewLine & vbNewLine & _
                   "   1) (OUI) REMPLACER cette demande" & vbNewLine & vbNewLine & _
                   "   2) (NON) pour NE RIEN CHANGER à la demande existante" & vbNewLine & vbNewLine & _
@@ -319,7 +319,7 @@ End Function
 '
 'End Sub
 
-Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Integer, days2 As Integer, days3 As Integer, days4 As Integer)
+Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Long, days2 As Long, days3 As Long, days4 As Long)
 
     Select Case age
         Case Is < days1
@@ -377,7 +377,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) As Boolean
+Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
@@ -405,12 +405,12 @@ Function Fn_ValidateDaySpecificMonth(d As Integer, m As Integer, y As Integer) A
 End Function
 
 Function CompleteDate(dateInput As String) As Variant
-    Dim defaultDay As Integer
-    Dim defaultMonth As Integer
-    Dim defaultYear As Integer
-    Dim dayPart As Integer
-    Dim monthPart As Integer
-    Dim yearPart As Integer
+    Dim defaultDay As Long
+    Dim defaultMonth As Long
+    Dim defaultYear As Long
+    Dim dayPart As Long
+    Dim monthPart As Long
+    Dim yearPart As Long
     Dim parsedDate As Date
     Dim parts() As String
     
@@ -549,7 +549,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
 End Function
 
-Public Function Fn_Get_Hourly_Rate(profID As Integer, dte As Date)
+Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
 
         'Use the Dynamic Named Range
         Dim rng As Range
@@ -581,7 +581,7 @@ End Function
 
 Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
-    Dim row As Integer
+    Dim row As Long
     Dim rate As Double
     With wshAdmin
         For row = 18 To 11 Step -1
@@ -628,8 +628,8 @@ Function Fn_Is_Debours_Balance() As Boolean
     Fn_Is_Debours_Balance = False
     If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
         MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
-            "Total saisi = " & Format(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
-            & " vs. Ventilation = " & Format(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
+            "Total saisi = " & Format$(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
+            & " vs. Ventilation = " & Format$(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
             & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
             vbCritical, "Veuillez vérifier votre écriture!"
     Else
@@ -680,10 +680,10 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
 
 End Function
 
-Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As Integer, leftOrRight As String) As String
+Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As Long, leftOrRight As String) As String
 
     Dim paddedString As String
-    Dim charactersNeeded As Integer
+    Dim charactersNeeded As Long
     
     charactersNeeded = length - Len(s)
     
@@ -701,7 +701,7 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As I
         
 End Function
 
-Function Fn_Get_Chart_Of_Accounts(nbCol As Integer) As Variant '2024-06-07 @ 07:31
+Function Fn_Get_Chart_Of_Accounts(nbCol As Long) As Variant '2024-06-07 @ 07:31
 
     'Reference the named range
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
@@ -853,11 +853,11 @@ Public Function GetEndPath(ByVal fullWorkbookName As String) As String
     
 End Function
 
-Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer) As String
+Function GetQuarterDates(fiscalYearStartMonth As Long, fiscalYear As Long) As String
     Dim startDate As Date
     Dim endDate As Date
     Dim quarterDates As String
-    Dim i As Integer
+    Dim i As Long
     
     'Initialize the quarterDates variable
     quarterDates = ""
@@ -871,13 +871,12 @@ Function GetQuarterDates(fiscalYearStartMonth As Integer, fiscalYear As Integer)
         endDate = DateAdd("m", 3, startDate) - 1
         
         'Add the quarter dates to the string
-        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format(startDate, "dd/mm/yyyy") & " to " & Format(endDate, "dd-mmm-yyyy") & vbCrLf
+        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format$(startDate, "dd/mm/yyyy") & " to " & Format$(endDate, "dd-mmm-yyyy") & vbCrLf
     Next i
     
     'Return the quarter dates
     GetQuarterDates = quarterDates
     
 End Function
-
 
 

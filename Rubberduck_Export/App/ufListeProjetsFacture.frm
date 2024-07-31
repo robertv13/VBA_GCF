@@ -27,13 +27,13 @@ Private Sub UserForm_Initialize()
     ReDim arr(1 To lastUsedRow - 1, 1 To 4)
     
     'Populate the array with non-contiguous columns
-    Dim i As Integer, nbRows As Integer
+    Dim i As Long, nbRows As Long
     For i = 2 To lastUsedRow
         If ws.Cells(i, 26).value <> "Vrai" Then 'Exclude those projects with isDétruite set to True
             nbRows = nbRows + 1
             arr(nbRows, 1) = ws.Cells(i, 2).value 'nomClient
             arr(nbRows, 2) = ws.Cells(i, 4).value 'date
-            arr(nbRows, 3) = Fn_Pad_A_String(Format(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
+            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
             arr(nbRows, 4) = ws.Cells(i, 1).value 'ProjetID
         End If
     Next i
@@ -55,7 +55,7 @@ Private Sub UserForm_Initialize()
         End With
             
         'Populate the ListBox with the array
-        Dim j As Integer
+        Dim j As Long
         For i = LBound(arr, 1) To UBound(arr, 1)
             Me.lsbProjetsFacture.AddItem
             For j = LBound(arr, 2) To UBound(arr, 2)
@@ -74,7 +74,7 @@ End Sub
 
 Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
 
-    Dim rowSelected As Integer
+    Dim rowSelected As Long
     Dim nomClient As String, dte As String
     Dim honorairesTotal As Double
     Dim projetID As Long
@@ -99,5 +99,4 @@ Private Sub UserForm_Terminate()
     Unload ufListeProjetsFacture
     
 End Sub
-
 

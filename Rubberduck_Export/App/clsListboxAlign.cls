@@ -20,7 +20,7 @@ Option Explicit
 '-------------------------------------------------------------------------------------
 
 '@EntryPoint
-Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
+Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Long = 0)
     '
     ' PURPOSE: Center align the text in a listbox column
     ' HOW TO USE:
@@ -31,7 +31,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     '
     Dim labSizer As MSForms.Label
     Dim lngIndex As Long
-    Dim intColumn As Integer
+    Dim intColumn As Long
     Dim lngTopIndex As Long
     Dim vntColWidths As Variant
 
@@ -89,7 +89,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
 
 End Sub
 
-Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
+Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Long = 0)
     '
     ' PURPOSE: Left align the text in a listbox column
     ' HOW TO USE:
@@ -99,7 +99,7 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
     ' MyListBoxClass.Left Me.lstEcriture, 1
     '
     Dim lngIndex As Long
-    Dim intColumn As Integer
+    Dim intColumn As Long
     Dim lngTopIndex As Long
     Dim vntColWidths As Variant
     ReDim sngWidth(LBox.ColumnCount) As Single
@@ -132,7 +132,7 @@ Public Sub Left(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 0)
 
 End Sub
 
-Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
+Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Long = 1)
     '
     ' PURPOSE: Right align the text in a listbox column
     ' HOW TO USE:
@@ -143,7 +143,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Integer = 1)
     '
     Dim labSizer As MSForms.Label
     Dim lngIndex As Long
-    Dim intColumn As Integer
+    Dim intColumn As Long
     Dim lngTopIndex As Long
     Dim vntColWidths As Variant
     'Get label control to help size text

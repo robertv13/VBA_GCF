@@ -128,7 +128,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.Goto Range(Target.Address)
         End If
         
-        If CDate(Me.Range("K4").value) > Format(Now(), "dd/mm/yyyy") Then
+        If CDate(Me.Range("K4").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Target.value = ""
                 Target.Activate
@@ -198,3 +198,4 @@ Private Sub ckbRecurrente_Click()
     End If
 
 End Sub
+

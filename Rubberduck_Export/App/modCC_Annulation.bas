@@ -122,7 +122,7 @@ Sub Display_Invoice_info(tempSheet As Worksheet, ws As String, r As Long)
 
         Application.EnableEvents = False
         'Display all fields from FAC_Entête
-        wshCC_Annulation.Range("L5").value = Format(wshFAC_Entête.Cells(r, 2), "dd-mm-yyyy")
+        wshCC_Annulation.Range("L5").value = Format$(wshFAC_Entête.Cells(r, 2), "dd-mm-yyyy")
         
         wshCC_Annulation.Range("F7").value = wshFAC_Entête.Cells(r, 5)
         wshCC_Annulation.Range("F8").value = wshFAC_Entête.Cells(r, 6)
@@ -169,8 +169,8 @@ Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByR
         End If
     Next i
     
-    Dim profID As Integer
-    Dim rowInWorksheet As Integer: rowInWorksheet = 13
+    Dim profID As Long
+    Dim rowInWorksheet As Long: rowInWorksheet = 13
     Dim prof As Variant
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
         Dim strProf As String
@@ -212,7 +212,7 @@ Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, By
     
     'Check if the invNo was found at all
     Dim firstAddress As String
-    Dim rowFeesSummary As Integer: rowFeesSummary = 20
+    Dim rowFeesSummary As Long: rowFeesSummary = 20
     If Not cell Is Nothing Then
         firstAddress = cell.Address
         Application.EnableEvents = False
@@ -294,7 +294,7 @@ Sub CC_Annulation_Delete_Button_Click()
     
     Call CC_Annulation_HideButtons
     
-    Dim answerYesNo As Integer
+    Dim answerYesNo As Long
     answerYesNo = MsgBox("Êtes-vous certain de vouloir ANNULER cette facture ? ", _
                          vbYesNo + vbQuestion, "Confirmation d'ANNULATION de facture")
     If answerYesNo = vbNo Then
@@ -395,4 +395,5 @@ Sub CC_Annulation_HideButtons()
     wshCC_Annulation.Shapes("CC_Annulation_DELETE_Button").Visible = False
     
 End Sub
+
 

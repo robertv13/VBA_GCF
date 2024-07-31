@@ -294,7 +294,7 @@ Private Sub Process_Change(ByVal Target As Range)
 End Sub
 
 'Example subroutine to suggest an amount and trigger processing
-Sub Suggest_Amount(rowNumber As Integer, suggestedAmount As Double)
+Sub Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
     
@@ -309,3 +309,4 @@ Sub Suggest_Amount(rowNumber As Integer, suggestedAmount As Double)
     Call Process_Change(targetCell)
     
 End Sub
+

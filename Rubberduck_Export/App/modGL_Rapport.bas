@@ -27,7 +27,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         Set selectedItems = New Collection
 
         'Loop through ListBox items and collect selected ones
-        Dim i As Integer
+        Dim i As Long
         With lb.Object
             For i = 0 To .ListCount - 1
                 If .Selected(i) And Trim(.List(i)) <> "" Then
@@ -108,8 +108,8 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         
         'Assign Criteria (3)
         .Range("L3").value = glNo
-        .Range("M3").value = ">=" & Format(dateDeb, "mm-dd-yyyy")
-        .Range("N3").value = "<=" & Format(dateFin, "mm-dd-yyyy")
+        .Range("M3").value = ">=" & Format$(dateDeb, "mm-dd-yyyy")
+        .Range("N3").value = "<=" & Format$(dateFin, "mm-dd-yyyy")
         Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
         
         'Destination to copy (setup & clear previous results)
@@ -367,4 +367,5 @@ Sub GL_Rapport_Back_To_Menu()
     Call Output_Timer_Results("modGL_Rapport:GL_Rapport_Back_To_Menu()", timerStart)
     
 End Sub
+
 

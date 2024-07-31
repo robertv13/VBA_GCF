@@ -24,7 +24,7 @@ Private Sub Worksheet_Activate()
             arr = Fn_Get_Chart_Of_Accounts(2) 'Returns an array with 2 columns
             
             'Add items to the ListBox
-            Dim i As Integer
+            Dim i As Long
             For i = LBound(arr, 1) To UBound(arr, 1)
                 .AddItem arr(i, 1) & " " & arr(i, 2)
             Next i
@@ -90,8 +90,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         Select Case Range("F4").value
             Case "Aujourd'hui"
-                wshGL_Rapport.Range("F6").value = Format(Now(), "dd/mm/yyyy")
-                wshGL_Rapport.Range("H6").value = Format(Now(), "dd/mm/yyyy")
+                wshGL_Rapport.Range("F6").value = Format$(Now(), "dd/mm/yyyy")
+                wshGL_Rapport.Range("H6").value = Format$(Now(), "dd/mm/yyyy")
             Case "Mois Courant"
                 wshGL_Rapport.Range("F6").value = wshAdmin.Range("MoisDe")
                 wshGL_Rapport.Range("H6").value = wshAdmin.Range("MoisA")

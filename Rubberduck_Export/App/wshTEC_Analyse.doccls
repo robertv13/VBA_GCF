@@ -120,7 +120,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("I3").value) > Format(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("I3").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
@@ -211,7 +211,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 
                 'Set the date
                 Dim dateProjet As String
-                dateProjet = Format(ws.Range("I3").value, "dd/mm/yyyy")
+                dateProjet = Format$(ws.Range("I3").value, "dd/mm/yyyy")
                 
                 'Determine the summary total
                 Dim hono As Double
@@ -263,7 +263,7 @@ Sub Delete_CheckBox()
     
     'Check if CheckBox1 exists and then delete it
     Dim checkBox As OLEObject
-    Dim i As Integer
+    Dim i As Long
     For i = 1 To 5
         On Error Resume Next
         Set checkBox = ws.OLEObjects("CheckBox" & i)
@@ -282,3 +282,4 @@ Sub Back_To_TEC_Menu()
     wshMenuTEC.Range("A1").Select
 
 End Sub
+

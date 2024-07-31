@@ -1,12 +1,12 @@
 Attribute VB_Name = "modTEC"
 Option Explicit
 
-Global Const rmv_modeInitial As Integer = 1
-Global Const rmv_modeCreation As Integer = 2
-Global Const rmv_modeAffichage As Integer = 3
-Global Const rmv_modeModification As Integer = 4
+Global Const rmv_modeInitial As Long = 1
+Global Const rmv_modeCreation As Long = 2
+Global Const rmv_modeAffichage As Long = 3
+Global Const rmv_modeModification As Long = 4
 
-Global rmv_state As Integer
+Global rmv_state As Long
 
 Global savedClient As String
 Global savedActivite As String
@@ -94,7 +94,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
-    Dim answerYesNo As Integer
+    Dim answerYesNo As Long
     answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
@@ -281,7 +281,7 @@ No_Sort_Required:
     End If
     
     wshTEC_Local.Range("S13").value = lastResultRow - 2 & " rows"
-    wshTEC_Local.Range("S14").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+    wshTEC_Local.Range("S14").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -366,8 +366,8 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Get the last used row
             Dim lastRow As Long
             If IsNull(rs.Fields("MaxID").value) Then
-                ' Handle empty table (assign a default value, e.g., 1)
-                lastRow = 1
+                'Handle empty table (assign a default value, e.g., 0)
+                lastRow = 0
             Else
                 lastRow = rs.Fields("MaxID").value
             End If
@@ -390,7 +390,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
             rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
             rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
-            rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+            rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
             rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
             rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
             rs.Fields("DateSaisie").value = Now
@@ -407,7 +407,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
                 rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
                 rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
-                rs.Fields("Heures").value = Format(ufSaisieHeures.txtHeures.value, "#0.00")
+                rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 rs.Fields("DateSaisie").value = Now
@@ -467,7 +467,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("H" & nextRowNumber).value = hoursValue
             .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
             .Range("J" & nextRowNumber).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-            .Range("K" & nextRowNumber).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            .Range("K" & nextRowNumber).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)
@@ -541,7 +541,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     End With
      
     'Add hours to totalHeures
-    Dim nbrRows, i As Integer
+    Dim nbrRows, i As Long
     nbrRows = ufSaisieHeures.lsbHresJour.ListCount
     Dim totalHeures As Double
     
@@ -549,7 +549,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         For i = 0 To nbrRows - 1
             totalHeures = totalHeures + CCur(ufSaisieHeures.lsbHresJour.List(i, 5))
         Next
-        ufSaisieHeures.txtTotalHeures.value = Format(totalHeures, "#0.00")
+        ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
     End If
 
 EndOfProcedure:
@@ -671,7 +671,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
     
 No_Sort_Required:
         wshTEC_Local.Range("AL13").value = lastResultRow - 2 & " rows"
-        wshTEC_Local.Range("AL14").value = Format(Now(), "mm/dd/yyyy hh:mm:ss")
+        wshTEC_Local.Range("AL14").value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
     End With
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -681,4 +681,5 @@ No_Sort_Required:
     Set ws = Nothing
 
 End Sub
+
 

@@ -426,7 +426,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
             rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
             rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
             rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format(wshENC_Saisie.Range("J5").value, "#,##0.00")
+            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
             rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
     Else 'Update an existing record
         'Open the recordset for the specified ID
@@ -436,7 +436,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
             rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
             rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
             rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format(wshENC_Saisie.Range("J5").value, "#,##0.00")
+            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
             rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
         Else
             'Handle the case where the specified ID is not found
@@ -510,7 +510,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
             rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
             rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
             rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Pay_Amount").value = Format(wshENC_Saisie.Range("J" & encRow).value, "#,##0.00")
+            rs.Fields("Pay_Amount").value = Format$(wshENC_Saisie.Range("J" & encRow).value, "#,##0.00")
     Else 'Update an existing record
         'Open the recordset for the specified ID
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
@@ -519,7 +519,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
             rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
             rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
             rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Amount").value = Format(wshENC_Saisie.Range("J5").value, "#,##0.00")
+            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
             rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
         Else
             'Handle the case where the specified ID is not found

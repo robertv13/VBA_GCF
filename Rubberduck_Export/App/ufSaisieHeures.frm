@@ -140,7 +140,7 @@ End Sub
 Private Sub txtDate_Enter()
 
     If Me.txtDate.value = "" Then
-        Me.txtDate.value = Format(Now(), "dd/mm/yyyy")
+        Me.txtDate.value = Format$(Now(), "dd/mm/yyyy")
     End If
 
 End Sub
@@ -168,7 +168,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    If CDate(fullDate) > Format(Now(), "dd/mm/yyyy") Then
+    If CDate(fullDate) > Format$(Now(), "dd/mm/yyyy") Then
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
@@ -276,7 +276,7 @@ Sub txtHeures_AfterUpdate()
         Exit Sub
     End If
     
-    Me.txtHeures.value = Format(strHeures, "#0.00")
+    Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
         If Me.txtTEC_ID = "" Then
@@ -397,7 +397,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
         .cmbProfessionnel.Enabled = False
 
-        .txtDate.value = Format(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
+        .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
         .txtDate.Enabled = False
 
         .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
@@ -409,7 +409,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         savedActivite = .txtActivite.value
         .txtSavedActivite.value = .txtActivite.value
 
-        .txtHeures.value = Format(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
+        .txtHeures.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
         savedHeures = .txtHeures.value
         .txtSavedHeures.value = .txtHeures.value
 
@@ -431,4 +431,5 @@ Exit_Sub:
     Set lookupRange = Nothing
     
 End Sub
+
 

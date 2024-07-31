@@ -20,7 +20,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                         'Check if the cell in column E (timestamp column) is empty
                         If IsEmpty(Me.Cells(cell.row, "E").value) Then
                             'If it's empty, insert the timestamp
-                            Me.Cells(cell.row, "E").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                            Me.Cells(cell.row, "E").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                         End If
                     End If
                 End If

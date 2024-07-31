@@ -41,7 +41,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
     
     Dim TimeStamp As String
-    Dim i As Integer, j As Integer
+    Dim i As Long, j As Long
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
@@ -58,9 +58,9 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                TimeStamp = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 rs.Fields("TimeStamp") = TimeStamp
-                Debug.Print "GL_Trans - " & CDate(Format(Now(), "dd/mm/yyyy hh:mm:ss"))
+                Debug.Print "GL_Trans - " & CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             rs.update
 Nothing_to_Post:
     Next i
@@ -91,7 +91,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
     Dim rowToBeUsed As Long
     rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).row + 1
     
-    Dim i As Integer, j As Integer
+    Dim i As Long, j As Long
     'Loop through the array and post each row
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
@@ -108,7 +108,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
                      .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
                 End If
                 .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+                .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
             End If
         Next i
