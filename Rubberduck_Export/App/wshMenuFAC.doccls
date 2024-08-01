@@ -58,5 +58,6 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
     Call SlideIn_FAC_Historique
+    Call SlideIn_FAC_Annulation
 
 End Sub

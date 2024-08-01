@@ -3,11 +3,11 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v3.B.4" '2024-07-30 @ 20:08
-Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
+Public Const APP_VERSION_NO As String = "v3.B.5.xlsb" '2024-07-31 @ 10:07Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
 Public Const MAXWIDTH As Long = 192
+Public Const NB_MAX_LIGNE_FAC As Long = 35
 
 Public userName As String
 
@@ -304,7 +304,7 @@ Sub BackupMasterFile()
     masterWorkbook.SaveCopyAs backupFilePath
 
     'Close the master workbook
-    masterWorkbook.Close SaveChanges:=False
+    masterWorkbook.Close saveChanges:=False
 
 '    'Optional: Notify the user
 '    MsgBox "Backup created: " & vbNewLine & vbNewLine & "'" & backupFilePath & "'"

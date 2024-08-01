@@ -44,10 +44,10 @@ Sub wshCAR_Dashboard_Refresh()
         'Copy AR_Entête to Invoice List
         Dim maxRow As Long
         lastRow = wshFAC_Comptes_Clients.Range("A999999").End(xlUp).row
-        Dim SourceRange As Range: Set SourceRange = wshFAC_Comptes_Clients.Range("A3:J" & lastRow)
+        Dim sourceRange As Range: Set sourceRange = wshFAC_Comptes_Clients.Range("A3:J" & lastRow)
         Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & lastRow)
         'Copy values from source range to target range
-        targetRange.value = SourceRange.value
+        targetRange.value = sourceRange.value
 
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
@@ -77,7 +77,7 @@ Sub wshCAR_Dashboard_Refresh()
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
-    Set SourceRange = Nothing
+    Set sourceRange = Nothing
     Set targetRange = Nothing
     Set tbl = Nothing
     Set ws = Nothing

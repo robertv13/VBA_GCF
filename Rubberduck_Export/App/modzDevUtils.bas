@@ -305,7 +305,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Next ws
     
     'Close the workbook without saving changes
-    wb.Close SaveChanges:=False
+    wb.Close saveChanges:=False
     
     Call Array_2D_Resizer(arr, r, UBound(arr, 2))
     

@@ -69,9 +69,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
-                Debug.Print wshFAC_Projets_Entête.Range("Z" & i).value
-                If UCase(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Then
-                    liveOne = liveOne + 1
+                If UCase(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
+                    wshFAC_Projets_Entête.Range("Z" & i).value = 0 Then
+                        liveOne = liveOne + 1
                 End If
             Next i
         End If
@@ -83,7 +83,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         Dim projetID As Long
         If wshFAC_Brouillon.Range("B51").value <> "" Then
             Application.EnableEvents = False
-            projetID = wshFAC_Brouillon.Range("B52").value
+            projetID = CLng(wshFAC_Brouillon.Range("B52").value)
             'Get the Entête for this projetID
             lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
             Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
@@ -113,17 +113,22 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 For ii = 44 To 48
                     If arr(ii - 43, 1) <> "" And arr(ii - 43, 2) <> 0 Then
                         wshFAC_Brouillon.Range("R" & r).value = arr(ii - 43, 1)
+                        wshFAC_Brouillon.Range("S" & r).NumberFormat = "#,##0.00"
                         wshFAC_Brouillon.Range("S" & r).value = arr(ii - 43, 2)
+                        wshFAC_Brouillon.Range("T" & r).NumberFormat = "#,##0.00 $"
                         wshFAC_Brouillon.Range("T" & r).value = arr(ii - 43, 3)
                         r = r + 1
                    End If
                 Next ii
-                Application.EnableEvents = True
             End If
-            Application.EnableEvents = True
+            'The total fees amount id determined by the fees summary
+            wshFAC_Brouillon.Range("O47").value = wshFAC_Brouillon.Range("U49").value
+            
             wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
             wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
             wshFAC_Brouillon.Range("O9").Select
+            
+            Application.EnableEvents = True
         Else
             Application.EnableEvents = True
             wshFAC_Brouillon.Select
@@ -348,12 +353,12 @@ End Sub
 Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
-    Dim FilePath As String
-    FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-    If FilePath = "False" Then Exit Sub 'User canceled
+    Dim filePath As String
+    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If filePath = "False" Then Exit Sub 'User canceled
     
     Dim wbSource As Workbook
-    Set wbSource = Workbooks.Open(FilePath)
+    Set wbSource = Workbooks.Open(filePath)
     Dim wsSource As Worksheet
     Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
     
@@ -367,7 +372,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     If rngSource Is Nothing Then
         MsgBox "Aucune cellule de sélectionnées. L'Opération est annulée.", vbExclamation
-        wbSource.Close SaveChanges:=False
+        wbSource.Close saveChanges:=False
         Set wbSource = Nothing
         Exit Sub
     End If
@@ -391,7 +396,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     wsDestination.Paste rngDestination 'Use the Paste method to paste the copied data
     
     'Step 5 - Close and release the Excel file
-    wbSource.Close SaveChanges:=False
+    wbSource.Close saveChanges:=False
     Application.CutCopyMode = False
     
     'Cleanup - 2024-07-27 @ 07:39

@@ -80,17 +80,6 @@ Sub SlideIn_Debours()
     End With
 
 End Sub
-Sub SlideOut_Comptabilite()
-    
-    With wshMenu.Shapes("btnComptabiliteMenu")
-        For width = 32 To MAXWIDTH
-            .Height = width
-            ActiveSheet.Shapes("icoComptabilite").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Comptabilité"
-    End With
-
-End Sub
 
 Sub SlideIn_Comptabilite()
     
@@ -101,6 +90,18 @@ Sub SlideIn_Comptabilite()
             ActiveSheet.Shapes("icoComptabilite").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
+    End With
+
+End Sub
+
+Sub SlideOut_Comptabilite()
+    
+    With wshMenu.Shapes("btnComptabiliteMenu")
+        For width = 32 To MAXWIDTH
+            .Height = width
+            ActiveSheet.Shapes("icoComptabilite").Left = width - 32
+        Next width
+        .TextFrame2.TextRange.Characters.text = "Comptabilité"
     End With
 
 End Sub
@@ -575,7 +576,7 @@ Sub Exit_Without_Saving() '2024-06-20 @ 13:48
         Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
         
         Dim wb As Workbook: Set wb = ActiveWorkbook
-        ActiveWorkbook.Close SaveChanges:=False
+        ActiveWorkbook.Close saveChanges:=False
 
         Application.Application.Quit
     End If
@@ -616,7 +617,7 @@ Sub Exit_Click() '2024-07-05 @ 06:37
         Application.DisplayAlerts = False
         ThisWorkbook.Save
         Application.DisplayAlerts = True
-        ThisWorkbook.Close SaveChanges:=False
+        ThisWorkbook.Close saveChanges:=False
     
         'If Personal.xlsb is open, hide it without saving
         Dim wb As Workbook

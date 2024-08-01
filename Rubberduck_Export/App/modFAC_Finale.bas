@@ -16,8 +16,14 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         End If
         
         'Check For Mandatory Fields - Date de facture
-        If .Range("O3").value = Empty Or Len(Trim(.Range("O6").value)) <> 8 Then
+        If .Range("O3").value = Empty Then
             MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
+            GoTo Fast_Exit_Sub
+        End If
+        
+        'Check For Mandatory Fields - Date de facture
+        If Len(Trim(.Range("O6").value)) <> 8 Then
+            MsgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
     End With

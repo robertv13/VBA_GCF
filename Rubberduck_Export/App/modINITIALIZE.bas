@@ -28,20 +28,20 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
             lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
             'Supprimer toutes les lignes sauf la première (en-tête)
             If lastUsedRow > 1 Then
-                ws.rows("2:" & lastUsedRow).delete
+                ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
             End If
         End If
     Next ws
 
     'Sauvegarder et fermer le workbook
-    wb.Close SaveChanges:=True
+    wb.Close saveChanges:=True
 
     'Step 2 - Enlève les rangées d'une feuille locale
     Set ws = wshTEC_TDB_Data
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     'Supprimer toutes les lignes sauf la première (en-tête)
     If lastUsedRow > 1 Then
-        ws.rows("2:" & lastUsedRow).delete
+        ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
         
         'Requires a minimum of one line (values)
         ws.Range("A2").value = 0
@@ -129,7 +129,8 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
 '    Set wb = Nothing
     Set ws = Nothing
     
-    MsgBox "Toutes les données ont été supprimées avec succès, en gardant les en-têtes !"
+    MsgBox "Toutes les données ont été supprimées avec succès," & vbNewLine & vbNewLine & _
+           "en gardant les en-têtes !"
     
 End Sub
 

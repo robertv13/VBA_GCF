@@ -1,9 +1,0 @@
-﻿Option Explicit
-
-'Make sure the Menu worksheet is selected, when we open the Workbook
-Private Sub Workbook_Open()
-    
-    'Come back to menu Worksheet (wsMenu)
-    wsMenu.Select
-
-End Sub

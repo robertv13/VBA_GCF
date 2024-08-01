@@ -25,7 +25,7 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Application.CutCopyMode = False
 
     'Save and close the workbook
-    wb.Close SaveChanges:=True
+    wb.Close saveChanges:=True
 
 End Sub
 
@@ -384,6 +384,12 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim r As Long: r = 2
     Dim readRows As Long
     
+    'dnrPlanComptable ----------------------------------------------------- Plan Comptable
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
+    r = r + 1
+    
+    Call check_Plan_Comptable(r, readRows)
+
     'wshBD_Clients --------------------------------------------------------------- Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
     r = r + 1
@@ -887,7 +893,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim currentRow As Long
         
     Dim i As Long
-    Dim projetID As String, oldProjetID As String
+    Dim projetID As Long, oldProjetID As Long
     Dim lookUpValue As String, result As Variant
     For i = LBound(arr, 1) To UBound(arr, 1) - 1 'One line of header !
         projetID = arr(i, 1)
@@ -983,7 +989,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         GoTo Clean_Exit
     End If
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
+    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows - 1, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
     Dim row As Long: row = 1
@@ -1085,12 +1091,12 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - headerRow
+    readRows = readRows + UBound(arr, 1)
     
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -1143,8 +1149,8 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim strCodeGL As String, strDescGL As String
     Dim ligne As Range
     For Each ligne In planComptable.rows
-        strCodeGL = strCodeGL + ligne.Cells(1, 2).value + "|:|"
-        strDescGL = strDescGL + ligne.Cells(1, 1).value + "|:|"
+        strCodeGL = strCodeGL & ligne.Cells(1, 2).value & "|:|"
+        strDescGL = strDescGL & ligne.Cells(1, 1).value & "|:|"
     Next ligne
     
     Dim numRows As Long
@@ -1463,7 +1469,7 @@ Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
         r = r + 1
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce resultat:")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -1511,6 +1517,117 @@ Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'dnrPlanComptable_All
+    Dim arr As Variant
+    Dim nbCol As Long
+    nbCol = 4
+    arr = Fn_Get_Plan_Comptable(nbCol) 'Returns array with 4 columns (Code, Description)
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(UBound(arr, 1), "###,##0") & _
+        " comptes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de 'dnr_PlanComptable_All'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    If UBound(arr, 1) < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
+    Dim dict_code_GL As New Dictionary
+    Dim dict_descr_GL As New Dictionary
+    
+    Dim i As Long, codeGL As String, descrGL As String
+    Dim GL_ID As Long
+    Dim typeGL As String
+    Dim cas_doublon_descr As Long, cas_doublon_code As Long, cas_type As Long
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        codeGL = arr(i, 1)
+        descrGL = arr(i, 2)
+        If dict_descr_GL.Exists(descrGL) = False Then
+            dict_descr_GL.add descrGL, codeGL
+        Else
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+            cas_doublon_descr = cas_doublon_descr + 1
+        End If
+        
+        If dict_code_GL.Exists(codeGL) = False Then
+            dict_code_GL.add codeGL, descrGL
+        Else
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+            cas_doublon_code = cas_doublon_code + 1
+        End If
+        
+        GL_ID = arr(i, 3)
+        typeGL = arr(i, 4)
+        If InStr("Actifs^Passifs^Équité^Revenus^Dépenses^", typeGL) = 0 Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            r = r + 1
+            cas_type = cas_type + 1
+        End If
+        
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " comptes ont été analysés!")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
+    If cas_doublon_descr = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de description")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    End If
+    
+    If cas_doublon_code = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code de G/L")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    End If
+    
+    If cas_type = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun type de G/L invalide")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_type & " cas de types de G/L invalides")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        r = r + 1
+    End If
+    r = r + 1
+    
+Clean_Exit:
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
@@ -1702,7 +1819,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     End If
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce resultat:")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     

@@ -40,7 +40,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
-    arr = Fn_Get_Chart_Of_Accounts(2) 'Returns array with 2 columns (Code, Description)
+    arr = Fn_Get_Plan_Comptable(2) 'Returns array with 2 columns (Code, Description)
     
     Dim dictSolde As Dictionary: Set dictSolde = New Dictionary
     Dim arrSolde() As Variant 'GLbalance

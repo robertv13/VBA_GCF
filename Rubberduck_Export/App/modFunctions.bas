@@ -701,8 +701,10 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As L
         
 End Function
 
-Function Fn_Get_Chart_Of_Accounts(nbCol As Long) As Variant '2024-06-07 @ 07:31
+Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
 
+    Debug.Assert nbCol >= 1 And nbCol <= 4 '2024-07-31 @ 19:26
+    
     'Reference the named range
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     
@@ -712,7 +714,7 @@ Function Fn_Get_Chart_Of_Accounts(nbCol As Long) As Variant '2024-06-07 @ 07:31
     If nbCol = 1 Then
         ReDim arr(1 To planComptable.rows.count) As String '1D array
     Else
-        ReDim arr(1 To planComptable.rows.count, 1 To 2) As String '2D array
+        ReDim arr(1 To planComptable.rows.count, 1 To nbCol) As String '2D array
     End If
     For rowNum = 1 To planComptable.rows.count
         'Get the entire row as a range
@@ -721,14 +723,23 @@ Function Fn_Get_Chart_Of_Accounts(nbCol As Long) As Variant '2024-06-07 @ 07:31
         For Each row In rowRange.rows
             If nbCol = 1 Then
                 arr(rowNum) = row.Cells(1, 2)
+            ElseIf nbCol = 2 Then
+                arr(rowNum, 1) = row.Cells(1, 2)
+                arr(rowNum, 2) = row.Cells(1, 1)
+            ElseIf nbCol = 3 Then
+                arr(rowNum, 1) = row.Cells(1, 2)
+                arr(rowNum, 2) = row.Cells(1, 1)
+                arr(rowNum, 3) = row.Cells(1, 3)
             Else
                 arr(rowNum, 1) = row.Cells(1, 2)
                 arr(rowNum, 2) = row.Cells(1, 1)
+                arr(rowNum, 3) = row.Cells(1, 3)
+                arr(rowNum, 4) = row.Cells(1, 4)
             End If
         Next row
     Next rowNum
     
-    Fn_Get_Chart_Of_Accounts = arr
+    Fn_Get_Plan_Comptable = arr
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set planComptable = Nothing
