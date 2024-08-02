@@ -1274,7 +1274,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     montant = wshFAC_Brouillon.Range("B33").value
     If montant Then
         MyArray(1, 1) = "1100"
-        MyArray(1, 2) = "Comptes Clients"
+        MyArray(1, 2) = "Comptes clients"
         MyArray(1, 3) = montant
         MyArray(1, 4) = ""
     End If
@@ -1283,7 +1283,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     montant = wshFAC_Brouillon.Range("B34").value
     If montant Then
         MyArray(2, 1) = "4000"
-        MyArray(2, 2) = "Revenus"
+        MyArray(2, 2) = "Revenus de consultation"
         MyArray(2, 3) = montant
         MyArray(2, 4) = ""
     End If
@@ -1291,7 +1291,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'Miscellaneous Amount # 1 (wshFAC_Brouillon.Range("B35"))
     montant = wshFAC_Brouillon.Range("B35").value
     If montant Then
-        MyArray(3, 1) = "5009"
+        MyArray(3, 1) = "9999"
         MyArray(3, 2) = "Frais divers # 1"
         MyArray(3, 3) = montant
         MyArray(3, 4) = ""
@@ -1300,7 +1300,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'Miscellaneous Amount # 2 (wshFAC_Brouillon.Range("B36"))
     montant = wshFAC_Brouillon.Range("B36").value
     If montant Then
-        MyArray(4, 1) = "5008"
+        MyArray(4, 1) = "9999"
         MyArray(4, 2) = "Frais divers # 2"
         MyArray(4, 3) = montant
         MyArray(4, 4) = ""
@@ -1309,7 +1309,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'Miscellaneous Amount # 3 (wshFAC_Brouillon.Range("B37"))
     montant = wshFAC_Brouillon.Range("B37").value
     If montant Then
-        MyArray(5, 1) = "5002"
+        MyArray(5, 1) = "9999"
         MyArray(5, 2) = "Frais divers # 3"
         MyArray(5, 3) = montant
         MyArray(5, 4) = ""
@@ -1318,8 +1318,8 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'GST to pay (wshFAC_Brouillon.Range("B38"))
     montant = wshFAC_Brouillon.Range("B38").value
     If montant Then
-        MyArray(6, 1) = "2200"
-        MyArray(6, 2) = "TPS à payer"
+        MyArray(6, 1) = "1202"
+        MyArray(6, 2) = "TPS percues"
         MyArray(6, 3) = montant
         MyArray(6, 4) = ""
     End If
@@ -1327,8 +1327,8 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'PST to pay (wshFAC_Brouillon.Range("B39"))
     montant = wshFAC_Brouillon.Range("B39").value
     If montant Then
-        MyArray(7, 1) = "2201"
-        MyArray(7, 2) = "TVQ à payer"
+        MyArray(7, 1) = "1203"
+        MyArray(7, 2) = "TVQ percues"
         MyArray(7, 3) = montant
         MyArray(7, 4) = ""
     End If
@@ -1336,8 +1336,8 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     'Deposit applied (wshFAC_Brouillon.Range("B40"))
     montant = wshFAC_Brouillon.Range("B40").value
     If montant Then
-        MyArray(8, 1) = "1230"
-        MyArray(8, 2) = "Avance - Prêt GCP"
+        MyArray(8, 1) = "2400"
+        MyArray(8, 2) = "Produit perçu d'avance"
         MyArray(8, 3) = montant
         MyArray(8, 4) = ""
     End If

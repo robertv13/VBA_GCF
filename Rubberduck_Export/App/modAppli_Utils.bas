@@ -798,9 +798,16 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         r = r + 2
         GoTo Clean_Exit
     End If
+    Dim firstEmptyCol As Long
+    firstEmptyCol = 1
+    Do Until ws.Cells(headerRow, firstEmptyCol) = ""
+        firstEmptyCol = firstEmptyCol + 1
+    Loop
+    Dim lastUsedCol As Long
+    lastUsedCol = firstEmptyCol - 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
-        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+        " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -808,20 +815,21 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Dim arr As Variant
-    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count - headerRow).value
-    If UBound(arr, 1) < 3 Then
+    If lastUsedRow = headerRow Then
         r = r + 1
         GoTo Clean_Exit
     End If
 
+    Dim arr As Variant
+    arr = wshFAC_Entête.Range("A1").CurrentRegion.Offset(2, 0).Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
+    
     'Array pointer
     Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
     Dim Inv_No As String
-    For i = LBound(arr, 1) + 2 To UBound(arr, 1) 'Two lines of header !
+    For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
@@ -879,7 +887,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     
     'Transfer data from Worksheet into an Array (arr)
     Dim numRows As Long
-    numRows = ws.Range("A1").CurrentRegion.rows.count - 1
+    numRows = ws.Range("A1").CurrentRegion.rows.count - 1 'Remove header
     If numRows < 1 Then
         r = r + 1
         GoTo Clean_Exit
@@ -894,8 +902,8 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         
     Dim i As Long
     Dim projetID As Long, oldProjetID As Long
-    Dim lookUpValue As String, result As Variant
-    For i = LBound(arr, 1) To UBound(arr, 1) - 1 'One line of header !
+    Dim lookUpValue As Long, result As Variant
+    For i = LBound(arr, 1) To UBound(arr, 1)
         projetID = arr(i, 1)
         lookUpValue = projetID
         If projetID <> oldProjetID Then
@@ -934,7 +942,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " lignes ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 2
     
@@ -1125,8 +1133,16 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         GoTo Clean_Exit
     End If
     
+    Dim firstEmptyCol As Long
+    firstEmptyCol = 1
+    Do Until ws.Cells(headerRow, firstEmptyCol) = ""
+        firstEmptyCol = firstEmptyCol + 1
+    Loop
+    Dim lastUsedCol As Long
+    lastUsedCol = firstEmptyCol - 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
-        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+        " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -1915,6 +1931,9 @@ End Sub
 Sub Add_Message_To_WorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
 
     ws.Cells(r, c).value = m
+    If c = 1 Then
+        ws.Cells(r, c).Font.Bold = True
+    End If
 
 End Sub
 Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10

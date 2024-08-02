@@ -216,8 +216,8 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
             MyArray(1, 1) = "1000"
             MyArray(1, 2) = "Encaisse"
         Case "VISA", "MCARD", "AMEX"
-            MyArray(1, 1) = "1000"
-            MyArray(1, 2) = "Encaisse"
+            MyArray(1, 1) = "2010"
+            MyArray(1, 2) = "Carte de crédit"
         Case "Autre"
             MyArray(1, 1) = "1000"
             MyArray(1, 2) = "Encaisse"
@@ -244,7 +244,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         
         If wshDEB_Saisie.Range("L" & l).value <> 0 Then
             MyArray(arrRow, 1) = "1200"
-            MyArray(arrRow, 2) = "TPS payée"
+            MyArray(arrRow, 2) = "TPS payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
@@ -252,7 +252,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
         If wshDEB_Saisie.Range("M" & l).value <> 0 Then
             MyArray(arrRow, 1) = "1201"
-            MyArray(arrRow, 2) = "TVQ payée"
+            MyArray(arrRow, 2) = "TVQ payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
