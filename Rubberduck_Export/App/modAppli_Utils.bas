@@ -467,7 +467,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Call check_GL_Trans(r, readRows)
     
-    'wshTEC_DB_Data ---------------------------------------------------------- TEC_DB_Data
+    'wshTEC_TDB_Data -------------------------------------------------------- TEC_TDB_Data
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TDB_Data")
     r = r + 1
     
@@ -547,22 +547,25 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         nom = arr(i, 1)
         code = arr(i, 2)
+        
         If dict_nom_client.Exists(nom) = False Then
             dict_nom_client.add nom, code
         Else
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le nom '" & nom & "' est un doublon pour le code '" & code & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
         End If
+        
         If dict_code_client.Exists(code) = False Then
             dict_code_client.add code, nom
         Else
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code '" & code & "' est un doublon pour le client '" & nom & "'")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
             Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
         End If
+        
     Next i
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
@@ -1312,7 +1315,7 @@ Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
     
-    'wshTEC_DB_Data
+    'wshTEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long

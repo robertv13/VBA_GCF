@@ -52,6 +52,8 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
         cmbProfessionnel.value = "GC"
     ElseIf userName = "Robert M. Vigneault" Then
         cmbProfessionnel.value = "RMV"
+    Else
+        cmbProfessionnel.value = ""
     End If
     cmbProfessionnel.SetFocus
    

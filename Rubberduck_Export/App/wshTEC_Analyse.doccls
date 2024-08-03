@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 '    ActiveWindow.Panes(2).Activate
     Application.EnableEvents = False
     ws.Select
-    ws.Range("I3").value = Format$(Now(), "dd/mm/yyyy")
+    ws.Range("I3").value = Format$(Now(), "mm/dd/yyyy")
     ws.Range("I3").Select
     Application.EnableEvents = True
     

@@ -26,7 +26,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     Dim maxEJNo As Long, lastJE As Long
     If IsNull(rs.Fields("MaxEJNo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
+        lastJE = 0
     Else
         lastJE = rs.Fields("MaxEJNo").value
     End If
