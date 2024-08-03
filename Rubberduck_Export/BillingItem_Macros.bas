@@ -80,7 +80,7 @@ Sub BillingEntry_Load()
     If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Load() @ " & Time
     With shInvoice
         If .Range("B3").Value = "" Then
-            MsgBox "Veuillez sélectionner une charge valide"
+            MsgBox "Veuillez sï¿½lectionner une charge valide"
             Exit Sub
         End If
         .Range("B23").Value = True 'Set Load To True
@@ -113,7 +113,7 @@ Sub BillingEntry_AddToInvoice()
     If shInvoice.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice() @ " & Time
     With shInvoice
         If .Range("B17").Value = Empty Then
-            MsgBox "Vous devez sélectionner une charge pour l'ajouter à la facture"
+            MsgBox "Vous devez sï¿½lectionner une charge pour l'ajouter ï¿½ la facture"
         End If
         If .Range("B20").Value = Empty Then
             MsgBox "Assurez-vous de sauvegarder la facture avant d'y ajouter des charges"
@@ -121,7 +121,7 @@ Sub BillingEntry_AddToInvoice()
         End If
         SelRow = .Range("B17").Value 'Selected Row
         If .Range("G" & SelRow).Value = "Yes" Then
-            If MsgBox("Cette charge a déjà été facturé. Êtes-vous certain de vouloir l'ajouter à nouveau ?", vbYesNo, "Charge déjà facturée") = vbNo Then Exit Sub
+            If MsgBox("Cette charge a dï¿½jï¿½ ï¿½tï¿½ facturï¿½. ï¿½tes-vous certain de vouloir l'ajouter ï¿½ nouveau ?", vbYesNo, "Charge dï¿½jï¿½ facturï¿½e") = vbNo Then Exit Sub
         End If
         
         EntryRow = .Range("H" & SelRow).Value 'Entry Database Row
@@ -146,7 +146,7 @@ NewRow:
             InvRow = 10
             'MsgBox InvRow
             If InvRow = 36 Then 'Max Items
-                MsgBox "Vous avez atteint le maximum d'entrée sur cette facture"
+                MsgBox "Vous avez atteint le maximum d'entrï¿½e sur cette facture"
                 Exit Sub
             End If
         'End If
@@ -174,3 +174,9 @@ Sub BillingEntry_AddAllItems()
     If shInvoice.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddAllItems()" & vbNewLine
 End Sub
 
+If Activesheet.Name <> "Sheet2" Then
+    Application.EnableEvents = False
+    Me.Activate
+    MsgBox "You must go to Sheet2 after Sheet1", vbCritical
+    Application.EnableEvents = True
+End If
