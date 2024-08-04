@@ -360,4 +360,122 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     
 End Sub
 
+Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
+
+    Call Client_List_Import_All
+    
+    Dim strConnection As String
+    Dim wsDest As Worksheet
+    Dim i As Long, j As Long
+    Dim lastUsedRow As Long
+    Dim rowNum As Long
+    
+    'Define the path to the closed workbook
+    Dim strFilePath As String
+    strFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\CAR.xlsx"
+    Dim strSheetName As String
+    strSheetName = "CAR$"
+    Dim strRange As String
+    strRange = "A1:G120" 'Adjust the range as needed
+    
+    'Connection string for Excel
+    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
+                    "Data Source=" & strFilePath & ";" & _
+                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
+    
+    'Create a new ADO connection and recordset
+    Dim cnn As Object: Set cnn = CreateObject("ADODB.Connection")
+    Dim rst As Object: Set rst = CreateObject("ADODB.Recordset")
+    
+    'Open the connection
+    cnn.Open strConnection
+    
+    'Open the recordset
+    rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
+    
+    'Define the destination worksheet
+    Set wsDest = ThisWorkbook.Sheets("CAR")
+    
+    'Get the last row in the destination sheet
+    lastUsedRow = wsDest.Range("A999").End(xlUp).row
+    rowNum = lastUsedRow
+    
+    'Loop through the recordset and write data to the destination sheet
+    Dim client As String
+    Dim dateFact As String
+    Dim factNo As String
+    Dim clientCode As String
+    Dim clientCodeFromDB As String
+    Dim totalFact As Double
+    Dim recu As Double
+    Dim dateRecu As String
+    Dim solde As Double
+    
+    Dim errorMesg As String
+    Dim totCAR As Double
+    
+    Do Until rst.EOF
+        client = rst.Fields(0).value
+        dateFact = rst.Fields(1).value
+        factNo = rst.Fields(2).value
+        totalFact = rst.Fields(3).value
+        recu = rst.Fields(4).value
+        If IsNull(rst.Fields(5).value) Then
+            dateRecu = ""
+        Else
+            dateRecu = rst.Fields(5).value
+        End If
+        solde = rst.Fields(6).value
+        
+        clientCode = Left(client, 10)
+            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
+        client = Mid(client, InStr(client, " - ") + 3, Len(client))
+        totCAR = totCAR + solde
+        
+        'Is this a Valid Client ?
+        Dim myInfo() As Variant
+        Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+        myInfo = Fn_Find_Data_In_A_Range(rng, 1, client, 2)
+        If myInfo(1) = "" Then
+            If InStr(errorMesg, client) = 0 Then
+                errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
+            End If
+        End If
+        clientCodeFromDB = myInfo(3)
+        
+'        If clientCode <> clientCodeFromDB Then
+'            errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
+'        End If
+        
+'        wsDest.Range("A" & rowNum).value = factNo
+'        wsDest.Range("B" & rowNum).value = dateFact
+'        wsDest.Range("C" & rowNum).value = client
+'        wsDest.Range("D" & rowNum).value = "Unpaid"
+'        wsDest.Range("E" & rowNum).value = "Net 30"
+'        wsDest.Range("F" & rowNum).value = Format$(dateFact + 30, "mm/dd/yyyy")
+'        wsDest.Range("G" & rowNum).value = totalFact
+'        wsDest.Range("H" & rowNum).value = recu
+'        wsDest.Range("I" & rowNum).value = totalFact - recu
+'        wsDest.Range("J" & rowNum).value = Now() - wsDest.Range("F" & rowNum).value
+'
+'        rowNum = rowNum + 1
+
+        rst.MoveNext
+        
+    Loop
+    
+    If errorMesg <> "" Then
+        MsgBox errorMesg
+    Else
+        MsgBox "Tous les CAR ont été importés, pour un total de " & Format$(totCAR, "#,##0.00$")
+    End If
+    
+    'Clean up
+    rst.Close
+    cnn.Close
+    
+    Set rst = Nothing
+    Set cnn = Nothing
+    
+End Sub
 

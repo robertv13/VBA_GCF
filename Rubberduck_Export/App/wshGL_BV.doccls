@@ -23,7 +23,7 @@ Private Sub Worksheet_Activate()
     'Hide column A & B
 '    ws.Range("A:B").EntireColumn.Hidden = True
 
-    Call SetTabOrder(ws)
+'    Call SetTabOrder(ws)
     
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
@@ -137,7 +137,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B9").value = CDate(Format$(Range("J1").value, "dd/mm/yyyy"))
@@ -226,6 +226,7 @@ Sub wshGL_BV_Create_Dynamic_Shape()
     'Check if the shape has already been created
     If dynamicShape Is Nothing Then
         'Create the text box shape
+        Me.Unprotect
         Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
     End If
     

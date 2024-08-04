@@ -50,7 +50,7 @@ Sub SaisieHeures_Click()
     
 End Sub
 
-Sub TEC_TDB_Click()
+Sub TEC_TdB_Click()
 
     Call SlideIn_TEC_TDB
     

@@ -38,7 +38,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         Call TEC_AdvancedFilter_And_Sort
         Call TEC_Refresh_ListBox_And_Add_Hours
         
-        Call TEC_TDB_Update_All
+        Call TEC_TdB_Update_All
         
         'Reset command buttons
         Call Buttons_Enabled_True_Or_False(False, False, False, False)
@@ -562,9 +562,9 @@ EndOfProcedure:
     
 End Sub
 
-Sub TEC_TDB_Push_TEC_Local_To_DB_Data()
+Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TDB_Push_TEC_Local_To_DB_Data()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TdB_Push_TEC_Local_To_DB_Data()")
 
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
@@ -595,31 +595,31 @@ Sub TEC_TDB_Push_TEC_Local_To_DB_Data()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Output_Timer_Results("modTEC:TEC_TDB_Push_TEC_Local_To_DB_Data()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_TdB_Push_TEC_Local_To_DB_Data()", timerStart)
 
 End Sub
 
-Sub TEC_TDB_Update_All()
+Sub TEC_TdB_Update_All()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TDB_Update_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TdB_Update_All()")
     
-    Call TEC_TDB_Push_TEC_Local_To_DB_Data
-    Call TEC_TDB_Refresh_All_Pivot_Tables
+    Call TEC_TdB_Push_TEC_Local_To_DB_Data
+    Call TEC_TdB_Refresh_All_Pivot_Tables
     
-    Call Output_Timer_Results("modTEC:TEC_TDB_Update_All()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_TdB_Update_All()", timerStart)
 
 End Sub
 
-Sub TEC_TDB_Refresh_All_Pivot_Tables()
+Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TDB_Refresh_All_Pivot_Tables()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC:TEC_TdB_Refresh_All_Pivot_Tables()")
     
     Dim pt As PivotTable
     For Each pt In wshTEC_TDB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
 
-    Call Output_Timer_Results("modTEC:TEC_TDB_Refresh_All_Pivot_Tables()", timerStart)
+    Call Output_Timer_Results("modTEC:TEC_TdB_Refresh_All_Pivot_Tables()", timerStart)
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set pt = Nothing

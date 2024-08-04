@@ -278,6 +278,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     'Create a Conditional Formating for the displayed transactions
     ws.Unprotect
     With ws.Range("M5:T" & lastResultUsedRow)
+        On Error Resume Next
         .FormatConditions.add _
             Type:=xlExpression, _
             Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
@@ -288,6 +289,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
             .TintAndShade = 0.799981688894314
         End With
         .FormatConditions(1).StopIfTrue = False
+        On Error GoTo 0
     End With
     
     ws.Protect UserInterfaceOnly:=True
@@ -429,8 +431,7 @@ Sub GL_TB_Setup_And_Print()
     Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 60) + 1
     
-    Dim shp As Range
-    Set shp = ActiveSheet.Shapes("GL_BV_Print")
+    Dim shp As Range: Set shp = ActiveSheet.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
     
     Call GL_TB_SetUp_And_Print_Document(printRange, pagesRequired)

@@ -73,7 +73,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_GL_Posting_Preparation
     
     'Update TEC_DashBoard
-    Call TEC_TDB_Update_All '2024-03-21 @ 12:32
+    Call TEC_TdB_Update_All '2024-03-21 @ 12:32
 
     Application.ScreenUpdating = True
     

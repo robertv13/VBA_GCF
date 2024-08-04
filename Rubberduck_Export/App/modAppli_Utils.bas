@@ -29,7 +29,6 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
 
 End Sub
 
-
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
@@ -50,111 +49,6 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
     Set cell = Nothing
     
 End Sub
-
-'Sub Printer_Page_Setup(ws As Worksheet, _
-'                       rng As Range, _
-'                       header1 As String, _
-'                       header2 As String, _
-'                       Optional Orient As String = "L") '2024-07-14 @ 06:51
-'
-'    Dim retries As Integer
-'
-'    On Error GoTo CleanUp
-'
-'    'Retry loop for setting PrintCommunication to False
-'    retries = 3
-'    Do While retries > 0
-'        On Error Resume Next
-'        Application.PrintCommunication = False
-'        If Err.Number = 0 Then Exit Do
-'        retries = retries - 1
-'        Application.Wait (Now + TimeValue("0:00:01"))
-'        On Error GoTo CleanUp
-'    Loop
-'
-'    If retries = 0 Then
-'        MsgBox "Failed to set PrintCommunication to False after multiple attempts", vbCritical
-'        Exit Sub
-'    End If
-'
-'    With ws.PageSetup
-'        .PrintArea = rng.Address
-'        .PrintTitleRows = "$1:$1"
-'        .PrintTitleColumns = ""
-'
-'        .LeftHeader = ""
-'        .CenterHeader = "&""-,Gras""&14&K0070C0" & header1 & Chr(10) & header2
-'        .RightHeader = ""
-'        .LeftFooter = "&11&D - &T"
-'        .CenterFooter = "&11&KFF0000&A"
-'        .RightFooter = "&11Page &P de &N"
-'
-'        .TopMargin = Application.InchesToPoints(0.55)
-'        .LeftMargin = Application.InchesToPoints(0.15)
-'        .RightMargin = Application.InchesToPoints(0.15)
-'        .HeaderMargin = Application.InchesToPoints(0.15)
-'        .FooterMargin = Application.InchesToPoints(0.15)
-'        .BottomMargin = Application.InchesToPoints(0.4)
-'
-'        .PrintHeadings = False
-'        .PrintGridlines = False
-'        .PrintComments = xlPrintNoComments
-'        .PrintQuality = 600
-'        .CenterHorizontally = True
-'        .CenterVertically = False
-'        If Orient = "L" Then
-'            .Orientation = xlLandscape
-'        Else
-'            .Orientation = xlPortrait
-'        End If
-'        .Draft = False
-'        .PaperSize = xlPaperLetter
-'        .FirstPageNumber = xlAutomatic
-'        .Order = xlDownThenOver
-'        .BlackAndWhite = False
-'        .Zoom = 100
-'        .FitToPagesWide = 1
-'        .FitToPagesTall = False
-'        .PrintErrors = xlPrintErrorsDisplayed
-'        .OddAndEvenPagesHeaderFooter = False
-'        .DifferentFirstPageHeaderFooter = False
-'        .ScaleWithDocHeaderFooter = True
-'        .AlignMarginsHeaderFooter = True
-'
-'        'Clear EvenPage headers and footers if they exist
-'        On Error Resume Next
-'       .EvenPage.LeftHeader.text = ""
-'        .EvenPage.CenterHeader.text = ""
-'        .EvenPage.RightHeader.text = ""
-'        .EvenPage.LeftFooter.text = ""
-'        .EvenPage.CenterFooter.text = ""
-'        .EvenPage.RightFooter.text = ""
-'
-'        .FirstPage.LeftHeader.text = ""
-'        .FirstPage.CenterHeader.text = ""
-'        .FirstPage.RightHeader.text = ""
-'        .FirstPage.LeftFooter.text = ""
-'        .FirstPage.CenterFooter.text = ""
-'        .FirstPage.RightFooter.text = ""
-'    End With
-'
-'CleanUp:
-'    'Retry loop for setting PrintCommunication to True
-'    retries = 3
-'    Do While retries > 0
-'        On Error Resume Next
-'        Application.PrintCommunication = True
-'        If Err.Number = 0 Then Exit Do
-'        retries = retries - 1
-'        Application.Wait (Now + TimeValue("0:00:01"))
-'        On Error GoTo CleanUp
-'    Loop
-'    If retries = 0 Then
-'        MsgBox "Failed to set PrintCommunication to True after multiple attempts", vbCritical
-'    End If
-'    On Error GoTo 0
-'
-'End Sub
 
 Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
                        header2 As String, Optional Orient As String = "L")
@@ -302,6 +196,8 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:CreateOrReplaceWorksheet()")
+    
     Dim ws As Worksheet
     Dim wsExists As Boolean
     wsExists = False
@@ -370,6 +266,8 @@ End Sub
 
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:Integrity_Verification()")
+    
     Application.ScreenUpdating = False
     
     Call Erase_And_Create_Worksheet("Analyse_Intégrité")
@@ -467,11 +365,11 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Call check_GL_Trans(r, readRows)
     
-    'wshTEC_TDB_Data -------------------------------------------------------- TEC_TDB_Data
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TDB_Data")
+    'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
     r = r + 1
     
-    Call check_TEC_TDB_Data(r, readRows)
+    Call check_TEC_TdB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
@@ -512,10 +410,14 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:Integrity_Verification()", timerStart)
+    
 End Sub
 
 Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Clients()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -601,9 +503,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_Clients()", timerStart)
+
 End Sub
 
 Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Fournisseurs()")
     
     Application.ScreenUpdating = False
 
@@ -687,10 +593,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_Fournisseurs()", timerStart)
+
 End Sub
 
 Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Détails()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -782,10 +692,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_FAC_Détails()", timerStart)
+
 End Sub
 
 Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Entête()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -855,10 +769,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_FAC_Entête()", timerStart)
+
 End Sub
 
 Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Projets_Détails()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -961,10 +879,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_FAC_Projets_Détails()", timerStart)
+
 End Sub
 
 Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Projets_Entête()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1116,10 +1038,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_FAC_Projets_Entête()", timerStart)
+
 End Sub
 
 Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_GL_Trans()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1307,15 +1233,19 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_GL_Trans()", timerStart)
+
 End Sub
 
-Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
+Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_TEC_TdB_Data()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
     
-    'wshTEC_TDB_Data
+    'wshTEC_TdB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
@@ -1335,7 +1265,7 @@ Private Sub check_TEC_TDB_Data(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_TDB_Data'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_TdB_Data'")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
     r = r + 1
     
@@ -1540,10 +1470,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_TEC_TdB_Data()", timerStart)
+
 End Sub
 
 Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Plan_Comptable()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1651,10 +1585,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_Plan_Comptable()", timerStart)
+
 End Sub
 
 Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_TEC()")
+    
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1890,6 +1828,8 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
+    Call Output_Timer_Results("modAppli_Utils:check_TEC()", timerStart)
+
 End Sub
 
 Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
@@ -1905,6 +1845,23 @@ Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
     End With
     
     'Cleaning memory - 2024-07-01 @ 09:34
+    Set SharedFolder = Nothing
+    
+End Sub
+
+Sub ADMIN_Invoices_Excel_Folder_Selection() '2024-08-04 @ 07:30
+
+    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
+    
+    With SharedFolder
+        .Title = "Choisir le répertoire des factures (Format Excel)"
+        .AllowMultiSelect = False
+        If .show = -1 Then
+            wshAdmin.Range("F7").value = .selectedItems(1)
+        End If
+    End With
+    
+    'Cleaning memory - 2024-08-04 @ 07:28
     Set SharedFolder = Nothing
     
 End Sub
