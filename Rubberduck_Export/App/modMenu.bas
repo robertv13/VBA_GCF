@@ -520,40 +520,72 @@ End Sub
 
 Sub menuFacturation_Click()
     
-    Call SlideIn_Facturation
+    If Environ("Username") = "GCFiscalite" Or _
+        Environ("Username") = "Robert M. Vigneault" Then
     
-    wshMenuFAC.Visible = xlSheetVisible
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A1").Select
+        Call SlideIn_Facturation
+        
+        wshMenuFAC.Visible = xlSheetVisible
+        wshMenuFAC.Activate
+        wshMenuFAC.Range("A1").Select
+    Else
+        Application.EnableEvents = False
+        wshMenu.Activate
+        Application.EnableEvents = True
+    End If
 
 End Sub
 
 Sub MenuDEB_Click()
     
-    Call SlideIn_Debours
-    
-    wshMenuDEB.Visible = xlSheetVisible
-    wshMenuDEB.Activate
-    wshMenuDEB.Range("A1").Select
+    If Environ("Username") = "GCFiscalite" Or _
+        Environ("Username") = "Robert M. Vigneault" Then
+        
+        Call SlideIn_Debours
+        
+        wshMenuDEB.Visible = xlSheetVisible
+        wshMenuDEB.Activate
+        wshMenuDEB.Range("A1").Select
+    Else
+        Application.EnableEvents = False
+        wshMenu.Activate
+        Application.EnableEvents = True
+    End If
 
 End Sub
 
 Sub menuComptabilite_Click()
     
-    Call SlideIn_Comptabilite
+    If Environ("Username") = "GCFiscalite" Or _
+        Environ("Username") = "Robert M. Vigneault" Then
     
-    wshMenuGL.Visible = xlSheetVisible
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
+        Call SlideIn_Comptabilite
+        
+        wshMenuGL.Visible = xlSheetVisible
+        wshMenuGL.Activate
+        wshMenuGL.Range("A1").Select
+    Else
+        Application.EnableEvents = False
+        wshMenu.Activate
+        Application.EnableEvents = True
+    End If
 
 End Sub
 
 Sub menuParametres_Click()
     
-    Call SlideIn_Parametres
+    If Environ("Username") = "GCFiscalite" Or _
+        Environ("Username") = "Robert M. Vigneault" Then
     
-    wshAdmin.Visible = xlSheetVisible
-    wshAdmin.Select
+        Call SlideIn_Parametres
+        
+        wshAdmin.Visible = xlSheetVisible
+        wshAdmin.Select
+    Else
+        Application.EnableEvents = False
+        wshMenu.Activate
+        Application.EnableEvents = True
+    End If
     
 End Sub
 
@@ -576,7 +608,7 @@ Sub Exit_Without_Saving() '2024-06-20 @ 13:48
         Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
         
         Dim wb As Workbook: Set wb = ActiveWorkbook
-        ActiveWorkbook.Close saveChanges:=False
+        ActiveWorkbook.Close saveChanges:=True
 
         Application.Application.Quit
     End If

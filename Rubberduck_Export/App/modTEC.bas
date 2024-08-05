@@ -476,8 +476,8 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TEC_ID
-        Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
+        Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(Abs(TECID), lookupRange)
         If rowToBeUpdated = 0 Then

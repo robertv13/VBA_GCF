@@ -4,6 +4,18 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = wshMenu
     
+    With ws.Range("A34")
+        .Font.Size = 9
+        .Font.Color = vbBlack
+        .value = "Version: " & APP_VERSION_NO
+    End With
+    
+    With ws.Range("A35")
+        .Font.Size = 9
+        .Font.Color = vbRed
+        .value = "Utilisateur: " & Environ("Username")
+    End With
+    
     With ws
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells

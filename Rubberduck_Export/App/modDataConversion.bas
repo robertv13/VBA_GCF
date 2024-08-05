@@ -55,13 +55,15 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
 End Sub
 
 'Ajustements à la feuille DB_Clients (*) ---> [*]
-Sub Clients_Process_Rows()
+Sub Clients_Ajuste_Nom()
 
-    Dim i As Long
-    
+    'Declare and open the closed workbook
+    Dim wb As Workbook
+    Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+
     'Define the worksheet you want to work with
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("BD_Clients")
+    Set ws = wb.Worksheets("Clients")
     
     'Find the last used row with data in column A
     Dim lastUsedRow As Long
@@ -69,18 +71,26 @@ Sub Clients_Process_Rows()
     
     'Loop through each row starting from row 2 (headers are 1 row)
     Dim client As String, client_ID As String, contactFacturation As String
-    Dim posOP As Integer, posEP As Integer
+    Dim posOpenParenthesis As Integer, posCloseParenthesis As Integer
+    Dim numberOpenParenthesis As Integer, numberCloseParenthesis As Integer
+    Dim i As Long
     For i = 2 To lastUsedRow
-        'Read data from the current row
+        'Load data into variables
         client = ws.Cells(i, 1).value
         client_ID = ws.Cells(i, 2).value
         contactFacturation = ws.Cells(i, 3).value
         
         'Process the data and make adjustments if necessary
-        posOP = InStr(client, "(")
-        posEP = InStr(client, ")")
-        If posOP <> 0 Or posEP <> 0 Then
-            If posEP > posOP + 5 Then
+        posOpenParenthesis = InStr(client, "(")
+        posCloseParenthesis = InStr(client, ")")
+        numberOpenParenthesis = CountCharOccurrences(client, "(")
+        numberCloseParenthesis = CountCharOccurrences(client, ")")
+        
+        If numberOpenParenthesis = 1 And numberCloseParenthesis = 1 Then
+            If posCloseParenthesis > posOpenParenthesis + 5 Then
+                client = Replace(client, "(", "[")
+                client = Replace(client, ")", "]")
+                ws.Cells(i, 1).value = client
                 Debug.Print i & " - " & client
             End If
         End If
@@ -90,6 +100,28 @@ Sub Clients_Process_Rows()
     MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
+
+Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As String) As Long
+    Dim i As Long
+    Dim count As Long
+    
+    count = 0
+    
+    ' Ensure charToCount is a single character
+    If Len(charToCount) <> 1 Then
+        CountCharOccurrences = -1 ' Return -1 for invalid input
+        Exit Function
+    End If
+    
+    ' Loop through each character in the string
+    For i = 1 To Len(inputString)
+        If Mid(inputString, i, 1) = charToCount Then
+            count = count + 1
+        End If
+    Next i
+    
+    CountCharOccurrences = count
+End Function
 
 Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
 
@@ -403,6 +435,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     'Loop through the recordset and write data to the destination sheet
     Dim client As String
     Dim dateFact As String
+    Dim dateDue As String
     Dim factNo As String
     Dim clientCode As String
     Dim clientCodeFromDB As String
@@ -410,6 +443,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     Dim recu As Double
     Dim dateRecu As String
     Dim solde As Double
+    Dim joursDue As Long
     
     Dim errorMesg As String
     Dim totCAR As Double
@@ -443,22 +477,24 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
         End If
         clientCodeFromDB = myInfo(3)
         
-'        If clientCode <> clientCodeFromDB Then
-'            errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
-'        End If
+        If clientCode <> clientCodeFromDB Then
+            errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
+        End If
         
-'        wsDest.Range("A" & rowNum).value = factNo
-'        wsDest.Range("B" & rowNum).value = dateFact
-'        wsDest.Range("C" & rowNum).value = client
-'        wsDest.Range("D" & rowNum).value = "Unpaid"
-'        wsDest.Range("E" & rowNum).value = "Net 30"
-'        wsDest.Range("F" & rowNum).value = Format$(dateFact + 30, "mm/dd/yyyy")
-'        wsDest.Range("G" & rowNum).value = totalFact
-'        wsDest.Range("H" & rowNum).value = recu
-'        wsDest.Range("I" & rowNum).value = totalFact - recu
-'        wsDest.Range("J" & rowNum).value = Now() - wsDest.Range("F" & rowNum).value
-'
-'        rowNum = rowNum + 1
+        wsDest.Range("A" & rowNum).value = factNo
+        wsDest.Range("B" & rowNum).value = dateFact
+        wsDest.Range("C" & rowNum).value = client
+        wsDest.Range("D" & rowNum).value = clientCode
+        wsDest.Range("E" & rowNum).value = "Unpaid"
+        wsDest.Range("F" & rowNum).value = "Net 30"
+        dateDue = DateAdd("d", 30, CDate(dateFact))
+        wsDest.Range("G" & rowNum).value = Format$(CDate(dateDue), "mm/dd/yyyy")
+        wsDest.Range("H" & rowNum).value = totalFact
+        wsDest.Range("I" & rowNum).value = recu
+        wsDest.Range("J" & rowNum).value = totalFact - recu
+        joursDue = DateDiff("d", dateDue, Date)
+        wsDest.Range("K" & rowNum).value = joursDue
+        rowNum = rowNum + 1
 
         rst.MoveNext
         
@@ -479,3 +515,87 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     
 End Sub
 
+Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
+
+    Application.ScreenUpdating = False
+    
+    'Declare and open the 2 workbooks
+    Dim wb1 As Workbook
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée_Intact.xlsx")
+    Dim wb2 As Workbook
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+
+    'Declare the 2 worksheets
+    Dim ws1 As Worksheet
+    Set ws1 = wb1.Worksheets("Clients")
+    Dim ws2 As Worksheet
+    Set ws2 = wb2.Worksheets("Clients")
+    
+    'Erase and create a new worksheet for differences
+    Dim wsDiff As Worksheet
+    Call CreateOrReplaceWorksheet("Différences")
+    Set wsDiff = ThisWorkbook.Worksheets("Différences")
+    wsDiff.Range("A1").value = "Position"
+    wsDiff.Range("B1").value = "Valeur originale"
+    wsDiff.Range("C1").value = "Valeur corrigée"
+    Call Make_It_As_Header(wsDiff.Range("A1:C1"))
+
+    Dim diffRow As Long
+    diffRow = 2 'Take into consideration the Header
+    Dim diffCol As Long
+    diffCol = 1
+
+    'Loop through each cell and compare
+    Dim cell1 As Range
+    Dim cell2 As Range
+    Dim readCells As Long
+    For Each cell1 In ws1.usedRange
+        Set cell2 = ws2.Cells(cell1.row, cell1.Column)
+        readCells = readCells + 1
+        If cell1.value <> cell2.value Then
+            wsDiff.Cells(diffRow, 1).value = "Ligne " & cell1.row & ", Colonne " & cell1.Column
+            wsDiff.Cells(diffRow, 2).value = cell1.value
+            wsDiff.Cells(diffRow, 3).value = cell2.value
+            diffRow = diffRow + 1
+        End If
+    Next cell1
+
+    wsDiff.columns.AutoFit
+    
+    'Result print setup - 2024-08-05 @ 05:16
+    diffRow = diffRow + 1
+    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readCells, "###,##0") & _
+                                    " cellules analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:C" & diffRow)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:C" & diffRow)
+    Dim header1 As String: header1 = "Vérification des différences"
+    Dim header2 As String: header2 = "Clients"
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    
+    Application.ScreenUpdating = True
+    
+    wsDiff.Activate
+
+    'Close the workbooks without saving
+    wb1.Close False
+    wb2.Close False
+    
+    'Cleanup
+    Set cell1 = Nothing
+    Set cell2 = Nothing
+    Set rngToPrint = Nothing
+    Set wb1 = Nothing
+    Set wb2 = Nothing
+    Set ws1 = Nothing
+    Set ws2 = Nothing
+    Set wsDiff = Nothing
+    
+    MsgBox "Comparison complete. " & vbNewLine & vbNewLine & _
+           "Differences have been recorded in the 'Differences' sheet.", vbInformation
+           
+End Sub

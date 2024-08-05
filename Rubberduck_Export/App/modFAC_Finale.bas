@@ -1068,7 +1068,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
             .BCC = "robertv13@gmail.com"
             .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"
 '            .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
-                vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "Guillaume Charron, CPA, CA, M. Fisc." & _
+                vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "GCFiscalite, CPA, CA, M. Fisc." & _
                 vbNewLine & "Président"
             .Attachments.add source_file
            

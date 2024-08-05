@@ -48,7 +48,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
 
     'Default Professionnal - 2024-03-27 @ 07:00
-    If userName = "Guillaume Charron" Then
+    If userName = "GCFiscalite" Then
         cmbProfessionnel.value = "GC"
     ElseIf userName = "Robert M. Vigneault" Then
         cmbProfessionnel.value = "RMV"
