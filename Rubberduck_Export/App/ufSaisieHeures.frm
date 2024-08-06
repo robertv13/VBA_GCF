@@ -400,7 +400,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
             savedClient = .txtClient.value
             .txtSavedClient.value = .txtClient.value
-            wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(savedClient)
+            wshAdmin.Range("TEC_Client_ID").value = wshTEC_Local.Range("E" & rowTecID).value
     
             .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
             savedActivite = .txtActivite.value

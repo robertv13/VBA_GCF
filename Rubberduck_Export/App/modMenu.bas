@@ -16,8 +16,6 @@ Sub SlideOut_TEC()
 End Sub
 
 Sub SlideIn_TEC()
-        
-    
     
     With wshMenu.Shapes("btnTECMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -47,7 +45,6 @@ End Sub
 
 Sub SlideIn_Facturation()
     
-    
     With wshMenu.Shapes("btnFacturationMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -73,8 +70,6 @@ End Sub
 
 Sub SlideIn_Debours()
     
-    
-    
     With wshMenu.Shapes("btnDeboursMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -87,8 +82,6 @@ Sub SlideIn_Debours()
 End Sub
 
 Sub SlideIn_Comptabilite()
-    
-    
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -127,8 +120,6 @@ End Sub
 
 Sub SlideIn_Parametres()
     
-    
-    
     With wshMenu.Shapes("btnParametresOption")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -153,8 +144,6 @@ Sub SlideOut_Exit()
 End Sub
 
 Sub SlideIn_Exit()
-    
-    
     
     With wshMenu.Shapes("btnEXIT")
         For width = MAXWIDTH To 32 Step -1
@@ -600,14 +589,14 @@ Sub menuParametres_Click()
     
 End Sub
 
-Sub Exit_Without_Saving() '2024-06-20 @ 13:48
+Sub Exit_After_Saving() '2024-08-06 @ 14:51
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
     Dim confirmation As VbMsgBoxResult
-    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & _
-                        "l'application de gestion (sans sauvegarde) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
+    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+                        "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
         Call SlideIn_Exit
@@ -618,8 +607,12 @@ Sub Exit_Without_Saving() '2024-06-20 @ 13:48
         
         Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
         
+        Application.EnableEvents = False
+        
         Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close saveChanges:=True
+        
+        Application.EnableEvents = True
 
         Application.Application.Quit
     End If

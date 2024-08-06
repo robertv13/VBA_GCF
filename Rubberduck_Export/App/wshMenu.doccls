@@ -83,8 +83,6 @@ End Sub
 
 Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    
-    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -123,5 +121,9 @@ Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Intege
 
     Application.EnableEvents = True
     Application.ScreenUpdating = True
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
 
 End Sub
