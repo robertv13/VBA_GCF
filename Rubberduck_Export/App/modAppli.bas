@@ -3,11 +3,16 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v4.B.3.xlsb" '2024-08-04 @ 10:17
+Public Const APP_VERSION_NO As String = "v4.B.4.xlsb" '2024-08-05 @ 23:08
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
 Public Const MAXWIDTH As Long = 192
+
+Public Const DATA_PATH As String = "\DataFiles"
+Public Const FACT_PDF_PATH As String = "\Factures_PDF"
+Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
+Public rootPath As String
 
 Public userName As String
 
@@ -105,12 +110,6 @@ Public Enum TEC_Data_Columns
     ftecNoFacture
     ftecLast = ftecNoFacture
 End Enum
-
-Private Sub auto_open() '2024-03-06 @ 14:36
-
-    userName = Environ("Username") '2024-03-27 @ 06:54
-
-End Sub
 
 Sub BackToMainMenu()
 
@@ -285,8 +284,8 @@ Sub BackupMasterFile()
     
     'Open the master file
     Dim masterWorkbook As Workbook
-    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("FolderSharedData").value _
-                                & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
+    Set masterWorkbook = Workbooks.Open(rootPath & DATA_PATH & Application.PathSeparator & _
+                            "GCF_BD_MASTER.xlsx")
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS
     Dim currentDateAndTime As String
@@ -432,44 +431,13 @@ Sub Hide_Shapes_Based_On_Username()
 
 End Sub
 
-'@EntryPoint
-'Sub Test_Calcul_Taxes()
-'
-'    Dim d As Date
-'    Dim taxCode As String
-'    Dim total As Currency, gst As Currency, pst As Currency
-'    Dim gstCredit As Currency, pstCredit As Currency
-'    Dim netAmount As Currency
-'
-'    d = #7/3/2024#
-'    taxCode = "REP"
-'    total = 0
-'    netAmount = 217.39
-'
-'    Call Calculate_gst_PST_And_Credits(d, taxCode, total, gst, pst, gstCredit, pstCredit, netAmount)
-'
-'    Debug.Print vbNewLine & "Date   : " & d
-'    Debug.Print "TaxCode: " & taxCode
-'    Debug.Print "Gross  : " & Format(total, "#,##0.00")
-'    Debug.Print "Net    : " & Format(netAmount, "#,##0.00") & vbNewLine
-'
-'    Debug.Print "TPS    : " & Format(gst, "#,##0.00")
-'    Debug.Print "TVQ    : " & Format(pst, "#,##0.00")
-'    Debug.Print "TPS_CT : " & Format(gstCredit, "#,##0.00")
-'    Debug.Print "TVQ_CT : " & Format(pstCredit, "#,##0.00")
-'
-'End Sub
+Sub Set_Root_Path()
 
-'Sub TEST_GetOneDrivePath()
-'
-'    On Error GoTo eh
-'    Debug.Print "Original Path is: " & ThisWorkbook.path & "/" & ThisWorkbook.name
-'    Debug.Print "The Path is     : " & GetOneDrivePath(ThisWorkbook.FullName)
-'    Exit Sub
-'eh:
-'    MsgBox Err.Description
-'
-'End Sub
-'
+    If Not Environ("username") = "Robert M. Vigneault" Then
+        rootPath = "P:\Administration\APP\GCF"
+    Else
+        rootPath = "C:\VBA\GC_FISCALITÉ"
+    End If
 
+End Sub
 

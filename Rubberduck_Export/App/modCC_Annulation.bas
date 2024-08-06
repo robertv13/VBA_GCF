@@ -71,7 +71,7 @@ Sub Insert_Big_PDF_Icon(tempSheet As Worksheet)
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = "C:\VBA\GC_FISCALITÉ\Resources\AdobeAcrobatReader.png"
+    iconPath = rootPath & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
     
     Dim pic As Picture
     Dim cell As Range
@@ -103,7 +103,7 @@ Sub CC_Annulation_Display_PDF_Invoice()
     
     'Assuming the invoice number is at 'F5'
     Dim fullPDFFileName As String
-    fullPDFFileName = wshAdmin.Range("FolderPDFInvoice").value & _
+    fullPDFFileName = rootPath & FACT_PDF_PATH & _
         Application.PathSeparator & ws.Cells(5, 6).value & ".pdf"
     
     'Open the invoice using Adobe Acrobat Reader

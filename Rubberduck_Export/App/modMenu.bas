@@ -17,6 +17,8 @@ End Sub
 
 Sub SlideIn_TEC()
         
+    
+    
     With wshMenu.Shapes("btnTECMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -45,6 +47,7 @@ End Sub
 
 Sub SlideIn_Facturation()
     
+    
     With wshMenu.Shapes("btnFacturationMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -70,6 +73,8 @@ End Sub
 
 Sub SlideIn_Debours()
     
+    
+    
     With wshMenu.Shapes("btnDeboursMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -82,6 +87,8 @@ Sub SlideIn_Debours()
 End Sub
 
 Sub SlideIn_Comptabilite()
+    
+    
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -120,6 +127,8 @@ End Sub
 
 Sub SlideIn_Parametres()
     
+    
+    
     With wshMenu.Shapes("btnParametresOption")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
@@ -144,6 +153,8 @@ Sub SlideOut_Exit()
 End Sub
 
 Sub SlideIn_Exit()
+    
+    
     
     With wshMenu.Shapes("btnEXIT")
         For width = MAXWIDTH To 32 Step -1

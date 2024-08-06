@@ -493,7 +493,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Lon
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails"
     
@@ -632,7 +632,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête"
     

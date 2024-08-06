@@ -13,7 +13,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     
     'Define workbook path
     Dim sourcePath As String
-    sourcePath = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourcePath = rootPath & DATA_PATH & Application.PathSeparator & _
                 "GCF_BD_MASTER.xlsx" '2024-07-29 @ 18:17
 
     'Ouvrir le workbook

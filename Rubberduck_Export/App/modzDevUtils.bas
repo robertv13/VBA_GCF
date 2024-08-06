@@ -280,7 +280,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    wbPath = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     
     'Open the workbook in read-only mode
@@ -763,25 +763,25 @@ Sub List_All_Shapes_Properties()
     
     Dim r As Long
     r = 2
-    ws.Range("D" & r).value = "Type"
-    ws.Range("E" & r).value = "Shape Name"
-    ws.Range("F" & r).value = "ZOrder"
-    ws.Range("G" & r).value = "Top"
-    ws.Range("H" & r).value = "Left"
-    ws.Range("I" & r).value = "Width"
-    ws.Range("J" & r).value = "Height"
+    ws.Range("G" & r).value = "Type"
+    ws.Range("H" & r).value = "Shape Name"
+    ws.Range("I" & r).value = "ZOrder"
+    ws.Range("J" & r).value = "Top"
+    ws.Range("K" & r).value = "Left"
+    ws.Range("L" & r).value = "Width"
+    ws.Range("M" & r).value = "Height"
     
     'Loop through all shapes on the worksheet
     Dim shp As Shape
     r = 3
     For Each shp In ws.Shapes
-        ws.Range("D" & r).value = shp.Type
-        ws.Range("E" & r).value = shp.name
-        ws.Range("F" & r).value = shp.ZOrderPosition
-        ws.Range("G" & r).value = shp.Top
-        ws.Range("H" & r).value = shp.Left
-        ws.Range("I" & r).value = shp.width
-        ws.Range("J" & r).value = shp.Height
+        ws.Range("G" & r).value = shp.Type
+        ws.Range("H" & r).value = shp.name
+        ws.Range("I" & r).value = shp.ZOrderPosition
+        ws.Range("J" & r).value = shp.Top
+        ws.Range("K" & r).value = shp.Left
+        ws.Range("L" & r).value = shp.width
+        ws.Range("M" & r).value = shp.Height
         r = r + 1
     Next shp
     
@@ -789,6 +789,31 @@ Sub List_All_Shapes_Properties()
     Set shp = Nothing
     Set ws = Nothing
     
+End Sub
+
+Sub Menu_Adjust_Shape_Properties()
+
+    Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
+    
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        If InStr(shp.name, "Groupe") Then Debug.Print shp.name & " - " & shp.Top
+        If shp.name = "Groupe 01 - TEC" Then shp.Top = 60
+        If shp.name = "Groupe 02 - FACTURATION" Then shp.Top = 120
+        If shp.name = "Groupe 03 - DÉBOURSÉ" Then shp.Top = 180
+        If shp.name = "Groupe 04 - COMPTABILITÉ" Then shp.Top = 240
+        If shp.name = "Groupe 05 - PARAMÈTRES" Then shp.Top = 300
+        If shp.name = "Groupe 06 - SORTIE" Then shp.Top = 360
+        
+        If shp.name = "TECHover" Then shp.Top = 60: shp.Height = 40
+        If shp.name = "FACHover" Then shp.Top = 120: shp.Height = 40
+        If shp.name = "DEBHover" Then shp.Top = 180: shp.Height = 40
+        If shp.name = "GLHover" Then shp.Top = 240: shp.Height = 40
+        If shp.name = "PARAMHover" Then shp.Top = 300: shp.Height = 40
+        If shp.name = "EXITHover" Then shp.Top = 360: shp.Height = 40
+       
+    Next shp
+
 End Sub
 
 Sub List_All_Tables()
@@ -1006,7 +1031,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(x, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
                 arrResult(xr, 7) = TimeStamp
                 arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If

@@ -59,7 +59,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans"
     
@@ -332,7 +332,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Recurrent"
     

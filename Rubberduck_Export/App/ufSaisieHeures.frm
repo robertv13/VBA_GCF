@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   8160
+   ClientHeight    =   9150.001
    ClientLeft      =   135
    ClientTop       =   570
    ClientWidth     =   14025
@@ -30,6 +30,10 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     'Special timer for log purpose
     Dim timer3Start As Double: timer3Start = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Activate()")
     
+    If rootPath = "" Then
+        MsgBox "La variable de configuration 'rootPath' est vide", vbExclamation
+    End If
+    
     Call Client_List_Import_All
     Call TEC_Import_All
     
@@ -50,8 +54,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     'Default Professionnal - 2024-03-27 @ 07:00
     If userName = "GCFiscalite" Then
         cmbProfessionnel.value = "GC"
-    ElseIf userName = "Robert M. Vigneault" Then
-        cmbProfessionnel.value = "RMV"
     Else
         cmbProfessionnel.value = ""
     End If
@@ -392,7 +394,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy")
+            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "mm/dd/yyyy")
             .txtDate.Enabled = False
     
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)

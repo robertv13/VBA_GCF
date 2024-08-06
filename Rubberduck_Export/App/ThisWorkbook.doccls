@@ -1,7 +1,6 @@
 ﻿Option Explicit
 
 Public startTime As Double
-
 Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
@@ -10,10 +9,11 @@ Private Sub Workbook_Open()
     
     Application.ScreenUpdating = False
     
-'    Call DisableCloseButton
-'    Call AddCustomMenu
+    Call Set_Root_Path
     
-    'Call the BackupMasterFile (GCF_BD_Sortie.xlss) macro
+    Debug.Assert rootPath <> ""
+    
+    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
     Call BackupMasterFile
     
     Call Hide_Shapes_Based_On_Username
@@ -45,4 +45,3 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
     ufExitDisable.show
 
 End Sub
-

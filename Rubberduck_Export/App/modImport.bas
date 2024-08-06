@@ -7,7 +7,7 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     
     'Save the shared data folder name
     Dim saveDataPath As String
-    saveDataPath = ThisWorkbook.Worksheets("Admin").Range("FolderSharedData").value
+    saveDataPath = rootPath & DATA_PATH
     
     'Define the target workbook and sheet names
     Dim targetWorkbook As Workbook: Set targetWorkbook = ThisWorkbook
@@ -67,7 +67,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     sourceWorksheet = "PlanComptable"
     
@@ -119,7 +119,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
 
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients"
     
@@ -182,7 +182,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx', in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Recurrent"
                      
@@ -234,7 +234,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Trans"
                      
@@ -286,7 +286,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Détails"
                      
@@ -338,7 +338,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Entête"
                      
@@ -390,7 +390,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
 
     'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Comptes_Clients"
                      
@@ -441,7 +441,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Détails"
                      
@@ -493,7 +493,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Entête"
                      
@@ -545,7 +545,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Détails"
                      
@@ -611,7 +611,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Entête"
                      
@@ -679,7 +679,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs"
     
@@ -748,7 +748,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
     'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_EJ_Auto"
                      
@@ -808,7 +808,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_Trans"
                      
@@ -860,7 +860,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("FolderSharedData").value & Application.PathSeparator & _
+    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "TEC_Local"
     

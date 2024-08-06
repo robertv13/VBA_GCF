@@ -83,6 +83,8 @@ End Sub
 
 Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
+    
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     

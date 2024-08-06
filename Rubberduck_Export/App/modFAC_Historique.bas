@@ -166,7 +166,7 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = "C:\VBA\GC_FISCALITÉ\Resources\AdobeAcrobatReader.png"
+    iconPath = rootPath & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
     
     Dim pic As Picture
     Dim cell As Range
@@ -209,7 +209,7 @@ Sub Display_PDF_Invoice()
     rowNumber = targetCell.row
     
     'Assuming the invoice number is in column E (5th column)
-    fullPDFFileName = wshAdmin.Range("FolderPDFInvoice").value & _
+    fullPDFFileName = rootPath & FACT_PDF_PATH & _
         Application.PathSeparator & ws.Cells(rowNumber, 5).value & ".pdf"
     
     'Open the invoice using Adobe Acrobat Reader
