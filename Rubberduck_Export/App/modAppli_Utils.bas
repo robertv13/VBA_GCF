@@ -224,6 +224,8 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
+    Call Output_Timer_Results("modAppli_Utils:CreateOrReplaceWorksheet()", timerStart)
+
 End Sub
 
 Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
@@ -294,7 +296,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Client_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_Clients(r, readRows)
@@ -305,7 +307,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Fournisseur_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_Fournisseurs(r, readRows)
@@ -316,7 +318,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Détails(r, readRows)
@@ -327,7 +329,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Entête(r, readRows)
@@ -338,7 +340,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Projets_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Détails(r, readRows)
@@ -349,7 +351,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Entête(r, readRows)
@@ -360,7 +362,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call GL_Trans_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
 
     Call check_GL_Trans(r, readRows)
@@ -377,7 +379,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call TEC_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_TEC(r, readRows)
@@ -426,11 +428,11 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshBD_Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(ws.usedRange.rows.count - 1, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Clients'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -454,7 +456,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
             dict_nom_client.add nom, code
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
         End If
@@ -463,14 +465,14 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
             dict_code_client.add code, nom
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
         End If
         
     Next i
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -478,20 +480,20 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_nom = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_doublon_code = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     r = r + 1
@@ -519,11 +521,11 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(ws.usedRange.rows.count - 1, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Fournisseurs'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -546,7 +548,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
             dict_nom_fournisseur.add nom, code
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le nom '" & nom & "' est un doublon pour le code '" & code & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
         End If
@@ -554,13 +556,13 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
             dict_code_fournisseur.add code, nom
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code '" & code & "' est un doublon pour le nom '" & nom & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
         End If
     Next i
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -568,20 +570,20 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_nom = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de nom")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     If cas_doublon_code = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     r = r + 1
@@ -612,14 +614,14 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
@@ -627,7 +629,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Transfer data from Worksheet into an Array (arr)
@@ -656,28 +658,28 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
         End If
         If result = "Not Found" Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 3)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 2, "##,##0") & " lignes de transactions ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -711,7 +713,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A9999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -725,11 +727,11 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Entête'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     If lastUsedRow = headerRow Then
@@ -750,13 +752,13 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         Inv_No = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -788,14 +790,14 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
 
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
@@ -803,7 +805,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Transfer data from Worksheet into an Array (arr)
@@ -838,33 +840,33 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         End If
         If result = "Not Found" Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 3)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -898,18 +900,18 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Entête'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Establish the number of rows before transferring it to an Array
@@ -917,7 +919,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     numRows = ws.Range("A1").CurrentRegion.rows.count
     If numRows <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -934,98 +936,98 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         projetID = arr(i, 1)
         If IsNumeric(arr(i, 3)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsDate(arr(i, 4)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 7)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If IsNumeric(arr(i, 9)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1057,7 +1059,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1072,11 +1074,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshGL_Trans'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     On Error Resume Next
@@ -1086,7 +1088,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
         Exit Sub
     End If
@@ -1129,31 +1131,31 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         End If
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         glCode = arr(i, 5)
         If InStr(1, strCodeGL, glCode + "|:|") = 0 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         glDescr = arr(i, 6)
         If InStr(1, strDescGL, glDescr + "|:|") = 0 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La description du compte '" & glDescr & "' à la ligne " & i & " est INVALIDE")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         dt = arr(i, 7)
         If IsNumeric(dt) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant du débit '" & dt & "' à la ligne " & i & " n'est pas une valeur numérique")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         ct = arr(i, 8)
         If IsNumeric(ct) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant du débit '" & ct & "' à la ligne " & i & " n'est pas une valeur numérique")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
         End If
         currentRow = dict_GL_Entry(GL_Entry_No)
@@ -1162,7 +1164,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         If arr(i, 10) <> "" Then
             If IsDate(arr(i, 10)) = False Then
                 Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
-                Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
                 r = r + 1
             End If
         End If
@@ -1177,7 +1179,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         ct = Round(sum_arr(v, 3), 2)
         If dt <> ct Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Écriture # " & v & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_hors_balance = cas_hors_balance + 1
         End If
@@ -1186,40 +1188,40 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     Next v
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " lignes de transactions ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - headerRow
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     If cas_hors_balance = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Chacune des écritures balancent au niveau de l'écriture")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Les totaux des transactions sont:")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Dt = " & Format$(sum_dt, "###,###,##0.00 $"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Ct = " & Format$(sum_ct, "###,###,##0.00 $"))
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     If sum_dt - sum_ct <> 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Hors-Balance de " & Format$(sum_dt - sum_ct, "###,###,##0.00$"))
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     r = r + 1
@@ -1252,7 +1254,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1262,11 +1264,11 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_TdB_Data'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -1291,7 +1293,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         dateTEC = arr(i, 3)
         If IsDate(dateTEC) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
         Else
@@ -1301,28 +1303,28 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         hres = arr(i, 5)
         If IsNumeric(hres) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 6)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 7)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 8)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
@@ -1339,7 +1341,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             dict_TEC_ID.add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
@@ -1349,7 +1351,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -1357,21 +1359,21 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -1381,45 +1383,45 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim formattedHours As String
@@ -1428,7 +1430,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -1436,7 +1438,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures détruites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -1444,7 +1446,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -1452,7 +1454,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -1460,7 +1462,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 2
 
 Clean_Exit:
@@ -1490,11 +1492,11 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(UBound(arr, 1), "###,##0") & _
         " comptes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de 'dnr_PlanComptable_All'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     If UBound(arr, 1) < 2 Then
@@ -1516,7 +1518,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
             dict_descr_GL.add descrGL, codeGL
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_descr = cas_doublon_descr + 1
         End If
@@ -1525,7 +1527,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
             dict_code_GL.add codeGL, descrGL
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
         End If
@@ -1534,7 +1536,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
         typeGL = arr(i, 4)
         If InStr("Actifs^Passifs^Équité^Revenus^Dépenses^", typeGL) = 0 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_type = cas_type + 1
         End If
@@ -1542,7 +1544,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " comptes ont été analysés!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -1550,31 +1552,31 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_descr = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de description")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_doublon_code = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de code de G/L")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_type = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun type de G/L invalide")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_type & " cas de types de G/L invalides")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     r = r + 1
@@ -1604,7 +1606,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1614,11 +1616,11 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -1645,7 +1647,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         testDate = IsDate(dateTEC)
         If testDate = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
         Else
@@ -1658,28 +1660,28 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         testHres = IsNumeric(hres)
         If testHres = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 12)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
@@ -1696,7 +1698,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             dict_TEC_ID.add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
@@ -1706,7 +1708,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -1714,21 +1716,21 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -1738,46 +1740,46 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim formattedHours As String
@@ -1786,7 +1788,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -1794,7 +1796,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures détruites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -1802,7 +1804,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -1810,7 +1812,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -1818,7 +1820,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
 
 Clean_Exit:

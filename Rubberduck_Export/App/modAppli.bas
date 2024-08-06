@@ -3,7 +3,7 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v4.B.2.xlsb" '2024-08-04 @ 10:17
+Public Const APP_VERSION_NO As String = "v4.B.3.xlsb" '2024-08-04 @ 10:17
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
@@ -182,10 +182,10 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next ws
     
-    Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
-    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
+    
+    Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
     
 End Sub
 
@@ -381,6 +381,55 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
         
     End If
     
+End Sub
+
+Sub Hide_Shapes_Based_On_Username()
+    
+    'Get the current username
+    Dim userName As String
+    userName = Environ("Username")
+    
+    'Set the worksheet where the shapes are located
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Menu")
+    
+    'Loop through each shape in the worksheet
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        'Check the username and hide shapes accordingly
+        Select Case shp.name
+            Case "ChangeReferenceSystem"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "VérificationIntégritée"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "RechercheCode"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "RéférencesCirculaires"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case Else
+        End Select
+    Next shp
+
 End Sub
 
 '@EntryPoint

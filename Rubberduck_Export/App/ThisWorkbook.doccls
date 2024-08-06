@@ -16,7 +16,7 @@ Private Sub Workbook_Open()
     'Call the BackupMasterFile (GCF_BD_Sortie.xlss) macro
     Call BackupMasterFile
     
-'    Call Admin_Import_Worksheet
+    Call Hide_Shapes_Based_On_Username
     
     Call Hide_All_Worksheets_Except_Menu
     

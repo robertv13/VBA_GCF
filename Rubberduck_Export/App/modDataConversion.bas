@@ -97,6 +97,54 @@ Sub Clients_Ajuste_Nom()
         
     Next i
     
+    wb.Save
+    
+    MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
+    
+End Sub
+
+'Ajustements à la feuille DB_Clients (Ajout du contactdans le nom du client)
+Sub Clients_Ajout_Contact_Dans_Nom()
+
+    'Declare and open the closed workbook
+    Dim wb As Workbook
+    Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+
+    'Define the worksheet you want to work with
+    Dim ws As Worksheet
+    Set ws = wb.Worksheets("Clients")
+    
+    'Find the last used row with data in column A
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    
+    'Loop through each row starting from row 2 (headers are 1 row)
+    Dim client As String, client_ID As String, contactFacturation As String
+    Dim posOpenSquareBracket As Integer, posCloseSquareBracket As Integer
+    Dim numberOpenSquareBracket As Integer, numberCloseSquareBracket As Integer
+    Dim i As Long
+    For i = 2 To lastUsedRow
+        'Load data into variables
+        client = ws.Cells(i, 1).value
+        client_ID = ws.Cells(i, 2).value
+        contactFacturation = Trim(ws.Cells(i, 3).value)
+        
+        'Process the data and make adjustments if necessary
+        posOpenSquareBracket = InStr(client, "[")
+        posCloseSquareBracket = InStr(client, "]")
+        
+        If numberOpenSquareBracket = 0 And numberCloseSquareBracket = 0 Then
+            If contactFacturation <> "" And InStr(client, contactFacturation) = 0 Then
+                client = Trim(client) & " [" & contactFacturation & "]"
+                ws.Cells(i, 1).value = client
+                Debug.Print i & " - " & client
+            End If
+        End If
+        
+    Next i
+    
+    wb.Save
+    
     MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
@@ -515,13 +563,13 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
+Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
 
     Application.ScreenUpdating = False
     
     'Declare and open the 2 workbooks
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée_Intact.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée_Intact_2.xlsx")
     Dim wb2 As Workbook
     Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
 
@@ -536,12 +584,13 @@ Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
     Call CreateOrReplaceWorksheet("Différences")
     Set wsDiff = ThisWorkbook.Worksheets("Différences")
     wsDiff.Range("A1").value = "Position"
-    wsDiff.Range("B1").value = "Valeur originale"
-    wsDiff.Range("C1").value = "Valeur corrigée"
-    Call Make_It_As_Header(wsDiff.Range("A1:C1"))
+    wsDiff.Range("B1").value = "CodeClient"
+    wsDiff.Range("C1").value = "Valeur originale"
+    wsDiff.Range("D1").value = "Valeur corrigée"
+    Call Make_It_As_Header(wsDiff.Range("A1:D1"))
 
     Dim diffRow As Long
-    diffRow = 2 'Take into consideration the Header
+    diffRow = 2                                  'Take into consideration the Header
     Dim diffCol As Long
     diffCol = 1
 
@@ -554,8 +603,9 @@ Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
         readCells = readCells + 1
         If cell1.value <> cell2.value Then
             wsDiff.Cells(diffRow, 1).value = "Ligne " & cell1.row & ", Colonne " & cell1.Column
-            wsDiff.Cells(diffRow, 2).value = cell1.value
-            wsDiff.Cells(diffRow, 3).value = cell2.value
+            wsDiff.Cells(diffRow, 2).value = ws1.Cells(cell1.row, 2).value
+            wsDiff.Cells(diffRow, 3).value = cell1.value
+            wsDiff.Cells(diffRow, 4).value = cell2.value
             diffRow = diffRow + 1
         End If
     Next cell1
@@ -565,14 +615,14 @@ Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
     'Result print setup - 2024-08-05 @ 05:16
     diffRow = diffRow + 1
     wsDiff.Range("A" & diffRow).value = "**** " & Format$(readCells, "###,##0") & _
-                                    " cellules analysées dans l'ensemble du fichier ***"
+                                        " cellules analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:C" & diffRow)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:D" & diffRow)
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
 
     'Setup print parameters
-    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:C" & diffRow)
+    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
     Dim header1 As String: header1 = "Vérification des différences"
     Dim header2 As String: header2 = "Clients"
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
@@ -599,3 +649,5 @@ Sub Compare_2_Excel_Files() '2024-08-05 @ 05:32
            "Differences have been recorded in the 'Differences' sheet.", vbInformation
            
 End Sub
+
+
