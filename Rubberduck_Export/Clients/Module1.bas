@@ -7,6 +7,12 @@ Public iLeft As Integer
 Public iTop As Integer
 Public bState As Boolean
 
+Sub Show_Form()
+    
+    frmForm.Show
+
+End Sub
+
 Sub Reset()
 
     Dim iRow As Long
@@ -26,7 +32,7 @@ Sub Reset()
         .cmbDepartment.BackColor = vbWhite
         '--------------------------------
         
-        .cmbDepartment.Clear
+'        .cmbDepartment.Clear
         
         'Creating a dynamic name for department
         
@@ -41,8 +47,8 @@ Sub Reset()
         'Below code are associated with Search Feature - Part 3
         Call Add_SearchColumn
         ThisWorkbook.Sheets("Database").AutoFilterMode = False
-        ThisWorkbook.Sheets("SearchData").AutoFilterMode = False
-        ThisWorkbook.Sheets("SearchData").Cells.Clear
+        ThisWorkbook.Sheets("DonnéesRecherche").AutoFilterMode = False
+        ThisWorkbook.Sheets("DonnéesRecherche").Cells.Clear
         '-----------------------------------------------
         
         .lstDatabase.ColumnCount = 9
@@ -85,12 +91,6 @@ Sub Submit()
 
 End Sub
 
-Sub Show_Form()
-    
-    frmForm.Show
-
-End Sub
-
 Function Selected_List() As Long
 
     Selected_List = 0
@@ -111,7 +111,7 @@ Sub Add_SearchColumn()
 
     With frmForm.cmbSearchColumn
         .Clear
-        .AddItem "All"
+        .AddItem "Tous"
         
         .AddItem "Employee Id"
         .AddItem "Employee Name"
@@ -122,7 +122,7 @@ Sub Add_SearchColumn()
         .AddItem "Submitted By"
         .AddItem "Submitted On"
         
-        .Value = "All"
+        .Value = "Tous"
     End With
     
     frmForm.EnableEvents = True
@@ -133,7 +133,7 @@ Sub Add_SearchColumn()
 
 End Sub
 
-Sub SearchData()
+Sub DonnéesRecherche()
 
     Application.ScreenUpdating = False
     
@@ -146,8 +146,8 @@ Sub SearchData()
     
     Dim shDatabase As Worksheet ' Database sheet
     Set shDatabase = ThisWorkbook.Sheets("Database")
-    Dim shSearchData As Worksheet 'SearchData sheet
-    Set shSearchData = ThisWorkbook.Sheets("SearchData")
+    Dim shDonnéesRecherche As Worksheet 'DonnéesRecherche sheet
+    Set shDonnéesRecherche = ThisWorkbook.Sheets("DonnéesRecherche")
     
     iDatabaseRow = ThisWorkbook.Sheets("Database").Range("A" & Application.Rows.Count).End(xlUp).Row
     sColumn = frmForm.cmbSearchColumn.Value
@@ -167,15 +167,15 @@ Sub SearchData()
     End If
     
     If Application.WorksheetFunction.Subtotal(3, shDatabase.Range("C:C")) >= 2 Then
-        'Code to remove the previous data from SearchData worksheet
-        shSearchData.Cells.Clear
-        shDatabase.AutoFilter.Range.Copy shSearchData.Range("A1")
+        'Code to remove the previous data from DonnéesRecherche worksheet
+        shDonnéesRecherche.Cells.Clear
+        shDatabase.AutoFilter.Range.Copy shDonnéesRecherche.Range("A1")
         Application.CutCopyMode = False
-        iSearchRow = shSearchData.Range("A" & Application.Rows.Count).End(xlUp).Row
+        iSearchRow = shDonnéesRecherche.Range("A" & Application.Rows.Count).End(xlUp).Row
         frmForm.lstDatabase.ColumnCount = 9
-        frmForm.lstDatabase.ColumnWidths = "30, 60, 75, 40, 60, 45, 55, 70, 70"
+        frmForm.lstDatabase.ColumnWidths = "30; 60; 75; 40; 60; 45; 55; 70; 70"
         If iSearchRow > 1 Then
-            frmForm.lstDatabase.RowSource = "SearchData!A2:I" & iSearchRow
+            frmForm.lstDatabase.RowSource = "DonnéesRecherche!A2:I" & iSearchRow
             MsgBox "Records found."
         End If
     Else
@@ -192,7 +192,7 @@ Function ValidateEntries() As Boolean
     ValidateEntries = True
     
     Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("Print")
+    Set sh = ThisWorkbook.Sheets("z_Print")
     
     Dim iEmployeeID As Variant
     iEmployeeID = frmForm.txtID.Value
@@ -207,7 +207,7 @@ Function ValidateEntries() As Boolean
         '--------------------------------
         
         If Trim(.txtID.Value) = "" Then
-            MsgBox "Please enter Employee ID.", vbOKOnly + vbInformation, "Emp ID"
+            MsgBox "SVP, saisir un code de client.", vbOKOnly + vbInformation, "Code de client"
             ValidateEntries = False
             .txtID.BackColor = vbRed
             .txtID.SetFocus
@@ -217,7 +217,7 @@ Function ValidateEntries() As Boolean
         'Validating Duplicate Entries
         
         If Not sh.Range("B:B").Find(what:=iEmployeeID, lookat:=xlWhole) Is Nothing Then
-            MsgBox "Duplicate Employee ID found.", vbOKOnly + vbInformation, "Emp ID"
+            MsgBox "Doublon de code de client.", vbOKOnly + vbInformation, "Code de client"
             ValidateEntries = False
             .txtID.BackColor = vbRed
             .txtID.SetFocus
@@ -225,7 +225,7 @@ Function ValidateEntries() As Boolean
         End If
         
         If Trim(.txtName.Value) = "" Then
-            MsgBox "Please enter Employee Name.", vbOKOnly + vbInformation, "Emp Name"
+            MsgBox "SVP, saisir le nom du client.", vbOKOnly + vbInformation, "Nom de client"
             ValidateEntries = False
             .txtName.BackColor = vbRed
             .txtName.SetFocus
@@ -266,101 +266,101 @@ Function ValidateEntries() As Boolean
 
 End Function
 
-Function ValidatePrintDetails() As Boolean
+'Function ValidatePrintDetails() As Boolean
+'
+'    ValidatePrintDetails = True
+'
+'    Dim sh As Worksheet
+'    Set sh = ThisWorkbook.Sheets("Print")
+'
+'    Dim iEmployeeID As Variant
+'    iEmployeeID = frmForm.txtID.Value
+'
+'    With frmForm
+'        'Default Color
+'        .txtID.BackColor = vbWhite
+'        .txtName.BackColor = vbWhite
+'        .txtCity.BackColor = vbWhite
+'        .txtCountry.BackColor = vbWhite
+'        .cmbDepartment.BackColor = vbWhite
+'        '--------------------------------
+'
+'        If Trim(.txtID.Value) = "" Then
+'            MsgBox "Please enter Employee ID.", vbOKOnly + vbInformation, "Emp ID"
+'            ValidatePrintDetails = False
+'            .txtID.BackColor = vbRed
+'            .txtID.SetFocus
+'            Exit Function
+'        End If
+'
+'        If Trim(.txtName.Value) = "" Then
+'            MsgBox "Please enter Employee Name.", vbOKOnly + vbInformation, "Emp Name"
+'            ValidatePrintDetails = False
+'            .txtName.BackColor = vbRed
+'            .txtName.SetFocus
+'            Exit Function
+'        End If
+'
+'        'Validating Gender
+'        If .optFemale.Value = False And .optMale.Value = False Then
+'            MsgBox "Please select gender.", vbOKOnly + vbInformation, "Gender"
+'            ValidatePrintDetails = False
+'            Exit Function
+'        End If
+'
+'        If Trim(.cmbDepartment.Value) = "" Then
+'            MsgBox "Please select department name from drop-down.", vbOKOnly + vbInformation, "Dpartment"
+'            ValidatePrintDetails = False
+'            .cmbDepartment.BackColor = vbRed
+'            .cmbDepartment.SetFocus
+'            Exit Function
+'        End If
+'
+'        If Trim(.txtCity.Value) = "" Then
+'            MsgBox "Please enter City Name.", vbOKOnly + vbInformation, "City Name"
+'            ValidatePrintDetails = False
+'            .txtCity.BackColor = vbRed
+'            .txtCity.SetFocus
+'            Exit Function
+'        End If
+'
+'        If Trim(.txtCountry.Value) = "" Then
+'            MsgBox "Please enter Country Name.", vbOKOnly + vbInformation, "Country Name"
+'            ValidatePrintDetails = False
+'            .txtCountry.BackColor = vbRed
+'            .txtCountry.SetFocus
+'            Exit Function
+'        End If
+'    End With
+'
+'End Function
 
-    ValidatePrintDetails = True
-    
-    Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("Print")
-    
-    Dim iEmployeeID As Variant
-    iEmployeeID = frmForm.txtID.Value
-    
-    With frmForm
-        'Default Color
-        .txtID.BackColor = vbWhite
-        .txtName.BackColor = vbWhite
-        .txtCity.BackColor = vbWhite
-        .txtCountry.BackColor = vbWhite
-        .cmbDepartment.BackColor = vbWhite
-        '--------------------------------
-        
-        If Trim(.txtID.Value) = "" Then
-            MsgBox "Please enter Employee ID.", vbOKOnly + vbInformation, "Emp ID"
-            ValidatePrintDetails = False
-            .txtID.BackColor = vbRed
-            .txtID.SetFocus
-            Exit Function
-        End If
-        
-        If Trim(.txtName.Value) = "" Then
-            MsgBox "Please enter Employee Name.", vbOKOnly + vbInformation, "Emp Name"
-            ValidatePrintDetails = False
-            .txtName.BackColor = vbRed
-            .txtName.SetFocus
-            Exit Function
-        End If
-        
-        'Validating Gender
-        If .optFemale.Value = False And .optMale.Value = False Then
-            MsgBox "Please select gender.", vbOKOnly + vbInformation, "Gender"
-            ValidatePrintDetails = False
-            Exit Function
-        End If
-        
-        If Trim(.cmbDepartment.Value) = "" Then
-            MsgBox "Please select department name from drop-down.", vbOKOnly + vbInformation, "Dpartment"
-            ValidatePrintDetails = False
-            .cmbDepartment.BackColor = vbRed
-            .cmbDepartment.SetFocus
-            Exit Function
-        End If
-        
-        If Trim(.txtCity.Value) = "" Then
-            MsgBox "Please enter City Name.", vbOKOnly + vbInformation, "City Name"
-            ValidatePrintDetails = False
-            .txtCity.BackColor = vbRed
-            .txtCity.SetFocus
-            Exit Function
-        End If
-        
-        If Trim(.txtCountry.Value) = "" Then
-            MsgBox "Please enter Country Name.", vbOKOnly + vbInformation, "Country Name"
-            ValidatePrintDetails = False
-            .txtCountry.BackColor = vbRed
-            .txtCountry.SetFocus
-            Exit Function
-        End If
-    End With
-
-End Function
-
-Sub Print_Form()
-
-    Application.ScreenUpdating = False
-    Application.DisplayAlerts = False
-    
-    Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("Print")
-    
-    With frmForm
-        sh.Range("E5").Value = .txtID.Value
-        sh.Range("E7").Value = .txtName.Value
-        sh.Range("E9").Value = IIf(.optFemale.Value = True, "Female", "Male")
-        sh.Range("E11").Value = .cmbDepartment.Value
-        sh.Range("E13").Value = .txtCity.Value
-        sh.Range("E15").Value = .txtCountry.Value
-    End With
-    
-    'Code to Print the form or Export to PDF
-    sh.PageSetup.PrintArea = "$B$2:$I$17"
-    'sh.PrintOut copies:=1, IgnorePrintAreas:=False
-    sh.ExportAsFixedFormat xlTypePDF, ThisWorkbook.Path & Application.PathSeparator & frmForm.txtName.Value & ".pdf"
-    
-    MsgBox "Employee details have been printed.", vbOKOnly + vbInformation, "Print"
-   
-    Application.ScreenUpdating = True
-    Application.DisplayAlerts = True
-    
-End Sub
+'Sub Print_Form()
+'
+'    Application.ScreenUpdating = False
+'    Application.DisplayAlerts = False
+'
+'    Dim sh As Worksheet
+'    Set sh = ThisWorkbook.Sheets("Print")
+'
+'    With frmForm
+'        sh.Range("E5").Value = .txtID.Value
+'        sh.Range("E7").Value = .txtName.Value
+'        sh.Range("E9").Value = IIf(.optFemale.Value = True, "Female", "Male")
+'        sh.Range("E11").Value = .cmbDepartment.Value
+'        sh.Range("E13").Value = .txtCity.Value
+'        sh.Range("E15").Value = .txtCountry.Value
+'    End With
+'
+'    'Code to Print the form or Export to PDF
+'    sh.PageSetup.PrintArea = "$B$2:$I$17"
+'    'sh.PrintOut copies:=1, IgnorePrintAreas:=False
+'    sh.ExportAsFixedFormat xlTypePDF, ThisWorkbook.Path & Application.PathSeparator & frmForm.txtName.Value & ".pdf"
+'
+'    MsgBox "Employee details have been printed.", vbOKOnly + vbInformation, "Print"
+'
+'    Application.ScreenUpdating = True
+'    Application.DisplayAlerts = True
+'
+'End Sub
 

@@ -21,7 +21,7 @@ Private Sub cmbSearchColumn_Change()
 
     If Me.EnableEvents = False Then Exit Sub
     
-    If Me.cmbSearchColumn.Value = "All" Then
+    If Me.cmbSearchColumn.Value = "Tous" Then
         Call Reset
     Else
         Me.txtSearch.Value = ""
@@ -34,12 +34,12 @@ End Sub
 Private Sub cmdDelete_Click()
     
     If Selected_List = 0 Then
-        MsgBox "No row is selected.", vbOKOnly + vbInformation, "Delete"
+        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Destruction"
         Exit Sub
     End If
     
     Dim i As VbMsgBoxResult
-    i = MsgBox("Do you want to delete the selected record?", vbYesNo + vbQuestion, "Confirmation")
+    i = MsgBox("Désirez-vous DÉTRUIRE ce client ?", vbYesNo + vbQuestion, "Confirmation")
     If i = vbNo Then Exit Sub
     
     Dim iRow As Long
@@ -50,14 +50,14 @@ Private Sub cmdDelete_Click()
     
     Call Reset
     
-    MsgBox "Selected record has been deleted.", vbOKOnly + vbInformation, "Deleted"
+    MsgBox "Le client a été DÉTRUIT.", vbOKOnly + vbInformation, "Deleted"
     
 End Sub
 
 Private Sub cmdEdit_Click()
     
     If Selected_List = 0 Then
-        MsgBox "No row is selected.", vbOKOnly + vbInformation, "Edit"
+        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Modification"
         Exit Sub
     End If
     
@@ -77,26 +77,14 @@ Private Sub cmdEdit_Click()
     Me.txtCity.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 5)
     Me.txtCountry.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 6)
     
-    MsgBox "Please make the required changes and click on 'Save' button to update.", vbOKOnly + vbInformation, "Edit"
-    
-End Sub
-
-Private Sub cmdPrint_Click()
-    
-    Dim msgValue As VbMsgBoxResult
-    msgValue = MsgBox("Do you want to print the employee details?", vbYesNo + vbInformation, "Print")
-    If msgValue = vbNo Then Exit Sub
-    
-    If ValidatePrintDetails() = True Then
-        Call Print_Form
-    End If
+    MsgBox "Veuillez apporter les changements et cliquer sur 'Sauvegarde' pour enregistrer.", vbOKOnly + vbInformation, "Changement"
     
 End Sub
 
 Private Sub cmdReset_Click()
 
     Dim msgValue As VbMsgBoxResult
-    msgValue = MsgBox("Do you want to reset the form?", vbYesNo + vbInformation, "Confirmation")
+    msgValue = MsgBox("Désirez-vous VIDER le formulaire ?", vbYesNo + vbInformation, "Confirmation")
     If msgValue = vbNo Then Exit Sub
     
     Call Reset
@@ -106,7 +94,7 @@ End Sub
 Private Sub cmdSave_Click()
     
     Dim msgValue As VbMsgBoxResult
-    msgValue = MsgBox("Do you want to save the data?", vbYesNo + vbInformation, "Confirmation")
+    msgValue = MsgBox("Désirez-vous SAUVEGARDER ces informations ?", vbYesNo + vbInformation, "Confirmation")
     If msgValue = vbNo Then Exit Sub
     
     If ValidateEntries() = True Then
@@ -121,12 +109,16 @@ End Sub
 Private Sub cmdSearch_Click()
 
     If Me.txtSearch.Value = "" Then
-        MsgBox "PLease enter the search value.", vbOKOnly + vbInformation, "Search"
+        MsgBox "SVP, saisir la valeur à rechercher.", vbOKOnly + vbInformation, "Recherche"
         Exit Sub
     End If
     
-    Call SearchData
+    Call DonnéesRecherche
     
+End Sub
+
+Private Sub Frame1_Click()
+
 End Sub
 
 Private Sub UserForm_Initialize()
