@@ -30,33 +30,33 @@ Private Sub cmbSearchColumn_Change()
 
 End Sub
 
-Private Sub cmdDelete_Click()
-    
-    If Selected_List = 0 Then
-        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Destruction"
-        Exit Sub
-    End If
-    
-    Dim i As VbMsgBoxResult
-    i = MsgBox("Désirez-vous DÉTRUIRE ce client ?", vbYesNo + vbQuestion, "Confirmation")
-    If i = vbNo Then Exit Sub
-    
-    Dim iRow As Long
-    iRow = Application.WorksheetFunction.Match(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0), _
-    ThisWorkbook.Sheets("Données").Range("A:A"), 0)
-    
-    ThisWorkbook.Sheets("Données").Rows(iRow).Delete
-    
-    Call Reset
-    
-    MsgBox "Le client a été DÉTRUIT.", vbOKOnly + vbInformation, "Deleted"
-    
-End Sub
-
+'Private Sub cmdDelete_Click()
+'
+'    If Selected_List = 0 Then
+'        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Destruction"
+'        Exit Sub
+'    End If
+'
+'    Dim i As VbMsgBoxResult
+'    i = MsgBox("Désirez-vous DÉTRUIRE ce client ?", vbYesNo + vbQuestion, "Confirmation")
+'    If i = vbNo Then Exit Sub
+'
+'    Dim iRow As Long
+'    iRow = Application.WorksheetFunction.Match(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0), _
+'    ThisWorkbook.Sheets("Données").Range("A:A"), 0)
+'
+'    ThisWorkbook.Sheets("Données").Rows(iRow).Delete
+'
+'    Call Reset
+'
+'    MsgBox "Le client a été DÉTRUIT.", vbOKOnly + vbInformation, "Deleted"
+'
+'End Sub
+'
 Private Sub cmdEdit_Click()
     
     If Selected_List = 0 Then
-        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Modification"
+        MsgBox "Aucun enregistrement n'a été choisi.", vbOKOnly + vbInformation, "Modification"
         Exit Sub
     End If
     
@@ -79,20 +79,22 @@ Private Sub cmdEdit_Click()
     Me.txtComptable.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 13)
     Me.txtNotaireAvocat.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 14)
     
-    MsgBox "Veuillez apporter les changements et cliquer sur 'Sauvegarde' pour enregistrer.", vbOKOnly + vbInformation, "Changement"
+'    MsgBox "Veuillez apporter les changements et cliquer sur 'Sauvegarde' pour enregistrer.", vbOKOnly + vbInformation, "Changement"
+    
+    frmForm.cmdSave.Enabled = True
+    frmForm.cmdCancel.Enabled = True
     
 End Sub
 
-Private Sub cmdReset_Click()
+Private Sub cmdCancel_Click()
 
     Dim msgValue As VbMsgBoxResult
-    msgValue = MsgBox("Désirez-vous VIDER le formulaire ?", vbYesNo + vbInformation, "Confirmation")
+    msgValue = MsgBox("Désirez-vous vraiment ANNULER la présente modification ?", vbYesNo + vbInformation, "Annuler les modifications courantes")
     If msgValue = vbNo Then Exit Sub
-    
+
     Call Reset
 
 End Sub
-
 Private Sub cmdSave_Click()
     
     Dim msgValue As VbMsgBoxResult
@@ -102,7 +104,11 @@ Private Sub cmdSave_Click()
     If ValidateEntries() = True Then
     
         Call Submit
+        
         Call Reset
+        
+        frmForm.cmdSave.Enabled = False
+        frmForm.cmdCancel.Enabled = False
     
     End If
     
@@ -119,8 +125,27 @@ Private Sub cmdSearch_Click()
     
 End Sub
 
+Private Sub Frame1_Click()
+
+End Sub
+
+Private Sub lstDatabase_Click()
+
+    frmForm.cmdEdit.Enabled = True
+
+End Sub
+
+Private Sub lstDatabase_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Call cmdEdit_Click
+
+End Sub
+
 Private Sub UserForm_Initialize()
 
     Call Reset
+    
+    frmForm.cmdSave.Enabled = False
+    frmForm.cmdCancel.Enabled = False
 
 End Sub

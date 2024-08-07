@@ -53,12 +53,11 @@ Sub Reset()
         ThisWorkbook.Sheets("Données").AutoFilterMode = False
         ThisWorkbook.Sheets("DonnéesRecherche").AutoFilterMode = False
         ThisWorkbook.Sheets("DonnéesRecherche").Cells.Clear
-        '-----------------------------------------------
         
         .lstDatabase.ColumnCount = 15
         .lstDatabase.ColumnHeads = True
         
-        .lstDatabase.ColumnWidths = "100;40;85;60;90;75;55;70;70; 70; 70; 70; 70; 70; 70"
+        .lstDatabase.ColumnWidths = "200; 45; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
         
         If iRow > 1 Then
             .lstDatabase.RowSource = "Données!A2:O" & iRow
@@ -111,8 +110,10 @@ Function Selected_List() As Long
     For i = 0 To frmForm.lstDatabase.ListCount - 1
         If frmForm.lstDatabase.Selected(i) = True Then
             Selected_List = i + 1
+            frmForm.cmdEdit.Enabled = True
             Exit For
         End If
+        frmForm.cmdEdit.Enabled = False
     Next i
 
 End Function
@@ -141,14 +142,16 @@ Sub Add_SearchColumn()
         .AddItem "Comptable"
         .AddItem "Notaire/Avocat"
         
-        .Value = "Tous"
+        .Value = "Client_ID"
     End With
     
     frmForm.EnableEvents = True
     
     frmForm.txtSearch.Value = ""
-    frmForm.txtSearch.Enabled = False
-    frmForm.cmdSearch.Enabled = False
+    frmForm.txtSearch.Enabled = True
+'    frmForm.txtSearch.Enabled = False
+    frmForm.cmdSearch.Enabled = True
+'    frmForm.cmdSearch.Enabled = False
 
 End Sub
 
@@ -185,20 +188,22 @@ Sub DonnéesRecherche()
         wshDonnées.Range("A1:O" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
     End If
     
-    If Application.WorksheetFunction.Subtotal(3, wshDonnées.Range("C:C")) >= 2 Then
+    Dim searchRowsFound As Long
+    searchRowsFound = Application.WorksheetFunction.Subtotal(3, wshDonnées.Range("A:A")) - 1 'Heading
+    If searchRowsFound >= 1 Then
         'Code to remove the previous data from DonnéesRecherche worksheet
         wshSearchData.Cells.Clear
         wshDonnées.AutoFilter.Range.Copy wshSearchData.Range("A1")
         Application.CutCopyMode = False
         iSearchRow = wshSearchData.Range("A" & Application.Rows.Count).End(xlUp).Row
         frmForm.lstDatabase.ColumnCount = 15
-        frmForm.lstDatabase.ColumnWidths = "100;40;85;60;90;75;55;70;70; 70; 70; 70; 70; 70; 70"
+        frmForm.lstDatabase.ColumnWidths = "200; 45; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
         If iSearchRow > 1 Then
             frmForm.lstDatabase.RowSource = "DonnéesRecherche!A2:O" & iSearchRow
-            MsgBox "J'ai trouvé des enregistrements."
+'            MsgBox "J'ai trouvé " & searchRowsFound & " enregistrements."
         End If
     Else
-       MsgBox "Je n'ai rien trouvé."
+       MsgBox "Je n'ai trouvé AUCUN enregistrement."
     End If
 
     wshDonnées.AutoFilterMode = False
@@ -233,10 +238,12 @@ Function ValidateEntries() As Boolean
         .txtComptable.BackColor = vbWhite
         .txtNotaireAvocat.BackColor = vbWhite
         
+        'Valeur OBLIGATOIRE
         If Trim(.txtCodeClient.Value) = "" Then
             MsgBox "SVP, saisir un code de client.", vbOKOnly + vbInformation, "Code de client"
             ValidateEntries = False
             .txtCodeClient.BackColor = vbRed
+            .txtCodeClient.Enabled = True
             .txtCodeClient.SetFocus
             Exit Function
         End If
@@ -250,6 +257,7 @@ Function ValidateEntries() As Boolean
 '            Exit Function
 '        End If
         
+        'Valeur OBLIGATOIRE
         If Trim(.txtNomClient.Value) = "" Then
             MsgBox "SVP, saisir le nom du client.", vbOKOnly + vbInformation, "Nom de client"
             ValidateEntries = False
