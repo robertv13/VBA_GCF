@@ -2,8 +2,8 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmForm 
    Caption         =   "Gestion du fichier Clients"
    ClientHeight    =   11160
-   ClientLeft      =   7125
-   ClientTop       =   2970
+   ClientLeft      =   6615
+   ClientTop       =   2460
    ClientWidth     =   17955
    OleObjectBlob   =   "frmForm.frx":0000
 End
@@ -15,6 +15,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Public EnableEvents As Boolean
+Public nouveauClient As Boolean
 
 Private Sub cmbSearchColumn_Change()
 
@@ -30,29 +31,31 @@ Private Sub cmbSearchColumn_Change()
 
 End Sub
 
-'Private Sub cmdDelete_Click()
-'
-'    If Selected_List = 0 Then
-'        MsgBox "Aucun client n'a été choisi.", vbOKOnly + vbInformation, "Destruction"
-'        Exit Sub
-'    End If
-'
-'    Dim i As VbMsgBoxResult
-'    i = MsgBox("Désirez-vous DÉTRUIRE ce client ?", vbYesNo + vbQuestion, "Confirmation")
-'    If i = vbNo Then Exit Sub
-'
-'    Dim iRow As Long
-'    iRow = Application.WorksheetFunction.Match(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0), _
-'    ThisWorkbook.Sheets("Données").Range("A:A"), 0)
-'
-'    ThisWorkbook.Sheets("Données").Rows(iRow).Delete
-'
-'    Call Reset
-'
-'    MsgBox "Le client a été DÉTRUIT.", vbOKOnly + vbInformation, "Deleted"
-'
-'End Sub
-'
+Private Sub cmdAddClient_Click()
+
+    Call Reset
+    
+    frmForm.txtCodeClient.Enabled = True
+    frmForm.txtCodeClient.SetFocus
+    
+    nouveauClient = True
+
+End Sub
+
+Private Sub cmdCancel_Click()
+
+    Dim msgValue As VbMsgBoxResult
+    msgValue = MsgBox("Désirez-vous vraiment ANNULER la présente modification ?", vbYesNo + vbInformation, "Annuler les modifications courantes")
+    If msgValue = vbNo Then Exit Sub
+
+    Call Reset
+    
+    Me.cmdAddClient.Enabled = True
+    Me.cmdCancel.Enabled = False
+    Me.cmdSave.Enabled = False
+
+End Sub
+
 Private Sub cmdEdit_Click()
     
     If Selected_List = 0 Then
@@ -75,26 +78,20 @@ Private Sub cmdEdit_Click()
     Me.txtCodePostal.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 9)
     Me.txtPays.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 10)
     Me.txtReferePar.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 11)
-    Me.txtFinAnnee.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 12)
+    Me.txtFinAnnee.Value = Format(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 12), "mmm")
     Me.txtComptable.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 13)
     Me.txtNotaireAvocat.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 14)
     
 '    MsgBox "Veuillez apporter les changements et cliquer sur 'Sauvegarde' pour enregistrer.", vbOKOnly + vbInformation, "Changement"
     
+    nouveauClient = False
+    
+    frmForm.cmdEdit.Enabled = False
     frmForm.cmdSave.Enabled = True
     frmForm.cmdCancel.Enabled = True
     
 End Sub
 
-Private Sub cmdCancel_Click()
-
-    Dim msgValue As VbMsgBoxResult
-    msgValue = MsgBox("Désirez-vous vraiment ANNULER la présente modification ?", vbYesNo + vbInformation, "Annuler les modifications courantes")
-    If msgValue = vbNo Then Exit Sub
-
-    Call Reset
-
-End Sub
 Private Sub cmdSave_Click()
     
     Dim msgValue As VbMsgBoxResult
@@ -103,7 +100,13 @@ Private Sub cmdSave_Click()
     
     If ValidateEntries() = True Then
     
-        Call Submit
+        If nouveauClient = True Then
+            Call Submit_GCF_BD_Entrée_Clients("NEW_RECORD")
+            Call Submit_Locally("NEW_RECORD")
+        Else
+            Call Submit_GCF_BD_Entrée_Clients("UPDATE")
+            Call Submit_Locally("UPDATE")
+        End If
         
         Call Reset
         
@@ -125,10 +128,6 @@ Private Sub cmdSearch_Click()
     
 End Sub
 
-Private Sub Frame1_Click()
-
-End Sub
-
 Private Sub lstDatabase_Click()
 
     frmForm.cmdEdit.Enabled = True
@@ -137,7 +136,33 @@ End Sub
 
 Private Sub lstDatabase_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Me.cmdEdit.Enabled = False
+    Me.cmdAddClient.Enabled = False
+    
     Call cmdEdit_Click
+    
+
+End Sub
+
+Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    MsgBox "Verifier que le code de client n'existe pas déjà."
+
+End Sub
+
+Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    If Trim(frmForm.txtNomClient) <> "" Then
+        frmForm.cmdSave.Enabled = True
+    End If
+    
+    frmForm.cmdCancel.Enabled = True
+
+End Sub
+
+Private Sub txtSearch_Change()
+
+    frmForm.cmdSearch.Enabled = True
 
 End Sub
 
