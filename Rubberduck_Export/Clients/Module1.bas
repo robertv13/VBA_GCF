@@ -30,7 +30,7 @@ Sub Reset()
         
         'Creating a dynamic name for department
         
-        shSupport.Range("A2", shSupport.Range("A" & Application.Rows.Count).End(xlUp)).Name = "Dynamic"
+        wshSupport.Range("A2", wshSupport.Range("A" & Application.Rows.Count).End(xlUp)).Name = "Dynamic"
         .cmbDepartment.RowSource = "Dynamic"
         .cmbDepartment.Value = ""
         .txtRowNumber.Value = ""
@@ -362,45 +362,5 @@ Sub Print_Form()
     Application.ScreenUpdating = True
     Application.DisplayAlerts = True
     
-End Sub
-
-Sub Maximize_Restore()
-
-    If Not bState = True Then
-        iWidth = frmForm.Width
-        iHeight = frmForm.Height
-        iTop = frmForm.Top
-        iLeft = frmForm.Left
-        
-        'Code for full screen
-        With Application
-            .WindowState = xlMaximized
-            frmForm.Zoom = Int(.Width / frmForm.Width * 100)
-            
-            frmForm.StartUpPosition = 0
-            frmForm.Left = .Left
-            frmForm.Top = .Top
-            frmForm.Width = .Width
-            frmForm.Height = .Height
-        End With
-        
-        frmForm.cmdFullScreen.Caption = "Restore"
-        bState = True
-    Else
-        With Application
-            .WindowState = xlNormal
-            frmForm.Zoom = 100
-            frmForm.StartUpPosition = 0
-            frmForm.Left = iLeft
-            frmForm.Width = iWidth
-            frmForm.Height = iHeight
-            frmForm.Top = iTop
-        End With
-        
-        frmForm.cmdFullScreen.Caption = "Full Screen"
-    
-        bState = False
-    End If
-
 End Sub
 

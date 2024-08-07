@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmForm 
-   Caption         =   "Automated Data Entry Form version 1.0 (Validate, Add, Reset, Search, Edit, Delete and Print)"
-   ClientHeight    =   7965
+   Caption         =   "Gestion du fichier Clients"
+   ClientHeight    =   10185
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   11325
+   ClientWidth     =   13095
    OleObjectBlob   =   "frmForm.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -78,12 +78,6 @@ Private Sub cmdEdit_Click()
     Me.txtCountry.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 6)
     
     MsgBox "Please make the required changes and click on 'Save' button to update.", vbOKOnly + vbInformation, "Edit"
-    
-End Sub
-
-Private Sub cmdFullScreen_Click()
-
-    Call Maximize_Restore
     
 End Sub
 
