@@ -1,12 +1,11 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmForm 
    Caption         =   "Gestion du fichier Clients"
-   ClientHeight    =   10185
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   13095
+   ClientHeight    =   11160
+   ClientLeft      =   7125
+   ClientTop       =   2970
+   ClientWidth     =   17955
    OleObjectBlob   =   "frmForm.frx":0000
-   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "frmForm"
 Attribute VB_GlobalNameSpace = False
@@ -44,9 +43,9 @@ Private Sub cmdDelete_Click()
     
     Dim iRow As Long
     iRow = Application.WorksheetFunction.Match(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0), _
-    ThisWorkbook.Sheets("Database").Range("A:A"), 0)
+    ThisWorkbook.Sheets("Données").Range("A:A"), 0)
     
-    ThisWorkbook.Sheets("Database").Rows(iRow).Delete
+    ThisWorkbook.Sheets("Données").Rows(iRow).Delete
     
     Call Reset
     
@@ -62,20 +61,23 @@ Private Sub cmdEdit_Click()
     End If
     
     'Code to update the value to respective controls
-    Dim sGender As String
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0), _
-    ThisWorkbook.Sheets("Database").Range("A:A"), 0)
-    Me.txtID.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 1)
-    Me.txtName.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 2)
-    sGender = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 3)
-    If sGender = "Female" Then
-        Me.optFemale.Value = True
-    Else
-        Me.optMale.Value = True
-    End If
-    Me.cmbDepartment.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 4)
-    Me.txtCity.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 5)
-    Me.txtCountry.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 6)
+        ThisWorkbook.Sheets("Données").Range("A:A"), 0)
+    Me.txtNomClient.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 0)
+    Me.txtCodeClient.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 1)
+    Me.txtContactFact.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 2)
+    Me.txtTitreContact.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 3)
+    Me.txtCourrielFact.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 4)
+    Me.txtAdresse1.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 5)
+    Me.txtAdresse2.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 6)
+    Me.txtVille.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 7)
+    Me.txtProvince.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 8)
+    Me.txtCodePostal.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 9)
+    Me.txtPays.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 10)
+    Me.txtReferePar.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 11)
+    Me.txtFinAnnee.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 12)
+    Me.txtComptable.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 13)
+    Me.txtNotaireAvocat.Value = Me.lstDatabase.List(Me.lstDatabase.ListIndex, 14)
     
     MsgBox "Veuillez apporter les changements et cliquer sur 'Sauvegarde' pour enregistrer.", vbOKOnly + vbInformation, "Changement"
     
@@ -115,10 +117,6 @@ Private Sub cmdSearch_Click()
     
     Call DonnéesRecherche
     
-End Sub
-
-Private Sub Frame1_Click()
-
 End Sub
 
 Private Sub UserForm_Initialize()
