@@ -256,7 +256,7 @@ End Sub
 '
 '    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
 '    Dim sourceWorkbook As String, sourceTab As String
-'    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
+'    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
 '                     "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
 '    sourceTab = "FAC_Comptes_Clients"
 '
@@ -321,7 +321,7 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Entête"
     
@@ -353,7 +353,7 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = rootPath & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Détails"
     
@@ -383,7 +383,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Entête"
     
@@ -468,7 +468,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Détails"
     

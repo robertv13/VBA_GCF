@@ -6,7 +6,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:GL_Posting_To_DB()")
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     
@@ -127,7 +127,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = rootPath & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     

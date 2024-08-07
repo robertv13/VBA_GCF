@@ -12,7 +12,6 @@ Public Const MAXWIDTH As Long = 192
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
-Public rootPath As String
 
 Public userName As String
 
@@ -113,11 +112,15 @@ End Enum
 
 Sub Set_Root_Path()
 
+    Dim rootPath As String
+    
     If Not Environ("username") = "Robert M. Vigneault" Then
         rootPath = "P:\Administration\APP\GCF"
     Else
         rootPath = "C:\VBA\GC_FISCALITÉ"
     End If
+
+    wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
 
 End Sub
 

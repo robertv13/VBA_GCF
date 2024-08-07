@@ -11,7 +11,7 @@ Private Sub Workbook_Open()
     
     Call Set_Root_Path
     
-    Debug.Assert rootPath <> ""
+    Debug.Assert wshAdmin.Range("F5").value <> ""
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
     Call BackupMasterFile
@@ -64,7 +64,7 @@ Sub BackupMasterFile()
     
     'Open the master file
     Dim masterWorkbook As Workbook
-    Set masterWorkbook = Workbooks.Open(rootPath & DATA_PATH & Application.PathSeparator & _
+    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                             "GCF_BD_MASTER.xlsx")
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS

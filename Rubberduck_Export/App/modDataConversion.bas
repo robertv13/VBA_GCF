@@ -10,7 +10,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = rootPath & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -304,7 +304,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = rootPath & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
