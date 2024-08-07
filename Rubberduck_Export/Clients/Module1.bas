@@ -184,7 +184,6 @@ Sub Submit_Locally(action As String)
         .Cells(iRow, 13) = frmForm.txtFinAnnee.Value
         .Cells(iRow, 14) = frmForm.txtComptable.Value
         .Cells(iRow, 15) = frmForm.txtNotaireAvocat.Value
-'        .Cells(iRow, 8) = Application.UserName
 '        .Cells(iRow, 9) = [Text(Now(), "DD-MM-YYYY HH:MM:SS")]
     End With
 
@@ -334,15 +333,6 @@ Function ValidateEntries() As Boolean
             Exit Function
         End If
     
-'        'Validating Duplicate Entries
-'        If Not sh.Range("B:B").Find(what:=iCodeClient, lookat:=xlWhole) Is Nothing Then
-'            MsgBox "Ce code de client existe déjà.", vbOKOnly + vbInformation, "Doublon de code de client"
-'            ValidateEntries = False
-'            .txtCodeClient.BackColor = vbRed
-'            .txtCodeClient.SetFocus
-'            Exit Function
-'        End If
-        
         'Valeur OBLIGATOIRE
         If Trim(.txtNomClient.Value) = "" Then
             MsgBox "SVP, saisir le nom du client.", vbOKOnly + vbInformation, "Nom de client"
@@ -458,5 +448,19 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     
 End Sub
 
+Function Fn_Does_Client_Code_Exist() As Boolean
+
+    Dim ws As Worksheet: Set ws = wshClients
+    Dim iCodeClient As String
+    iCodeClient = frmForm.txtCodeClient.Value
+    
+    Fn_Does_Client_Code_Exist = False
+    
+    'Validating Duplicate Entries
+    If Not ws.Range("B:B").Find(what:=iCodeClient, lookat:=xlWhole) Is Nothing Then
+        Fn_Does_Client_Code_Exist = True
+    End If
+
+End Function
 
 

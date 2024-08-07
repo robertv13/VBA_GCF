@@ -112,6 +112,8 @@ Private Sub cmdSave_Click()
         
         frmForm.cmdSave.Enabled = False
         frmForm.cmdCancel.Enabled = False
+        
+        Me.txtSearch.SetFocus
     
     End If
     
@@ -146,8 +148,21 @@ End Sub
 
 Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    MsgBox "Verifier que le code de client n'existe pas déjà."
-
+    Dim clientExists As Boolean
+    
+    clientExists = Fn_Does_Client_Code_Exist
+    
+    If clientExists = True Then
+        frmForm.txtCodeClient.BackColor = vbRed
+        MsgBox "Ce code de client '" & frmForm.txtCodeClient.Value & "' existe déjà en base de données." & vbNewLine & vbNewLine & _
+               "Veuillez choisir un AUTRE code qui n'existe pas, SVP", vbCritical + vbOKOnly, "Doublon de code de client"
+        frmForm.txtCodeClient.BackColor = vbWhite
+        frmForm.txtCodeClient.Value = ""
+        frmForm.txtCodeClient.SetFocus
+        frmForm.txtCodeClient.SetFocus
+        
+    End If
+    
 End Sub
 
 Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
