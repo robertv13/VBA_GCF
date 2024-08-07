@@ -6,7 +6,7 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_New_Invoice()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_New_Invoice()")
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -145,7 +145,7 @@ End Sub
 
 Sub FAC_Brouillon_Client_Change(clientName As String)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Client_Change()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Client_Change()")
     
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
@@ -277,7 +277,7 @@ End Sub
 
 Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click()")
     
     Dim cutoffDate As Date
     cutoffDate = wshFAC_Brouillon.Range("O3").value
@@ -294,7 +294,7 @@ End Sub
 
 Sub FAC_Brouillon_Setup_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells()")
 
     Application.EnableEvents = False
     
@@ -425,7 +425,7 @@ End Sub
 
 Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()")
     
     Application.EnableEvents = False
     
@@ -444,7 +444,7 @@ End Sub
 
 Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()")
     
     'Set all criteria before calling FAC_Brouillon_TEC_Advanced_Filter_And_Sort
     Dim c1 As Long, c2 As String
@@ -473,7 +473,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         isInvoiced As String, _
         isDeleted As String)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort()")
     
     Application.ScreenUpdating = False
 
@@ -551,7 +551,7 @@ End Sub
 
 Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:10
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()")
 
     Dim lastUsedRow As Long
     lastUsedRow = wshTEC_Local.Range("AQ9999").End(xlUp).row
@@ -610,7 +610,7 @@ End Sub
  
 Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale()")
    
     Application.ScreenUpdating = False
     
@@ -638,7 +638,7 @@ End Sub
 
 Sub FAC_Brouillon_Back_To_FAC_Menu()
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
    
     Application.EnableEvents = False
     wshFAC_Brouillon.Range("B27").value = False
@@ -661,7 +661,7 @@ End Sub
 
 Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes()")
     
     Application.EnableEvents = False
     
@@ -724,7 +724,7 @@ End Sub
 
 Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes()")
     
     Application.EnableEvents = False
     

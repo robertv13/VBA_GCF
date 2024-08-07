@@ -21,14 +21,6 @@ Private Sub btnOK_Click() '2024-07-05 @ 06:25
 
 End Sub
 
-Private Sub Label1_Click()
-
-End Sub
-
-Private Sub UserForm_Click()
-
-End Sub
-
 Private Sub UserForm_Initialize()
 
     Label1.Caption = "Pour quitter cette application, vous devez OBLIGATOIREMENT" & vbCrLf & vbCrLf & _

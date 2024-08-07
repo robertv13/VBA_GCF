@@ -90,7 +90,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Find_Data_In_A_Range()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Find_Data_In_A_Range()")
     
     Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
     Dim dataValue As Variant
@@ -219,7 +219,7 @@ End Function
 
 Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_GL_Code_From_GL_Description()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Get_GL_Code_From_GL_Description()")
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
@@ -286,7 +286,7 @@ End Function
 
 Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
     
     Dim matchResult As Variant
 

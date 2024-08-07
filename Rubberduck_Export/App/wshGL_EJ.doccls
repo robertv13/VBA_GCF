@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_EJ:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_EJ:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False

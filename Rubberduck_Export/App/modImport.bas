@@ -58,7 +58,7 @@ End Sub
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ChartOfAccount_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:ChartOfAccount_Import_All()")
     
     Application.StatusBar = "J'importe le plan comptable"
     
@@ -108,7 +108,7 @@ End Sub
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Client_List_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:Client_List_Import_All()")
     
     Application.StatusBar = "J'importe la liste des clients"
     
@@ -171,7 +171,7 @@ End Sub
 
 Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:DEB_Recurrent_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:DEB_Recurrent_Import_All()")
     
     Application.StatusBar = "J'importe les transactions récurrentes de déboursés"
     
@@ -223,7 +223,7 @@ End Sub
 
 Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:DEB_Trans_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:DEB_Trans_Import_All()")
     
     Application.StatusBar = "J'importe les transactions de déboursés"
     
@@ -275,7 +275,7 @@ End Sub
 
 Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ENC_Détails_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:ENC_Détails_Import_All()")
     
     Application.StatusBar = "J'importe le détail des Encaissements"
     
@@ -327,7 +327,7 @@ End Sub
 
 Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:ENC_Entête_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:ENC_Entête_Import_All()")
     
     Application.StatusBar = "J'importe le détail des Encaissements"
     
@@ -379,7 +379,7 @@ End Sub
 
 Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Comptes_Clients_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Comptes_Clients_Import_All()")
     
     Application.StatusBar = "J'importe les comptes clients"
     
@@ -431,7 +431,7 @@ End Sub
 
 Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Détails_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Détails_Import_All()")
     
     Application.StatusBar = "J'importe le détail des Factures"
     Application.ScreenUpdating = False
@@ -482,7 +482,7 @@ End Sub
 
 Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Entête_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Entête_Import_All()")
     
     Application.StatusBar = "J'importe les entêtes de Facture"
     
@@ -534,7 +534,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Projets_Détails_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Projets_Détails_Import_All()")
     
     Application.StatusBar = "J'importe le détail des Projets de Factures"
     
@@ -600,7 +600,7 @@ End Sub
 
 Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:FAC_Projets_Entête_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Projets_Entête_Import_All()")
     
     Application.StatusBar = "J'importe les entêtes de Facture"
     
@@ -668,7 +668,7 @@ End Sub
 
 Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:Fournisseur_List_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:Fournisseur_List_Import_All()")
     
     Application.StatusBar = "J'importe la liste des fournisseurs"
     
@@ -732,7 +732,7 @@ End Sub
 
 Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_EJ_Auto_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:GL_EJ_Auto_Import_All()")
     
     Application.StatusBar = "J'importe les écritures de journal récurrentes"
     
@@ -792,7 +792,7 @@ End Sub
 
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:GL_Trans_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:GL_Trans_Import_All()")
     
     Application.StatusBar = "J'importe les transactions du Grand-Livre"
     
@@ -849,7 +849,7 @@ End Sub
 
 Sub TEC_Import_All() '2024-02-14 @ 06:19
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modImport:TEC_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:TEC_Import_All()")
     
     Application.StatusBar = "J'importe tous les TEC"
     
@@ -898,4 +898,38 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
     
 End Sub
+
+Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Dynamic_Range_Redefine_Plan_Comptable()")
+
+    'Redefine - dnrPlanComptable_Description_Only
+    'Delete existing dynamic named range (assuming it could exists)
+    On Error Resume Next
+    ThisWorkbook.Names("dnrPlanComptable_Description_Only").delete
+    On Error GoTo 0
+    
+    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
+    Dim newRangeFormula As String
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
+    
+    'Create the new dynamic named range
+    ThisWorkbook.Names.add name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    
+    'Redefine - dnrPlanComptable_All
+    'Delete existing dynamic named range (assuming it could exists)
+    On Error Resume Next
+    ThisWorkbook.Names("dnrPlanComptable_All").delete
+    On Error GoTo 0
+    
+    'Define a new dynamic named range for 'dnrPlanComptable_All'
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
+    
+    'Create the new dynamic named range
+    ThisWorkbook.Names.add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+    
+    Call Output_Timer_Results("modAppli:Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
+    
+End Sub
+
 

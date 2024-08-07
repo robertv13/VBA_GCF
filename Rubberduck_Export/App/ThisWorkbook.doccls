@@ -16,9 +16,19 @@ Private Sub Workbook_Open()
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
     Call BackupMasterFile
     
-    Call Hide_Shapes_Based_On_Username
+    Call Hide_Dev_Shapes_Based_On_Username
     
-    Call Hide_All_Worksheets_Except_Menu
+    With wshMenu.Range("A34")
+        .Font.Size = 9
+        .Font.Color = vbBlack
+        .value = "Version: " & APP_VERSION_NO
+    End With
+    
+    With wshMenu.Range("A35")
+        .Font.Size = 9
+        .Font.Color = vbRed
+        .value = "Utilisateur: " & Environ("Username")
+    End With
     
     wshMenu.Activate
     wshMenu.Unprotect
@@ -45,3 +55,46 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
     ufExitDisable.show
 
 End Sub
+
+Sub BackupMasterFile()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:BackupMasterFile()")
+    
+    Application.ScreenUpdating = False
+    
+    'Open the master file
+    Dim masterWorkbook As Workbook
+    Set masterWorkbook = Workbooks.Open(rootPath & DATA_PATH & Application.PathSeparator & _
+                            "GCF_BD_MASTER.xlsx")
+    
+    'Get the current date and time in the format YYYYMMDD_HHMMSS
+    Dim currentDateAndTime As String
+    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
+
+    'Create the backup file name
+    Dim backupFileName As String
+    backupFileName = Left(masterWorkbook.name, InStrRev(masterWorkbook.name, ".") - 1) & "_" & currentDateAndTime & ".xlsx"
+
+    'Define the backup file path (same directory as the master file)
+    Dim backupFilePath As String
+    backupFilePath = masterWorkbook.path & "\" & backupFileName
+
+    'Save a copy of the master workbook with the new name
+    masterWorkbook.SaveCopyAs backupFilePath
+
+    'Close the master workbook
+    masterWorkbook.Close saveChanges:=False
+
+'    'Optional: Notify the user
+'    MsgBox "Backup created: " & vbNewLine & vbNewLine & "'" & backupFilePath & "'"
+
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set masterWorkbook = Nothing
+    
+    Call Output_Timer_Results("modAppli:BackupMasterFile()", timerStart)
+
+End Sub
+
+

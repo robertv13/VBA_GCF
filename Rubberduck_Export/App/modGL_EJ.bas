@@ -3,7 +3,7 @@ Option Explicit
 
 Sub JE_Update()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:JE_Update()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:JE_Update()")
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").value) = False Then Exit Sub
     
@@ -44,7 +44,7 @@ End Sub
 
 Sub Save_EJ_Recurrente(ll As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:Save_EJ_Recurrente()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:Save_EJ_Recurrente()")
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Range("E99").End(xlUp).row  'Last Used Row in wshGL_EJ
@@ -58,7 +58,7 @@ End Sub
 
 Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:Load_JEAuto_Into_JE()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:Load_JEAuto_Into_JE()")
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
@@ -87,7 +87,7 @@ End Sub
 
 Sub wshGL_EJ_Clear_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:wshGL_EJ_Clear_All_Cells()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:wshGL_EJ_Clear_All_Cells()")
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -108,7 +108,7 @@ End Sub
 
 Sub GL_EJ_Auto_Build_Summary()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:GL_EJ_Auto_Build_Summary()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:GL_EJ_Auto_Build_Summary()")
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -139,7 +139,7 @@ End Sub
 
 Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:GL_Trans_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:GL_Trans_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -218,7 +218,7 @@ End Sub
 
 Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:GL_Trans_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:GL_Trans_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -258,7 +258,7 @@ End Sub
 
 Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -328,7 +328,7 @@ End Sub
 
 Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     

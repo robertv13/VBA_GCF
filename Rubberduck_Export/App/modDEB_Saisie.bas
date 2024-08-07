@@ -3,7 +3,7 @@ Option Explicit
 
 Sub DEB_Saisie_Update()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Update()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Saisie_Update()")
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").value <> "" Then
@@ -54,7 +54,7 @@ End Sub
 
 Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -146,7 +146,7 @@ End Sub
 
 Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Trans_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -188,7 +188,7 @@ End Sub
 
 Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()")
 
     Dim montant As Double, dateDebours As Date
     Dim descGL_Trans As String, source As String, deboursType As String
@@ -269,7 +269,7 @@ End Sub
 
 Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:Load_DEB_Auto_Into_JE()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:Load_DEB_Auto_Into_JE()")
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto, rowDEB As Long
@@ -313,7 +313,7 @@ End Sub
 
 Sub Save_DEB_Recurrent(ll As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:Save_DEB_Recurrent()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:Save_DEB_Recurrent()")
     
     Dim rowDEBLast As Long
     rowDEBLast = wshDEB_Saisie.Range("E99").End(xlUp).row  'Last Used Row in wshDEB_Saisie
@@ -327,7 +327,7 @@ End Sub
 
 Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -404,7 +404,7 @@ End Sub
 
 Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -446,7 +446,7 @@ End Sub
 
 Sub DEB_Recurrent_Build_Summary()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Recurrent_Build_Summary()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Recurrent_Build_Summary()")
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -478,7 +478,7 @@ End Sub
 
 Public Sub DEB_Saisie_Clear_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()")
 
     'Vide les cellules
     Application.EnableEvents = False
@@ -499,6 +499,71 @@ Sub DEBOURS_Back_To_Menu()
     
     wshMenuDEB.Activate
     wshMenuDEB.Range("A1").Select
+    
+End Sub
+
+Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
+                                  total As Currency, _
+                                  gst As Currency, pst As Currency, _
+                                  gstCredit As Currency, pstCredit As Currency, _
+                                  netAmount As Currency)
+
+    Dim gstRate As Double, pstRate As Double
+    gstRate = Fn_Get_Tax_Rate(d, "F")
+    pstRate = Fn_Get_Tax_Rate(d, "P")
+    
+    If total <> 0 Then 'Calculate the amount before taxes
+        'GST calculation
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
+            gst = Round(total / (1 + gstRate + pstRate) * gstRate, 2)
+        Else
+            gst = 0
+        End If
+        
+        'PST calculation
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
+            pst = Round(total / (1 + gstRate + pstRate) * pstRate, 2)
+        Else
+            pst = 0
+        End If
+        
+        'Tax credits
+        If taxCode <> "REP" Then
+            gstCredit = gst
+            pstCredit = pst
+        Else
+            gstCredit = Round(gst / 2, 2)
+            pstCredit = Round(pst / 2, 2)
+        End If
+        
+        netAmount = total - gstCredit - pstCredit
+        Exit Sub
+    End If
+    
+    If netAmount <> 0 Then 'Calculate the taxes from the net amount
+        'gst calculation
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
+            gst = Round(netAmount * gstRate, 2)
+        Else
+            gst = 0
+        End If
+        'PST calculation
+        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
+            pst = Round(netAmount * pstRate, 2)
+        Else
+            pst = 0
+        End If
+        If taxCode <> "REP" Then
+            gstCredit = gst
+            pstCredit = pst
+        Else
+            gstCredit = Round(gst / 2, 2)
+            pstCredit = Round(pst / 2, 2)
+        End If
+        
+        total = netAmount + gst + pst
+        
+    End If
     
 End Sub
 

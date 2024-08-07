@@ -28,7 +28,7 @@ End Property
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     'Special timer for log purpose
-    Dim timer3Start As Double: timer3Start = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Activate()")
+    Dim timer3Start As Double: timer3Start = Timer: Call Start_Timer("ufSaisieHeures:UserForm_Activate()")
     
     If rootPath = "" Then
         MsgBox "La variable de configuration 'rootPath' est vide", vbExclamation
@@ -68,7 +68,7 @@ End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:lstboxNomClient_DblClick()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:lstboxNomClient_DblClick()")
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -93,7 +93,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:UserForm_Terminate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:UserForm_Terminate()")
 
     'Clear the admin control cells
     wshAdmin.Range("B3:B7").ClearContents
@@ -125,7 +125,7 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
 
     If Me.cmbProfessionnel.value <> "" Then
         wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
@@ -151,7 +151,7 @@ End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtDate_BeforeUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtDate_BeforeUpdate()")
     
     Dim fullDate As Variant
     
@@ -190,7 +190,7 @@ End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtDate_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtDate_AfterUpdate()")
     
     If IsDate(Me.txtDate.value) Then
         wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
@@ -228,7 +228,7 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtClient_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtClient_AfterUpdate()")
     
     If Me.txtClient.value <> Me.txtSavedClient.value Then
         If Me.txtTEC_ID.value = "" Then
@@ -244,7 +244,7 @@ End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtActivite_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtActivite_AfterUpdate()")
     
     If Me.txtActivite.value <> Me.txtSavedActivite.value Then
         If Me.txtTEC_ID = "" Then
@@ -260,7 +260,7 @@ End Sub
 
 Sub txtHeures_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtHeures_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtHeures_AfterUpdate()")
     
     'Validation des heures saisies
     Dim strHeures As String
@@ -296,7 +296,7 @@ End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:chbFacturable_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:chbFacturable_AfterUpdate()")
     
     If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
         If Me.txtTEC_ID = "" Then
@@ -312,7 +312,7 @@ End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("ufSaisieHeures:txtCommNote_AfterUpdate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtCommNote_AfterUpdate()")
     
     If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
         If Me.txtTEC_ID = "" Then

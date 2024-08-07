@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshCC_Annulation:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshCC_Annulation:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -106,7 +106,7 @@ End Sub
 
 Sub CC_Annulation_Back_To_FAC_Menu()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modCC_Annulation:Back_To_FAC_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCC_Annulation:Back_To_FAC_Menu()")
    
     wshCC_Annulation.Range("F5").ClearContents
     

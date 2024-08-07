@@ -3,7 +3,7 @@ Option Explicit
 
 Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Build_Trial_Balance()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Build_Trial_Balance()")
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -132,7 +132,7 @@ End Sub
 
 Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_TB_Totals()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Display_TB_Totals()")
     
 '    Dim ws As Worksheet
 '    Set ws = ThisWorkbook.Worksheets("GL_BV")
@@ -165,7 +165,7 @@ End Sub
 
 Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()")
     
     Dim ws As Worksheet: Set ws = wshGL_BV
     
@@ -308,7 +308,7 @@ End Sub
 
 Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_AdvancedFilter_By_GL()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_AdvancedFilter_By_GL()")
 
     With wshGL_Trans
         Dim rgResult As Range: Set rgResult = .Range("P2").CurrentRegion
@@ -362,7 +362,7 @@ End Sub
 
 Sub GL_TB_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Sub_Totals()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Sub_Totals()")
 
     Dim r As Long
     With wshGL_BV
@@ -384,7 +384,7 @@ End Sub
 
 Sub GL_TB_Determine_From_And_To_Date(period As String)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Determine_From_And_To_Date()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Determine_From_And_To_Date()")
 
     Select Case period
         Case "Mois"
@@ -419,7 +419,7 @@ End Sub
 
 Sub GL_TB_Setup_And_Print()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print()")
     
     Dim lastRow As Long
     lastRow = Range("D999").End(xlUp).row + 2
@@ -448,7 +448,7 @@ End Sub
 
 Sub GL_TB_Setup_And_Print_Trans()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_Setup_And_Print_Trans()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
     Dim lastRow As Long
     lastRow = Range("M9999").End(xlUp).row
@@ -477,7 +477,7 @@ End Sub
 
 Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modGL_TB:GL_TB_SetUp_And_Print_Document()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_SetUp_And_Print_Document()")
     
     With ActiveSheet.PageSetup
         .PrintTitleRows = ""

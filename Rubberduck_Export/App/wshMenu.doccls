@@ -2,27 +2,12 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim ws As Worksheet: Set ws = wshMenu
-    
-    With ws.Range("A34")
-        .Font.Size = 9
-        .Font.Color = vbBlack
-        .value = "Version: " & APP_VERSION_NO
-    End With
-    
-    With ws.Range("A35")
-        .Font.Size = 9
-        .Font.Color = vbRed
-        .value = "Utilisateur: " & Environ("Username")
-    End With
-    
-    With ws
+    Call Hide_All_Worksheets_Except_Menu
+
+    With wshMenu
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
-    
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set ws = Nothing
     
 End Sub
 

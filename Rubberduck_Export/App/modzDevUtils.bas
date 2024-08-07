@@ -1562,4 +1562,53 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
 
 End Sub
 
+Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:SetTabOrder()")
+    
+    'Clear previous settings AND protect the worksheet
+    ws.EnableSelection = xlNoRestrictions
+    ws.Protect UserInterfaceOnly:=True
+
+    'Collect all unprotected cells
+    Dim cell As Range, unprotectedCells As Range
+    For Each cell In ws.usedRange
+        If Not cell.Locked Then
+            If unprotectedCells Is Nothing Then
+                Set unprotectedCells = cell
+            Else
+                Set unprotectedCells = Union(unprotectedCells, cell)
+            End If
+        End If
+    Next cell
+
+    'Sort to ensure cells are sorted left-to-right, top-to-bottom
+    If Not unprotectedCells Is Nothing Then
+        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
+        Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+    
+        'Enable TAB through unprotected cells
+        Application.EnableEvents = False
+        Dim i As Long
+        For i = 1 To sortedCells.count
+            If i = sortedCells.count Then
+                sortedCells.Cells(i).Next.Select
+            Else
+                sortedCells.Cells(i).Next.Select
+                sortedCells.Cells(i + 1).Activate
+            End If
+        Next i
+    End If
+    
+    Application.EnableEvents = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    Set unprotectedCells = Nothing
+    Set sortedCells = Nothing
+    
+    Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
+
+End Sub
+
 

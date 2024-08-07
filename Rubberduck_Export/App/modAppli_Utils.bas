@@ -115,7 +115,7 @@ Public Sub UnprotectCells(rng As Range)
 
 End Sub
 
-Sub Start_Routine(subName As String) '2024-06-06 @ 10:12
+Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
 
     Dim modeOper As Long
     modeOper = 2
@@ -196,7 +196,7 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:CreateOrReplaceWorksheet()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:CreateOrReplaceWorksheet()")
     
     Dim ws As Worksheet
     Dim wsExists As Boolean
@@ -268,7 +268,7 @@ End Sub
 
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:Integrity_Verification()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:Integrity_Verification()")
     
     Application.ScreenUpdating = False
     
@@ -418,7 +418,7 @@ End Sub
 
 Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Clients()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Clients()")
     
     Application.ScreenUpdating = False
     
@@ -511,7 +511,7 @@ End Sub
 
 Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Fournisseurs()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Fournisseurs()")
     
     Application.ScreenUpdating = False
 
@@ -601,7 +601,7 @@ End Sub
 
 Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Détails()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Détails()")
     
     Application.ScreenUpdating = False
     
@@ -700,7 +700,7 @@ End Sub
 
 Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Entête()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Entête()")
     
     Application.ScreenUpdating = False
     
@@ -777,7 +777,7 @@ End Sub
 
 Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Projets_Détails()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Projets_Détails()")
     
     Application.ScreenUpdating = False
     
@@ -887,7 +887,7 @@ End Sub
 
 Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_FAC_Projets_Entête()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Projets_Entête()")
     
     Application.ScreenUpdating = False
     
@@ -1046,7 +1046,7 @@ End Sub
 
 Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_GL_Trans()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_GL_Trans()")
     
     Application.ScreenUpdating = False
     
@@ -1241,7 +1241,7 @@ End Sub
 
 Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_TEC_TdB_Data()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_TEC_TdB_Data()")
     
     Application.ScreenUpdating = False
     
@@ -1478,7 +1478,7 @@ End Sub
 
 Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_Plan_Comptable()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Plan_Comptable()")
     
     Application.ScreenUpdating = False
     
@@ -1593,7 +1593,7 @@ End Sub
 
 Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modAppli_Utils:check_TEC()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_TEC()")
     
     Application.ScreenUpdating = False
     

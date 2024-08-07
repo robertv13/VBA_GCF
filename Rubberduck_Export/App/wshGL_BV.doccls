@@ -5,7 +5,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:Worksheet_Activate()")
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -169,7 +169,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 '    Sub GL_TB_AdvancedFilter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()")
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
@@ -237,7 +237,7 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-        Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshGL_BV:wshGL_BV_Adjust_The_Shape()")
+        Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:wshGL_BV_Adjust_The_Shape()")
         
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row

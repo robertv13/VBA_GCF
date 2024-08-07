@@ -6,7 +6,7 @@ Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow 
 
 Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Load_Open_Invoices()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Load_Open_Invoices()")
     
     wshENC_Saisie.Range("D13:K42").ClearContents 'Clear the invoices area before loading it
     With wshFAC_Comptes_Clients
@@ -32,7 +32,7 @@ End Sub
 
 Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Save_Update()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Save_Update()")
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
@@ -110,7 +110,7 @@ End Sub
 
 Sub Encaissement_Add_New() '2024-02-07 @ 12:39
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Add_New()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Add_New()")
 
     wshENC_Saisie.Range("B2").value = False
     wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents 'Clear Fields
@@ -123,7 +123,7 @@ End Sub
 
 Sub Encaissement_Previous() '2024-02-14 @ 11:04
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Previous()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Previous()")
 
     Dim MinPayID As Long, PayID As Long
     With wshENC_Saisie
@@ -154,7 +154,7 @@ End Sub
 
 Sub Encaissement_Next() '2024-02-14 @ 11:04
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Next()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Next()")
 
     Application.EnableEvents = False
 
@@ -190,7 +190,7 @@ End Sub
 
 Sub Encaissement_Load() '2024-02-14 @ 11:04
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Load()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Load()")
 
     With wshENC_Saisie
         If .Range("B4").value = Empty Then
@@ -234,7 +234,7 @@ End Sub
 
 Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Encaissement_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Import_All()")
     
     Application.ScreenUpdating = False
     
@@ -314,7 +314,7 @@ End Sub
 '
 Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_ENC_Entête_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:FAC_ENC_Entête_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Entête.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
@@ -346,7 +346,7 @@ End Sub
 
 Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:FAC_ENC_Détails_Import_All()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:FAC_ENC_Détails_Import_All()")
     
     'Clear all cells, but the headers, in the destination worksheet
     wshENC_Détails.Range("A1").CurrentRegion.Offset(3, 0).ClearContents
@@ -378,7 +378,7 @@ End Sub
 
 Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -463,7 +463,7 @@ End Sub
 
 Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -550,7 +550,7 @@ End Sub
 
 Sub Back_To_FAC_Menu()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Enc:Back_To_FAC_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Back_To_FAC_Menu()")
    
     wshENC_Saisie.Visible = xlSheetHidden
 

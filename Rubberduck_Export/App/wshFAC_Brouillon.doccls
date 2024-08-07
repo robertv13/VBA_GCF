@@ -6,7 +6,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Brouillon:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Brouillon:Worksheet_Activate()")
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -83,7 +83,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Brouillon:Worksheet_Change()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Brouillon:Worksheet_Change()")
     
     Application.EnableEvents = False
     

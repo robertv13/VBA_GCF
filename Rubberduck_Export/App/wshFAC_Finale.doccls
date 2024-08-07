@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Finale:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Finale:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     

@@ -3,7 +3,7 @@ Option Explicit
 
 Sub Affiche_Liste_Factures()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshFAC_Historique:Affiche_Liste_Factures()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Historique:Affiche_Liste_Factures()")
     
     Dim ws As Worksheet: Set ws = wshFAC_Historique
     
@@ -285,7 +285,7 @@ End Sub
 
 Sub FAC_Historique_Clear_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Historique:FAC_Historique_Clear_All_Cells()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()")
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -305,11 +305,11 @@ Sub FAC_Historique_Clear_All_Cells()
 
 End Sub
 
-Sub Shape_Is_Visible(a As Boolean)
+Sub Shape_Is_Visible(A As Boolean)
 
     Dim shp As Shape: Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("Rectangle : coins arrondis 2")
     
-    If a = True Then
+    If A = True Then
         shp.Visible = True
     Else
         shp.Visible = False
@@ -322,7 +322,7 @@ End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()")
     
     wshFAC_Historique.Visible = xlSheetHidden
     

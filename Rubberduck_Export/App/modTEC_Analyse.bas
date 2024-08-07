@@ -3,7 +3,7 @@ Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
     
     Application.ScreenUpdating = False
     
@@ -180,17 +180,18 @@ Sub TEC_Sort_Group_And_Subtotal()
             .Size = 12
         End With
     End With
+    
     'Change the format of the top row (Hours)
     With wsDest.Range("H6")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 65535
+            .Color = 255
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
         With .Font
-            .Color = -16776961
+            .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
             .Bold = True
             .Size = 12
@@ -488,7 +489,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -567,7 +568,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -627,7 +628,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -688,7 +689,7 @@ End Sub
 
 Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As Long, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     

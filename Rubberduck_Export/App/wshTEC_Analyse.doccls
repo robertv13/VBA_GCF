@@ -6,7 +6,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_Activate()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshTEC_Analyse:Worksheet_Activate()")
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -50,18 +50,12 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_SelectionChange()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshTEC_Analyse:Worksheet_SelectionChange()")
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = BASIC_COLOR
     End If
     
-'    'Save the current cell address and color, before changing it
-'    With Target
-'        previousCellAddress = .Address
-'        interior_color_current_cell = .Interior.Color
-'    End With
-'
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Analyse.Range("I3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -101,7 +95,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshTEC_Analyse:Worksheet_Change()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshTEC_Analyse:Worksheet_Change()")
     
     Dim fullDate As Variant
     
@@ -111,6 +105,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
+            Call TEC_Sort_Group_And_Subtotal
+
 '            Application.GoTo wshTEC_Analyse.Range("O9")
         Else
             Call MsgBoxInvalidDate

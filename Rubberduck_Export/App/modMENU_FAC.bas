@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub PreparationFacture_Click()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:PreparationFacture_Click()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:PreparationFacture_Click()")
 
     Call SlideIn_PrepFact
     
@@ -72,7 +72,7 @@ End Sub
 'Option # 4
 Sub FAC_Historique_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:FAC_Historique_Click()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:FAC_Historique_Click()")
 
     Call SlideIn_FAC_Historique
     
@@ -98,7 +98,7 @@ End Sub
 'Option # 5
 Sub CC_Annulation_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("wshMenuFAC:CC_Annulation_Click()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:CC_Annulation_Click()")
 
     Call SlideIn_FAC_Annulation
     

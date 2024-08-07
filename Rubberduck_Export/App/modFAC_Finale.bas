@@ -6,7 +6,7 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Save()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Save()")
 
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
@@ -99,7 +99,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -187,7 +187,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -234,7 +234,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -315,7 +315,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -350,7 +350,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -412,7 +412,7 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -450,7 +450,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 End Sub
 Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()")
 
     Application.ScreenUpdating = False
     
@@ -504,7 +504,7 @@ End Sub
 
 Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -535,7 +535,7 @@ End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -601,7 +601,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()")
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     
@@ -639,7 +639,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -679,7 +679,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()")
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     
@@ -716,7 +716,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 End Sub
 Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()")
 
     Application.ScreenUpdating = False
     
@@ -763,7 +763,7 @@ End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
     
     'Set the range to look for
     Dim lastTECRow As Long
@@ -793,7 +793,7 @@ End Sub
 
 Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Invoice_Load()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:Invoice_Load()")
 
     With wshFAC_Brouillon
         If wshFAC_Brouillon.Range("B20").value = Empty Then
@@ -869,7 +869,7 @@ End Sub
 
 Sub InvoiceGetAllTrans(inv As String)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:InvoiceGetAllTrans()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:InvoiceGetAllTrans()")
 
     Application.ScreenUpdating = False
 
@@ -916,7 +916,7 @@ End Sub
 
 Sub FAC_Finale_Setup_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Setup_All_Cells()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Setup_All_Cells()")
     
     Application.EnableEvents = False
     
@@ -1097,7 +1097,7 @@ End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Prev_Invoice()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:Prev_Invoice()")
     
     With wshFAC_Brouillon
         Dim MininvNumb As Long
@@ -1128,7 +1128,7 @@ End Sub
 
 Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:Next_Invoice()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:Next_Invoice()")
     
     With wshFAC_Brouillon
         Dim MaxinvNumb As Long
@@ -1240,7 +1240,7 @@ End Sub
 
 Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()")
    
     Application.ScreenUpdating = False
     
@@ -1256,7 +1256,7 @@ End Sub
 
 Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Routine("modFAC_Finale:modFAC_Finale()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:modFAC_Finale()")
 
     Dim montant As Double
     Dim dateFact As Date

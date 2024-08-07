@@ -673,3 +673,104 @@ Sub Exit_Click() '2024-07-05 @ 06:37
     End If
     
 End Sub
+
+Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Hide_All_Worksheets_Except_Menu()")
+    
+    Dim ws As Worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.CodeName <> "wshMenu" Then
+            If userName <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+                ws.Visible = xlSheetHidden
+            End If
+        End If
+    Next ws
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
+    Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
+    
+End Sub
+
+Sub Slide_In_All_Menu_Options()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Slide_In_All_Menu_Options()")
+    
+    Call SlideIn_TEC
+    Call SlideIn_Facturation
+    Call SlideIn_Debours
+    Call SlideIn_Comptabilite
+    Call SlideIn_Parametres
+    Call SlideIn_Exit
+
+    Call Output_Timer_Results("modAppli:Slide_In_All_Menu_Options()", timerStart)
+
+End Sub
+
+Sub Hide_Dev_Shapes_Based_On_Username()
+    
+    'Get the current username
+    Dim userName As String
+    userName = Environ("Username")
+    
+    'Set the worksheet where the shapes are located
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Menu")
+    
+    'Loop through each shape in the worksheet
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        'Check the username and hide shapes accordingly
+        Select Case shp.name
+            Case "ChangeReferenceSystem"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "VérificationIntégritée"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "RechercheCode"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "RéférencesCirculaires"
+                If userName = "Robert M. Vigneault" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case Else
+        End Select
+    Next shp
+
+End Sub
+
+Sub BackToMainMenu()
+
+    Dim ws As Worksheet
+    For Each ws In ActiveWorkbook.Worksheets
+        If ws.name <> "Menu" Then ws.Visible = xlSheetHidden
+    Next ws
+    wshMenu.Activate
+    wshMenu.Range("A1").Select
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
+End Sub
+
+
+
