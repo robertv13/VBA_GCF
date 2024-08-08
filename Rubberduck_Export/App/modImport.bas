@@ -377,22 +377,22 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
 
 End Sub
 
-Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
+Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:FAC_Comptes_Clients_Import_All()")
     
-    Application.StatusBar = "J'importe les comptes clients"
+    Application.StatusBar = "J'importe les transactions de CAR"
     
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
     wshFAC_Comptes_Clients.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
-    'Import Comptes_Clients from 'GCF_DB_Sortie.xlsx'
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_MASTER.xlsx"
-    sourceTab = "FAC_Comptes_Clients"
+                     "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
+    sourceTab = "CAR"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -410,13 +410,13 @@ Sub FAC_Comptes_Clients_Import_All() '2024-03-11 @ 11:33
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshFAC_Comptes_Clients workbook
+    'Copy to wshCAR workbook
     wshFAC_Comptes_Clients.Range("A3").CopyFromRecordset recSet
-
-   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
     
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
+    Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshFAC_Comptes_Clients, rng, 1)
+
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     

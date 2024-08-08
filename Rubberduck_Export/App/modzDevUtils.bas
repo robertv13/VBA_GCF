@@ -757,33 +757,42 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
     
 End Function
 
-Sub List_All_Shapes_Properties()
+Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
+    Dim rng As Range
+    Dim row As Long, col As Long
+    row = ActiveCell.row
+    col = ActiveCell.Column
+    
+    Application.EnableEvents = False
+    
     Dim r As Long
-    r = 2
-    ws.Range("G" & r).value = "Type"
-    ws.Range("H" & r).value = "Shape Name"
-    ws.Range("I" & r).value = "ZOrder"
-    ws.Range("J" & r).value = "Top"
-    ws.Range("K" & r).value = "Left"
-    ws.Range("L" & r).value = "Width"
-    ws.Range("M" & r).value = "Height"
+    r = row
+    ws.Cells(r, col).value = "Type"
+    ws.Cells(r, col + 1).value = "Shape Name"
+    ws.Cells(r, col + 2).value = "ZOrder"
+    ws.Cells(r, col + 3).value = "Top"
+    ws.Cells(r, col + 4).value = "Left"
+    ws.Cells(r, col + 5).value = "Width"
+    ws.Cells(r, col + 6).value = "Height"
     
     'Loop through all shapes on the worksheet
     Dim shp As Shape
-    r = 3
+    r = row + 1
     For Each shp In ws.Shapes
-        ws.Range("G" & r).value = shp.Type
-        ws.Range("H" & r).value = shp.name
-        ws.Range("I" & r).value = shp.ZOrderPosition
-        ws.Range("J" & r).value = shp.Top
-        ws.Range("K" & r).value = shp.Left
-        ws.Range("L" & r).value = shp.width
-        ws.Range("M" & r).value = shp.Height
+        ws.Cells(r, col).value = shp.Type
+        ws.Cells(r, col + 1).value = shp.name
+        ws.Cells(r, col + 2).value = shp.ZOrderPosition
+        ws.Cells(r, col + 3).value = shp.Top
+        ws.Cells(r, col + 4).value = shp.Left
+        ws.Cells(r, col + 5).value = shp.width
+        ws.Cells(r, col + 6).value = shp.Height
         r = r + 1
     Next shp
+    
+    Application.EnableEvents = True
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set shp = Nothing

@@ -30,10 +30,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     'Special timer for log purpose
     Dim timer3Start As Double: timer3Start = Timer: Call Start_Timer("ufSaisieHeures:UserForm_Activate()")
     
-    If wshAdmin.Range("F5").value = "" Then
-        MsgBox "La variable de configuration 'wshAdmin.Range("F5").value' est vide", vbExclamation
-    End If
-    
     Call Client_List_Import_All
     Call TEC_Import_All
     

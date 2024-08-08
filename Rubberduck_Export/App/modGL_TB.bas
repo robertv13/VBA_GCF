@@ -431,12 +431,16 @@ Sub GL_TB_Setup_And_Print()
     Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 60) + 1
     
-    Dim shp As Range: Set shp = ActiveSheet.Shapes("GL_BV_Print")
+    On Error Resume Next
+    Dim shp As Range: Set shp = wshGL_BV.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
+    On Error GoTo 0
     
     Call GL_TB_SetUp_And_Print_Document(printRange, pagesRequired)
     
+    On Error Resume Next
     shp.Visible = msoTrue
+    On Error GoTo 0
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set printRange = Nothing

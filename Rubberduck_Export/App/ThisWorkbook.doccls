@@ -11,21 +11,19 @@ Private Sub Workbook_Open()
     
     Call Set_Root_Path
     
-    Debug.Assert wshAdmin.Range("F5").value <> ""
-    
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
     Call BackupMasterFile
     
     Call Hide_Dev_Shapes_Based_On_Username
     
     With wshMenu.Range("A34")
-        .Font.Size = 9
+        .Font.Size = 8
         .Font.Color = vbBlack
         .value = "Version: " & APP_VERSION_NO
     End With
     
     With wshMenu.Range("A35")
-        .Font.Size = 9
+        .Font.Size = 8
         .Font.Color = vbRed
         .value = "Utilisateur: " & Environ("Username")
     End With

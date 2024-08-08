@@ -567,15 +567,15 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     
     'Declare and open the 2 workbooks
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER_TEC_Intact.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER_ACO.xlsx")
     Dim wb2 As Workbook
     Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
 
     'Declare the 2 worksheets
     Dim ws1 As Worksheet
-    Set ws1 = wb1.Worksheets("TEC_Local")
+    Set ws1 = wb1.Worksheets("CAR")
     Dim ws2 As Worksheet
-    Set ws2 = wb2.Worksheets("TEC_Local")
+    Set ws2 = wb2.Worksheets("CAR")
     
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -601,7 +601,7 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
         readCells = readCells + 1
         If cell1.value <> cell2.value Then
             wsDiff.Cells(diffRow, 1).value = "Ligne " & cell1.row & ", Colonne " & cell1.Column
-            wsDiff.Cells(diffRow, 2).value = ws1.Cells(cell1.row, 5).value
+            wsDiff.Cells(diffRow, 2).value = ws1.Cells(cell1.row, 4).value
             wsDiff.Cells(diffRow, 3).value = cell1.value
             wsDiff.Cells(diffRow, 4).value = cell2.value
             diffRow = diffRow + 1
@@ -708,4 +708,66 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     MsgBox "Les données ont été copiées avec succès dans le fichier destination."
     
 End Sub
+
+Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
+
+    Dim sourceRange As Range
+    
+    'Définir les chemins d'accès des fichiers (source & destination)
+    Dim sourceFilePath As String
+    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+    Dim clientMF As String
+    clientMF = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    
+    'Declare le Workbook & le Worksheet (source)
+    Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
+    Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("CAR")
+    
+    'Détermine la dernière rangée utilisée dans le fichier Source
+    Dim lastUsedRow As Long
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
+    Dim lastUsedCol As Long
+    lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
+    
+    'Define the range to copy
+    Set sourceRange = sourceSheet.Range(sourceSheet.Cells(1, 1), sourceSheet.Cells(lastUsedRow, lastUsedCol))
+    
+    ' Open the destination workbook
+    Dim referenceWorkbook As Workbook: Set referenceWorkbook = Workbooks.Open(clientMF)
+    Dim referenceSheet As Worksheet: Set referenceSheet = referenceWorkbook.Worksheets("Clients")
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).row
+    
+    Dim dictClients As Dictionary 'Code, Nomdu Client
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowClient
+        dictClients.add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
+'        Debug.Print referenceSheet.Cells(i, 2).value & " - " & referenceSheet.Cells(i, 1).value
+    Next i
+    
+    Dim codeClient As String, nomClient As String, updatedNomClient As String
+    For i = 3 To lastUsedRow
+        codeClient = sourceSheet.Cells(i, 4).value
+        nomClient = sourceSheet.Cells(i, 3).value
+        updatedNomClient = dictClients(codeClient)
+        Debug.Print i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
+        sourceSheet.Cells(i, 3).value = updatedNomClient
+    Next i
+    
+    'Save and close the destination workbook
+    sourceWorkbook.Save
+    sourceWorkbook.Close
+    
+    'Clean up
+    Set sourceSheet = Nothing
+    Set sourceRange = Nothing
+    Set sourceWorkbook = Nothing
+    Set referenceSheet = Nothing
+    Set referenceWorkbook = Nothing
+    
+    MsgBox "Les données ont été copiées avec succès dans le fichier destination."
+    
+End Sub
+
 

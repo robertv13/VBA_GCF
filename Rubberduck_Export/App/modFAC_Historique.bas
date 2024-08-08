@@ -21,10 +21,12 @@ Sub Affiche_Liste_Factures()
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
     End If
-    wshFAC_Entête.Range("W3").value = myInfo(3)
+    wshFAC_Entête.Range("X3").value = myInfo(3)
     
     Call FAC_Entête_AdvancedFilter
+    Application.EnableEvents = False
     ws.Range("E9:R33").ClearContents
+    Application.EnableEvents = True
     Call Copy_List_Of_Invoices_to_Worksheet(dateFrom, dateTo)
     
     Application.ScreenUpdating = True
@@ -46,21 +48,21 @@ Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     With ws
-        'Setup source data including headers
+        'Setup the destination Range and clear it before applying AdvancedFilter
         Dim lastUsedRow As Long
+        Dim destinationRng As Range: Set destinationRng = .Range("Z2:AU2")
+        lastUsedRow = .Range("Z99999").End(xlUp).row
+        If lastUsedRow > 2 Then
+            ws.Range("Z3:AU" & lastUsedRow).ClearContents
+        End If
+        
+        'Setup source data including headers
         lastUsedRow = .Range("A99999").End(xlUp).row
         If lastUsedRow < 3 Then Exit Sub 'No data to filter
         Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
         
         'Define the criteria range including headers
         Dim criteriaRng As Range: Set criteriaRng = ws.Range("X2:X3")
-    
-        'Setup the destination Range and clear it before applying AdvancedFilter
-        Dim destinationRng As Range: Set destinationRng = .Range("Z2:AU2")
-        lastUsedRow = .Range("Z99999").End(xlUp).row
-        If lastUsedRow > 2 Then
-            ws.Range("Z3:AU" & lastUsedRow).ClearContents
-        End If
     
         ' Apply the advanced filter
         sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
