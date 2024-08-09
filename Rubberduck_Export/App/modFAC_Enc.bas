@@ -26,7 +26,7 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
     End With
     wshENC_Saisie.Range("B2").value = False 'Set PaymentLoad to False
     
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Load_Open_Invoices()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Load_Open_Invoices()", timerStart)
 
 End Sub
 
@@ -104,7 +104,7 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
         .Range("F3").Select
     End With
     
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Save_Update()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Save_Update()", timerStart)
 
 End Sub
 
@@ -117,7 +117,7 @@ Sub Encaissement_Add_New() '2024-02-07 @ 12:39
     wshENC_Saisie.Range("J3").value = Date 'Set Default Date
     wshENC_Saisie.Range("F5").value = "Banque" ' Set Default type
     
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Add_New()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Add_New()", timerStart)
     
 End Sub
 
@@ -148,7 +148,7 @@ Sub Encaissement_Previous() '2024-02-14 @ 11:04
         Call Encaissement_Load 'Load Payment
     End With
 
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Previous()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Previous()", timerStart)
 
 End Sub
 
@@ -184,7 +184,7 @@ Sub Encaissement_Next() '2024-02-14 @ 11:04
     
     Application.EnableEvents = True
 
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Next()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Next()", timerStart)
 
 End Sub
 
@@ -228,7 +228,7 @@ NoData:
         .Range("B2").value = False 'Payment Load to False
     End With
     
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Load()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Load()", timerStart)
 
 End Sub
 
@@ -245,7 +245,7 @@ Sub Encaissement_Import_All() '2024-02-14 @ 09:48
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modFAC_Enc:Encaissement_Import_All()", timerStart)
+    Call End_Timer("modFAC_Enc:Encaissement_Import_All()", timerStart)
     
 End Sub
 
@@ -340,7 +340,7 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
     Set DestinationRange = Nothing
     Set sourceRange = Nothing
     
-    Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Entête_Import_All()", timerStart)
+    Call End_Timer("modFAC_Enc:FAC_ENC_Entête_Import_All()", timerStart)
   
 End Sub
 
@@ -372,7 +372,7 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
     Set DestinationRange = Nothing
     Set sourceRange = Nothing
     
-    Call Output_Timer_Results("modFAC_Enc:FAC_ENC_Détails_Import_All()", timerStart)
+    Call End_Timer("modFAC_Enc:FAC_ENC_Détails_Import_All()", timerStart)
     
 End Sub
 
@@ -457,7 +457,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()", timerStart)
+    Call End_Timer("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()", timerStart)
     
 End Sub
 
@@ -544,7 +544,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
+    Call End_Timer("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
     
 End Sub
 
@@ -557,7 +557,7 @@ Sub Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Output_Timer_Results("modFAC_Enc:Back_To_FAC_Menu()", timerStart)
+    Call End_Timer("modFAC_Enc:Back_To_FAC_Menu()", timerStart)
     
 End Sub
 

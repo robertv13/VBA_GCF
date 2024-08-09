@@ -38,7 +38,7 @@ Sub JE_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès"
     
-    Call Output_Timer_Results("modGL_EJ:JE_Update()", timerStart)
+    Call End_Timer("modGL_EJ:JE_Update()", timerStart)
     
 End Sub
 
@@ -52,7 +52,7 @@ Sub Save_EJ_Recurrente(ll As Long)
     Call GL_EJ_Auto_Add_Record_To_DB(ll)
     Call GL_EJ_Auto_Add_Record_Locally(ll)
     
-    Call Output_Timer_Results("modGL_EJ:Save_EJ_Recurrente()", timerStart)
+    Call End_Timer("modGL_EJ:Save_EJ_Recurrente()", timerStart)
     
 End Sub
 
@@ -81,7 +81,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     wshGL_EJ.Range("F6").value = "[Auto]-" & EJAutoDesc
     wshGL_EJ.Range("K4").Activate
 
-    Call Output_Timer_Results("modGL_EJ:Load_JEAuto_Into_JE()", timerStart)
+    Call End_Timer("modGL_EJ:Load_JEAuto_Into_JE()", timerStart)
     
 End Sub
 
@@ -102,7 +102,7 @@ Sub wshGL_EJ_Clear_All_Cells()
     End With
     ActiveSheet.Protect UserInterfaceOnly:=True
     
-    Call Output_Timer_Results("modGL_EJ:wshGL_EJ_Clear_All_Cells()", timerStart)
+    Call End_Timer("modGL_EJ:wshGL_EJ_Clear_All_Cells()", timerStart)
 
 End Sub
 
@@ -133,7 +133,7 @@ Sub GL_EJ_Auto_Build_Summary()
         Next i
     End With
 
-    Call Output_Timer_Results("modGL_EJ:GL_EJ_Auto_Build_Summary()", timerStart)
+    Call End_Timer("modGL_EJ:GL_EJ_Auto_Build_Summary()", timerStart)
 
 End Sub
 
@@ -212,7 +212,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modGL_EJ:GL_Trans_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modGL_EJ:GL_Trans_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -252,7 +252,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modGL_EJ:GL_Trans_Add_Record_Locally()", timerStart)
+    Call End_Timer("modGL_EJ:GL_Trans_Add_Record_Locally()", timerStart)
 
 End Sub
 
@@ -322,7 +322,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -361,7 +361,7 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()", timerStart)
+    Call End_Timer("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()", timerStart)
     
 End Sub
 

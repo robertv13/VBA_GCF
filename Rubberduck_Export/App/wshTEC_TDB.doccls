@@ -13,7 +13,7 @@ Private Sub Worksheet_Activate()
 
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("wshTEC_TDB:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshTEC_TDB:Worksheet_Activate()", timerStart)
 
 End Sub
 

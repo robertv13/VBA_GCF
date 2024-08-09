@@ -1,6 +1,7 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
+
 Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As String, numberRows As Long)
 
     'Open the workbook
@@ -134,14 +135,16 @@ Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
             Dim lastUsedRow As Long
             lastUsedRow = .Range("A99999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("B" & lastUsedRow).value = subName & " - entering"
+            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
+            .Range("B" & lastUsedRow).value = ThisWorkbook.name
+            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("D" & lastUsedRow).value = subName & " - entering"
         End With
     End If
 
 End Sub
 
-Sub Output_Timer_Results(subName As String, t As Double)
+Sub End_Timer(subName As String, t As Double)
 
     Dim modeOper As Long
     modeOper = 2 '2024-03-29 @ 11:37
@@ -167,11 +170,13 @@ Sub Output_Timer_Results(subName As String, t As Double)
             Dim lastUsedRow As Long
             lastUsedRow = .Range("A99999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("B" & lastUsedRow).value = subName
+            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
+            .Range("B" & lastUsedRow).value = ThisWorkbook.name
+            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("D" & lastUsedRow).value = subName
             If t Then
-                .Range("C" & lastUsedRow).value = Round(Timer - t, 4)
-                .Range("C" & lastUsedRow).NumberFormat = "#,##0.0000"
+                .Range("E" & lastUsedRow).value = Round(Timer - t, 4)
+                .Range("E" & lastUsedRow).NumberFormat = "#,##0.0000"
             End If
         End With
     End If
@@ -224,7 +229,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("modAppli_Utils:CreateOrReplaceWorksheet()", timerStart)
+    Call End_Timer("modAppli_Utils:CreateOrReplaceWorksheet()", timerStart)
 
 End Sub
 
@@ -387,7 +392,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
         .name = "Courier New"
-        .Size = 10
+        .size = 10
     End With
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
@@ -412,7 +417,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:Integrity_Verification()", timerStart)
+    Call End_Timer("modAppli_Utils:Integrity_Verification()", timerStart)
     
 End Sub
 
@@ -505,7 +510,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_Clients()", timerStart)
+    Call End_Timer("modAppli_Utils:check_Clients()", timerStart)
 
 End Sub
 
@@ -595,7 +600,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_Fournisseurs()", timerStart)
+    Call End_Timer("modAppli_Utils:check_Fournisseurs()", timerStart)
 
 End Sub
 
@@ -694,7 +699,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_FAC_Détails()", timerStart)
+    Call End_Timer("modAppli_Utils:check_FAC_Détails()", timerStart)
 
 End Sub
 
@@ -771,7 +776,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_FAC_Entête()", timerStart)
+    Call End_Timer("modAppli_Utils:check_FAC_Entête()", timerStart)
 
 End Sub
 
@@ -881,7 +886,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_FAC_Projets_Détails()", timerStart)
+    Call End_Timer("modAppli_Utils:check_FAC_Projets_Détails()", timerStart)
 
 End Sub
 
@@ -1040,7 +1045,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_FAC_Projets_Entête()", timerStart)
+    Call End_Timer("modAppli_Utils:check_FAC_Projets_Entête()", timerStart)
 
 End Sub
 
@@ -1235,7 +1240,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_GL_Trans()", timerStart)
+    Call End_Timer("modAppli_Utils:check_GL_Trans()", timerStart)
 
 End Sub
 
@@ -1472,7 +1477,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_TEC_TdB_Data()", timerStart)
+    Call End_Timer("modAppli_Utils:check_TEC_TdB_Data()", timerStart)
 
 End Sub
 
@@ -1587,7 +1592,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_Plan_Comptable()", timerStart)
+    Call End_Timer("modAppli_Utils:check_Plan_Comptable()", timerStart)
 
 End Sub
 
@@ -1830,7 +1835,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modAppli_Utils:check_TEC()", timerStart)
+    Call End_Timer("modAppli_Utils:check_TEC()", timerStart)
 
 End Sub
 
@@ -1881,7 +1886,7 @@ Sub Make_It_As_Header(r As Range)
         With .Font
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
-            .Size = 10
+            .size = 10
             .Italic = True
             .Bold = True
         End With

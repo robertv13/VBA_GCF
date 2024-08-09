@@ -3,7 +3,6 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v4.C.2.xlsb" '2024-08-08 @ 14:02
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
@@ -12,8 +11,6 @@ Public Const MAXWIDTH As Long = 192
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
-
-Public userName As String
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns
@@ -112,9 +109,11 @@ End Enum
 
 Sub Set_Root_Path()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Set_Root_Path()")
+    
     Dim rootPath As String
     
-    If Trim(Environ("username")) = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else
         rootPath = "P:\Administration\APP\GCF"
@@ -122,41 +121,40 @@ Sub Set_Root_Path()
 
     wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
 
+    Call End_Timer("modAppli:Set_Root_Path()", timerStart)
+
 End Sub
 
 Sub Display_Info_On_Main_Menu()
 
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Display_Info_On_Main_Menu()")
+    
     Application.EnableEvents = False
     wshMenu.Unprotect
     
-    Debug.Print wshMenu.Range("A33").Font.Size
-    
-    Dim version As String: version = APP_VERSION_NO
     With wshMenu.Range("$A$33")
-        .Font.Size = 8
+        .Font.size = 8
         .Font.Color = vbBlack
-        .value = "'" & CStr("Version - " & version)
+        .value = "'" & CStr("Version - " & ThisWorkbook.name)
     End With
     
-    Debug.Print wshMenu.Range("A34").Font.Size
-    
-    Dim userName As String: userName = Environ("Username")
     With wshMenu.Range("$A$34")
-        .Font.Size = 8
+        .Font.size = 8
         .Font.Color = vbRed
-        .value = "'" & CStr("Utilisateur - " & userName)
+        .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
-    
-    Debug.Print wshMenu.Range("A35").Font.Size
     
     Dim env As String: env = wshAdmin.Range("F5").value
     With wshMenu.Range("$A$35")
-        .Font.Size = 8
+        .Font.size = 8
         .Font.Color = vbBlack
-        .value = "'" & CStr("Environnement - " & env)
+        .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 
-    wshMenu.Protect
+    wshMenu.Protect UserInterfaceOnly:=True
+    
     Application.EnableEvents = True
+
+    Call End_Timer("modAppli:Display_Info_On_Main_Menu()", timerStart)
 
 End Sub

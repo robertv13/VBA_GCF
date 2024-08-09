@@ -13,6 +13,6 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("wshFAC_Finale:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshFAC_Finale:Worksheet_Activate()", timerStart)
     
 End Sub

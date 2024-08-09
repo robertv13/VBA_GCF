@@ -1,6 +1,8 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
+Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
+
 Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
@@ -112,7 +114,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
 
-    Call Output_Timer_Results("Functions:Fn_Find_Data_In_A_Range()", timerStart)
+    Call End_Timer("Functions:Fn_Find_Data_In_A_Range()", timerStart)
 
 End Function
 
@@ -217,6 +219,48 @@ Function GetCheckBoxPosition(chkBox As OLEObject) As String
     
 End Function
 
+Function GetColumnType(col As Range) As String
+
+    Dim cell As Range
+    Dim dataType As String
+    Dim cellValue As Variant
+    
+    dataType = "Empty" ' Default type if no data found
+    
+    ' Loop through cells in the first few rows to determine the data type
+    For Each cell In col.Cells
+        cellValue = cell.value
+        If Not IsEmpty(cellValue) Then
+            If IsNumeric(cellValue) Then
+                If IsDate(cellValue) Then
+                    dataType = "Date"
+                Else
+                    dataType = "Numeric"
+                End If
+            ElseIf IsDate(cellValue) Then
+                dataType = "Date"
+            ElseIf IsError(cellValue) Then
+                dataType = "Error"
+            Else
+                Select Case VarType(cellValue)
+                    Case vbString
+                        dataType = "Text"
+                    Case vbBoolean
+                        dataType = "Boolean"
+                    Case vbDate
+                        dataType = "Date"
+                    Case Else
+                        dataType = "Other"
+                End Select
+            End If
+            ' Exit loop once a non-empty value is found
+            Exit For
+        End If
+    Next cell
+    
+    GetColumnType = dataType
+End Function
+
 Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Get_GL_Code_From_GL_Description()")
@@ -249,7 +293,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Output_Timer_Results("Functions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
+    Call End_Timer("Functions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
 
 End Function
 
@@ -302,22 +346,9 @@ Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal
         Fn_Get_TEC_Row_Number_By_TEC_ID = 0
     End If
     
-    Call Output_Timer_Results("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()", timerStart)
+    Call End_Timer("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()", timerStart)
     
 End Function
-
-'Sub test()
-'
-'    Dim dueDate As Date: dueDate = #7/1/2024#
-'    Dim cutoffDate As Date: cutoffDate = Now()
-'    Dim days1 As Integer: days1 = 30
-'    Dim days2 As Integer: days2 = 60
-'    Dim days3 As Integer: days3 = 90
-'    Dim days4 As Integer: days4 = 120
-'    Dim b As Integer
-'    b = Fn_Get_Bucket_For_Aging(dueDate, cutoffDate, days1, days2, days3, days4)
-'
-'End Sub
 
 Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Long, days2 As Long, days3 As Long, days4 As Long)
 
@@ -335,6 +366,7 @@ Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Long, days2 As Long, days
     End Select
     
 End Function
+
 Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
 
     'Define the source data
@@ -595,6 +627,19 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     End With
     
     Fn_Get_Tax_Rate = rate
+    
+End Function
+
+Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
+
+    Dim buffer As String * 255
+    Dim size As Long: size = 255
+    
+    If GetUserName(buffer, size) Then
+        Fn_Get_Windows_Username = Left$(buffer, size - 1)
+    Else
+        Fn_Get_Windows_Username = "Unknown"
+    End If
     
 End Function
 

@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshGL_EJ:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshGL_EJ:Worksheet_Activate()", timerStart)
 
 End Sub
 

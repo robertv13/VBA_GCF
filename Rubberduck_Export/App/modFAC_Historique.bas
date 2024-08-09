@@ -33,7 +33,7 @@ Sub Affiche_Liste_Factures()
     
     Call Shape_Is_Visible(False)
     
-    Call Output_Timer_Results("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
+    Call End_Timer("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
 
 Clean_Exit:
     
@@ -303,7 +303,7 @@ Sub FAC_Historique_Clear_All_Cells()
     End With
     ActiveSheet.Protect UserInterfaceOnly:=True
     
-    Call Output_Timer_Results("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
+    Call End_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
 
 End Sub
 
@@ -336,7 +336,7 @@ Sub FAC_Historique_Back_To_FAC_Menu()
     
     wshMenuFAC.Range("A1").Select
     
-    Call Output_Timer_Results("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", timerStart)
+    Call End_Timer("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", timerStart)
 
 End Sub
 

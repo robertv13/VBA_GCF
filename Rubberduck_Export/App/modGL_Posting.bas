@@ -77,7 +77,7 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modGL_Posting:GL_Posting_To_DB()", timerStart)
+    Call End_Timer("modGL_Posting:GL_Posting_To_DB()", timerStart)
 
 End Sub
 
@@ -116,7 +116,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modGL_Posting:GL_Posting_Locally()", timerStart)
+    Call End_Timer("modGL_Posting:GL_Posting_Locally()", timerStart)
 
 End Sub
 
@@ -198,7 +198,7 @@ Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As St
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modGL_Posting:Encaissement_GL_Posting()", timerStart)
+    Call End_Timer("modGL_Posting:Encaissement_GL_Posting()", timerStart)
 
 End Sub
 

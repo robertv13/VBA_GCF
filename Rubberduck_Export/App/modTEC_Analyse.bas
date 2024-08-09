@@ -24,7 +24,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     progressBarBg.Line.Visible = msoTrue  'Show the border of the progress bar
     progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
-    progressBarBg.TextFrame.Characters.Font.Size = 14
+    progressBarBg.TextFrame.Characters.Font.size = 14
     progressBarBg.TextFrame.Characters.Font.Color = RGB(0, 0, 0) 'Black font
     progressBarBg.TextFrame.Characters.text = "Préparation complétée à 0 %"
     
@@ -177,7 +177,7 @@ Sub TEC_Sort_Group_And_Subtotal()
             .Color = -16776961
             .TintAndShade = 0
             .Bold = True
-            .Size = 12
+            .size = 12
         End With
     End With
     
@@ -194,7 +194,7 @@ Sub TEC_Sort_Group_And_Subtotal()
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
             .Bold = True
-            .Size = 12
+            .size = 12
         End With
     End With
     
@@ -256,7 +256,7 @@ Sub TEC_Sort_Group_And_Subtotal()
 
 '    Application.StatusBar = ""
 
-    Call Output_Timer_Results("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
+    Call End_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
 
 End Sub
 
@@ -562,7 +562,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As Long, fr As Long, lr As Lon
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -595,7 +595,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As L
         rn = rn + 1
     Next i
     
-    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
+    Call End_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -683,7 +683,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -715,7 +715,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
-    Call Output_Timer_Results("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
+    Call End_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -760,7 +760,7 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
         'Modify checkbox properties
         With checkBox.Object
             .Caption = "On facture"
-            .Font.Size = 11  ' Set font size
+            .Font.size = 11  ' Set font size
             .Font.Bold = True  ' Set font bold
             .ForeColor = RGB(0, 0, 255)  ' Set font color (Blue)
             .BackColor = RGB(200, 255, 200)  ' Set background color (Light Green)

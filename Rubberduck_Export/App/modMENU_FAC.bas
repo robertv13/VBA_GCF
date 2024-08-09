@@ -26,7 +26,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("wshMenuFAC:PreparationFacture_Click()", timerStart)
+    Call End_Timer("wshMenuFAC:PreparationFacture_Click()", timerStart)
     
 End Sub
 
@@ -91,7 +91,7 @@ Sub FAC_Historique_Click()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("wshMenuFAC:FAC_Historique_Click()", timerStart)
+    Call End_Timer("wshMenuFAC:FAC_Historique_Click()", timerStart)
 
 End Sub
 
@@ -118,7 +118,7 @@ Sub CC_Annulation_Click()
     
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("wshMenuFAC:CC_Annulation_Click()", timerStart)
+    Call End_Timer("wshMenuFAC:CC_Annulation_Click()", timerStart)
 
 End Sub
 

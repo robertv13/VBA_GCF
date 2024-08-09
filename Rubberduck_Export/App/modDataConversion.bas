@@ -257,7 +257,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
         wsDest.Range("L" & rowNum).value = "FAUX"
         wsDest.Range("M" & rowNum).value = ""
         wsDest.Range("N" & rowNum).value = "FAUX"
-        wsDest.Range("O" & rowNum).value = APP_VERSION_NO
+        wsDest.Range("O" & rowNum).value = ThisWorkbook.name
         wsDest.Range("P" & rowNum).value = ""
         
         rst.MoveNext

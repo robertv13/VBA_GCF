@@ -126,7 +126,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Set dictSolde = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Build_Trial_Balance()", timerStart)
 
 End Sub
 
@@ -159,7 +159,7 @@ Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
 '            Call Erreur_Totaux_DT_CT
 '        End If
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Display_TB_Totals()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Display_TB_Totals()", timerStart)
 
 End Sub
 
@@ -302,7 +302,7 @@ Exit_Sub:
     Set searchRange = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", timerStart)
 
 End Sub
 
@@ -356,7 +356,7 @@ NoSort:
     Set rgData = Nothing
     Set rgResult = Nothing
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_AdvancedFilter_By_GL()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_AdvancedFilter_By_GL()", timerStart)
 
 End Sub
 
@@ -378,7 +378,7 @@ Sub GL_TB_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
         .Range("B2").value = wshGL_BV.Range("B2").value + 1
     End With
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Sub_Totals()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Sub_Totals()", timerStart)
 
 End Sub
 
@@ -413,7 +413,7 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B9").value = CDate(Format$(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
     End Select
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Determine_From_And_To_Date()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Determine_From_And_To_Date()", timerStart)
 
 End Sub
 
@@ -446,7 +446,7 @@ Sub GL_TB_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Setup_And_Print()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Setup_And_Print()", timerStart)
 
 End Sub
 
@@ -475,7 +475,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Output_Timer_Results("modGL_TB:GL_TB_Setup_And_Print_Trans()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_Setup_And_Print_Trans()", timerStart)
 
 End Sub
 
@@ -529,7 +529,7 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
     wshGL_BV.PrintOut , , 1, True, True, , , , False
  
-    Call Output_Timer_Results("modGL_TB:GL_TB_SetUp_And_Print_Document()", timerStart)
+    Call End_Timer("modGL_TB:GL_TB_SetUp_And_Print_Document()", timerStart)
  
 End Sub
 

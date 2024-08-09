@@ -44,7 +44,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Cleaning memory - 2024-07-11 @ 10:14
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshTEC_Analyse:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -89,7 +89,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         End If
     End If
     
-    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_SelectionChange()", timerStart)
+    Call End_Timer("wshTEC_Analyse:Worksheet_SelectionChange()", timerStart)
     
 End Sub
 
@@ -136,7 +136,7 @@ ExitSub:
     
     'Cleaning memory - 2024-07-01 @ 09:34
 
-    Call Output_Timer_Results("wshTEC_Analyse:Worksheet_Change()", timerStart)
+    Call End_Timer("wshTEC_Analyse:Worksheet_Change()", timerStart)
   
 End Sub
 

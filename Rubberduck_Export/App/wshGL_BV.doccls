@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshGL_BV:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshGL_BV:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -209,7 +209,7 @@ NoSort:
     Set rgData = Nothing
     Set rgResult = Nothing
     
-    Call Output_Timer_Results("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
+    Call End_Timer("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
 
 End Sub
 
@@ -294,7 +294,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             .TextFrame.Characters.text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
             .TextFrame.Characters.Font.name = "Consolas"
-            .TextFrame.Characters.Font.Size = 11
+            .TextFrame.Characters.Font.size = 11
             .TextFrame.MarginLeft = 4
             .TextFrame.MarginRight = 4
             .TextFrame.MarginTop = 3
@@ -307,7 +307,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
         End With
       
-      Call Output_Timer_Results("wshGL_BV:wshGL_BV_Adjust_The_Shape()", timerStart)
+      Call End_Timer("wshGL_BV:wshGL_BV_Adjust_The_Shape()", timerStart)
       
 End Sub
 

@@ -5,7 +5,9 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
-    Call Output_Timer_Results("message:N E W  session  has  started", 0)
+    Call End_Timer("message:N E W  session  has  started", 0)
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ThisWorkbook:Workbook_Open()")
     
     Application.ScreenUpdating = False
     
@@ -16,7 +18,11 @@ Private Sub Workbook_Open()
     
     Call Hide_Dev_Shapes_Based_On_Username
     
+    MsgBox "Avant l'affichage des paramètres"
+    
     Call Display_Info_On_Main_Menu
+    
+    MsgBox "Après l'affichage des paramètres"
     
     wshMenu.Activate
     wshMenu.Unprotect
@@ -34,6 +40,8 @@ Private Sub Workbook_Open()
 
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set wb = Nothing
+    
+    Call End_Timer("ThisWorkbook:Workbook_Open()", timerStart)
     
 End Sub
 
@@ -81,7 +89,7 @@ Sub BackupMasterFile()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set masterWorkbook = Nothing
     
-    Call Output_Timer_Results("modAppli:BackupMasterFile()", timerStart)
+    Call End_Timer("modAppli:BackupMasterFile()", timerStart)
 
 End Sub
 

@@ -42,7 +42,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshFAC_Historique:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshFAC_Historique:Worksheet_Activate()", timerStart)
 
 End Sub
 

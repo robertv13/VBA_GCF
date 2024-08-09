@@ -213,7 +213,7 @@ Private Sub MakeAllMatchesAvailable()
     With MyListBox
         'To get the scrollbar working correctly it is necessary to turn IntegralHeight off and on
         .IntegralHeight = False
-        .Height = ResizeListbox(MyListBox, myTextBox.Font.Size)
+        .Height = ResizeListbox(MyListBox, myTextBox.Font.size)
         .IntegralHeight = True
 
         'List index will not highlight to first unless the second one is
@@ -266,14 +266,14 @@ End Function
 Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double) As Double
 
     'Set listbox font to the same size as the textbox
-    MyListBox.Font.Size = fontSize
+    MyListBox.Font.size = fontSize
 
     Dim ItemCount As Long
     ItemCount = IIf(MyListBox.ListCount > m_maxRows, m_maxRows, MyListBox.ListCount)
 
     Dim itemSize As Double
     'the font size is itself plus a quarter for the space between rows
-    itemSize = MyListBox.Font.Size + (MyListBox.Font.Size / 4)
+    itemSize = MyListBox.Font.size + (MyListBox.Font.size / 4)
     
     ResizeListbox = (itemSize * ItemCount) + 5
     

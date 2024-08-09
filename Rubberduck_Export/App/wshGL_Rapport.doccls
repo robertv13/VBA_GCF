@@ -51,7 +51,7 @@ Private Sub Worksheet_Activate()
     Set lb = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshGL_Rapport:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshGL_Rapport:Worksheet_Activate()", timerStart)
 
 End Sub
 

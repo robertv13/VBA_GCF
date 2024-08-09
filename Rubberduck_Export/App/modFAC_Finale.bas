@@ -93,7 +93,7 @@ Fast_Exit_Sub:
 
     wshFAC_Brouillon.Select
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Save()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Save()", timerStart)
     
 End Sub
 
@@ -181,7 +181,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Set rs = Nothing
     Set conn = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()", timerStart)
 
 End Sub
 
@@ -226,7 +226,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     wshFAC_Brouillon.Range("B11").value = firstFreeRow
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -309,7 +309,7 @@ nothing_to_update:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()", timerStart)
 
 End Sub
 
@@ -344,7 +344,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
 nothing_to_update:
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()", timerStart)
 
 End Sub
 
@@ -406,7 +406,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()", timerStart)
 
 End Sub
 
@@ -445,7 +445,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()", timerStart)
 
 End Sub
 Sub FAC_Finale_Add_Comptes_Clients_to_DB()
@@ -498,7 +498,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()", timerStart)
 
 End Sub
 
@@ -529,7 +529,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()", timerStart)
 
 End Sub
 
@@ -566,7 +566,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
             rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            rs.Fields("VersionApp").value = APP_VERSION_NO
+            rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
         Else
@@ -595,7 +595,7 @@ next_iteration:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()", timerStart)
 
 End Sub
 
@@ -633,7 +633,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()", timerStart)
 
 End Sub
 
@@ -673,7 +673,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", timerStart)
 
 End Sub
 
@@ -711,7 +711,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", timerStart)
 
 End Sub
 Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
@@ -749,7 +749,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     'Cleaning memory - 2024-07-23 @ 15:32
     Set conn = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()", timerStart)
     Exit Sub
 
 eh:
@@ -779,7 +779,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
     Next r
@@ -787,7 +787,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     'Cleaning memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
 
 End Sub
 
@@ -863,7 +863,7 @@ NoItems:
     .Range("B24").value = False 'Set Invoice Load To false
     End With
     
-    Call Output_Timer_Results("modFAC_Finale:Invoice_Load()", timerStart)
+    Call End_Timer("modFAC_Finale:Invoice_Load()", timerStart)
 
 End Sub
 
@@ -910,7 +910,7 @@ Done:
     End With
     Application.ScreenUpdating = True
 
-    Call Output_Timer_Results("modFAC_Finale:InvoiceGetAllTrans()", timerStart)
+    Call End_Timer("modFAC_Finale:InvoiceGetAllTrans()", timerStart)
 
 End Sub
 
@@ -969,7 +969,7 @@ Sub FAC_Finale_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Setup_All_Cells()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Setup_All_Cells()", timerStart)
 
 End Sub
 
@@ -1049,7 +1049,7 @@ Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action A
         
         'Where are the email templates ? - 2024-03-27 @ 07:28
         Dim FullTemplatePathAndFile As String
-        If userName <> "Robert M. Vigneault" Then
+        If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
             FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
         Else
             FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
@@ -1122,7 +1122,7 @@ Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
         Invoice_Load
     End With
     
-    Call Output_Timer_Results("modFAC_Finale:Prev_Invoice()", timerStart)
+    Call End_Timer("modFAC_Finale:Prev_Invoice()", timerStart)
 
 End Sub
 
@@ -1153,7 +1153,7 @@ Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
         Invoice_Load
     End With
 
-    Call Output_Timer_Results("modFAC_Finale:Next_Invoice()", timerStart)
+    Call End_Timer("modFAC_Finale:Next_Invoice()", timerStart)
 
 End Sub
 
@@ -1250,7 +1250,7 @@ Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()", timerStart)
 
 End Sub
 
@@ -1345,7 +1345,7 @@ Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
     Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray)
     Call GL_Posting_Locally(dateFact, descGL_Trans, source, GL_TransNo, MyArray)
     
-    Call Output_Timer_Results("modFAC_Finale:modFAC_Finale()", timerStart)
+    Call End_Timer("modFAC_Finale:modFAC_Finale()", timerStart)
 
 End Sub
 

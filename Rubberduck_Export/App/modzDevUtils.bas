@@ -251,7 +251,7 @@ Sub Check_Invoice_Template()
         With .Font
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
-            .Size = 10
+            .size = 10
             .Italic = True
             .Bold = True
         End With
@@ -1139,6 +1139,67 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
 End Sub
 
+Sub List_All_Columns() '2024-08-09 @ 11:52
+
+    Dim colType As String
+    
+    'Erase & create a worksheet for the report
+    Call Erase_And_Create_Worksheet("Liste des Colonnes")
+    Dim reportSheet As Worksheet: Set reportSheet = ThisWorkbook.Worksheets("Liste des Colonnes")
+    
+    'Add headers to the report
+    With reportSheet
+        .Cells(1, 1).value = "Nom de la feuille"
+        .Cells(1, 2).value = "No. col."
+        .Cells(1, 3).value = "Lettre col."
+        .Cells(1, 4).value = "Nom Col."
+        .Cells(1, 5).value = "Type données"
+        .Cells(1, 6).value = "Largeur"
+    End With
+    
+    Dim outputRow As Long
+    outputRow = 2
+    
+    'Loop through each worksheet
+    Dim ws As Worksheet
+    Dim col As Range
+    For Each ws In ThisWorkbook.Worksheets
+        'Loop through each column in the worksheet
+        Dim i As Long
+        For i = 1 To ws.usedRange.columns.count
+            Set col = ws.Cells(1, i).EntireColumn
+            
+            colType = GetColumnType(col)
+            
+            ' Output the information to the report
+            With reportSheet
+                .Cells(outputRow, 1).value = ws.name
+                .Cells(outputRow, 2).value = i
+                .Cells(outputRow, 3).value = Replace(col.Address(False, False), "1", "")
+'                .Cells(outputRow, 3).value = col.Address(False, False).Replace("1", "")
+                .Cells(outputRow, 4).value = ws.Cells(1, i).value
+                .Cells(outputRow, 5).value = colType
+                .Cells(outputRow, 6).value = col.ColumnWidth
+            End With
+            
+            outputRow = outputRow + 1
+        Next i
+    Next ws
+    
+    'Sort the report by worksheet name and column number
+    With reportSheet.Sort
+        .SortFields.clear
+        .SortFields.add key:=Range("A2"), Order:=xlAscending ' Worksheet name
+        .SortFields.add key:=Range("B2"), Order:=xlAscending ' Column number
+        .SetRange Range("A1:F" & outputRow - 1)
+        .Header = xlYes
+        .Apply
+    End With
+    
+    MsgBox "Le rapport des colonnes a été généré avec succès !", vbInformation
+    
+End Sub
+
 Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     
     'Prepare the result worksheet
@@ -1616,7 +1677,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
     
-    Call Output_Timer_Results("modAppli:SetTabOrder()", timerStart)
+    Call End_Timer("modAppli:SetTabOrder()", timerStart)
 
 End Sub
 

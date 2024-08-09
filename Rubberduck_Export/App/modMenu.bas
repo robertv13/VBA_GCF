@@ -520,8 +520,8 @@ End Sub
 
 Sub menuFacturation_Click()
     
-    If Environ("Username") = "GCFiscalite" Or _
-        Environ("Username") = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+        Fn_Get_Windows_Username = "Robert M. Vigneault" Then
     
         Call SlideIn_Facturation
         
@@ -538,8 +538,8 @@ End Sub
 
 Sub MenuDEB_Click()
     
-    If Environ("Username") = "GCFiscalite" Or _
-        Environ("Username") = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+        Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         
         Call SlideIn_Debours
         
@@ -556,8 +556,8 @@ End Sub
 
 Sub menuComptabilite_Click()
     
-    If Environ("Username") = "GCFiscalite" Or _
-        Environ("Username") = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+        Fn_Get_Windows_Username = "Robert M. Vigneault" Then
     
         Call SlideIn_Comptabilite
         
@@ -574,8 +574,8 @@ End Sub
 
 Sub menuParametres_Click()
     
-    If Environ("Username") = "GCFiscalite" Or _
-        Environ("Username") = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+        Fn_Get_Windows_Username = "Robert M. Vigneault" Then
     
         Call SlideIn_Parametres
         
@@ -605,7 +605,7 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         Application.ScreenUpdating = True
         Application.EnableEvents = True
         
-        Call Output_Timer_Results("message:This  session  has  been  terminated A B N O R M A L L Y", 0)
+        Call End_Timer("message:This session has been terminated N O R M A L L Y", 0)
         
         Application.EnableEvents = False
         
@@ -648,7 +648,7 @@ Sub Exit_Click() '2024-07-05 @ 06:37
         Application.ScreenUpdating = True
         Application.EnableEvents = False
         
-        Call Output_Timer_Results("message:This  session  has  been  terminated N O R M A L L Y", 0)
+        Call End_Timer("message:This  session  has  been  terminated N O R M A L L Y", 0)
         
         Application.DisplayAlerts = False
         ThisWorkbook.Save
@@ -681,7 +681,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If userName <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If Fn_Get_Windows_Username <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -690,7 +690,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
+    Call End_Timer("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
     
 End Sub
 
@@ -705,15 +705,11 @@ Sub Slide_In_All_Menu_Options()
     Call SlideIn_Parametres
     Call SlideIn_Exit
 
-    Call Output_Timer_Results("modAppli:Slide_In_All_Menu_Options()", timerStart)
+    Call End_Timer("modAppli:Slide_In_All_Menu_Options()", timerStart)
 
 End Sub
 
 Sub Hide_Dev_Shapes_Based_On_Username()
-    
-    'Get the current username
-    Dim userName As String
-    userName = Environ("Username")
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet
@@ -725,28 +721,28 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         'Check the username and hide shapes accordingly
         Select Case shp.name
             Case "ChangeReferenceSystem"
-                If userName = "Robert M. Vigneault" Then
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "VérificationIntégritée"
-                If userName = "Robert M. Vigneault" Then
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RechercheCode"
-                If userName = "Robert M. Vigneault" Then
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RéférencesCirculaires"
-                If userName = "Robert M. Vigneault" Then
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse

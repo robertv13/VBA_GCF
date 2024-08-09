@@ -26,7 +26,7 @@ Sub CC_Sort_Group_And_Subtotal()
     progressBarBg.Line.Visible = msoTrue  'Show the border of the progress bar
     progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
-    progressBarBg.TextFrame.Characters.Font.Size = 14
+    progressBarBg.TextFrame.Characters.Font.size = 14
     progressBarBg.TextFrame.Characters.Font.Color = RGB(0, 0, 0) 'Black font
     progressBarBg.TextFrame.Characters.text = "Préparation complétée à 0 %"
     
@@ -187,7 +187,7 @@ Sub CC_Sort_Group_And_Subtotal()
             .Color = -16776961
             .TintAndShade = 0
             .Bold = True
-            .Size = 12
+            .size = 12
         End With
     End With
     
@@ -249,7 +249,7 @@ Sub CC_Sort_Group_And_Subtotal()
 
 '    Application.StatusBar = ""
 
-    Call Output_Timer_Results("modCC_Analyse:CC_Sort_Group_And_Subtotal()", timerStart)
+    Call End_Timer("modCC_Analyse:CC_Sort_Group_And_Subtotal()", timerStart)
 
 End Sub
 

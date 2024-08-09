@@ -58,7 +58,7 @@ Public Sub Center(LBox As MSForms.ListBox, Optional WhichColumn As Long = 0)
     With labSizer
         With .Font
             .name = LBox.Font.name
-            .Size = LBox.Font.Size
+            .size = LBox.Font.size
             .Bold = LBox.Font.Bold
             .Italic = LBox.Font.Italic
         End With
@@ -168,7 +168,7 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Long = 1)
     With labSizer
         With .Font
             .name = LBox.Font.name
-            .Size = LBox.Font.Size
+            .size = LBox.Font.size
             .Bold = LBox.Font.Bold
             .Italic = LBox.Font.Italic
         End With

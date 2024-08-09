@@ -43,7 +43,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -207,6 +207,6 @@ ExitSub:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
 
-    Call Output_Timer_Results("wshFAC_Brouillon:Worksheet_Change()", timerStart)
+    Call End_Timer("wshFAC_Brouillon:Worksheet_Change()", timerStart)
   
 End Sub

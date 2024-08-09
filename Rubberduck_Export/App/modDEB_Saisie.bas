@@ -48,7 +48,7 @@ Sub DEB_Saisie_Update()
     
     wshDEB_Saisie.Range("F4").Select
         
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Update()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Saisie_Update()", timerStart)
         
 End Sub
 
@@ -140,7 +140,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -180,7 +180,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
@@ -263,7 +263,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     GL_TransNo = wshAdmin.Range("B9").value
     Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GL_TransNo, MyArray)
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 
 End Sub
 
@@ -307,7 +307,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
 
     Application.EnableEvents = True
 
-    Call Output_Timer_Results("modGL_EJ:Load_JEAuto_Into_JE()", timerStart)
+    Call End_Timer("modGL_EJ:Load_JEAuto_Into_JE()", timerStart)
     
 End Sub
 
@@ -321,7 +321,7 @@ Sub Save_DEB_Recurrent(ll As Long)
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
     
-    Call Output_Timer_Results("modDEB_Saisie:Save_DEB_Recurrent()", timerStart)
+    Call End_Timer("modDEB_Saisie:Save_DEB_Recurrent()", timerStart)
     
 End Sub
 
@@ -398,7 +398,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()", timerStart)
 
 End Sub
 
@@ -440,7 +440,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()", timerStart)
     
 End Sub
 
@@ -472,7 +472,7 @@ Sub DEB_Recurrent_Build_Summary()
         Next i
     End With
 
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Recurrent_Build_Summary()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Recurrent_Build_Summary()", timerStart)
 
 End Sub
 
@@ -489,7 +489,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     End With
     Application.EnableEvents = True
     
-    Call Output_Timer_Results("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
+    Call End_Timer("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
 
 End Sub
 

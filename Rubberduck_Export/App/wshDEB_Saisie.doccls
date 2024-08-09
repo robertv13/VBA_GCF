@@ -45,7 +45,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshDEB_Saisie:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshDEB_Saisie:Worksheet_Activate()", timerStart)
 
 End Sub
 

@@ -102,7 +102,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Call Output_Timer_Results("modImport:ChartOfAccount_Import_All()", timerStart)
+    Call End_Timer("modImport:ChartOfAccount_Import_All()", timerStart)
 
 End Sub
 
@@ -165,7 +165,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Call Output_Timer_Results("modImport:Client_List_Import_All()", timerStart)
+    Call End_Timer("modImport:Client_List_Import_All()", timerStart)
         
 End Sub
 
@@ -217,7 +217,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:DEB_Recurrent_Import_All()", timerStart)
+    Call End_Timer("modImport:DEB_Recurrent_Import_All()", timerStart)
 
 End Sub
 
@@ -269,7 +269,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:DEB_Trans_Import_All()", timerStart)
+    Call End_Timer("modImport:DEB_Trans_Import_All()", timerStart)
 
 End Sub
 
@@ -321,7 +321,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:ENC_Détails_Import_All()", timerStart)
+    Call End_Timer("modImport:ENC_Détails_Import_All()", timerStart)
 
 End Sub
 
@@ -373,7 +373,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:ENC_Entête_Import_All()", timerStart)
+    Call End_Timer("modImport:ENC_Entête_Import_All()", timerStart)
 
 End Sub
 
@@ -425,7 +425,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
+    Call End_Timer("modImport:FAC_Comptes_Clients_Import_All()", timerStart)
 
 End Sub
 
@@ -476,7 +476,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:FAC_Détails_Import_All()", timerStart)
+    Call End_Timer("modImport:FAC_Détails_Import_All()", timerStart)
 
 End Sub
 
@@ -528,7 +528,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:FAC_Entête_Import_All()", timerStart)
+    Call End_Timer("modImport:FAC_Entête_Import_All()", timerStart)
 
 End Sub
 
@@ -594,7 +594,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:FAC_Projets_Détails_Import_All()", timerStart)
+    Call End_Timer("modImport:FAC_Projets_Détails_Import_All()", timerStart)
 
 End Sub
 
@@ -662,7 +662,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     Application.StatusBar = ""
     
-    Call Output_Timer_Results("modImport:FAC_Projets_Entête_Import_All()", timerStart)
+    Call End_Timer("modImport:FAC_Projets_Entête_Import_All()", timerStart)
 
 End Sub
 
@@ -726,7 +726,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:Fournisseur_List_Import_All()", timerStart)
+    Call End_Timer("modImport:Fournisseur_List_Import_All()", timerStart)
         
 End Sub
 
@@ -786,7 +786,7 @@ Clean_Exit:
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:GL_EJ_Auto_Import_All()", timerStart)
+    Call End_Timer("modImport:GL_EJ_Auto_Import_All()", timerStart)
 
 End Sub
 
@@ -843,7 +843,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:GL_Trans_Import_All()", timerStart)
+    Call End_Timer("modImport:GL_Trans_Import_All()", timerStart)
 
 End Sub
 
@@ -895,7 +895,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Output_Timer_Results("modImport:TEC_Import_All()", timerStart)
+    Call End_Timer("modImport:TEC_Import_All()", timerStart)
     
 End Sub
 
@@ -928,7 +928,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call Output_Timer_Results("modAppli:Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
+    Call End_Timer("modAppli:Dynamic_Range_Redefine_Plan_Comptable()", timerStart)
     
 End Sub
 

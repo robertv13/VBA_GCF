@@ -43,7 +43,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Output_Timer_Results("wshCC_Annulation:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshCC_Annulation:Worksheet_Activate()", timerStart)
 
 End Sub
 
@@ -115,6 +115,6 @@ Sub CC_Annulation_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Output_Timer_Results("modCC_Annulation:Back_To_FAC_Menu()", timerStart)
+    Call End_Timer("modCC_Annulation:Back_To_FAC_Menu()", timerStart)
     
 End Sub

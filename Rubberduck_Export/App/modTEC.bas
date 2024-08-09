@@ -47,7 +47,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Output_Timer_Results("modTEC:TEC_Ajoute_Ligne()", timerStart)
+    Call End_Timer("modTEC:TEC_Ajoute_Ligne()", timerStart)
 
 End Sub
 
@@ -79,7 +79,7 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("modTEC:TEC_Modifie_Ligne()", timerStart)
+    Call End_Timer("modTEC:TEC_Modifie_Ligne()", timerStart)
 
 End Sub
 
@@ -142,7 +142,7 @@ Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set sh = Nothing
 
-    Call Output_Timer_Results("modTEC:TEC_Efface_Ligne()", timerStart)
+    Call End_Timer("modTEC:TEC_Efface_Ligne()", timerStart)
 
 End Sub
 
@@ -219,7 +219,7 @@ No_Sort_Required:
     Set dRng = Nothing
     Set sRng = Nothing
     
-    Call Output_Timer_Results("modTEC:TEC_AdvancedFilter_And_Sort()", timerStart)
+    Call End_Timer("modTEC:TEC_AdvancedFilter_And_Sort()", timerStart)
 
 End Sub
 
@@ -315,7 +315,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("modTEC:TEC_Efface_Formulaire()", timerStart)
+    Call End_Timer("modTEC:TEC_Efface_Formulaire()", timerStart)
 
 End Sub
 
@@ -343,7 +343,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = Now
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
-            rs.Fields("VersionApp").value = APP_VERSION_NO
+            rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.update
         Else
             'Handle the case where the specified ID is not found
@@ -397,7 +397,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("EstFacturee").value = ConvertValueBooleanToText(False)
             rs.Fields("DateFacturee").value = Null
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
-            rs.Fields("VersionApp").value = APP_VERSION_NO
+            rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = ""
         Else 'Update an existing record
             'Open the recordset for the specified ID
@@ -411,7 +411,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 rs.Fields("DateSaisie").value = Now
-                rs.Fields("VersionApp").value = APP_VERSION_NO
+                rs.Fields("VersionApp").value = ThisWorkbook.name
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", vbExclamation
@@ -436,7 +436,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_To_DB()", timerStart)
+    Call End_Timer("modTEC:TEC_Record_Add_Or_Update_To_DB()", timerStart)
 
 End Sub
 
@@ -471,7 +471,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)
-            .Range("O" & nextRowNumber).value = APP_VERSION_NO
+            .Range("O" & nextRowNumber).value = ThisWorkbook.name
             .Range("P" & nextRowNumber).value = ""
         End With
     Else
@@ -499,13 +499,13 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("L" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
                 .Range("M" & rowToBeUpdated).value = ""
                 .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
-                .Range("O" & rowToBeUpdated).value = APP_VERSION_NO
+                .Range("O" & rowToBeUpdated).value = ThisWorkbook.name
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
             wshTEC_Local.Range("K" & rowToBeUpdated).value = Now()
             wshTEC_Local.Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = APP_VERSION_NO
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
         End If
     End If
     
@@ -514,7 +514,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
-    Call Output_Timer_Results("modTEC:TEC_Record_Add_Or_Update_Locally()", timerStart)
+    Call End_Timer("modTEC:TEC_Record_Add_Or_Update_Locally()", timerStart)
 
 End Sub
 
@@ -537,7 +537,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        .RowSource = wshTEC_Local.Range("V3:AF" & lastRow)
+        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow
     End With
      
     'Add hours to totalHeures
@@ -558,7 +558,7 @@ EndOfProcedure:
 
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Output_Timer_Results("modTEC:TEC_Refresh_ListBox_And_Add_Hours()", timerStart)
+    Call End_Timer("modTEC:TEC_Refresh_ListBox_And_Add_Hours()", timerStart)
     
 End Sub
 
@@ -595,7 +595,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Output_Timer_Results("modTEC:TEC_TdB_Push_TEC_Local_To_DB_Data()", timerStart)
+    Call End_Timer("modTEC:TEC_TdB_Push_TEC_Local_To_DB_Data()", timerStart)
 
 End Sub
 
@@ -606,7 +606,7 @@ Sub TEC_TdB_Update_All()
     Call TEC_TdB_Push_TEC_Local_To_DB_Data
     Call TEC_TdB_Refresh_All_Pivot_Tables
     
-    Call Output_Timer_Results("modTEC:TEC_TdB_Update_All()", timerStart)
+    Call End_Timer("modTEC:TEC_TdB_Update_All()", timerStart)
 
 End Sub
 
@@ -619,7 +619,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
         pt.RefreshTable
     Next pt
 
-    Call Output_Timer_Results("modTEC:TEC_TdB_Refresh_All_Pivot_Tables()", timerStart)
+    Call End_Timer("modTEC:TEC_TdB_Refresh_All_Pivot_Tables()", timerStart)
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set pt = Nothing

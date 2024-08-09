@@ -48,7 +48,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
 
     'Default Professionnal - 2024-03-27 @ 07:00
-    If userName = "GCFiscalite" Then
+    If Fn_Get_Windows_Username = "GCFiscalite" Then
         cmbProfessionnel.value = "GC"
     Else
         cmbProfessionnel.value = ""
@@ -58,7 +58,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     rmv_state = rmv_modeInitial
     
     'Close the special timer (log purpose)
-    Call Output_Timer_Results("ufSaisieHeures:UserForm_Activate()", timer3Start)
+    Call End_Timer("ufSaisieHeures:UserForm_Activate()", timer3Start)
     
 End Sub
 
@@ -77,7 +77,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-    Call Output_Timer_Results("ufSaisieHeures:lstboxNomClient_DblClick()", timerStart)
+    Call End_Timer("ufSaisieHeures:lstboxNomClient_DblClick()", timerStart)
 
 End Sub
 
@@ -115,7 +115,7 @@ MenuSelect:
     wshMenu.Activate
     wshMenu.Select
     
-    Call Output_Timer_Results("ufSaisieHeures:UserForm_Terminate()", timerStart)
+    Call End_Timer("ufSaisieHeures:UserForm_Terminate()", timerStart)
 
 End Sub
 
@@ -133,7 +133,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         End If
     End If
 
-    Call Output_Timer_Results("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", timerStart)
 
 End Sub
 
@@ -180,7 +180,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
-    Call Output_Timer_Results("ufSaisieHeures:txtDate_BeforeUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtDate_BeforeUpdate()", timerStart)
     
 End Sub
 
@@ -210,7 +210,7 @@ Private Sub txtDate_AfterUpdate()
         Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
     
-    Call Output_Timer_Results("ufSaisieHeures:txtDate_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtDate_AfterUpdate()", timerStart)
     
 End Sub
 
@@ -234,7 +234,7 @@ Private Sub txtClient_AfterUpdate()
         End If
     End If
     
-    Call Output_Timer_Results("ufSaisieHeures:txtClient_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtClient_AfterUpdate()", timerStart)
     
 End Sub
 
@@ -250,7 +250,7 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
 
-    Call Output_Timer_Results("ufSaisieHeures:txtActivite_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtActivite_AfterUpdate()", timerStart)
     
 End Sub
 
@@ -286,7 +286,7 @@ Sub txtHeures_AfterUpdate()
         End If
     End If
     
-    Call Output_Timer_Results("ufSaisieHeures:txtHeures_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtHeures_AfterUpdate()", timerStart)
     
 End Sub
 
@@ -302,7 +302,7 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
-    Call Output_Timer_Results("ufSaisieHeures:chbFacturable_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:chbFacturable_AfterUpdate()", timerStart)
     
 End Sub
 
@@ -324,7 +324,7 @@ Private Sub txtCommNote_AfterUpdate()
 '        End If
 '    End If
 
-    Call Output_Timer_Results("ufSaisieHeures:txtCommNote_AfterUpdate()", timerStart)
+    Call End_Timer("ufSaisieHeures:txtCommNote_AfterUpdate()", timerStart)
     
 End Sub
 

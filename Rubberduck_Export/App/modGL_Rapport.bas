@@ -89,7 +89,7 @@ Public Sub GL_Report_For_Selected_Accounts()
     Set selectedItems = Nothing
     Set ws = Nothing
     
-    Call Output_Timer_Results("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
+    Call End_Timer("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
 
 End Sub
 
@@ -147,7 +147,7 @@ NoSort:
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
     
-    Call Output_Timer_Results("modGL_Rapport:get_GL_Details_For_A_Account()", timerStart)
+    Call End_Timer("modGL_Rapport:get_GL_Details_For_A_Account()", timerStart)
 
 End Sub
 
@@ -236,7 +236,7 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
         .Range("F4").Select
     End With
     
-    Call Output_Timer_Results("modGL_Rapport:GL_Rapport_Clear_All_Cells()", timerStart)
+    Call End_Timer("modGL_Rapport:GL_Rapport_Clear_All_Cells()", timerStart)
 
 End Sub
 
@@ -256,7 +256,7 @@ Sub Set_Up_Report_Headers_And_Columns()
         With .Range("A1:H1")
             .Font.Italic = True
             .Font.Bold = True
-            .Font.Size = 10
+            .Font.size = 10
             .HorizontalAlignment = xlCenter
             With .Interior
                 .Pattern = xlSolid
@@ -364,7 +364,7 @@ Sub GL_Rapport_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call Output_Timer_Results("modGL_Rapport:GL_Rapport_Back_To_Menu()", timerStart)
+    Call End_Timer("modGL_Rapport:GL_Rapport_Back_To_Menu()", timerStart)
     
 End Sub
 

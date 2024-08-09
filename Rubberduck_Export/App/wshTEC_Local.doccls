@@ -6,6 +6,6 @@ Private Sub Worksheet_Activate()
 
     wshTEC_Local.EnableCalculation = True
     
-    Call Output_Timer_Results("wshTEC_Local:Worksheet_Activate()", timerStart)
+    Call End_Timer("wshTEC_Local:Worksheet_Activate()", timerStart)
 
 End Sub
