@@ -46,7 +46,7 @@ Sub SaisieHeures_Click()
     Call SlideIn_SaisieHeures
     
     Load ufSaisieHeures
-    ufSaisieHeures.show vbModal
+    ufSaisieHeures.show vbModeless '2024-08-08 @ 13:56
     
 End Sub
 

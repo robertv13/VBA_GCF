@@ -16,17 +16,7 @@ Private Sub Workbook_Open()
     
     Call Hide_Dev_Shapes_Based_On_Username
     
-    With wshMenu.Range("A34")
-        .Font.Size = 8
-        .Font.Color = vbBlack
-        .value = "Version: " & APP_VERSION_NO
-    End With
-    
-    With wshMenu.Range("A35")
-        .Font.Size = 8
-        .Font.Color = vbRed
-        .value = "Utilisateur: " & Environ("Username")
-    End With
+    Call Display_Info_On_Main_Menu
     
     wshMenu.Activate
     wshMenu.Unprotect

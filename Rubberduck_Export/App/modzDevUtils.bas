@@ -345,7 +345,7 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
-    ReDim allLinesOfCode(1 To 15000, 1 To 4)
+    ReDim allLinesOfCode(1 To 25000, 1 To 4)
     
     Application.ScreenUpdating = False
     'Allows up to 3 search strings

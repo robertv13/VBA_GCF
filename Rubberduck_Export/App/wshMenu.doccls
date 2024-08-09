@@ -108,7 +108,3 @@ Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Intege
     Application.ScreenUpdating = True
 
 End Sub
-
-Private Sub Worksheet_Change(ByVal Target As Range)
-
-End Sub

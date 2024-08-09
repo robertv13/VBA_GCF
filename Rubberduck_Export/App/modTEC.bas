@@ -537,7 +537,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        .RowSource = "TEC_Local!V3:AF" & lastRow
+        .RowSource = wshTEC_Local.Range("V3:AF" & lastRow)
     End With
      
     'Add hours to totalHeures

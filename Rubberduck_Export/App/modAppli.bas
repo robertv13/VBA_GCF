@@ -3,7 +3,7 @@ Attribute VB_Name = "modAppli"
 
 Option Explicit
 
-Public Const APP_VERSION_NO As String = "v4.C.1.xlsb" '2024-08-07 @ 17:03
+Public Const APP_VERSION_NO As String = "v4.C.2.xlsb" '2024-08-08 @ 14:02
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
@@ -114,13 +114,49 @@ Sub Set_Root_Path()
 
     Dim rootPath As String
     
-    If Not Environ("username") = "Robert M. Vigneault" Then
-        rootPath = "P:\Administration\APP\GCF"
-    Else
+    If Trim(Environ("username")) = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
+    Else
+        rootPath = "P:\Administration\APP\GCF"
     End If
 
     wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
 
 End Sub
 
+Sub Display_Info_On_Main_Menu()
+
+    Application.EnableEvents = False
+    wshMenu.Unprotect
+    
+    Debug.Print wshMenu.Range("A33").Font.Size
+    
+    Dim version As String: version = APP_VERSION_NO
+    With wshMenu.Range("$A$33")
+        .Font.Size = 8
+        .Font.Color = vbBlack
+        .value = "'" & CStr("Version - " & version)
+    End With
+    
+    Debug.Print wshMenu.Range("A34").Font.Size
+    
+    Dim userName As String: userName = Environ("Username")
+    With wshMenu.Range("$A$34")
+        .Font.Size = 8
+        .Font.Color = vbRed
+        .value = "'" & CStr("Utilisateur - " & userName)
+    End With
+    
+    Debug.Print wshMenu.Range("A35").Font.Size
+    
+    Dim env As String: env = wshAdmin.Range("F5").value
+    With wshMenu.Range("$A$35")
+        .Font.Size = 8
+        .Font.Color = vbBlack
+        .value = "'" & CStr("Environnement - " & env)
+    End With
+
+    wshMenu.Protect
+    Application.EnableEvents = True
+
+End Sub
