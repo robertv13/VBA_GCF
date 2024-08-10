@@ -770,4 +770,40 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     
 End Sub
 
+Sub Check_Client_Name() '2024-08-10 @ 10:13
+
+    'Définir les chemins d'accès des fichiers (source & destination)
+    Dim sourceFilePath As String
+    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    
+    'Declare le Workbook & le Worksheet (source)
+    Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
+    Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("Clients")
+    
+    'Détermine la dernière rangée utilisée dans le fichier Source
+    Dim lastUsedRow As Long
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
+    
+    Dim codeClient As String, nomClient As String, contactFact As String
+    Dim i As Long
+    For i = 2 To lastUsedRow
+        codeClient = sourceSheet.Cells(i, 2).value
+        nomClient = Trim(sourceSheet.Cells(i, 1).value)
+        contactFact = Trim(sourceSheet.Cells(i, 3).value)
+        If InStr(nomClient, contactFact) = 0 Then
+            Debug.Print i & " : " & codeClient & " - " & nomClient & " on ajoute '" & contactFact & "'"
+        End If
+    Next i
+    
+    'Save and close the destination workbook
+    sourceWorkbook.Save
+    sourceWorkbook.Close
+    
+    'Clean up
+    Set sourceSheet = Nothing
+    Set sourceWorkbook = Nothing
+    
+    MsgBox "Les données ont été vérifiées avec succès dans le fichier Clients."
+    
+End Sub
 

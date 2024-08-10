@@ -607,6 +607,8 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         
         Call End_Timer("message:This session has been terminated N O R M A L L Y", 0)
         
+        Call Write_Info_On_Main_Menu
+        
         Application.EnableEvents = False
         
         Dim wb As Workbook: Set wb = ActiveWorkbook

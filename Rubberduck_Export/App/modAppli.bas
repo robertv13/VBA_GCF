@@ -125,12 +125,18 @@ Sub Set_Root_Path()
 
 End Sub
 
-Sub Display_Info_On_Main_Menu()
+Sub Write_Info_On_Main_Menu()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Display_Info_On_Main_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Write_Info_On_Main_Menu()")
     
     Application.EnableEvents = False
     wshMenu.Unprotect
+    
+    With wshMenu.Range("$A$32")
+        .Font.size = 8
+        .Font.Color = vbBlue
+        .value = "'" & CStr("Heure - " & Format$(Now(), "hh:mm:ss"))
+    End With
     
     With wshMenu.Range("$A$33")
         .Font.size = 8
@@ -155,6 +161,6 @@ Sub Display_Info_On_Main_Menu()
     
     Application.EnableEvents = True
 
-    Call End_Timer("modAppli:Display_Info_On_Main_Menu()", timerStart)
+    Call End_Timer("modAppli:Write_Info_On_Main_Menu()", timerStart)
 
 End Sub

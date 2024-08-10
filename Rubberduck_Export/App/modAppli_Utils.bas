@@ -1638,6 +1638,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
+    Dim cas_date_future As Long
     Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
     Dim cas_estDetruit_invalide As Long
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
@@ -1658,6 +1659,12 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Else
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
+        End If
+        If dateTEC > Now() Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+            r = r + 1
+            cas_date_future = cas_date_future + 1
         End If
         code = arr(i, 5)
         nom = arr(i, 6)
@@ -1738,6 +1745,17 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
+    
+    If cas_date_future = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date dans le futur")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_future & " cas de date FUTURE")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+        r = r + 1
+    End If
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")

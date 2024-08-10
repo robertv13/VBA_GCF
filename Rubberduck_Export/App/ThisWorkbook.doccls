@@ -18,7 +18,7 @@ Private Sub Workbook_Open()
     
     Call Hide_Dev_Shapes_Based_On_Username
     
-    Call Display_Info_On_Main_Menu
+    Call Write_Info_On_Main_Menu
     
     wshMenu.Activate
     wshMenu.Unprotect
