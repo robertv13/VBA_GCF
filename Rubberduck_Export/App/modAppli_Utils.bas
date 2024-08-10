@@ -2193,6 +2193,9 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                                             ":O" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("H" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#0.00"
                 .Range("K" & firstDataRow & ":K" & lastUsedRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+                .columns("F").ColumnWidth = 45
+                .columns("G").ColumnWidth = 65
+                .columns("I").ColumnWidth = 25
             End With
 
     End Select

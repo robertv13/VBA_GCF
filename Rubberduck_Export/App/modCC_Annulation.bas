@@ -208,7 +208,7 @@ Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, By
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
-    Set cell = wsFees.Range("A2:A" & lastUsedRow).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = wsFees.Range("A2:A" & lastUsedRow).Find(What:=invNo, LookIn:=xlValues, lookAt:=xlWhole)
     
     'Check if the invNo was found at all
     Dim firstAddress As String
@@ -334,7 +334,7 @@ Sub CC_Annulation_Get_GL_Posting(tempSheet As Worksheet, invNo)
     
     'Use Range.Find to locate the first cell with the invNo
     Dim cell As Range
-    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACT-" & invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACT-" & invNo, LookIn:=xlValues, lookAt:=xlWhole)
     
     'Check if the invNo was found at all
     Dim firstAddress As String

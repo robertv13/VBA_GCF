@@ -615,7 +615,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
-    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookAt:=xlWhole)
 
     'Check if the projetID was found at all
     Dim firstAddress As String
@@ -693,7 +693,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
-    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookAt:=xlWhole)
 
     'Check if the projetID was found at all
     Dim firstAddress As String
@@ -775,7 +775,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
         If wshTEC_Local.Range("BA" & r).value = False And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
             TECID = wshTEC_Local.Range("AQ" & r).value
-            rowToBeUpdated = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
+            rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")

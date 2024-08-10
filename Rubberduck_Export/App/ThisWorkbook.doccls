@@ -18,11 +18,7 @@ Private Sub Workbook_Open()
     
     Call Hide_Dev_Shapes_Based_On_Username
     
-    MsgBox "Avant l'affichage des paramètres"
-    
     Call Display_Info_On_Main_Menu
-    
-    MsgBox "Après l'affichage des paramètres"
     
     wshMenu.Activate
     wshMenu.Unprotect

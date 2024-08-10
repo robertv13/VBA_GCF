@@ -1,6 +1,16 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
+#If VBA7 Then
+    '64-bit Excel (VBA7 and later)
+    Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+#Else
+    '32-bit Excel
+    Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+#End If
+
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
 Function Fn_GetID_From_Initials(i As String)
@@ -92,13 +102,13 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Find_Data_In_A_Range()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Find_Data_In_A_Range()")
     
     Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
     Dim dataValue As Variant
     
     'Search for the string in a given range (r) at the column specified (cs)
-    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
+    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, lookAt:=xlWhole)
     
     'Check if the string was found
     If Not foundCell Is Nothing Then
@@ -114,7 +124,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
 
-    Call End_Timer("Functions:Fn_Find_Data_In_A_Range()", timerStart)
+    Call End_Timer("modFunctions:Fn_Find_Data_In_A_Range()", timerStart)
 
 End Function
 
@@ -130,7 +140,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
     Dim cell As Range
     Set cell = searchRange.Find(What:=valueToFind, _
                                 LookIn:=xlValues, _
-                                LookAt:=xlWhole)
+                                lookAt:=xlWhole)
     
     'Check if the value is found
     Dim firstAddress As String
@@ -263,7 +273,7 @@ End Function
 
 Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Get_GL_Code_From_GL_Description()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Get_GL_Code_From_GL_Description()")
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
@@ -293,7 +303,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call End_Timer("Functions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
+    Call End_Timer("modFunctions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
 
 End Function
 
@@ -328,25 +338,21 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(tempSheet As Worksheet, invNo As St
     
 End Function
 
-Public Function Fn_Get_TEC_Row_Number_By_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
+Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
     
-    Dim matchResult As Variant
-
-    'Use the Match function to find the row number of the unique TEC_ID
-    matchResult = Application.Match(uniqueID, lookupRange.columns(1), 0)
-    matchResult = matchResult + 2 'Two header lines...
-
-    'Check if Match found a result
-    If Not IsError(matchResult) Then
-        Fn_Get_TEC_Row_Number_By_TEC_ID = matchResult
-    Else
-        'If Match did not find a result, return 0
-        Fn_Get_TEC_Row_Number_By_TEC_ID = 0
-    End If
+    On Error Resume Next
+        Dim cell As Range
+        Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, lookAt:=xlWhole)
+        If Not cell Is Nothing Then
+            Fn_Find_Row_Number_TEC_ID = cell.row
+        Else
+            Fn_Find_Row_Number_TEC_ID = -1 'Not found
+        End If
+    On Error GoTo 0
     
-    Call End_Timer("Functions:Fn_Get_TEC_Row_Number_By_TEC_ID()", timerStart)
+    Call End_Timer("modFunctions:Fn_Find_Row_Number_TEC_ID()", timerStart)
     
 End Function
 

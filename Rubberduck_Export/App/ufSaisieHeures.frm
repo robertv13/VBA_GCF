@@ -31,6 +31,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Dim timer3Start As Double: timer3Start = Timer: Call Start_Timer("ufSaisieHeures:UserForm_Activate()")
     
     Call Client_List_Import_All
+    
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
@@ -123,9 +124,9 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:cmbProfessionnel_AfterUpdate()")
 
-    If Me.cmbProfessionnel.value <> "" Then
-        wshAdmin.Range("TEC_Initials").value = Me.cmbProfessionnel.value
-        wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(Me.cmbProfessionnel.value)
+    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
+        wshAdmin.Range("TEC_Initials").value = ufSaisieHeures.cmbProfessionnel.value
+        wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
         
         If wshAdmin.Range("TEC_Date").value <> "" Then
             Call TEC_AdvancedFilter_And_Sort
@@ -139,8 +140,8 @@ End Sub
 
 Private Sub txtDate_Enter()
 
-    If Me.txtDate.value = "" Then
-        Me.txtDate.value = Format$(Now(), "dd/mm/yyyy")
+    If ufSaisieHeures.txtDate.value = "" Then
+        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy")
     End If
 
 End Sub
@@ -151,15 +152,15 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = CompleteDate(CStr(Me.txtDate.value))
+    fullDate = CompleteDate(CStr(ufSaisieHeures.txtDate.value))
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
-        Me.txtDate.value = fullDate
+        ufSaisieHeures.txtDate.value = fullDate
     Else
         Call MsgBoxInvalidDate
         Application.EnableEvents = False
-        Me.txtDate.value = ""
+        ufSaisieHeures.txtDate.value = ""
         Application.EnableEvents = True
         txtDate.SelStart = 0
         txtDate.SelLength = Len(Me.txtDate.value)
@@ -188,12 +189,12 @@ Private Sub txtDate_AfterUpdate()
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtDate_AfterUpdate()")
     
-    If IsDate(Me.txtDate.value) Then
-        wshAdmin.Range("TEC_Date").value = CDate(Me.txtDate.value)
+    If IsDate(ufSaisieHeures.txtDate.value) Then
+        wshAdmin.Range("TEC_Date").value = CDate(ufSaisieHeures.txtDate.value)
     Else
-        Me.txtDate.SetFocus
-        Me.txtDate.SelLength = Len(Me.txtDate.value)
-        Me.txtDate.SelStart = 0
+        ufSaisieHeures.txtDate.SetFocus
+        ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
+        ufSaisieHeures.txtDate.SelStart = 0
         Exit Sub
     End If
 
@@ -203,10 +204,10 @@ Private Sub txtDate_AfterUpdate()
     End If
     
     'Enabled the NEW & ADD button if the minimum fields are non empty
-    If Trim(Me.cmbProfessionnel.value) <> vbNullString And _
-        Trim(Me.txtDate.value) <> vbNullString And _
-        Trim(Me.txtClient.value) <> vbNullString And _
-        Trim(Me.txtHeures.value) <> 0 Then
+    If Trim(ufSaisieHeures.cmbProfessionnel.value) <> vbNullString And _
+        Trim(ufSaisieHeures.txtDate.value) <> vbNullString And _
+        Trim(ufSaisieHeures.txtClient.value) <> vbNullString And _
+        Trim(ufSaisieHeures.txtHeures.value) <> 0 Then
         Call Buttons_Enabled_True_Or_False(True, True, False, False)
     End If
     
@@ -216,6 +217,8 @@ End Sub
 
 Private Sub txtClient_Enter()
 
+    Call SetNumLockOn '2024-08-10 @ 07:53
+    
     If rmv_state = rmv_modeInitial Then
         rmv_state = rmv_modeCreation
     End If
@@ -380,7 +383,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
         lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
-        rowTecID = Fn_Get_TEC_Row_Number_By_TEC_ID(TECID, lookupRange)
+        rowTecID = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
         
         Dim isBilled As Boolean
         isBilled = wshTEC_Local.Range("L" & rowTecID).value
@@ -390,7 +393,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "mm/dd/yyyy")
+            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy") '2024-08-10 @ 07:23
             .txtDate.Enabled = False
     
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)

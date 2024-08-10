@@ -1632,6 +1632,15 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
 
 End Sub
 
+Sub SetNumLockOn() '2024-08-10 @ 07:39
+
+    'Check if NumLock is off (0), and turn it on if so
+    If GetKeyState(&H90) = 0 Then
+        keybd_event &H90, 0, 0, 0 'Turn NumLock on
+    End If
+    
+End Sub
+
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:SetTabOrder()")
