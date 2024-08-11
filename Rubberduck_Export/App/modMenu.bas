@@ -3,7 +3,28 @@ Option Explicit
 
 Dim width As Long
 
+Sub SlideIn_TEC()
+    
+    wshMenu.Unprotect
+    
+    With wshMenu.Shapes("btnTECMenu")
+        For width = MAXWIDTH To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            wshMenu.Shapes("icoTEC").Left = width - 32
+        Next width
+        On Error Resume Next
+        .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
+    End With
+    
+    wshMenu.Protect UserInterfaceOnly:=True
+
+End Sub
+
 Sub SlideOut_TEC()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnTECMenu")
         For width = 32 To MAXWIDTH
@@ -13,25 +34,32 @@ Sub SlideOut_TEC()
         .TextFrame2.TextRange.Characters.text = "TEC"
     End With
     
+    wshMenu.Protect UserInterfaceOnly:=True
+    
 End Sub
 
-Sub SlideIn_TEC()
+Sub SlideIn_Facturation()
     
-    With wshMenu.Shapes("btnTECMenu")
+    wshMenu.Unprotect
+    
+    With wshMenu.Shapes("btnFacturationMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            wshMenu.Shapes("icoTEC").Left = width - 32
+            wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
         On Error Resume Next
-        wshMenu.Unprotect
-        On Error GoTo 0
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
-    
+
+    wshMenu.Protect UserInterfaceOnly:=True
+
 End Sub
 
 Sub SlideOut_Facturation()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnFacturationMenu")
         For width = 32 To MAXWIDTH
@@ -41,22 +69,32 @@ Sub SlideOut_Facturation()
         .TextFrame2.TextRange.Characters.text = "Facturation"
     End With
 
+    wshMenu.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_Facturation()
+Sub SlideIn_Debours()
     
-    With wshMenu.Shapes("btnFacturationMenu")
+    wshMenu.Unprotect
+    
+    With wshMenu.Shapes("btnDeboursMenu")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            wshMenu.Shapes("icoFacturation").Left = width - 32
+            ActiveSheet.Shapes("icoDebours").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_Debours()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnDeboursMenu")
         For width = 32 To MAXWIDTH
@@ -66,22 +104,13 @@ Sub SlideOut_Debours()
         .TextFrame2.TextRange.Characters.text = "Débours"
     End With
 
-End Sub
-
-Sub SlideIn_Debours()
-    
-    With wshMenu.Shapes("btnDeboursMenu")
-        For width = MAXWIDTH To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoDebours").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideIn_Comptabilite()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -89,12 +118,18 @@ Sub SlideIn_Comptabilite()
             .Left = width - 32
             ActiveSheet.Shapes("icoComptabilite").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_Comptabilite()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = 32 To MAXWIDTH
@@ -104,9 +139,32 @@ Sub SlideOut_Comptabilite()
         .TextFrame2.TextRange.Characters.text = "Comptabilité"
     End With
 
+    wshMenu.Protect UserInterfaceOnly:=True
+
+End Sub
+
+Sub SlideIn_Parametres()
+    
+    wshMenu.Unprotect
+    
+    With wshMenu.Shapes("btnParametresOption")
+        For width = MAXWIDTH To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            ActiveSheet.Shapes("icoParametres").Left = width - 32
+        Next width
+        On Error Resume Next
+        .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
+    End With
+
+    wshMenu.Protect UserInterfaceOnly:=True
+
 End Sub
 
 Sub SlideOut_Parametres()
+    
+    wshMenu.Unprotect
     
     With wshMenu.Shapes("btnParametresOption")
         For width = 32 To MAXWIDTH
@@ -116,22 +174,32 @@ Sub SlideOut_Parametres()
         .TextFrame2.TextRange.Characters.text = "Paramètres"
     End With
 
+    wshMenu.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_Parametres()
+Sub SlideIn_Exit()
     
-    With wshMenu.Shapes("btnParametresOption")
+    wshMenu.Unprotect
+    
+    With wshMenu.Shapes("btnEXIT")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoParametres").Left = width - 32
+            wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_Exit()
+    
+    wshMenu.Unprotect
     
     With ActiveSheet.Shapes("btnEXIT")
         For width = 32 To MAXWIDTH
@@ -141,18 +209,7 @@ Sub SlideOut_Exit()
         .TextFrame2.TextRange.Characters.text = "Sortie"
     End With
 
-End Sub
-
-Sub SlideIn_Exit()
-    
-    With wshMenu.Shapes("btnEXIT")
-        For width = MAXWIDTH To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            wshMenu.Shapes("icoEXIT").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -232,8 +289,29 @@ Sub SlideOut_TEC_Analyse()
 
 End Sub
 
+Sub SlideIn_PrepFact()
+
+    wshMenuFAC.Unprotect
+    
+    With wshMenuFAC.Shapes("btnPrepFact")
+        For width = MAXWIDTH To 32 Step -1
+            .Height = width
+            .Left = width - 32
+            ActiveSheet.Shapes("icoPrepFact").Left = width - 32
+        Next width
+        On Error Resume Next
+        .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
+    End With
+
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
+End Sub
+
 Sub SlideOut_PrepFact()
 
+    wshMenuFAC.Unprotect
+    
     With wshMenuFAC.Shapes("btnPrepFact")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -242,23 +320,33 @@ Sub SlideOut_PrepFact()
         .TextFrame2.TextRange.Characters.text = "Préparation de facture"
     End With
 
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_PrepFact()
+Sub SlideIn_SuiviCC()
 
-    With wshMenuFAC.Shapes("btnPrepFact")
+    wshMenuFAC.Unprotect
+    
+    With wshMenuFAC.Shapes("btnSuiviCC")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoPrepFact").Left = width - 32
+            ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_SuiviCC()
 
+    wshMenuFAC.Unprotect
+    
     With wshMenuFAC.Shapes("btnSuiviCC")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -267,23 +355,33 @@ Sub SlideOut_SuiviCC()
         .TextFrame2.TextRange.Characters.text = "Suivi de C/C"
     End With
 
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_SuiviCC()
+Sub SlideIn_Encaissement()
 
-    With wshMenuFAC.Shapes("btnSuiviCC")
+    wshMenuFAC.Unprotect
+    
+    With wshMenuFAC.Shapes("btnEncaissement")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
+            ActiveSheet.Shapes("icoEncaissement").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_Encaissement()
 
+    wshMenuFAC.Unprotect
+    
     With wshMenuFAC.Shapes("btnEncaissement")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -292,23 +390,33 @@ Sub SlideOut_Encaissement()
         .TextFrame2.TextRange.Characters.text = "Encaissement"
     End With
 
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_Encaissement()
+Sub SlideIn_FAC_Historique()
 
-    With wshMenuFAC.Shapes("btnEncaissement")
+    wshMenuFAC.Unprotect
+    
+    With wshMenuFAC.Shapes("btnFAC_Historique")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEncaissement").Left = width - 32
+            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_FAC_Historique()
 
+    wshMenuFAC.Unprotect
+    
     With wshMenuFAC.Shapes("btnFAC_Historique")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -317,23 +425,33 @@ Sub SlideOut_FAC_Historique()
         .TextFrame2.TextRange.Characters.text = "Historique factures"
     End With
 
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_FAC_Historique()
+Sub SlideIn_FAC_Annulation()
 
-    With wshMenuFAC.Shapes("btnFAC_Historique")
+    wshMenuFAC.Unprotect
+    
+    With wshMenuFAC.Shapes("btnFAC_Annulation")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
+            ActiveSheet.Shapes("icoFAC_Annulation").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_FAC_Annulation()
 
+    wshMenuFAC.Unprotect
+    
     With wshMenuFAC.Shapes("btnFAC_Annulation")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -342,48 +460,33 @@ Sub SlideOut_FAC_Annulation()
         .TextFrame2.TextRange.Characters.text = "Annulation de facture"
     End With
 
+    wshMenuFAC.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_FAC_Annulation()
+Sub SlideIn_Paiement()
 
-    With wshMenuFAC.Shapes("btnFAC_Annulation")
+    wshMenuDEB.Unprotect
+    
+    With wshMenuDEB.Shapes("btnPaiement")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFAC_Annulation").Left = width - 32
+            ActiveSheet.Shapes("icoPaiement").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
 
-End Sub
-
-Sub SlideOut_Regularisation()
-
-    With wshMenuFAC.Shapes("btnRegularisation")
-        For width = 32 To MAXWIDTH
-            .Height = width
-            ActiveSheet.Shapes("icoRegularisation").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = "Régularisation"
-    End With
-
-End Sub
-
-Sub SlideIn_Regularisation()
-
-    With wshMenuFAC.Shapes("btnRegularisation")
-        For width = MAXWIDTH To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoRegularisation").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+    wshMenuDEB.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_Paiement()
 
+    wshMenuDEB.Unprotect
+    
     With wshMenuDEB.Shapes("btnPaiement")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -392,23 +495,33 @@ Sub SlideOut_Paiement()
         .TextFrame2.TextRange.Characters.text = "Déboursé"
     End With
 
+    wshMenuDEB.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_Paiement()
+Sub SlideIn_EJ()
 
-    With wshMenuDEB.Shapes("btnPaiement")
+    wshMenuGL.Unprotect
+    
+    With wshMenuGL.Shapes("btnEJ")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoPaiement").Left = width - 32
+            ActiveSheet.Shapes("icoEJ").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_EJ()
 
+    wshMenuGL.Unprotect
+    
     With wshMenuGL.Shapes("btnEJ")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -417,23 +530,33 @@ Sub SlideOut_EJ()
         .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
     End With
 
+    wshMenuGL.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_EJ()
+Sub SlideIn_BV()
 
-    With wshMenuGL.Shapes("btnEJ")
-        For width = MAXWIDTH To 32 Step -1
+    wshMenuGL.Unprotect
+    
+    With wshMenuGL.Shapes("btnBV")
+        For width = 180 To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEJ").Left = width - 32
+            ActiveSheet.Shapes("icoBV").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_BV()
 
+    wshMenuGL.Unprotect
+    
     With wshMenuGL.Shapes("btnBV")
         For width = 32 To 180
             .Height = width
@@ -442,23 +565,31 @@ Sub SlideOut_BV()
         .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
     End With
 
+    wshMenuGL.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_BV()
+Sub SlideIn_GL_Report()
 
-    With wshMenuGL.Shapes("btnBV")
-        For width = 180 To 32 Step -1
+    wshMenuGL.Unprotect
+    
+    With wshMenuGL.Shapes("btnGL")
+        For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoBV").Left = width - 32
+            ActiveSheet.Shapes("icoGL").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
+
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_GL_Report()
 
+    wshMenuGL.Unprotect
+    
     With wshMenuGL.Shapes("btnGL")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -467,23 +598,33 @@ Sub SlideOut_GL_Report()
         .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
     End With
 
+    wshMenuGL.Protect UserInterfaceOnly:=True
+
 End Sub
 
-Sub SlideIn_GL_Report()
+Sub SlideIn_EF()
 
-    With wshMenuGL.Shapes("btnGL")
+    wshMenuGL.Unprotect
+    
+    With wshMenuGL.Shapes("btnEF")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoGL").Left = width - 32
+            ActiveSheet.Shapes("icoEF").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
+
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
 Sub SlideOut_EF()
 
+    wshMenuGL.Unprotect
+    
     With wshMenuGL.Shapes("btnEF")
         For width = 32 To MAXWIDTH
             .Height = width
@@ -492,18 +633,7 @@ Sub SlideOut_EF()
         .TextFrame2.TextRange.Characters.text = "États financiers"
     End With
 
-End Sub
-
-Sub SlideIn_EF()
-
-    With wshMenuGL.Shapes("btnEF")
-        For width = MAXWIDTH To 32 Step -1
-            .Height = width
-            .Left = width - 32
-            ActiveSheet.Shapes("icoEF").Left = width - 32
-        Next width
-        .TextFrame2.TextRange.Characters.text = ""
-    End With
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 

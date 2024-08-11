@@ -21,7 +21,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Analyse")
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     Call TEC_Sort_Group_And_Subtotal
     

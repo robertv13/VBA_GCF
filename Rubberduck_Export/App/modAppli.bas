@@ -107,21 +107,20 @@ Public Enum TEC_Data_Columns
     ftecLast = ftecNoFacture
 End Enum
 
-Sub Set_Root_Path()
+Sub Set_Environment()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Set_Root_Path()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Set_Environment()")
     
     Dim rootPath As String
-    
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else
         rootPath = "P:\Administration\APP\GCF"
     End If
-
     wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
+    
 
-    Call End_Timer("modAppli:Set_Root_Path()", timerStart)
+    Call End_Timer("modAppli:Set_Environment()", timerStart)
 
 End Sub
 
@@ -131,6 +130,7 @@ Sub Write_Info_On_Main_Menu()
     
     Application.EnableEvents = False
     wshMenu.Unprotect
+    Application.ScreenUpdating = True
     
     With wshMenu.Range("$A$32")
         .Font.size = 8
@@ -160,7 +160,25 @@ Sub Write_Info_On_Main_Menu()
     wshMenu.Protect UserInterfaceOnly:=True
     
     Application.EnableEvents = True
+    Application.ScreenUpdating = False
 
     Call End_Timer("modAppli:Write_Info_On_Main_Menu()", timerStart)
+
+End Sub
+
+Sub Handle_Rubberduck_Reference()
+
+    Dim ref As Object
+
+    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
+        On Error Resume Next 'In case the reference doesn't exist
+        For Each ref In ThisWorkbook.VBProject.References
+            If ref.name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
+                ThisWorkbook.VBProject.References.Remove ref
+                Exit For
+            End If
+        Next ref
+        On Error GoTo 0
+    End If
 
 End Sub

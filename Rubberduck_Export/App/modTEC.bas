@@ -531,6 +531,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     ufSaisieHeures.txtTotalHeures.value = ""
     ufSaisieHeures.lsbHresJour.RowSource = ""
     ufSaisieHeures.lsbHresJour.clear '2024-08-10 @ 05:59
+'    Application.Wait ("0:00:01")
     
     'Last Row used in first column of result
     Dim lastRow As Long
@@ -541,7 +542,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         .ColumnHeads = True
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow
+        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
     End With
      
     'Add hours to totalHeures

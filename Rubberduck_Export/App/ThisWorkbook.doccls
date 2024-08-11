@@ -5,20 +5,28 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
+'    Call Handle_Rubberduck_Reference
+    
     Call End_Timer("message:N E W  session  has  started", 0)
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ThisWorkbook:Workbook_Open()")
     
     Application.ScreenUpdating = False
     
-    Call Set_Root_Path
+    Call Set_Environment
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
     Call BackupMasterFile
     
     Call Hide_Dev_Shapes_Based_On_Username
     
+    Application.ScreenUpdating = True
+    
     Call Write_Info_On_Main_Menu
+    
+    Application.Wait ("0:00:01") 'RMV_TEMP - 2024-08-11 @ 13:56
+    
+    Application.ScreenUpdating = False
     
     wshMenu.Activate
     wshMenu.Unprotect

@@ -66,6 +66,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).row
+    If destLastUsedRow < 6 Then destLastUsedRow = 6
     wsDest.Range("A6:I" & destLastUsedRow).ClearContents
     
     'Update the progress bar fill
@@ -121,7 +122,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     wsDest.Sort.SortFields.add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
     
     With wsDest.Sort
-        .SetRange wsDest.Range("A5:I" & destLastUsedRow)
+        .SetRange wsDest.Range("A6:I" & destLastUsedRow)
         .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom

@@ -129,6 +129,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
         
         If wshAdmin.Range("TEC_Date").value <> "" Then
+            ufSaisieHeures.txtDate.value = wshAdmin.Range("TEC_Date").value
             Call TEC_AdvancedFilter_And_Sort
             Call TEC_Refresh_ListBox_And_Add_Hours
         End If
