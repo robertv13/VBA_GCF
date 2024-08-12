@@ -1,1 +1,19 @@
 ﻿Option Explicit
+
+Private Sub Workbook_Deactivate()
+
+    MsgBox "Workbook_Deactivate Event"
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Fin de session - Workbook_Deactivate *****", 0)
+
+End Sub
+
+Private Sub Workbook_Open()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début de session - Workbook_Open *****", 0)
+
+    Call Client_List_Import_All
+    
+    frmForm.Show vbModeless
+
+End Sub

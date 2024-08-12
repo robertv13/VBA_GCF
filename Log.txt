@@ -1,0 +1,41 @@
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|***** ThisWorkbook:Workbook_Open ***** (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0742 seconds
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (sortie)|Temps écoulé: 0,3516 seconds
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|frmFrom:UserForm_Initialize (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Reset (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|frmFrom:cmbSearchColumn_Change (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|modMain:Reset (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-12_14:34:19|Clients_v.1.7.xlsm|frmForm:UserForm_Initialize (sortie)|Temps écoulé: 0,0391 seconds
+Robert_M._Vigneault|2024-08-12_14:34:22|Clients_v.1.7.xlsm|frmFrom:txtNomClient_Exit (entrée)
+Robert_M._Vigneault|2024-08-12_14:34:22|Clients_v.1.7.xlsm|frmForm:txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-12_14:35:46|Clients_v.1.7.xlsm|***** Fin de session - Workbook_Deactivate ***** (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:39|Clients_v.1.7.xlsm|***** Début de session - Workbook_Open ***** (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:39|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (sortie)|Temps écoulé: 0,3555 seconds
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|frmFrom:UserForm_Initialize (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Reset (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|frmFrom:cmbSearchColumn_Change (entrée)
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|modMain:Reset (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-12_14:36:40|Clients_v.1.7.xlsm|frmForm:UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-12_14:37:08|Clients_v.1.7.xlsm|***** Fin de session - Workbook_Deactivate ***** (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|***** Début de session - Workbook_Open ***** (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Client_List_Import_All (sortie)|Temps écoulé: 0,3711 seconds
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|frmFrom:UserForm_Initialize (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Reset (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|frmFrom:cmbSearchColumn_Change (entrée)
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|modMain:Reset (sortie)|Temps écoulé: 0,0430 seconds
+Robert_M._Vigneault|2024-08-12_14:37:13|Clients_v.1.7.xlsm|frmForm:UserForm_Initialize (sortie)|Temps écoulé: 0,0469 seconds
+Robert_M._Vigneault|2024-08-12_14:37:39|Clients_v.1.7.xlsm|***** Fin de session - Workbook_Deactivate ***** (entrée)
