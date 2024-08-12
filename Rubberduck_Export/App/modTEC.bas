@@ -539,23 +539,48 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
-        .ColumnHeads = True
+        .ColumnHeads = False
         .ColumnCount = 9
         .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
-        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
+'        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
     End With
-     
-    'Add hours to totalHeures
-    Dim nbrRows, i As Long
-    nbrRows = ufSaisieHeures.lsbHresJour.ListCount
-    Dim totalHeures As Double
     
-    If nbrRows > 0 Then
-        For i = 0 To nbrRows - 1
-            totalHeures = totalHeures + CCur(ufSaisieHeures.lsbHresJour.List(i, 5))
-        Next
-        ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
-    End If
+    'Manually add to listBox (.RowSource DOES NOT WORK!!!)
+    Dim rng As Range
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+    Debug.Print rng.Address
+     
+    Dim i As Long, j As Long
+    Dim totalHeures As Double
+    Application.ScreenUpdating = True
+    For i = 1 To rng.rows.count
+        Debug.Print rng.Cells(i, 1).value & " " & rng.Cells(i, 2).value & " " & rng.Cells(i, 3).value & " " & rng.Cells(i, 6).value
+        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = rng.Cells(i, 3).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = rng.Cells(i, 9).value
+        totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
+        
+'        'Loop through each subsequent column and set the value
+'        For j = 2 To rng.columns.count
+'            ufSaisieHeures.ListBox1.List(ufSaisieHeures.ListBox1.ListCount - 1, j - 1) = rng.Cells(i, j).value
+'            'Add hours to totalHeures
+'            If j = 6 Then totalHeures = totalHeures + CCur(rng.Cells(i, j).value)
+'       Next j
+    Next i
+         
+    ufSaisieHeures.Repaint
+    
+    ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
+    
+    DoEvents '2024-08-12 @ 10:31
+    
+    Application.ScreenUpdating = True
 
 EndOfProcedure:
 

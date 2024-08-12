@@ -24,7 +24,7 @@ Private Sub Workbook_Open()
     
     Call Write_Info_On_Main_Menu
     
-    Application.Wait ("0:00:01") 'RMV_TEMP - 2024-08-11 @ 13:56
+'    Application.Wait ("0:00:01") 'RMV_TEMP - 2024-08-11 @ 13:56
     
     Application.ScreenUpdating = False
     

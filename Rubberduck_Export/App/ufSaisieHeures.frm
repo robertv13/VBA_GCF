@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   9150.001
+   ClientHeight    =   9255.001
    ClientLeft      =   135
    ClientTop       =   570
    ClientWidth     =   14025
@@ -100,22 +100,25 @@ Private Sub UserForm_Terminate()
     'Clean up
     Set oEventHandler = Nothing
     
-    Me.Hide
-    Unload Me
+    ufSaisieHeures.Hide
+    Unload ufSaisieHeures
     
-    If Me.name = "ufSaisieHeures" Then
+    If ufSaisieHeures.name = "ufSaisieHeures" Then
         On Error GoTo MenuSelect
         wshMenuTEC.Select
         On Error GoTo 0
     Else
         wshMenu.Select
     End If
-    Exit Sub
+    
+    GoTo Exit_Sub
     
 MenuSelect:
     wshMenu.Activate
     wshMenu.Select
     
+Exit_Sub:
+
     Call End_Timer("ufSaisieHeures:UserForm_Terminate()", timerStart)
 
 End Sub

@@ -5,7 +5,11 @@ Dim width As Long
 
 Sub SlideIn_TEC()
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:SlideIn_TEC()")
+    
+    On Error Resume Next
     wshMenu.Unprotect
+    On Error GoTo 0
     
     With wshMenu.Shapes("btnTECMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -20,11 +24,13 @@ Sub SlideIn_TEC()
     
     wshMenu.Protect UserInterfaceOnly:=True
 
+    Call End_Timer("modMenu:SlideIn_TEC()", timerStart)
+
 End Sub
 
 Sub SlideOut_TEC()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnTECMenu")
         For width = 32 To MAXWIDTH
@@ -40,7 +46,9 @@ End Sub
 
 Sub SlideIn_Facturation()
     
-    wshMenu.Unprotect
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:SlideIn_Facturation()")
+    
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnFacturationMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -55,11 +63,13 @@ Sub SlideIn_Facturation()
 
     wshMenu.Protect UserInterfaceOnly:=True
 
+    Call End_Timer("modMenu:SlideIn_Facturation()", timerStart)
+
 End Sub
 
 Sub SlideOut_Facturation()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnFacturationMenu")
         For width = 32 To MAXWIDTH
@@ -75,7 +85,7 @@ End Sub
 
 Sub SlideIn_Debours()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnDeboursMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -94,7 +104,7 @@ End Sub
 
 Sub SlideOut_Debours()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnDeboursMenu")
         For width = 32 To MAXWIDTH
@@ -110,7 +120,7 @@ End Sub
 
 Sub SlideIn_Comptabilite()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = MAXWIDTH To 32 Step -1
@@ -129,7 +139,7 @@ End Sub
 
 Sub SlideOut_Comptabilite()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = 32 To MAXWIDTH
@@ -145,7 +155,7 @@ End Sub
 
 Sub SlideIn_Parametres()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnParametresOption")
         For width = MAXWIDTH To 32 Step -1
@@ -164,7 +174,7 @@ End Sub
 
 Sub SlideOut_Parametres()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnParametresOption")
         For width = 32 To MAXWIDTH
@@ -180,7 +190,7 @@ End Sub
 
 Sub SlideIn_Exit()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With wshMenu.Shapes("btnEXIT")
         For width = MAXWIDTH To 32 Step -1
@@ -199,7 +209,7 @@ End Sub
 
 Sub SlideOut_Exit()
     
-    wshMenu.Unprotect
+    On Error Resume Next: wshMenu.Unprotect: On Error GoTo 0
     
     With ActiveSheet.Shapes("btnEXIT")
         For width = 32 To MAXWIDTH
@@ -828,7 +838,7 @@ End Sub
 
 Sub Slide_In_All_Menu_Options()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Slide_In_All_Menu_Options()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:Slide_In_All_Menu_Options()")
     
     Call SlideIn_TEC
     Call SlideIn_Facturation
@@ -837,11 +847,13 @@ Sub Slide_In_All_Menu_Options()
     Call SlideIn_Parametres
     Call SlideIn_Exit
 
-    Call End_Timer("modAppli:Slide_In_All_Menu_Options()", timerStart)
+    Call End_Timer("modMenu:Slide_In_All_Menu_Options()", timerStart)
 
 End Sub
 
 Sub Hide_Dev_Shapes_Based_On_Username()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:Hide_Dev_Shapes_Based_On_Username()")
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet
@@ -883,6 +895,8 @@ Sub Hide_Dev_Shapes_Based_On_Username()
             Case Else
         End Select
     Next shp
+
+    Call End_Timer("modMenu:Hide_Dev_Shapes_Based_On_Username()", timerStart)
 
 End Sub
 
