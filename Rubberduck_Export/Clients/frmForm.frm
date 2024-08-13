@@ -83,6 +83,9 @@ Private Sub cmdEdit_Click()
         Exit Sub
     End If
     
+    'Save selected line number
+    wshMENU.Range("B3").Value = Selected_List
+    
     'Code to update the value to respective controls
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0), _
         ThisWorkbook.Sheets("Données").Range("A:A"), 0)
@@ -142,7 +145,15 @@ Private Sub cmdSave_Click()
     frmForm.cmdSave.Enabled = False
     frmForm.cmdCancel.Enabled = False
     
-    Me.txtSearch.SetFocus
+    If wshMENU.Range("B3").Value >= 0 And _
+        wshMENU.Range("B3").Value < frmForm.lstDonnées.ListCount Then
+            frmForm.lstDonnées.ListIndex = wshMENU.Range("B3").Value
+            If wshMENU.Range("B3").Value > 15 Then
+                frmForm.lstDonnées.TopIndex = wshMENU.Range("B3").Value - 8 'Guess ?
+            End If
+    End If
+    
+'    Me.txtSearch.SetFocus
 
     Call Log_Record("frmForm:cmdSave_Click", startTime)
 

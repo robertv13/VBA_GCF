@@ -5,9 +5,9 @@ Dim InitialValues As Collection
 
 Sub Show_Form()
     
-'    Call Client_List_Import_All 'Toujours avoir la dernière version des clients
-'
-'    frmForm.Show vbModeless
+    Call Client_List_Import_All 'Toujours avoir la dernière version des clients
+
+    frmForm.Show vbModeless
 
 End Sub
 
@@ -75,6 +75,8 @@ Sub Reset()
         End If
         If Err.Number = 380 Then
             MsgBox "Il y a un problème avec une commande de programmation." & _
+                    vbNewLine & vbNewLine & _
+                    "Valeur de iRow = " & iRow & _
                     vbNewLine & vbNewLine & _
                     "Sortir de l'application et réessayer à nouveau" & _
                     vbCritical
