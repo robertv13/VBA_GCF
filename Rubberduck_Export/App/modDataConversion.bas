@@ -807,3 +807,67 @@ Sub Check_Client_Name() '2024-08-10 @ 10:13
     
 End Sub
 
+Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
+
+    'Définir les chemins d'accès des fichiers (source & destination)
+    Dim sourceFilePath As String
+    sourceFilePath = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER.xlsx"
+    
+    'Declare le Workbook & le Worksheet (source)
+    Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
+    Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("TEC_Local")
+    
+    'Détermine la dernière rangée utilisée dans le fichier Source
+    Dim lastUsedRow As Long
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
+    
+    Dim profID As Long
+    Dim prof As String, codeClient As String, nomClient As String
+    Dim estFacturable As String, estFacturee As String, estDetruit As String
+    Dim dateServ As Date
+    Dim hresSaisies As Double, hresDetruites As Double, hresFacturees As Double
+    Dim hresNonDetruites As Double, hresFacturables As Double, hresNonFacturables As Double
+    Dim i As Long
+    For i = 2 To lastUsedRow
+        profID = sourceSheet.Cells(i, 2).value
+        prof = sourceSheet.Cells(i, 3).value
+        dateServ = sourceSheet.Cells(i, 4).value
+        codeClient = sourceSheet.Cells(i, 5).value
+        nomClient = Trim(sourceSheet.Cells(i, 6).value)
+        hresSaisies = Trim(sourceSheet.Cells(i, 8).value)
+        estFacturable = sourceSheet.Cells(i, 10).value
+        estFacturee = sourceSheet.Cells(i, 12).value
+        estDetruit = sourceSheet.Cells(i, 14).value
+        
+        hresDetruites = 0
+        If estDetruit = "VRAI" Then
+            hresDetruites = hresSaisies
+        End If
+        hresNonDetruites = hresSaisies - hresDetruites
+        
+        hresFacturables = 0
+        hresNonFacturables = 0
+        If estFacturable = "VRAI" Then
+            hresFacturables = hresNonDetruites
+        Else
+            hresNonFacturables = hresNonDetruites
+        End If
+        
+        hresFacturees = 0
+        If estFacturee = "VRAI" Then
+            hresFacturees = hresNonDetruites
+        End If
+        
+    Next i
+    
+    'Close the source workbook
+    sourceWorkbook.Close
+    
+    'Clean up
+    Set sourceSheet = Nothing
+    Set sourceWorkbook = Nothing
+    
+    MsgBox "Sommaire des heures est complété."
+    
+End Sub
+

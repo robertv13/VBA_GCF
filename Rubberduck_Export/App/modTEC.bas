@@ -391,6 +391,9 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("Date").value = CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy"))
             rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
             rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
+            If Len(ufSaisieHeures.txtActivite.value) > 255 Then
+                ufSaisieHeures.txtActivite.value = Left(ufSaisieHeures.txtActivite.value, 255)
+            End If
             rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
             rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
             rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
@@ -541,7 +544,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
-        .ColumnWidths = "30; 26; 52; 130; 200; 35; 80; 38; 83"
+        .ColumnWidths = "30; 24; 54; 155; 240; 42; 90; 32; 90"
 '        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
     End With
     
@@ -554,24 +557,16 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim totalHeures As Double
     Application.ScreenUpdating = True
     For i = 1 To rng.rows.count
-        Debug.Print rng.Cells(i, 1).value & " " & rng.Cells(i, 2).value & " " & rng.Cells(i, 3).value & " " & rng.Cells(i, 6).value
         ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = rng.Cells(i, 3).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, "dd/mm/yyyy")
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = rng.Cells(i, 9).value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, "dd/mm/yyyy hh:nn:ss")
         totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
-        
-'        'Loop through each subsequent column and set the value
-'        For j = 2 To rng.columns.count
-'            ufSaisieHeures.ListBox1.List(ufSaisieHeures.ListBox1.ListCount - 1, j - 1) = rng.Cells(i, j).value
-'            'Add hours to totalHeures
-'            If j = 6 Then totalHeures = totalHeures + CCur(rng.Cells(i, j).value)
-'       Next j
     Next i
          
     ufSaisieHeures.Repaint

@@ -1690,4 +1690,93 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
+Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
+
+    Dim logFile As String
+    logFile = wshAdmin.Range("F5").value & "\Log.txt"
+    
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    
+    Dim currentTime As String
+    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    
+    Open logFile For Append As #fileNum
+    
+    If startTime = 0 Then
+        startTime = Timer 'Start timing
+        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
+                        Replace(currentTime, " ", "_") & "|" & _
+                        ThisWorkbook.name & "|" & _
+                        procedureName & " (entrée)"
+        Close #fileNum
+    Else
+        Dim elapsedTime As Double
+        elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
+        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
+                        Replace(currentTime, " ", "_") & "|" & _
+                        ThisWorkbook.name & "|" & _
+                        procedureName & " (sortie)" & "|" & _
+                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds"
+        Close #fileNum
+    End If
+End Sub
+
+Sub Test_Log_Record()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modzDevUtils:Test_Log_Record", 0)
+
+    Call Log_Record("modzDevUtils:Test_Log_Record", startTime)
+    
+End Sub
+
+Sub ExportAllVBAComponentsForGitHub()
+
+    Dim vbComp As VBComponent
+    Dim exportPath As String
+    Dim fileName As String
+
+    'Set the directory where you want to export the files
+    exportPath = "C:\VBA\GC_FISCALITÉ\Rubberduck_Export\App\"
+
+    'Ensure the export path ends with a backslash
+    If Right(exportPath, 1) <> "\" Then
+        exportPath = exportPath & "\"
+    End If
+
+    ' Loop through each component in the VBA project
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        Select Case vbComp.Type
+            Case vbext_ct_StdModule
+                fileName = vbComp.name & ".bas"
+            Case vbext_ct_ClassModule
+                ' Export class modules as *.cls
+                fileName = vbComp.name & ".cls"
+            Case vbext_ct_MSForm
+                ' Export user forms as *.frm and their associated *.frx files
+                fileName = vbComp.name & ".frm"
+                vbComp.Export exportPath & fileName
+                ' Copy the associated *.frx file if it exists
+                If Dir(ThisWorkbook.path & "\" & vbComp.name & ".frx") <> "" Then
+                    FileCopy ThisWorkbook.path & "\" & vbComp.name & ".frx", exportPath & vbComp.name & ".frx"
+                End If
+            Case vbext_ct_Document
+                ' Export worksheets and ThisWorkbook as *.doccls
+                fileName = vbComp.name & ".doccls"
+            Case Else
+                'Skip other component types
+                Debug.Print vbComp.Type
+                Stop
+                GoTo NextComponent
+        End Select
+        
+        ' Export the component
+        vbComp.Export exportPath & fileName
+        
+NextComponent:
+    Next vbComp
+
+    MsgBox "Export completed!", vbInformation
+    
+End Sub
 

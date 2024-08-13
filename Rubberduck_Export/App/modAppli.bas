@@ -119,7 +119,6 @@ Sub Set_Environment()
     End If
     wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
     
-
     Call End_Timer("modAppli:Set_Environment()", timerStart)
 
 End Sub

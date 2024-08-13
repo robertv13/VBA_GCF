@@ -1,7 +1,6 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
-
 Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As String, numberRows As Long)
 
     'Open the workbook
@@ -116,6 +115,54 @@ Public Sub UnprotectCells(rng As Range)
 
 End Sub
 
+Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
+    
+    Dim components() As String
+    Dim i As Long, j As Long
+    Dim temp As String
+    Dim sortedString As String
+    Dim intResult As Integer
+    
+    'Split the string into components
+    components = Split(inputString, delimiter)
+    
+    'Sort components (simple bubble sort)
+    For i = LBound(components) To UBound(components) - 1
+        For j = i + 1 To UBound(components)
+'            Debug.Print components(i) & " vs. " & components(j)
+            intResult = StrComp(components(i), components(j), vbTextCompare)
+            If intResult = 1 Then
+                'Swap components
+                temp = components(i)
+                components(i) = components(j)
+                components(j) = temp
+'            Debug.Print components(i) & " < " & components(j)
+            End If
+        Next j
+    Next i
+    
+    'Rejoin the sorted components into a single string
+    inputString = Join(components, delimiter)
+    If Left(inputString, 1) = "|" Then
+        inputString = Right(inputString, Len(inputString) - 1)
+    End If
+    
+End Sub
+
+'Function CompareComponents(comp1 As String, comp2 As String) As Long
+'
+'    'Extract date part from each component
+''    Dim date1 As String
+''    Dim date2 As String
+''
+''    date1 = Split(comp1, "_")(0)
+''    date2 = Split(comp2, "_")(0)
+'
+'    'Compare 2 components
+'    CompareComponents = StrComp(comp1, comp2, vbTextCompare)
+'
+'End Function
+'
 Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
 
     Dim modeOper As Long
@@ -273,17 +320,28 @@ End Sub
 
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:Integrity_Verification()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Integrity_Verification", 0)
+
     Application.ScreenUpdating = False
     
     Call Erase_And_Create_Worksheet("Analyse_Intégrité")
-
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
     wsOutput.Range("A1").value = "Feuille"
     wsOutput.Range("B1").value = "Message"
     wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+
+    Call Erase_And_Create_Worksheet("Heures_Jour_Prof")
+    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("Heures_Jour_Prof")
+    wsSommaire.Range("A1").value = "Date"
+    wsSommaire.Range("B1").value = "Prof."
+    wsSommaire.Range("C1").value = "H/Saisies"
+    wsSommaire.Range("D1").value = "H/Détruites"
+    wsSommaire.Range("E1").value = "H/Fact"
+    wsSommaire.Range("F1").value = "H/NFact"
+    wsSommaire.Range("G1").value = "H/Facturées"
+    wsSommaire.Range("H1").value = "H/TEC"
+    Call Make_It_As_Header(wsSommaire.Range("A1:H1"))
 
     'Data starts at row 2
     Dim r As Long: r = 2
@@ -291,13 +349,11 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
-    r = r + 1
     
     Call check_Plan_Comptable(r, readRows)
 
     'wshBD_Clients --------------------------------------------------------------- Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
-    r = r + 1
     
     Call Client_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
@@ -308,7 +364,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Fournisseurs")
-    r = r + 1
     
     Call Fournisseur_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
@@ -319,7 +374,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
-    r = r + 1
     
     Call FAC_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
@@ -330,7 +384,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
-    r = r + 1
     
     Call FAC_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
@@ -341,7 +394,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
-    r = r + 1
     
     Call FAC_Projets_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
@@ -352,7 +404,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
-    r = r + 1
     
     Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
@@ -363,7 +414,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "GL_Trans")
-    r = r + 1
     
     Call GL_Trans_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
@@ -374,13 +424,11 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
-    r = r + 1
     
     Call check_TEC_TdB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
-    r = r + 1
     
     Call TEC_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
@@ -396,12 +444,13 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     End With
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
-
+    wsSommaire.Range("A1").CurrentRegion.EntireColumn.AutoFit
+    
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = r + 1
     wsOutput.Range("A" & lastUsedRow).value = "**** " & Format$(readRows, "###,##0") & _
-                                    " lignes analysées dans l'ensemble de l'application ***"
+                                    " lignes analysées dans l'ensemble des tables ***"
     
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
@@ -417,13 +466,13 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:Integrity_Verification()", timerStart)
-    
+    Call Log_Record("modAppli:Integrity_Verification", startTime)
+
 End Sub
 
 Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Clients()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Clients", 0)
     
     Application.ScreenUpdating = False
     
@@ -510,14 +559,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_Clients()", timerStart)
+    Call Log_Record("modAppli:check_Clients", startTime)
 
 End Sub
 
 Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Fournisseurs()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Fournisseurs", 0)
+
     Application.ScreenUpdating = False
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -600,14 +649,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_Fournisseurs()", timerStart)
+    Call Log_Record("modAppli:check_Fournisseurs", startTime)
 
 End Sub
 
 Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Détails()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Détails", 0)
+
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -699,14 +748,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_FAC_Détails()", timerStart)
+    Call Log_Record("modAppli:check_FAC_Détails", startTime)
 
 End Sub
 
 Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Entête()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Entête", 0)
+
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -776,14 +825,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_FAC_Entête()", timerStart)
+    Call Log_Record("modAppli:check_FAC_Entête", startTime)
 
 End Sub
 
 Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Projets_Détails()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Détails", 0)
+
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -886,14 +935,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_FAC_Projets_Détails()", timerStart)
+    Call Log_Record("modAppli:check_FAC_Projets_Détails", startTime)
 
 End Sub
 
 Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_FAC_Projets_Entête()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Entête", 0)
+
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1045,14 +1094,14 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_FAC_Projets_Entête()", timerStart)
+    Call Log_Record("modAppli:check_FAC_Projets_Entête", startTime)
 
 End Sub
 
 Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_GL_Trans()")
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_GL_Trans", 0)
+
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
@@ -1240,13 +1289,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_GL_Trans()", timerStart)
+    Call Log_Record("modAppli:check_GL_Trans", startTime)
 
 End Sub
 
 Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_TEC_TdB_Data()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_TEC_TdB_Data", 0)
     
     Application.ScreenUpdating = False
     
@@ -1273,7 +1322,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_TdB_Data'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -1308,28 +1356,24 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         hres = arr(i, 5)
         If IsNumeric(hres) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 6)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 7)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 8)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
@@ -1346,7 +1390,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             dict_TEC_ID.add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
@@ -1356,7 +1399,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -1364,21 +1406,17 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -1388,45 +1426,36 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim formattedHours As String
@@ -1435,7 +1464,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -1443,7 +1471,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures détruites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -1451,7 +1478,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -1459,7 +1485,6 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -1467,7 +1492,20 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    r = r + 1
+    
+    formattedHours = Format$(total_hres_facturees, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures Facturées       : " & formattedHours)
+    r = r + 1
+
+    formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures TEC             : " & formattedHours)
     r = r + 2
 
 Clean_Exit:
@@ -1477,13 +1515,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_TEC_TdB_Data()", timerStart)
+    Call Log_Record("modAppli:check_TEC_TdB_Data", startTime)
 
 End Sub
 
 Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_Plan_Comptable()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Plan_Comptable", 0)
     
     Application.ScreenUpdating = False
     
@@ -1592,17 +1630,18 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_Plan_Comptable()", timerStart)
+    Call Log_Record("modAppli:check_Plan_Comptable", startTime)
 
 End Sub
 
 Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:check_TEC()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_GL_Trans", 0)
     
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("Heures_Jour_Prof")
     
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -1621,11 +1660,9 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim arr As Variant
@@ -1635,6 +1672,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
+    Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
@@ -1643,8 +1681,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim cas_estDetruit_invalide As Long
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
     Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
+    Dim keyDate As String
     
     minDate = "12/31/2999"
+    Dim bigStrDateProf As String
+    Dim arrHres(1 To 10000, 1 To 6) As Variant
+    Dim arrRow As Integer, pArr As Integer, rArr As Integer
+    
     For i = LBound(arr, 1) To UBound(arr, 1) - 2
         TECID = arr(i, 1)
         profID = arr(i, 2)
@@ -1653,7 +1696,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         testDate = IsDate(dateTEC)
         If testDate = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_invalide = cas_date_invalide + 1
         Else
@@ -1662,7 +1704,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
         If dateTEC > Now() Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_date_future = cas_date_future + 1
         End If
@@ -1672,55 +1713,105 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         testHres = IsNumeric(hres)
         If testHres = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 12)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
+        Dim h(1 To 6) As Double
+        h(1) = 0
         total_hres_inscrites = total_hres_inscrites + hres
-        If estDetruit = "Vrai" Then total_hres_detruites = total_hres_detruites + hres
+        h(1) = hres
         
-        If estDetruit = "Faux" And estFacturable = "Vrai" Then total_hres_facturable = total_hres_facturable + hres
-        If estDetruit = "Faux" And estFacturable = "Faux" Then total_hres_non_facturable = total_hres_non_facturable + hres
-        If estDetruit = "Faux" And estFacturee = "Vrai" Then total_hres_facturees = total_hres_facturees + hres
+        h(2) = 0
+        If estDetruit = "Vrai" Then
+            total_hres_detruites = total_hres_detruites + hres
+            h(2) = hres
+        End If
         
-        'Dictionary
+        h(3) = 0
+        If estDetruit = "Faux" And estFacturable = "Vrai" Then
+            total_hres_facturable = total_hres_facturable + hres
+            h(3) = hres
+        End If
+        
+        h(4) = 0
+        If estDetruit = "Faux" And estFacturable = "Faux" Then
+            total_hres_non_facturable = total_hres_non_facturable + hres
+            h(4) = hres
+        End If
+        
+        h(5) = 0
+        If estDetruit = "Faux" And estFacturee = "Vrai" Then
+            total_hres_facturees = total_hres_facturees + hres
+            h(5) = hres
+        End If
+        
+        'TEC = Heures Facturrables - Heures facturées
+        If h(3) Then
+            h(6) = h(3) - h(5)
+        Else
+            h(6) = 0
+        End If
+        
+        If h(1) - h(2) <> h(3) + h(4) Then
+            Debug.Print i & " Écart - " & TECID & " " & prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
+            Stop
+        End If
+        
+        'Dictionaries
         If dict_TEC_ID.Exists(TECID) = False Then
             dict_TEC_ID.add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
-            Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
         If dict_prof.Exists(prof & "-" & profID) = False Then
             dict_prof.add prof & "-" & profID, 0
         End If
+        
+        'Summary by Date
+        d = day(dateTEC)
+        m = month(dateTEC)
+        y = year(dateTEC)
+        keyDate = Format$(y, "0000") & Format$(m, "00") & Format$(d, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
+        p = InStr(bigStrDateProf, keyDate)
+        If p = 0 Then
+            rArr = rArr + 1
+            pArr = rArr
+            bigStrDateProf = bigStrDateProf & keyDate & Format$(rArr, "0000") & "|"
+        Else
+            pArr = Mid(bigStrDateProf, p + 12, 4)
+        End If
+        arrHres(pArr, 1) = arrHres(pArr, 1) + h(1)
+        arrHres(pArr, 2) = arrHres(pArr, 2) + h(2)
+        arrHres(pArr, 3) = arrHres(pArr, 3) + h(3)
+        arrHres(pArr, 4) = arrHres(pArr, 4) + h(4)
+        arrHres(pArr, 5) = arrHres(pArr, 5) + h(5)
+        arrHres(pArr, 6) = arrHres(pArr, 6) + h(6)
     Next i
     
+    Call SortDelimitedString(bigStrDateProf, "|")
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     'Add number of rows processed (read)
@@ -1728,31 +1819,25 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     If cas_doublon_TECID = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucun doublon de TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_date_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_invalide & " cas de date INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_date_future = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune date dans le futur")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_date_future & " cas de date FUTURE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
@@ -1763,46 +1848,37 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     If cas_hres_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturable_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturable' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estFacturee_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estFacturee' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     If cas_estDetruit_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Aucune valeur 'estDetruit' n'est INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
         r = r + 1
     End If
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     Dim formattedHours As String
@@ -1811,7 +1887,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -1819,7 +1894,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures détruites       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -1827,7 +1901,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -1835,7 +1908,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -1843,17 +1915,54 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
     r = r + 1
 
+    formattedHours = Format$(total_hres_facturees, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures Facturées       : " & formattedHours)
+    r = r + 1
+
+    formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures TEC             : " & formattedHours)
+    r = r + 1
+
+    Dim r2 As Integer
+    r2 = 2 'Output to wsSommaire
+    
+    Dim components() As String
+    components = Split(bigStrDateProf, "|")
+    
+    Dim dateStr As String
+    For i = LBound(components) To UBound(components)
+        dateStr = Left(components(i), 8)
+        dateStr = DateSerial(Mid(dateStr, 1, 4), Mid(dateStr, 5, 2), Mid(dateStr, 7, 2))
+        prof = Trim(Mid(components(i), 9, 4))
+        pArr = CInt(Mid(components(i), 13, 4))
+        wsSommaire.Cells(r2, 1).value = Format$(dateStr, "mm/dd/yyyy")
+        wsSommaire.Cells(r2, 2).value = prof
+        wsSommaire.Cells(r2, 3).value = arrHres(pArr, 1)
+        wsSommaire.Cells(r2, 4).value = arrHres(pArr, 2)
+        wsSommaire.Cells(r2, 5).value = arrHres(pArr, 3)
+        wsSommaire.Cells(r2, 6).value = arrHres(pArr, 4)
+        wsSommaire.Cells(r2, 7).value = arrHres(pArr, 5)
+        wsSommaire.Cells(r2, 8).value = arrHres(pArr, 6)
+        r2 = r2 + 1
+    Next i
+    
 Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
+    Set dict_TEC_ID = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modAppli_Utils:check_TEC()", timerStart)
+    Call Log_Record("modAppli:check_TEC", startTime)
 
 End Sub
 
@@ -1935,47 +2044,6 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set PDFFolder = Nothing
-
-End Sub
-
-Sub CopyToClipboard() '2024-07-06 @ 07:37
-
-    'Reference:
-    
-    Dim objData As Object
-    Dim strText As String
-    
-    ' Create a new DataObject
-    Set objData = CreateObject("MSForms.DataObject")
-    
-    ' Text to copy
-    strText = "Hello, Clipboard!"
-    
-    ' Set text to DataObject
-    objData.SetText strText
-    ' Put text to Clipboard
-    objData.PutInClipboard
-    
-    MsgBox "Text copied to clipboard!"
-End Sub
-
-Sub PasteFromClipboard() '2024-07-06 @ 07:37
-
-    Dim objData As Object
-    Dim strText As String
-    
-    ' Create a new DataObject
-    Set objData = CreateObject("MSForms.DataObject")
-    
-    ' Get data from Clipboard
-    objData.GetFromClipboard
-    ' Get text from DataObject
-    strText = objData.GetText
-    
-    ' Paste text into cell A1
-    Range("A1").value = strText
-    
-    MsgBox "Text pasted from clipboard!"
 
 End Sub
 

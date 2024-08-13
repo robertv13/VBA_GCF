@@ -7,6 +7,8 @@ Private Sub Workbook_Open()
 
 '    Call Handle_Rubberduck_Reference
     
+    Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
+    
     Call End_Timer("message:N E W  session  has  started", 0)
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ThisWorkbook:Workbook_Open()")
@@ -94,6 +96,12 @@ Sub BackupMasterFile()
     Set masterWorkbook = Nothing
     
     Call End_Timer("modAppli:BackupMasterFile()", timerStart)
+
+End Sub
+
+Private Sub Workbook_Deactivate()
+
+        Call Log_Record("***** Fin de la session (Workbook_Deactivate) *****", 0)
 
 End Sub
 

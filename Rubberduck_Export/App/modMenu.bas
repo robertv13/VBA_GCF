@@ -745,8 +745,6 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         Application.ScreenUpdating = True
         Application.EnableEvents = True
         
-        Call End_Timer("message:This session has been terminated N O R M A L L Y", 0)
-        
         Call Write_Info_On_Main_Menu
         
         Application.EnableEvents = False
@@ -756,6 +754,10 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         
         Application.EnableEvents = True
 
+        Call End_Timer("message:This session has been terminated N O R M A L L Y", 0)
+        
+        Call Log_Record("***** Session terminée normalement (modMenu:Exit_After_Saving) *****", 0)
+        
         Application.Application.Quit
     End If
     
@@ -764,57 +766,57 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
     
 End Sub
 
-Sub Exit_Click() '2024-07-05 @ 06:37
+'Sub Exit_Click() '2024-07-05 @ 06:37
     
-    Application.EnableEvents = False
-    Application.ScreenUpdating = False
-    
-    Dim confirmation As VbMsgBoxResult
-    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
-                        "l'application de gestion ?" & vbNewLine, vbYesNo + vbQuestion, "Confirmation de sortie")
-    
-    If confirmation = vbYes Then
-        Call SlideIn_Exit
-        Call Hide_All_Worksheets_Except_Menu
-        
-        'Delete temporary Worksheet (Feuil*)
-        Dim ws As Worksheet
-        For Each ws In ThisWorkbook.Worksheets
-            If InStr(1, ws.CodeName, "Feuil") > 0 Then
-                Application.DisplayAlerts = False
-                ws.delete
-                Application.DisplayAlerts = True
-            End If
-        Next ws
-    
-        Application.ScreenUpdating = True
-        Application.EnableEvents = False
-        
-        Call End_Timer("message:This  session  has  been  terminated N O R M A L L Y", 0)
-        
-        Application.DisplayAlerts = False
-        ThisWorkbook.Save
-        Application.DisplayAlerts = True
-        ThisWorkbook.Close saveChanges:=False
-    
-        'If Personal.xlsb is open, hide it without saving
-        Dim wb As Workbook
-        On Error Resume Next
-        Set wb = Workbooks("PERSONAL.XLSB")
-        If Not wb Is Nothing Then
-            wb.IsAddin = True
-        End If
-        On Error GoTo 0
-    
-        'Cleaning - 2024-07-05 @ 06:46
-        Set wb = Nothing
-        Set ws = Nothing
-        
-        Application.Quit
-        
-    End If
-    
-End Sub
+'    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'
+'    Dim confirmation As VbMsgBoxResult
+'    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+'                        "l'application de gestion ?" & vbNewLine, vbYesNo + vbQuestion, "Confirmation de sortie")
+'
+'    If confirmation = vbYes Then
+'        Call SlideIn_Exit
+'        Call Hide_All_Worksheets_Except_Menu
+'
+'        'Delete temporary Worksheet (Feuil*)
+'        Dim ws As Worksheet
+'        For Each ws In ThisWorkbook.Worksheets
+'            If InStr(1, ws.CodeName, "Feuil") > 0 Then
+'                Application.DisplayAlerts = False
+'                ws.delete
+'                Application.DisplayAlerts = True
+'            End If
+'        Next ws
+'
+'        Application.ScreenUpdating = True
+'        Application.EnableEvents = False
+'
+'        Call End_Timer("message:This  session  has  been  terminated N O R M A L L Y", 0)
+'
+'        Application.DisplayAlerts = False
+'        ThisWorkbook.Save
+'        Application.DisplayAlerts = True
+'        ThisWorkbook.Close saveChanges:=False
+'
+'        'If Personal.xlsb is open, hide it without saving
+'        Dim wb As Workbook
+'        On Error Resume Next
+'        Set wb = Workbooks("PERSONAL.XLSB")
+'        If Not wb Is Nothing Then
+'            wb.IsAddin = True
+'        End If
+'        On Error GoTo 0
+'
+'        'Cleaning - 2024-07-05 @ 06:46
+'        Set wb = Nothing
+'        Set ws = Nothing
+'
+'        Application.Quit
+'
+'    End If
+'
+'End Sub
 
 Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
