@@ -1673,7 +1673,9 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim d As Integer, m As Integer, y As Integer, p As Integer
-    Dim code As String, nom As String, hres As Double, testHres As Boolean, estFacturable As Boolean
+    Dim codeClient As String, nomClient As String
+    Dim isClientValid As Boolean
+    Dim hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
     Dim cas_date_future As Long
@@ -1707,8 +1709,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             cas_date_future = cas_date_future + 1
         End If
-        code = arr(i, 5)
-        nom = arr(i, 6)
+        'Validate clientCode
+        codeClient = Trim(arr(i, 5))
+        If Fn_Validate_Client_Number(codeClient) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le code de client '" & codeClient & "' est INVALIDE !!!")
+            r = r + 1
+        End If
+        nomClient = arr(i, 6)
         hres = arr(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
@@ -2287,5 +2294,3 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     End Select
 
 End Sub
-
-

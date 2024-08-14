@@ -544,7 +544,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
-        .ColumnWidths = "30; 24; 54; 155; 240; 42; 90; 32; 90"
+        .ColumnWidths = "30; 24; 54; 155; 240; 35; 90; 32; 90"
 '        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
     End With
     

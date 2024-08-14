@@ -170,25 +170,20 @@ Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As 
     CountCharOccurrences = count
 End Function
 
-Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
+Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
 
     Call Client_List_Import_All
     
-    Dim strConnection As String
-    Dim wsDest As Worksheet
-    Dim i As Long, j As Long
-    Dim lastUsedRow As Long
-    Dim rowNum As Long
-    
     'Define the path to the closed workbook
     Dim strFilePath As String
-    strFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\TEC.xlsx"
+    strFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\TEC_20240814.xlsx"
     Dim strSheetName As String
     strSheetName = "TEC$"
     Dim strRange As String
-    strRange = "A1:F262" 'Adjust the range as needed
+    strRange = "A1:F110" 'Adjust the range as needed
     
     'Connection string for Excel
+    Dim strConnection As String
     strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
                     "Data Source=" & strFilePath & ";" & _
                     "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
@@ -204,9 +199,11 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
     rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
     
     'Define the destination worksheet
+    Dim wsDest As Worksheet
     Set wsDest = ThisWorkbook.Sheets("TEC_Local")
     
     'Get the last row in the destination sheet
+    Dim lastUsedRow As Long, rowNum As Long
     lastUsedRow = wsDest.Range("A999").End(xlUp).row
     rowNum = lastUsedRow
     
@@ -216,30 +213,28 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
     Dim clientCode As String
     Dim clientCodeFromDB As String
     Dim errorMesg As String
-    Dim TEC_ID As Long
+    Dim TEC_ID As Long: TEC_ID = 342
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
-        prof = rst.Fields(0).value
-        client = rst.Fields(2).value
-        clientCode = Left(client, 10)
-            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
-        client = Mid(client, InStr(client, " - ") + 3, Len(client))
-        totHres = totHres + rst.Fields(4)
+        prof = Trim(rst.Fields(0).value)
+        clientCode = Trim(rst.Fields(2).value)
+'        clientCode = Left(client, 10)
+'            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
+        client = Trim(rst.Fields(3).value)
+'        client = Mid(client, InStr(client, " - ") + 3, Len(client))
+        totHres = totHres + CDbl(rst.Fields(5).value)
         
         'Is this a Valid Client ?
         Dim myInfo() As Variant
         Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-        myInfo = Fn_Find_Data_In_A_Range(rng, 1, client, 2)
+        myInfo = Fn_Find_Data_In_A_Range(rng, 2, clientCode, 1)
         If myInfo(1) = "" Then
             If InStr(errorMesg, client) = 0 Then
                 errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
             End If
-        End If
-        clientCodeFromDB = myInfo(3)
-        
-        If clientCode <> clientCodeFromDB Then
-            errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
+        Else
+            client = myInfo(3)
         End If
         
         TEC_ID = TEC_ID + 1
@@ -247,13 +242,13 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-03 @ 16:15
         wsDest.Range("B" & rowNum).value = Get_ID_From_Initials(prof)
         wsDest.Range("C" & rowNum).value = prof
         wsDest.Range("D" & rowNum).value = rst.Fields(1).value
-        wsDest.Range("E" & rowNum).value = clientCodeFromDB
+        wsDest.Range("E" & rowNum).value = clientCode
         wsDest.Range("F" & rowNum).value = client
-        wsDest.Range("G" & rowNum).value = rst.Fields(3).value
-        wsDest.Range("H" & rowNum).value = rst.Fields(4).value
-        wsDest.Range("I" & rowNum).value = rst.Fields(5).value
+        wsDest.Range("G" & rowNum).value = rst.Fields(4).value
+        wsDest.Range("H" & rowNum).value = rst.Fields(5).value
+        wsDest.Range("I" & rowNum).value = ""
         wsDest.Range("J" & rowNum).value = "VRAI"
-        wsDest.Range("K" & rowNum).value = "08/03/2024"
+        wsDest.Range("K" & rowNum).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
         wsDest.Range("L" & rowNum).value = "FAUX"
         wsDest.Range("M" & rowNum).value = ""
         wsDest.Range("N" & rowNum).value = "FAUX"

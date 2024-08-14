@@ -104,8 +104,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Find_Data_In_A_Range()")
     
-    Dim foundInfo(1 To 3) As Variant 'Address, Row, Value
-    Dim dataValue As Variant
+    Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
     'Search for the string in a given range (r) at the column specified (cs)
     Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, lookAt:=xlWhole)
@@ -412,6 +411,33 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
     Set sourceRng = Nothing
+    
+End Function
+
+Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 @ 10:36
+
+    '2024-08-14 @ 10:17 - Verify that a client exists, based on clientCode
+    
+    Fn_Validate_Client_Number = False
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wshBD_Clients.Range("B99999").End(xlUp).row
+    Dim rngToSearch As Range
+    Set rngToSearch = wshBD_Clients.Range("B1:B" & lastUsedRow)
+    
+    'Search for the string in a given range (r) at the column specified (cs)
+    Dim rngFound As Range
+    Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, lookAt:=xlWhole)
+
+    If Not rngFound Is Nothing Then
+        Fn_Validate_Client_Number = True
+    Else
+        Fn_Validate_Client_Number = False
+    End If
+
+    'Clean-up - 2024-08-14 @ 10:15
+    Set rngFound = Nothing
+    Set rngToSearch = Nothing
     
 End Function
 
