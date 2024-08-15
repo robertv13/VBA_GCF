@@ -1,0 +1,118 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Confirmation:Worksheet_Activate()")
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+    
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
+    
+    ws.Protect UserInterfaceOnly:=True
+    
+    Call SetTabOrder(ws)
+    
+    Application.EnableEvents = False
+    
+    'Hide the OK and CANCEL buttons
+    ws.Shapes("FAC_Confirmation_OK_Button").Visible = False
+    ws.Shapes("FAC_Confirmation_Delete_Button").Visible = False
+    
+    ws.Activate
+    
+'    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon(ws)
+    
+    previousCellAddress = ws.Range("F5").Address
+    ws.Range("F5").Select
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set ws = Nothing
+    
+    Call End_Timer("wshFAC_Confirmation:Worksheet_Activate()", timerStart)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+    
+    'Invoice Number is selected
+    If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
+        Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    'Saisie du numéro de facture
+    If Not Intersect(Target, Range("F5")) Is Nothing Then
+        invNo = Trim(Target.value)
+        If invNo <> "" Then
+            Call Get_Invoice_Data(invNo)
+            Call FAC_Confirmation_ShowButtons
+            
+            'Simulate waiting for user input
+            Do
+                DoEvents
+                If Range("B2").value = "OK" Or Range("B2").value = "DELETE" Then
+                    Exit Do
+                End If
+            Loop
+            
+            'Handle the user interaction result
+            Select Case Range("B2").value
+                Case "OK"
+                    Call FAC_Confirmation_OK_Button_Click
+                Case "DELETE"
+                    Call FAC_Confirmation_Delete_Button_Click
+                    Application.EnableEvents = False
+                    Target.ClearContents ' Clear the cell value
+                    Application.EnableEvents = True
+            End Select
+            
+            'Reset flag cell
+            Range("B2").value = ""
+            
+            Application.ScreenUpdating = True
+        
+        Else
+            Target.Select
+        End If
+    End If
+
+End Sub
+
+Sub FAC_Confirmation_Back_To_FAC_Menu()
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:Back_To_FAC_Menu()")
+   
+    wshFAC_Confirmation.Range("F5").ClearContents
+    
+    wshFAC_Confirmation.Visible = xlSheetHidden
+
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A1").Select
+    
+    Call End_Timer("modFAC_Confirmation:Back_To_FAC_Menu()", timerStart)
+    
+End Sub

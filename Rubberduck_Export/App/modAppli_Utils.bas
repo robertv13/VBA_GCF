@@ -8,14 +8,14 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
 
     'Find the last row with data in column A
-    Dim lastRow As Long
-    lastRow = ws.Range("A9999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Range("A9999").End(xlUp).row
     Dim firstNewRow As Long
-    firstNewRow = lastRow - numberRows + 1
+    firstNewRow = LastRow - numberRows + 1
 
     'Set the range for new rows
     Dim newRows As Range
-    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
+    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(LastRow, ws.columns.count))
 
     'Copy formatting from the row above the first new row to the new rows
     ws.rows(firstNewRow - 1).Copy
@@ -112,6 +112,67 @@ Public Sub UnprotectCells(rng As Range)
     'Protect the worksheet
     rng.Parent.Protect UserInterfaceOnly:=True
 
+
+End Sub
+
+Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
+
+    Dim wsSrc As Worksheet
+    Set wsSrc = ThisWorkbook.Worksheets("Heures_Jour_Prof")
+    
+    Dim wsTgt As Worksheet
+    Set wsTgt = ThisWorkbook.Worksheets("HresJourProf")
+    
+    Dim lastUsedRowSrc As Long
+    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).row '2024-08-15 @ 06:17
+    
+    wsTgt.Range("A2:H" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).row).ClearContents
+    
+    'Copy columns A to H (from Source to Target), using Copy and Paste Special
+    wsSrc.Range("A2:H" & lastUsedRowSrc).Copy
+    wsTgt.Cells(2, 1).PasteSpecial Paste:=xlPasteValues
+    
+    'Clear the clipboard
+    Application.CutCopyMode = False
+    
+'    Dim i As Long, j As Long
+'    For i = 2 To lastUsedRowSrc
+'        For j = 1 To 8
+'            wsTgt.Cells(i, j).value = wsSrc.Cells(i, j).value
+'        Next j
+'    Next i
+
+    Call Update_Pivot_Table
+    
+    MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
+            vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
+            vbExclamation
+    
+End Sub
+
+Sub Update_Pivot_Table() '2024-08-15 @ 06:34
+
+    'Define the worksheet containing the data
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("HresJourProf")
+    
+    'Find the last row of your data
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    
+    'Define the new data range
+    Dim rngData As Range
+    Set rngData = ws.Range("A1:H" & lastUsedRow)
+    
+    'Update the Pivot Table
+    Dim pt As PivotTable
+    Set pt = ws.PivotTables("ptHresJourProf")
+    pt.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
+                        SourceType:=xlDatabase, _
+                        SourceData:=rngData)
+    
+    'Refresh the Pivot Table
+    pt.RefreshTable
 
 End Sub
 
@@ -2057,13 +2118,13 @@ End Sub
 Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
 
     Dim ws As Worksheet: Set ws = rng.Worksheet
-    Dim dataRange As Range
+    Dim DataRange As Range
     
     'Remove the worksheet conditional formatting
     ws.Cells.FormatConditions.delete
     
     'Determine the range excluding header rows
-    Set dataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).row, rng.columns.count))
+    Set DataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).row, rng.columns.count))
 
     'Add the standard conditional formatting
     Dim formula As String
@@ -2073,19 +2134,19 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
         formula = "=MOD(LIGNE();2)=1"
     End If
     
-    dataRange.FormatConditions.add Type:=xlExpression, Formula1:= _
+    DataRange.FormatConditions.add Type:=xlExpression, Formula1:= _
         formula
-    dataRange.FormatConditions(dataRange.FormatConditions.count).SetFirstPriority
-    With dataRange.FormatConditions(1).Font
+    DataRange.FormatConditions(DataRange.FormatConditions.count).SetFirstPriority
+    With DataRange.FormatConditions(1).Font
         .Strikethrough = False
         .TintAndShade = 0
     End With
-    With dataRange.FormatConditions(1).Interior
+    With DataRange.FormatConditions(1).Interior
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent1
         .TintAndShade = 0.799981688894314
     End With
-    dataRange.FormatConditions(1).StopIfTrue = False
+    DataRange.FormatConditions(1).StopIfTrue = False
 
 End Sub
 

@@ -572,6 +572,42 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     
 End Function
 
+Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07:44
+
+    Fn_Strip_Contact_From_Client_Name = cn
+    
+    'Find position of square brackets
+    Dim posOSB As Integer, posCSB As Integer
+    posOSB = InStr(cn, "[")
+    posCSB = InStr(cn, "]")
+    
+    'Is there a valid structure ?
+    If posOSB = 0 Or posCSB = 0 Or posCSB < posOSB Then
+        Exit Function
+    End If
+    
+    If posOSB > 1 Then
+        Fn_Strip_Contact_From_Client_Name = Trim(Left(cn, posOSB - 1) & Mid(cn, posCSB + 1))
+    Else
+        Fn_Strip_Contact_From_Client_Name = Trim(Mid(cn, posCSB + 1))
+    End If
+    
+    'Cleanup extra spaces
+    Do While InStr(Fn_Strip_Contact_From_Client_Name, "  ")
+        Fn_Strip_Contact_From_Client_Name = Replace(Fn_Strip_Contact_From_Client_Name, "  ", " ")
+    Loop
+    
+End Function
+
+'Public Sub test_fn()
+'
+'    Dim cn As String
+'    cn = "Robert M. [Vigneault]    Guay"
+'    cn = Fn_Strip_Contact_From_Client_Name(cn)
+'    Debug.Print cn & "|"
+'
+'End Sub
+'
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     Fn_TEC_Is_Data_Valid = False
@@ -825,18 +861,19 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     
 End Function
 
-Public Function GetCurrentRegion(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
+Public Function Fn_Get_Current_Region(ByVal DataRange As Range, Optional headerSize As Long = 1) As Range
 
-    Set GetCurrentRegion = dataRange.CurrentRegion
+    Set Fn_Get_Current_Region = DataRange.CurrentRegion
     If headerSize > 0 Then
-        With GetCurrentRegion
+        With Fn_Get_Current_Region
             'Remove the header
-            Set GetCurrentRegion = .Offset(headerSize).Resize(.rows.count - headerSize)
+            Set Fn_Get_Current_Region = .Offset(headerSize).Resize(.rows.count - headerSize)
+            Debug.Print Fn_Get_Current_Region.Address
         End With
     End If
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set GetCurrentRegion = Nothing
+    Set Fn_Get_Current_Region = Nothing
     
 End Function
 

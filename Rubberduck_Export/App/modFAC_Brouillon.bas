@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+Dim LastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
@@ -156,6 +156,9 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
         GoTo Clean_Exit
     End If
+    
+    Dim clientNamePurged As String
+    clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientName)
         
     ActiveSheet.Unprotect
     
@@ -166,7 +169,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     With wshFAC_Brouillon
         Application.EnableEvents = False
         .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("K4").value = clientName
+        .Range("K4").value = clientNamePurged
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -225,7 +228,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
     
-    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d mmmm yyyy")
+    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d MMMM yyyy")
     
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
@@ -429,11 +432,11 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     
     Application.EnableEvents = False
     
-    Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
-    If lastRow > 6 Then
-        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
+    Dim LastRow As Long
+    LastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
+    If LastRow > 6 Then
+        wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
     End If
     
     Application.EnableEvents = True
@@ -871,7 +874,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

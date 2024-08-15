@@ -114,6 +114,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Call wshGL_BV_Display_JE_Trans_With_Shape
     Else
         wshGL_BV.Range("B10").value = 0
+        Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+        shp.Visible = msoFalse
+
     End If
     
 End Sub
@@ -137,7 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B9").value = CDate(Format$(Range("J1").value, "dd/mm/yyyy"))
@@ -223,15 +226,15 @@ End Sub
 
 Sub wshGL_BV_Create_Dynamic_Shape()
 
-    'Check if the shape has already been created
-    If dynamicShape Is Nothing Then
-        'Create the text box shape
-        Me.Unprotect
-        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
-    End If
-    
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set dynamicShape = Nothing
+'    'Check if the shape has already been created
+'    If dynamicShape Is Nothing Then
+'        'Create the text box shape
+'        Me.Unprotect
+'        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
+'    End If
+'
+'    'Cleaning memory - 2024-07-01 @ 09:34
+'    Set dynamicShape = Nothing
     
 End Sub
 
@@ -255,9 +258,10 @@ Sub wshGL_BV_Adjust_The_Shape()
 '                    maxLength = Len(.Range("AD2").value)
 '                End If
                 If i = 2 Then
-                    texteFull = "Desc  : " & .Range("AD2").value & vbCrLf
+                    texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
+                    texteFull = texteFull & "Desc    : " & .Range("AD2").value & vbCrLf
                     If Trim(.Range("AE2").value) <> "" Then
-                        texteFull = texteFull & "Source: " & .Range("AE2").value & vbCrLf & vbCrLf
+                        texteFull = texteFull & "Source  : " & .Range("AE2").value & vbCrLf & vbCrLf
                     Else
                         texteFull = texteFull & vbCrLf
                     End If
@@ -285,9 +289,11 @@ Sub wshGL_BV_Adjust_The_Shape()
         If Right(texteFull, Len(texteFull) - 1) = vbCrLf Then
             texteFull = Left(texteFull, Len(texteFull) - 2)
         End If
+        
+        Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("JE_Detail_Trans")
+
         'Set shape properties
         With dynamicShape
-            .name = "JE_Detail_Trans"
             .Fill.ForeColor.RGB = RGB(249, 255, 229)
             .Line.Weight = 2
             .Line.ForeColor.RGB = vbBlue
@@ -300,7 +306,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             .TextFrame.MarginTop = 3
             .TextFrame.MarginBottom = 3
             If maxLength < 80 Then maxLength = 80
-            .width = ((maxLength * 6.4))
+            .width = ((maxLength * 6.7))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
             .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
             .Left = wshGL_BV.Range("N" & rowSelected).Left + 4
@@ -313,9 +319,12 @@ End Sub
 
 Sub wshGL_BV_Show_Dynamic_Shape()
 
-    If Not dynamicShape Is Nothing Then
-        dynamicShape.Visible = True
-    End If
+    Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+    shp.Visible = msoTrue
+    
+'    If Not dynamicShape Is Nothing Then
+'        dynamicShape.Visible = True
+'    End If
     
 End Sub
 

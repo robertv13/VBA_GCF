@@ -39,15 +39,15 @@ End Sub
 Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_Encaissement
-    Call SlideIn_FAC_Annulation
+    Call SlideIn_FAC_Confirmation
     Call SlideOut_FAC_Historique
 
 End Sub
 
-Private Sub lblFAC_Annulation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+Private Sub lblFAC_Confirmation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
     Call SlideIn_FAC_Historique
-    Call SlideOut_FAC_Annulation
+    Call SlideOut_FAC_Confirmation
 
 End Sub
 
@@ -57,6 +57,6 @@ Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As In
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
     Call SlideIn_FAC_Historique
-    Call SlideIn_FAC_Annulation
+    Call SlideIn_FAC_Confirmation
 
 End Sub

@@ -1,6 +1,6 @@
 Attribute VB_Name = "modFAC_Enc"
 Option Explicit
-Dim lastRow As Long, lastResultRow As Long
+Dim LastRow As Long, lastResultRow As Long
 Dim payRow As Long
 Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow As Long
 
@@ -210,9 +210,9 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         'Load Pay Items
         With wshENC_Détails
             .Range("M4:T999999").ClearContents
-            lastRow = .Range("A999999").End(xlUp).row
-            If lastRow < 4 Then GoTo NoData
-            .Range("A3:G" & lastRow).AdvancedFilter _
+            LastRow = .Range("A999999").End(xlUp).row
+            If LastRow < 4 Then GoTo NoData
+            .Range("A3:G" & LastRow).AdvancedFilter _
                 xlFilterCopy, _
                 criteriaRange:=.Range("J2:J3"), _
                 CopyToRange:=.Range("O3:T3"), _
@@ -404,17 +404,17 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim lastRow As Long
+        Dim LastRow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            lastRow = 1
+            LastRow = 1
         Else
-            lastRow = rs.Fields("MaxID").value
+            LastRow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = lastRow + 1
+        nextID = LastRow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close
@@ -488,17 +488,17 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         rs.Open strSQL, conn
         
         'Get the last used row
-        Dim lastRow As Long
+        Dim LastRow As Long
         If IsNull(rs.Fields("MaxID").value) Then
             ' Handle empty table (assign a default value, e.g., 1)
-            lastRow = 1
+            LastRow = 1
         Else
-            lastRow = rs.Fields("MaxID").value
+            LastRow = rs.Fields("MaxID").value
         End If
         
         'Calculate the new ID
         Dim nextID As Long
-        nextID = lastRow + 1
+        nextID = LastRow + 1
     
         'Close the previous recordset, no longer needed and open an empty recordset
         rs.Close

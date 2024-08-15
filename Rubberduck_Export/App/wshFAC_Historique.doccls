@@ -15,31 +15,31 @@ Private Sub Worksheet_Activate()
     Call FAC_Détails_Import_All
     
     Call FAC_Historique_Clear_All_Cells
-    Call Shape_Is_Visible(False)
+    
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
+    shp.Visible = False
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = wshFAC_Historique
     
     ws.Application.Calculation = xlCalculationAutomatic
     
-   'Hide column A & B
-    With ws
-        .Unprotect
-'        .Range("A:B").EntireColumn.Hidden = True
-    End With
+    ws.Unprotect
     
     Call SetTabOrder(ws)
     
     With ws
-        .Range("F4").Select
-        previousCellAddress = .Range("F4").Address
+        .Range("D4").Select
+        previousCellAddress = .Range("D4").Address
     End With
     
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    ws.Protect UserInterfaceOnly:=True
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call End_Timer("wshFAC_Historique:Worksheet_Activate()", timerStart)
@@ -54,40 +54,45 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim ws As Worksheet: Set ws = wshFAC_Historique
     
-    'Is the worksheet protected ?
-    Dim cell As Range
-    If ws.ProtectContents Then
-        'Check to see if the selected cell is locked
-        For Each cell In Target.Cells
-            If cell.Locked Then
-                'Pick the next one, that is not locked
-                On Error Resume Next
-                Application.EnableEvents = False  'Prevent infinite looping
-                ws.Cells.SpecialCells(xlCellTypeVisible).Find(What:="", After:=cell, LookIn:=xlFormulas, lookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False).Activate
-                Application.EnableEvents = True
-                On Error GoTo 0
-                Exit For 'Once a unlockd cell is found, exit the for each loop
-            End If
-        Next cell
-    End If
+'    'Is the worksheet protected ?
+'    Dim cell As Range
+'    If ws.ProtectContents Then
+'        'Check to see if the selected cell is locked
+'        For Each cell In Target.Cells
+'            If cell.Locked Then
+'                'Pick the next one, that is not locked
+'                On Error Resume Next
+'                Application.EnableEvents = False  'Prevent infinite looping
+'                ws.Cells.SpecialCells(xlCellTypeVisible).Find(What:="", After:=cell, LookIn:=xlFormulas, lookAt:=xlPart, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=False, SearchFormat:=False).Activate
+'                Application.EnableEvents = True
+'                On Error GoTo 0
+'                Exit For 'Once a unlocked cell is found, exit the for each loop
+'            End If
+'        Next cell
+'    End If
     
     'Client has been selected
-    If Not Intersect(Target, wshFAC_Historique.Range("F4")) Is Nothing Then
+    If Not Intersect(Target, wshFAC_Historique.Range("D4:H4")) Is Nothing Then
+        'Empty the worksheet
+        wshFAC_Historique.Range("C9:P34").ClearContents
+        wshFAC_Historique.Range("D6:F6").ClearContents
+        wshFAC_Historique.Range("N6", "P6").ClearContents
+        Call Remove_All_PDF_Icons
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
-    'Dates period has bee selected
+    'Dates period has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("F6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Dates from has been selected
-    If Not Intersect(Target, wshFAC_Historique.Range("P6")) Is Nothing Then
+    If Not Intersect(Target, wshFAC_Historique.Range("N6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
     'Dates to has been selected
-    If Not Intersect(Target, wshFAC_Historique.Range("R6")) Is Nothing Then
+    If Not Intersect(Target, wshFAC_Historique.Range("P6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
@@ -95,7 +100,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     previousCellAddress = Target.Address
 
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
-    Set cell = Nothing
+'    Set cell = Nothing
     Set ws = Nothing
 
 End Sub
@@ -104,98 +109,108 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim fullDate As Variant
     
+    'Client name change
+     If Not Intersect(Target, Range("F4")) Is Nothing Then
+        
+     End If
+   
     'Dates Period change
     If Not Intersect(Target, Range("F6")) Is Nothing Then
         Application.EnableEvents = False
         Select Case Range("F6").value
             Case "Aujourd'hui"
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("Aujourdhui")
                 wshFAC_Historique.Range("P6").value = wshAdmin.Range("Aujourdhui")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("Aujourdhui")
             Case "Mois Courant"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("MoisA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("MoisDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisA")
             Case "Mois Dernier"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisPrecDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("MoisPrecA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("MoisPrecDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("MoisPrecA")
             Case "Trimestre courant"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("TrimA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("TrimDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimA")
             Case "Trimestre précédent"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimPrecDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("TrimPrecA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("TrimPrecDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("TrimPrecA")
             Case "Année courante"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneeDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("AnneeA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("AnneeDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneeA")
             Case "Année précédente"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneePrecDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("AnneePrecA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("AnneePrecDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("AnneePrecA")
             Case "7 derniers jours"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("SeptJoursDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("SeptJoursA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("SeptJoursDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("SeptJoursA")
             Case "15 derniers jours"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("QuinzeJoursDe")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("QuinzeJoursA")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("QuinzeJoursDe")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("QuinzeJoursA")
             Case "Semaine"
-                wshFAC_Historique.Range("P6").value = wshAdmin.Range("DateDebutSemaine")
-                wshFAC_Historique.Range("R6").value = wshAdmin.Range("DateFinSemaine")
+                wshFAC_Historique.Range("N6").value = wshAdmin.Range("DateDebutSemaine")
+                wshFAC_Historique.Range("P6").value = wshAdmin.Range("DateFinSemaine")
             Case Else
+                wshFAC_Historique.Range("N6").value = ""
                 wshFAC_Historique.Range("P6").value = ""
-                wshFAC_Historique.Range("R6").value = ""
         End Select
         
-        If Not wshFAC_Historique.Range("B1").value = "VRAI" Then
-            wshFAC_Historique.Range("E9:R33").ClearContents
-            Call Remove_All_PDF_Icons
-        End If
+'        If Not wshFAC_Historique.Range("B1").value = "VRAI" Then
+'            wshFAC_Historique.Range("C9:P34").ClearContents
+'            Call Remove_All_PDF_Icons
+'        End If
         
         Application.EnableEvents = True
+        
     End If
     
     'From date has changed
-    If Not Intersect(Target, Range("P6")) Is Nothing Then
+    If Not Intersect(Target, Range("N6")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = CompleteDate(CStr(Target.text))
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            wshFAC_Historique.Range("E9:R33").ClearContents
+            wshFAC_Historique.Range("C9:P34").ClearContents
             Call Remove_All_PDF_Icons
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
     'To date has changed
-    If Not Intersect(Target, Range("R6")) Is Nothing Then
+    If Not Intersect(Target, Range("P6")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = CompleteDate(CStr(Target.text))
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            wshFAC_Historique.Range("E9:R33").ClearContents
+            Application.EnableEvents = False
+            wshFAC_Historique.Range("C9:P34").ClearContents
             Call Remove_All_PDF_Icons
+            Application.EnableEvents = True
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 
-    If IsDate(wshFAC_Historique.Range("P6").value) And IsDate(wshFAC_Historique.Range("R6").value) Then
-        Call Shape_Is_Visible(True)
-    End If
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
     
-    If IsDate(wshFAC_Historique.Range("P6").value) = False Or _
-        IsDate(wshFAC_Historique.Range("R6").value) = False Or _
-        Trim(wshFAC_Historique.Range("F4").value) = "" Then
-        Call Shape_Is_Visible(False)
+    Application.EnableEvents = False
+    
+    If IsDate(wshFAC_Historique.Range("N6").value) And _
+        IsDate(wshFAC_Historique.Range("P6").value) And _
+        Trim(wshFAC_Historique.Range("D4").value) <> "" Then
+        shp.Visible = True
+    Else
+        shp.Visible = False
     End If
     
     Application.EnableEvents = True

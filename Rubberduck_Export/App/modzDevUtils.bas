@@ -955,15 +955,15 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim rowToMove As Range
 
     'Move completed item ($D = a) to the bottom of the list
-    Dim i As Long, lastRow As Long
+    Dim i As Long, LastRow As Long
     i = 2
 
     Application.EnableEvents = False
     
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
-        lastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(lastRow + 1)
+        LastRow = tbl.ListRows.count
+        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(LastRow + 1)
         tbl.ListRows(1).delete
     Wend
 

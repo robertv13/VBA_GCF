@@ -439,15 +439,15 @@ Sub SlideOut_FAC_Historique()
 
 End Sub
 
-Sub SlideIn_FAC_Annulation()
+Sub SlideIn_FAC_Confirmation()
 
     wshMenuFAC.Unprotect
     
-    With wshMenuFAC.Shapes("btnFAC_Annulation")
+    With wshMenuFAC.Shapes("btnFAC_Confirmation")
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFAC_Annulation").Left = width - 32
+            ActiveSheet.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -458,16 +458,16 @@ Sub SlideIn_FAC_Annulation()
 
 End Sub
 
-Sub SlideOut_FAC_Annulation()
+Sub SlideOut_FAC_Confirmation()
 
     wshMenuFAC.Unprotect
     
-    With wshMenuFAC.Shapes("btnFAC_Annulation")
+    With wshMenuFAC.Shapes("btnFAC_Confirmation")
         For width = 32 To MAXWIDTH
             .Height = width
-            ActiveSheet.Shapes("icoFAC_Annulation").Left = width - 32
+            ActiveSheet.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
-        .TextFrame2.TextRange.Characters.text = "Annulation de facture"
+        .TextFrame2.TextRange.Characters.text = "Confirmation de facture"
     End With
 
     wshMenuFAC.Protect UserInterfaceOnly:=True

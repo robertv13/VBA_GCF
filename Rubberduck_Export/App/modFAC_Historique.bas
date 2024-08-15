@@ -9,9 +9,9 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = False
     
-    Dim clientName As String: clientName = ws.Range("F4").value
-    Dim dateFrom As Date: dateFrom = ws.Range("P6").value
-    Dim dateTo As Date: dateTo = ws.Range("R6").value
+    Dim clientName As String: clientName = ws.Range("D4").value
+    Dim dateFrom As Date: dateFrom = ws.Range("N6").value
+    Dim dateTo As Date: dateTo = ws.Range("P6").value
     
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
@@ -31,7 +31,8 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = True
     
-    Call Shape_Is_Visible(False)
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
+    shp.Visible = False
     
     Call End_Timer("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
 
@@ -98,28 +99,26 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
     
     Dim arr() As Variant
-    ReDim arr(1 To 250, 1 To 15)
+    ReDim arr(1 To 250, 1 To 11)
     
     With ws
-        Dim i As Long, r As Long, invNo As String
+        Dim i As Long, r As Long
         For i = 3 To lastUsedRow
             If .Range("AA" & i).value < dateMin Or .Range("AA" & i).value > dateMax Then
                 GoTo nextIteration
             End If
             r = r + 1
-            invNo = .Range("Z" & i).value
-            arr(r, 1) = invNo
-            arr(r, 2) = .Range("AA" & i).value
-            arr(r, 4) = .Range("AI" & i).value
-            arr(r, 6) = .Range("AK" & i).value
-            arr(r, 7) = .Range("AM" & i).value
-            arr(r, 8) = .Range("AO" & i).value
-            arr(r, 9) = .Range("AQ" & i).value
-            arr(r, 10) = .Range("AS" & i).value
-            arr(r, 11) = .Range("AU" & i).value
-            arr(r, 12) = .Range("AT" & i).value
-            arr(r, 13) = Round(Now() - arr(r, 2), 0)
-            arr(r, 14) = Fn_Get_AR_Balance_For_Invoice(ws2, invNo)
+            arr(r, 1) = .Range("Z" & i).value  'Invoice number
+            arr(r, 2) = .Range("AA" & i).value 'Invoice Date
+            arr(r, 3) = .Range("AI" & i).value 'Fees
+            arr(r, 4) = .Range("AK" & i).value 'Misc. 1
+            arr(r, 5) = .Range("AM" & i).value 'Misc. 2
+            arr(r, 6) = .Range("AO" & i).value 'Misc. 3
+            arr(r, 7) = .Range("AQ" & i).value 'GST $
+            arr(r, 8) = .Range("AS" & i).value 'PST $
+            arr(r, 9) = .Range("AU" & i).value 'Deposit
+            arr(r, 10) = .Range("AT" & i).value 'AR_Total
+            arr(r, 11) = Fn_Get_AR_Balance_For_Invoice(ws2, .Range("Z" & i).value)
 nextIteration:
         Next i
     End With
@@ -132,20 +131,22 @@ nextIteration:
     'Transfer the arr to the worksheet, after resizing it
     Call Array_2D_Resizer(arr, r, 14)
 
+    Application.EnableEvents = False
+    
     With wshFAC_Historique
         For i = 1 To UBound(arr, 1)
-            .Range("E" & i + 8).value = arr(i, 1)
-            .Range("F" & i + 8).value = arr(i, 2)
+            .Range("C" & i + 8).value = arr(i, 1)
+            .Range("D" & i + 8).value = arr(i, 2)
+            .Range("F" & i + 8).value = arr(i, 3)
             .Range("H" & i + 8).value = arr(i, 4)
+            .Range("I" & i + 8).value = arr(i, 5)
             .Range("J" & i + 8).value = arr(i, 6)
             .Range("K" & i + 8).value = arr(i, 7)
             .Range("L" & i + 8).value = arr(i, 8)
             .Range("M" & i + 8).value = arr(i, 9)
             .Range("N" & i + 8).value = arr(i, 10)
-            .Range("O" & i + 8).value = arr(i, 11)
-            .Range("P" & i + 8).value = arr(i, 12)
-            .Range("Q" & i + 8).value = Now() - arr(i, 2)
-            .Range("R" & i + 8).value = arr(i, 12) - arr(i, 14) 'Balance
+            .Range("O" & i + 8).value = Now() - arr(i, 2)
+            .Range("P" & i + 8).value = arr(i, 10) - arr(i, 9) 'Balance
         Next i
     End With
     
@@ -154,6 +155,9 @@ nextIteration:
     If lastUsedRow >= 9 Then
         Call Insert_PDF_Icons(lastUsedRow)
     End If
+    
+    Application.EnableEvents = True
+
 Clean_Exit:
 
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
@@ -164,7 +168,7 @@ End Sub
 
 Sub Insert_PDF_Icons(lastUsedRow As Long)
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = wshFAC_Historique
     
     Dim i As Long
     Dim iconPath As String
@@ -175,16 +179,17 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
     
     'Loop through each row and insert the icon if there is data in column E
     For i = 9 To lastUsedRow
-        If ws.Cells(i, 5).value <> "" Then 'Check if there is data in column E
-            Set cell = ws.Cells(i, 19) 'Set the cell where the icon should be inserted (column S)
+        If ws.Cells(i, 3).value <> "" Then 'Check if there is data in column C
+            Set cell = ws.Cells(i, 17) 'Set the cell where the icon should be inserted (column Q)
             
             'Insert the icon
             Set pic = ws.Pictures.Insert(iconPath)
+            Debug.Print pic.width, pic.Height
             With pic
                 .Top = cell.Top + 1
                 .Left = cell.Left + 5
-                .Height = cell.Height - 10
-                .width = cell.width - 10
+                .Height = cell.Height - 15
+                .width = cell.width - 15
                 .Placement = xlMoveAndSize
                 .OnAction = "Display_PDF_Invoice"
             End With
@@ -200,7 +205,7 @@ End Sub
 
 Sub Display_PDF_Invoice()
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Histo")
+    Dim ws As Worksheet: Set ws = wshFAC_Historique
     
     Dim rowNumber As Long
     Dim fullPDFFileName As String
@@ -212,7 +217,7 @@ Sub Display_PDF_Invoice()
     
     'Assuming the invoice number is in column E (5th column)
     fullPDFFileName = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
-        Application.PathSeparator & ws.Cells(rowNumber, 5).value & ".pdf"
+        Application.PathSeparator & ws.Cells(rowNumber, 3).value & ".pdf"
     
     'Open the invoice using Adobe Acrobat Reader
     If fullPDFFileName <> "" Then
@@ -293,7 +298,7 @@ Sub FAC_Historique_Clear_All_Cells()
     Application.EnableEvents = False
     ActiveSheet.Unprotect
     With wshFAC_Historique
-        .Range("F4:I4,F6:I6").ClearContents
+        .Range("D4:H4", "D6:F6").ClearContents
         .Range("E9:R33").ClearContents
         .Range("P6,R6").ClearContents
         Call Remove_All_PDF_Icons
@@ -307,20 +312,20 @@ Sub FAC_Historique_Clear_All_Cells()
 
 End Sub
 
-Sub Shape_Is_Visible(A As Boolean)
-
-    Dim shp As Shape: Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("Rectangle : coins arrondis 2")
-    
-    If A = True Then
-        shp.Visible = True
-    Else
-        shp.Visible = False
-    End If
-    
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
-    Set shp = Nothing
-    
-End Sub
+'Sub Shape_Is_Visible(A As Boolean)
+'
+'    Dim shp As Shape: Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("cmdAfficheFactures")
+'
+'    If A = True Then
+'        shp.Visible = True
+'    Else
+'        shp.Visible = False
+'    End If
+'
+'    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+'    Set shp = Nothing
+'
+'End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 
@@ -328,12 +333,12 @@ Sub FAC_Historique_Back_To_FAC_Menu()
     
     wshFAC_Historique.Visible = xlSheetHidden
     
-    wshMenuFAC.Activate
     Call SlideIn_PrepFact
     Call SlideIn_SuiviCC
     Call SlideIn_Encaissement
     Call SlideIn_FAC_Historique
     
+    wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
     Call End_Timer("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", timerStart)

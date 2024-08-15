@@ -568,20 +568,20 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Copy to wshFAC_Projets_Détails workbook
     wshFAC_Projets_Détails.Range("A2").CopyFromRecordset recSet
 
-    Dim lastRow As Long
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = lastRow To 2 Step -1
+    For i = LastRow To 2 Step -1
         If wshFAC_Projets_Détails.Cells(i, 9).value = "Vrai" Then
             wshFAC_Projets_Détails.rows(i).delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
-    If lastRow > 1 Then
+    LastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    If LastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
     End If
@@ -634,20 +634,20 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     'Copy to wshFAC_Projets_Entête workbook
     wshFAC_Projets_Entête.Range("A2").CopyFromRecordset recSet
 
-    Dim lastRow As Long
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = lastRow To 2 Step -1
+    For i = LastRow To 2 Step -1
         If wshFAC_Projets_Entête.Cells(i, 26).value = True Then
             wshFAC_Projets_Entête.rows(i).delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
-    If lastRow > 1 Then
+    LastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    If LastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
     End If

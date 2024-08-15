@@ -421,26 +421,22 @@ Sub GL_TB_Setup_And_Print()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print()")
     
-    Dim lastRow As Long
-    lastRow = Range("D999").End(xlUp).row + 2
-    If lastRow < 4 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = Range("D999").End(xlUp).row + 2
+    If LastRow < 4 Then Exit Sub
     
     Dim printRange As Range
-    Set printRange = wshGL_BV.Range("D1:G" & lastRow)
+    Set printRange = wshGL_BV.Range("D1:G" & LastRow)
     
     Dim pagesRequired As Long
-    pagesRequired = Int((lastRow - 1) / 60) + 1
+    pagesRequired = Int((LastRow - 1) / 60) + 1
     
-    On Error Resume Next
-    Dim shp As Range: Set shp = wshGL_BV.Shapes("GL_BV_Print")
+    Dim shp As Shape: Set shp = wshGL_BV.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
-    On Error GoTo 0
     
     Call GL_TB_SetUp_And_Print_Document(printRange, pagesRequired)
     
-    On Error Resume Next
     shp.Visible = msoTrue
-    On Error GoTo 0
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set printRange = Nothing
@@ -454,17 +450,17 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
-    Dim lastRow As Long
-    lastRow = Range("M9999").End(xlUp).row
-    If lastRow < 4 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = Range("M9999").End(xlUp).row
+    If LastRow < 4 Then Exit Sub
     
     Dim printRange As Range
-    Set printRange = wshGL_BV.Range("L1:T" & lastRow)
+    Set printRange = wshGL_BV.Range("L1:T" & LastRow)
     
     Dim pagesRequired As Long
-    pagesRequired = Int((lastRow - 1) / 80) + 1
+    pagesRequired = Int((LastRow - 1) / 80) + 1
     
-    Dim shp As Range: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
+    Dim shp As Shape: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
     shp.Visible = msoFalse
     
     Call GL_TB_SetUp_And_Print_Document(printRange, pagesRequired)
@@ -527,7 +523,8 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
 '    Application.Dialogs(xlDialogPrint).show
 '    ActiveSheet.PageSetup.PrintArea = ""
     
-    wshGL_BV.PrintOut , , 1, True, True, , , , False
+    wshGL_BV.PrintPreview '2024-08-15 @ 14:53
+'    wshGL_BV.PrintOut , , 1, True, True, , , , False
  
     Call End_Timer("modGL_TB:GL_TB_SetUp_And_Print_Document()", timerStart)
  
@@ -535,11 +532,39 @@ End Sub
 
 Sub GL_TB_Back_To_Menu()
     
+    Call Erase_Non_Required_Shapes
+    
     wshGL_BV.Visible = xlSheetHidden
     
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
+End Sub
+
+Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
+
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
+    
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        Debug.Print shp.name
+        If InStr(shp.name, "Rounded Rectangle ") Then
+            shp.delete
+        End If
+    Next shp
+
+End Sub
+
+
+Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
+
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
+    
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        Debug.Print shp.name
+    Next shp
+
 End Sub
 
 

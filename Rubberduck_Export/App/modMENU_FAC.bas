@@ -96,11 +96,11 @@ Sub FAC_Historique_Click()
 End Sub
 
 'Option # 5
-Sub CC_Annulation_Click()
+Sub FAC_Confirmation_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:CC_Annulation_Click()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:FAC_Confirmation_Click()")
 
-    Call SlideIn_FAC_Annulation
+    Call SlideIn_FAC_Confirmation
     
     Application.ScreenUpdating = False
     
@@ -111,14 +111,14 @@ Sub CC_Annulation_Click()
 
     Application.EnableEvents = True
     
-    wshCC_Annulation.Visible = xlSheetVisible
-    wshCC_Annulation.Activate
+    wshFAC_Confirmation.Visible = xlSheetVisible
+    wshFAC_Confirmation.Activate
     
-    wshCC_Annulation.Application.Calculation = xlCalculationAutomatic
+    wshFAC_Confirmation.Application.Calculation = xlCalculationAutomatic
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("wshMenuFAC:CC_Annulation_Click()", timerStart)
+    Call End_Timer("wshMenuFAC:FAC_Confirmation_Click()", timerStart)
 
 End Sub
 

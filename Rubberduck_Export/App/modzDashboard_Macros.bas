@@ -1,7 +1,7 @@
 Attribute VB_Name = "modzDashboard_Macros"
 Option Explicit
 
-Dim lastRow As Long, lastResultRow As Long, selRow As Long, selCol As Long
+Dim LastRow As Long, lastResultRow As Long, selRow As Long, selCol As Long
 
 Sub wshCAR_Dashboard_TabChange()
     
@@ -38,23 +38,23 @@ Sub wshCAR_Dashboard_Refresh()
 
     'Get Current Data
     With wshFAC_Invoice_List 'Get Aged listing of A/R @ Invoice List.Range("P3:W999999")
-        lastRow = .Range("A999999").End(xlUp).row
-        .Range("A3:J" & lastRow).ClearContents
+        LastRow = .Range("A999999").End(xlUp).row
+        .Range("A3:J" & LastRow).ClearContents
         
         'Copy AR_Entête to Invoice List
         Dim maxRow As Long
-        lastRow = wshFAC_Comptes_Clients.Range("A999999").End(xlUp).row
-        Dim sourceRange As Range: Set sourceRange = wshFAC_Comptes_Clients.Range("A3:J" & lastRow)
-        Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & lastRow)
+        LastRow = wshFAC_Comptes_Clients.Range("A999999").End(xlUp).row
+        Dim sourceRange As Range: Set sourceRange = wshFAC_Comptes_Clients.Range("A3:J" & LastRow)
+        Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & LastRow)
         'Copy values from source range to target range
         targetRange.value = sourceRange.value
 
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
-        lastRow = .Range("A99999").End(xlUp).row
-        If lastRow < 3 Then Exit Sub
-        .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
-        .Range("A2:D" & lastRow).AdvancedFilter xlFilterCopy, _
+        LastRow = .Range("A99999").End(xlUp).row
+        If LastRow < 3 Then Exit Sub
+        .Range("H3:J" & LastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
+        .Range("A2:D" & LastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("L1:L2"), _
             CopyToRange:=.Range("P2"), _
             Unique:=True
@@ -99,11 +99,11 @@ Sub Aging_Refresh()
     With wshFAC_Invoice_List
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
-        lastRow = .Range("A99999").End(xlUp).row
-        If lastRow < 3 Then Exit Sub
-        .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
+        LastRow = .Range("A99999").End(xlUp).row
+        If LastRow < 3 Then Exit Sub
+        .Range("H3:J" & LastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
         'Very long to execute - 2024-02-16 @ 06:49
-        .Range("A2:D" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("L1:L2"), CopyToRange:=.Range("P2"), Unique:=True
+        .Range("A2:D" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("L1:L2"), CopyToRange:=.Range("P2"), Unique:=True
         lastResultRow = .Range("P99999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         .Range("Q3:V" & lastResultRow).formula = .Range("Q1:W1").formula
@@ -118,12 +118,12 @@ Sub Aging_ShowCustDetail()
     selRow = wshCAR_Dashboard.Range("AA1").value        'Set Selected Row
     With wshFAC_Invoice_List
         'Clear Prior Results
-        lastRow = .Range("AB9999").End(xlUp).row + 1
-        .Range("AB3:AJ" & lastRow).ClearContents
-        lastRow = .Range("A99999").End(xlUp).row
-        If lastRow < 3 Then Exit Sub
-        .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
-        .Range("A2:J" & lastRow).AdvancedFilter xlFilterCopy, _
+        LastRow = .Range("AB9999").End(xlUp).row + 1
+        .Range("AB3:AJ" & LastRow).ClearContents
+        LastRow = .Range("A99999").End(xlUp).row
+        If LastRow < 3 Then Exit Sub
+        .Range("H3:J" & LastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
+        .Range("A2:J" & LastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("Y1:Z2"), _
             CopyToRange:=.Range("AB2:AJ2"), _
             Unique:=True
@@ -141,10 +141,10 @@ Sub AgingDetail_Refresh()
     With wshFAC_Invoice_List
         'Clear Prior Results
         .Range("AB3:AJ9999").ClearContents
-        lastRow = .Range("A99999").End(xlUp).row
-        If lastRow < 3 Then Exit Sub
-        .Range("H3:J" & lastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
-        .Range("A2:ND" & lastRow).AdvancedFilter xlFilterCopy, _
+        LastRow = .Range("A99999").End(xlUp).row
+        If LastRow < 3 Then Exit Sub
+        .Range("H3:J" & LastRow).formula = .Range("H1:J1").formula 'Bring Down Total Paid & Days Overdue Formulas
+        .Range("A2:ND" & LastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("AL1:AM2"), _
             CopyToRange:=.Range("AB2:AJ2"), _
             Unique:=True

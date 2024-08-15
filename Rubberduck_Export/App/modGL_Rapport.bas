@@ -177,24 +177,25 @@ Sub print_results_From_GL_Trans(compte As String)
         Exit Sub
     End If
     
-    Dim rngSource As Variant
-    rngSource = GetCurrentRegion(wshGL_Trans.Range("P1"))
-    
-    'Read thru the array
-    Dim i As Long, sumDT As Currency, sumCT As Currency
-    For i = LBound(rngSource, 1) To UBound(rngSource, 1)
-        ws.Cells(lastRowUsed_AB, 2) = rngSource(i, fgltDate)
-        ws.Cells(lastRowUsed_AB, 3) = rngSource(i, fgltDescr)
-        ws.Cells(lastRowUsed_AB, 4) = rngSource(i, fgltSource)
-        ws.Cells(lastRowUsed_AB, 5) = rngSource(i, fgltEntryNo)
-        ws.Cells(lastRowUsed_AB, 6) = rngSource(i, fgltdt)
-        ws.Cells(lastRowUsed_AB, 7) = rngSource(i, fgltct)
-        ws.Cells(lastRowUsed_AB, 8) = solde + CCur(rngSource(i, fgltdt)) - CCur(rngSource(i, fgltct))
-        solde = solde + CCur(rngSource(i, fgltdt)) - CCur(rngSource(i, fgltct))
-        sumDT = sumDT + rngSource(i, fgltdt)
-        sumCT = sumCT + rngSource(i, fgltct)
-        lastRowUsed_AB = lastRowUsed_AB + 1
-    Next i
+    Dim lastUsedTrans As Long
+    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row '2024-08-15 @ 15:46
+    If lastUsedTrans > 1 Then
+        Dim i As Long, sumDT As Currency, sumCT As Currency
+        'Read thru the rows
+        For i = 2 To lastUsedTrans
+            ws.Cells(lastRowUsed_AB, 2) = wshGL_Trans.Range("Q" & i).value
+            ws.Cells(lastRowUsed_AB, 3) = wshGL_Trans.Range("R" & i).value
+            ws.Cells(lastRowUsed_AB, 4) = wshGL_Trans.Range("S" & i).value
+            ws.Cells(lastRowUsed_AB, 5) = wshGL_Trans.Range("P" & i).value
+            ws.Cells(lastRowUsed_AB, 6) = wshGL_Trans.Range("V" & i).value
+            ws.Cells(lastRowUsed_AB, 7) = wshGL_Trans.Range("W" & i).value
+            ws.Cells(lastRowUsed_AB, 8) = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
+            solde = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
+            sumDT = sumDT + wshGL_Trans.Range("V" & i).value
+            sumCT = sumCT + wshGL_Trans.Range("W" & i).value
+            lastRowUsed_AB = lastRowUsed_AB + 1
+        Next i
+    End If
     
     ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
     With ws.Range("F" & lastRowUsed_AB)
@@ -232,7 +233,6 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
         .Range("F4").value = "Dates manuelles"
         .Range("F6").value = ""
         .Range("H6").value = ""
-        .Range("F4").Activate
         .Range("F4").Select
     End With
     

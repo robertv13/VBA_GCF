@@ -13,6 +13,8 @@ Private Sub Worksheet_Activate()
     
     'Setup a listBox
     Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
+    lb.Height = 332
+    lb.width = 275
     
     'Ensure it is a ListBox
     If TypeName(lb.Object) = "ListBox" Then
@@ -38,7 +40,7 @@ Private Sub Worksheet_Activate()
     
     'Hide column A & B
     With ws
-'        .Range("A:B").EntireColumn.Hidden = True
+        .Range("A:B").EntireColumn.Hidden = True
         .Protect UserInterfaceOnly:=True
         .EnableCalculation = True
     End With
@@ -139,7 +141,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
@@ -155,7 +157,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 
