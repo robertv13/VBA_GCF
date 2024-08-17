@@ -4,7 +4,7 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = wshMenuDEB
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

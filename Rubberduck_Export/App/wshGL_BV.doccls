@@ -27,7 +27,7 @@ Private Sub Worksheet_Activate()
     
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
-    ws.Range("L4:T99999").ClearContents
+    ws.Range("L4:T9999").ClearContents
     ws.Range("B10").value = 0
     
     Dim cbx As Shape

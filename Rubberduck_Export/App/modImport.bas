@@ -392,7 +392,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
-    sourceTab = "CAR"
+    sourceTab = "FAC_Comptes_Clients"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection

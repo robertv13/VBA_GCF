@@ -124,7 +124,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     With wshFAC_Finale
         rs.Fields("Inv_No") = .Range("E28").value
         rs.Fields("Date_Facture") = CDate(wshFAC_Brouillon.Range("O3").value)
-        rs.Fields("FouP") = "F"
+        rs.Fields("AC_C") = "AC" 'Facture to be confirmed MANUALLY - 2024-08-16 @ 05:46
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
         rs.Fields("Nom_Client") = .Range("B24").value
@@ -132,40 +132,40 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields("Adresse2") = .Range("B26").value
         rs.Fields("Adresse3") = .Range("B27").value
         
-        rs.Fields("Honoraires") = .Range("E69").value
+        rs.Fields("Honoraires") = Format$(.Range("E69").value, "0.00")
         
         rs.Fields("AF1_Desc") = .Range("B70").value
-        rs.Fields("AutresFrais_1") = wshFAC_Finale.Range("E70").value
+        rs.Fields("AutresFrais_1") = Format$(wshFAC_Finale.Range("E70").value, "0.00")
         rs.Fields("AF2_Desc") = .Range("B71").value
-        rs.Fields("AutresFrais_2") = .Range("E71").value
+        rs.Fields("AutresFrais_2") = Format$(.Range("E71").value, "0.00")
         rs.Fields("AF3_Desc") = .Range("B72").value
-        rs.Fields("AutresFrais_3") = .Range("E72").value
+        rs.Fields("AutresFrais_3") = Format$(.Range("E72").value, "0.00")
         
-        rs.Fields("Taux_TPS") = .Range("C74").value
-        rs.Fields("Mnt_TPS") = .Range("E74").value
-        rs.Fields("Taux_TVQ") = .Range("C75").value
-        rs.Fields("Mnt_TVQ") = .Range("E75").value
+        rs.Fields("Taux_TPS") = Format$(.Range("C74").value, "0.00")
+        rs.Fields("Mnt_TPS") = Format$(.Range("E74").value, "0.00")
+        rs.Fields("Taux_TVQ") = Format$(.Range("C75").value, "0.000")
+        rs.Fields("Mnt_TVQ") = Format$(.Range("E75").value, "0.00")
         
-        rs.Fields("AR_Total") = .Range("E77").value
+        rs.Fields("AR_Total") = Format$(.Range("E77").value, "0.00")
         
-        rs.Fields("Dépôt") = .Range("E79").value
+        rs.Fields("Dépôt") = Format$(.Range("E79").value, "0.00")
     End With
     'Update the recordset (create the record)
     rs.update
     
     Application.EnableEvents = False
     
-    'Prepare GL Posting
-    With wshFAC_Brouillon
-        .Range("B33").value = wshFAC_Finale.Range("E81").value   'AR amount
-        .Range("B34").value = -wshFAC_Finale.Range("E69").value  'Revenues
-        .Range("B35").value = -wshFAC_Finale.Range("E70").value  'Misc $ - 1
-        .Range("B36").value = -wshFAC_Finale.Range("E71").value  'Misc $ - 2
-        .Range("B37").value = -wshFAC_Finale.Range("E72").value  'Misc $ - 3
-        .Range("B38").value = -wshFAC_Finale.Range("E74").value  'GST $
-        .Range("B39").value = -wshFAC_Finale.Range("E75").value  'PST $
-        .Range("B40").value = wshFAC_Finale.Range("E79").value   'Deposit
-    End With
+    'Prepare GL Posting - Delayed until Confirmation de Facture
+'    With wshFAC_Brouillon
+'        .Range("B33").value = wshFAC_Finale.Range("E81").value   'AR amount
+'        .Range("B34").value = -wshFAC_Finale.Range("E69").value  'Revenues
+'        .Range("B35").value = -wshFAC_Finale.Range("E70").value  'Misc $ - 1
+'        .Range("B36").value = -wshFAC_Finale.Range("E71").value  'Misc $ - 2
+'        .Range("B37").value = -wshFAC_Finale.Range("E72").value  'Misc $ - 3
+'        .Range("B38").value = -wshFAC_Finale.Range("E74").value  'GST $
+'        .Range("B39").value = -wshFAC_Finale.Range("E75").value  'PST $
+'        .Range("B40").value = wshFAC_Finale.Range("E79").value   'Deposit
+'    End With
     
     Application.EnableEvents = True
     
@@ -205,23 +205,23 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("B26").value
         .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("B27").value
         
-        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("E69").value
+        .Range("J" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E69").value, "0.00")
         
         .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("B70").value
-        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("E70").value
+        .Range("L" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E70").value, "0.00")
         .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("B71").value
-        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("E71").value
+        .Range("N" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E71").value, "0.00")
         .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("B72").value
-        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("E72").value
+        .Range("P" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E72").value, "0.00")
         
-        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
-        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("E74").value
-        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("C75").value
-        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("E75").value
+        .Range("Q" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C74").value, "0.00")
+        .Range("R" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E74").value, "0.00")
+        .Range("S" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C75").value, "0.00")
+        .Range("T" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E75").value, "0.00")
         
-        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E77").value
+        .Range("U" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E77").value, "0.00")
         
-        .Range("V" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
+        .Range("V" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E79").value, "0.00")
     End With
     
     wshFAC_Brouillon.Range("B11").value = firstFreeRow
@@ -265,10 +265,11 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
         With wshFAC_Finale
             rs.Fields("Inv_No") = noFacture
             rs.Fields("Description") = .Range("B" & r).value
-            rs.Fields("Heures") = .Range("C" & r).value
-            rs.Fields("Taux") = .Range("D" & r).value
+            rs.Fields("Heures") = Format$(.Range("C" & r).value, "0.00")
+            rs.Fields("Taux") = Format$(.Range("D" & r).value, "0.00")
             If .Range("E" & r).value <> "" Then
-                rs.Fields("Honoraires") = .Range("E" & r).value
+                rs.Fields("Honoraires") = Format$(.Range("E" & r).value, "0.00")
+                
             End If
             rs.Fields("Inv_Row") = wshFAC_Brouillon.Range("B11").value
         End With
@@ -284,11 +285,11 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                 rs.AddNew
                 With wshFAC_Brouillon
                     rs.Fields("Inv_No") = noFacture
-                    rs.Fields("Description") = "*** Sommaire des TEC pour la facture - " & _
+                    rs.Fields("Description") = "*** - [Sommaire des TEC] pour la facture - " & _
                                                 wshFAC_Brouillon.Range("R" & i).value
-                    rs.Fields("Heures") = .Range("S" & i).value
-                    rs.Fields("Taux") = .Range("T" & i).value
-                    rs.Fields("Honoraires") = .Range("S" & i).value * .Range("T" & i).value
+                    rs.Fields("Heures") = Format$(.Range("S" & i).value, "0.00")
+                    rs.Fields("Taux") = Format$(.Range("T" & i).value, "0.00")
+                    rs.Fields("Honoraires") = Format$(.Range("S" & i).value * .Range("T" & i).value, "0.00")
                     rs.Fields("Inv_Row") = wshFAC_Brouillon.Range("B11").value
                 End With
                 rs.update
@@ -333,9 +334,9 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
         With wshFAC_Détails
             .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
             .Range("B" & firstFreeRow).value = wshFAC_Finale.Range("B" & i).value
-            .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("C" & i).value
-            .Range("D" & firstFreeRow).value = wshFAC_Finale.Range("D" & i).value
-            .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("E" & i).value
+            .Range("C" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C" & i).value, "0.00")
+            .Range("D" & firstFreeRow).value = Format$(wshFAC_Finale.Range("D" & i).value, "0.00")
+            .Range("E" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E" & i).value, "0.00")
             .Range("F" & firstFreeRow).value = i
             firstFreeRow = firstFreeRow + 1
         End With
@@ -385,8 +386,8 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
                 rs.Fields("Inv_No") = noFacture
                 rs.Fields("Séquence") = seq
                 rs.Fields("Prof") = wshFAC_Brouillon.Range("R" & r).value
-                rs.Fields("Heures") = wshFAC_Brouillon.Range("S" & r).value
-                rs.Fields("Taux") = wshFAC_Brouillon.Range("T" & r).value
+                rs.Fields("Heures") = Format$(wshFAC_Brouillon.Range("S" & r).value, "0.00")
+                rs.Fields("Taux") = Format$(wshFAC_Brouillon.Range("T" & r).value, "0.00")
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
@@ -435,8 +436,8 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
                 .Range("A" & firstFreeRow).value = noFacture
                 .Range("B" & firstFreeRow).value = seq
                 .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("R" & i).value
-                .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("S" & i).value
-                .Range("E" & firstFreeRow).value = wshFAC_Brouillon.Range("T" & i).value
+                .Range("D" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("S" & i).value, "0.00")
+                .Range("E" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("T" & i).value, "0.00")
                 firstFreeRow = firstFreeRow + 1
                 seq = seq + 1
             End With
@@ -474,6 +475,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields("Invoice_No") = .Range("E28").value
         rs.Fields("Invoice_Date") = CDate(wshFAC_Brouillon.Range("O3").value)
         rs.Fields("Customer") = .Range("B24").value
+        rs.Fields("CodeClient") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Status") = "Unpaid"
         rs.Fields("Terms") = "Net 30"
         rs.Fields("Due_Date") = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
@@ -516,13 +518,14 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = wshFAC_Brouillon.Range("O3").value
         .Range("C" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
-        .Range("D" & firstFreeRow).value = "Unpaid"
-        .Range("E" & firstFreeRow).value = "Net 30"
-        .Range("F" & firstFreeRow).value = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
-        .Range("G" & firstFreeRow).value = wshFAC_Finale.Range("E81").value
-        .Range("H" & firstFreeRow).formula = ""
-        .Range("I" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
-        .Range("J" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
+        .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
+        .Range("E" & firstFreeRow).value = "Unpaid"
+        .Range("F" & firstFreeRow).value = "Net 30"
+        .Range("G" & firstFreeRow).value = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
+        .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("E81").value
+        .Range("I" & firstFreeRow).formula = ""
+        .Range("J" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
+        .Range("K" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
     End With
 
 nothing_to_update:
@@ -565,7 +568,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
-            rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -825,7 +828,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
         .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-        wshFAC_Finale.Range("B21").value = "Le " & Format$(wshFAC_Entête.Range("B" & InvListRow).value, "d mmmm yyyy")
+        wshFAC_Finale.Range("B21").value = "Le " & Format$(wshFAC_Entête.Range("B" & InvListRow).value, "d MMMM yyyy")
         wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
         wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
         wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value

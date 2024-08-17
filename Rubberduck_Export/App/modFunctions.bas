@@ -679,6 +679,35 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
 
 End Function
 
+Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
+
+    'Return the Type of invoice - 'C' for confirmed, 'AC' to be confirmed
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wshFAC_Entête.Range("A99999").End(xlUp).row
+    Dim rngToSearch As Range
+    Set rngToSearch = wshFAC_Entête.Range("A2:B" & lastUsedRow)
+    
+    'Find the invNo into rngToSearch
+    Dim rngFound As Range
+    Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, lookAt:=xlWhole)
+
+    If Not rngFound Is Nothing Then
+        If rngFound.Cells(rngFound.row, 3) = "C" Then
+            Fn_Get_Invoice_Type = "C"
+        Else
+            Fn_Get_Invoice_Type = "AC"
+        End If
+    Else
+        Fn_Get_Invoice_Type = "C"
+    End If
+
+    'Clean-up - 2024-08-17 @ 06:55
+    Set rngFound = Nothing
+    Set rngToSearch = Nothing
+    
+End Function
+
 Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
     Dim row As Long

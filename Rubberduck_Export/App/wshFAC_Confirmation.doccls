@@ -18,7 +18,7 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect userInterfaceOnly:=True
     
     Call SetTabOrder(ws)
     

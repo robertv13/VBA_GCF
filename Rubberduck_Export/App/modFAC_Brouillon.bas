@@ -173,13 +173,13 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
-            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
         Else
-            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
-                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("K7").value = ""
         End If
         Application.EnableEvents = True
@@ -192,12 +192,12 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
-            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
         Else
-            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 8) & " " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & "  " & _
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
             .Range("B27").value = ""
         End If
@@ -388,26 +388,28 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     End If
     
     'Step 4 - Paste the copied cells at a predefined location
-    Dim wbDestination As Workbook
-    Set wbDestination = ThisWorkbook
-    Dim wsDestination As Worksheet
-    Set wsDestination = wshFAC_Brouillon
-    wsDestination.Activate
-    Dim rngDestination As Range
-    Set rngDestination = wsDestination.Range("L11")
-    rngDestination.Select
-    wsDestination.Paste rngDestination 'Use the Paste method to paste the copied data
+'    Dim wbDestination As Workbook: Set wbDestination = ThisWorkbook
+'    Dim wsDestination As Worksheet: Set wsDestination = wshFAC_Brouillon
+'    wsDestination.Activate
+    Application.EnableEvents = False
+    wshFAC_Brouillon.Range("L11").PasteSpecial Paste:=xlPasteAll
+    Application.EnableEvents = True
     
+'    Dim rngDestination As Range
+'    Set rngDestination = wsDestination.Range("L11")
+'    rngDestination.Select
+'    wsDestination.Paste
+   
     'Step 5 - Close and release the Excel file
     wbSource.Close saveChanges:=False
     Application.CutCopyMode = False
     
     'Cleanup - 2024-07-27 @ 07:39
-    Set rngDestination = Nothing
-    Set rngSource = Nothing
-    Set wbDestination = Nothing
+'    Set rngDestination = Nothing
+'    Set rngSource = Nothing
+'    Set wbDestination = Nothing
     Set wbSource = Nothing
-    Set wsDestination = Nothing
+'    Set wsDestination = Nothing
     Set wsSource = Nothing
     
 End Sub
@@ -621,9 +623,9 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Dim i As Long
     Dim iFacFinale As Long: iFacFinale = 34
     For i = 11 To 45
-        wshFAC_Finale.Range("B" & iFacFinale).value = wshFAC_Brouillon.Range("L" & i).value
+        wshFAC_Finale.Range("B" & iFacFinale).value = "' - " & wshFAC_Brouillon.Range("L" & i).value
         iFacFinale = iFacFinale + 1
-        Debug.Print wshFAC_Brouillon.Range("L" & i).value
+'        Debug.Print wshFAC_Brouillon.Range("L" & i).value
     Next i
     
     Call FAC_Finale_Cacher_Heures
@@ -749,7 +751,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect userInterfaceOnly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula
@@ -869,8 +871,8 @@ Sub Load_Invoice_Template(t As String)
     Dim facRow As Long
     facRow = 11
     For i = LBound(arr) + 1 To UBound(arr)
-        wshFAC_Brouillon.Range("L" & facRow).value = Mid(arr(i), 3)
-        wshFAC_Finale.Range("B" & facRow + 23).value = "   - " & Mid(arr(i), 3)
+        wshFAC_Brouillon.Range("L" & facRow).value = "'" & Mid(arr(i), 3)
+        wshFAC_Finale.Range("B" & facRow + 23).value = "' - " & Mid(arr(i), 3)
         facRow = facRow + 2
     Next i
         
@@ -882,7 +884,7 @@ Sub test_fn_get_hourly_rate()
 
     Dim hr As Currency
     hr = Fn_Get_Hourly_Rate(2, "2024-07-21")
-    Debug.Print hr
+    Debug.Print "test_fn_get_hourly_rate() = " & hr
 
 End Sub
 

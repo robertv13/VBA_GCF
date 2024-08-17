@@ -13,22 +13,25 @@ Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
     
-   'Hide column A & B
+    Call Client_List_Import_All
+    
+    Call TEC_Import_All
+    
     With ws
         .Unprotect
-'        .Range("A:B").EntireColumn.Hidden = True
+        .Range("A:B").EntireColumn.Hidden = True
     End With
     
     ws.Range("Q1").value = "Worksheet_Activate(): " & Format$(Now, "dd/mm/yyyy @ hh:mm:ss")
         
-    'Anything to import from Master workbook?
-    
     'Set the zoom factor to 92% when this worksheet is activated
     ActiveWindow.Zoom = 92
     
     Application.Calculation = xlCalculationAutomatic
     
     Call SetTabOrder(ws)
+    
+    ws.Protect userInterfaceOnly:=True '2024-08-16 @ 07:08
     
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents
@@ -38,6 +41,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = True
     
     Me.Range("E3").Activate 'The first input is the customer name
+    
     Application.EnableEvents = True
 
     'Cleaning memory - 2024-07-01 @ 09:34
