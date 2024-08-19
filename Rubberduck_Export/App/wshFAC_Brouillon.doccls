@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    ws.Protect userInterfaceOnly:=True '2024-08-16 @ 07:08
+    ws.Protect UserInterfaceOnly:=True '2024-08-16 @ 07:08
     
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents

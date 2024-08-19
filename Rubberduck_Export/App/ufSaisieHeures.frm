@@ -48,12 +48,23 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Call Buttons_Enabled_True_Or_False(False, False, False, False)
 
-    'Default Professionnal - 2024-03-27 @ 07:00
-    If Fn_Get_Windows_Username = "GCFiscalite" Then
-        cmbProfessionnel.value = "GC"
-    Else
-        cmbProfessionnel.value = ""
-    End If
+    'Default Professionnal - 2024-08-19 @ 07:59
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    Select Case userName
+        Case "GCFiscalite"
+            cmbProfessionnel.value = "GC"
+        Case "vgervais"
+            cmbProfessionnel.value = "VG"
+        Case "User"
+            cmbProfessionnel.value = "ML"
+        Case "vgervais"
+            cmbProfessionnel.value = "AR"
+        Case Else
+            cmbProfessionnel.value = ""
+
+    End Select
+    
     cmbProfessionnel.SetFocus
    
     rmv_state = rmv_modeInitial

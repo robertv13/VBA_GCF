@@ -597,15 +597,6 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     
 End Function
 
-'Public Sub test_fn()
-'
-'    Dim cn As String
-'    cn = "Robert M. [Vigneault]    Guay"
-'    cn = Fn_Strip_Contact_From_Client_Name(cn)
-'    Debug.Print cn & "|"
-'
-'End Sub
-'
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     Fn_TEC_Is_Data_Valid = False

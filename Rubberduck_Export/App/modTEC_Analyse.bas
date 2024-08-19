@@ -123,7 +123,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     
     With wsDest.Sort
         .SetRange wsDest.Range("A6:I" & destLastUsedRow)
-        .Header = xlYes
+        .Header = xlNo
         .MatchCase = False
         .Orientation = xlTopToBottom
         .SortMethod = xlPinYin
@@ -143,7 +143,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     'Add subtotals for hours (column H) at each change in ClientNom_ID (column C) in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
     Application.DisplayAlerts = False
-    wsDest.Range("A6:I" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
+    wsDest.Range("A5:I" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
         TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
     Application.DisplayAlerts = True
     wsDest.Range("A:B").EntireColumn.Hidden = True
@@ -166,7 +166,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     Application.ScreenUpdating = False
     
     'Change the format of the top row (Total General)
-    With wsDest.Range("D6")
+    With wsDest.Range("C6:D6")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -772,20 +772,17 @@ End Sub
 
 Sub Delete_CheckBox()
 
-    'Set your worksheet (adjust this to match your worksheet name)
+    'Set the worksheet
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
-    'Check if CheckBox1 exists and then delete it
-    Dim checkBox As OLEObject
-    Dim i As Long
-    For i = 1 To 5
-        On Error Resume Next
-        Set checkBox = ws.OLEObjects("CheckBox" & i)
-        If Not checkBox Is Nothing Then
-            checkBox.delete
+    'Check if any CheckBox exists and then delete it/them
+    Dim sh As Shape
+    For Each sh In ws.Shapes
+        If InStr(sh.name, "CheckBox") Then
+            sh.delete
         End If
-        On Error GoTo 0
-    Next i
+    Next sh
+    
 End Sub
 
 Sub Groups_SubTotals_Collapse_A_Client(r As Long)

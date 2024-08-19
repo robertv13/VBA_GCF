@@ -99,7 +99,7 @@ Public Sub ProtectCells(rng As Range)
     rng.Locked = True
     
     'Protect the worksheet
-    rng.Parent.Protect userInterfaceOnly:=True
+    rng.Parent.Protect UserInterfaceOnly:=True
 
 
 End Sub
@@ -110,7 +110,7 @@ Public Sub UnprotectCells(rng As Range)
     rng.Locked = False
     
     'Protect the worksheet
-    rng.Parent.Protect userInterfaceOnly:=True
+    rng.Parent.Protect UserInterfaceOnly:=True
 
 
 End Sub
@@ -2462,4 +2462,147 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 
     End Select
 
+End Sub
+
+Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 16:24
+
+    'Erase and create a new worksheet for differences
+    Dim wsDiff As Worksheet
+    Call CreateOrReplaceWorksheet("Différences_Colonnes")
+    Set wsDiff = ThisWorkbook.Worksheets("Différences_Colonnes")
+    wsDiff.Range("A1").value = "Worksheet"
+    wsDiff.Range("B1").value = "Nb. colonnes"
+    wsDiff.Range("C1").value = "Colonne"
+    wsDiff.Range("D1").value = "Valeur originale"
+    wsDiff.Range("E1").value = "Nouvelle valeur"
+    Call Make_It_As_Header(wsDiff.Range("A1:E1"))
+
+    'Set your workbooks and worksheets here
+    Dim wb1 As Workbook
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
+    Dim wb2 As Workbook
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    
+    Dim wso As Worksheet
+    Dim wsn As Worksheet
+    
+    'Loop through each column (assuming both sheets have the same structure)
+    Dim col1 As Range, col2 As Range
+    Dim diffLog As String
+    Dim diffRow As Long, readColumns As Long
+    Dim wsName As String
+    diffRow = 1
+    For Each wso In wb1.Worksheets
+        wsName = wso.name
+        Set wsn = wb2.Sheets(wsName)
+        
+        Dim nbCol As Integer
+        nbCol = 1
+        Do
+            nbCol = nbCol + 1
+        Loop Until wso.Cells(1, nbCol).value = ""
+        nbCol = nbCol - 1
+        
+        diffRow = diffRow + 1
+        wsDiff.Cells(diffRow, 1).value = wsName
+        wsDiff.Cells(diffRow, 2).value = nbCol
+        
+        Dim i As Integer
+        For i = 1 To nbCol
+            Set col1 = wso.columns(i)
+            Set col2 = wsn.columns(i)
+            readColumns = readColumns + 1
+            
+            'Compare Font Name
+            If col1.Font.name <> col2.Font.name Then
+                diffLog = diffLog & "Column " & i & " Font Name differs: " & col1.Font.name & " vs " & col2.Font.name & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.Font.name
+                wsDiff.Cells(diffRow, 5).value = col2.Font.name
+            End If
+            
+            'Compare Font Size
+            If col1.Font.size <> col2.Font.size Then
+                diffLog = diffLog & "Column " & i & " Font Size differs: " & col1.Font.size & " vs " & col2.Font.size & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.Font.size
+                wsDiff.Cells(diffRow, 5).value = col2.Font.size
+            End If
+            
+            'Compare Column Width
+            If col1.ColumnWidth <> col2.ColumnWidth Then
+                diffLog = diffLog & "Column " & i & " Width differs: " & col1.ColumnWidth & " vs " & col2.ColumnWidth & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.ColumnWidth
+                wsDiff.Cells(diffRow, 5).value = col2.ColumnWidth
+            End If
+            
+            'Compare Number Format
+            If col1.NumberFormat <> col2.NumberFormat Then
+                diffLog = diffLog & "Column " & i & " Number Format differs: " & col1.NumberFormat & " vs " & col2.NumberFormat & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.NumberFormat
+                wsDiff.Cells(diffRow, 5).value = col2.NumberFormat
+            End If
+            
+            'Compare Horizontal Alignment
+            If col1.HorizontalAlignment <> col2.HorizontalAlignment Then
+                diffLog = diffLog & "Column " & i & " Horizontal Alignment differs: " & col1.HorizontalAlignment & " vs " & col2.HorizontalAlignment & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.HorizontalAlignment
+                wsDiff.Cells(diffRow, 5).value = col2.HorizontalAlignment
+            End If
+    
+            'Compare Background Color
+            If col1.Interior.Color <> col2.Interior.Color Then
+                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.Color & " vs " & col2.Interior.Color & vbCrLf
+                wsDiff.Cells(diffRow, 3).value = i
+                wsDiff.Cells(diffRow, 4).value = col1.Interior.Color
+                wsDiff.Cells(diffRow, 5).value = col2.Interior.Color
+            End If
+    
+        Next i
+        
+    Next wso
+    
+    wsDiff.columns.AutoFit
+    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
+    
+    'Result print setup - 2024-08-05 @ 05:16
+    diffRow = diffRow + 2
+    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readColumns, "###,##0") & _
+                                        " colonnes analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
+    Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
+    Dim header2 As String: header2 = ""
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    
+    'Close the 2 workbooks without saving anything
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=False
+    
+    'Output differences
+    If diffLog <> "" Then
+        MsgBox "Différences trouvées:" & vbCrLf & diffLog
+    Else
+        MsgBox "Aucune différence dans les colonnes."
+    End If
+    
+    'Cleanup
+    Set col1 = Nothing
+    Set col2 = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set wb1 = Nothing
+    Set wb2 = Nothing
+    Set wsn = Nothing
+    Set wso = Nothing
+    Set wsDiff = Nothing
+    
 End Sub

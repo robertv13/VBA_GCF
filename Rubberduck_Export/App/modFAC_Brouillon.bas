@@ -187,7 +187,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     With wshFAC_Finale
         Application.EnableEvents = False
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("B24").value = clientName
+        .Range("B24").value = Fn_Strip_Contact_From_Client_Name(clientName)
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -198,6 +198,12 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
                                 wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("B27").value = ""
+        End If
+        If Trim(.Range("B26").value) = ", ," Then
+            .Range("B26").value = ""
+        End If
+        If Trim(.Range("B27").value) = ", ," Then
             .Range("B27").value = ""
         End If
         Application.EnableEvents = True
@@ -227,7 +233,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
     
-    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d MMMM yyyy")
+'    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d MMMM yyyy")
     
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
@@ -451,7 +457,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()")
     
     'Set all criteria before calling FAC_Brouillon_TEC_Advanced_Filter_And_Sort
-    Dim c1 As Long, c2 As String
+    Dim c1 As String, c2 As String
     Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
     c2 = "<=" & Format$(d, "mm-dd-yyyy")
@@ -471,7 +477,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
+Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         cutoffDate As String, _
         isBillable As String, _
         isInvoiced As String, _
@@ -498,7 +504,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As Long, _
         
         'Define the Criteria Range
         Dim cRng As Range
-        If clientID <> 0 Then
+        If clientID <> "" Then
             .Range("AK3").value = clientID
         Else
             .Range("AK3").value = ""
@@ -622,8 +628,10 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Dim i As Long
     Dim iFacFinale As Long: iFacFinale = 34
     For i = 11 To 45
-        wshFAC_Finale.Range("B" & iFacFinale).value = "' - " & wshFAC_Brouillon.Range("L" & i).value
-        iFacFinale = iFacFinale + 1
+        If wshFAC_Brouillon.Range("L" & i).value <> "" Then
+            wshFAC_Finale.Range("B" & iFacFinale).value = "' - " & wshFAC_Brouillon.Range("L" & i).value
+            iFacFinale = iFacFinale + 1
+        End If
 '        Debug.Print wshFAC_Brouillon.Range("L" & i).value
     Next i
     
@@ -750,7 +758,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula

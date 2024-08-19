@@ -818,7 +818,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         End If
         .Range("B24").value = True 'Set Invoice Load to true
         .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
-        wshFAC_Finale.Range("C34:F69").ClearContents
+        wshFAC_Finale.Range("B34:F68").ClearContents
         Dim InvListRow As Long
         InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
@@ -828,9 +828,13 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
         .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-        wshFAC_Finale.Range("B21").value = "Le " & Format$(wshFAC_Entête.Range("B" & InvListRow).value, "d MMMM yyyy")
+        Dim dFact As Date
+        dFact = wshFAC_Entête.Range("B" & InvListRow).value
+        wshFAC_Finale.Range("B21").value = "Le " & Format$(dFact, "d") & " " & _
+                                            UCase(Format$(dFact, "mmmm")) & " " & _
+                                            Format$(dFact, "yyyy")
         wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
-        wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
+        wshFAC_Finale.Range("B24").value = Fn_Strip_Contact_From_Client_Name(wshFAC_Entête.Range("E" & InvListRow).value)
         wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
         wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Load Invoice Detail Items
@@ -922,9 +926,15 @@ Sub FAC_Finale_Setup_All_Cells()
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Setup_All_Cells()")
     
     Application.EnableEvents = False
-    
+     
     With wshFAC_Finale
-        .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j MMMM aaaa"")"
+'        Dim j As String, m As String, y As String
+'        j = Format$(FAC_Brouillon!O3, "j")
+'        m = UCase(Format$(FAC_Brouillon!O3, "mmm"))
+'        y = Format$(FAC_Brouillon!O3, "yyyy")
+        
+        .Range("B21").formula = "= ""Le "" & DAY(FAC_Brouillon!o3) & "" "" & UPPER(TEXT(FAC_Brouillon!O3, ""mmmm"")) & "" "" & YEAR(FAC_Brouillon!O3)"
+'        .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j mmmm aaaa"")"
         .Range("B23:B27").value = ""
         .Range("E28").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
         

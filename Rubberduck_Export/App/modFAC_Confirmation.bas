@@ -161,6 +161,55 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
 
 End Sub
 
+Sub Show_Unconfirmed_Invoice()
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Clear contents or the area
+    Dim lastUsedRow As Long
+    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.rows.count, "P").End(xlUp).row
+    If lastUsedRow > 3 Then
+        wshFAC_Confirmation.Range("P4:AA" & lastUsedRow).ClearContents
+    End If
+
+    'Set criteria for AvancedFilter
+    ws.Range("AW3").value = "AC"
+    
+    Call FAC_Entête_AdvancedFilter_AC_C
+    
+    Dim lastUsedRowAF As Long
+    lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+    If lastUsedRowAF < 3 Then
+        GoTo Clean_Exit
+    End If
+    
+    wshFAC_Confirmation.Unprotect
+    
+    Dim i As Integer
+    For i = 3 To lastUsedRowAF
+        With wshFAC_Confirmation
+            wshFAC_Confirmation.rows(i + 1).Locked = False
+            .Cells(i + 1, 16).value = ws.Cells(i, 51)
+            .Cells(i + 1, 17).value = ws.Cells(i, 52)
+            .Cells(i + 1, 18).value = ws.Cells(i, 55)
+            .Cells(i + 1, 19).value = ws.Cells(i, 67)
+            .Cells(i + 1, 20).value = ws.Cells(i, 56)
+            .Cells(i + 1, 21).value = ws.Cells(i, 58)
+            .Cells(i + 1, 22).value = ws.Cells(i, 60)
+            .Cells(i + 1, 23).value = ws.Cells(i, 62)
+            .Cells(i + 1, 24).value = ws.Cells(i, 64)
+            .Cells(i + 1, 25).value = ws.Cells(i, 66)
+            .Cells(i + 1, 26).value = ws.Cells(i, 68)
+        End With
+    Next i
+    
+    wshFAC_Confirmation.Protect UserInterfaceOnly:=True
+    
+Clean_Exit:
+    Set ws = Nothing
+
+End Sub
+
 Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant)
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
@@ -274,6 +323,8 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     'Hide both buttons
     ws.Shapes("btnFAC_Confirmation").Visible = False
     ws.Shapes("btnFAC_Confirmation_OK").Visible = False
+    
+    Call Show_Unconfirmed_Invoice
     
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
@@ -496,9 +547,9 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
         misc3 = ws.Cells(r, 16).value
         Dim tps As Currency, tvq As Currency
         tps = ws.Cells(r, 18).value
-        tvq = ws.Cells(r, 18).value
+        tvq = ws.Cells(r, 20).value
         Dim depot As Currency
-        depot = ws.Cells(r, 20).value
+        depot = ws.Cells(r, 22).value
         
         Dim descGL_Trans As String, source As String
         descGL_Trans = ws.Cells(r, 6).value

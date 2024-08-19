@@ -18,7 +18,11 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    ws.Protect userInterfaceOnly:=True
+    On Error Resume Next
+    ws.Range("A:B").EntireColumn.Hidden = True
+    On Error GoTo 0
+    
+    ws.Protect UserInterfaceOnly:=True
     
     Call SetTabOrder(ws)
     
@@ -30,6 +34,8 @@ Private Sub Worksheet_Activate()
     ws.Activate
     
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    
+    Call Show_Unconfirmed_Invoice
     
     previousCellAddress = ws.Range("F5").Address
     ws.Range("F5").Select
@@ -53,6 +59,14 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Invoice Number is selected
     If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
         Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Invoice Number is selected from Invoices to be confirmed
+    If Not Intersect(Target, Me.columns(16)) Is Nothing And Target.Cells.count = 1 Then
+        Dim selectedRow As Long
+        selectedRow = Target.row
+        Me.Range("F5").value = Me.Cells(selectedRow, 16)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     

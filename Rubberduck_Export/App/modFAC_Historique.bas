@@ -23,7 +23,7 @@ Sub Affiche_Liste_Factures()
     End If
     wshFAC_Entête.Range("X3").value = myInfo(3)
     
-    Call FAC_Entête_AdvancedFilter
+    Call FAC_Entête_AdvancedFilter_Code_Client
     Application.EnableEvents = False
     ws.Range("E9:R33").ClearContents
     Application.EnableEvents = True
@@ -44,7 +44,7 @@ Clean_Exit:
     
 End Sub
 
-Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
+Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -72,11 +72,56 @@ Sub FAC_Entête_AdvancedFilter() '2024-06-27 @ 15:27
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.clear
-            .SortFields.add key:=wshTEC_Local.Range("Z3"), _
+            .SortFields.add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
             .SetRange ws.Range("Z3:AU" & lastUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+     End With
+
+    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    Set criteriaRng = Nothing
+    Set destinationRng = Nothing
+    Set sourceRng = Nothing
+    Set ws = Nothing
+
+End Sub
+
+Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    With ws
+        'Setup the destination Range and clear it before applying AdvancedFilter
+        Dim lastUsedRow As Long
+        Dim destinationRng As Range: Set destinationRng = .Range("AY2:BP2")
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+        If lastUsedRow > 2 Then
+            ws.Range("AY3:BP" & lastUsedRow).ClearContents
+        End If
+        
+        'Setup source data including headers
+        lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+        If lastUsedRow < 3 Then Exit Sub 'No data to filter
+        Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
+        
+        'Define the criteria range including headers
+        Dim criteriaRng As Range: Set criteriaRng = ws.Range("AW2:AW3")
+    
+        ' Apply the advanced filter
+        sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+        
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+        If lastUsedRow < 4 Then Exit Sub
+        With ws.Sort 'Sort - Inv_No
+            .SortFields.clear
+            .SortFields.add key:=ws.Range("AY3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Invoice Number
+            .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
      End With
@@ -306,7 +351,7 @@ Sub FAC_Historique_Clear_All_Cells()
         wshFAC_Historique.Activate
         wshFAC_Historique.Range("F4").Select
     End With
-    ActiveSheet.Protect userInterfaceOnly:=True
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
     Call End_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
 

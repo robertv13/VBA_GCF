@@ -645,7 +645,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-    Set ws = ThisWorkbook.Worksheets.add(Before:=Menu)
+    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
     ws.name = sheetName
     
     'Clean up - 2024-07-11 @ 08:27
@@ -1647,7 +1647,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     
     'Clear previous settings AND protect the worksheet
     ws.EnableSelection = xlNoRestrictions
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
 
     'Collect all unprotected cells
     Dim cell As Range, unprotectedCells As Range
@@ -1693,7 +1693,7 @@ End Sub
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & "\Log.txt"
+    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "Log.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -1816,7 +1816,7 @@ End Sub
 Sub Log_Analysis()
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & "\Log.txt"
+    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "Log.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -1826,7 +1826,7 @@ Sub Log_Analysis()
     
     Open logFile For Input As #fileNum
 
-    Dim strDate As String, strVersion As String, strModule As String
+    Dim strUser As String, strDate As String, strVersion As String, strModule As String
     Dim logline As String
     Dim arrTime(1 To 10) As Long
     Dim ctr As Long
@@ -1837,6 +1837,9 @@ Sub Log_Analysis()
         Dim arr() As String
         arr = Split(logline, "|")
 '        Debug.Print arr(1), arr(2), arr(3), arr(4)
+        If InStr(strUser, arr(0)) = 0 Then
+            strUser = strUser + Fn_Pad_A_String(arr(0), " ", 15, "R") & "|"
+        End If
         If InStr(strDate, Left(arr(1), 10)) = 0 Then
             strDate = strDate & Left(arr(1), 10) & "|"
         End If
@@ -1879,6 +1882,10 @@ Sub Log_Analysis()
     
     Debug.Print arrTime(1), arrTime(2), arrTime(3), arrTime(4), arrTime(5), arrTime(6), arrTime(7), arrTime(8), arrTime(9), arrTime(10)
     
+    Call SortDelimitedString(strUser, "|")
+    Dim arrUser() As String
+    arrUser = Split(strUser, "|")
+    
     Call SortDelimitedString(strDate, "|")
     Dim arrDate() As String
     arrDate = Split(strDate, "|")
@@ -1891,6 +1898,7 @@ Sub Log_Analysis()
     Dim arrModule() As String
     arrModule = Split(strModule, "|")
     
+    MsgBox "Il y a " & UBound(arrUser, 1) + 1 & " utilisateurs dans le log", vbInformation
     MsgBox "Il y a " & UBound(arrDate, 1) + 1 & " jours dans le log", vbInformation
     MsgBox "Il y a " & UBound(arrVersion, 1) + 1 & " versions d'application dans le log", vbInformation
     MsgBox "Il y a " & UBound(arrModule, 1) + 1 & " modules distincts dans le log", vbInformation

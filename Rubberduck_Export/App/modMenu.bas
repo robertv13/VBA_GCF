@@ -22,7 +22,7 @@ Sub SlideIn_TEC()
         On Error GoTo 0
     End With
     
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
     Call End_Timer("modMenu:SlideIn_TEC()", timerStart)
 
@@ -40,7 +40,7 @@ Sub SlideOut_TEC()
         .TextFrame2.TextRange.Characters.text = "TEC"
     End With
     
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
     
 End Sub
 
@@ -61,7 +61,7 @@ Sub SlideIn_Facturation()
         On Error GoTo 0
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
     Call End_Timer("modMenu:SlideIn_Facturation()", timerStart)
 
@@ -79,7 +79,7 @@ Sub SlideOut_Facturation()
         .TextFrame2.TextRange.Characters.text = "Facturation"
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -98,7 +98,7 @@ Sub SlideIn_Debours()
         On Error GoTo 0
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -114,7 +114,7 @@ Sub SlideOut_Debours()
         .TextFrame2.TextRange.Characters.text = "Débours"
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -133,7 +133,7 @@ Sub SlideIn_Comptabilite()
         On Error GoTo 0
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -149,7 +149,7 @@ Sub SlideOut_Comptabilite()
         .TextFrame2.TextRange.Characters.text = "Comptabilité"
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -168,7 +168,7 @@ Sub SlideIn_Parametres()
         On Error GoTo 0
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -184,7 +184,7 @@ Sub SlideOut_Parametres()
         .TextFrame2.TextRange.Characters.text = "Paramètres"
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -203,7 +203,7 @@ Sub SlideIn_Exit()
         On Error GoTo 0
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -219,7 +219,7 @@ Sub SlideOut_Exit()
         .TextFrame2.TextRange.Characters.text = "Sortie"
     End With
 
-    wshMenu.Protect userInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -314,7 +314,7 @@ Sub SlideIn_PrepFact()
         On Error GoTo 0
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -330,7 +330,7 @@ Sub SlideOut_PrepFact()
         .TextFrame2.TextRange.Characters.text = "Préparation de facture"
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -349,7 +349,7 @@ Sub SlideIn_SuiviCC()
         On Error GoTo 0
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -365,7 +365,7 @@ Sub SlideOut_SuiviCC()
         .TextFrame2.TextRange.Characters.text = "Suivi de C/C"
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -384,7 +384,7 @@ Sub SlideIn_Encaissement()
         On Error GoTo 0
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -400,7 +400,7 @@ Sub SlideOut_Encaissement()
         .TextFrame2.TextRange.Characters.text = "Encaissement"
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -419,7 +419,7 @@ Sub SlideIn_FAC_Historique()
         On Error GoTo 0
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -435,7 +435,7 @@ Sub SlideOut_FAC_Historique()
         .TextFrame2.TextRange.Characters.text = "Historique factures"
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -454,7 +454,7 @@ Sub SlideIn_FAC_Confirmation()
         On Error GoTo 0
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -470,7 +470,7 @@ Sub SlideOut_FAC_Confirmation()
         .TextFrame2.TextRange.Characters.text = "Confirmation de facture"
     End With
 
-    wshMenuFAC.Protect userInterfaceOnly:=True
+    wshMenuFAC.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -489,7 +489,7 @@ Sub SlideIn_Paiement()
         On Error GoTo 0
     End With
 
-    wshMenuDEB.Protect userInterfaceOnly:=True
+    wshMenuDEB.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -505,7 +505,7 @@ Sub SlideOut_Paiement()
         .TextFrame2.TextRange.Characters.text = "Déboursé"
     End With
 
-    wshMenuDEB.Protect userInterfaceOnly:=True
+    wshMenuDEB.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -524,7 +524,7 @@ Sub SlideIn_EJ()
         On Error GoTo 0
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -540,7 +540,7 @@ Sub SlideOut_EJ()
         .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -559,7 +559,7 @@ Sub SlideIn_BV()
         On Error GoTo 0
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -575,7 +575,7 @@ Sub SlideOut_BV()
         .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -592,7 +592,7 @@ Sub SlideIn_GL_Report()
         .TextFrame2.TextRange.Characters.text = ""
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -608,7 +608,7 @@ Sub SlideOut_GL_Report()
         .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -627,7 +627,7 @@ Sub SlideIn_EF()
         On Error GoTo 0
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
@@ -643,7 +643,7 @@ Sub SlideOut_EF()
         .TextFrame2.TextRange.Characters.text = "États financiers"
     End With
 
-    wshMenuGL.Protect userInterfaceOnly:=True
+    wshMenuGL.Protect UserInterfaceOnly:=True
 
 End Sub
 
