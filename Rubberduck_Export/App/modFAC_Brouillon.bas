@@ -16,8 +16,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         With wshFAC_Brouillon
             .Range("B24").value = True
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("O6").value = .Range("FACNextInvoiceNumber").value 'Paste Invoice ID
-            .Range("FACNextInvoiceNumber").value = .Range("FACNextInvoiceNumber").value + 1 'Increment Next Invoice ID
+            .Range("O6").value = Fn_Get_Next_Invoice_Number
             
             Call FAC_Brouillon_Setup_All_Cells
             

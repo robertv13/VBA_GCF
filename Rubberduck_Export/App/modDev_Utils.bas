@@ -645,7 +645,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-    Set ws = ThisWorkbook.Worksheets.add
+    Set ws = ThisWorkbook.Worksheets.add(Before:=Menu)
     ws.name = sheetName
     
     'Clean up - 2024-07-11 @ 08:27

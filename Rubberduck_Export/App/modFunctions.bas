@@ -306,24 +306,22 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
 
 End Function
 
-Function Fn_Get_TEC_Invoiced_By_This_Invoice(tempSheet As Worksheet, invNo As String) As Variant
+Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsTEC.Range("A99999").End(xlUp).row
+    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row '2024-08-18 @ 06:37
     
     Dim resultArr() As Variant
     ReDim resultArr(1 To 1000)
     
     Dim rowCount As Long
-    
     Dim i As Long
     For i = 3 To lastUsedRow
         If wsTEC.Cells(i, 16).value = invNo Then
             rowCount = rowCount + 1
             resultArr(rowCount) = i
-            Call AddRecordToTempSheet(tempSheet, wsTEC.name, i)
         End If
     Next i
     
@@ -684,20 +682,17 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     'Return the Type of invoice - 'C' for confirmed, 'AC' to be confirmed
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Entête.Range("A99999").End(xlUp).row
+    lastUsedRow = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).row
     Dim rngToSearch As Range
-    Set rngToSearch = wshFAC_Entête.Range("A2:B" & lastUsedRow)
+    Set rngToSearch = wshFAC_Entête.Range("A1:A" & lastUsedRow)
     
     'Find the invNo into rngToSearch
     Dim rngFound As Range
     Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, lookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
-        If rngFound.Cells(rngFound.row, 3) = "C" Then
-            Fn_Get_Invoice_Type = "C"
-        Else
-            Fn_Get_Invoice_Type = "AC"
-        End If
+        Debug.Print invNo, rngFound.row, rngFound.Offset(0, 2).value
+        Fn_Get_Invoice_Type = rngFound.Offset(0, 2).value
     Else
         Fn_Get_Invoice_Type = "C"
     End If
@@ -841,6 +836,19 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As L
 
     Fn_Pad_A_String = paddedString
         
+End Function
+
+Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    Dim strLastInvoice As String
+    strLastInvoice = ws.Cells(lastUsedRow, 1).value
+    strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
+    
+    Fn_Get_Next_Invoice_Number = strLastInvoice + 1
+
 End Function
 
 Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31

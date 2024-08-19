@@ -1,7 +1,7 @@
 Attribute VB_Name = "modGL_Posting"
 Option Explicit
 
-Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-06 @ 07:00
+Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:GL_Posting_To_DB()")
 
@@ -32,9 +32,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     End If
     
     'Calculate the new JE number
-    Dim nextJENo As Long
-    nextJENo = lastJE + 1
-    wshAdmin.Range("B9").value = nextJENo '2024-06-06 @ 16:30
+    glEntryNo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -46,7 +44,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant) 'Generic routine 2024-06-
     For i = LBound(arr, 1) To UBound(arr, 1)
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
-                rs.Fields("No_Entrée") = nextJENo
+                rs.Fields("No_Entrée") = glEntryNo
                 rs.Fields("Date") = CDate(df)
                 rs.Fields("Description") = desc
                 rs.Fields("Source") = source
@@ -81,7 +79,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write records locally
+Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write records locally
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:GL_Posting_Locally()")
     
@@ -96,7 +94,7 @@ Sub GL_Posting_Locally(df, desc, source, GL_TransNo, arr As Variant) 'Write reco
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = GL_TransNo
+                .Range("A" & rowToBeUsed).value = glEntryNo
                 .Range("B" & rowToBeUsed).value = CDate(df)
                 .Range("C" & rowToBeUsed).value = desc
                 .Range("D" & rowToBeUsed).value = source

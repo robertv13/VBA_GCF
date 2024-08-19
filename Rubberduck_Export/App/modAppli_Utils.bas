@@ -813,6 +813,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     Dim Inv_No As String
     Dim totals(1 To 8, 1 To 2) As Currency
+    Dim nbFactC As Long, nbFactAC As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
@@ -832,6 +833,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
             totals(6, 1) = totals(6, 1) + arr(i, 20)
             totals(7, 1) = totals(7, 1) + arr(i, 21)
             totals(8, 1) = totals(8, 1) + arr(i, 22)
+            nbFactC = nbFactC + 1
         Else
             totals(1, 2) = totals(1, 2) + arr(i, 10)
             totals(2, 2) = totals(2, 2) + arr(i, 12)
@@ -841,13 +843,14 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
             totals(6, 2) = totals(6, 2) + arr(i, 20)
             totals(7, 2) = totals(7, 2) + arr(i, 21)
             totals(8, 2) = totals(8, 2) + arr(i, 22)
+            nbFactAC = nbFactAC + 1
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Honoraires  : " & _
             Fn_Pad_A_String(Format$(totals(1, 1), "##,##0.00$"), " ", 12, "L"))
@@ -874,7 +877,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
             Fn_Pad_A_String(Format$(totals(8, 1), "##,##0.00$"), " ", 12, "L"))
     r = r + 2
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Honoraires  : " & _
             Fn_Pad_A_String(Format$(totals(1, 2), "##,##0.00$"), " ", 12, "L"))
@@ -965,6 +968,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     Dim Inv_No As String
     Dim totals(1 To 3, 1 To 2) As Currency
+    Dim nbFactC As Long, nbFactAC As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         Dim invType As String
@@ -1009,17 +1013,19 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             totals(1, 1) = totals(1, 1) + arr(i, 8)
             totals(2, 1) = totals(2, 1) + arr(i, 9)
             totals(3, 1) = totals(3, 1) + arr(i, 10)
+            nbFactC = nbFactC + 1
         Else
             totals(1, 2) = totals(1, 2) + arr(i, 8)
             totals(2, 2) = totals(2, 2) + arr(i, 9)
             totals(3, 2) = totals(3, 2) + arr(i, 10)
+            nbFactAC = nbFactAC + 1
         End If
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures    : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00$"), " ", 13, "L"))
     r = r + 1
@@ -1028,7 +1034,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir      : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00$"), " ", 13, "L"))
     r = r + 2
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures    : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00$"), " ", 13, "L"))
     r = r + 1
@@ -2303,6 +2309,67 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             
         Case "wshBD_Fournisseurs"
             
+        Case "wshDEB_Recurrent"
+            With wshDEB_Recurrent
+                .Range("A" & firstDataRow & ":M" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
+                     ", D" & firstDataRow & ":D" & lastUsedRow & _
+                     ", E" & firstDataRow & ":E" & lastUsedRow & _
+                     ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("I" & firstDataRow & ":N" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+            End With
+       
+        Case "wshDEB_Trans"
+            With wshDEB_Trans
+                .Range("A" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C" & firstDataRow & ":C" & lastUsedRow & ", " & _
+                       "D" & firstDataRow & ":D" & lastUsedRow & ", " & _
+                       "F" & firstDataRow & ":F" & lastUsedRow & ", " & _
+                       "H" & firstDataRow & ":H" & lastUsedRow & ", " & _
+                       "O" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("J" & firstDataRow & ":N" & lastUsedRow)
+                    .HorizontalAlignment = xlRight
+                    .NumberFormat = "#,##0.00 $"
+                End With
+                .Range("A1").CurrentRegion.EntireColumn.AutoFit
+            End With
+        
+        Case "wshENC_Détails"
+            With wshENC_Détails
+                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C4" & firstDataRow & ":C" & lastUsedRow & ", F4" & firstDataRow & ":F" & lastUsedRow & ", G4" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("D" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("C" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("D" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("H" & firstDataRow & ":H" & lastUsedRow & ",J4" & firstDataRow & ":J" & lastUsedRow & ",L4" & firstDataRow & ":L" & lastUsedRow & ",N4" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("O" & firstDataRow & ":O" & lastUsedRow & ",Q4" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
+            End With
+        
+        Case "wshENC_Entête"
+            With wshENC_Entête
+                .Range("A" & firstDataRow & ":F" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("A" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("E" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("E" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00$"
+            End With
+        
+        Case "wshFAC_Comptes_Clients"
+            With wshFAC_Comptes_Clients
+                .Range("A" & firstDataRow & ":B" & lastUsedRow & ", " & _
+                       "D" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("C" & firstDataRow & ":C" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("G" & firstDataRow & ":G" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("H" & firstDataRow & ":J" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("A1").CurrentRegion.EntireColumn.AutoFit
+            End With
+        
         Case "wshFAC_Détails"
             With usedRange
                 .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":C" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
@@ -2341,65 +2408,6 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                 .Range("E" & firstDataRow & ":E" & lastUsedRow & ", I" & firstDataRow & ":I" & lastUsedRow & ", M" & firstDataRow & ":M" & lastUsedRow & _
                         ", Q" & firstDataRow & ":Q" & lastUsedRow & ", U" & firstDataRow & ":U" & lastUsedRow & ", Y" & firstDataRow & ":Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
                 .Range("G" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"
-            End With
-        
-        Case "wshDEB_Recurrent"
-            With wshDEB_Recurrent
-                .Range("A" & firstDataRow & ":M" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
-                     ", D" & firstDataRow & ":D" & lastUsedRow & _
-                     ", E" & firstDataRow & ":E" & lastUsedRow & _
-                     ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("I" & firstDataRow & ":N" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "#,##0.00 $"
-                End With
-            End With
-       
-        Case "wshDEB_Trans"
-            With wshDEB_Trans
-                .Range("A2" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("C2" & firstDataRow & ":C" & lastUsedRow & _
-                     ", D2" & firstDataRow & ":D" & lastUsedRow & _
-                     ", F2" & firstDataRow & ":F" & lastUsedRow & _
-                     ", H2" & firstDataRow & ":H" & lastUsedRow & _
-                     ", O2" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("J2" & firstDataRow & ":N" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "#,##0.00 $"
-                End With
-                .Range("A1").CurrentRegion.EntireColumn.AutoFit
-            End With
-        
-        Case "wshENC_Détails"
-            With wshENC_Détails
-                .Range("A4" & firstDataRow & ":A" & lastUsedRow & ", C4" & firstDataRow & ":C" & lastUsedRow & ", F4" & firstDataRow & ":F" & lastUsedRow & ", G4" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B4" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("D4" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("C4" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("D4" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("H4" & firstDataRow & ":H" & lastUsedRow & ",J4" & firstDataRow & ":J" & lastUsedRow & ",L4" & firstDataRow & ":L" & lastUsedRow & ",N4" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("O4" & firstDataRow & ":O" & lastUsedRow & ",Q4" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
-            End With
-        
-        Case "wshENC_Entête"
-            With wshENC_Entête
-                .Range("A2" & firstDataRow & ":F" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("A2" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("E2" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("E2" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00$"
-            End With
-        
-        Case "wshFAC_Comptes_Clients"
-            With wshFAC_Comptes_Clients
-                .Range("A3" & firstDataRow & ":B" & lastUsedRow & ", D3" & firstDataRow & ":F" & lastUsedRow & ", J3" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C3" & firstDataRow & ":C" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("G3" & firstDataRow & ":I" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("B3" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("G3" & firstDataRow & ":I" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         
         Case "wshGL_EJ_Recurrente"

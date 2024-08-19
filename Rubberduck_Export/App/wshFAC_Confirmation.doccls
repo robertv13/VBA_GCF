@@ -9,7 +9,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    'Import transactions from MASTER file
+    Call FAC_Entête_Import_All
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
@@ -25,12 +25,11 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     'Hide the OK and CANCEL buttons
-    ws.Shapes("FAC_Confirmation_OK_Button").Visible = False
-    ws.Shapes("FAC_Confirmation_Delete_Button").Visible = False
+    ws.Shapes("btnFAC_Confirmation_OK").Visible = False
     
     ws.Activate
     
-'    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon(ws)
+    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     
     previousCellAddress = ws.Range("F5").Address
     ws.Range("F5").Select
@@ -69,12 +68,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         invNo = Trim(Target.value)
         If invNo <> "" Then
             Call Get_Invoice_Data(invNo)
-            Call FAC_Confirmation_ShowButtons
             
             'Simulate waiting for user input
             Do
                 DoEvents
-                If Range("B2").value = "OK" Or Range("B2").value = "DELETE" Then
+                If Range("B2").value = "OK" Or Range("B2").value = "CONFIRM" Then
                     Exit Do
                 End If
             Loop
@@ -83,8 +81,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Select Case Range("B2").value
                 Case "OK"
                     Call FAC_Confirmation_OK_Button_Click
-                Case "DELETE"
-                    Call FAC_Confirmation_Delete_Button_Click
+                Case "CONFIRM"
+                    Call FAC_Confirmation_Button_Click
                     Application.EnableEvents = False
                     Target.ClearContents ' Clear the cell value
                     Application.EnableEvents = True
@@ -96,7 +94,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.ScreenUpdating = True
         
         Else
+            On Error Resume Next
             Target.Select
+            On Error GoTo 0
         End If
     End If
 

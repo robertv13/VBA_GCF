@@ -12,10 +12,10 @@ Sub Get_Invoice_Data(noFact As String)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
-    Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.Offset(0, 0).Resize(lastUsedRow, 1)
     Dim result As Variant
+    Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.Offset(0, 0).Resize(lastUsedRow, 1)
     result = Application.WorksheetFunction.XLookup(noFact, _
                                                    rngToSearch, _
                                                    rngToSearch, _
@@ -24,48 +24,43 @@ Sub Get_Invoice_Data(noFact As String)
                                                    1)
     
     If result <> "Not Found" Then
-        'Setup the worksheet for cancellation update (kind of clipboard)
-        On Error Resume Next
-        Worksheets("Clipboard").Visible = xlSheetVisible
-        On Error GoTo 0
-        Call Erase_And_Create_Worksheet("Clipboard")
-        Dim tempSheet As Worksheet: Set tempSheet = ThisWorkbook.Worksheets("Clipboard")
-        Worksheets("Clipboard").Visible = xlHidden
-
         Dim matchedRow As Long
         matchedRow = Application.Match(noFact, rngToSearch, 0)
-        Call AddRecordToTempSheet(tempSheet, ws.name, matchedRow)
-
-        Call Display_Invoice_info(tempSheet, ws.name, matchedRow)
         
-        Call Insert_Big_PDF_Icon(tempSheet)
+        Call Display_Invoice_info(ws, matchedRow)
+        
+        Call Insert_Big_PDF_Icon
         
         Dim resultArr As Variant
-        resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(tempSheet, noFact)
+        resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(noFact)
         
         If Not IsEmpty(resultArr) Then
             Dim TECSummary() As Variant
             ReDim TECSummary(1 To 10, 1 To 3)
-            Call Get_TEC_Summary_For_That_Invoice(tempSheet, resultArr, TECSummary)
+            Call Get_TEC_Summary_For_That_Invoice(resultArr, TECSummary)
             
             Dim FeesSummary() As Variant
             ReDim FeesSummary(1 To 5, 1 To 3)
-            Call Get_Fees_Summary_For_That_Invoice(tempSheet, resultArr, FeesSummary)
-            
+            Call Get_Fees_Summary_For_That_Invoice(resultArr, FeesSummary)
         End If
         
-        Call FAC_Confirmation_Get_GL_Posting(tempSheet, noFact)
-
+'        Call FAC_Confirmation_Get_GL_Posting(noFact)
+'
         oWorkSheet.Activate
         
     Else
         MsgBox "La facture n'existe pas"
-        Exit Sub
+        GoTo Clean_Exit
     End If
     
+Clean_Exit:
+    Set oWorkSheet = Nothing
+    Set rngToSearch = Nothing
+    Set ws = Nothing
+
 End Sub
 
-Sub Insert_Big_PDF_Icon(tempSheet As Worksheet)
+Sub Insert_Big_PDF_Icon()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
@@ -118,37 +113,55 @@ Sub FAC_Confirmation_Display_PDF_Invoice()
     
 End Sub
 
-Sub Display_Invoice_info(tempSheet As Worksheet, ws As String, r As Long)
+Sub Display_Invoice_info(wsF As Worksheet, r As Long)
 
-        Application.EnableEvents = False
-        'Display all fields from FAC_Entête
-        wshFAC_Confirmation.Range("L5").value = wshFAC_Entête.Cells(r, 2).value
+    Application.EnableEvents = False
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
+    
+    'Display all fields from FAC_Entête
+    With ws
+        .Range("L5").value = wsF.Cells(r, 2).value
+    
+        ws.Range("F7").value = wsF.Cells(r, 5).value
+        ws.Range("F8").value = Fn_Strip_Contact_From_Client_Name _
+                                                (wsF.Cells(r, 6).value)
+        ws.Range("F9").value = wsF.Cells(r, 7).value
+        ws.Range("F10").value = wsF.Cells(r, 8).value
+        ws.Range("F11").value = wsF.Cells(r, 9).value
         
-        wshFAC_Confirmation.Range("F7").value = wshFAC_Entête.Cells(r, 5).value
-        wshFAC_Confirmation.Range("F8").value = Fn_Strip_Contact_From_Client_Name _
-                                                (wshFAC_Entête.Cells(r, 6).value)
-        wshFAC_Confirmation.Range("F9").value = wshFAC_Entête.Cells(r, 7).value
-        wshFAC_Confirmation.Range("F10").value = wshFAC_Entête.Cells(r, 8).value
-        wshFAC_Confirmation.Range("F11").value = wshFAC_Entête.Cells(r, 9).value
+        ws.Range("L13").value = wsF.Cells(r, 10).value
+        ws.Range("L14").value = wsF.Cells(r, 12).value
+        ws.Range("L15").value = wsF.Cells(r, 14).value
+        ws.Range("L16").value = wsF.Cells(r, 16).value
+        ws.Range("L17").formula = "=SUM(L13:L16)"
         
-        wshFAC_Confirmation.Range("L13").value = wshFAC_Entête.Cells(r, 10).value
-        wshFAC_Confirmation.Range("L14").value = wshFAC_Entête.Cells(r, 12).value
-        wshFAC_Confirmation.Range("L15").value = wshFAC_Entête.Cells(r, 14).value
-        wshFAC_Confirmation.Range("L16").value = wshFAC_Entête.Cells(r, 16).value
-        wshFAC_Confirmation.Range("L17").formula = "=SUM(L13:L16)"
+        ws.Range("L18").value = wsF.Cells(r, 18).value
+        ws.Range("L19").value = wsF.Cells(r, 20).value
+        ws.Range("L21").formula = "=SUM(L17:L19)"
         
-        wshFAC_Confirmation.Range("L18").value = wshFAC_Entête.Cells(r, 18).value
-        wshFAC_Confirmation.Range("L19").value = wshFAC_Entête.Cells(r, 20).value
-        wshFAC_Confirmation.Range("L21").formula = "=SUM(L17:L19)"
+        ws.Range("L23").value = wsF.Cells(r, 22).value
+        ws.Range("L25").formula = "=L21 - L23"
         
-        wshFAC_Confirmation.Range("L23").value = wshFAC_Entête.Cells(r, 22).value
-        wshFAC_Confirmation.Range("L25").formula = "=L21 - L23"
-        
-        Application.EnableEvents = True
+    End With
+    
+    'Take care of invoice type (to be confirmed OR already confirmed)
+    If wsF.Cells(r, 3).value = "AC" Then
+        ws.Range("H5").value = "À CONFIRMER"
+        ws.Shapes("btnFAC_Confirmation").Visible = True
+    Else
+        ws.Range("H5").value = ""
+        ws.Shapes("btnFAC_Confirmation").Visible = False
+    End If
+    
+    'Make OK button visible
+    ws.Shapes("btnFAC_Confirmation_OK").Visible = True
+    
+    Application.EnableEvents = True
 
 End Sub
 
-Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByRef TECSummary As Variant)
+Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant)
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
@@ -195,13 +208,13 @@ Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByR
     
 End Sub
 
-Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByRef FeesSummary As Variant)
+Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Variant)
 
     Dim wsFees As Worksheet: Set wsFees = wshFAC_Sommaire_Taux
     
     'Determine the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = wsFees.Range("A9999").End(xlUp).row
+    lastUsedRow = wsFees.Cells(wsFees.rows.count, "A").End(xlUp).row
     
     'Get Invoice number
     Dim invNo As String
@@ -222,7 +235,6 @@ Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, By
             wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
             wshFAC_Confirmation.Range("G" & rowFeesSummary).value = wsFees.Cells(cell.row, 4).value
             wshFAC_Confirmation.Range("H" & rowFeesSummary).value = wsFees.Cells(cell.row, 5).value
-            Call AddRecordToTempSheet(tempSheet, wsFees.name, cell.row)
             rowFeesSummary = rowFeesSummary + 1
             'Find the next cell with the invNo
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
@@ -242,9 +254,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    ws.Range("B3:B17, B21:B35, A38:B52").ClearContents
-    
-    ws.Range("F5,L5").ClearContents
+    ws.Range("F5,H5,L5").ClearContents
     
     ws.Range("F7:I11").ClearContents
     
@@ -254,12 +264,16 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     ws.Range("F13:H17").ClearContents
     
-    ws.Range("F20:H24").ClearContents
+    ws.Range("F20:I24").ClearContents
     
     Dim pic As Picture
     For Each pic In ws.Pictures
         pic.delete
     Next pic
+    
+    'Hide both buttons
+    ws.Shapes("btnFAC_Confirmation").Visible = False
+    ws.Shapes("btnFAC_Confirmation_OK").Visible = False
     
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
@@ -277,8 +291,6 @@ Sub FAC_Confirmation_OK_Button_Click()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    Call FAC_Confirmation_HideButtons
-    
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     
     ws.Range("F5").Select
@@ -288,31 +300,30 @@ Sub FAC_Confirmation_OK_Button_Click()
     
 End Sub
 
-Sub FAC_Confirmation_Delete_Button_Click()
+Sub FAC_Confirmation_Button_Click()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim invNo As String
     invNo = ws.Range("F5").value
     
-    Call FAC_Confirmation_HideButtons
+    ws.Shapes("btnFAC_Confirmation").Visible = False
     
     Dim answerYesNo As Long
-    answerYesNo = MsgBox("Êtes-vous certain de vouloir ANNULER cette facture ? ", _
-                         vbYesNo + vbQuestion, "Confirmation d'ANNULATION de facture")
+    answerYesNo = MsgBox("Êtes-vous certain de vouloir CONFIRMER cette facture ? ", _
+                         vbYesNo + vbQuestion, "Confirmation de facture")
     If answerYesNo = vbNo Then
         MsgBox _
-            Prompt:="Cette facture ne sera PAS DÉTRUITE ! ", _
-            Title:="Confirmation d'annulation", _
+            Prompt:="Cette facture ne sera PAS CONFIRMÉE ! ", _
+            Title:="Confirmation", _
             Buttons:=vbCritical
             GoTo Clean_Exit
     End If
     
     If answerYesNo = vbYes Then
-        Call FAC_Confirmation_Annule_Facture(invNo)
+        Call FAC_Confirmation_Facture(invNo)
         
-        MsgBox "La facture a été annulée" & vbNewLine & vbNewLine & _
-                "Cependant le numéro est perdu à jamais", vbInformation
+        MsgBox "Cette facture a été confirmée", vbInformation
         
     End If
     
@@ -327,7 +338,7 @@ Clean_Exit:
     
 End Sub
 
-Sub FAC_Confirmation_Get_GL_Posting(tempSheet As Worksheet, invNo)
+Sub FAC_Confirmation_Get_GL_Posting(invNo)
 
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
@@ -348,7 +359,6 @@ Sub FAC_Confirmation_Get_GL_Posting(tempSheet As Worksheet, invNo)
         Application.EnableEvents = False
         Do
             'Save the information for invoice deletion
-            Call AddRecordToTempSheet(tempSheet, wsGL.name, cell.row)
             r = r + 1
             'Find the next cell with the invNo
             Set cell = wsGL.Range("D2:D" & lastUsedRow).FindNext(After:=cell)
@@ -358,45 +368,226 @@ Sub FAC_Confirmation_Get_GL_Posting(tempSheet As Worksheet, invNo)
 
 End Sub
 
-Sub AddRecordToTempSheet(tempSheet As Worksheet, worksheetData As String, s1 As Long)
+Sub FAC_Confirmation_Facture(invNo As String)
 
-    'Find the next available row in the temporary worksheet
-    Dim nextRow As Long
-    With tempSheet
-        If Application.WorksheetFunction.CountA(.Cells) = 0 Then
-            'If the sheet is empty, start from row 1
-            nextRow = 1
-        Else
-            'Find the last row with data and move to the next row
-            nextRow = .Cells(.rows.count, 1).End(xlUp).row + 1
+    'Update the type of invoice (Master)
+    Call FAC_Confirmation_Update_BD_MASTER(invNo)
+    
+    'Update the type of invoice (Locally)
+    Call FAC_Confirmation_Update_Locally(invNo)
+    
+    'Do the G/L posting
+    Call FAC_Confirmation_GL_Posting(invNo)
+    
+    'Clear the cells on the current Worksheet
+    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    
+    MsgBox "Code à ajouter pour confirmer la facture '" & invNo & "'"
+
+End Sub
+
+Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()")
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "FAC_Entête"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    Dim SQL As String
+    'Open the recordset for the specified invoice
+    SQL = "SELECT * FROM [" & destinationTab & "$] WHERE Inv_No = '" & invoice & "'"
+    rs.Open SQL, conn, 2, 3
+    If Not rs.EOF Then
+        'Update AC_ouC with 'C'
+'            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+        rs.Fields("AC_C").value = "C"
+        rs.update
+    Else
+        'Handle the case where the specified ID is not found
+        MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
+        rs.Close
+        GoTo Clean_Exit
+    End If
+    'Update the recordset (create the record)
+    rs.update
+    rs.Close
+    
+Clean_Exit:
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()", timerStart)
+
+End Sub
+
+Sub FAC_Confirmation_Update_Locally(invoice As String)
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_Update_Locally()")
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Set the range to look for
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
+    
+    Dim foundRange As Range
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, lookAt:=xlWhole)
+    
+    Dim r As Long, rowToBeUpdated As Long, TECID As Long
+    If Not foundRange Is Nothing Then
+        r = foundRange.row
+        ws.Cells(r, 3).value = "C"
+    Else
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
+    End If
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lookupRange = Nothing
+    Set ws = Nothing
+    
+    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_Update_Locally()", timerStart)
+
+End Sub
+
+Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_GL_Posting()")
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Set the range to look for
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
+    
+    Dim foundRange As Range
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, lookAt:=xlWhole)
+    
+    Dim r As Long
+    If Not foundRange Is Nothing Then
+        r = foundRange.row
+        Dim dateFact As Date
+        dateFact = ws.Cells(r, 2).value
+        Dim hono As Currency
+        hono = ws.Cells(r, 10).value
+        Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
+        misc1 = ws.Cells(r, 12).value
+        misc2 = ws.Cells(r, 14).value
+        misc3 = ws.Cells(r, 16).value
+        Dim tps As Currency, tvq As Currency
+        tps = ws.Cells(r, 18).value
+        tvq = ws.Cells(r, 18).value
+        Dim depot As Currency
+        depot = ws.Cells(r, 20).value
+        
+        Dim descGL_Trans As String, source As String
+        descGL_Trans = ws.Cells(r, 6).value
+        source = "Fact:" & invoice
+        
+        Dim MyArray(1 To 7, 1 To 4) As String
+        
+        'AR amount
+        If hono + misc1 + misc2 + misc3 + tps + tvq Then
+            MyArray(1, 1) = "1100"
+            MyArray(1, 2) = "Comptes clients"
+            MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
+            MyArray(1, 4) = ""
         End If
         
-        'Add the record to the next available row
-        .Cells(nextRow, 1).value = worksheetData
-        .Cells(nextRow, 2).value = s1
-    End With
+        'Professional Fees (hono)
+        If hono Then
+            MyArray(2, 1) = "4000"
+            MyArray(2, 2) = "Revenus de consultation"
+            MyArray(2, 3) = -hono
+            MyArray(2, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 1 (misc1)
+        If misc1 Then
+            MyArray(3, 1) = "9999"
+            MyArray(3, 2) = "Frais divers # 1"
+            MyArray(3, 3) = -misc1
+            MyArray(3, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 2 (misc2)
+        If misc2 Then
+            MyArray(4, 1) = "9999"
+            MyArray(4, 2) = "Frais divers # 2"
+            MyArray(4, 3) = -misc2
+            MyArray(4, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 3 (misc3)
+        If misc3 Then
+            MyArray(5, 1) = "9999"
+            MyArray(5, 2) = "Frais divers # 3"
+            MyArray(5, 3) = -misc3
+            MyArray(5, 4) = ""
+        End If
+        
+        'GST to pay (tps)
+        If tps Then
+            MyArray(6, 1) = "1202"
+            MyArray(6, 2) = "TPS percues"
+            MyArray(6, 3) = -tps
+            MyArray(6, 4) = ""
+        End If
+        
+        'PST to pay (tvq)
+        If tvq Then
+            MyArray(7, 1) = "1203"
+            MyArray(7, 2) = "TVQ percues"
+            MyArray(7, 3) = -tvq
+            MyArray(7, 4) = ""
+        End If
+        
+    '    'Deposit applied (depot)
+    '    If depot Then
+    '        MyArray(8, 1) = "2400"
+    '        MyArray(8, 2) = "Produit perçu d'avance"
+    '        MyArray(8, 3) = depot
+    '        MyArray(8, 4) = ""
+    '    End If
+        
+        Dim glEntryNo As Long
+        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, glEntryNo)
+        
+        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, glEntryNo)
+        
+    Else
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
+    End If
     
-End Sub
-
-Sub FAC_Confirmation_Annule_Facture(invNo As String)
-
-    MsgBox "Code à ajouter pour annuler la facture '" & invNo & "'"
-
-End Sub
-Sub FAC_Confirmation_ShowButtons()
-
-    'Show the OK and CANCEL buttons
-    wshFAC_Confirmation.Shapes("FAC_Confirmation_OK_Button").Visible = True
-    wshFAC_Confirmation.Shapes("FAC_Confirmation_DELETE_Button").Visible = True
+    'Clean up
+    On Error Resume Next
+    Set foundRange = Nothing
+    Set lookupRange = Nothing
+    Set ws = Nothing
+    On Error GoTo 0
     
-End Sub
+    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_GL_Posting()", timerStart)
 
-Sub FAC_Confirmation_HideButtons()
-
-    'Hide the OK and CANCEL buttons
-    wshFAC_Confirmation.Shapes("FAC_Confirmation_OK_Button").Visible = False
-    wshFAC_Confirmation.Shapes("FAC_Confirmation_DELETE_Button").Visible = False
-    
 End Sub
 
 

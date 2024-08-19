@@ -259,9 +259,10 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         End If
     Next l
     
-    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray)
-    GL_TransNo = wshAdmin.Range("B9").value
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, GL_TransNo, MyArray)
+    Dim glEntryNo As Long
+    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray, glEntryNo)
+    
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, MyArray, glEntryNo)
     
     Call End_Timer("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", timerStart)
 
