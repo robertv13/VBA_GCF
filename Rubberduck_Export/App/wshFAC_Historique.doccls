@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
     
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect UserInterfaceONly:=True
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing

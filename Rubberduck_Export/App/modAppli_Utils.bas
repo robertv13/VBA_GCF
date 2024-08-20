@@ -99,7 +99,7 @@ Public Sub ProtectCells(rng As Range)
     rng.Locked = True
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceOnly:=True
+    rng.Parent.Protect UserInterfaceONly:=True
 
 
 End Sub
@@ -110,7 +110,7 @@ Public Sub UnprotectCells(rng As Range)
     rng.Locked = False
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceOnly:=True
+    rng.Parent.Protect UserInterfaceONly:=True
 
 
 End Sub
@@ -297,7 +297,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     End If
     
     'Add the new worksheet
-    Set ws = ThisWorkbook.Worksheets.add
+    Set ws = ThisWorkbook.Worksheets.add(before:=wshMenu)
     ws.name = wsName
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -376,7 +376,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     
     Call check_Plan_Comptable(r, readRows)
 
@@ -385,7 +385,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Client_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_Clients(r, readRows)
@@ -395,7 +395,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Fournisseur_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_Fournisseurs(r, readRows)
@@ -405,7 +405,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_FAC_Détails(r, readRows)
@@ -415,7 +415,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_FAC_Entête(r, readRows)
@@ -425,7 +425,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Comptes_Clients_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_FAC_Comptes_Clients(r, readRows)
@@ -435,7 +435,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Projets_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Détails(r, readRows)
@@ -445,7 +445,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Entête(r, readRows)
@@ -455,13 +455,15 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call GL_Trans_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
 
     Call check_GL_Trans(r, readRows)
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
+    
+    Call TEC_TdB_Update_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     
     Call check_TEC_TdB_Data(r, readRows)
     
@@ -470,7 +472,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call TEC_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:mm:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_TEC(r, readRows)
@@ -1069,7 +1071,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -1081,7 +1083,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
-    lastUsedRow = wsMaster.Range("A99999").End(xlUp).row
+    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
@@ -2606,3 +2608,155 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Set wsDiff = Nothing
     
 End Sub
+
+Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
+
+    'Erase and create a new worksheet for differences
+    Dim wsDiff As Worksheet
+    Call CreateOrReplaceWorksheet("Différences_Lignes")
+    Set wsDiff = ThisWorkbook.Worksheets("Différences_Lignes")
+    wsDiff.Range("A1").value = "Worksheet"
+    wsDiff.Range("B1").value = "Prod_Cols"
+    wsDiff.Range("C1").value = "Dev_Cols"
+    wsDiff.Range("D1").value = "Prod_Rows"
+    wsDiff.Range("E1").value = "Dev_Rows"
+    wsDiff.Range("F1").value = "Ligne #"
+    wsDiff.Range("G1").value = "Colonne"
+    wsDiff.Range("H1").value = "Prod_Value"
+    wsDiff.Range("I1").value = "Dev_Value"
+    Call Make_It_As_Header(wsDiff.Range("A1:I1"))
+
+    'Set your workbooks and worksheets here
+    Dim wb1 As Workbook
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
+    Dim wb2 As Workbook
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    
+    Dim diffRow As Long
+    diffRow = 1
+    diffRow = diffRow + 1
+    wsDiff.Cells(diffRow, 1).value = "Prod: " & wb1.name
+    diffRow = diffRow + 1
+    wsDiff.Cells(diffRow, 1).value = "Dev : " & wb2.name
+    
+    Dim wsProd As Worksheet
+    Dim wsDev As Worksheet
+    
+    'Loop through each column (assuming both sheets have the same structure)
+    Dim diffLogMess As String
+    Dim readRows As Long
+    Dim wsName As String
+    For Each wsProd In wb1.Worksheets
+        wsName = wsProd.name
+        Set wsDev = wb2.Sheets(wsName)
+        
+        'Determine number of columns and rows in Prod Workbook
+        Dim arr(1 To 30) As String
+        Dim nbColProd As Integer, nbRowProd As Long
+        nbColProd = 0
+        Do
+            nbColProd = nbColProd + 1
+            arr(nbColProd) = wsProd.Cells(1, nbColProd).value
+            Debug.Print wsProd.name, " Prod: ", wsProd.Cells(1, nbColProd).value
+        Loop Until wsProd.Cells(1, nbColProd).value = ""
+        nbColProd = nbColProd - 1
+        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
+        
+        'Determine number of columns and rows in Dev Workbook
+        Dim nbColDev As Integer, nbRowDev As Long
+        nbColDev = 0
+        Do
+            nbColDev = nbColDev + 1
+            Debug.Print wsDev.name, " Dev : ", wsDev.Cells(1, nbColDev).value
+        Loop Until wsProd.Cells(1, nbColDev).value = ""
+        nbColDev = nbColDev - 1
+        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
+        
+        diffRow = diffRow + 2
+        wsDiff.Cells(diffRow, 1).value = wsName
+        wsDiff.Cells(diffRow, 2).value = nbColProd
+        wsDiff.Cells(diffRow, 3).value = nbColDev
+        wsDiff.Cells(diffRow, 4).value = nbRowProd
+        wsDiff.Cells(diffRow, 5).value = nbRowDev
+        
+        Dim nbRow As Long
+        If nbRowProd > nbRowDev Then
+            wsDiff.Cells(diffRow, 6).value = "Le client a ajouté " & nbRowProd - nbRowDev & " lignes dans la feuille"
+            nbRow = nbRowProd
+        End If
+        If nbRowProd < nbRowDev Then
+            wsDiff.Cells(diffRow, 6).value = "Le dev a ajouté " & nbRowDev - nbRowProd & " lignes dans la feuille"
+            nbRow = nbRowDev
+        End If
+        
+        Dim rowProd As Range, rowDev As Range
+        Dim i As Long, prevI As Long, j As Integer
+        For i = 1 To nbRow
+            Set rowProd = wsProd.rows(i)
+            Set rowDev = wsDev.rows(i)
+            readRows = readRows + 1
+            
+            For j = 1 To nbColProd
+                If wsProd.rows.Cells(i, j).value <> wsDev.rows.Cells(i, j).value Then
+                    diffLogMess = diffLogMess & "Cell(" & i & "," & j & ") was '" & _
+                                  wsProd.rows.Cells(i, j).value & "' is now '" & _
+                                  wsDev.rows.Cells(i, j).value & "'" & vbCrLf
+                    diffRow = diffRow + 1
+                    If i <> prevI Then
+                        wsDiff.Cells(diffRow, 6).value = "Ligne # " & i
+                        prevI = i
+                    End If
+                    wsDiff.Cells(diffRow, 7).value = j & "-" & arr(j)
+                    wsDiff.Cells(diffRow, 8).value = wsProd.rows.Cells(i, j).value
+                    wsDiff.Cells(diffRow, 9).value = wsDev.rows.Cells(i, j).value
+                End If
+            Next j
+            
+        Next i
+        
+    Next wsProd
+    
+    wsDiff.columns.AutoFit
+    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
+    wsDiff.Range("F:I").columns.HorizontalAlignment = xlLeft
+    
+    'Result print setup - 2024-08-20 @ 05:48
+    diffRow = diffRow + 2
+    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readRows, "###,##0") & _
+                                        " lignes analysées dans l'ensemble du Workbook ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
+    Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
+    Dim header2 As String: header2 = "Changements de lignes ou cellules"
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    
+    'Close the 2 workbooks without saving anything
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=False
+    
+    'Output differences
+    If diffLogMess <> "" Then
+        MsgBox "Différences trouvées:" & vbCrLf & diffLogMess
+    Else
+        MsgBox "Aucune différence dans les lignes."
+    End If
+    
+    'Cleanup
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set rowDev = Nothing
+    Set rowProd = Nothing
+    Set wb1 = Nothing
+    Set wb2 = Nothing
+    Set wsDev = Nothing
+    Set wsProd = Nothing
+    Set wsDiff = Nothing
+    
+End Sub
+
+

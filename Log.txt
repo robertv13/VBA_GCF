@@ -12424,3 +12424,1062 @@ Robert_M._Vigneault|2024-08-19_17:32:06|APP_v4.D.9.xlsm|***** Fin de la session 
 Robert_M._Vigneault|2024-08-19_17:37:29|APP_v4.D.9.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
 Robert_M._Vigneault|2024-08-19_17:39:39|APP_v4.D.9.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
 Robert_M._Vigneault|2024-08-19_17:41:44|APP_v4.D.9.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:05|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:06|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2148 seconds
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:49:12|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1328 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0391 seconds
+Robert_M._Vigneault|2024-08-19_17:49:13|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:14|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-19_17:49:14|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-19_17:49:14|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 0,5664 seconds
+Robert_M._Vigneault|2024-08-19_17:49:17|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 4,5859 seconds
+Robert_M._Vigneault|2024-08-19_17:52:08|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-19_17:52:08|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,3320 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1328 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:53:23|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1445 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1484 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1836 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-19_17:53:24|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-19_17:53:25|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 0,5625 seconds
+Robert_M._Vigneault|2024-08-19_17:53:27|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 4,6836 seconds
+Robert_M._Vigneault|2024-08-19_17:54:13|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-19_17:54:13|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0820 seconds
+Robert_M._Vigneault|2024-08-20_05:12:36|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:12:37|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:13:10|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:37:22|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:38:21|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:40:06|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:40:29|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:44:48|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:49:38|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:50:22|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:53:32|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_05:58:55|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:02:47|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:06:51|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:11:20|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:13:27|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:14:21|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:14:48|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:15:14|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:15:36|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:15:49|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:16:01|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:16:16|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:16:29|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:16:56|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:17:05|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:17:20|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:17:38|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:18:02|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:18:23|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:18:47|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:19:58|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:19:58|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:21:14|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:30:58|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:31:27|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:34:00|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:44:57|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:46:34|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:48:44|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:50:15|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:51:32|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:54:08|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:25|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2539 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1504 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1152 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_06:57:26|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,0918 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1152 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0059 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0430 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_06:57:27|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_06:57:28|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 0,5332 seconds
+Robert_M._Vigneault|2024-08-20_06:57:31|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,5488 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0215 seconds
+Robert_M._Vigneault|2024-08-20_06:58:47|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1152 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0449 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1191 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1484 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0137 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0371 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0781 seconds
+Robert_M._Vigneault|2024-08-20_06:58:48|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:49|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1543 seconds
+Robert_M._Vigneault|2024-08-20_06:58:49|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_06:58:50|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,3184 seconds
+Robert_M._Vigneault|2024-08-20_06:58:52|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,2422 seconds
+Robert_M._Vigneault|2024-08-20_07:06:29|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:07:32|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1348 seconds
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:15:12|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:13|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:15:13|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:13|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_07:15:13|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:15:13|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1543 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1992 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:17:59|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:18:00|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2168 seconds
+Robert_M._Vigneault|2024-08-20_07:18:00|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:18:00|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1777 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_07:19:25|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:26|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1836 seconds
+Robert_M._Vigneault|2024-08-20_07:19:26|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:19:26|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_07:19:57|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:21:04|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:21:04|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1816 seconds
+Robert_M._Vigneault|2024-08-20_07:21:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:21:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0918 seconds
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1074 seconds
+Robert_M._Vigneault|2024-08-20_07:25:18|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:25:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_07:25:46|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:26:52|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:26:53|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1992 seconds
+Robert_M._Vigneault|2024-08-20_07:26:53|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:26:53|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_07:29:40|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:34:00|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2148 seconds
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0957 seconds
+Robert_M._Vigneault|2024-08-20_07:35:18|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:19|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1992 seconds
+Robert_M._Vigneault|2024-08-20_07:35:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:35:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_07:35:33|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:36:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:36:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-08-20_07:36:21|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:36:22|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1699 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2012 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1152 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1777 seconds
+Robert_M._Vigneault|2024-08-20_07:37:17|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:37:18|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1543 seconds
+Robert_M._Vigneault|2024-08-20_07:37:35|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:41:15|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:41:15|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2207 seconds
+Robert_M._Vigneault|2024-08-20_07:41:15|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:41:16|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_07:46:44|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:44|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_07:46:44|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1152 seconds
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0996 seconds
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1621 seconds
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:46:45|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_07:52:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1855 seconds
+Robert_M._Vigneault|2024-08-20_07:52:58|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1836 seconds
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:52:59|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1484 seconds
+Robert_M._Vigneault|2024-08-20_07:53:20|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:40|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2129 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1035 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1191 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1191 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2012 seconds
+Robert_M._Vigneault|2024-08-20_07:57:41|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_07:57:42|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_07:57:59|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_08:04:27|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_08:04:27|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2344 seconds
+Robert_M._Vigneault|2024-08-20_08:04:27|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_08:04:27|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1816 seconds
+Robert_M._Vigneault|2024-08-20_08:04:42|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_08:05:21|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:23:05|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:24:22|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:25:29|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:25:29|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,2305 seconds
+Robert_M._Vigneault|2024-08-20_09:25:57|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:25:57|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:26:28|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_09:27:43|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:43|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:52|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:52|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1953 seconds
+Robert_M._Vigneault|2024-08-20_09:27:52|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:53|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_09:27:53|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:53|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:27:53|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:27:53|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:31:03|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:31:04|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,3242 seconds
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:32:17|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_09:32:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:32:18|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1289 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2109 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_09:33:00|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,2031 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,0859 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1445 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0703 seconds
+Robert_M._Vigneault|2024-08-20_09:33:01|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:02|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_09:33:02|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:33:03|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,7812 seconds
+Robert_M._Vigneault|2024-08-20_09:33:06|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 6,1992 seconds
+Robert_M._Vigneault|2024-08-20_09:33:39|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:44|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:44|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:44|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_09:34:44|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:45|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,2148 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1289 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0664 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_09:34:46|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:34:48|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,7383 seconds
+Robert_M._Vigneault|2024-08-20_09:34:50|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,6406 seconds
+Robert_M._Vigneault|2024-08-20_09:42:18|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:43:05|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:48:43|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:50:40|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:53:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0742 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1406 seconds
+Robert_M._Vigneault|2024-08-20_09:53:32|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:53:34|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,4023 seconds
+Robert_M._Vigneault|2024-08-20_09:53:36|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,2852 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0859 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_09:55:02|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,0781 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:03|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_09:55:04|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:04|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0547 seconds
+Robert_M._Vigneault|2024-08-20_09:55:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_09:55:04|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_09:55:05|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,3711 seconds
+Robert_M._Vigneault|2024-08-20_09:55:07|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,2227 seconds
+Robert_M._Vigneault|2024-08-20_09:56:14|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1992 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:56:15|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1367 seconds
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,0820 seconds
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_09:57:01|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,0820 seconds
+Robert_M._Vigneault|2024-08-20_09:57:50|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:57:52|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:58:57|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:58:58|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:59:27|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_09:59:28|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1914 seconds
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0859 seconds
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:08|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:00:09|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:09|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:00:09|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:00:09|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:00:51|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2031 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:02:21|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:02:22|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:02:33|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:04:22|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:04:23|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1953 seconds
+Robert_M._Vigneault|2024-08-20_10:04:23|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:04:23|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_10:04:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:04:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2031 seconds
+Robert_M._Vigneault|2024-08-20_10:04:58|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:04:58|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_10:06:19|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:06:19|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_10:06:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:06:19|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:06:55|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:06:55|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_10:06:55|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:06:55|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:07:28|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:29|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1914 seconds
+Robert_M._Vigneault|2024-08-20_10:07:29|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:29|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_10:07:48|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:49|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1328 seconds
+Robert_M._Vigneault|2024-08-20_10:07:49|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:49|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:07:49|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:07:49|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_10:08:08|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:09:37|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:09:37|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1836 seconds
+Robert_M._Vigneault|2024-08-20_10:09:37|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:09:37|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1406 seconds
+Robert_M._Vigneault|2024-08-20_10:09:46|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:09:46|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:09:46|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:09:46|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_10:13:03|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:04|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds
+Robert_M._Vigneault|2024-08-20_10:13:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:13:04|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2031 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:16:58|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:16:59|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1445 seconds
+Robert_M._Vigneault|2024-08-20_10:18:47|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:18:47|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1914 seconds
+Robert_M._Vigneault|2024-08-20_10:18:47|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:18:47|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1484 seconds
+Robert_M._Vigneault|2024-08-20_10:18:54|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:19:34|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:19:34|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2344 seconds
+Robert_M._Vigneault|2024-08-20_10:19:34|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:19:35|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_10:20:28|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:48|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2070 seconds
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1289 seconds
+Robert_M._Vigneault|2024-08-20_10:32:49|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:50|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds
+Robert_M._Vigneault|2024-08-20_10:32:50|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:32:50|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_10:34:06|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:36:40|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:37:16|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:38:03|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:38:32|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:38:49|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:38:52|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:39:12|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:40:50|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:41:43|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:41:43|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_10:41:43|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:41:43|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_10:42:06|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:42|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1367 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1367 seconds
+Robert_M._Vigneault|2024-08-20_10:58:43|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1992 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1328 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0586 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:58:44|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_10:58:46|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,4727 seconds
+Robert_M._Vigneault|2024-08-20_10:58:48|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,7227 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_10:59:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0625 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1484 seconds
+Robert_M._Vigneault|2024-08-20_10:59:42|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_10:59:44|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,4766 seconds
+Robert_M._Vigneault|2024-08-20_10:59:47|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 6,0742 seconds
+Robert_M._Vigneault|2024-08-20_11:01:00|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_11:01:25|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:26|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:26|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:26|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:03:26|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1523 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0391 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_11:03:27|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:40|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:40|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:40|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:06:40|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1680 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0391 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-08-20_11:06:41|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:30|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:30|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:30|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:12:30|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1211 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1250 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_11:12:31|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:12:32|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1836 seconds
+Robert_M._Vigneault|2024-08-20_11:12:32|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 117,5586 seconds
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1250 seconds
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1289 seconds
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:29|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0391 seconds
+Robert_M._Vigneault|2024-08-20_11:14:30|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:30|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0547 seconds
+Robert_M._Vigneault|2024-08-20_11:14:30|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:14:30|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1328 seconds
+Robert_M._Vigneault|2024-08-20_11:14:30|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1094 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1562 seconds
+Robert_M._Vigneault|2024-08-20_11:17:58|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:17:59|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_11:17:59|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 6,4961 seconds
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:05|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:18:06|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:06|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0469 seconds
+Robert_M._Vigneault|2024-08-20_11:18:06|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:06|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1367 seconds
+Robert_M._Vigneault|2024-08-20_11:18:06|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:18:07|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,4219 seconds
+Robert_M._Vigneault|2024-08-20_11:18:11|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 13,3320 seconds
+Robert_M._Vigneault|2024-08-20_11:19:11|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:45|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:45|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:45|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:19:45|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1641 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0938 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0977 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0430 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1719 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_11:19:46|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1016 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,0859 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0547 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1289 seconds
+Robert_M._Vigneault|2024-08-20_11:19:47|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:19:49|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,4883 seconds
+Robert_M._Vigneault|2024-08-20_11:19:51|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 5,7656 seconds
+Robert_M._Vigneault|2024-08-20_11:20:44|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:09|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:09|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:09|APP_v4.E.0.xlsm|modAppli:check_Plan_Comptable (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:21:09|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:09|APP_v4.E.0.xlsm|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,1953 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_Clients (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:Fournisseur_List_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_Fournisseurs (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,0820 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Détails (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,0859 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Entête (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,0898 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Comptes_Clients (sortie)|Temps écoulé: 0,1953 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 0,1602 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Détails (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-20_11:21:10|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,1055 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_FAC_Projets_Entête (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modImport:GL_Trans_Import_All (sortie)|Temps écoulé: 0,1133 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (sortie)|Temps écoulé: 0,0273 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_TEC_TdB_Data (sortie)|Temps écoulé: 0,0742 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modImport:TEC_Import_All (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,1797 seconds
+Robert_M._Vigneault|2024-08-20_11:21:11|APP_v4.E.0.xlsm|modAppli:check_GL_Trans (entrée)
+Robert_M._Vigneault|2024-08-20_11:21:13|APP_v4.E.0.xlsm|modAppli:check_TEC (sortie)|Temps écoulé: 1,7461 seconds
+Robert_M._Vigneault|2024-08-20_11:21:15|APP_v4.E.0.xlsm|modAppli:Integrity_Verification (sortie)|Temps écoulé: 6,4648 seconds
+Robert_M._Vigneault|2024-08-20_11:27:23|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_11:27:23|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_13:31:22|APP_v4.E.0.xlsm|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_13:31:23|APP_v4.E.0.xlsm|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_13:42:48|APP_v4.E.1.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-20_13:42:48|APP_v4.E.1.xlsb|***** Fin de la session (Workbook_Deactivate) ***** (entrée)

@@ -156,7 +156,7 @@ Sub Write_Info_On_Main_Menu()
         .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 
-    wshMenu.Protect UserInterfaceOnly:=True
+    wshMenu.Protect UserInterfaceONly:=True
     
     Application.EnableEvents = True
     Application.ScreenUpdating = False

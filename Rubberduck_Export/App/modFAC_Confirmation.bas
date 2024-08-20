@@ -203,7 +203,7 @@ Sub Show_Unconfirmed_Invoice()
         End With
     Next i
     
-    wshFAC_Confirmation.Protect UserInterfaceOnly:=True
+    wshFAC_Confirmation.Protect UserInterfaceONly:=True
     
 Clean_Exit:
     Set ws = Nothing
@@ -374,7 +374,7 @@ Sub FAC_Confirmation_Button_Click()
     If answerYesNo = vbYes Then
         Call FAC_Confirmation_Facture(invNo)
         
-        MsgBox "Cette facture a été confirmée", vbInformation
+        MsgBox "Cette facture a été confirmée avec succès", vbInformation
         
     End If
     
@@ -433,8 +433,6 @@ Sub FAC_Confirmation_Facture(invNo As String)
     'Clear the cells on the current Worksheet
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     
-    MsgBox "Code à ajouter pour confirmer la facture '" & invNo & "'"
-
 End Sub
 
 Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)

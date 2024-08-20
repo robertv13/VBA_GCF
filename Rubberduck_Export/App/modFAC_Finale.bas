@@ -143,7 +143,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         
         rs.Fields("Taux_TPS") = Format$(.Range("C74").value, "0.00")
         rs.Fields("Mnt_TPS") = Format$(.Range("E74").value, "0.00")
-        rs.Fields("Taux_TVQ") = Format$(.Range("C75").value, "0.000")
+        rs.Fields("Taux_TVQ") = Format$(.Range("C75").value, "0.0000")
         rs.Fields("Mnt_TVQ") = Format$(.Range("E75").value, "0.00")
         
         rs.Fields("AR_Total") = Format$(.Range("E77").value, "0.00")
@@ -602,6 +602,76 @@ next_iteration:
 
 End Sub
 
+Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
+    
+    'Set the range to look for
+    Dim lastTECRow As Long
+    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
+    
+    Dim r As Long, rowToBeUpdated As Long, TECID As Long
+    For r = firstResultRow To lastResultRow
+        If wshTEC_Local.Range("BA" & r).value = False And _
+                wshFAC_Brouillon.Range("C" & r + 4) = True Then
+            TECID = wshTEC_Local.Range("AQ" & r).value
+            rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
+'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+            wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
+        End If
+    Next r
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set lookupRange = Nothing
+    
+    Call End_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
+
+End Sub
+
+Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
+
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()")
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "FAC_Projets_Détails"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    'Build the query
+    Dim strSQL As String
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = " & "VRAI" & " WHERE projetID = '" & projetID & "'"
+    
+    'Execute the SQL query
+    conn.Execute strSQL
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", timerStart)
+
+End Sub
+
 Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()")
@@ -626,7 +696,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
         firstAddress = cell.Address
         Do
             'Update the isDétruite column for the found projetID
-            ws.Cells(cell.row, isDétruiteColumn).value = True
+            ws.Cells(cell.row, isDétruiteColumn).value = "VRAI"
             'Find the next cell with the projetID
             Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
@@ -640,83 +710,6 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
-
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()")
-
-    Application.ScreenUpdating = False
-    
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails"
-    
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-
-    'Build the query
-    Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE projetID = '" & projetID & "'"
-    
-    'Execute the SQL query
-    conn.Execute strSQL
-    
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", timerStart)
-
-End Sub
-
-Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
-
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()")
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
-    
-    Dim projetIDColumn As String, isDétruiteColumn As String
-    projetIDColumn = "A"
-    isDétruiteColumn = "Z"
-
-    'Find the last used row
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
-    
-    'Use Range.Find to locate the first cell with the projetID
-    Dim cell As Range
-    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookAt:=xlWhole)
-
-    'Check if the projetID was found at all
-    Dim firstAddress As String
-    If Not cell Is Nothing Then
-        firstAddress = cell.Address
-        Do
-            'Update the isDétruite column for the found projetID
-            ws.Cells(cell.row, isDétruiteColumn).value = True
-            'Find the next cell with the projetID
-            Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
-        Loop While Not cell Is Nothing And cell.Address <> firstAddress
-    End If
-    
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set cell = Nothing
-    Set ws = Nothing
-    
-    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", timerStart)
-
-End Sub
 Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()")
@@ -735,7 +728,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE ProjetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = " & "VRAI" & " WHERE ProjetID = " & projetID
 
     'Execute the SQL query
     On Error GoTo eh
@@ -764,33 +757,41 @@ eh:
 
 End Sub
 
-Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
+Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()")
     
-    'Set the range to look for
-    Dim lastTECRow As Long
-    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
-    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     
-    Dim r As Long, rowToBeUpdated As Long, TECID As Long
-    For r = firstResultRow To lastResultRow
-        If wshTEC_Local.Range("BA" & r).value = False And _
-                wshFAC_Brouillon.Range("C" & r + 4) = True Then
-            TECID = wshTEC_Local.Range("AQ" & r).value
-            rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
-'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
-            wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
-            wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
-        End If
-    Next r
+    Dim projetIDColumn As String, isDétruiteColumn As String
+    projetIDColumn = "A"
+    isDétruiteColumn = "Z"
+
+    'Find the last used row
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    
+    'Use Range.Find to locate the first cell with the projetID
+    Dim cell As Range
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookAt:=xlWhole)
+
+    'Check if the projetID was found at all
+    Dim firstAddress As String
+    If Not cell Is Nothing Then
+        firstAddress = cell.Address
+        Do
+            'Update the isDétruite column for the found projetID
+            ws.Cells(cell.row, isDétruiteColumn).value = "VRAI"
+            'Find the next cell with the projetID
+            Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
+        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+    End If
     
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set lookupRange = Nothing
+    Set cell = Nothing
+    Set ws = Nothing
     
-    Call End_Timer("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", timerStart)
+    Call End_Timer("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", timerStart)
 
 End Sub
 

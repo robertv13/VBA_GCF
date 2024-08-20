@@ -22,7 +22,7 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect UserInterfaceONly:=True
     
     Call SetTabOrder(ws)
     

@@ -292,7 +292,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         On Error GoTo 0
     End With
     
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect UserInterfaceONly:=True
     
 Exit_Sub:
 

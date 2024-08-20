@@ -75,6 +75,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Next i
         End If
         
+        'Bring the visible area to the top
+        wshFAC_Brouillon.Range("E3").Select
+
         If liveOne Then
             ufListeProjetsFacture.show
         End If
@@ -124,7 +127,11 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             wshFAC_Brouillon.Range("O47").value = wshFAC_Brouillon.Range("U49").value
             
             wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
+            Call FAC_Brouillon_Client_Change(wshFAC_Brouillon.Range("B51").value)
+            
             wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
+            Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
+            
             wshFAC_Brouillon.Range("O9").Select
             
             Application.EnableEvents = True
@@ -159,8 +166,6 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     Dim clientNamePurged As String
     clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientName)
         
-    ActiveSheet.Unprotect
-    
     Application.EnableEvents = False
     wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
     Application.EnableEvents = True
@@ -379,7 +384,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     On Error GoTo 0
     
     If rngSource Is Nothing Then
-        MsgBox "Aucune cellule de sélectionnées. L'Opération est annulée.", vbExclamation
+        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
         wbSource.Close saveChanges:=False
         Set wbSource = Nothing
         Exit Sub
@@ -393,21 +398,16 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     End If
     
     'Step 4 - Paste the copied cells at a predefined location
-'    Dim wbDestination As Workbook: Set wbDestination = ThisWorkbook
-'    Dim wsDestination As Worksheet: Set wsDestination = wshFAC_Brouillon
-'    wsDestination.Activate
     Application.EnableEvents = False
-    wshFAC_Brouillon.Range("L11").PasteSpecial Paste:=xlPasteAll
+    wshFAC_Brouillon.Unprotect
+    wshFAC_Brouillon.Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
+'    wshFAC_Brouillon.Range("L11").PasteSpecial Paste:=xlPasteValues
+    wshFAC_Brouillon.Protect UserInterfaceONly:=True
     Application.EnableEvents = True
+    Application.CutCopyMode = False
     
-'    Dim rngDestination As Range
-'    Set rngDestination = wsDestination.Range("L11")
-'    rngDestination.Select
-'    wsDestination.Paste
-   
     'Step 5 - Close and release the Excel file
     wbSource.Close saveChanges:=False
-    Application.CutCopyMode = False
     
     'Cleanup - 2024-07-27 @ 07:39
 '    Set rngDestination = Nothing
@@ -628,8 +628,29 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Dim i As Long
     Dim iFacFinale As Long: iFacFinale = 34
     For i = 11 To 45
-        If wshFAC_Brouillon.Range("L" & i).value <> "" Then
-            wshFAC_Finale.Range("B" & iFacFinale).value = "' - " & wshFAC_Brouillon.Range("L" & i).value
+        With wshFAC_Finale.Range("B" & iFacFinale)
+            .HorizontalAlignment = xlLeft
+            .VerticalAlignment = xlBottom
+            .WrapText = True
+            .Orientation = 0
+            .AddIndent = False
+            .IndentLevel = 1
+            .ShrinkToFit = True
+            .ReadingOrder = xlContext
+            .MergeCells = True
+        End With
+
+        If wshFAC_Brouillon.Range("L" & i).value <> "" Or wshFAC_Brouillon.Range("L" & i + 1).value <> "" Then
+            Dim tiret As String
+            If InStr(wshFAC_Brouillon.Range("L" & i).value, " - ") = 0 Then
+                tiret = "' - "
+            Else
+                tiret = "'"
+            End If
+            wshFAC_Finale.Range("B" & iFacFinale).value = tiret & wshFAC_Brouillon.Range("L" & i).value
+            If wshFAC_Finale.Range("B" & iFacFinale).value = " - " Then
+                wshFAC_Finale.Range("B" & iFacFinale).value = "'"
+            End If
             iFacFinale = iFacFinale + 1
         End If
 '        Debug.Print wshFAC_Brouillon.Range("L" & i).value
@@ -758,7 +779,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect UserInterfaceONly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula

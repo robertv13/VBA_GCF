@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate()
     'Hide column A & B
     With ws
         .Range("A:B").EntireColumn.Hidden = True
-        .Protect UserInterfaceOnly:=True
+        .Protect UserInterfaceONly:=True
         .EnableCalculation = True
     End With
     
