@@ -402,7 +402,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     wshFAC_Brouillon.Unprotect
     wshFAC_Brouillon.Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
 '    wshFAC_Brouillon.Range("L11").PasteSpecial Paste:=xlPasteValues
-    wshFAC_Brouillon.Protect UserInterfaceONly:=True
+    wshFAC_Brouillon.Protect UserInterfaceOnly:=True
     Application.EnableEvents = True
     Application.CutCopyMode = False
     
@@ -631,11 +631,11 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         With wshFAC_Finale.Range("B" & iFacFinale)
             .HorizontalAlignment = xlLeft
             .VerticalAlignment = xlBottom
-            .WrapText = True
+            .WrapText = False
             .Orientation = 0
             .AddIndent = False
             .IndentLevel = 1
-            .ShrinkToFit = True
+            .ShrinkToFit = False
             .ReadingOrder = xlContext
             .MergeCells = True
         End With
@@ -779,7 +779,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     ws.Range("C7:C" & row).Locked = True
     
     'Protect the worksheet
-    ws.Protect UserInterfaceONly:=True
+    ws.Protect UserInterfaceOnly:=True
     
     wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula

@@ -203,7 +203,7 @@ Sub Show_Unconfirmed_Invoice()
         End With
     Next i
     
-    wshFAC_Confirmation.Protect UserInterfaceONly:=True
+    wshFAC_Confirmation.Protect UserInterfaceOnly:=True
     
 Clean_Exit:
     Set ws = Nothing
@@ -243,8 +243,10 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
         Dim tauxHoraire As Currency
         tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
         wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
-        wshFAC_Confirmation.Cells(rowInWorksheet, 7) = hres
-        wshFAC_Confirmation.Cells(rowInWorksheet, 8) = tauxHoraire
+        wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
+                CDbl(Format$(hres, "0.00"))
+        wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
+                CDbl(Format$(tauxHoraire, "# ##0.00 $"))
         rowInWorksheet = rowInWorksheet + 1
 '        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
 '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
@@ -267,7 +269,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     
     'Get Invoice number
     Dim invNo As String
-    invNo = wshFAC_Confirmation.Range("F5").value
+    invNo = Trim(wshFAC_Confirmation.Range("F5").value)
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
@@ -282,8 +284,10 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
         Do
             'Display values in the worksheet
             wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
-            wshFAC_Confirmation.Range("G" & rowFeesSummary).value = wsFees.Cells(cell.row, 4).value
-            wshFAC_Confirmation.Range("H" & rowFeesSummary).value = wsFees.Cells(cell.row, 5).value
+            wshFAC_Confirmation.Range("G" & rowFeesSummary).value = _
+                        CDbl(Format$(wsFees.Cells(cell.row, 4).value, "##0.00"))
+            wshFAC_Confirmation.Range("H" & rowFeesSummary).value = _
+                        CDbl(Format$(wsFees.Cells(cell.row, 5).value, "##,##0.00 $"))
             rowFeesSummary = rowFeesSummary + 1
             'Find the next cell with the invNo
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
@@ -313,7 +317,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     ws.Range("F13:H17").ClearContents
     
-    ws.Range("F20:I24").ClearContents
+    ws.Range("F20:H24").ClearContents
     
     Dim pic As Picture
     For Each pic In ws.Pictures
@@ -372,9 +376,8 @@ Sub FAC_Confirmation_Button_Click()
     End If
     
     If answerYesNo = vbYes Then
+    
         Call FAC_Confirmation_Facture(invNo)
-        
-        MsgBox "Cette facture a été confirmée avec succès", vbInformation
         
     End If
     
@@ -430,6 +433,8 @@ Sub FAC_Confirmation_Facture(invNo As String)
     'Do the G/L posting
     Call FAC_Confirmation_GL_Posting(invNo)
     
+    MsgBox "Cette facture a été confirmée avec succès", vbInformation
+
     'Clear the cells on the current Worksheet
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     

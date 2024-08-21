@@ -532,6 +532,58 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
 End Sub
 
+Sub FAC_Sommaire_Taux_All() '2024-07-11 @ 09:21
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_All", 0)
+    
+    Application.StatusBar = "J'importe les sommaires de taux"
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshFAC_Sommaire_Taux.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+
+    'Import FAC_Sommaire_Taux from 'GCF_BD_MASTER.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER.xlsx"
+    sourceTab = "FAC_Sommaire_Taux"
+                     
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    recSet.ActiveConnection = connStr
+    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Open
+    
+    'Copy to wshFAC_Entête workbook
+    wshFAC_Sommaire_Taux.Range("A2").CopyFromRecordset recSet
+
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
+    Dim rng As Range: Set rng = wshFAC_Sommaire_Taux.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(wshFAC_Entête, rng, 1)
+    
+    Application.ScreenUpdating = True
+    Application.StatusBar = ""
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
+    
+    Call Log_Record("modImport:FAC_Sommaire_Taux_All", startTime)
+
+End Sub
+
 Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
@@ -574,7 +626,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
     For i = LastRow To 2 Step -1
-        If wshFAC_Projets_Détails.Cells(i, 9).value = "Vrai" Then
+        If UCase(wshFAC_Projets_Détails.Cells(i, 9).value) = "VRAI" Then
             wshFAC_Projets_Détails.rows(i).delete
         End If
     Next i
@@ -602,7 +654,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", 0)
     
-    Application.StatusBar = "J'importe les entêtes de Facture"
+    Application.StatusBar = "J'importe les entêtes de projets de facture"
     
     Application.ScreenUpdating = False
     
@@ -640,7 +692,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
     For i = LastRow To 2 Step -1
-        If wshFAC_Projets_Entête.Cells(i, 26).value = True Then
+        If UCase(wshFAC_Projets_Entête.Cells(i, 26).value) = "VRAI" Then
             wshFAC_Projets_Entête.rows(i).delete
         End If
     Next i

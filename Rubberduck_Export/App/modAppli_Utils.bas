@@ -99,7 +99,7 @@ Public Sub ProtectCells(rng As Range)
     rng.Locked = True
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceONly:=True
+    rng.Parent.Protect UserInterfaceOnly:=True
 
 
 End Sub
@@ -110,7 +110,7 @@ Public Sub UnprotectCells(rng As Range)
     rng.Locked = False
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceONly:=True
+    rng.Parent.Protect UserInterfaceOnly:=True
 
 
 End Sub

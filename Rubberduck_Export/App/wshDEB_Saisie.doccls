@@ -26,7 +26,7 @@ Private Sub Worksheet_Activate()
     With ws
         .Unprotect
 '        .Range("A:B").EntireColumn.Hidden = True
-        .Protect UserInterfaceONly:=True
+        .Protect UserInterfaceOnly:=True
     End With
     
     Call SetTabOrder(ws)

@@ -22,7 +22,7 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
-    ws.Protect UserInterfaceONly:=True
+    ws.Protect UserInterfaceOnly:=True
     
     Call SetTabOrder(ws)
     
@@ -120,6 +120,8 @@ Sub FAC_Confirmation_Back_To_FAC_Menu()
     
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:Back_To_FAC_Menu()")
    
+    wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
+    
     wshFAC_Confirmation.Range("F5").ClearContents
     
     wshFAC_Confirmation.Visible = xlSheetHidden

@@ -351,7 +351,7 @@ Sub FAC_Historique_Clear_All_Cells()
         wshFAC_Historique.Activate
         wshFAC_Historique.Range("F4").Select
     End With
-    ActiveSheet.Protect UserInterfaceONly:=True
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
     Call End_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
 

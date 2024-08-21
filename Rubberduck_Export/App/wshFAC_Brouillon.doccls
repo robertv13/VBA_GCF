@@ -17,6 +17,10 @@ Private Sub Worksheet_Activate()
     
     Call TEC_Import_All
     
+    Call FAC_Projets_Entête_Import_All
+    
+    Call FAC_Projets_Détails_Import_All
+    
     With ws
         .Unprotect
         .Range("A:B").EntireColumn.Hidden = True
@@ -31,7 +35,7 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    ws.Protect UserInterfaceONly:=True '2024-08-16 @ 07:08
+    ws.Protect UserInterfaceOnly:=True '2024-08-16 @ 07:08
     
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents

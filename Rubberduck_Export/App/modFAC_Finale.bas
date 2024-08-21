@@ -265,11 +265,12 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
         With wshFAC_Finale
             rs.Fields("Inv_No") = noFacture
             rs.Fields("Description") = .Range("B" & r).value
-            rs.Fields("Heures") = Format$(.Range("C" & r).value, "0.00")
-            rs.Fields("Taux") = Format$(.Range("D" & r).value, "0.00")
-            If .Range("E" & r).value <> "" Then
-                rs.Fields("Honoraires") = Format$(.Range("E" & r).value, "0.00")
-                
+            If .Range("C" & r).value <> 0 And _
+               .Range("D" & r).value <> 0 And _
+               .Range("E" & r).value <> 0 Then
+                    rs.Fields("Heures") = Format$(.Range("C" & r).value, "0.00")
+                    rs.Fields("Taux") = Format$(.Range("D" & r).value, "0.00")
+                    rs.Fields("Honoraires") = Format$(.Range("E" & r).value, "0.00")
             End If
             rs.Fields("Inv_Row") = wshFAC_Brouillon.Range("B11").value
         End With
@@ -651,7 +652,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = " & "VRAI" & " WHERE projetID = '" & projetID & "'"
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE projetID = " & projetID
     
     'Execute the SQL query
     conn.Execute strSQL
@@ -728,7 +729,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = " & "VRAI" & " WHERE ProjetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE ProjetID = " & projetID
 
     'Execute the SQL query
     On Error GoTo eh
@@ -1302,20 +1303,28 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
     
     If nbItems > 0 Then
         Dim rowFAC_Finale As Long
-        rowFAC_Finale = 67 - nbItems
-        Dim rngFeesSummary As Range: Set rngFeesSummary = _
-            wshFAC_Finale.Range("C" & rowFAC_Finale & ":D67")
+        rowFAC_Finale = 66 - nbItems
+        Dim rngFeesSummary As Range: Set rngFeesSummary = wshFAC_Finale.Range("C" & rowFAC_Finale & ":D66")
         wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Heures"
+        wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Bold = True
+        wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Underline = True
+        
         wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux"
+        wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Bold = True
+        wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Underline = True
         
         Dim rowFAC_Brouillon As Long
         rowFAC_Brouillon = 44
     
         Dim i As Long
-        For i = rowFAC_Finale + 1 To 67
+        For i = rowFAC_Finale + 1 To 66
             wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
             wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
+            wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
+            wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("D" & i).value = wshFAC_Brouillon.Range("T" & rowFAC_Brouillon).value
+            wshFAC_Finale.Range("D" & i).NumberFormat = "#,##0.00 $"
+            wshFAC_Finale.Range("D" & i).HorizontalAlignment = xlCenter
             rowFAC_Brouillon = rowFAC_Brouillon + 1
         Next i
         
