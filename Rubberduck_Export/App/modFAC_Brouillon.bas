@@ -718,7 +718,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
             .name = "chkBox - " & cell.row
             .value = True
             .text = ""
-            .LinkedCell = cell.Address
+            .linkedCell = cell.Address
             .Display3DShading = True
         End With
         ws.Range("C" & cell.row).Locked = False

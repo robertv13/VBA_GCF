@@ -105,7 +105,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     'Invoice Date has changed
-    If Not Intersect(Target, Range("O3")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then

@@ -645,8 +645,6 @@ End Sub
 
 Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
 
-    Dim sourceRange As Range
-    
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Master.xlsx"
@@ -664,6 +662,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
     
     'Define the range to copy
+    Dim sourceRange As Range
     Set sourceRange = sourceSheet.Range(sourceSheet.Cells(1, 1), sourceSheet.Cells(lastUsedRow, lastUsedCol))
     
     ' Open the destination workbook
@@ -672,12 +671,11 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     Dim lastUsedRowClient As Long
     lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).row
     
-    Dim dictClients As Dictionary 'Code, Nomdu Client
+    Dim dictClients As Dictionary 'Code, Nom du Client
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
         dictClients.add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
-'        Debug.Print referenceSheet.Cells(i, 2).value & " - " & referenceSheet.Cells(i, 1).value
     Next i
     
     Dim codeClient As String, nomClient As String, updatedNomClient As String
@@ -863,6 +861,57 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     Set sourceWorkbook = Nothing
     
     MsgBox "Sommaire des heures est complété."
+    
+End Sub
+
+Sub Validate_Client_Name_In_TEC()  '2024-08-21 @ 09:36
+
+    'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
+    Dim sourceFilePath As String
+    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Master.xlsx"
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
+    Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
+    
+    'Détermine la dernière rangée et dernière colonne utilisées dans wshTEC_Local
+    Dim lastUsedRowTEC As Long
+    lastUsedRowTEC = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).row
+    
+    'Open the Master File Workbook
+    Dim clientMFPath As String
+    clientMFPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
+    Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
+    Dim lastUsedRowTECClient As Long
+    lastUsedRowTECClient = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).row
+    
+    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim dictClients As Dictionary
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowTECClient
+        dictClients.add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+    Next i
+    
+    Dim codeClientTEC As String, nomClientTEC As String, nomClientFromMF As String
+    Dim casDelta As Long
+    For i = 2 To lastUsedRowTEC
+        codeClientTEC = wsSource.Cells(i, 5).value
+        nomClientTEC = wsSource.Cells(i, 6).value
+        nomClientFromMF = dictClients(codeClientTEC)
+        If nomClientTEC <> nomClientFromMF Then
+            Debug.Print i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
+            casDelta = casDelta + 1
+        End If
+    Next i
+    
+    'Clean up
+    Set wsSource = Nothing
+    Set wbSource = Nothing
+    Set wsMF = Nothing
+    Set wbMF = Nothing
+    
+    MsgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
+            vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
     
 End Sub
 

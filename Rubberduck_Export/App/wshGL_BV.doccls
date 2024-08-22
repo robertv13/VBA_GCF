@@ -19,9 +19,6 @@ Private Sub Worksheet_Activate()
     Me.Application.Calculation = xlCalculationAutomatic
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
-    
-    'Hide column A & B
-'    ws.Range("A:B").EntireColumn.Hidden = True
 
 '    Call SetTabOrder(ws)
     
@@ -30,6 +27,7 @@ Private Sub Worksheet_Activate()
     ws.Unprotect
     ws.Range("L4:T9999").ClearContents
     ws.Protect UserInterfaceOnly:=True
+    ws.EnableSelection = xlUnlockedCells
     ws.Range("B10").value = 0
     
     Dim cbx As Shape
@@ -42,12 +40,9 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    If ws.Range("J1").value = "" Then
-        ws.Range("J1").value = Format$(Now(), "dd/mm/yyyy")
-    End If
+    ws.Range("J1").value = Format$(Now(), "dd/mm/yyyy")
     
     With ws
-        .Range("J1").Activate
         .Range("J1").Select
         previousCellAddress = .Range("J1").Address
     End With

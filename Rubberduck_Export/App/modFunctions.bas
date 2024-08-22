@@ -439,6 +439,21 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 
     
 End Function
 
+Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
+    
+    Dim regex As Object
+    Set regex = CreateObject("VBScript.RegExp")
+    
+    'Définir le pattern pour l'expression régulière
+    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    regex.IgnoreCase = True
+    regex.Global = False
+    
+    'Vérifier si l'adresse courriel correspond au pattern
+    Fn_ValiderCourriel = regex.Test(courriel)
+    
+End Function
+
 Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     

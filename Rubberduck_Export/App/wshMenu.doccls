@@ -13,89 +13,115 @@ End Sub
 
 Private Sub TECHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:TECHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_Facturation
     Call SlideOut_TEC
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:TECHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub FACHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:FACHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_TEC
     Call SlideIn_Debours
     Call SlideOut_Facturation
     
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:FACHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub DEBHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:DEBHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_Facturation
     Call SlideIn_Comptabilite
     Call SlideOut_Debours
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:DEBHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub GLHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:GLHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_Debours
     Call SlideIn_Parametres
     Call SlideOut_Comptabilite
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:GLHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub PARAMHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:PARAMHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_Comptabilite
     Call SlideOut_Parametres
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:PARAMHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub EXITHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:EXITHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_Parametres
     Call SlideOut_Exit
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:EXITHover_MouseMove", startTime)
 
 End Sub
 
 Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
     
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenu:MinAllHover_MouseMove", 0)
+        
+    'ASUF
+    'AEEF
     
     Call SlideIn_TEC
     Call SlideIn_Facturation
@@ -104,7 +130,9 @@ Private Sub MinAllHover_MouseMove(ByVal Button As Integer, ByVal Shift As Intege
     Call SlideIn_Parametres
     Call SlideIn_Exit
 
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
+    'AEET
+    'ASUT
+
+    Call Log_Record("wshMenu:MinAllHover_MouseMove", startTime)
 
 End Sub

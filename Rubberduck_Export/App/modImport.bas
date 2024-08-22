@@ -532,9 +532,9 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
 End Sub
 
-Sub FAC_Sommaire_Taux_All() '2024-07-11 @ 09:21
+Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", 0)
     
     Application.StatusBar = "J'importe les sommaires de taux"
     
@@ -580,7 +580,7 @@ Sub FAC_Sommaire_Taux_All() '2024-07-11 @ 09:21
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:FAC_Sommaire_Taux_All", startTime)
+    Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", startTime)
 
 End Sub
 

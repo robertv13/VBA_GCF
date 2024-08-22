@@ -57,9 +57,6 @@ Sub Encaissement_Click()
     
     Call Encaissement_Import_All
     
-'    wshFAC_Comptes_Clients.Visible = xlSheetVisible
-'    wshENC_Détails.Visible = xlSheetVisible
-'    wshENC_Entête.Visible = xlSheetVisible
     With wshENC_Saisie
         .Visible = xlSheetVisible
         .Select

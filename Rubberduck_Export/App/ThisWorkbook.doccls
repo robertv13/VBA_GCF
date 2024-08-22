@@ -7,17 +7,17 @@ Private Sub Workbook_Open()
 
 '    Call Handle_Rubberduck_Reference
     
+    'Log activity
     Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
-    
     Call End_Timer("message:N E W  session  has  started", 0)
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ThisWorkbook:Workbook_Open()")
+    Dim timerStart As Double: timerStart = Timer
+    Call Start_Timer("ThisWorkbook:Workbook_Open()")
     
     Application.ScreenUpdating = False
     
     Call Set_Environment
     
-    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro
+    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each startup
     Call BackupMasterFile
     
     Call Hide_Dev_Shapes_Based_On_Username
@@ -26,25 +26,25 @@ Private Sub Workbook_Open()
     
     Call Write_Info_On_Main_Menu
     
-'    Application.Wait ("0:00:01") 'RMV_TEMP - 2024-08-11 @ 13:56
-    
     Application.ScreenUpdating = False
     
     wshMenu.Activate
-    wshMenu.Unprotect
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
-'    wshMenu.Protect UserInterfaceOnly:=True RMV - 2024-07-21
+    
+    'Protect wshMenu
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells '2024-08-21 @06:33
+    End With
     
     Call Slide_In_All_Menu_Options
 
     Dim wb As Workbook: Set wb = ActiveWorkbook
     wb.Application.Calculation = xlCalculationManual
    
-'    Call Import_Minimum_From_External_DB '2024-03-11 @ 09:56
-    
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
     
     Call End_Timer("ThisWorkbook:Workbook_Open()", timerStart)

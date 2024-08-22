@@ -11,6 +11,8 @@ Private Sub Worksheet_Activate()
     
     Call FAC_Entête_Import_All
     
+    Call FAC_Sommaire_Taux_Import_All
+    
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
     

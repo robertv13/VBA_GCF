@@ -25,7 +25,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Dim minDate As Date, dateCutOff As Date
     wshGL_BV.Range("C2").value = "Au " & CDate(Format$(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
 
-    minDate = CDate("01/01/2023")
+    minDate = CDate("07/31/2024")
     dateCutOff = CDate(wshGL_BV.Range("J1").value)
     wshGL_BV.Range("B2").value = 3
     wshGL_BV.Range("B10").value = 0
@@ -96,6 +96,14 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     currRow = currRow + 1
     wshGL_BV.Range("B2").value = currRow
     
+    'Unprotect the active cells of the TB area
+    With wshGL_BV '2024-08-21 @ 07:10
+        .Unprotect
+        .Range("D4:G" & currRow - 2).Locked = False
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
     'Output Debit total
     Dim rng As Range
     Set rng = wshGL_BV.Range("F" & currRow)
@@ -105,13 +113,11 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Set rng = wshGL_BV.Range("G" & currRow)
     Call GL_TB_Display_TB_Totals(rng, sumCT) 'Débit total - 2024-06-09 @ 07:51
     
-    wshGL_BV.Range("B2").value = currRow
-
     'Setup page for printing purposes
     Dim CenterHeaderTxt As String
     CenterHeaderTxt = wshAdmin.Range("NomEntreprise")
     With ActiveSheet.PageSetup
-        .CenterHeader = "&""Calibri,Bold""&20 " & CenterHeaderTxt
+        .CenterHeader = "&""Calibri,Bold""&16 " & CenterHeaderTxt
         .PrintArea = "$D$1:$G$" & currRow
         .Orientation = xlPortrait
         .FitToPagesWide = 1
@@ -292,8 +298,14 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         On Error GoTo 0
     End With
     
-    ws.Protect UserInterfaceOnly:=True
-    
+    'Unprotect the active cells of the transactions details area
+    With wshGL_BV '2024-08-21 @ 07:15
+        .Unprotect
+        .Range("L4:T" & lastResultUsedRow).Locked = False
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
 Exit_Sub:
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -406,8 +418,8 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B8").value = wshAdmin.Range("AnneePrecDe").value
             wshGL_BV.Range("B9").value = wshAdmin.Range("AnneePrecA").value
         Case "Dates Manuelles"
-            wshGL_BV.Range("B8").value = CDate(Format$("01-01-2023", "dd/mm/yyyy"))
-            wshGL_BV.Range("B9").value = CDate(Format$("12-31-2023", "dd/mm/yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format$("07-31-2024", "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format$("07-31-2025", "dd/mm/yyyy"))
         Case "Toutes les dates"
             wshGL_BV.Range("B8").value = CDate(Format$(wshGL_BV.Range("B3").value, "dd/mm/yyyy"))
             wshGL_BV.Range("B9").value = CDate(Format$(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))

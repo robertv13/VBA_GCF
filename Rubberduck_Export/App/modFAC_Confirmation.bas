@@ -454,7 +454,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+              ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim SQL As String
@@ -463,25 +463,28 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     rs.Open SQL, conn, 2, 3
     If Not rs.EOF Then
         'Update AC_ouC with 'C'
-'            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
         rs.Fields("AC_C").value = "C"
         rs.update
     Else
-        'Handle the case where the specified ID is not found
+        'Handle the case where the specified invoice is not found
         MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
-        rs.Close
         GoTo Clean_Exit
     End If
-    'Update the recordset (create the record)
-    rs.update
-    rs.Close
+    
+'    'Update the recordset (create the record) - 2024-08-21 @ 05:28
+'    rs.update
     
 Clean_Exit:
     'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
+    If Not rs Is Nothing Then
+        If rs.state = adStateOpen Then rs.Close
+        Set rs = Nothing
+    End If
+
+    If Not conn Is Nothing Then
+        If conn.state = adStateOpen Then conn.Close
+        Set conn = Nothing
+    End If
     
     Application.ScreenUpdating = True
 
