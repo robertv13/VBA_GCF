@@ -2,13 +2,15 @@
 
 Private Sub Workbook_Deactivate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Fin de session - Workbook_Deactivate *****", 0)
+    wshMENU.Range("B3").Value = 0 'Reset the last client used from the listBox
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Fin de session - Workbook_Deactivate *****", "", 0)
 
 End Sub
 
 Private Sub Workbook_Open()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début de session - Workbook_Open *****", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début de session - Workbook_Open *****", "", 0)
 
     Call Client_List_Import_All
     

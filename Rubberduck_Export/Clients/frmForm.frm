@@ -19,15 +19,15 @@ Public nouveauClient As Boolean
 
 Private Sub cmbFinAnnee_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    frmForm.txtFinAnnee.Value = Fix_Txt_Fin_Annee(frmForm.cmbFinAnnee.Value)
+    frmForm.txtFinAnnee.Value = Fn_Fix_Txt_Fin_Annee(frmForm.cmbFinAnnee.Value)
 
 End Sub
 
 Private Sub cmbSearchColumn_Change()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmbSearchColumn_Change", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmbSearchColumn_Change", "", 0)
     
-    If Me.EnableEvents = False Then Exit Sub
+    If Me.EnableEvents = False Then GoTo Clean_Exit
     
     If Me.cmbSearchColumn.Value = "Tous" Then
         Call Reset
@@ -37,13 +37,15 @@ Private Sub cmbSearchColumn_Change()
         Me.cmdSearch.Enabled = True
     End If
 
-    Call Log_Record("frmForm:cmbSearchColumn_Change", startTime)
+Clean_Exit:
+
+    Call Log_Record("frmForm:cmbSearchColumn_Change", Me.cmbSearchColumn.Value, startTime)
 
 End Sub
 
 Private Sub cmdAddClient_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdAddClient_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdAddClient_Click", "", 0)
     
     Call Reset
     
@@ -52,39 +54,41 @@ Private Sub cmdAddClient_Click()
     
     nouveauClient = True
 
-    Call Log_Record("frmForm:cmdAddClient_Click", startTime)
+    Call Log_Record("frmForm:cmdAddClient_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdCancel_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdCancel_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdCancel_Click", "", 0)
     
     Dim msgValue As VbMsgBoxResult
     msgValue = MsgBox("Désirez-vous vraiment ANNULER la présente modification ?", vbYesNo + vbInformation, "Annuler les modifications courantes")
-    If msgValue = vbNo Then Exit Sub
+    If msgValue = vbNo Then GoTo CleanExit
 
     Call Reset
     
-    Me.cmdAddClient.Enabled = True
-    Me.cmdCancel.Enabled = False
-    Me.cmdSave.Enabled = False
+    frmForm.cmdAddClient.Enabled = True
+    frmForm.cmdCancel.Enabled = False
+    frmForm.cmdSave.Enabled = False
 
-    Call Log_Record("frmForm:cmdCancel_Click", startTime)
+CleanExit:
+
+    Call Log_Record("frmForm:cmdCancel_Click", CStr(msgValue), startTime)
 
 End Sub
 
 Private Sub cmdEdit_Click()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdEdit_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdEdit_Click", "", 0)
     
-    If Selected_List = 0 Then
+    If Fn_Selected_List = 0 Then
         MsgBox "Aucun enregistrement n'a été choisi.", vbOKOnly + vbInformation, "Modification"
-        Exit Sub
+        GoTo Clean_Exit
     End If
     
     'Save selected line number
-    wshMENU.Range("B3").Value = Selected_List
+    wshMENU.Range("B3").Value = Fn_Selected_List
     
     'Code to update the value to respective controls
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0), _
@@ -111,23 +115,29 @@ Private Sub cmdEdit_Click()
     frmForm.cmdSave.Enabled = True
     frmForm.cmdCancel.Enabled = True
     
-    Call Log_Record("frmForm:cmdEdit_Click", startTime)
+Clean_Exit:
+
+    Call Log_Record("frmForm:cmdEdit_Click", Me.txtNomClient.Value, startTime)
 
 End Sub
 
 Private Sub cmdSave_Click()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdSave_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdSave_Click", "", 0)
     
-    If ValidateEntries() = False Then
-        Exit Sub
+    If Fn_ValidateEntries() = False Then
+        GoTo Clean_Exit
     End If
    
     Call Fix_Some_Fields '2024-08-10 @ 08:36
     
-    Dim msgValue As VbMsgBoxResult
+    'Confirm the Update
+    Dim msgValue As VbMsgBoxResult, msgValueLog As String
     msgValue = MsgBox("Désirez-vous SAUVEGARDER ces informations ?", vbYesNo + vbInformation, "Confirmation")
-    If msgValue = vbNo Then Exit Sub
+    msgValueLog = msgValue
+    If msgValue = vbNo Then
+        GoTo Clean_Exit
+    End If
     
     Dim clientExists As Boolean
     clientExists = Fn_Does_Client_Code_Exist
@@ -155,28 +165,32 @@ Private Sub cmdSave_Click()
     
 '    Me.txtSearch.SetFocus
 
-    Call Log_Record("frmForm:cmdSave_Click", startTime)
+Clean_Exit:
+
+    Call Log_Record("frmForm:cmdSave_Click", msgValueLog, startTime)
 
 End Sub
 
 Private Sub cmdSearch_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdSearch_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:cmdSearch_Click", "", 0)
     
     If Me.txtSearch.Value = "" Then
         MsgBox "SVP, saisir la valeur à rechercher.", vbOKOnly + vbInformation, "Recherche"
-        Exit Sub
+        GoTo Clean_Exit
     End If
     
     Call DonnéesRecherche
     
-    Call Log_Record("frmForm:cmdSearch_Click", startTime)
+Clean_Exit:
+
+    Call Log_Record("frmForm:cmdSearch_Click", "", startTime)
 
 End Sub
 
 Private Sub Fix_Some_Fields()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:Fix_Some_Fields", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:Fix_Some_Fields", "", 0)
     
     'Add the contact name to the client's name within square brackets
     If InStr(frmForm.txtNomClient.Value, "[") = 0 And _
@@ -185,19 +199,24 @@ Private Sub Fix_Some_Fields()
                 frmForm.txtNomClient.Value = Trim(frmForm.txtNomClient.Value) & " [" & Trim(frmForm.txtContactFact.Value) & "]"
     End If
     
-    Call Log_Record("frmForm:Fix_Some_Fields", startTime)
+    Call Log_Record("frmForm:Fix_Some_Fields", "", startTime)
 
 End Sub
 
 Private Sub lstDonnées_Click()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:lstDonnées_Click", "", 0)
+    
+    frmForm.cmdAddClient.Enabled = True
     frmForm.cmdEdit.Enabled = True
+
+    Call Log_Record("frmFrom:lstDonnées_Click", "", startTime)
 
 End Sub
 
 Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:lstDonnées_DblClick", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:lstDonnées_DblClick", "", 0)
     
     Me.cmdEdit.Enabled = False
     Me.cmdAddClient.Enabled = False
@@ -206,13 +225,13 @@ Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Call cmdEdit_Click
 
-    Call Log_Record("frmForm:lstDonnées_DblClick", startTime)
+    Call Log_Record("frmForm:lstDonnées_DblClick", "", startTime)
 
 End Sub
 
 Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:txtCodeClient_Exit", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:txtCodeClient_Exit", "", 0)
     
     Dim clientExists As Boolean
     clientExists = Fn_Does_Client_Code_Exist
@@ -224,24 +243,23 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         frmForm.txtCodeClient.BackColor = vbWhite
         frmForm.txtCodeClient.Value = ""
         frmForm.txtCodeClient.SetFocus
-        
     End If
     
-    Call Log_Record("frmForm:txtCodeClient_Exit", startTime)
+    Call Log_Record("frmForm:txtCodeClient_Exit", frmForm.txtCodeClient.Value, startTime)
 
 End Sub
 
 Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:txtNomClient_Exit", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:txtNomClient_Exit", "", 0)
     
-    If Trim(frmForm.txtNomClient) <> "" Then
+    If Trim(frmForm.txtNomClient.Value) <> "" Then
         frmForm.cmdSave.Enabled = True
     End If
     
     frmForm.cmdCancel.Enabled = True
 
-    Call Log_Record("frmForm:txtNomClient_Exit", startTime)
+    Call Log_Record("frmForm:txtNomClient_Exit", frmForm.txtNomClient.Value, startTime)
 
 End Sub
 
@@ -253,7 +271,7 @@ End Sub
 
 Private Sub UserForm_Initialize()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:UserForm_Initialize", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("frmFrom:UserForm_Initialize", "", 0)
     
     Call Reset
     
@@ -275,6 +293,6 @@ Private Sub UserForm_Initialize()
     frmForm.cmdSave.Enabled = False
     frmForm.cmdCancel.Enabled = False
 
-    Call Log_Record("frmForm:UserForm_Initialize", startTime)
+    Call Log_Record("frmForm:UserForm_Initialize", "", startTime)
 
 End Sub

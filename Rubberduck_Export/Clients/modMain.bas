@@ -13,7 +13,7 @@ End Sub
 
 Sub Reset()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Reset", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Reset", "", 0)
     
     Dim iRow As Long
     iRow = [Counta(Données!A:A)] 'Identifying the number of rows
@@ -85,13 +85,13 @@ Sub Reset()
             
     End With
     
-    Call Log_Record("modMain:Reset", startTime)
+    Call Log_Record("modMain:Reset", CStr(iRow), startTime)
 
 End Sub
 
 Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record to Clients' Master File
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", action, 0)
     
     Application.ScreenUpdating = False
     
@@ -110,7 +110,6 @@ Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record t
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     If action = "NEW_RECORD" Then
-        
         'Open an empty recordset
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
         
@@ -131,7 +130,6 @@ Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record t
         rs.Fields("Fin d'année").Value = frmForm.txtFinAnnee.Value
         rs.Fields("Comptable").Value = frmForm.txtComptable.Value
         rs.Fields("Notaire/Avocat").Value = frmForm.txtNotaireAvocat.Value
-        
     Else 'Update an existing record
         'Open the recordset for the existing client
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE Client_ID='" & frmForm.txtCodeClient & "'", conn, 2, 3
@@ -156,33 +154,34 @@ Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record t
             'Handle the case where the specified ID is not found
             MsgBox "Le client '" & frmForm.txtCodeClient & "' n'a pas été ajouté au fichier!" & _
                     vbNewLine & vbNewLine & "Veuillez le saisir à nouveau", vbExclamation
-            rs.Close
-            conn.Close
-            Exit Sub
+            GoTo Clean_Exit
         End If
     End If
     'Update the recordset (create the record)
     rs.Update
-    
+
+Clean_Exit:
+
     'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
+    If Not rs Is Nothing Then
+        If rs.State = adStateOpen Then rs.Close
+        Set rs = Nothing
+    End If
+
+    If Not conn Is Nothing Then
+        If conn.State = adStateOpen Then conn.Close
+        Set conn = Nothing
+    End If
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", startTime)
+    Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", action & " " & frmForm.txtCodeClient.Value, startTime)
 
 End Sub
 
 Sub Submit_Locally(action As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_Locally", "", 0)
     
     Dim sh As Worksheet
     Set sh = ThisWorkbook.Sheets("Données")
@@ -213,33 +212,13 @@ Sub Submit_Locally(action As String)
 '        .Cells(iRow, 9) = [Text(Now(), "DD-MM-YYYY HH:MM:SS")]
     End With
 
-    Call Log_Record("modMain:Submit_Locally", startTime)
+    Call Log_Record("modMain:Submit_Locally", action & " " & frmForm.txtCodeClient.Value, startTime)
 
 End Sub
 
-Function Selected_List() As Long
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Selected_List", 0)
-    
-    Selected_List = 0
-    
-    Dim i As Long
-    For i = 0 To frmForm.lstDonnées.ListCount - 1
-        If frmForm.lstDonnées.Selected(i) = True Then
-            Selected_List = i + 1
-            frmForm.cmdEdit.Enabled = True
-            Exit For
-        End If
-        frmForm.cmdEdit.Enabled = False
-    Next i
-
-    Call Log_Record("modMain:Selected_List", startTime)
-
-End Function
-
 Sub Add_SearchColumn()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Add_SearchColumn", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Add_SearchColumn", "", 0)
     
     frmForm.EnableEvents = False
 
@@ -272,19 +251,19 @@ Sub Add_SearchColumn()
 '    frmForm.txtSearch.Enabled = False
     frmForm.cmdSearch.Enabled = False
 
-    Call Log_Record("modMain:Add_SearchColumn", startTime)
+    Call Log_Record("modMain:Add_SearchColumn", "", startTime)
 
 End Sub
 
 Sub DonnéesRecherche()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:DonnéesRecherche", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:DonnéesRecherche", "", 0)
     
     Application.ScreenUpdating = False
     
     Dim iColumn As Integer 'To hold the selected column number in Données sheet
     Dim iDonnéesRow As Long 'To store the last non-blank row number available in Données sheet
-    Dim iSearchRow As Long 'To hold the last non-blank row number available in SearachData sheet
+    Dim iSearchRow As Long 'To hold the last non-blank row number available in SearchData sheet
     
     Dim sColumn As String 'To store the column selection
     Dim sValue As String 'To hold the search text value
@@ -332,67 +311,13 @@ Sub DonnéesRecherche()
     wshDonnées.AutoFilterMode = False
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMain:DonnéesRecherche", startTime)
+    Call Log_Record("modMain:DonnéesRecherche", frmForm.cmbSearchColumn.Value & ":" & sValue & " " & searchRowsFound, startTime)
 
 End Sub
 
-Function ValidateEntries() As Boolean
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:ValidateEntries", 0)
-    
-    ValidateEntries = True
-    
-    Dim sh As Worksheet: Set sh = ThisWorkbook.Sheets("Données")
-
-    Dim iCodeClient As Variant
-    iCodeClient = frmForm.txtCodeClient.Value
-    
-    With frmForm
-        'Default Color
-        .txtCodeClient.BackColor = vbWhite
-        .txtNomClient.BackColor = vbWhite
-        .txtContactFact.BackColor = vbWhite
-        .txtTitreContact.BackColor = vbWhite
-        .txtCourrielFact.BackColor = vbWhite
-        .txtAdresse1.BackColor = vbWhite
-        .txtAdresse2.BackColor = vbWhite
-        .txtVille.BackColor = vbWhite
-        .txtProvince.BackColor = vbWhite
-        .txtCodePostal.BackColor = vbWhite
-        .txtPays.BackColor = vbWhite
-        .txtReferePar.BackColor = vbWhite
-        .txtFinAnnee.BackColor = vbWhite
-        .txtComptable.BackColor = vbWhite
-        .txtNotaireAvocat.BackColor = vbWhite
-        
-        'Valeur OBLIGATOIRE
-        If Trim(.txtCodeClient.Value) = "" Then
-            MsgBox "SVP, saisir un code de client.", vbOKOnly + vbInformation, "Code de client"
-            ValidateEntries = False
-            .txtCodeClient.BackColor = vbRed
-            .txtCodeClient.Enabled = True
-            .txtCodeClient.SetFocus
-            Exit Function
-        End If
-    
-        'Valeur OBLIGATOIRE
-        If Trim(.txtNomClient.Value) = "" Then
-            MsgBox "SVP, saisir le nom du client.", vbOKOnly + vbInformation, "Nom de client"
-            ValidateEntries = False
-            .txtNomClient.BackColor = vbRed
-            .txtNomClient.SetFocus
-            Exit Function
-        End If
-        
-    End With
-
-    Call Log_Record("modMain:ValidateEntries", startTime)
-
-End Function
-
 Sub Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Client_List_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Client_List_Import_All", "", 0)
     
     Application.StatusBar = "J'importe la liste des clients"
     
@@ -445,15 +370,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
     Set connStr = Nothing
     Set recSet = Nothing
     
-'    MsgBox "Temps requis = " & Timer - timerStart
-        
-    Call Log_Record("modMain:Client_List_Import_All", startTime)
+    Call Log_Record("modMain:Client_List_Import_All", "", startTime)
 
 End Sub
 
 Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Apply_Worksheet_Format", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Apply_Worksheet_Format", "", 0)
     
     'Common stuff to all worksheets
     rng.EntireColumn.AutoFit 'Autofit all columns
@@ -476,8 +399,6 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         If Not usedRange Is Nothing Then
             usedRange.FormatConditions.Add Type:=xlExpression, _
                 Formula1:="=ET($A2<>"""";mod(LIGNE();2)=1)"
-    '        usedRange.FormatConditions.add Type:=xlExpression, _
-    '            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
             usedRange.FormatConditions(usedRange.FormatConditions.Count).SetFirstPriority
             With usedRange.FormatConditions(1).Font
                 .Strikethrough = False
@@ -491,69 +412,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             usedRange.FormatConditions(1).StopIfTrue = False
         End If
     
-    Call Log_Record("modMain:Apply_Worksheet_Format", startTime)
+    Call Log_Record("modMain:Apply_Worksheet_Format", CStr(numRows), startTime)
 
 End Sub
 
-Function Fn_Does_Client_Code_Exist() As Boolean
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fn_Does_Client_Code_Exist", 0)
-    
-    Fn_Does_Client_Code_Exist = False
-    
-    Dim ws As Worksheet: Set ws = wshClients
-    Dim iCodeClient As String
-    iCodeClient = frmForm.txtCodeClient.Value
-    If iCodeClient = "" Then
-        Exit Function
-    End If
-    
-    'Validating Duplicate Entries
-    If Not ws.Range("B:B").Find(what:=iCodeClient, lookat:=xlWhole) Is Nothing Then
-        Fn_Does_Client_Code_Exist = True
-    End If
-
-    Call Log_Record("modMain:Fn_Does_Client_Code_Exist", startTime)
-
-End Function
-
-Function Fix_Txt_Fin_Annee(fyem As String) As String
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fix_Txt_Fin_Annee", 0)
-    
-    'Add the last day of the month to Fiscal Year end month
-    Dim fiscalYearEndString As String
-    Select Case fyem
-        Case "Janvier"
-            fiscalYearEndString = "31/01"
-        Case "Février"
-            fiscalYearEndString = "28/02"
-        Case "Mars"
-            fiscalYearEndString = "31/03"
-        Case "Avril"
-            fiscalYearEndString = "30/04"
-        Case "Mai"
-            fiscalYearEndString = "31/05"
-        Case "Juin"
-            fiscalYearEndString = "30/06"
-        Case "Juillet"
-            fiscalYearEndString = "31/07"
-        Case "Août"
-            fiscalYearEndString = "31/08"
-        Case "Septembre"
-            fiscalYearEndString = "30/09"
-        Case "Octobre"
-            fiscalYearEndString = "31/10"
-        Case "Novembre"
-            fiscalYearEndString = "30/11"
-        Case "Décembre"
-            fiscalYearEndString = "31/12"
-        Case Else
-            fiscalYearEndString = frmForm.cmbFinAnnee.Value
-        End Select
-        
-    Fix_Txt_Fin_Annee = fiscalYearEndString
-
-    Call Log_Record("modMain:Fix_Txt_Fin_Annee", startTime)
-
-End Function
