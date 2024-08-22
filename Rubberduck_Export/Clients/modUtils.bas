@@ -42,6 +42,14 @@ Sub Log_Record(moduleProcName As String, param1 As String, Optional ByVal startT
                         procName & "|" & _
                         "" & "|" & _
                         param1
+    ElseIf startTime <= 0 Then 'Log intermédiaire
+        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
+                        currentTime & "|" & _
+                        ThisWorkbook.Name & "|" & _
+                        moduleName & "|" & _
+                        procName & "|" & _
+                        "" & "|" & _
+                        param1
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time

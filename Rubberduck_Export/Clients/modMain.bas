@@ -15,8 +15,13 @@ Sub Reset()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Reset", "", 0)
     
-    Dim iRow As Long
+    Dim iRow As Long, lastUsedRow As Long
     iRow = [Counta(Données!A:A)] 'Identifying the number of rows
+    lastUsedRow = wshClients.Cells(wshClients.Rows.Count, "A").End(xlUp).Row
+    If iRow <> lastUsedRow Then
+        MsgBox "Il semble y avoir une incongruité entre 2 pointeurs" & vbNewLine & vbNewLine & _
+               "Pointeur iRow = " & iRow & " - pointeur lastUsedRow = " & lastUsedRow, vbInformation
+    End If
     
     With frmForm
         .txtCodeClient.Value = ""
@@ -89,9 +94,9 @@ Sub Reset()
 
 End Sub
 
-Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record to Clients' Master File
+Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record to Clients' Master File
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", action, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Update_External_GCF_BD_Entree", action, 0)
     
     Application.ScreenUpdating = False
     
@@ -130,6 +135,8 @@ Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record t
         rs.Fields("Fin d'année").Value = frmForm.txtFinAnnee.Value
         rs.Fields("Comptable").Value = frmForm.txtComptable.Value
         rs.Fields("Notaire/Avocat").Value = frmForm.txtNotaireAvocat.Value
+        rs.Update
+        Call Log_Record("modMain:Update_External_GCF_BD_Entree", action & " " & frmForm.txtCodeClient.Value & " isDone", -1)
     Else 'Update an existing record
         'Open the recordset for the existing client
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE Client_ID='" & frmForm.txtCodeClient & "'", conn, 2, 3
@@ -150,38 +157,33 @@ Sub Submit_GCF_BD_Entrée_Clients(action As String) 'Update/Write Client record t
             rs.Fields("Fin d'année").Value = frmForm.txtFinAnnee.Value
             rs.Fields("Comptable").Value = frmForm.txtComptable.Value
             rs.Fields("Notaire/Avocat").Value = frmForm.txtNotaireAvocat.Value
-        Else
+            rs.Update
+            Call Log_Record("modMain:Update_External_GCF_BD_Entree", action & " " & frmForm.txtCodeClient.Value & " isDone", -1)
+       Else
             'Handle the case where the specified ID is not found
             MsgBox "Le client '" & frmForm.txtCodeClient & "' n'a pas été ajouté au fichier!" & _
                     vbNewLine & vbNewLine & "Veuillez le saisir à nouveau", vbExclamation
             GoTo Clean_Exit
         End If
     End If
-    'Update the recordset (create the record)
-    rs.Update
 
 Clean_Exit:
 
     'Close recordset and connection
-    If Not rs Is Nothing Then
-        If rs.State = adStateOpen Then rs.Close
-        Set rs = Nothing
-    End If
-
-    If Not conn Is Nothing Then
-        If conn.State = adStateOpen Then conn.Close
-        Set conn = Nothing
-    End If
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMain:Submit_GCF_BD_Entrée_Clients", action & " " & frmForm.txtCodeClient.Value, startTime)
+    Call Log_Record("modMain:Update_External_GCF_BD_Entree", action & " " & frmForm.txtCodeClient.Value, startTime)
 
 End Sub
 
-Sub Submit_Locally(action As String)
+Sub Update_Locally_BD_Clients(action As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Submit_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Update_Locally_BD_Clients", "", 0)
     
     Dim sh As Worksheet
     Set sh = ThisWorkbook.Sheets("Données")
@@ -212,7 +214,7 @@ Sub Submit_Locally(action As String)
 '        .Cells(iRow, 9) = [Text(Now(), "DD-MM-YYYY HH:MM:SS")]
     End With
 
-    Call Log_Record("modMain:Submit_Locally", action & " " & frmForm.txtCodeClient.Value, startTime)
+    Call Log_Record("modMain:Update_Locally_BD_Clients", action & " " & frmForm.txtCodeClient.Value, startTime)
 
 End Sub
 

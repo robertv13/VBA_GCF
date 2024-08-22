@@ -16,7 +16,10 @@ Function Fn_Does_Client_Code_Exist() As Boolean
     
     'Validating Duplicate Entries
     If Not ws.Range("B:B").Find(what:=iCodeClient, lookat:=xlWhole) Is Nothing Then
+        Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "VRAI", -1)
         Fn_Does_Client_Code_Exist = True
+    Else
+        Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "FAUX", -1)
     End If
 
 Clean_Exit:
@@ -136,6 +139,17 @@ Function Fn_ValidateEntries() As Boolean
             GoTo Clean_Exit
         End If
         
+        'Validation de la structure de l'adresse courriel
+        If .txtCourrielFact.Value <> "" Then
+            If Fn_ValiderCourriel(.txtCourrielFact.Value) = False Then
+                MsgBox "SVP, saisir une adresse courriel valide.", vbOKOnly + vbInformation, "Structure d'adresse courriel non-respecté"
+                Fn_ValidateEntries = False
+                .txtCourrielFact.BackColor = vbRed
+                .txtCourrielFact.SetFocus
+                GoTo Clean_Exit
+            End If
+        End If
+        
     End With
 
 Clean_Exit:
@@ -146,4 +160,18 @@ Clean_Exit:
     
 End Function
 
+Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
+    
+    Dim regex As Object
+    Set regex = CreateObject("VBScript.RegExp")
+    
+    'Définir le pattern pour l'expression régulière
+    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    regex.IgnoreCase = True
+    regex.Global = False
+    
+    'Vérifier si l'adresse courriel correspond au pattern
+    Fn_ValiderCourriel = regex.Test(courriel)
+    
+End Function
 

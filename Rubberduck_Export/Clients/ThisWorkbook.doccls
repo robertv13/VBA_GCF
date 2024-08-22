@@ -2,7 +2,7 @@
 
 Private Sub Workbook_Deactivate()
 
-    wshMENU.Range("B3").Value = 0 'Reset the last client used from the listBox
+    wshMENU.Range("B4").Value = 0 'Reset the last client used from the listBox
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Fin de session - Workbook_Deactivate *****", "", 0)
 
@@ -14,6 +14,29 @@ Private Sub Workbook_Open()
 
     Call Client_List_Import_All
     
+    wshMENU.Range("A32").Value = "Heure - " & Format$(Now(), "hh:nn:ss")
+    wshMENU.Range("A32").Font.size = 9
+    wshMENU.Range("A32").Font.Color = vbBlue
+    
+    wshMENU.Range("A33").Value = "Version - " & ThisWorkbook.Name
+    wshMENU.Range("A33").Font.size = 9
+    wshMENU.Range("A33").Font.Color = vbBlack
+    
+    wshMENU.Range("A34").Value = "Utilisateur - " & Environ("username")
+    wshMENU.Range("A34").Font.size = 9
+    wshMENU.Range("A34").Font.Color = vbRed
+    
+    Dim destinationFileName As String
+    If Not Environ("userName") = "Robert M. Vigneault" Then
+        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+    Else
+        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    End If
+    
+    wshMENU.Range("A35").Value = "Environnement - " & destinationFileName
+    wshMENU.Range("A35").Font.size = 9
+    wshMENU.Range("A35").Font.Color = vbBlack
+
     frmForm.Show vbModeless
 
 End Sub

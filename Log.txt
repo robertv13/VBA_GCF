@@ -14396,3 +14396,205 @@ Robert_M._Vigneault|2024-08-22_06:08:24|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (s
 Robert_M._Vigneault|2024-08-22_06:08:24|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0254 seconds
 Robert_M._Vigneault|2024-08-22_06:08:26|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
 Robert_M._Vigneault|2024-08-22_06:08:26|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0098 seconds
+Robert_M._Vigneault|2024-08-22_06:43:40|APP_v4.E.3.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0098 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0137 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:41|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0625 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:43:42|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0508 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0488 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (sortie)|Temps écoulé: 0,0352 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:15|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Comptabilite (sortie)|Temps écoulé: 0,0020 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:GLHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:PARAMHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:PARAMHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0684 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0098 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0625 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:16|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0645 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0488 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0020 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0449 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0020 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0215 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_06:49:17|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:18|APP_v4.E.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:18|APP_v4.E.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0176 seconds
+Robert_M._Vigneault|2024-08-22_06:49:20|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_06:49:20|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|***** Fin de la session (Workbook_Deactivate) ***** (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0020 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-08-22_07:56:35|APP_v4.E.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds

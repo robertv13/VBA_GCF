@@ -88,7 +88,7 @@ Private Sub cmdEdit_Click()
     End If
     
     'Save selected line number
-    wshMENU.Range("B3").Value = Fn_Selected_List
+    wshMENU.Range("B100").Value = Fn_Selected_List
     
     'Code to update the value to respective controls
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0), _
@@ -143,11 +143,11 @@ Private Sub cmdSave_Click()
     clientExists = Fn_Does_Client_Code_Exist
     
     If clientExists = True Then
-        Call Submit_GCF_BD_Entrée_Clients("UPDATE")
-        Call Submit_Locally("UPDATE")
+        Call Update_External_GCF_BD_Entree("UPDATE")
+        Call Update_Locally_BD_Clients("UPDATE")
     Else
-        Call Submit_GCF_BD_Entrée_Clients("NEW_RECORD")
-        Call Submit_Locally("NEW_RECORD")
+        Call Update_External_GCF_BD_Entree("NEW_RECORD")
+        Call Update_Locally_BD_Clients("NEW_RECORD")
     End If
     
     Call Reset
@@ -155,11 +155,11 @@ Private Sub cmdSave_Click()
     frmForm.cmdSave.Enabled = False
     frmForm.cmdCancel.Enabled = False
     
-    If wshMENU.Range("B3").Value >= 0 And _
-        wshMENU.Range("B3").Value < frmForm.lstDonnées.ListCount Then
-            frmForm.lstDonnées.ListIndex = wshMENU.Range("B3").Value
-            If wshMENU.Range("B3").Value > 15 Then
-                frmForm.lstDonnées.TopIndex = wshMENU.Range("B3").Value - 8 'Guess ?
+    If wshMENU.Range("B4").Value >= 0 And _
+        wshMENU.Range("B4").Value < frmForm.lstDonnées.ListCount Then
+            frmForm.lstDonnées.ListIndex = wshMENU.Range("B4").Value
+            If wshMENU.Range("B4").Value > 15 Then
+                frmForm.lstDonnées.TopIndex = wshMENU.Range("B4").Value - 8 'Guess ?
             End If
     End If
     
@@ -236,7 +236,9 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim clientExists As Boolean
     clientExists = Fn_Does_Client_Code_Exist
     
-    If clientExists = True Then
+'    MsgBox "X - " & clientExists & nouveauClient '2024-08-22 @ 07:41
+    
+    If clientExists = True And nouveauClient = True Then
         frmForm.txtCodeClient.BackColor = vbRed
         MsgBox "Ce code de client '" & frmForm.txtCodeClient.Value & "' existe déjà en base de données." & vbNewLine & vbNewLine & _
                "Veuillez choisir un AUTRE code qui n'existe pas, SVP", vbCritical + vbOKOnly, "Doublon de code de client"

@@ -1,84 +1,1484 @@
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0977 seconds|1276
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3828 seconds|
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Reset||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0430 seconds|1277
-Robert_M._Vigneault|20240822_063324|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0488 seconds|
-Robert_M._Vigneault|20240822_063339|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063339|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|ClientNom
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|modMain|Reset||
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0293 seconds|1277
-Robert_M._Vigneault|20240822_063522|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0391 seconds|
-Robert_M._Vigneault|20240822_063555|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|modMain|Reset||
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0059 seconds|
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0234 seconds|1277
-Robert_M._Vigneault|20240822_063556|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0430 seconds|
-Robert_M._Vigneault|20240822_063621|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
-Robert_M._Vigneault|20240822_063621|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
-Robert_M._Vigneault|20240822_063621|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0723 seconds|Client_ID:193r 1
-Robert_M._Vigneault|20240822_063621|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0859 seconds|
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0098 seconds|Les logiciels INFORMAT inc.[Robert M. Vigneault]
-Robert_M._Vigneault|20240822_063623|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0195 seconds|
-Robert_M._Vigneault|20240822_063625|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
-Robert_M._Vigneault|20240822_063625|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|Les logiciels INFORMAT inc.[Robert M. Vigneault]
-Robert_M._Vigneault|20240822_063629|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
-Robert_M._Vigneault|20240822_063629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
-Robert_M._Vigneault|20240822_063629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0020 seconds|
-Robert_M._Vigneault|20240822_063629|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
-Robert_M._Vigneault|20240822_063629|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1875 seconds|UPDATE 193r
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0059 seconds|UPDATE 193r
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Reset||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0176 seconds|
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0410 seconds|1277
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
-Robert_M._Vigneault|20240822_063631|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,1484 seconds|6
-Robert_M._Vigneault|20240822_063645|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 seconds|1276
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3066 seconds|
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Reset||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0488 seconds|1277
-Robert_M._Vigneault|20240822_063737|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0547 seconds|
-Robert_M._Vigneault|20240822_063804|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0293 seconds|1276
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1543 seconds|
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0293 seconds|1277
+Robert_M._Vigneault|20240822_070756|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0371 seconds|
+Robert_M._Vigneault|20240822_070801|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_070801|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_070801|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0723 seconds|Client_ID:193r 1
+Robert_M._Vigneault|20240822_070801|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0762 seconds|
+Robert_M._Vigneault|20240822_070806|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_070806|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_070808|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 1,9414 seconds|Client_ID:88888 0
+Robert_M._Vigneault|20240822_070808|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 1,9492 seconds|
+Robert_M._Vigneault|20240822_071024|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_071024|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_071024|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0293 seconds|1276
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds|
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0156 seconds|1277
+Robert_M._Vigneault|20240822_071025|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0410 seconds|
+Robert_M._Vigneault|20240822_071039|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_071058|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 20,9121 seconds|
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0312 seconds|1277
+Robert_M._Vigneault|20240822_071106|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0352 seconds|
+Robert_M._Vigneault|20240822_071119|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_071123|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_071123|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_071123|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_071131|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 14,7422 seconds|88888
+Robert_M._Vigneault|20240822_071152|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_071158|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 8,0156 seconds|Nouveau client pour fins de test additionnel
+Robert_M._Vigneault|20240822_071233|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_071241|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_071304|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 25,7207 seconds|
+Robert_M._Vigneault|20240822_071316|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_071321|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 6,5840 seconds|
+Robert_M._Vigneault|20240822_071353|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_071438|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_071445|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 53,8477 seconds|
+Robert_M._Vigneault|20240822_071506|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_071506|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 88888 Done
+Robert_M._Vigneault|20240822_071506|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1211 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_071509|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_071509|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0020 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0410 seconds|1278
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_071610|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 218,8535 seconds|6
+Robert_M._Vigneault|20240822_071620|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_071620|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0137 seconds|Nouveau client pour fins de test additionnel
+Robert_M._Vigneault|20240822_071621|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_071628|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_071628|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_071628|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_071628|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_071635|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 7,2441 seconds|
+Robert_M._Vigneault|20240822_072113|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_072113|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_072113|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0312 seconds|1276
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1855 seconds|
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0273 seconds|1277
+Robert_M._Vigneault|20240822_072114|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0312 seconds|
+Robert_M._Vigneault|20240822_072120|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072121|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0410 seconds|1277
+Robert_M._Vigneault|20240822_072125|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0410 seconds|
+Robert_M._Vigneault|20240822_072128|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_072128|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072128|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072128|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072128|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0117 seconds|88888
+Robert_M._Vigneault|20240822_072140|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072140|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0020 seconds|Nouveau client pour fins de tests additionnels
+Robert_M._Vigneault|20240822_072153|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_072159|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_072200|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 2,7656 seconds|
+Robert_M._Vigneault|20240822_072206|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_072210|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 5,5430 seconds|
+Robert_M._Vigneault|20240822_072242|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072242|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072242|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_072254|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_072329|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 88888 isDone
+Robert_M._Vigneault|20240822_072349|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 56,8086 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0352 seconds|1276
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1992 seconds|
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0215 seconds|
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0410 seconds|1277
+Robert_M._Vigneault|20240822_072429|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0410 seconds|
+Robert_M._Vigneault|20240822_072440|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072440|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072442|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 1,3516 seconds|Client_ID:88888 0
+Robert_M._Vigneault|20240822_072442|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 1,3574 seconds|
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0430 seconds|1277
+Robert_M._Vigneault|20240822_072446|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0527 seconds|
+Robert_M._Vigneault|20240822_072449|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_072449|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072449|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072449|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072449|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0234 seconds|88888
+Robert_M._Vigneault|20240822_072459|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072459|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0156 seconds|Nouveau client pour fins de test additionnel
+Robert_M._Vigneault|20240822_072513|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_072513|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_072513|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072513|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_072513|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072515|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072515|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072515|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_072515|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 88888 isDone
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 6,1895 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0039 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0449 seconds|1278
+Robert_M._Vigneault|20240822_072521|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 8,2422 seconds|6
+Robert_M._Vigneault|20240822_072527|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072527|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072528|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0527 seconds|Client_ID:88888 1
+Robert_M._Vigneault|20240822_072528|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0332 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072529|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0430 seconds|
+Robert_M._Vigneault|20240822_072531|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_072531|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072531|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_072531|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_072535|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 4,7070 seconds|
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0273 seconds|1277
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1621 seconds|
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0254 seconds|1278
+Robert_M._Vigneault|20240822_072726|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0410 seconds|
+Robert_M._Vigneault|20240822_072732|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072732|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072733|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0586 seconds|Client_ID:88888 1
+Robert_M._Vigneault|20240822_072733|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0605 seconds|
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072734|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0332 seconds|
+Robert_M._Vigneault|20240822_072736|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072736|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072740|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_072740|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_072740|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072740|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_072740|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1465 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0098 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0254 seconds|
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0625 seconds|1278
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072742|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,3555 seconds|6
+Robert_M._Vigneault|20240822_072748|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072748|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072748|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0566 seconds|Client_ID:88888 1
+Robert_M._Vigneault|20240822_072748|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0605 seconds|
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0020 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072750|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072753|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072753|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|modMain|Fn_Fix_Txt_Fin_Annee||
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_072803|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0391 seconds|
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1406 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0078 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1278
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_072805|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,0586 seconds|6
+Robert_M._Vigneault|20240822_072810|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072810|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072810|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0547 seconds|Client_ID:88888 1
+Robert_M._Vigneault|20240822_072810|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0566 seconds|
+Robert_M._Vigneault|20240822_072811|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072811|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072812|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_072828|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072828|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Nouveau client pour fins de test additionnel [Robert]
+Robert_M._Vigneault|20240822_072828|Clients_v.1.9A.xlsm|frmFrom|cmdCancel_Click||
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0625 seconds|1278
+Robert_M._Vigneault|20240822_072831|Clients_v.1.9A.xlsm|frmForm|cmdCancel_Click (sortie)|Temps écoulé: 2,3398 seconds|6
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0332 seconds|1278
+Robert_M._Vigneault|20240822_072832|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0527 seconds|
+Robert_M._Vigneault|20240822_072835|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_072835|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072835|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072835|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072835|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0234 seconds|99999
+Robert_M._Vigneault|20240822_072840|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_072840|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0078 seconds|Autre nouveau client
+Robert_M._Vigneault|20240822_072842|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_072842|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_072842|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072842|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_072842|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 99999 isDone
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1309 seconds|NEW_RECORD 99999
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0098 seconds|NEW_RECORD 99999
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0742 seconds|1279
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_072844|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,7578 seconds|6
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0430 seconds|1277
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1738 seconds|
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0332 seconds|1278
+Robert_M._Vigneault|20240822_072921|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0332 seconds|
+Robert_M._Vigneault|20240822_072926|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_072926|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_072928|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 2,0938 seconds|Client_ID:99999 0
+Robert_M._Vigneault|20240822_072928|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 2,0996 seconds|
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0293 seconds|1277
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2363 seconds|
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 seconds|Client_ID
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0352 seconds|1278
+Robert_M._Vigneault|20240822_072958|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0352 seconds|
+Robert_M._Vigneault|20240822_073734|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_073734|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_073734|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1719 seconds|
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0234 seconds|1278
+Robert_M._Vigneault|20240822_073735|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0391 seconds|
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0352 seconds|1278
+Robert_M._Vigneault|20240822_073736|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0527 seconds|
+Robert_M._Vigneault|20240822_073739|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_073739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_073739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_073739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_073739|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0273 seconds|99999
+Robert_M._Vigneault|20240822_073753|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_073753|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0059 seconds|Nouveau client parce que les tests ne sont pas conclants
+Robert_M._Vigneault|20240822_073759|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_073759|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_073759|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073759|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_073759|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 99999 isDone
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2598 seconds|NEW_RECORD 99999
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_073800|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0000 seconds|NEW_RECORD 99999
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0117 seconds|Client_ID
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0215 seconds|
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0488 seconds|1279
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073801|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,8555 seconds|6
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0117 seconds|Nouveau client parce que les tests ne sont pas conclants [Marie]
+Robert_M._Vigneault|20240822_073806|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_073808|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_073808|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_073808|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_073808|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_073822|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 14,2285 seconds|
+Robert_M._Vigneault|20240822_073857|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_073857|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_073857|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0312 seconds|1278
+Robert_M._Vigneault|20240822_073857|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1738 seconds|
+Robert_M._Vigneault|20240822_073857|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0293 seconds|1279
+Robert_M._Vigneault|20240822_073858|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_073905|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_073905|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0078 seconds|Nouveau client parce que les tests ne sont pas conclants [Marie]
+Robert_M._Vigneault|20240822_073906|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_074213|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_074213|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_074213|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0410 seconds|1278
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2793 seconds|
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0488 seconds|1279
+Robert_M._Vigneault|20240822_074214|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0527 seconds|
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1279
+Robert_M._Vigneault|20240822_074216|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0566 seconds|
+Robert_M._Vigneault|20240822_074224|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074224|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074224|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_074224|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074233|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 9,0781 seconds|999999
+Robert_M._Vigneault|20240822_074245|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074245|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0098 seconds|TEST TEST
+Robert_M._Vigneault|20240822_074247|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074247|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074247|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074247|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074247|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 999999 isDone
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2539 seconds|NEW_RECORD 999999
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0078 seconds|NEW_RECORD 999999
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|Client_ID
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0488 seconds|1280
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074249|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,0781 seconds|6
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0020 seconds|TEST TEST
+Robert_M._Vigneault|20240822_074252|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0215 seconds|
+Robert_M._Vigneault|20240822_074254|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074254|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074254|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074254|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074312|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 18,0645 seconds|
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0312 seconds|1276
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1699 seconds|
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0371 seconds|1277
+Robert_M._Vigneault|20240822_074348|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0371 seconds|
+Robert_M._Vigneault|20240822_074555|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0293 seconds|1276
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2598 seconds|
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0723 seconds|1277
+Robert_M._Vigneault|20240822_074556|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0820 seconds|
+Robert_M._Vigneault|20240822_074600|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074600|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0332 seconds|1277
+Robert_M._Vigneault|20240822_074601|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_074603|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074612|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074612|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_074612|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_074619|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 15,8281 seconds|88888
+Robert_M._Vigneault|20240822_074627|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074627|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0020 seconds|Nouveau client pour fins de tests
+Robert_M._Vigneault|20240822_074629|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074629|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074629|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||NEW_RECORD 88888 isDone
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2461 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0059 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0410 seconds|1278
+Robert_M._Vigneault|20240822_074631|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,9258 seconds|6
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0078 seconds|Nouveau client pour fins de tests
+Robert_M._Vigneault|20240822_074636|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0254 seconds|
+Robert_M._Vigneault|20240822_074638|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074652|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074654|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074654|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 3,0840 seconds|
+Robert_M._Vigneault|20240822_074737|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 58,9785 seconds|88888
+Robert_M._Vigneault|20240822_074743|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074743|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074743|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074743|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074743|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2383 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0059 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0703 seconds|1278
+Robert_M._Vigneault|20240822_074745|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,0664 seconds|6
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0078 seconds|Nouveau client pour fins de tests [RObert]
+Robert_M._Vigneault|20240822_074748|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074750|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074750|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074750|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074750|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074750|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0137 seconds|88888
+Robert_M._Vigneault|20240822_074753|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074753|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074753|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074753|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074753|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2520 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0020 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0684 seconds|1278
+Robert_M._Vigneault|20240822_074755|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,9668 seconds|6
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0176 seconds|Nouveau client pour fins de tests [RObert]
+Robert_M._Vigneault|20240822_074759|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0332 seconds|
+Robert_M._Vigneault|20240822_074801|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074801|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074801|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074801|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074801|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0137 seconds|88888
+Robert_M._Vigneault|20240822_074806|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074806|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074808|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 1,5547 seconds|
+Robert_M._Vigneault|20240822_074808|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,5645 seconds|
+Robert_M._Vigneault|20240822_074813|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074813|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074813|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074813|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074813|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074814|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074814|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074814|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2500 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0078 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|Client_ID
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0723 seconds|1278
+Robert_M._Vigneault|20240822_074815|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,8887 seconds|6
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0859 seconds|Client_ID:88888 1
+Robert_M._Vigneault|20240822_074821|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0938 seconds|
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0117 seconds|Nouveau client pour fins de tests [RObert]
+Robert_M._Vigneault|20240822_074822|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_074824|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_074824|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074824|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074824|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074824|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0137 seconds|88888
+Robert_M._Vigneault|20240822_074826|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074826|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074826|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074826|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074826|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0215 seconds|
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 88888 isDone
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2441 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0059 seconds|UPDATE 88888
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0176 seconds|
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0547 seconds|1278
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074828|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,6777 seconds|6
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0625 seconds|1276
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2930 seconds|
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_074933|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0566 seconds|
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Robert_M._Vigneault|20240822_074938|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_074940|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074940|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Robert_M._Vigneault|20240822_074943|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074943|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074943|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074943|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074943|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 100 isDone
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2539 seconds|UPDATE 100
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0000 seconds|UPDATE 100
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0098 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0605 seconds|1277
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074945|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,8906 seconds|6
+Robert_M._Vigneault|20240822_074946|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074946|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0176 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Robert_M._Vigneault|20240822_074947|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0215 seconds|
+Robert_M._Vigneault|20240822_074948|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_074948|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0020 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Robert_M._Vigneault|20240822_074953|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_074953|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_074953|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_074953|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_074953|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0137 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 100 isDone
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,2578 seconds|UPDATE 100
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 100
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0059 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0625 seconds|1277
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0020 seconds|
+Robert_M._Vigneault|20240822_074955|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,7637 seconds|6
+Robert_M._Vigneault|20240822_075004|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0625 seconds|1276
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2812 seconds|
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0430 seconds|1277
+Robert_M._Vigneault|20240822_075011|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0469 seconds|
+Robert_M._Vigneault|20240822_075121|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_115414|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_115414|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 seconds|1276
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3516 seconds|
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0625 seconds|1277
+Robert_M._Vigneault|20240822_115415|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0625 seconds|
+Robert_M._Vigneault|20240822_115429|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_115429|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_115429|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0820 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_115429|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0898 seconds|
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0234 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_115431|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0234 seconds|
+Robert_M._Vigneault|20240822_115434|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_115434|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_115441|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_115441|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_115441|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_115441|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_115441|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_115443|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_115443|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_115443|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_115443|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1758 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0117 seconds|Client_ID
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0703 seconds|1277
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115444|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,3047 seconds|6
+Robert_M._Vigneault|20240822_115448|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_115448|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_115448|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0664 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_115448|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0781 seconds|
+Robert_M._Vigneault|20240822_115456|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0547 seconds|1276
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2695 seconds|
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_115503|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_115507|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_115507|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_115507|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0703 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_115507|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0898 seconds|
+Robert_M._Vigneault|20240822_115515|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_115515|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_115516|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_115518|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_115518|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_115523|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_115524|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_115524|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_115524|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_115524|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1602 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0586 seconds|1277
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_115525|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,9102 seconds|6
+Robert_M._Vigneault|20240822_115617|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0352 seconds|1276
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1836 seconds|
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0352 seconds|1277
+Robert_M._Vigneault|20240822_120056|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0352 seconds|
+Robert_M._Vigneault|20240822_120510|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_120955|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_120955|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_120955|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0977 seconds|1276
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3594 seconds|
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0508 seconds|1277
+Robert_M._Vigneault|20240822_120956|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_121057|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0859 seconds|1276
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3047 seconds|
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121103|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_121104|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_121104|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_121104|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_121236|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0586 seconds|1276
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3008 seconds|
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0508 seconds|1277
+Robert_M._Vigneault|20240822_121256|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0547 seconds|
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0469 seconds|1276
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1836 seconds|
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0156 seconds|1277
+Robert_M._Vigneault|20240822_121406|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0469 seconds|
+Robert_M._Vigneault|20240822_121419|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_121419|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_121419|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0664 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_121419|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0664 seconds|
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_121422|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_121424|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_121424|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_121435|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_121435|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_121437|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 1,4102 seconds|
+Robert_M._Vigneault|20240822_121437|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,4180 seconds|
+Robert_M._Vigneault|20240822_121508|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_121508|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_121508|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_121508|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_121508|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0,1992 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,0117 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0586 seconds|1277
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121509|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,5195 seconds|6
+Robert_M._Vigneault|20240822_121518|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_121518|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_121518|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0625 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_121518|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0625 seconds|
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0312 seconds|1276
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,1758 seconds|
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0312 seconds|1277
+Robert_M._Vigneault|20240822_121530|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0391 seconds|
+Robert_M._Vigneault|20240822_121534|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_121534|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_121534|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0508 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_121534|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0547 seconds|
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0352 seconds|1276
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2148 seconds|
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_122011|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_122012|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_122012|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_122017|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_122017|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_122017|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0703 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_122017|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0742 seconds|
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0195 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_122018|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0234 seconds|
+Robert_M._Vigneault|20240822_122020|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_122020|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_122025|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_122025|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_122025|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_122025|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_122025|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_122027|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_122027|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_122027|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_122027|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+Robert_M._Vigneault|20240822_122525|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 317,8672 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0391 seconds|
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0703 seconds|1277
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_122544|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 319,1719 seconds|6
+Robert_M._Vigneault|20240822_122551|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_122551|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_122551|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0547 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_122551|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_122606|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122633|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_122634|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_122636|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_122636|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_122640|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_122640|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_122640|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_122640|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_122640|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122642|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_122642|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_122642|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_122642|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+Robert_M._Vigneault|20240822_122655|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 13,7695 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0117 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0586 seconds|1277
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_122656|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 15,8672 seconds|6
+Robert_M._Vigneault|20240822_122701|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_122701|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_122701|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0469 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_122701|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_122710|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmFrom|cmdAddClient_Click||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0078 seconds|Client_ID
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0820 seconds|1277
+Robert_M._Vigneault|20240822_122903|Clients_v.1.9A.xlsm|frmForm|cmdAddClient_Click (sortie)|Temps écoulé: 0,0820 seconds|
+Robert_M._Vigneault|20240822_122906|Clients_v.1.9A.xlsm|frmFrom|txtCodeClient_Exit||
+Robert_M._Vigneault|20240822_122906|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_122906|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_122906|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0273 seconds|
+Robert_M._Vigneault|20240822_122906|Clients_v.1.9A.xlsm|frmForm|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0312 seconds|88888
+Robert_M._Vigneault|20240822_122914|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_122914|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0117 seconds|Test de l'ajout d'un nouveau client
+Robert_M._Vigneault|20240822_122916|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_122916|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_122916|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122916|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_122916|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122918|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_122918|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||FAUX
+Robert_M._Vigneault|20240822_122918|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_122918|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||NEW_RECORD
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||NEW_RECORD 88888 isDone
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 10,7188 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0117 seconds|NEW_RECORD 88888
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0508 seconds|1278
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_122929|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 12,5430 seconds|6
+Robert_M._Vigneault|20240822_122942|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_123340|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_123421|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0430 seconds|1276
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2383 seconds|
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0234 seconds|
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0469 seconds|1277
+Robert_M._Vigneault|20240822_124028|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_124036|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_124036|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_124036|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,1211 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_124036|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,1289 seconds|
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0078 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124038|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_124039|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_124039|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124045|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_124045|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_124045|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124045|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_124045|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_124046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_124046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124046|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+Robert_M._Vigneault|20240822_124502|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_124510|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 264,2969 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0586 seconds|1277
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124515|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 270,4648 seconds|6
+Robert_M._Vigneault|20240822_124521|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_124521|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_124521|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0664 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_124521|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0742 seconds|
+Robert_M._Vigneault|20240822_124530|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124556|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124604|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_124604|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_124604|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_124604|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0781 seconds|1276
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3008 seconds|
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0508 seconds|1277
+Robert_M._Vigneault|20240822_124605|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_124611|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_124611|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_124611|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0703 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_124611|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0820 seconds|
+Robert_M._Vigneault|20240822_124612|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124612|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124612|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_124612|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0352 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124613|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0352 seconds|
+Robert_M._Vigneault|20240822_124614|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_124614|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0000 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124619|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_124619|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_124619|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_124619|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_124619|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0195 seconds|
+Robert_M._Vigneault|20240822_124621|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_124621|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_124621|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124621|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+Robert_M._Vigneault|20240822_124621|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 0,2578 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0039 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0391 seconds|1277
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124622|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 2,3594 seconds|6
+Robert_M._Vigneault|20240822_124625|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0547 seconds|1276
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3125 seconds|
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0586 seconds|1277
+Robert_M._Vigneault|20240822_124725|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0664 seconds|
+Robert_M._Vigneault|20240822_124731|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_124731|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_124731|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0547 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_124731|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,0586 seconds|
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,0156 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124732|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124734|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Robert_M._Vigneault|20240822_124734|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,0039 seconds|Dafco Électrique inc [Daniel Bouchard]
+Robert_M._Vigneault|20240822_124738|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Robert_M._Vigneault|20240822_124738|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Robert_M._Vigneault|20240822_124738|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124738|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Robert_M._Vigneault|20240822_124738|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,0117 seconds|
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 1250 isDone
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 0,2656 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,0000 seconds|UPDATE 1250
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0312 seconds|1277
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,0000 seconds|
+Robert_M._Vigneault|20240822_124739|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 1,6797 seconds|6
+Robert_M._Vigneault|20240822_124744|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 seconds|1276
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2773 seconds|
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0039 seconds|
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0430 seconds|1277
+Robert_M._Vigneault|20240822_124753|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0469 seconds|
+Robert_M._Vigneault|20240822_124800|Clients_v.1.9A.xlsm|frmFrom|cmdSearch_Click||
+Robert_M._Vigneault|20240822_124800|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche||
+Robert_M._Vigneault|20240822_124800|Clients_v.1.9A.xlsm|modMain|DonnéesRecherche (sortie)|Temps écoulé: 0,0820 seconds|Client_ID:1250 1
+Robert_M._Vigneault|20240822_124800|Clients_v.1.9A.xlsm|frmForm|cmdSearch_Click (sortie)|Temps écoulé: 0,1016 seconds|
+Robert_M._Vigneault|20240822_124807|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 seconds|1276
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,2422 seconds|
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0430 seconds|1277
+Robert_M._Vigneault|20240822_124818|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0508 seconds|
+Robert_M._Vigneault|20240822_125107|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 seconds|1276
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0,3633 seconds|
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Reset||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 seconds|Client_ID
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,0156 seconds|
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,0547 seconds|1277
+Robert_M._Vigneault|20240822_131536|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,0547 seconds|
+Robert_M._Vigneault|20240822_131610|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
