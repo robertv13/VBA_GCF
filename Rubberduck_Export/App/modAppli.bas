@@ -160,6 +160,8 @@ Sub Write_Info_On_Main_Menu()
     
     Application.EnableEvents = True
     Application.ScreenUpdating = False
+    
+    DoEvents '2024-08-23 @ 06:21
 
     Call End_Timer("modAppli:Write_Info_On_Main_Menu()", timerStart)
 

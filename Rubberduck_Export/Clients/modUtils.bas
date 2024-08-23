@@ -87,5 +87,51 @@ Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows u
     
 End Function
 
+Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
+                                    ByRef jours As Long, ByRef heures As Long, _
+                                    ByRef minutes As Long, ByRef secondes As Long)
+    
+    'Créer une instance de FileSystemObject
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    
+    'Obtenir le fichier
+    Dim fichier As Object: Set fichier = FSO.GetFile(fileName)
+    
+    'Récupérer la date et l'heure de la dernière modification
+    ddm = fichier.DateLastModified
+    
+    'Calculer la différence (jours) entre maintenant et la date de la dernière modification
+    Dim diff As Double
+    diff = Now - ddm
+    
+    'Convertir la différence en jours, heures, minutes et secondes
+    jours = Int(diff)
+    heures = Int((diff - jours) * 24)
+    minutes = Int(((diff - jours) * 24 - heures) * 60)
+    secondes = Int(((((diff - jours) * 24 - heures) * 60) - minutes) * 60)
+    
+    ' Libérer les objets
+    Set fichier = Nothing
+    Set FSO = Nothing
+    
+End Sub
 
+Sub Test_TempsDepuisDerniereModification()
+
+    Dim s As String
+    s = "GCF_BD_Entrée.xlsx"
+    
+    Dim ddm As Date
+    Dim jours As Long, heures As Long, minutes As Long, secondes As Long
+    Call Get_Date_Derniere_Modification(s, ddm, jours, heures, minutes, secondes)
+    
+    'Afficher (msgBox) les résultats
+    MsgBox "Date de la dernière modification du fichier '" & vbNewLine & vbNewLine & _
+           s & "' est " & ddm & vbNewLine & vbNewLine & "Soit:" & vbNewLine & vbNewLine & _
+           Space(15) & jours & " jours, " & vbNewLine & _
+           Space(15) & heures & " heures, " & vbNewLine & _
+           Space(15) & minutes & " minutes et" & vbNewLine & _
+           Space(15) & secondes & " secondes.", vbInformation, "Quand le fichier a-t-il été modifié ?"
+           
+End Sub
 

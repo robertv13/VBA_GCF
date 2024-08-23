@@ -101,7 +101,7 @@ Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    If Not Environ("userName") = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
     Else
         destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
@@ -169,12 +169,28 @@ Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record 
 
 Clean_Exit:
 
+    DoEvents
+    
     'Close recordset and connection
     rs.Close
     Set rs = Nothing
     conn.Close
     Set conn = Nothing
     
+    DoEvents
+    
+    'Additional verification - ACtual file MUST have been modified (GCF_Entrée.xlsx)
+    Dim ddm As Date, jours As Long, heures As Long, minutes As Long, secondes As Long
+'    Application.Wait Now + TimeValue("00:00:10")
+    Call Get_Date_Derniere_Modification(destinationFileName, _
+                                                ddm, jours, heures, minutes, secondes)
+    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 2 Then
+        MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
+               "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
+               "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
+               "Code: (" & jours & "." & heures & "." & minutes & "." & secondes & ")", vbCritical, _
+               "Le fichier n'est pas à jour sur disque"
+    End If
     Application.ScreenUpdating = True
 
     Call Log_Record("modMain:Update_External_GCF_BD_Entree", action & " " & frmForm.txtCodeClient.Value, startTime)
@@ -330,7 +346,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
 
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    If Not Environ("userName") = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         sourceWorkbook = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
     Else
         sourceWorkbook = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"

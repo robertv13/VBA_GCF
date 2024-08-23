@@ -148,28 +148,6 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     
 End Sub
 
-Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As String) As Long
-    Dim i As Long
-    Dim count As Long
-    
-    count = 0
-    
-    ' Ensure charToCount is a single character
-    If Len(charToCount) <> 1 Then
-        CountCharOccurrences = -1 ' Return -1 for invalid input
-        Exit Function
-    End If
-    
-    ' Loop through each character in the string
-    For i = 1 To Len(inputString)
-        If Mid(inputString, i, 1) = charToCount Then
-            count = count + 1
-        End If
-    Next i
-    
-    CountCharOccurrences = count
-End Function
-
 Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
 
     Call Client_List_Import_All
@@ -864,7 +842,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     
 End Sub
 
-Sub Validate_Client_Name_In_TEC()  '2024-08-21 @ 09:36
+Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
@@ -884,6 +862,19 @@ Sub Validate_Client_Name_In_TEC()  '2024-08-21 @ 09:36
     Dim lastUsedRowTECClient As Long
     lastUsedRowTECClient = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).row
     
+    'Setup output file
+    Dim strOutput As String
+    strOutput = "TEC_Correction_Nom"
+    Call CreateOrReplaceWorksheet(strOutput)
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+    wsOutput.Range("A1").value = "TEC_Nom_Client"
+    wsOutput.Range("B1").value = "Code_de_Client"
+    wsOutput.Range("C1").value = "Nom_Client_Master"
+    wsOutput.Range("D1").value = "TEC_ID"
+    wsOutput.Range("E1").value = "TEC_Prof"
+    wsOutput.Range("F1").value = "TEC_Date"
+    Call Make_It_As_Header(wsOutput.Range("A1:F1"))
+    
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
@@ -892,18 +883,49 @@ Sub Validate_Client_Name_In_TEC()  '2024-08-21 @ 09:36
         dictClients.add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
     Next i
     
+    'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
     Dim codeClientTEC As String, nomClientTEC As String, nomClientFromMF As String
-    Dim casDelta As Long
+    Dim casDelta As Long, rowOutput As Long
+    rowOutput = 2
     For i = 2 To lastUsedRowTEC
         codeClientTEC = wsSource.Cells(i, 5).value
         nomClientTEC = wsSource.Cells(i, 6).value
         nomClientFromMF = dictClients(codeClientTEC)
         If nomClientTEC <> nomClientFromMF Then
             Debug.Print i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
+            wsSource.Cells(i, 6).value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 1).value = nomClientTEC
+            wsOutput.Cells(rowOutput, 2).value = codeClientTEC
+            wsOutput.Cells(rowOutput, 3).value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 4).value = wsSource.Cells(i, 1).value
+            wsOutput.Cells(rowOutput, 5).value = wsSource.Cells(i, 3).value
+            wsOutput.Cells(rowOutput, 6).value = wsSource.Cells(i, 4).value
+            rowOutput = rowOutput + 1
             casDelta = casDelta + 1
         End If
     Next i
     
+    wsOutput.columns.AutoFit
+
+    'Result print setup - 2024-08-05 @ 05:16
+    rowOutput = rowOutput + 1
+    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
+                                        " lignes analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
+    Dim header1 As String: header1 = "Correction des noms de clients dans les TEC"
+    Dim header2 As String: header2 = ""
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    
+    'Close the 2 workbooks without saving anything
+    wbSource.Close saveChanges:=True
+    wbMF.Close saveChanges:=False
+
     'Clean up
     Set wsSource = Nothing
     Set wbSource = Nothing

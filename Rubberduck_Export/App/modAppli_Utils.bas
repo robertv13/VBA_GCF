@@ -723,6 +723,11 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).row
     Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
+    Dim strPmtNo As String
+    Dim i As Long
+    For i = 2 To lastUsedRowEntete
+        strPmtNo = strPmtNo & wsEntete.Range("A" & i).value & "|"
+    Next i
     
     'FAC_Entête Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
@@ -737,23 +742,18 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim row As Long: row = 1
     Dim currentRow As Long
         
-    Dim i As Long
-    Dim pmtNo As String, oldpmtNo As String
+    Dim pmtNo As Long, oldpmtNo As Long
     Dim result As Variant
+    Dim totalEncDetails As Currency
     For i = 2 To lastUsedRowDetails
         pmtNo = ws.Range("A" & i).value
         If pmtNo <> oldpmtNo Then
-            result = Application.WorksheetFunction.XLookup(pmtNo, _
-                        rngEntete, _
-                        rngEntete, _
-                        "Not Found", _
-                        0, _
-                        1)
+            If InStr(strPmtNo, pmtNo) = 0 Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
+                r = r + 1
+            End If
+            strPmtNo = strPmtNo & pmtNo & "|"
             oldpmtNo = pmtNo
-        End If
-        If result = "Not Found" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
-            r = r + 1
         End If
         
         Dim Inv_No As String
@@ -778,7 +778,11 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant '" & ws.Range("E" & i).value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
         End If
+        totalEncDetails = totalEncDetails + ws.Range("E" & i).value
     Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totalEncDetails, "#,##0.00 $"))
+    r = r + 1
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
     r = r + 2
@@ -880,10 +884,10 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
         totals = totals + arr(i, 6)
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totals, "#,##0.00 $"))
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totals, "#,##0.00 $"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1215,7 +1219,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         End If
         If arr(i, 5) <> "Paid" And arr(i, 5) <> "Unpaid" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE '")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsDate(CDate(arr(i, 7))) = False Then
@@ -1234,8 +1238,20 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
+        'PLUG pour s'assurer que le solde impayé est belt et bien aligner sur le total et $ payé à date
+        If arr(i, 10) <> arr(i, 8) - arr(i, 9) Then
+            arr(i, 10) = arr(i, 8) - arr(i, 9)
+        End If
         If IsNumeric(arr(i, 11)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** L'âge (jours) de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            r = r + 1
+        End If
+        If arr(i, 10) = 0 And arr(i, 5) = "Unpaid" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
+            r = r + 1
+        End If
+        If arr(i, 10) <> 0 And arr(i, 5) = "Paid" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
         End If
         If invType = "C" Then

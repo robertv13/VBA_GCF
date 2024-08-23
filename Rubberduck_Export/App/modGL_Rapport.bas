@@ -313,7 +313,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).row
+    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).row + 1
     Range("A3:H" & lastUsedRow).Select
     
     With ActiveSheet.PageSetup
@@ -322,7 +322,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
         
         .LeftMargin = Application.InchesToPoints(0.15)
         .RightMargin = Application.InchesToPoints(0.15)
-        .TopMargin = Application.InchesToPoints(0.75)
+        .TopMargin = Application.InchesToPoints(0.85)
         .BottomMargin = Application.InchesToPoints(0.45)
         .HeaderMargin = Application.InchesToPoints(0.15)
         .FooterMargin = Application.InchesToPoints(0.15)

@@ -17,8 +17,8 @@ Private Sub Worksheet_Activate()
     Call ENC_Détails_Import_All
     Call ENC_Entête_Import_All
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
     
     Me.Application.Calculation = xlCalculationAutomatic
 
@@ -51,17 +51,42 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If Target.CountLarge > 1 Then Exit Sub
     
-    If Not Intersect(Target, Me.Range("B12:B31")) Is Nothing Then
-        Debug.Print Target.Address, Target.value
+    'Client has been selected
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Date has been selected
+    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Payment Type has been selected
+    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Total deposit has been selected
+    If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
+    'Comments has been selected
+    If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
+    Dim fullDate As Variant
+    
     'On Customer Change BUT NOT on Payment load and only on new payments
     If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
-        Me.Range("F5").value <> Empty And Me.Range("B4").value = False And Me.Range("B6").value = "" Then
+        Me.Range("F5").value <> Empty And _
+            Me.Range("B4").value = False And _
+            Me.Range("B6").value = "" Then
         Application.EnableEvents = False
         Dim clientCode As String
         clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
@@ -70,6 +95,39 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = True
     End If
         
+    'Date has changed
+    If Not Intersect(Target, Me.Range("K3")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = CompleteDate(CStr(Target.text))
+        If fullDate <> "Invalid Date" Then
+            Target.value = fullDate
+        Else
+            Call MsgBoxInvalidDate
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+       
+        'Future date ?
+        If CDate(Range("K3").value) > Format$(Now(), "dd/mm/yyyy") Then
+            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Application.EnableEvents = False
+                Target.ClearContents
+                Application.EnableEvents = True
+                Application.GoTo Range(Target.Address)
+            End If
+        End If
+        
+'        'Si la cellule est vide après la modification
+'        If IsEmpty(Target.value) Then
+'            'Insérer la date du jour
+'            Application.EnableEvents = False
+'            Target.value = Date
+'            Application.EnableEvents = True
+'        End If
+    End If
+    
     'Apply checkbox has changed ?
     'See Apply_Click Procedure (OnAction with every Checkbox)
 

@@ -1047,4 +1047,24 @@ Function GetQuarterDates(fiscalYearStartMonth As Long, fiscalYear As Long) As St
     
 End Function
 
+Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As String) As Long
+    
+    'Ensure charToCount is a single character
+    If Len(charToCount) <> 1 Or Len(inputString) = 0 Then
+        CountCharOccurrences = -1 ' Return -1 for invalid input
+        Exit Function
+    End If
+    
+    'Loop through each character in the string
+    Dim i As Long, count As Long
+    For i = 1 To Len(inputString)
+        If Mid(inputString, i, 1) = charToCount Then
+            count = count + 1
+        End If
+    Next i
+    
+    CountCharOccurrences = count
+    
+End Function
+
 

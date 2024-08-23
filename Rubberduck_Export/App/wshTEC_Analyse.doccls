@@ -100,7 +100,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim fullDate As Variant
     
     'CutOffDate has changed
-    If Not Intersect(Target, Range("I3")) Is Nothing Then
+    If Not Intersect(Target, Range("H3")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
@@ -117,7 +117,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("I3").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("H3").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

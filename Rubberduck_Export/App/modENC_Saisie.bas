@@ -3,7 +3,6 @@ Option Explicit
 
 Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
-Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow As Long
 
 Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
@@ -33,6 +32,12 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
         lastResultRow = .Cells(.rows.count, "P").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         
+        'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
+        Dim r As Integer
+        For r = 3 To lastResultRow
+            .Range("U" & r).value = .Range("S" & r).value - .Range("T" & r).value
+        Next r
+        
         wshENC_Saisie.Range("B4").value = True 'Set PaymentLoad to True
 '        .Range("T3:T" & lastResultRow).formula = .Range("T1").formula 'Total Payments Formula
 
@@ -47,17 +52,15 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
             .EnableSelection = xlUnlockedCells
         End With
         
-        Dim r As Integer: r = 12
-        For i = 3 To lastResultRow
-            If .Range("U" & i).value <> 0 And i <= 22 Then
-                'PLUG pour que la colonne U reflète toujours le SOLDE...
-                .Range("U" & i).value = .Range("S" & i).value - .Range("T" & i).value
-                wshENC_Saisie.Range("F" & r).value = .Range("Q" & i).value
-                wshENC_Saisie.Range("G" & r).value = .Range("R" & i).value
-                wshENC_Saisie.Range("H" & r).value = .Range("S" & i).value
-                wshENC_Saisie.Range("I" & r).value = .Range("T" & i).value
-                wshENC_Saisie.Range("J" & r).value = .Range("U" & i).value
-                r = r + 1
+        Dim rr As Integer: rr = 12
+        For i = 3 To WorksheetFunction.Min(27, lastResultRow)
+            If .Range("U" & i).value <> 0 Then
+                wshENC_Saisie.Range("F" & rr).value = .Range("Q" & i).value
+                wshENC_Saisie.Range("G" & rr).value = .Range("R" & i).value
+                wshENC_Saisie.Range("H" & rr).value = .Range("S" & i).value
+                wshENC_Saisie.Range("I" & rr).value = .Range("T" & i).value
+                wshENC_Saisie.Range("J" & rr).value = .Range("U" & i).value
+                rr = rr + 1
             End If
         Next i
         
@@ -111,8 +114,8 @@ Sub ENC_Update() '2024-08-22 @ 09:46
         
         'Create records for ENC_Détails
         If lastOSRow > 11 Then
-            Call ENC_Add_DB_Details(pmtNo, lastOSRow)
-            Call ENC_Add_Locally_Details(pmtNo, lastOSRow)
+            Call ENC_Add_DB_Details(pmtNo, 12, lastOSRow)
+            Call ENC_Add_Locally_Details(pmtNo, 12, lastOSRow)
         End If
         
         'Update FAC_Comptes_Clients
@@ -368,7 +371,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
 
 End Sub
 
-Sub ENC_Add_DB_Details(pmtNo As Long, lastAppliedRow As Integer) 'Write to MASTER.xlsx
+Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) 'Write to MASTER.xlsx
     
 '    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Details()")
     
@@ -389,7 +392,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, lastAppliedRow As Integer) 'Write to MASTE
         
     'Build the recordSet
     Dim r As Integer
-    For r = 12 To lastAppliedRow
+    For r = firstRow To lastAppliedRow
         If wshENC_Saisie.Range("B" & r).value = True And _
             wshENC_Saisie.Range("K" & r).value <> 0 Then
             rs.AddNew
@@ -415,7 +418,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, lastAppliedRow As Integer) 'Write to MASTE
     
 End Sub
 
-Sub ENC_Add_Locally_Details(pmtNo As Long, lastAppliedRow As Integer) '2024-08-22 @ 10:55
+Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
     
 '    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_Locally_Details()")
     
@@ -427,7 +430,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, lastAppliedRow As Integer) '2024-08-2
     rowToBeUsed = lastUsedRow + 1
     
     Dim r As Integer
-    For r = 12 To lastAppliedRow
+    For r = firstRow To lastAppliedRow
         If wshENC_Saisie.Range("B" & r).value = True And _
             wshENC_Saisie.Range("K" & r).value <> 0 Then
             wshENC_Détails.Range("A" & rowToBeUsed).value = pmtNo
@@ -475,6 +478,10 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             If Not rs.EOF Then
                 'Update Amount_Paid
                 rs.Fields("Total_Paid").value = rs.Fields("Total_Paid").value + wshENC_Saisie.Range("K" & r).value
+                'Update invoice Status
+                If rs.Fields("Total").value - rs.Fields("Total_Paid").value = 0 Then
+                    rs.Fields("Status").value = "Paid"
+                End If
                 rs.update
             Else
                 'Handle the case where the specified ID is not found
@@ -484,13 +491,13 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             End If
             'Update the recordset (create the record)
             rs.update
+            rs.Close
         End If
     Next r
     
 Clean_Exit:
     
     'Close recordset and connection
-    rs.Close
     Set rs = Nothing
     conn.Close
     Set conn = Nothing
@@ -682,18 +689,20 @@ Sub ENC_Saisie_Add_Check_Boxes(row As Long)
     Dim cbx As checkBox
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If cell.row <= 31 And Cells(cell.row, 2).value = "" Then 'Applied = False
-        'Create a checkbox linked to the cell
-        Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.width, cell.Height)
-        With cbx
-            .name = "chkBox - " & cell.row
-            .Caption = ""
-            .value = False
-            .linkedCell = "B" & cell.row
-            .Display3DShading = True
-            .OnAction = "Apply_Click"
-            .Locked = False
-        End With
+    If cell.row <= 36 And _
+        Cells(cell.row, 2).value = "" And _
+        Cells(cell.row, 6).value <> "" Then 'Applied = False
+            'Create a checkbox linked to the cell
+            Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.width, cell.Height)
+            With cbx
+                .name = "chkBox - " & cell.row
+                .Caption = ""
+                .value = False
+                .linkedCell = "B" & cell.row
+                .Display3DShading = True
+                .OnAction = "Apply_Click"
+                .Locked = False
+            End With
     End If
     Next cell
 
@@ -747,14 +756,14 @@ Sub ENC_Clear_Cells()
         lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.rows.count, "F").End(xlUp).row
         
         .Range("B4").value = False
-        .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K31").ClearContents 'Clear Fields
-        .Range("B12:B31").ClearContents
+        .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
+        .Range("B12:B36").ClearContents
         
         If lastUsedRow > 11 Then
             Call ENC_Remove_Check_Boxes(lastUsedRow)
         End If
         
-        .Range("K5").value = Date 'Set Default Date
+        .Range("K5").value = ""
         .Range("F7").value = "Banque" ' Set Default type
         .Range("F5").Select
     End With

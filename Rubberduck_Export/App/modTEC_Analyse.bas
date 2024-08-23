@@ -1,12 +1,23 @@
 Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
-Sub TEC_Sort_Group_And_Subtotal()
+Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
     
     Application.ScreenUpdating = False
     
+    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
+    Dim lastUsedRowClient
+    lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.rows.count, "B").End(xlUp).row
+    Dim dictClients As Dictionary
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowClient
+        dictClients.add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+    Next i
+
     'Calculate the center of the used range
     Dim centerX As Double, centerY As Double
     centerX = 410
@@ -79,7 +90,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
     
-    Dim i As Long, r As Long
+    Dim r As Long
     r = 6
     Application.EnableEvents = False
     For i = 3 To lastUsedRow
@@ -87,10 +98,15 @@ Sub TEC_Sort_Group_And_Subtotal()
         If wsSource.Cells(i, 14).value <> "VRAI" And _
             wsSource.Cells(i, 12).value <> "VRAI" And _
             wsSource.Cells(i, 10).value = "VRAI" Then
-                If wsSource.Cells(i, ftecDate).value <= wsDest.Range("I3").value Then
+                If wsSource.Cells(i, ftecDate).value <= wsDest.Range("H3").value Then
+                    'Get clients's name from MasterFile
+                    Dim codeClient As String, nomClientFromMF As String
+                    codeClient = wsSource.Cells(i, ftecClient_ID).value
+                    nomClientFromMF = dictClients(codeClient)
+                    
                     wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecTEC_ID).value
                     wsDest.Cells(r, 2).value = wsSource.Cells(i, ftecProf_ID).value
-                    wsDest.Cells(r, 3).value = wsSource.Cells(i, ftecClientNom).value
+                    wsDest.Cells(r, 3).value = nomClientFromMF
                     wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecDate).value
                     wsDest.Cells(r, 6).value = wsSource.Cells(i, ftecProf).value
                     wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecDescription).value
@@ -140,10 +156,10 @@ Sub TEC_Sort_Group_And_Subtotal()
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
     
-    'Add subtotals for hours (column H) at each change in ClientNom_ID (column C) in the destination worksheet
+    'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
     Application.DisplayAlerts = False
-    wsDest.Range("A5:I" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
+    wsDest.Range("A6:I" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
         TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
     Application.DisplayAlerts = True
     wsDest.Range("A:B").EntireColumn.Hidden = True
@@ -153,7 +169,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     wsDest.Outline.ShowLevels RowLevels:=2
     
     'Add a formula to sum the billed amounts at the top row
-    wsDest.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
+    wsDest.Range("D5").formula = "=SUM(D6:D" & destLastUsedRow & ")"
     
     'Update the progress bar fill
     progressBarFill.width = 0.75 * barWidth  '75 %
@@ -166,7 +182,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     Application.ScreenUpdating = False
     
     'Change the format of the top row (Total General)
-    With wsDest.Range("C6:D6")
+    With wsDest.Range("C5:D5")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -183,7 +199,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     End With
     
     'Change the format of the top row (Hours)
-    With wsDest.Range("H6")
+    With wsDest.Range("H5")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -200,7 +216,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     End With
     
     'Change the format of all Client's Total rows
-    For r = 7 To destLastUsedRow
+    For r = 6 To destLastUsedRow
         If wsDest.Range("A" & r).value = "" Then
             With wsDest.Range("C" & r).Interior
                 .Pattern = xlSolid
@@ -212,6 +228,11 @@ Sub TEC_Sort_Group_And_Subtotal()
             With wsDest.Range("C" & r).Font
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = 0
+            End With
+            With wsDest.Range("C" & r)
+                If InStr(.value, "Total ") = 1 Then
+                    .value = Mid(.value, 7)
+                End If
             End With
         End If
     Next r
@@ -227,7 +248,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     Application.ScreenUpdating = False
     
     'Set conditional formats for total hours (Client's total)
-    Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
+    Dim rngTotals As Range: Set rngTotals = wsDest.Range("D7:D" & destLastUsedRow)
     Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
     
     'Bring in all the invoice requests
@@ -242,6 +263,7 @@ Sub TEC_Sort_Group_And_Subtotal()
     progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.95, "0%")
     
     'Introduce a small delay to ensure the worksheet is fully updated
+    DoEvents
     Application.Wait (Now + TimeValue("0:00:01")) '2024-07-23 @ 16:13 - Slowdown the application
         
     'Temporarily enable screen updating to show the progress bar

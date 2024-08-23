@@ -27,7 +27,7 @@ Private Sub Workbook_Open()
     wshMENU.Range("A34").Font.Color = vbRed
     
     Dim destinationFileName As String
-    If Not Environ("userName") = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
     Else
         destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
