@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
@@ -439,11 +439,11 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     
     Application.EnableEvents = False
     
-    Dim LastRow As Long
-    LastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
-    If LastRow > 6 Then
-        wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
+    Dim lastRow As Long
+    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
+    If lastRow > 6 Then
+        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
     
     Application.EnableEvents = True
@@ -904,7 +904,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

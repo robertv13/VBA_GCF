@@ -955,15 +955,15 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim rowToMove As Range
 
     'Move completed item ($D = a) to the bottom of the list
-    Dim i As Long, LastRow As Long
+    Dim i As Long, lastRow As Long
     i = 2
 
     Application.EnableEvents = False
     
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
-        LastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(LastRow + 1)
+        lastRow = tbl.ListRows.count
+        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(lastRow + 1)
         tbl.ListRows(1).delete
     Wend
 
@@ -1693,7 +1693,7 @@ End Sub
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "Log.txt"
+    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile

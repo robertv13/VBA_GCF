@@ -165,12 +165,12 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
-        Dim LastRow As Long, lastResultRow As Long, resultRow As Long
-        LastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
-        If LastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range: Set sRng = .Range("A2:P" & LastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         
          'Criteria
         Dim cRng As Range: Set cRng = .Range("R2:T3")
@@ -230,12 +230,12 @@ Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
     Application.ScreenUpdating = False
 
     With wshTEC_Local
-        Dim LastRow As Long, lastResultRow As Long, resultRow As Long
-        LastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
-        If LastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range: Set sRng = .Range("A2:P" & LastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         .Range("S10").value = sRng.Address
         
         'Criteria
@@ -366,17 +366,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim LastRow As Long
+            Dim lastRow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 'Handle empty table (assign a default value, e.g., 0)
-                LastRow = 0
+                lastRow = 0
             Else
-                LastRow = rs.Fields("MaxID").value
+                lastRow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = LastRow + 1
+            nextID = lastRow + 1
             wshAdmin.Range("TEC_Current_ID").value = nextID
         
             'Close the previous recordset, no longer needed and open an empty recordset
@@ -537,9 +537,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 '    Application.Wait ("0:00:01")
     
     'Last Row used in first column of result
-    Dim LastRow As Long
-    LastRow = wshTEC_Local.Range("V999").End(xlUp).row
-    If LastRow < 3 Then Exit Sub
+    Dim lastRow As Long
+    lastRow = wshTEC_Local.Range("V999").End(xlUp).row
+    If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
@@ -550,7 +550,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
     Debug.Print rng.Address
      
     Dim i As Long, j As Long

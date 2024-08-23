@@ -8,14 +8,14 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
 
     'Find the last row with data in column A
-    Dim LastRow As Long
-    LastRow = ws.Range("A9999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Range("A9999").End(xlUp).row
     Dim firstNewRow As Long
-    firstNewRow = LastRow - numberRows + 1
+    firstNewRow = lastRow - numberRows + 1
 
     'Set the range for new rows
     Dim newRows As Range
-    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(LastRow, ws.columns.count))
+    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
 
     'Copy formatting from the row above the first new row to the new rows
     ws.rows(firstNewRow - 1).Copy
@@ -400,6 +400,26 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call check_Fournisseurs(r, readRows)
     
+    'wshENC_Détails ---------------------------------------------------------- ENC_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Détails")
+    
+    Call ENC_Détails_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    r = r + 1
+    
+    Call check_ENC_Détails(r, readRows)
+    
+    'wshENC_Entête ------------------------------------------------------------ ENC_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Entête")
+    
+    Call ENC_Entête_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    r = r + 1
+    
+    Call check_ENC_Entête(r, readRows)
+    
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
     
@@ -672,6 +692,213 @@ Clean_Exit:
     Application.ScreenUpdating = True
     
     Call Log_Record("modAppli:check_Fournisseurs", startTime)
+
+End Sub
+
+Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_ENC_Détails", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'wshENC_Détails
+    Dim ws As Worksheet: Set ws = wshENC_Détails
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRowDetails As Long
+    lastUsedRowDetails = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    If lastUsedRowDetails <= 2 - headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRowDetails - headerRow, "###,##0") & _
+        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    'ENC_Entête Worksheet
+    Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
+    Dim lastUsedRowEntete As Long
+    lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).row
+    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
+    
+    'FAC_Entête Worksheet
+    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
+    Dim lastUsedRowFacEntete As Long
+    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).row
+    Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Détails'")
+    r = r + 1
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim pmtNo As String, oldpmtNo As String
+    Dim result As Variant
+    For i = 2 To lastUsedRowDetails
+        pmtNo = ws.Range("A" & i).value
+        If pmtNo <> oldpmtNo Then
+            result = Application.WorksheetFunction.XLookup(pmtNo, _
+                        rngEntete, _
+                        rngEntete, _
+                        "Not Found", _
+                        0, _
+                        1)
+            oldpmtNo = pmtNo
+        End If
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
+            r = r + 1
+        End If
+        
+        Dim Inv_No As String
+        Inv_No = CStr(ws.Range("B" & i).value)
+        result = Application.WorksheetFunction.XLookup(Inv_No, _
+                        rngFACEntete, _
+                        rngFACEntete, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La facture '" & Inv_No & "' du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
+            r = r + 1
+        End If
+        
+        If IsDate(ws.Range("D" & i).value) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La date '" & ws.Range("D" & i).value & "' du paiment '" & pmtNo & "' est INVALIDE '")
+            r = r + 1
+        End If
+        
+        If IsNumeric(ws.Range("E" & i).value) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le montant '" & ws.Range("E" & i).value & "' du paiement '" & pmtNo & "' n'est pas numérique")
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + lastUsedRowDetails - 1
+    
+Clean_Exit:
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rngEntete = Nothing
+    Set rngFACEntete = Nothing
+    Set ws = Nothing
+    Set wsFACEntete = Nothing
+    Set wsEntete = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:check_ENC_Détails", startTime)
+
+End Sub
+
+Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_ENC_Entête", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    
+    'Clients Master File
+    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsClients.Cells(wsClients.rows.count, "B").End(xlUp).row
+    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
+    
+    'wshENC_Entête
+    Dim ws As Worksheet: Set ws = wshENC_Entête
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Dim firstEmptyCol As Long
+    firstEmptyCol = 1
+    Do Until ws.Cells(headerRow, firstEmptyCol) = ""
+        firstEmptyCol = firstEmptyCol + 1
+    Loop
+    Dim lastUsedCol As Long
+    lastUsedCol = firstEmptyCol - 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
+        " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Entête'")
+    r = r + 1
+    
+    If lastUsedRow = headerRow Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
+    Dim arr As Variant
+    arr = wshENC_Entête.Range("A1").CurrentRegion.Offset(1, 0) _
+              .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim pmtNo As String
+    Dim totals As Currency
+    Dim result As Variant
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        pmtNo = arr(i, 1)
+        If IsDate(arr(i, 2)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
+            r = r + 1
+        End If
+        
+        Dim codeClient As String
+        codeClient = arr(i, 4)
+        result = Application.WorksheetFunction.XLookup(codeClient, _
+                        rngClients, _
+                        rngClients, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
+            r = r + 1
+        End If
+        totals = totals + arr(i, 6)
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totals, "#,##0.00 $"))
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
+Clean_Exit:
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set rngClients = Nothing
+    Set ws = Nothing
+    Set wsClients = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:check_ENC_Entête", startTime)
 
 End Sub
 
@@ -2343,21 +2570,18 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         
         Case "wshENC_Détails"
             With wshENC_Détails
-                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C4" & firstDataRow & ":C" & lastUsedRow & ", F4" & firstDataRow & ":F" & lastUsedRow & ", G4" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("D" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("C" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("D" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("H" & firstDataRow & ":H" & lastUsedRow & ",J4" & firstDataRow & ":J" & lastUsedRow & ",L4" & firstDataRow & ":L" & lastUsedRow & ",N4" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("O" & firstDataRow & ":O" & lastUsedRow & ",Q4" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
+                .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("C2:C" & lastUsedRow & ", E2:EB" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("E2:E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("E2:E" & lastUsedRow).NumberFormat = "#,##0.00"
             End With
         
         Case "wshENC_Entête"
             With wshENC_Entête
-                .Range("A" & firstDataRow & ":F" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("A" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("E" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("E" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00$"
+                .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("C2:C" & lastUsedRow & ", E2:E" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("F2:F" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00$"
             End With
         
         Case "wshFAC_Comptes_Clients"

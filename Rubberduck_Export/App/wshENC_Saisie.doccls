@@ -32,8 +32,6 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-'    Call DEB_Saisie_Clear_All_Cells
-    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
@@ -67,6 +65,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         Dim clientCode As String
         clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
+        Me.Range("B8").value = clientCode
         Call ENC_Load_OS_Invoices(clientCode)
         Application.EnableEvents = True
     End If

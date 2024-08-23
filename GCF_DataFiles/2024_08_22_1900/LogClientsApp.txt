@@ -1,0 +1,1752 @@
+Annie|20240822_084643|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_084643|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_084644|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_084644|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2207 seconds|1276
+Annie|20240822_084644|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.5430 seconds|
+Annie|20240822_084644|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_084644|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_084644|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_084645|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_084645|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|Client_ID
+Annie|20240822_084645|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2441 seconds|
+Annie|20240822_084645|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.4961 seconds|1277
+Annie|20240822_084645|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.6445 seconds|
+Annie|20240822_084658|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_084658|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1035 seconds|
+Annie|20240822_084714|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_084714|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_084714|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_084714|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1113 seconds|
+Annie|20240822_084714|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_084714|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_084714|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4570 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_084714|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6387 seconds|
+Annie|20240822_084732|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_084733|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1113 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_084735|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_084740|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_084740|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1426 seconds|
+Annie|20240822_084740|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_084741|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1113 seconds|
+Annie|20240822_084742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_084742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_084742|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1973 seconds|
+Annie|20240822_084742|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_084743|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.0273 seconds|UPDATE 1250
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1055 seconds|UPDATE 1250
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_084744|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_084744|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_084744|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_084744|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|Client_ID
+Annie|20240822_084744|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4551 seconds|
+Annie|20240822_084744|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_084745|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0879 seconds|
+Annie|20240822_084745|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8691 seconds|1277
+Annie|20240822_084745|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_084745|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_084745|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 10.0176 seconds|6
+Annie|20240822_084750|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_084753|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_084753|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_084754|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_084754|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2227 seconds|1276
+Annie|20240822_084754|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1387 seconds|
+Annie|20240822_084754|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_084754|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_084754|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_084755|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_084755|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0996 seconds|Client_ID
+Annie|20240822_084755|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2773 seconds|
+Annie|20240822_084755|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6367 seconds|1277
+Annie|20240822_084755|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7930 seconds|
+Annie|20240822_084810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_084810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1250 seconds|
+Annie|20240822_084811|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_084811|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_084811|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_084812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_084812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_084812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_084812|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4570 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_084812|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6230 seconds|
+Annie|20240822_084818|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_085017|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_085017|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_085017|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_085018|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1914 seconds|1276
+Annie|20240822_085018|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1289 seconds|
+Annie|20240822_085018|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_085018|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_085018|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_085018|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085018|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0996 seconds|Client_ID
+Annie|20240822_085018|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2773 seconds|
+Annie|20240822_085019|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6230 seconds|1277
+Annie|20240822_085019|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7930 seconds|
+Annie|20240822_085033|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085033|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_085033|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_085033|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_085034|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_085034|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_085034|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_085034|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1074 seconds|
+Annie|20240822_085034|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4414 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_085034|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6016 seconds|
+Annie|20240822_085035|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_085036|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1016 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_085037|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_085037|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_085038|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1191 seconds|
+Annie|20240822_085038|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_085038|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1035 seconds|
+Annie|20240822_085040|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_085040|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_085040|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2109 seconds|
+Annie|20240822_085040|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.9531 seconds|UPDATE 1250
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1055 seconds|UPDATE 1250
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_085041|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_085041|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085041|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1074 seconds|
+Annie|20240822_085041|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085041|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0996 seconds|Client_ID
+Annie|20240822_085042|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4414 seconds|
+Annie|20240822_085042|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085042|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_085042|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8672 seconds|1277
+Annie|20240822_085042|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085042|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_085042|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4.7754 seconds|6
+Annie|20240822_085049|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_085052|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_085052|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_085053|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_085053|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2500 seconds|1276
+Annie|20240822_085053|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.2500 seconds|
+Annie|20240822_085053|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_085054|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_085054|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_085054|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085054|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0918 seconds|Client_ID
+Annie|20240822_085054|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2637 seconds|
+Annie|20240822_085054|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6152 seconds|1277
+Annie|20240822_085054|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7734 seconds|
+Annie|20240822_085151|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085151|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1270 seconds|
+Annie|20240822_085151|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_085151|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_085152|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_085152|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_085152|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_085152|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1035 seconds|
+Annie|20240822_085152|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4277 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_085152|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.5938 seconds|
+Annie|20240822_085154|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_085154|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1035 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_085156|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_085156|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_085156|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1309 seconds|
+Annie|20240822_085156|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_085156|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1191 seconds|
+Annie|20240822_085157|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_085157|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_085158|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2148 seconds|
+Annie|20240822_085158|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_085158|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.0352 seconds|UPDATE 1250
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.0996 seconds|UPDATE 1250
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_085159|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085159|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1035 seconds|
+Annie|20240822_085159|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085159|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240822_085159|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4453 seconds|
+Annie|20240822_085200|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085200|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0996 seconds|
+Annie|20240822_085200|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8750 seconds|1277
+Annie|20240822_085200|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085200|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_085200|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4.4805 seconds|6
+Annie|20240822_085203|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085203|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_085220|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_085223|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_085223|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_085224|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_085224|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1699 seconds|1276
+Annie|20240822_085224|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.0977 seconds|
+Annie|20240822_085224|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_085224|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_085225|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_085225|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_085225|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0918 seconds|Client_ID
+Annie|20240822_085225|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2480 seconds|
+Annie|20240822_085225|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5215 seconds|1277
+Annie|20240822_085225|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.6855 seconds|
+Annie|20240822_085234|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_085234|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_085336|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_085621|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_085621|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+User|20240822_085622|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_085622|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2109 seconds|1276
+User|20240822_085623|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,4238 seconds|
+User|20240822_085623|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_085623|Clients_v.1.9A.xlsm|modMain|Reset||
+User|20240822_085623|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+User|20240822_085623|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_085623|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_085623|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3301 seconds|
+User|20240822_085623|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6055 seconds|1277
+User|20240822_085624|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8359 seconds|
+User|20240822_085629|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_085629|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1543 seconds|
+User|20240822_085629|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_085629|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_085629|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+User|20240822_085629|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1426 seconds|
+User|20240822_085629|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+User|20240822_085630|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_085630|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6328 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_085630|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8516 seconds|
+User|20240822_085634|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_085634|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1523 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_085638|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+User|20240822_085638|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_085638|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1152 seconds|
+User|20240822_085638|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_085638|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1074 seconds|
+User|20240822_085640|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_085640|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_085640|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2109 seconds|
+User|20240822_085640|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+User|20240822_085641|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 100 isDone
+User|20240822_085641|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1,0195 seconds|UPDATE 100
+User|20240822_085641|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+User|20240822_085641|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0,1230 seconds|UPDATE 100
+User|20240822_085641|Clients_v.1.9A.xlsm|modMain|Reset||
+User|20240822_085642|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+User|20240822_085642|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_085642|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_085642|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_085642|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 seconds|Client_ID
+User|20240822_085642|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5273 seconds|
+User|20240822_085642|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_085642|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_085642|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,9492 seconds|1277
+User|20240822_085643|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_085643|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_085643|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,0117 seconds|6
+User|20240822_085654|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_085657|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_085657|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+User|20240822_085658|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_085658|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1660 seconds|1276
+User|20240822_085658|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,2227 seconds|
+User|20240822_085658|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_085658|Clients_v.1.9A.xlsm|modMain|Reset||
+User|20240822_085659|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+User|20240822_085659|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_085659|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_085659|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3242 seconds|
+User|20240822_085659|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6621 seconds|1277
+User|20240822_085659|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8594 seconds|
+User|20240822_085707|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_134008|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_134008|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_134009|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_134009|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1992 seconds|1276
+Annie|20240822_134009|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.3359 seconds|
+Annie|20240822_134009|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_134010|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_134010|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_134010|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_134010|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0820 seconds|Client_ID
+Annie|20240822_134010|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2266 seconds|
+Annie|20240822_134010|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5938 seconds|1277
+Annie|20240822_134010|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7461 seconds|
+Annie|20240822_134020|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_134021|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1133 seconds|
+Annie|20240822_134021|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_134021|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_134021|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_134021|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0820 seconds|
+Annie|20240822_134021|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_134021|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_134021|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4453 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_134021|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6406 seconds|
+Annie|20240822_134023|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_134023|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1289 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_134025|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_134025|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_134029|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 3.7852 seconds|
+Annie|20240822_134029|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 3.9922 seconds|
+Annie|20240822_134043|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_134043|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_134043|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_134043|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_134044|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_134046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_134046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_134046|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1953 seconds|
+Annie|20240822_134046|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_134047|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_134047|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.0273 seconds|UPDATE 1250
+Annie|20240822_134047|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_134047|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.0977 seconds|UPDATE 1250
+Annie|20240822_134048|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|Client_ID
+Annie|20240822_134048|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4375 seconds|
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0781 seconds|
+Annie|20240822_134048|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8008 seconds|1277
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_134048|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_134049|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5.3594 seconds|6
+Annie|20240822_134053|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_134056|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_134056|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_134057|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_134057|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1523 seconds|1276
+Annie|20240822_134057|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.0312 seconds|
+Annie|20240822_134057|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_134057|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_134058|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_134058|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_134058|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0820 seconds|Client_ID
+Annie|20240822_134058|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2500 seconds|
+Annie|20240822_134058|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6055 seconds|1277
+Annie|20240822_134058|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7539 seconds|
+Annie|20240822_134116|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_140430|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_140430|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_140431|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_140431|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1875 seconds|1276
+User|20240822_140432|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3125 seconds|
+User|20240822_140432|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_140432|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140432|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140432|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140432|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|Client_ID
+User|20240822_140432|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3516 seconds|
+User|20240822_140433|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6133 seconds|1277
+User|20240822_140433|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8203 seconds|
+User|20240822_140436|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140436|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_140436|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140437|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140437|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140437|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140437|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140437|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140437|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5234 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140437|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7266 seconds|
+User|20240822_140439|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_140439|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1406 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140445|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_140445|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_140445|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_140445|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_140445|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1016 seconds|
+User|20240822_140447|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_140447|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_140447|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2227 seconds|
+User|20240822_140447|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,0117 seconds|UPDATE 100
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1367 seconds|UPDATE 100
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140448|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140449|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140449|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140449|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140449|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1523 seconds|Client_ID
+User|20240822_140449|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5469 seconds|
+User|20240822_140449|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140449|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140449|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,9844 seconds|1277
+User|20240822_140449|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4,7344 seconds|6
+User|20240822_140454|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_140458|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_140458|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_140458|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_140459|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1641 seconds|1276
+User|20240822_140459|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,0273 seconds|
+User|20240822_140459|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_140459|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140459|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140459|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140459|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 seconds|Client_ID
+User|20240822_140459|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,2930 seconds|
+User|20240822_140500|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6523 seconds|1277
+User|20240822_140500|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8516 seconds|
+User|20240822_140506|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140506|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1758 seconds|
+User|20240822_140506|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140507|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140507|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140507|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140507|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140507|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140507|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5430 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140507|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7227 seconds|
+User|20240822_140511|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_140512|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1953 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140519|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_140519|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_140519|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_140519|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_140519|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140521|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_140521|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_140521|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 seconds|
+User|20240822_140521|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_140522|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_140522|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,1094 seconds|UPDATE 100
+User|20240822_140523|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_140523|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1211 seconds|UPDATE 100
+User|20240822_140523|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140523|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140523|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140523|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_140523|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140523|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 seconds|Client_ID
+User|20240822_140523|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5312 seconds|
+User|20240822_140523|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140524|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_140524|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,9844 seconds|1277
+User|20240822_140524|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4,7344 seconds|6
+User|20240822_140536|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140536|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140536|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140536|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140536|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140536|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_140536|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5117 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140536|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7539 seconds|
+User|20240822_140546|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_140546|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1719 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140551|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_140551|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_140551|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_140551|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_140551|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_140553|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_140553|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_140553|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2305 seconds|
+User|20240822_140553|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,0039 seconds|UPDATE 100
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1172 seconds|UPDATE 100
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140554|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140555|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140555|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140555|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140555|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|Client_ID
+User|20240822_140555|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5078 seconds|
+User|20240822_140555|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140555|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_140555|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,9375 seconds|1277
+User|20240822_140555|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4,7031 seconds|6
+User|20240822_140600|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_140604|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_140604|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_140604|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_140605|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1836 seconds|1276
+User|20240822_140605|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,0430 seconds|
+User|20240822_140605|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_140605|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140605|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140605|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140605|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_140605|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3242 seconds|
+User|20240822_140606|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6250 seconds|1277
+User|20240822_140606|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8359 seconds|
+User|20240822_140608|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140609|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 seconds|
+User|20240822_140609|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140609|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140609|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140609|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_140609|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140609|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140609|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5430 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140609|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7461 seconds|
+User|20240822_140617|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140617|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140618|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140618|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_140618|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140618|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_140618|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6250 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_140618|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8672 seconds|
+User|20240822_140624|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140624|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_140624|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140624|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140625|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140625|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1016 seconds|
+User|20240822_140625|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140625|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140625|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,4766 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_140625|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6602 seconds|
+User|20240822_140626|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140626|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140626|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140626|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140626|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140626|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1016 seconds|
+User|20240822_140626|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5000 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_140626|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6992 seconds|
+User|20240822_140627|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_140627|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_140627|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140627|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_140627|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_140627|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140627|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5078 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_140627|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7109 seconds|
+User|20240822_140628|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_140628|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1641 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_140642|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_140642|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_140642|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_140643|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_140643|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_140645|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_140645|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_140645|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2227 seconds|
+User|20240822_140645|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_140646|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 101 isDone
+User|20240822_140646|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,0312 seconds|UPDATE 101
+User|20240822_140646|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_140646|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1133 seconds|UPDATE 101
+User|20240822_140647|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140647|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140647|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140647|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 seconds|
+User|20240822_140647|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140647|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 seconds|Client_ID
+User|20240822_140647|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,4883 seconds|
+User|20240822_140647|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140647|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 seconds|
+User|20240822_140647|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,8633 seconds|1277
+User|20240822_140647|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_140648|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_140648|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,4727 seconds|6
+User|20240822_140701|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_140706|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_140706|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_140707|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_140707|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1602 seconds|1276
+User|20240822_140707|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3203 seconds|
+User|20240822_140707|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_140707|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_140707|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_140707|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_140708|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1055 seconds|Client_ID
+User|20240822_140708|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,2969 seconds|
+User|20240822_140708|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6289 seconds|1277
+User|20240822_140708|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8281 seconds|
+User|20240822_140719|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_150950|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_150951|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_150952|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_150952|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2227 seconds|1276
+User|20240822_150952|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,5664 seconds|
+User|20240822_150952|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_150952|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_150953|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_150953|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_150953|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 seconds|Client_ID
+User|20240822_150953|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3438 seconds|
+User|20240822_150953|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7305 seconds|1277
+User|20240822_150953|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9375 seconds|
+User|20240822_150956|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_150957|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_150957|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_150957|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_150957|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_150957|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_150957|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_150957|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 seconds|
+User|20240822_150957|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5156 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_150957|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7266 seconds|
+User|20240822_151001|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_151001|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1680 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_151011|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_151011|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_151011|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1523 seconds|
+User|20240822_151012|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_151012|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_151014|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_151014|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_151014|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2344 seconds|
+User|20240822_151014|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_151015|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_151015|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,1133 seconds|UPDATE 100
+User|20240822_151015|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_151015|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1328 seconds|UPDATE 100
+User|20240822_151016|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_151016|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_151016|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151016|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_151016|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151016|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_151016|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5391 seconds|
+User|20240822_151016|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151016|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_151017|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,9922 seconds|1277
+User|20240822_151017|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,5234 seconds|6
+User|20240822_151023|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_151023|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_151023|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151023|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151023|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151023|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151024|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5312 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_151024|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7812 seconds|
+User|20240822_151034|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_151035|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_151035|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1523 seconds|1276
+User|20240822_151035|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3320 seconds|
+User|20240822_151035|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_151035|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_151036|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_151036|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151036|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 seconds|Client_ID
+User|20240822_151036|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3242 seconds|
+User|20240822_151036|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,5508 seconds|1277
+User|20240822_151036|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,7578 seconds|
+User|20240822_151039|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151039|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151039|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_151039|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_151039|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151040|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_151040|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151040|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_151040|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5430 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_151040|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7422 seconds|
+User|20240822_151040|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_151040|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_151040|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151040|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_151041|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151041|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151041|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5312 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_151041|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7305 seconds|
+User|20240822_151043|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_151043|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1328 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_151050|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_151050|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_151050|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_151050|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_151051|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151053|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_151053|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_151053|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2344 seconds|
+User|20240822_151053|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_151054|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_151054|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 0,9961 seconds|UPDATE 100
+User|20240822_151054|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_151055|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1250 seconds|UPDATE 100
+User|20240822_151055|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_151055|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_151055|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151055|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_151055|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151055|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|Client_ID
+User|20240822_151055|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5703 seconds|
+User|20240822_151055|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151056|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_151056|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0078 seconds|1277
+User|20240822_151056|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,7070 seconds|6
+User|20240822_151301|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151301|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1719 seconds|
+User|20240822_151301|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_151301|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_151301|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151301|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_151302|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_151302|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_151302|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5664 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_151302|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7969 seconds|
+User|20240822_151304|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_151304|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1758 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_151313|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_151313|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_151313|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_151313|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_151313|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1445 seconds|
+User|20240822_151315|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_151316|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_151316|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2852 seconds|
+User|20240822_151316|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 101 isDone
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,1758 seconds|UPDATE 101
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1406 seconds|UPDATE 101
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_151317|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_151318|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151318|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_151318|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151318|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|Client_ID
+User|20240822_151318|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5703 seconds|
+User|20240822_151318|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151318|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_151318|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0273 seconds|1277
+User|20240822_151318|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_151319|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_151319|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,7422 seconds|6
+User|20240822_151411|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_151416|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_151416|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_151417|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_151417|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2188 seconds|1276
+User|20240822_151417|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3438 seconds|
+User|20240822_151418|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_151418|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_151418|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_151418|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_151418|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1406 seconds|Client_ID
+User|20240822_151418|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3477 seconds|
+User|20240822_151418|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,6445 seconds|1277
+User|20240822_151418|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8398 seconds|
+User|20240822_151959|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_152508|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_152508|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1758 seconds|
+User|20240822_152508|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_152508|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_152508|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152508|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_152508|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152508|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_152509|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5977 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_152509|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8164 seconds|
+User|20240822_152511|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_152511|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1289 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_152515|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_152515|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_152515|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_152515|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_152515|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_152521|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_152522|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_152522|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2656 seconds|
+User|20240822_152522|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,2305 seconds|UPDATE 100
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1367 seconds|UPDATE 100
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_152523|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_152524|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_152524|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_152524|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_152524|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1523 seconds|Client_ID
+User|20240822_152524|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,6094 seconds|
+User|20240822_152524|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_152524|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 seconds|
+User|20240822_152524|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,1016 seconds|1277
+User|20240822_152525|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 9,5430 seconds|6
+User|20240822_152939|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_152940|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_152940|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1602 seconds|1276
+User|20240822_152940|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3711 seconds|
+User|20240822_152940|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_152940|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_152941|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_152941|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_152941|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_152941|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3398 seconds|
+User|20240822_152941|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,5898 seconds|1277
+User|20240822_152941|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,8086 seconds|
+User|20240822_152944|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_152945|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 seconds|
+User|20240822_152945|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_152945|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_152945|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152945|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1523 seconds|
+User|20240822_152945|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152945|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_152945|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5742 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_152945|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7852 seconds|
+User|20240822_152950|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_152950|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_152950|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_152950|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_152950|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152950|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_152951|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_152951|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_152951|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5781 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_152951|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8398 seconds|
+User|20240822_152956|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_152956|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1367 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_153001|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_153001|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_153001|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_153001|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_153002|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_153004|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_153004|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_153004|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,3281 seconds|
+User|20240822_153004|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_153005|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_153005|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,0195 seconds|UPDATE 100
+User|20240822_153005|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_153005|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1289 seconds|UPDATE 100
+User|20240822_153006|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_153006|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_153006|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_153006|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1914 seconds|
+User|20240822_153006|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_153006|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 seconds|Client_ID
+User|20240822_153006|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,6445 seconds|
+User|20240822_153006|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153007|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 seconds|
+User|20240822_153007|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,1602 seconds|1277
+User|20240822_153007|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,7617 seconds|6
+User|20240822_153007|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_153007|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_153007|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153007|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_153007|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153008|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1445 seconds|
+User|20240822_153008|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6055 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_153008|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8672 seconds|
+User|20240822_153009|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153009|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_153009|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_153009|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_153009|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153009|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_153009|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153009|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_153009|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5781 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_153010|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7930 seconds|
+User|20240822_153011|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153011|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_153011|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_153012|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_153012|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153012|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_153012|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153012|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_153012|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5625 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_153012|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8164 seconds|
+User|20240822_153015|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153016|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_153111|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_153237|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_153237|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_153238|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_153238|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1953 seconds|1276
+User|20240822_153238|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,2695 seconds|
+User|20240822_153238|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_153239|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_153239|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_153239|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_153239|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1406 seconds|Client_ID
+User|20240822_153239|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3633 seconds|
+User|20240822_153239|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7188 seconds|1277
+User|20240822_153239|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9297 seconds|
+User|20240822_153243|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153243|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_153243|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_153243|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_153243|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153243|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_153243|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_153243|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_153243|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5703 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_153244|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7773 seconds|
+User|20240822_153247|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_153247|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1289 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_153251|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_153251|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_153251|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_153251|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_153252|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_153253|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_153253|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_153254|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2422 seconds|
+User|20240822_153254|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_153255|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_153255|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,4688 seconds|UPDATE 100
+User|20240822_153255|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_153255|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1250 seconds|UPDATE 100
+User|20240822_153256|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_153256|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_153256|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_153256|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,2148 seconds|
+User|20240822_153256|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_153256|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 seconds|Client_ID
+User|20240822_153256|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,6641 seconds|
+User|20240822_153256|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_153257|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_153257|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,1484 seconds|1277
+User|20240822_153257|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,6445 seconds|6
+User|20240822_153358|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_155548|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_155548|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_155550|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_155550|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2148 seconds|1276
+User|20240822_155550|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,5508 seconds|
+User|20240822_155550|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_155550|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_155551|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_155551|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_155551|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 seconds|Client_ID
+User|20240822_155551|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3281 seconds|
+User|20240822_155551|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7227 seconds|1277
+User|20240822_155551|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9688 seconds|
+User|20240822_155602|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_155603|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_155603|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_155603|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_155603|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_155603|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_155603|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_155603|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_155603|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5469 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_155603|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7617 seconds|
+User|20240822_155606|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_155606|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1328 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+User|20240822_155618|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_155618|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_155618|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1445 seconds|
+User|20240822_155618|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_155618|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_155620|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_155620|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_155621|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2539 seconds|
+User|20240822_155621|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_155622|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 101 isDone
+User|20240822_155622|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,4883 seconds|UPDATE 101
+User|20240822_155622|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_155622|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1758 seconds|UPDATE 101
+User|20240822_155622|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_155623|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_155623|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_155623|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_155623|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_155623|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 seconds|Client_ID
+User|20240822_155623|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5547 seconds|
+User|20240822_155623|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_155623|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_155623|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0156 seconds|1277
+User|20240822_155624|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_155624|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 seconds|
+User|20240822_155624|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,7852 seconds|6
+User|20240822_155645|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_155648|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_155649|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_155649|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_155650|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2070 seconds|1276
+User|20240822_155650|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,2344 seconds|
+User|20240822_155650|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_155650|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_155650|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_155650|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_155650|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|Client_ID
+User|20240822_155651|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3477 seconds|
+User|20240822_155651|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7109 seconds|1277
+User|20240822_155651|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9180 seconds|
+Annie|20240822_160448|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_160448|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_160449|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_160449|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1914 seconds|1276
+Annie|20240822_160449|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1953 seconds|
+Annie|20240822_160449|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_160450|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_160450|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_160450|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160450|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|Client_ID
+Annie|20240822_160450|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2500 seconds|
+Annie|20240822_160450|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.9453 seconds|1277
+Annie|20240822_160451|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 1.1758 seconds|
+Annie|20240822_160502|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160502|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1328 seconds|
+Annie|20240822_160504|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_160504|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_160504|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160504|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1133 seconds|
+Annie|20240822_160504|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160505|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1211 seconds|
+Annie|20240822_160505|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4688 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_160505|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6172 seconds|
+Annie|20240822_160506|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_160506|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0820 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_160513|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_160513|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_160514|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1328 seconds|
+Annie|20240822_160514|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_160514|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1406 seconds|
+Annie|20240822_160516|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_160516|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_160516|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2773 seconds|
+Annie|20240822_160516|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_160517|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+User|20240822_160518|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_160518|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.3086 seconds|UPDATE 1250
+Annie|20240822_160518|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_160518|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1250 seconds|UPDATE 1250
+Annie|20240822_160518|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_160518|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_160518|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160518|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240822_160519|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.6055 seconds|
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1211 seconds|
+Annie|20240822_160519|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 1.1562 seconds|1277
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160519|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1328 seconds|
+Annie|20240822_160520|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 6.4531 seconds|6
+Annie|20240822_160526|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_160531|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_160531|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_160532|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_160532|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1602 seconds|1276
+Annie|20240822_160532|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0.9414 seconds|
+Annie|20240822_160532|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_160532|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_160532|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_160532|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160533|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1133 seconds|Client_ID
+Annie|20240822_160533|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.3047 seconds|
+Annie|20240822_160533|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5664 seconds|1277
+Annie|20240822_160533|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7188 seconds|
+Annie|20240822_160542|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160542|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0820 seconds|
+User|20240822_160739|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_160739|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_160740|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_160740|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2070 seconds|1276
+User|20240822_160740|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3203 seconds|
+User|20240822_160740|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_160741|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_160741|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_160741|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_160741|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1445 seconds|Client_ID
+User|20240822_160741|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3711 seconds|
+User|20240822_160741|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7227 seconds|1277
+User|20240822_160741|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9453 seconds|
+User|20240822_160746|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_160746|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_160746|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_160747|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_160747|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_160747|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_160747|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_160747|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1484 seconds|
+User|20240822_160747|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6406 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_160747|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8867 seconds|
+Annie|20240822_160757|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160757|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240822_160757|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_160757|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_160757|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160758|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_160758|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160758|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_160758|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4375 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Annie|20240822_160758|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6055 seconds|
+Annie|20240822_160759|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_160800|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1094 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+Annie|20240822_160803|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_160803|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_160803|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240822_160803|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_160803|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_160807|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_160808|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_160808|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1992 seconds|
+Annie|20240822_160808|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 100 isDone
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.3906 seconds|UPDATE 100
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1016 seconds|UPDATE 100
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_160809|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_160809|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|Client_ID
+Annie|20240822_160810|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4336 seconds|
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_160810|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8125 seconds|1277
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1133 seconds|
+Annie|20240822_160810|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 7.4805 seconds|6
+Annie|20240822_160812|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_160812|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_160812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_160812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_160812|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_160812|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4492 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_160813|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6211 seconds|
+Annie|20240822_160814|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_160814|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0977 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_160816|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_160817|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_160817|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_160817|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_160817|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_160820|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_160820|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_160820|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1875 seconds|
+Annie|20240822_160820|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 101 isDone
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 1.0273 seconds|UPDATE 101
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1094 seconds|UPDATE 101
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_160821|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_160821|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160821|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_160821|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_160821|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|Client_ID
+Annie|20240822_160822|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4180 seconds|
+Annie|20240822_160822|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160822|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1250 seconds|
+Annie|20240822_160822|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8125 seconds|1277
+Annie|20240822_160822|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_160822|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_160822|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5.6562 seconds|6
+User|20240822_161012|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161031|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161034|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161034|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1758 seconds|1276
+Annie|20240822_161035|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1719 seconds|
+Annie|20240822_161035|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161035|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0898 seconds|Client_ID
+Annie|20240822_161036|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2383 seconds|
+Annie|20240822_161036|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5352 seconds|1277
+Annie|20240822_161036|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.6836 seconds|
+Annie|20240822_161039|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161039|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161040|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161040|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161040|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161041|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161041|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161041|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161041|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4180 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161041|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.5859 seconds|
+Annie|20240822_161042|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161042|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0977 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161045|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161045|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161046|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1328 seconds|
+Annie|20240822_161046|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161046|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161048|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161048|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161048|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2344 seconds|
+Annie|20240822_161048|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161048|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 101 isDone
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.8359 seconds|UPDATE 101
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1250 seconds|UPDATE 101
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161049|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161049|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161049|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161049|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240822_161049|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4453 seconds|
+Annie|20240822_161050|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161050|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_161050|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8398 seconds|1277
+Annie|20240822_161050|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161050|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_161050|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4.6992 seconds|6
+Annie|20240822_161103|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161103|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1250 seconds|
+Annie|20240822_161103|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161103|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161103|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161103|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1211 seconds|
+Annie|20240822_161103|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161104|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_161104|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4414 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161104|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6445 seconds|
+Annie|20240822_161105|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161105|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1016 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161108|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161108|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161108|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1133 seconds|
+Annie|20240822_161108|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161108|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161110|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161110|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161110|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2266 seconds|
+Annie|20240822_161111|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161111|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.9844 seconds|UPDATE 1250
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1250 seconds|UPDATE 1250
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161112|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161112|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1133 seconds|
+Annie|20240822_161112|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161112|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240822_161112|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4531 seconds|
+Annie|20240822_161113|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161113|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161113|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.9414 seconds|1277
+Annie|20240822_161113|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161113|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1289 seconds|
+Annie|20240822_161113|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5.1328 seconds|6
+Annie|20240822_161119|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161123|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161123|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161124|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161124|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2695 seconds|1276
+Annie|20240822_161124|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.3203 seconds|
+Annie|20240822_161124|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161124|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161125|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161125|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161125|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1211 seconds|Client_ID
+Annie|20240822_161125|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2852 seconds|
+Annie|20240822_161125|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6367 seconds|1277
+Annie|20240822_161125|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.8203 seconds|
+Annie|20240822_161141|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161249|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161328|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161328|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161329|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161329|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1836 seconds|1276
+Annie|20240822_161329|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.0820 seconds|
+Annie|20240822_161329|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161329|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161329|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161329|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161330|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|Client_ID
+Annie|20240822_161330|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2656 seconds|
+Annie|20240822_161330|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5977 seconds|1277
+Annie|20240822_161330|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7461 seconds|
+Annie|20240822_161332|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161332|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0820 seconds|
+Annie|20240822_161333|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161333|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161333|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161333|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161333|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161333|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161333|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.3750 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161333|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.5156 seconds|
+Annie|20240822_161334|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161334|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0859 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161338|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161338|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161338|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161338|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161339|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161341|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161341|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161341|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1836 seconds|
+Annie|20240822_161341|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161341|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 101 isDone
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.7617 seconds|UPDATE 101
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1055 seconds|UPDATE 101
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161342|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161342|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1836 seconds|
+Annie|20240822_161342|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161342|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1445 seconds|Client_ID
+Annie|20240822_161342|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.5625 seconds|
+Annie|20240822_161343|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161343|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1367 seconds|
+Annie|20240822_161343|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 1.0391 seconds|1277
+Annie|20240822_161343|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161343|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_161343|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4.8398 seconds|6
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161353|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161353|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_161353|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161353|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4141 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161353|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.5898 seconds|
+Annie|20240822_161356|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161356|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0820 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161358|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161358|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161359|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161359|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161359|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161400|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161400|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161401|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1758 seconds|
+Annie|20240822_161401|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161401|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_161401|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.7812 seconds|UPDATE 1250
+Annie|20240822_161401|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1055 seconds|UPDATE 1250
+Annie|20240822_161402|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1016 seconds|Client_ID
+Annie|20240822_161402|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4375 seconds|
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161402|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161402|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8320 seconds|1277
+Annie|20240822_161403|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161403|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161403|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 4.3242 seconds|6
+Annie|20240822_161415|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161419|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161419|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161420|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161420|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2109 seconds|1276
+Annie|20240822_161420|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.0273 seconds|
+Annie|20240822_161420|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161420|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161421|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161421|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161421|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1289 seconds|Client_ID
+Annie|20240822_161421|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.3359 seconds|
+Annie|20240822_161421|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.7070 seconds|1277
+Annie|20240822_161421|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.8711 seconds|
+Annie|20240822_161430|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161615|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161615|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161616|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161616|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1992 seconds|1276
+Annie|20240822_161616|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1094 seconds|
+Annie|20240822_161617|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161617|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161617|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161617|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161617|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0859 seconds|Client_ID
+Annie|20240822_161617|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2266 seconds|
+Annie|20240822_161617|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5547 seconds|1277
+Annie|20240822_161617|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7188 seconds|
+Annie|20240822_161622|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161622|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1172 seconds|
+Annie|20240822_161622|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161622|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161622|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161622|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240822_161623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161623|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161623|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4570 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161623|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6289 seconds|
+Annie|20240822_161625|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161625|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1094 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_161628|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161629|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_161629|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161629|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161630|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161630|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161630|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1719 seconds|
+Annie|20240822_161630|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 101 isDone
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.7422 seconds|UPDATE 101
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.0898 seconds|UPDATE 101
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161631|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161631|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0742 seconds|
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0898 seconds|Client_ID
+Annie|20240822_161632|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.3516 seconds|
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161632|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6836 seconds|1277
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161632|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 3.7188 seconds|6
+Annie|20240822_161637|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161646|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161647|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161647|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161647|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1719 seconds|1276
+Annie|20240822_161648|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0.9531 seconds|
+Annie|20240822_161648|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161648|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161648|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161648|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161648|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|Client_ID
+Annie|20240822_161648|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2461 seconds|
+Annie|20240822_161648|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.5234 seconds|1277
+Annie|20240822_161648|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.6797 seconds|
+Annie|20240822_161655|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_161854|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_161854|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_161855|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_161855|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1914 seconds|1276
+Annie|20240822_161855|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.2773 seconds|
+Annie|20240822_161856|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_161856|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161856|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161856|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161856|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0859 seconds|Client_ID
+Annie|20240822_161856|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2383 seconds|
+Annie|20240822_161856|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6016 seconds|1277
+Annie|20240822_161856|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7500 seconds|
+Annie|20240822_161908|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161908|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240822_161908|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_161908|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_161908|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161909|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240822_161909|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_161909|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161909|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4961 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161909|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6992 seconds|
+Annie|20240822_161911|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_161911|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.0820 seconds|Dafco Électrique inc [Daniel Bouchard]
+Annie|20240822_161914|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_161914|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_161914|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240822_161914|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_161914|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.0898 seconds|
+Annie|20240822_161916|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_161916|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_161916|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1680 seconds|
+Annie|20240822_161916|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_161917|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 1250 isDone
+Annie|20240822_161917|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.9766 seconds|UPDATE 1250
+Annie|20240822_161917|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.0938 seconds|UPDATE 1250
+Annie|20240822_161918|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1133 seconds|Client_ID
+Annie|20240822_161918|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4258 seconds|
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161918|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_161918|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8242 seconds|1277
+Annie|20240822_161919|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_161919|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.0938 seconds|
+Annie|20240822_161919|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5.0508 seconds|6
+Annie|20240822_161931|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_162126|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_162127|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_162127|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_162128|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1914 seconds|1276
+Annie|20240822_162128|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.2070 seconds|
+Annie|20240822_162128|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_162128|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_162128|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_162128|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_162128|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 seconds|Client_ID
+Annie|20240822_162128|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2656 seconds|
+Annie|20240822_162129|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6055 seconds|1277
+Annie|20240822_162129|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7461 seconds|
+Annie|20240822_162305|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_162306|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_162306|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1562 seconds|1276
+Annie|20240822_162306|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1211 seconds|
+Annie|20240822_162306|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_162306|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_162306|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_162307|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_162307|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240822_162307|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2773 seconds|
+Annie|20240822_162307|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.4922 seconds|1277
+Annie|20240822_162307|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.6758 seconds|
+Annie|20240822_162307|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_162308|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_162308|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1680 seconds|1276
+Annie|20240822_162308|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 0.9453 seconds|
+Annie|20240822_162314|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_162314|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1016 seconds|
+Annie|20240822_162510|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_DblClick||
+Annie|20240822_162510|Clients_v.1.9A.xlsm|frmFrom|cmdEdit_Click||
+Annie|20240822_162510|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_162510|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1211 seconds|
+Annie|20240822_162510|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List||
+Annie|20240822_162510|Clients_v.1.9A.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1172 seconds|
+Annie|20240822_162510|Clients_v.1.9A.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0.4922 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_162510|Clients_v.1.9A.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6680 seconds|
+Annie|20240822_162513|Clients_v.1.9A.xlsm|frmFrom|txtNomClient_Exit||
+Annie|20240822_162513|Clients_v.1.9A.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0.1055 seconds|Atelier d'automobile Tony inc. [Tony Brasiola]
+Annie|20240822_162521|Clients_v.1.9A.xlsm|frmFrom|cmdSave_Click||
+Annie|20240822_162521|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240822_162521|Clients_v.1.9A.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.1367 seconds|
+Annie|20240822_162521|Clients_v.1.9A.xlsm|frmFrom|Fix_Some_Fields||
+Annie|20240822_162521|Clients_v.1.9A.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240822_162524|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240822_162524|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240822_162524|Clients_v.1.9A.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.2031 seconds|
+Annie|20240822_162524|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE
+Annie|20240822_162525|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients||UPDATE 101 isDone
+Annie|20240822_162525|Clients_v.1.9A.xlsm|modMain|Submit_GCF_BD_Entrée_Clients (sortie)|Temps écoulé: 0.9844 seconds|UPDATE 101
+Annie|20240822_162525|Clients_v.1.9A.xlsm|modMain|Submit_Locally||
+Annie|20240822_162526|Clients_v.1.9A.xlsm|modMain|Submit_Locally (sortie)|Temps écoulé: 0.1211 seconds|UPDATE 101
+Annie|20240822_162526|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_162526|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_162526|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_162526|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1211 seconds|
+Annie|20240822_162526|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_162526|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1094 seconds|Client_ID
+Annie|20240822_162526|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.4727 seconds|
+Annie|20240822_162526|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_162527|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1055 seconds|
+Annie|20240822_162527|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.8828 seconds|1277
+Annie|20240822_162527|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click||
+Annie|20240822_162527|Clients_v.1.9A.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0.1172 seconds|
+Annie|20240822_162527|Clients_v.1.9A.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 6.0586 seconds|6
+Annie|20240822_162612|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+Annie|20240822_162814|Clients_v.1.9A.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240822_162814|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All||
+Annie|20240822_162815|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format||
+Annie|20240822_162815|Clients_v.1.9A.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1641 seconds|1276
+Annie|20240822_162815|Clients_v.1.9A.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1.1289 seconds|
+Annie|20240822_162815|Clients_v.1.9A.xlsm|frmFrom|UserForm_Initialize||
+Annie|20240822_162815|Clients_v.1.9A.xlsm|modMain|Reset||
+Annie|20240822_162816|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn||
+Annie|20240822_162816|Clients_v.1.9A.xlsm|frmFrom|cmbSearchColumn_Change||
+Annie|20240822_162816|Clients_v.1.9A.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|Client_ID
+Annie|20240822_162816|Clients_v.1.9A.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0.2852 seconds|
+Annie|20240822_162816|Clients_v.1.9A.xlsm|modMain|Reset (sortie)|Temps écoulé: 0.6094 seconds|1277
+Annie|20240822_162816|Clients_v.1.9A.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0.7812 seconds|
+Annie|20240822_163107|Clients_v.1.9A.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_165233|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_165233|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_165234|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_165234|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,2031 seconds|1276
+User|20240822_165234|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3086 seconds|
+User|20240822_165234|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_165234|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165235|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165235|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165235|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1445 seconds|Client_ID
+User|20240822_165235|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3945 seconds|
+User|20240822_165235|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7344 seconds|1277
+User|20240822_165235|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 1,0000 seconds|
+User|20240822_165300|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165300|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165300|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165301|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165301|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165301|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165301|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165301|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165301|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5898 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_165301|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8203 seconds|
+User|20240822_165303|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_165304|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1211 seconds|AL Carrière Extincteurs Ltée [Benoit Carrière]
+User|20240822_165326|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_165326|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_165326|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165326|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_165326|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165330|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_165331|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_165331|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2500 seconds|
+User|20240822_165331|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_165332|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 100 isDone
+User|20240822_165332|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,4219 seconds|UPDATE 100
+User|20240822_165332|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_165332|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1250 seconds|UPDATE 100
+User|20240822_165332|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165333|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165333|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165333|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_165333|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165333|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 seconds|Client_ID
+User|20240822_165333|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5820 seconds|
+User|20240822_165333|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165333|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165333|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0508 seconds|1277
+User|20240822_165334|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 7,5742 seconds|6
+User|20240822_165437|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165437|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1797 seconds|
+User|20240822_165437|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165438|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165438|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165438|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_165438|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165438|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165438|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6016 seconds|François Poulin / Synaptech
+User|20240822_165438|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8008 seconds|
+User|20240822_165439|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165440|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165440|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165440|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165440|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165440|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1680 seconds|
+User|20240822_165440|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6680 seconds|François Poulin / Synaptech
+User|20240822_165440|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8984 seconds|
+User|20240822_165442|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_165442|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1250 seconds|François Poulin / Synaptech
+User|20240822_165447|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_165447|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_165447|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165447|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_165447|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1445 seconds|
+User|20240822_165450|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_165450|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_165450|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2891 seconds|
+User|20240822_165450|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_165451|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 103 isDone
+User|20240822_165452|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,5000 seconds|UPDATE 103
+User|20240822_165452|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_165452|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1445 seconds|UPDATE 103
+User|20240822_165452|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165452|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165452|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165452|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165452|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165453|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 seconds|Client_ID
+User|20240822_165453|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,5703 seconds|
+User|20240822_165453|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165453|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165453|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0820 seconds|1277
+User|20240822_165453|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165453|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 seconds|
+User|20240822_165453|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 6,6562 seconds|6
+User|20240822_165456|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165456|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_165457|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165457|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165457|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165457|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_165457|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165457|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_165457|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5859 seconds|BJC Consultants inc. [Chantal Laberge]
+User|20240822_165457|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8164 seconds|
+User|20240822_165459|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165459|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165459|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165459|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1602 seconds|
+User|20240822_165500|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165500|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165500|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,6055 seconds|BJC Consultants inc. [Chantal Laberge]
+User|20240822_165500|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8320 seconds|
+User|20240822_165502|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_165502|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1680 seconds|BJC Consultants inc. [Chantal Laberge]
+User|20240822_165517|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_165518|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_165518|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_165518|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_165518|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1445 seconds|
+User|20240822_165520|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_165520|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_165520|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2422 seconds|
+User|20240822_165520|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_165521|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 105 isDone
+User|20240822_165521|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,3711 seconds|UPDATE 105
+User|20240822_165522|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_165522|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1406 seconds|UPDATE 105
+User|20240822_165522|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165522|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165522|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165522|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1406 seconds|
+User|20240822_165522|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165522|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 seconds|Client_ID
+User|20240822_165522|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,6094 seconds|
+User|20240822_165523|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165523|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1641 seconds|
+User|20240822_165523|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,1016 seconds|1277
+User|20240822_165523|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165523|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165523|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,7852 seconds|6
+User|20240822_165532|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||
+User|20240822_165552|Clients_v2.0.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240822_165552|Clients_v2.0.xlsm|modMain|Client_List_Import_All||
+User|20240822_165553|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format||
+User|20240822_165553|Clients_v2.0.xlsm|modMain|Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1719 seconds|1276
+User|20240822_165553|Clients_v2.0.xlsm|modMain|Client_List_Import_All (sortie)|Temps écoulé: 1,3672 seconds|
+User|20240822_165553|Clients_v2.0.xlsm|frmFrom|UserForm_Initialize||
+User|20240822_165553|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165554|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165554|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165554|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 seconds|Client_ID
+User|20240822_165554|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,3555 seconds|
+User|20240822_165554|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 0,7500 seconds|1277
+User|20240822_165554|Clients_v2.0.xlsm|frmForm|UserForm_Initialize (sortie)|Temps écoulé: 0,9727 seconds|
+User|20240822_165557|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165557|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165557|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165557|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165557|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165557|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165557|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165557|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 seconds|
+User|20240822_165558|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5820 seconds|Ghislain Falardeau
+User|20240822_165558|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8164 seconds|
+User|20240822_165559|Clients_v2.0.xlsm|frmFrom|lstDonnées_DblClick||
+User|20240822_165559|Clients_v2.0.xlsm|frmFrom|cmdEdit_Click||
+User|20240822_165559|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165559|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165559|Clients_v2.0.xlsm|modMain|Fn_Selected_List||
+User|20240822_165559|Clients_v2.0.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 seconds|
+User|20240822_165559|Clients_v2.0.xlsm|frmForm|cmdEdit_Click (sortie)|Temps écoulé: 0,5586 seconds|Ghislain Falardeau
+User|20240822_165559|Clients_v2.0.xlsm|frmForm|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7656 seconds|
+User|20240822_165600|Clients_v2.0.xlsm|frmFrom|txtNomClient_Exit||
+User|20240822_165600|Clients_v2.0.xlsm|frmForm|txtNomClient_Exit (sortie)|Temps écoulé: 0,1211 seconds|Ghislain Falardeau
+User|20240822_165634|Clients_v2.0.xlsm|frmFrom|cmdSave_Click||
+User|20240822_165634|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries||
+User|20240822_165634|Clients_v2.0.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_165634|Clients_v2.0.xlsm|frmFrom|Fix_Some_Fields||
+User|20240822_165634|Clients_v2.0.xlsm|frmForm|Fix_Some_Fields (sortie)|Temps écoulé: 0,1328 seconds|
+User|20240822_165636|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240822_165636|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+User|20240822_165636|Clients_v2.0.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2422 seconds|
+User|20240822_165636|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE
+User|20240822_165637|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree||UPDATE 106 isDone
+User|20240822_165638|Clients_v2.0.xlsm|modMain|Update_External_GCF_BD_Entree (sortie)|Temps écoulé: 1,4336 seconds|UPDATE 106
+User|20240822_165638|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients||
+User|20240822_165638|Clients_v2.0.xlsm|modMain|Update_Locally_BD_Clients (sortie)|Temps écoulé: 0,1367 seconds|UPDATE 106
+User|20240822_165638|Clients_v2.0.xlsm|modMain|Reset||
+User|20240822_165638|Clients_v2.0.xlsm|modMain|Add_SearchColumn||
+User|20240822_165638|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165638|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1484 seconds|
+User|20240822_165638|Clients_v2.0.xlsm|frmFrom|cmbSearchColumn_Change||
+User|20240822_165638|Clients_v2.0.xlsm|frmForm|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 seconds|Client_ID
+User|20240822_165639|Clients_v2.0.xlsm|modMain|Add_SearchColumn (sortie)|Temps écoulé: 0,6016 seconds|
+User|20240822_165639|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165639|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 seconds|
+User|20240822_165639|Clients_v2.0.xlsm|modMain|Reset (sortie)|Temps écoulé: 1,0625 seconds|1277
+User|20240822_165639|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click||
+User|20240822_165639|Clients_v2.0.xlsm|frmFrom|lstDonnées_Click (sortie)|Temps écoulé: 0,2383 seconds|
+User|20240822_165639|Clients_v2.0.xlsm|frmForm|cmdSave_Click (sortie)|Temps écoulé: 5,5859 seconds|6
+User|20240822_165851|Clients_v2.0.xlsm|***** Fin de session - Workbook_Deactivate *****|||

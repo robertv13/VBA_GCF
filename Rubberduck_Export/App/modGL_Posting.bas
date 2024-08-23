@@ -16,14 +16,14 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
-    Dim strSQL As String
+    Dim strSQL As String, MaxEJNo As Long
     strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
 
     'Open recordset to find out the next JE number
     rs.Open strSQL, conn
     
     'Get the last used row
-    Dim maxEJNo As Long, lastJE As Long
+    Dim lastJE As Long
     If IsNull(rs.Fields("MaxEJNo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 0
@@ -115,88 +115,6 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     Application.ScreenUpdating = True
     
     Call End_Timer("modGL_Posting:GL_Posting_Locally()", timerStart)
-
-End Sub
-
-Sub Encaissement_GL_Posting(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:Encaissement_GL_Posting()")
-    
-    Application.ScreenUpdating = False
-    
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans"
-    
-    'Initialize connection, connection string, open the connection & declare rs Object
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-
-    'SQL select command to find the next available ID
-    Dim strSQL As String
-    strSQL = "SELECT MAX(No_EJ) AS MaxEJNo FROM [" & destinationTab & "$]"
-
-    'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
-    
-    'Get the last used row
-    Dim maxEJNo As Long, lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
-    Else
-        lastJE = rs.Fields("MaxEJNo").value
-    End If
-    
-    'Calculate the new ID
-    Dim nextJENo As Long
-    nextJENo = lastJE + 1
-
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
-    
-    'Debit side
-    rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields("No_EJ").value = nextJENo
-        rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Description").value = nom
-        rs.Fields("Source").value = "Encaissement # " & no
-        rs.Fields("No_Compte").value = "1000" 'Hardcoded
-        rs.Fields("Compte").value = "Encaisse" 'Hardcoded
-        rs.Fields("Débit").value = montant
-        rs.Fields("AutreRemarque").value = desc
-    rs.update
-    
-    'Credit side
-    rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields("No_EJ").value = nextJENo
-        rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Description").value = nom
-        rs.Fields("Source").value = "Encaissement # " & no
-        rs.Fields("No_Compte").value = "1100" 'Hardcoded
-        rs.Fields("Compte").value = "Comptes-Clients" 'Hardcoded
-        rs.Fields("Crédit").value = montant
-        rs.Fields("AutreRemarque").value = desc
-    rs.update
-
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-    
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call End_Timer("modGL_Posting:Encaissement_GL_Posting()", timerStart)
 
 End Sub
 

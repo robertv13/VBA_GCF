@@ -161,7 +161,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     rs.Open strSQL, conn
     
     'Get the last used row
-    Dim maxEJNo As Long, lastJE As Long
+    Dim MaxEJNo As Long, lastJE As Long
     If IsNull(rs.Fields("MaxEJNo").value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 1

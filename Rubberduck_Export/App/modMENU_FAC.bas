@@ -55,8 +55,6 @@ Sub Encaissement_Click()
     
     Application.ScreenUpdating = False
     
-    Call Encaissement_Import_All
-    
     With wshENC_Saisie
         .Visible = xlSheetVisible
         .Select

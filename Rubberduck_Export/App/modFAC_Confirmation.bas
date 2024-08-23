@@ -468,23 +468,13 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     Else
         'Handle the case where the specified invoice is not found
         MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
-        GoTo Clean_Exit
     End If
     
-'    'Update the recordset (create the record) - 2024-08-21 @ 05:28
-'    rs.update
-    
-Clean_Exit:
     'Close recordset and connection
-    If Not rs Is Nothing Then
-        If rs.state = adStateOpen Then rs.Close
-        Set rs = Nothing
-    End If
-
-    If Not conn Is Nothing Then
-        If conn.state = adStateOpen Then conn.Close
-        Set conn = Nothing
-    End If
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
     
     Application.ScreenUpdating = True
 

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
-Dim LastRow As Long, lastResultRow As Long
+Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
 Dim resultRow As Long, payItemRow As Long, lastPayItemRow As Long, payitemDBRow As Long
 
@@ -47,12 +47,18 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
             .EnableSelection = xlUnlockedCells
         End With
         
+        Dim r As Integer: r = 12
         For i = 3 To lastResultRow
-            wshENC_Saisie.Range("F" & i + 9).value = .Range("Q" & i).value
-            wshENC_Saisie.Range("G" & i + 9).value = .Range("R" & i).value
-            wshENC_Saisie.Range("H" & i + 9).value = .Range("S" & i).value
-            wshENC_Saisie.Range("I" & i + 9).value = .Range("T" & i).value
-            wshENC_Saisie.Range("J" & i + 9).value = .Range("U" & i).value
+            If .Range("U" & i).value <> 0 And i <= 22 Then
+                'PLUG pour que la colonne U reflète toujours le SOLDE...
+                .Range("U" & i).value = .Range("S" & i).value - .Range("T" & i).value
+                wshENC_Saisie.Range("F" & r).value = .Range("Q" & i).value
+                wshENC_Saisie.Range("G" & r).value = .Range("R" & i).value
+                wshENC_Saisie.Range("H" & r).value = .Range("S" & i).value
+                wshENC_Saisie.Range("I" & r).value = .Range("T" & i).value
+                wshENC_Saisie.Range("J" & r).value = .Range("U" & i).value
+                r = r + 1
+            End If
         Next i
         
         Call ENC_Saisie_Add_Check_Boxes(lastResultRow - 2)
@@ -67,81 +73,78 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
 
 End Sub
 
-Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
+Sub ENC_Update() '2024-08-22 @ 09:46
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Save_Update()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Update()")
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
-        If .Range("F3").value = Empty Or _
-           .Range("J3").value = Empty Or _
-           .Range("J3").value = Empty Then
+        If .Range("F5").value = Empty Or _
+           .Range("K5").value = Empty Or _
+           .Range("F7").value = Empty Or _
+           .Range("K7").value = 0 Then
             MsgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
-                "1. Un client" & vbNewLine & _
-                "2. Une date de paiement" & vbNewLine & _
+                "1. Un client valide" & vbNewLine & _
+                "2. Une date d'encaissements" & vbNewLine & _
                 "3. Un type de paiement et" & vbNewLine & _
-                "4. Des transactions" & vbNewLine & vbNewLine & _
+                "4. Des montants appliqués" & vbNewLine & vbNewLine & _
                 "AVANT de sauvegarder la transaction.", vbExclamation
-            Exit Sub
+            GoTo Clean_Exit
         End If
+        
         'Check to make sure Payment Amount = Applied Amount
-        If .Range("J5").value <> .Range("J10").value Then
-            MsgBox "Assurez-vous que le montant du paiement soit ÉGAL" & vbNewLine & _
+        If .Range("K9").value <> 0 Then
+            MsgBox "Assurez-vous que le montant de l'encaissement soit ÉGAL" & vbNewLine & _
                 "à la somme des paiements appliqués", vbExclamation
-            Exit Sub
-        End If
-        'New Payment -OR- Existing Payment ?
-        If .Range("B4").value = Empty Then 'New Payment
-            payRow = wshENC_Entête.Range("A999999").End(xlUp).row + 1 'First Available Row
-            .Range("B3").value = .Range("B5").value 'Next payment ID
-            'wshENC_Entête.Range("A" & payRow).value = .Range("B3").value 'PayID
-            Call Add_Or_Update_Enc_Entete_Record_To_DB(0)
-        Else 'Existing Payment
-            Call Add_Or_Update_Enc_Entete_Record_To_DB(.Range("B4").value)
+            GoTo Clean_Exit
         End If
         
-        'Save Applied Invoices to Payment Detail
-        lastPayItemRow = .Range("E999999").End(xlUp).row 'Last Pay Item
+        'Create records for ENC_Entête
+        Call ENC_Add_DB_Entete
+        Call ENC_Add_Locally_Entete
         
-        For payItemRow = 13 To lastPayItemRow
-            If .Range("D" & payItemRow).value = Chr(252) Then 'The row has been applied
-                If .Range("K" & payItemRow).value = Empty Then 'New Pay Item row
-                    payitemDBRow = wshENC_Détails.Range("A999999").End(xlUp).row + 1 'First Avail Pay Items Row
-                    Call Add_Or_Update_Enc_Detail_Record_To_DB(0, payItemRow)
-                    'wshENC_Détails.Range("A" & payitemDBRow).value = .Range("B3").value 'Payment ID
-                    'wshENC_Détails.Range("F" & payitemDBRow).value = "=row()"
-                    .Range("K" & payItemRow).value = payitemDBRow 'Database Row
-                Else 'Existing Pay Item
-                    payitemDBRow = .Range("K" & payItemRow).value 'Existing Pay Item Row
-                End If
-'                wshENC_Détails.Range("B" & payitemDBRow).value = .Range("F" & payItemRow).value 'Invoice ID
-'                wshENC_Détails.Range("C" & payitemDBRow).value = .Range("F3").value 'Customer
-'                wshENC_Détails.Range("D" & payitemDBRow).value = .Range("J3").value 'Pay Date
-'                wshENC_Détails.Range("E" & payitemDBRow).value = .Range("J" & payItemRow).value 'Amount paid
-            End If
-        Next payItemRow
+        Dim pmtNo As Long
+        pmtNo = wshENC_Saisie.Range("B9").value
         
+        Dim lastOSRow As Integer
+        lastOSRow = .Cells(.rows.count, "F").End(xlUp).row 'Last applied Item
+        
+        'Create records for ENC_Détails
+        If lastOSRow > 11 Then
+            Call ENC_Add_DB_Details(pmtNo, lastOSRow)
+            Call ENC_Add_Locally_Details(pmtNo, lastOSRow)
+        End If
+        
+        'Update FAC_Comptes_Clients
+        If lastOSRow > 11 Then
+            Call ENC_Update_DB_Comptes_Clients(12, lastOSRow)
+            Call ENC_Update_Locally_Comptes_Clients(12, lastOSRow)
+        End If
+                
         'Prepare G/L posting
         Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
-        noEnc = wshENC_Saisie.Range("B5").value
-        dateEnc = wshENC_Saisie.Range("J3").value
-        nomClient = wshENC_Saisie.Range("F3").value
-        typeEnc = wshENC_Saisie.Range("F5").value
-        montantEnc = wshENC_Saisie.Range("J5").value
-        descEnc = wshENC_Saisie.Range("F7").value
+        noEnc = wshENC_Saisie.Range("B9").value
+        dateEnc = wshENC_Saisie.Range("K5").value
+        nomClient = wshENC_Saisie.Range("F5").value
+        typeEnc = wshENC_Saisie.Range("F7").value
+        montantEnc = wshENC_Saisie.Range("K7").value
+        descEnc = wshENC_Saisie.Range("F9").value
 
-        Call Encaissement_GL_Posting(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
+        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
-        Call Encaissement_Import_All   'Bring back locally three worksheets
+        MsgBox "L'encaissement a été renregistré avec succès", vbInformation
         
-        MsgBox "Le paiement a été renregistré avec succès"
         Call Encaissement_Add_New 'Reset the form
-        .Range("F3").Select
+        
+        .Range("F5").Select
     End With
     
-    Call End_Timer("modFAC_Enc:Encaissement_Save_Update()", timerStart)
+Clean_Exit:
+
+'    Call End_Timer("modENC_Saisie:ENC_Update()", timerStart)
 
 End Sub
 
@@ -244,9 +247,9 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
         'Load Pay Items
         With wshENC_Détails
             .Range("M4:T999999").ClearContents
-            LastRow = .Range("A999999").End(xlUp).row
-            If LastRow < 4 Then GoTo NoData
-            .Range("A3:G" & LastRow).AdvancedFilter _
+            lastRow = .Range("A999999").End(xlUp).row
+            If lastRow < 4 Then GoTo NoData
+            .Range("A3:G" & lastRow).AdvancedFilter _
                 xlFilterCopy, _
                 criteriaRange:=.Range("J2:J3"), _
                 CopyToRange:=.Range("O3:T3"), _
@@ -266,33 +269,16 @@ NoData:
 
 End Sub
 
-Sub Encaissement_Import_All() '2024-02-14 @ 09:48
+Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Import_All()")
-    
-    Application.ScreenUpdating = False
-    
-    '3 sheets to import
-    Call FAC_Comptes_Clients_Import_All
-    Call ENC_Entête_Import_All
-    Call ENC_Détails_Import_All
-    
-    Application.ScreenUpdating = True
-    
-    Call End_Timer("modFAC_Enc:Encaissement_Import_All()", timerStart)
-    
-End Sub
-
-Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record to external .xlsx file
-    
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Entete()")
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_ENC_Entête"
+    destinationTab = "ENC_Entête"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
@@ -301,83 +287,97 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Set rs = CreateObject("ADODB.Recordset")
 
-    'If r is 0, add a new record, otherwise, update an existing record
-    If r = 0 Then 'Add a record
-        'SQL select command to find the next available ID
-        Dim strSQL As String, MaxID As Long
-        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & destinationTab & "$]"
+    'SQL select command to find the next available ID
+    Dim strSQL As String, MaxPmtNo As Long
+    strSQL = "SELECT MAX(Pay_ID) AS MaxPmtNo FROM [" & destinationTab & "$]"
+
+    'Open recordset to find out the MaxPmtNo
+    rs.Open strSQL, conn
     
-        'Open recordset to find out the MaxID
-        rs.Open strSQL, conn
-        
-        'Get the last used row
-        Dim LastRow As Long
-        If IsNull(rs.Fields("MaxID").value) Then
-            ' Handle empty table (assign a default value, e.g., 1)
-            LastRow = 1
-        Else
-            LastRow = rs.Fields("MaxID").value
-        End If
-        
-        'Calculate the new ID
-        Dim nextID As Long
-        nextID = LastRow + 1
-    
-        'Close the previous recordset, no longer needed and open an empty recordset
-        rs.Close
-        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
-        
-        'Add fields to the recordset before updating it
-        rs.AddNew
-            rs.Fields("Pay_ID").value = nextID
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
-    Else 'Update an existing record
-        'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
-        If Not rs.EOF Then
-            'Update fields for the existing record
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
-        Else
-            'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le Pay_ID '" & r & "' ne peut être trouvé!", vbExclamation
-            rs.Close
-            conn.Close
-            Exit Sub
-        End If
+    'Get the last used row
+    Dim lr As Long
+    If IsNull(rs.Fields("MaxPmtNo").value) Then
+        'Handle empty table (assign a default value, e.g., 1)
+        lr = 0
+    Else
+        lr = rs.Fields("MaxPmtNo").value
     End If
+    
+    'Calculate the new PmtNo
+    Dim pmtNo As Long
+    pmtNo = lr + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    
+    'Add fields to the recordset before updating it
+    rs.AddNew
+        rs.Fields("Pay_ID").value = pmtNo
+        rs.Fields("Pay_Date").value = wshENC_Saisie.Range("K5").value
+        rs.Fields("Customer").value = wshENC_Saisie.Range("F5").value
+        rs.Fields("codeClient").value = wshENC_Saisie.Range("B8").value
+        rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F7").value
+        rs.Fields("Amount").value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00 $"))
+        rs.Fields("Notes").value = wshENC_Saisie.Range("F9").value
     'Update the recordset (create the record)
     rs.update
     
+    Application.EnableEvents = False
+    wshENC_Saisie.Range("B9").value = pmtNo
+    Application.EnableEvents = True
+    
     'Close recordset and connection
-    On Error Resume Next
     rs.Close
-    On Error GoTo 0
+    Set rs = Nothing
     conn.Close
+    Set conn = Nothing
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modFAC_Enc:Add_Or_Update_Enc_Entete_Record_To_DB()", timerStart)
+'    Call End_Timer("modENC_Saisie:ENC_Add_DB_Entete()", timerStart)
     
 End Sub
 
-Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR- Update a record to external .xlsx file
+Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'Get the JE number
+    Dim currentPmnNo As Long
+    currentPmnNo = wshENC_Saisie.Range("B9").value
+    
+    'What is the last used row in DEB_Trans ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshENC_Entête.Range("A99999").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    wshENC_Entête.Range("A" & rowToBeUsed).value = currentPmnNo
+    wshENC_Entête.Range("B" & rowToBeUsed).value = CDate(wshENC_Saisie.Range("K5").value)
+    wshENC_Entête.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
+    wshENC_Entête.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("B8").value
+    wshENC_Entête.Range("E" & rowToBeUsed).value = wshENC_Saisie.Range("F7").value
+    wshENC_Entête.Range("F" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00"))
+    wshENC_Entête.Range("G" & rowToBeUsed).value = wshENC_Saisie.Range("F9").value
+    
+    Application.ScreenUpdating = True
+
+'    Call End_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", timerStart)
+
+End Sub
+
+Sub ENC_Add_DB_Details(pmtNo As Long, lastAppliedRow As Integer) 'Write to MASTER.xlsx
+    
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Details()")
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_ENC_Détails"
+    destinationTab = "ENC_Détails"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -385,59 +385,227 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    'If r is 0, add a new record, otherwise, update an existing record
-    If r = 0 Then 'Add a record
-        'SQL select command to find the next available ID
-        Dim strSQL As String, MaxID As Long
-        strSQL = "SELECT MAX(Pay_ID) AS MaxID FROM [" & destinationTab & "$]"
-    
-        'Open recordset to find out the MaxID
-        rs.Open strSQL, conn
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
         
-        'Get the last used row
-        Dim LastRow As Long
-        If IsNull(rs.Fields("MaxID").value) Then
-            ' Handle empty table (assign a default value, e.g., 1)
-            LastRow = 1
-        Else
-            LastRow = rs.Fields("MaxID").value
+    'Build the recordSet
+    Dim r As Integer
+    For r = 12 To lastAppliedRow
+        If wshENC_Saisie.Range("B" & r).value = True And _
+            wshENC_Saisie.Range("K" & r).value <> 0 Then
+            rs.AddNew
+                rs.Fields("Pay_ID").value = pmtNo
+                rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & r).value
+                rs.Fields("Customer").value = wshENC_Saisie.Range("F5").value
+                rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("K5").value)
+                rs.Fields("Pay_Amount").value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00 $"))
+            'Update the recordset (create the record)
+            rs.update
         End If
-        
-        'Calculate the new ID
-        Dim nextID As Long
-        nextID = LastRow + 1
+    Next r
     
-        'Close the previous recordset, no longer needed and open an empty recordset
-        rs.Close
-        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
-        
-        'Add fields to the recordset before updating it
-        rs.AddNew
-            rs.Fields("Pay_ID").value = nextID
-            rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Pay_Amount").value = Format$(wshENC_Saisie.Range("J" & encRow).value, "#,##0.00")
-    Else 'Update an existing record
-        'Open the recordset for the specified ID
-        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
-        If Not rs.EOF Then
-            'Update fields for the existing record
-            rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
-        Else
-            'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le Pay_ID '" & r & "' ne peut être trouvé!", vbExclamation
-            rs.Close
-            conn.Close
-            Exit Sub
+    'Close recordset and connection
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
+    
+    Application.ScreenUpdating = True
+
+'    Call End_Timer("modENC_Saisie:ENC_Add_DB_Details()", timerStart)
+    
+End Sub
+
+Sub ENC_Add_Locally_Details(pmtNo As Long, lastAppliedRow As Integer) '2024-08-22 @ 10:55
+    
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_Locally_Details()")
+    
+    Application.ScreenUpdating = False
+    
+    'What is the last used row in ENC_Détails ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.rows.count, "A").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    Dim r As Integer
+    For r = 12 To lastAppliedRow
+        If wshENC_Saisie.Range("B" & r).value = True And _
+            wshENC_Saisie.Range("K" & r).value <> 0 Then
+            wshENC_Détails.Range("A" & rowToBeUsed).value = pmtNo
+            wshENC_Détails.Range("B" & rowToBeUsed).value = wshENC_Saisie.Range("F" & r).value
+            wshENC_Détails.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
+            wshENC_Détails.Range("D" & rowToBeUsed).value = CDate(wshENC_Saisie.Range("K5").value)
+            wshENC_Détails.Range("E" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00"))
+            rowToBeUsed = rowToBeUsed + 1
         End If
+    Next r
+    
+    Application.ScreenUpdating = True
+
+'    Call End_Timer("modENC_Saisie:ENC_Add_Locally_Details()", timerStart)
+
+End Sub
+
+Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
+    
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Details()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "FAC_Comptes_Clients"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    Dim r As Long
+    For r = firstRow To lastRow
+        If wshENC_Saisie.Range("B" & r).value = True And _
+            wshENC_Saisie.Range("K" & r) <> 0 Then
+            'Open the recordset for the specified invoice
+            Dim Inv_No As String
+            Inv_No = wshENC_Saisie.Range("F" & r).value
+            Dim strSQL As String
+            strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE Invoice_No = '" & Inv_No & "'"
+            rs.Open strSQL, conn, 2, 3
+            If Not rs.EOF Then
+                'Update Amount_Paid
+                rs.Fields("Total_Paid").value = rs.Fields("Total_Paid").value + wshENC_Saisie.Range("K" & r).value
+                rs.update
+            Else
+                'Handle the case where the specified ID is not found
+                MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
+                    vbExclamation
+                GoTo Clean_Exit
+            End If
+            'Update the recordset (create the record)
+            rs.update
+        End If
+    Next r
+    
+Clean_Exit:
+    
+    'Close recordset and connection
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
+    
+    Application.ScreenUpdating = True
+
+'    Call End_Timer("modENC_Saisie:ENC_Add_DB_Details()", timerStart)
+    
+End Sub
+
+Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
+    
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_Locally_Details()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    
+    'Set the range to look for
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
+    
+    Dim r As Integer
+    For r = firstRow To lastRow
+        Dim Inv_No As String
+        Inv_No = wshENC_Saisie.Range("F" & r).value
+        
+        Dim foundRange As Range
+        Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, lookAt:=xlWhole)
+    
+        Dim rowToBeUpdated As Long
+        If Not foundRange Is Nothing Then
+            rowToBeUpdated = foundRange.row
+            ws.Cells(r, 9).value = ws.Cells(r, 9).value + wshENC_Saisie.Range("K" & r).value
+        Else
+            MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
+        End If
+    Next r
+    
+    Application.ScreenUpdating = True
+
+'    Call End_Timer("modENC_Saisie:ENC_Add_Locally_Details()", timerStart)
+
+End Sub
+
+Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+    
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_GL_Posting_DB()")
+    
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "GL_Trans"
+    
+    'Initialize connection, connection string, open the connection & declare rs Object
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    'SQL select command to find the next available ID
+    Dim strSQL As String, MaxEJNo As Long
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
+
+    'Open recordset to find out the MaxID
+    rs.Open strSQL, conn
+    
+    'Get the last used row
+    Dim lastJE As Long
+    If IsNull(rs.Fields("MaxEJNo").value) Then
+        ' Handle empty table (assign a default value, e.g., 1)
+        lastJE = 1
+    Else
+        lastJE = rs.Fields("MaxEJNo").value
     End If
-    'Update the recordset (create the record)
+    
+    'Calculate the new ID
+    Dim nextJENo As Long
+    nextJENo = lastJE + 1
+
+    'Close the previous recordset, no longer needed and open an empty recordset
+    rs.Close
+    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    
+    'Debit side
+    rs.AddNew
+        'Add fields to the recordset before updating it
+        rs.Fields("No_Entrée").value = nextJENo
+        rs.Fields("Date").value = CDate(dt)
+        rs.Fields("Description").value = nom
+        rs.Fields("Source").value = "Encaissement # " & no
+        rs.Fields("No_Compte").value = "1000" 'Hardcoded
+        rs.Fields("Compte").value = "Encaisse" 'Hardcoded
+        rs.Fields("Débit").value = montant
+        rs.Fields("AutreRemarque").value = desc
+        rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
     rs.update
+    
+    'Credit side
+    rs.AddNew
+        'Add fields to the recordset before updating it
+        rs.Fields("No_Entrée").value = nextJENo
+        rs.Fields("Date").value = CDate(dt)
+        rs.Fields("Description").value = nom
+        rs.Fields("Source").value = "Encaissement # " & no
+        rs.Fields("No_Compte").value = "1100" 'Hardcoded
+        rs.Fields("Compte").value = "Comptes clients" 'Hardcoded
+        rs.Fields("Crédit").value = montant
+        rs.Fields("AutreRemarque").value = desc
+        rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+    rs.update
+
+    wshENC_Saisie.Range("B10").value = nextJENo
     
     'Close recordset and connection
     On Error Resume Next
@@ -446,13 +614,58 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     conn.Close
     
     Application.ScreenUpdating = True
-
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modFAC_Enc:Add_Or_Update_Enc_Detail_Record_To_DB()", timerStart)
+    Call End_Timer("modENC_Saisie:ENC_GL_Posting_DB()", timerStart)
+
+End Sub
+
+Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_GL_Posting_Locally()")
+    
+    Application.ScreenUpdating = False
+    
+    'What is the last used row in GL_Trans ?
+    Dim lastUsedRow As Long, rowToBeUsed As Long
+    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.rows.count, "A").End(xlUp).row
+    rowToBeUsed = lastUsedRow + 1
+    
+    Dim nextJENo As Long
+    nextJENo = wshENC_Saisie.Range("B10").value
+    
+    With wshGL_Trans
+    'Debit side
+        .Range("A" & rowToBeUsed).value = nextJENo
+        .Range("B" & rowToBeUsed).value = CDate(dt)
+        .Range("C" & rowToBeUsed).value = nom
+        .Range("D" & rowToBeUsed).value = "Encaissement # " & no
+        .Range("E" & rowToBeUsed).value = "1000" 'Hardcoded
+        .Range("F" & rowToBeUsed).value = "Encaisse" 'Hardcoded
+        .Range("G" & rowToBeUsed).value = montant
+        .Range("I" & rowToBeUsed).value = desc
+        .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+        rowToBeUsed = rowToBeUsed + 1
+    
+    'Credit side
+        .Range("A" & rowToBeUsed).value = nextJENo
+        .Range("B" & rowToBeUsed).value = CDate(dt)
+        .Range("C" & rowToBeUsed).value = nom
+        .Range("D" & rowToBeUsed).value = "Encaissement # " & no
+        .Range("E" & rowToBeUsed).value = "1100" 'Hardcoded
+        .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
+        .Range("H" & rowToBeUsed).value = montant
+        .Range("I" & rowToBeUsed).value = desc
+        .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+    End With
+    
+    Application.ScreenUpdating = True
+    
+    Call End_Timer("modENC_Saisie:ENC_GL_Posting_Locally()", timerStart)
+
 End Sub
 
 Sub ENC_Saisie_Add_Check_Boxes(row As Long)
@@ -469,7 +682,7 @@ Sub ENC_Saisie_Add_Check_Boxes(row As Long)
     Dim cbx As checkBox
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If Cells(cell.row, 2).value = "" Then 'Applied = False
+    If cell.row <= 31 And Cells(cell.row, 2).value = "" Then 'Applied = False
         'Create a checkbox linked to the cell
         Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.width, cell.Height)
         With cbx
@@ -513,7 +726,7 @@ Sub ENC_Remove_Check_Boxes(row As Long)
         End If
     Next cbx
     
-    wshFAC_Brouillon.Range("B12:B" & row).value = ""
+'    wshFAC_Brouillon.Range("B12:B" & row).value = ""
     
     Application.EnableEvents = True
 
@@ -544,8 +757,10 @@ Sub ENC_Clear_Cells()
         .Range("K5").value = Date 'Set Default Date
         .Range("F7").value = "Banque" ' Set Default type
         .Range("F5").Select
-        
     End With
+    
+    wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = False
+    wshENC_Saisie.Shapes("btnENC_Annule").Visible = False
     
     Call End_Timer("modENC_Saisie:ENC_Clear_Cells()", timerStart)
 
@@ -553,7 +768,6 @@ End Sub
 
 Sub Apply_Click()
 
-    
     Dim chkBox As checkBox
     Set chkBox = ActiveSheet.CheckBoxes(Application.Caller)
     Dim linkedCell As Range
@@ -569,6 +783,8 @@ Sub Apply_Click()
                 wshENC_Saisie.Range("K" & linkedCell.row).value = wshENC_Saisie.Range("K9").value
             End If
         End If
+        wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = True
+        wshENC_Saisie.Shapes("btnENC_Annule").Visible = True
     Else
         Range("K" & linkedCell.row).value = 0
     End If

@@ -282,7 +282,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshENC_Détails.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    wshENC_Détails.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -307,7 +307,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     recSet.Open
     
     'Copy to wshENC_Détails workbook
-    wshENC_Détails.Range("A3").CopyFromRecordset recSet
+    wshENC_Détails.Range("A2").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
@@ -334,7 +334,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshENC_Entête.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    wshENC_Entête.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -359,7 +359,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     recSet.Open
     
     'Copy to wshENC_Entête workbook
-    wshENC_Entête.Range("A3").CopyFromRecordset recSet
+    wshENC_Entête.Range("A2").CopyFromRecordset recSet
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
     Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
@@ -388,7 +388,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     'Clear all cells, but the headers, in the target worksheet
     wshFAC_Comptes_Clients.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
-    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    'Import FAC_Comptes_Clients from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
@@ -620,20 +620,20 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Copy to wshFAC_Projets_Détails workbook
     wshFAC_Projets_Détails.Range("A2").CopyFromRecordset recSet
 
-    Dim LastRow As Long
-    LastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = LastRow To 2 Step -1
+    For i = lastRow To 2 Step -1
         If UCase(wshFAC_Projets_Détails.Cells(i, 9).value) = "VRAI" Then
             wshFAC_Projets_Détails.rows(i).delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    LastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
     End If
@@ -686,20 +686,20 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     'Copy to wshFAC_Projets_Entête workbook
     wshFAC_Projets_Entête.Range("A2").CopyFromRecordset recSet
 
-    Dim LastRow As Long
-    LastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = LastRow To 2 Step -1
+    For i = lastRow To 2 Step -1
         If UCase(wshFAC_Projets_Entête.Cells(i, 26).value) = "VRAI" Then
             wshFAC_Projets_Entête.rows(i).delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    LastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
     End If

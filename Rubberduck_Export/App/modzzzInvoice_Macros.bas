@@ -1,6 +1,6 @@
 Attribute VB_Name = "modzzzInvoice_Macros"
 Option Explicit
-Dim invRow As Long, invitemRow As Long, LastRow As Long, lastItemRow As Long
+Dim invRow As Long, invitemRow As Long, lastRow As Long, lastItemRow As Long
 Dim resultRow As Long, lastResultRow As Long, itemRow As Long, termRow As Long, statusRow As Long
 
 Sub CAR_Dashboard_Invoice_SaveUpdate()
