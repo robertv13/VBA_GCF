@@ -3,7 +3,7 @@ Option Explicit
 
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
-Sub Log_Record(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
+Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
 
     Dim currentTime As String
     currentTime = Format$(Now, "yyyymmdd_hhnnss")
@@ -66,28 +66,7 @@ Sub Log_Record(moduleProcName As String, param1 As String, Optional ByVal startT
 
 End Sub
 
-Sub Test_Log_Record()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modzDevUtils:Test_Log_Record", "Test", 0)
-
-    Call Log_Record("modzDevUtils:Test_Log_Record", "Test sortie", startTime)
-    
-End Sub
-
-Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
-
-    Dim buffer As String * 255
-    Dim size As Long: size = 255
-    
-    If GetUserName(buffer, size) Then
-        Fn_Get_Windows_Username = Left$(buffer, size - 1)
-    Else
-        Fn_Get_Windows_Username = "Unknown"
-    End If
-    
-End Function
-
-Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
+Sub CM_Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef jours As Long, ByRef heures As Long, _
                                     ByRef minutes As Long, ByRef secondes As Long)
     
@@ -116,22 +95,20 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
 End Sub
 
-Sub Test_TempsDepuisDerniereModification()
+Sub CM_Verify_DDM(fullFileName As String)
 
-    Dim s As String
-    s = "GCF_BD_Entrée.xlsx"
+    Dim ddm As Date, jours As Long, heures As Long, minutes As Long, secondes As Long
     
-    Dim ddm As Date
-    Dim jours As Long, heures As Long, minutes As Long, secondes As Long
-    Call Get_Date_Derniere_Modification(s, ddm, jours, heures, minutes, secondes)
+    Call CM_Get_Date_Derniere_Modification(fullFileName, ddm, jours, heures, minutes, secondes)
     
-    'Afficher (msgBox) les résultats
-    MsgBox "Date de la dernière modification du fichier '" & vbNewLine & vbNewLine & _
-           s & "' est " & ddm & vbNewLine & vbNewLine & "Soit:" & vbNewLine & vbNewLine & _
-           Space(15) & jours & " jours, " & vbNewLine & _
-           Space(15) & heures & " heures, " & vbNewLine & _
-           Space(15) & minutes & " minutes et" & vbNewLine & _
-           Space(15) & secondes & " secondes.", vbInformation, "Quand le fichier a-t-il été modifié ?"
-           
+    'Record to the log the difference between NOW and the date of last modifcation
+    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 2 Then
+        MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
+               "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
+               "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
+               "Code: (" & jours & "." & heures & "." & minutes & "." & secondes & ")", vbCritical, _
+               "Le fichier n'est pas à jour sur disque"
+    End If
+
 End Sub
-

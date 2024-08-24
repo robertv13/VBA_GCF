@@ -3,28 +3,28 @@ Option Explicit
 
 Function Fn_Does_Client_Code_Exist() As Boolean
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "", 0)
     
     Fn_Does_Client_Code_Exist = False
     
     Dim ws As Worksheet: Set ws = wshClients
     Dim iCodeClient As String
-    iCodeClient = frmForm.txtCodeClient.Value
+    iCodeClient = ufClientMF.txtCodeClient.Value
     If iCodeClient = "" Then
         GoTo Clean_Exit
     End If
     
     'Validating Duplicate Entries
-    If Not ws.Range("B:B").Find(what:=iCodeClient, lookat:=xlWhole) Is Nothing Then
-        Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "VRAI", -1)
+    If Not ws.Range("B:B").Find(what:=iCodeClient, LookAt:=xlWhole) Is Nothing Then
+        Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "VRAI", -1)
         Fn_Does_Client_Code_Exist = True
     Else
-        Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "FAUX", -1)
+        Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "FAUX", -1)
     End If
 
 Clean_Exit:
 
-    Call Log_Record("modMain:Fn_Does_Client_Code_Exist", "", startTime)
+    Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "", startTime)
     
     Exit Function
 
@@ -32,7 +32,7 @@ End Function
 
 Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", 0)
     
     'Add the last day of the month to Fiscal Year end month
     Dim fiscalYearEndString As String
@@ -62,47 +62,60 @@ Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
         Case "Décembre"
             fiscalYearEndString = "31/12"
         Case Else
-            fiscalYearEndString = frmForm.cmbFinAnnee.Value
+            fiscalYearEndString = ufClientMF.cmbFinAnnee.Value
         End Select
         
     Fn_Fix_Txt_Fin_Annee = fiscalYearEndString
 
-    Call Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", startTime)
+    Call CM_Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", startTime)
 
+End Function
+
+Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
+
+    Dim buffer As String * 255
+    Dim size As Long: size = 255
+    
+    If GetUserName(buffer, size) Then
+        Fn_Get_Windows_Username = Left$(buffer, size - 1)
+    Else
+        Fn_Get_Windows_Username = "Unknown"
+    End If
+    
 End Function
 
 Function Fn_Selected_List() As Long
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fn_Selected_List", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Selected_List", "", 0)
     
     Fn_Selected_List = 0
     
     Dim i As Long
-    For i = 0 To frmForm.lstDonnées.ListCount - 1
-        If frmForm.lstDonnées.Selected(i) = True Then
+    For i = 0 To ufClientMF.lstDonnées.ListCount - 1
+        If ufClientMF.lstDonnées.Selected(i) = True Then
             Fn_Selected_List = i + 1
-            frmForm.cmdEdit.Enabled = True
+            ufClientMF.cmdEdit.Enabled = True
             Exit For
         End If
-        frmForm.cmdEdit.Enabled = False
+        ufClientMF.cmdEdit.Enabled = False
     Next i
 
-    Call Log_Record("modMain:Fn_Selected_List", "", startTime)
+    Call CM_Log_Record("modMain:Fn_Selected_List", "", startTime)
 
 End Function
 
 Function Fn_ValidateEntries() As Boolean
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMain:Fn_ValidateEntries", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_ValidateEntries", "", 0)
     
     Fn_ValidateEntries = True
     
     Dim sh As Worksheet: Set sh = ThisWorkbook.Sheets("Données")
 
     Dim iCodeClient As Variant
-    iCodeClient = frmForm.txtCodeClient.Value
+    iCodeClient = ufClientMF.txtCodeClient.Value
     
-    With frmForm
+    With ufClientMF
         'Default Color
         .txtCodeClient.BackColor = vbWhite
         .txtNomClient.BackColor = vbWhite
@@ -139,8 +152,8 @@ Function Fn_ValidateEntries() As Boolean
             GoTo Clean_Exit
         End If
         
-        'Validation de la structure de l'adresse courriel
-        If .txtCourrielFact.Value <> "" Then
+        'Validation de la structure de l'adresse courriel, si ce n'est pas inconnu
+        If .txtCourrielFact.Value <> "" And .txtCourrielFact.Value <> "inconnu" Then
             If Fn_ValiderCourriel(.txtCourrielFact.Value) = False Then
                 MsgBox "SVP, saisir une adresse courriel valide.", vbOKOnly + vbInformation, "Structure d'adresse courriel non-respecté"
                 Fn_ValidateEntries = False
@@ -154,13 +167,15 @@ Function Fn_ValidateEntries() As Boolean
 
 Clean_Exit:
 
-    Call Log_Record("modMain:Fn_ValidateEntries", "", startTime)
+    Call CM_Log_Record("modMain:Fn_ValidateEntries", "", startTime)
 
     Exit Function
     
 End Function
 
 Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
+    
+    Fn_ValiderCourriel = False
     
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
@@ -170,8 +185,21 @@ Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
     regex.IgnoreCase = True
     regex.Global = False
     
-    'Vérifier si l'adresse courriel correspond au pattern
-    Fn_ValiderCourriel = regex.Test(courriel)
+    'Last chance to accept a invalid email address...
+    If regex.Test(courriel) = False Then
+        Dim msgValue As VbMsgBoxResult
+        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
+                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
+                            "Désirez-vous quand même conserver cette adresse ?", _
+                            vbYesNo + vbInformation, "Struture de courriel non standard")
+        If msgValue = vbYes Then
+            Fn_ValiderCourriel = True
+        Else
+            Fn_ValiderCourriel = False
+        End If
+    Else
+        Fn_ValiderCourriel = True
+    End If
     
 End Function
 

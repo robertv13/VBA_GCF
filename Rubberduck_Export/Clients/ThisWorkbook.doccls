@@ -1,18 +1,16 @@
 ﻿Option Explicit
 
-Private Sub Workbook_Deactivate()
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
 
-    wshMENU.Range("B4").Value = 0 'Reset the last client used from the listBox
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Fin de session - Workbook_Deactivate *****", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("***** Fin de session - Workbook_BeforeClose *****", "", 0)
 
 End Sub
 
 Private Sub Workbook_Open()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début de session - Workbook_Open *****", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("***** Début de session - Workbook_Open *****", "", 0)
 
-    Call Client_List_Import_All
+    Call CM_Client_List_Import_All
     
     wshMENU.Range("A32").Value = "Heure - " & Format$(Now(), "hh:nn:ss")
     wshMENU.Range("A32").Font.size = 9
@@ -37,6 +35,6 @@ Private Sub Workbook_Open()
     wshMENU.Range("A35").Font.size = 9
     wshMENU.Range("A35").Font.Color = vbBlack
 
-    frmForm.Show vbModeless
+    ufClientMF.Show vbModeless
 
 End Sub
