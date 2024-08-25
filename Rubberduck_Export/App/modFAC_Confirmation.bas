@@ -402,7 +402,7 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
     
     'Use Range.Find to locate the first cell with the invNo
     Dim cell As Range
-    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACT-" & invNo, LookIn:=xlValues, lookAt:=xlWhole)
+    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACTURE:" & invNo, LookIn:=xlValues, lookAt:=xlWhole)
     
     'Check if the invNo was found at all
     Dim firstAddress As String
@@ -549,7 +549,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
         
         Dim descGL_Trans As String, source As String
         descGL_Trans = ws.Cells(r, 6).value
-        source = "Fact:" & invoice
+        source = "FACTURE:" & invoice
         
         Dim MyArray(1 To 7, 1 To 4) As String
         

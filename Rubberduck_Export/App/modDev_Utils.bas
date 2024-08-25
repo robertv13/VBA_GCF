@@ -1692,6 +1692,8 @@ End Sub
 
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
 
+    On Error GoTo Error_Handler
+    
     Dim logFile As String
     logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.txt"
     
@@ -1720,6 +1722,14 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
                         "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds"
         Close #fileNum
     End If
+    
+    Exit Sub
+    
+Error_Handler:
+
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Erreur au démarrage"
+    'Sortir gracieusement de l'application
+    Application.Quit 'No save...
     
 End Sub
 

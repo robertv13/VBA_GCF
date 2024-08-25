@@ -11,6 +11,8 @@ Private Sub Worksheet_Activate()
     
     'Import transactions from MASTER file
     Call DEB_Trans_Import_All
+    Call GL_Trans_Import_All
+    Call Fournisseur_List_Import_All
     
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
@@ -19,25 +21,24 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
-    
     'Hide column A & B
     With ws
         .Unprotect
-'        .Range("A:B").EntireColumn.Hidden = True
-        .Protect UserInterfaceOnly:=True
+        .Range("A:B").EntireColumn.Hidden = True
     End With
     
     Call SetTabOrder(ws)
     
     Call DEB_Saisie_Clear_All_Cells
     
+    ws.Protect UserInterfaceOnly:=True
+    ws.EnableSelection = xlUnlockedCells
+    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
     With ws
-        .Range("F4").Activate
+        .Range("C3").Activate
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -99,7 +100,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Dim suggestedAmount As Double
             suggestedAmount = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
             If suggestedAmount > 0 Then
-                Call Suggest_Amount(Target.Row, suggestedAmount)
+                Call DEB_Suggest_Amount(Target.Row, suggestedAmount)
             End If
             Application.EnableEvents = True
         End If
@@ -142,6 +143,7 @@ End Sub
 Private Sub Worksheet_Change(ByVal Target As Range)
     
     On Error GoTo ErrorHandler
+    
     Application.EnableEvents = False
     
     Call Process_Change(Target)
@@ -150,8 +152,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Exit Sub
     
 ErrorHandler:
-    Application.EnableEvents = True ' Ensure events are re-enabled if an error occurs
-    MsgBox "Error " & Err.Number & ": " & Err.Description, vbCritical, "Error"
+    Application.EnableEvents = True 'Ensure events are re-enabled if an error occurs
+    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur"
 
 End Sub
 
@@ -187,12 +189,12 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If
     
-    'Description has changed
+    'Account has changed
     If Not Intersect(Target, GLRange) Is Nothing Then
         If Target.value <> "" Then
             Application.EnableEvents = False
@@ -202,15 +204,11 @@ Private Sub Process_Change(ByVal Target As Range)
         End If
     End If
     
-    If Not Intersect(Target, GLRange) Is Nothing Then
-        
-    End If
-    
     'Amount has changed
     If Not Intersect(Target, amountRange) Is Nothing Then
         'If the user changes the Amount cell
         Dim cell As Range
-        For Each cell In Target
+    For Each cell In Target
             Debug.Print cell.Address & " = " & cell.value
             If cell.value = 0 Then
                 cell.Offset(0, 1).value = "" 'Clear GST
@@ -229,7 +227,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     Target.value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     netAmount
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
-                Call Calculate_gst_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
+                Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
                                                    wshDEB_Saisie.Range("H" & Target.Row).value, _
                                                    Target.value, _
                                                    gst, pst, gstCredit, pstCredit, _
@@ -261,7 +259,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     Target.value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
-                Call Calculate_gst_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
+                Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
                                                    wshDEB_Saisie.Range("H" & Target.Row).value, _
                                                    amount, _
                                                    gst, pst, gstCredit, pstCredit, _
@@ -282,6 +280,17 @@ Private Sub Process_Change(ByVal Target As Range)
         Next cellNet
     End If
     
+    'Force TAB order after a cell has been changed - 2024-08-25 @ 10:35
+    If Not Intersect(Target, Me.Range("F4")) Is Nothing Then
+        Me.Range("O4").Select
+    ElseIf Not Intersect(Target, Me.Range("O4")) Is Nothing Then
+        Me.Range("F6").Select
+    ElseIf Not Intersect(Target, Me.Range("F6")) Is Nothing Then
+        Me.Range("M6").Select
+    ElseIf Not Intersect(Target, Me.Range("M6")) Is Nothing Then
+        Me.Range("O6").Select
+    End If
+
     'Cleanup - 2024-07-14 @ 08:26
     Set amountRange = Nothing
     Set cell = Nothing
@@ -293,8 +302,7 @@ Private Sub Process_Change(ByVal Target As Range)
     
 End Sub
 
-'Example subroutine to suggest an amount and trigger processing
-Sub Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
+Sub DEB_Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
     
@@ -309,4 +317,3 @@ Sub Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
     Call Process_Change(targetCell)
     
 End Sub
-

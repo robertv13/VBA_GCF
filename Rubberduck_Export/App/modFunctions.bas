@@ -935,7 +935,7 @@ Public Function ConvertValueBooleanToText(val As Boolean) As String
 
 End Function
 
-Sub Fn_Get_Tax_RateZ(r As Range, d As Date, tx As String)
+'Sub Fn_Get_Tax_RateZ(r As Range, d As Date, tx As String)
     
 '    'Set the range to search
 '    Dim dataRange As Range: Set dataRange = r
@@ -956,7 +956,7 @@ Sub Fn_Get_Tax_RateZ(r As Range, d As Date, tx As String)
 '
 '    MsgBox "Search complete. Results are in columns D and E."
     
-End Sub
+'End Sub
 
 Public Function GetOneDrivePath(ByVal fullWorkbookName As String) As String '2024-05-27 @ 10:10
     

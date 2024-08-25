@@ -118,7 +118,7 @@ End Sub
 Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
 
     Dim wsSrc As Worksheet
-    Set wsSrc = ThisWorkbook.Worksheets("Heures_Jour_Prof")
+    Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim wsTgt As Worksheet
     Set wsTgt = ThisWorkbook.Worksheets("HresJourProf")
@@ -351,15 +351,15 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
 
     Application.ScreenUpdating = False
     
-    Call Erase_And_Create_Worksheet("Analyse_Intégrité")
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Call Erase_And_Create_Worksheet("X_Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     wsOutput.Range("A1").value = "Feuille"
     wsOutput.Range("B1").value = "Message"
     wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
-    Call Erase_And_Create_Worksheet("Heures_Jour_Prof")
-    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("Heures_Jour_Prof")
+    Call Erase_And_Create_Worksheet("X_Heures_Jour_Prof")
+    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     wsSommaire.Range("A1").value = "Date"
     wsSommaire.Range("B1").value = "Prof."
     wsSommaire.Range("C1").value = "H/Saisies"
@@ -517,9 +517,9 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim header2 As String: header2 = ""
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
     
-    MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'Analyse_Intégrité'", vbInformation
+    MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     
-    ThisWorkbook.Worksheets("Analyse_Intégrité").Activate
+    ThisWorkbook.Worksheets("X_Analyse_Intégrité").Activate
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wsOutput = Nothing
@@ -536,7 +536,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshBD_Clients
     Dim ws As Worksheet: Set ws = wshBD_Clients
@@ -620,7 +620,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
 
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshBD_fournisseurs
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
@@ -701,7 +701,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshENC_Détails
     Dim ws As Worksheet: Set ws = wshENC_Détails
@@ -822,7 +822,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'Clients Master File
     Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
@@ -923,7 +923,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshFAC_Détails
     Dim ws As Worksheet: Set ws = wshFAC_Détails
@@ -1015,7 +1015,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshFAC_Entête
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -1169,7 +1169,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
@@ -1320,7 +1320,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshFAC_Projets_Détails
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
@@ -1421,7 +1421,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
@@ -1557,7 +1557,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
@@ -1739,7 +1739,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshTEC_TdB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -1962,7 +1962,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'dnrPlanComptable_All
     Dim arr As Variant
@@ -2065,8 +2065,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Analyse_Intégrité")
-    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("Heures_Jour_Prof")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2582,14 +2582,14 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
        
         Case "wshDEB_Trans"
             With wshDEB_Trans
-                .Range("A" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("C" & firstDataRow & ":C" & lastUsedRow & ", " & _
-                       "D" & firstDataRow & ":D" & lastUsedRow & ", " & _
-                       "F" & firstDataRow & ":F" & lastUsedRow & ", " & _
-                       "H" & firstDataRow & ":H" & lastUsedRow & ", " & _
-                       "O" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("J" & firstDataRow & ":N" & lastUsedRow)
+                .Range("A2:Q" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("C2:C" & lastUsedRow & ", " & _
+                       "D2:D" & lastUsedRow & ", " & _
+                       "F2:F" & lastUsedRow & ", " & _
+                       "H2:H" & lastUsedRow & ", " & _
+                       "P2:P" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("J2:O" & lastUsedRow)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With

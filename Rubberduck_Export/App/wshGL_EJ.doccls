@@ -24,14 +24,13 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
    'Hide column A & B
     With ws
         .Unprotect
-'        .Range("A:B").EntireColumn.Hidden = True
+        .Range("A:B").EntireColumn.Hidden = True
     End With
     
     Call SetTabOrder(ws)
     
     With ws
         .Range("K4").value = Now()
-        .Range("F4").Activate
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -125,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Format$(Now(), "dd/mm/yyyy") Then

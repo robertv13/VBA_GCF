@@ -43,7 +43,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         End If
         
         'Erase & Create output Worksheet
-        Call CreateOrReplaceWorksheet("GL_Rapport_Out")
+        Call CreateOrReplaceWorksheet("X_GL_Rapport_Out")
         
         'Setup report header
         Call Set_Up_Report_Headers_And_Columns
@@ -153,7 +153,7 @@ End Sub
 
 Sub print_results_From_GL_Trans(compte As String)
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("GL_Rapport_Out")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
     Dim solde As Currency
@@ -242,7 +242,7 @@ End Sub
 
 Sub Set_Up_Report_Headers_And_Columns()
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("GL_Rapport_out")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
     With ws
         .Cells(1, 1) = "Compte"
@@ -313,7 +313,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).Row + 1
+    lastUsedRow = ThisWorkbook.Worksheets("X_GL_Rapport_Out").Range("H999999").End(xlUp).Row + 1
     Range("A3:H" & lastUsedRow).Select
     
     With ActiveSheet.PageSetup
@@ -358,7 +358,7 @@ Sub GL_Rapport_Back_To_Menu()
    
     wshGL_Rapport.Visible = xlSheetHidden
     On Error Resume Next
-    ThisWorkbook.Worksheets("GL_Rapport_Out").Visible = xlSheetHidden
+    ThisWorkbook.Worksheets("X_GL_Rapport_Out").Visible = xlSheetHidden
     On Error GoTo 0
 
     wshMenuGL.Activate

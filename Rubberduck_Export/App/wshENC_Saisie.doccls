@@ -16,6 +16,7 @@ Private Sub Worksheet_Activate()
     Call FAC_Entête_Import_All
     Call ENC_Détails_Import_All
     Call ENC_Entête_Import_All
+    Call GL_Trans_Import_All
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -23,6 +24,8 @@ Private Sub Worksheet_Activate()
     Me.Application.Calculation = xlCalculationAutomatic
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("ENC_Saisie")
+    
+    Me.columns("A:B").Hidden = True
     
     'Protect the Worksheet
     With ws
@@ -94,7 +97,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Call ENC_Load_OS_Invoices(clientCode)
         Application.EnableEvents = True
     End If
-        
+    
     'Date has changed
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
@@ -106,7 +109,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -115,20 +118,21 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
         
-'        'Si la cellule est vide après la modification
-'        If IsEmpty(Target.value) Then
-'            'Insérer la date du jour
-'            Application.EnableEvents = False
-'            Target.value = Date
-'            Application.EnableEvents = True
-'        End If
     End If
     
-    'Apply checkbox has changed ?
-    'See Apply_Click Procedure (OnAction with every Checkbox)
+    'Force TAB order after a cell has been changed
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
+        Me.Range("K5").Select
+    ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
+        Me.Range("F7").Select
+    ElseIf Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        Me.Range("K7").Select
+    ElseIf Not Intersect(Target, Me.Range("K7")) Is Nothing Then
+        Me.Range("F9").Select
+    End If
 
 End Sub

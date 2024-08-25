@@ -121,6 +121,10 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("TVQ").value = CDbl(wshDEB_Saisie.Range("K" & l).value)
             rs.Fields("Crédit_TPS").value = CDbl(wshDEB_Saisie.Range("L" & l).value)
             rs.Fields("Crédit_TVQ").value = CDbl(wshDEB_Saisie.Range("M" & l).value)
+            'Montant de dépense (Total - creditTPS - creditTVQ)
+            rs.Fields("Dépense").value = CDbl(wshDEB_Saisie.Range("I" & l).value _
+                                              - wshDEB_Saisie.Range("L" & l).value _
+                                              - wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
 '            rs.Fields("TimeStamp").value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
             rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
@@ -175,8 +179,12 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
         wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
         wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
-        wshDEB_Trans.Range("O" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("P" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+        '$ dépense = Total - creditTPS - creditTVQ
+        wshDEB_Trans.Range("O" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value _
+                                                      - wshDEB_Saisie.Range("L" & i).value _
+                                                      - wshDEB_Saisie.Range("M" & i).value
+        wshDEB_Trans.Range("P" & rowToBeUsed).value = ""
+        wshDEB_Trans.Range("Q" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -200,7 +208,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     If Trim(wshDEB_Saisie.Range("M6").value) <> "" Then
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
     End If
-    source = "DÉBOURS-" & Format$(wshDEB_Saisie.Range("B1").value, "000000")
+    source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").value, "00000")
     
     Dim MyArray() As String
     ReDim MyArray(1 To 16, 1 To 4)
@@ -483,13 +491,24 @@ Public Sub DEB_Saisie_Clear_All_Cells()
 
     'Vide les cellules
     Application.EnableEvents = False
+    
     With wshDEB_Saisie
         .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
         .Range("O4").value = Format$(Now(), "mm/dd/yyyy")
         .ckbRecurrente = False
     End With
+    
+    With wshDEB_Saisie.Range("F4:H4, O4, F6:I6, M6, O6, E9:O23").Interior '2024-08-25 @ 09:43
+            .Pattern = xlNone
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+    End With
+
     Application.EnableEvents = True
     
+    wshDEB_Saisie.Protect UserInterfaceOnly:=True
+    wshDEB_Saisie.EnableSelection = xlUnlockedCells
+
     Call End_Timer("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
 
 End Sub
@@ -503,15 +522,15 @@ Sub DEBOURS_Back_To_Menu()
     
 End Sub
 
-Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
+Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
                                   total As Currency, _
                                   gst As Currency, pst As Currency, _
                                   gstCredit As Currency, pstCredit As Currency, _
                                   netAmount As Currency)
 
     Dim gstRate As Double, pstRate As Double
-    gstRate = Fn_Get_Tax_Rate(d, "F")
-    pstRate = Fn_Get_Tax_Rate(d, "P")
+    gstRate = Fn_Get_Tax_Rate(d, "TPS")
+    pstRate = Fn_Get_Tax_Rate(d, "TVQ")
     
     If total <> 0 Then 'Calculate the amount before taxes
         'GST calculation
@@ -528,7 +547,7 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
             pst = 0
         End If
         
-        'Tax credits
+        'Tax credits - REP cust the credit by 50%
         If taxCode <> "REP" Then
             gstCredit = gst
             pstCredit = pst
@@ -537,6 +556,7 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
             pstCredit = Round(pst / 2, 2)
         End If
         
+        'Net amount (Expense) = Total - gstCredit - pstCredit
         netAmount = total - gstCredit - pstCredit
         Exit Sub
     End If
@@ -567,5 +587,4 @@ Sub Calculate_gst_PST_And_Credits(d As Date, taxCode As String, _
     End If
     
 End Sub
-
 
