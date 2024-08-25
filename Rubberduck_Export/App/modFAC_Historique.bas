@@ -52,13 +52,13 @@ Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
         'Setup the destination Range and clear it before applying AdvancedFilter
         Dim lastUsedRow As Long
         Dim destinationRng As Range: Set destinationRng = .Range("Z2:AU2")
-        lastUsedRow = .Range("Z99999").End(xlUp).row
+        lastUsedRow = .Range("Z99999").End(xlUp).Row
         If lastUsedRow > 2 Then
             ws.Range("Z3:AU" & lastUsedRow).ClearContents
         End If
         
         'Setup source data including headers
-        lastUsedRow = .Range("A99999").End(xlUp).row
+        lastUsedRow = .Range("A99999").End(xlUp).Row
         If lastUsedRow < 3 Then Exit Sub 'No data to filter
         Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
         
@@ -68,7 +68,7 @@ Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
         ' Apply the advanced filter
         sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
         
-        lastUsedRow = .Range("Z99999").End(xlUp).row
+        lastUsedRow = .Range("Z99999").End(xlUp).Row
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.clear
@@ -97,13 +97,13 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
         'Setup the destination Range and clear it before applying AdvancedFilter
         Dim lastUsedRow As Long
         Dim destinationRng As Range: Set destinationRng = .Range("AY2:BP2")
-        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
         If lastUsedRow > 2 Then
             ws.Range("AY3:BP" & lastUsedRow).ClearContents
         End If
         
         'Setup source data including headers
-        lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+        lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
         If lastUsedRow < 3 Then Exit Sub 'No data to filter
         Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
         
@@ -113,7 +113,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
         ' Apply the advanced filter
         sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
         
-        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.clear
@@ -140,7 +140,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     Dim ws2 As Worksheet: Set ws2 = wshENC_Détails
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    lastUsedRow = ws.Range("Z9999").End(xlUp).Row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
     
     Dim arr() As Variant
@@ -258,7 +258,7 @@ Sub Display_PDF_Invoice()
     'Determine which icon was clicked and get the corresponding row number
     Dim targetCell As Range
     Set targetCell = ActiveSheet.Shapes(Application.Caller).TopLeftCell
-    rowNumber = targetCell.row
+    rowNumber = targetCell.Row
     
     'Assuming the invoice number is in column E (5th column)
     fullPDFFileName = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
@@ -298,11 +298,11 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
     
     'Clear previous results
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    lastUsedRow = ws.Range("Z9999").End(xlUp).Row
     ws.Range("Z3:AU" & lastUsedRow).ClearContents
 
     'Define the source range including headers
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
 
     'Define the criteria range including headers
@@ -315,7 +315,7 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
     srcRange.AdvancedFilter action:=xlFilterCopy, criteriaRange:=criteriaRange, CopyToRange:=destRange, Unique:=False
     
     Dim lastResultRow As Long
-    lastResultRow = ws.Range("Z9999").End(xlUp).row
+    lastResultRow = ws.Range("Z9999").End(xlUp).Row
     If lastResultRow < 4 Then Exit Sub
     With ws.Sort 'Sort - Inv_No
         .SortFields.clear

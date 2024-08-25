@@ -45,7 +45,7 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
 '    vbaComponent.Properties("_CodeName").value = "wshADMIN"
     
     'Close the source workbook
-    sourceWorkbook.Close saveChanges:=False
+    sourceWorkbook.Close SaveChanges:=False
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
 
@@ -621,7 +621,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     wshFAC_Projets_Détails.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
@@ -632,7 +632,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
@@ -687,7 +687,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     wshFAC_Projets_Entête.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).Row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
@@ -698,7 +698,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).Row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
@@ -791,7 +791,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     Application.ScreenUpdating = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).Row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
     If lastUsedRow > 1 Then
@@ -851,7 +851,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
-    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).Row
     
     'Clear all cells, but the headers, in the target worksheet
     If saveLastRow > 1 Then

@@ -12,7 +12,7 @@ Sub Get_Invoice_Data(noFact As String)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     Dim result As Variant
     Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.Offset(0, 0).Resize(lastUsedRow, 1)
@@ -167,7 +167,7 @@ Sub Show_Unconfirmed_Invoice()
     
     'Clear contents or the area
     Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.rows.count, "P").End(xlUp).row
+    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.rows.count, "P").End(xlUp).Row
     If lastUsedRow > 3 Then
         wshFAC_Confirmation.Range("P4:AA" & lastUsedRow).ClearContents
     End If
@@ -178,7 +178,7 @@ Sub Show_Unconfirmed_Invoice()
     Call FAC_Entête_AdvancedFilter_AC_C
     
     Dim lastUsedRowAF As Long
-    lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+    lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
     If lastUsedRowAF < 3 Then
         GoTo Clean_Exit
     End If
@@ -265,7 +265,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     
     'Determine the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = wsFees.Cells(wsFees.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsFees.Cells(wsFees.rows.count, "A").End(xlUp).Row
     
     'Get Invoice number
     Dim invNo As String
@@ -283,11 +283,11 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
         Application.EnableEvents = False
         Do
             'Display values in the worksheet
-            wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
+            wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.Row, 3).value
             wshFAC_Confirmation.Range("G" & rowFeesSummary).value = _
-                        CDbl(Format$(wsFees.Cells(cell.row, 4).value, "##0.00"))
+                        CDbl(Format$(wsFees.Cells(cell.Row, 4).value, "##0.00"))
             wshFAC_Confirmation.Range("H" & rowFeesSummary).value = _
-                        CDbl(Format$(wsFees.Cells(cell.row, 5).value, "##,##0.00 $"))
+                        CDbl(Format$(wsFees.Cells(cell.Row, 5).value, "##,##0.00 $"))
             rowFeesSummary = rowFeesSummary + 1
             'Find the next cell with the invNo
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
@@ -397,7 +397,7 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
     Dim lastUsedRow
-    lastUsedRow = wsGL.Range("A99999").End(xlUp).row
+    lastUsedRow = wsGL.Range("A99999").End(xlUp).Row
     Dim rngToSearch As Range: Set rngToSearch = wsGL.Range("D1:D" & lastUsedRow)
     
     'Use Range.Find to locate the first cell with the invNo
@@ -494,7 +494,7 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range
@@ -502,7 +502,7 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     
     Dim r As Long, rowToBeUpdated As Long, TECID As Long
     If Not foundRange Is Nothing Then
-        r = foundRange.row
+        r = foundRange.Row
         ws.Cells(r, 3).value = "C"
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
@@ -524,7 +524,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range
@@ -532,7 +532,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     
     Dim r As Long
     If Not foundRange Is Nothing Then
-        r = foundRange.row
+        r = foundRange.Row
         Dim dateFact As Date
         dateFact = ws.Cells(r, 2).value
         Dim hono As Currency

@@ -9,7 +9,7 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
 
     'Find the last row with data in column A
     Dim lastRow As Long
-    lastRow = ws.Range("A9999").End(xlUp).row
+    lastRow = ws.Range("A9999").End(xlUp).Row
     Dim firstNewRow As Long
     firstNewRow = lastRow - numberRows + 1
 
@@ -25,7 +25,7 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Application.CutCopyMode = False
 
     'Save and close the workbook
-    wb.Close saveChanges:=True
+    wb.Close SaveChanges:=True
 
 End Sub
 
@@ -124,9 +124,9 @@ Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
     Set wsTgt = ThisWorkbook.Worksheets("HresJourProf")
     
     Dim lastUsedRowSrc As Long
-    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).row '2024-08-15 @ 06:17
+    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
     
-    wsTgt.Range("A2:H" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).row).ClearContents
+    wsTgt.Range("A2:H" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
     
     'Copy columns A to H (from Source to Target), using Copy and Paste Special
     wsSrc.Range("A2:H" & lastUsedRowSrc).Copy
@@ -158,7 +158,7 @@ Sub Update_Pivot_Table() '2024-08-15 @ 06:34
     
     'Find the last row of your data
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Define the new data range
     Dim rngData As Range
@@ -207,7 +207,7 @@ Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
     If modeOper = 2 Then
         With wshzDocLogAppli
             Dim lastUsedRow As Long
-            lastUsedRow = .Range("A99999").End(xlUp).row
+            lastUsedRow = .Range("A99999").End(xlUp).Row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
             .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
             .Range("B" & lastUsedRow).value = ThisWorkbook.name
@@ -242,7 +242,7 @@ Sub End_Timer(subName As String, t As Double)
     If modeOper = 2 Then
         With wshzDocLogAppli
             Dim lastUsedRow As Long
-            lastUsedRow = .Range("A99999").End(xlUp).row
+            lastUsedRow = .Range("A99999").End(xlUp).Row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
             .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
             .Range("B" & lastUsedRow).value = ThisWorkbook.name
@@ -707,21 +707,32 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshENC_Détails
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRowDetails As Long
-    lastUsedRowDetails = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRowDetails = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     If lastUsedRowDetails <= 2 - headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
     
+    Dim col As Integer, nbCol As Integer
+    col = 1
+    'Boucle pour trouver la première colonne entièrement vide
+    Do While col <= ws.columns.count
+        If ws.Cells(1, col).value = "" Then
+            nbCol = col
+            Exit Do
+        End If
+        col = col + 1
+    Loop
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRowDetails - headerRow, "###,##0") & _
-        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+        " lignes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
     'ENC_Entête Worksheet
     Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
     Dim lastUsedRowEntete As Long
-    lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).row
+    lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).Row
     Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
     Dim strPmtNo As String
     Dim i As Long
@@ -732,14 +743,14 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'FAC_Entête Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
     Dim lastUsedRowFacEntete As Long
-    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).row
+    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).Row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Détails'")
     r = r + 1
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim pmtNo As Long, oldpmtNo As Long
@@ -816,14 +827,14 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Clients Master File
     Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
     Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsClients.Cells(wsClients.rows.count, "B").End(xlUp).row
+    lastUsedRowClient = wsClients.Cells(wsClients.rows.count, "B").End(xlUp).Row
     Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
     
     'wshENC_Entête
     Dim ws As Worksheet: Set ws = wshENC_Entête
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -855,7 +866,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -918,7 +929,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -930,8 +941,9 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
-    
-    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRow)
+    Dim lastUsedRowEntete As Long
+    lastUsedRowEntete = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRowEntete)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
     r = r + 1
@@ -941,23 +953,23 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = wshFAC_Détails.Range("A1").CurrentRegion.Offset(1, 0).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
     Dim Inv_No As String, oldInv_No As String
     Dim result As Variant
     For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
-        Inv_No = arr(i, 1)
+        Inv_No = CStr(arr(i, 1))
         If Inv_No <> oldInv_No Then
-            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1).value, _
-                                                       rngMaster, _
-                                                       rngMaster, _
-                                                       "Not Found", _
-                                                       0, _
-                                                       1)
+             result = Application.WorksheetFunction.XLookup(Inv_No, _
+                                                    rngMaster, _
+                                                    rngMaster, _
+                                                    "Not Found", _
+                                                    0, _
+                                                    1)
 
-            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
+'            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
             oldInv_No = Inv_No
         End If
         If result = "Not Found" Then
@@ -1009,7 +1021,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
        r = r + 2
@@ -1040,7 +1052,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1163,7 +1175,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -1195,7 +1207,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1272,20 +1284,20 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures    : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00$"), " ", 13, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants payés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00$"), " ", 13, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir      : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00$"), " ", 13, "L"))
     r = r + 2
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures    : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00$"), " ", 13, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants payés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 13, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir      : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 13, "L"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1314,7 +1326,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -1326,7 +1338,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
-    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
@@ -1344,7 +1356,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1415,7 +1427,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -1441,7 +1453,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows - 1, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1551,7 +1563,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshGL_Trans
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -1606,7 +1618,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     ReDim sum_arr(1 To 2500, 1 To 3)
     
     'Array pointer
-    Dim row As Long: row = 1
+    Dim Row As Long: Row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1617,9 +1629,9 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
-            dict_GL_Entry.add GL_Entry_No, row
-            sum_arr(row, 1) = GL_Entry_No
-            row = row + 1
+            dict_GL_Entry.add GL_Entry_No, Row
+            sum_arr(Row, 1) = GL_Entry_No
+            Row = Row + 1
         End If
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
@@ -1733,7 +1745,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -2060,7 +2072,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Cette feuille est vide !!!")
         r = r + 2
@@ -2475,7 +2487,7 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
     ws.Cells.FormatConditions.delete
     
     'Determine the range excluding header rows
-    Set DataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).row, rng.columns.count))
+    Set DataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).Row, rng.columns.count))
 
     'Add the standard conditional formatting
     Dim formula As String
@@ -2826,8 +2838,8 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=False
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=False
     
     'Output differences
     If diffLog <> "" Then
@@ -2900,7 +2912,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print wsProd.name, " Prod: ", wsProd.Cells(1, nbColProd).value
         Loop Until wsProd.Cells(1, nbColProd).value = ""
         nbColProd = nbColProd - 1
-        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
+        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).Row
         
         'Determine number of columns and rows in Dev Workbook
         Dim nbColDev As Integer, nbRowDev As Long
@@ -2910,7 +2922,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print wsDev.name, " Dev : ", wsDev.Cells(1, nbColDev).value
         Loop Until wsProd.Cells(1, nbColDev).value = ""
         nbColDev = nbColDev - 1
-        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
+        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).Row
         
         diffRow = diffRow + 2
         wsDiff.Cells(diffRow, 1).value = wsName
@@ -2976,8 +2988,8 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=False
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=False
     
     'Output differences
     If diffLogMess <> "" Then

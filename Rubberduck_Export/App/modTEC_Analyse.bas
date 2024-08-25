@@ -10,7 +10,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
     Dim lastUsedRowClient
-    lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.rows.count, "B").End(xlUp).row
+    lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.rows.count, "B").End(xlUp).Row
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
     Dim i As Long
@@ -61,7 +61,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Set the source worksheet, lastUsedRow and lastUsedCol
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
     'Find the last row with data in the source worksheet
-    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).Row
     'Find the first empty column from the left in the source worksheet
     firstEmptyCol = 1
     Do Until IsEmpty(wsSource.Cells(2, firstEmptyCol))
@@ -76,7 +76,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Cells.RemoveSubtotal
     
     Dim destLastUsedRow As Long
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 6 Then destLastUsedRow = 6
     wsDest.Range("A6:I" & destLastUsedRow).ClearContents
     
@@ -129,7 +129,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = False
    
     'Find the last row in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
 
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.clear
@@ -157,7 +157,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = False
     
     'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     Application.DisplayAlerts = False
     wsDest.Range("A6:I" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
         TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
@@ -165,7 +165,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Range("A:B").EntireColumn.Hidden = True
 
     'Group the data to show subtotals in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     wsDest.Outline.ShowLevels RowLevels:=2
     
     'Add a formula to sum the billed amounts at the top row
@@ -305,9 +305,9 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
     For Each cell In rng
         If InStr(1, cell.value, "Total ", vbTextCompare) > 0 Then
             If totalRange Is Nothing Then
-                Set totalRange = ws.Cells(cell.row, 8) 'Column H
+                Set totalRange = ws.Cells(cell.Row, 8) 'Column H
             Else
-                Set totalRange = Union(totalRange, ws.Cells(cell.row, 8))
+                Set totalRange = Union(totalRange, ws.Cells(cell.Row, 8))
             End If
         End If
     Next cell
@@ -359,7 +359,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     'Determine the last row used
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Clear the Hours Summary area
     Call Clean_Up_Summary_Area(ws)
@@ -476,7 +476,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
 
     Dim wsSource As Worksheet: Set wsSource = wshFAC_Projets_Entête
     Dim sourceLastUsedRow As Long
-    sourceLastUsedRow = wsSource.Range("A9999").End(xlUp).row
+    sourceLastUsedRow = wsSource.Range("A9999").End(xlUp).Row
     
     Dim wsActive As Worksheet: Set wsActive = wshTEC_Analyse
     Dim rngTotal As Range: Set rngTotal = wsActive.Range("C1:C" & activeLastUsedRow)
@@ -597,7 +597,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As Long, fr As Long, lr As L
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    lastUsedRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
     rn = lastUsedRow + 1
     
     Dim dateTEC As String, TimeStamp As String
@@ -718,7 +718,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).row
+    lastUsedRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).Row
     rn = lastUsedRow + 1
     
     Dim dateTEC As String, TimeStamp As String

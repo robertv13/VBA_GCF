@@ -64,7 +64,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         'Do we have pending requests for invoice ?
         Dim lastUsedRow As Long, liveOne As Long
-        lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
+        lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).Row
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
@@ -87,7 +87,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             projetID = CLng(wshFAC_Brouillon.Range("B52").value)
             'Get the Entête for this projetID
-            lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).row
+            lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).Row
             Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
             Dim result As Variant
             result = Application.WorksheetFunction.XLookup(projetID, _
@@ -248,7 +248,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         
     'Adjust hourly rate base on the date
     Dim lastUsedProfInSummary As Long
-    lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).row
+    lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).Row
     
     Dim dateTauxHoraire As Date
     dateTauxHoraire = d
@@ -385,7 +385,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     If rngSource Is Nothing Then
         MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
-        wbSource.Close saveChanges:=False
+        wbSource.Close SaveChanges:=False
         Set wbSource = Nothing
         Exit Sub
     End If
@@ -407,7 +407,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     Application.CutCopyMode = False
     
     'Step 5 - Close and release the Excel file
-    wbSource.Close saveChanges:=False
+    wbSource.Close SaveChanges:=False
     
     'Cleanup - 2024-07-27 @ 07:39
 '    Set rngDestination = Nothing
@@ -440,7 +440,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Application.EnableEvents = False
     
     Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row 'First line of data is at row 7
+    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
     If lastRow > 6 Then
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
@@ -490,7 +490,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
     With wshTEC_Local
         'Is there anything to filter ?
         Dim lastSourceRow As Long, lastResultRow As Long
-        lastSourceRow = .Range("A99999").End(xlUp).row 'Last TEC Entry row
+        lastSourceRow = .Range("A99999").End(xlUp).Row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
         'Define the source area Range
@@ -498,7 +498,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         
         'Define and Clear the destination area Range
         Dim dRng As Range
-        lastResultRow = .Range("AQ9999").End(xlUp).row
+        lastResultRow = .Range("AQ9999").End(xlUp).Row
         If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).ClearContents
         Set dRng = .Range("AQ2:BE2")
         
@@ -522,7 +522,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         'Do the Advanced Filter
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, Unique:=True
         
-        lastResultRow = .Range("AQ9999").End(xlUp).row
+        lastResultRow = .Range("AQ9999").End(xlUp).Row
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -564,7 +564,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()")
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("AQ9999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Range("AQ9999").End(xlUp).Row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -591,7 +591,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         rng.value = arr 'RMV
     End With
     
-    lastUsedRow = wshFAC_Brouillon.Range("D9999").End(xlUp).row
+    lastUsedRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row
     If lastUsedRow < 7 Then Exit Sub 'No rows
 
     With wshFAC_Brouillon
@@ -692,7 +692,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
+Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes()")
     
@@ -705,23 +705,23 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
     ws.Unprotect
     On Error GoTo 0
     
-    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("C7:C" & row)
+    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("C7:C" & Row)
     
     Dim cell As Range
     Dim cbx As checkBox
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If Cells(cell.row, 8).value = False Then 'IsInvoiced = False
+    If Cells(cell.Row, 8).value = False Then 'IsInvoiced = False
         'Create a checkbox linked to the cell
         Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.width, cell.Height)
         With cbx
-            .name = "chkBox - " & cell.row
+            .name = "chkBox - " & cell.Row
             .value = True
             .text = ""
             .linkedCell = cell.Address
             .Display3DShading = True
         End With
-        ws.Range("C" & cell.row).Locked = False
+        ws.Range("C" & cell.Row).Locked = False
     End If
     Next cell
 
@@ -733,14 +733,14 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
 '    ws.Protect UserInterfaceOnly:=True
      
     With ws
-        .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"
-        .Range("D7:D" & row).Font.Bold = False
+        .Range("D7:D" & Row).NumberFormat = "dd/mm/yyyy"
+        .Range("D7:D" & Row).Font.Bold = False
         
-        .Range("D" & row + 2).formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
-        .Range("D" & row + 2).NumberFormat = "##0.00"
-        .Range("D" & row + 2).Font.Bold = True
+        .Range("D" & Row + 2).formula = "=SUMIF(C7:C" & Row + 5 & ",True,G7:G" & Row + 5 & ")"
+        .Range("D" & Row + 2).NumberFormat = "##0.00"
+        .Range("D" & Row + 2).Font.Bold = True
         
-        .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
+        .Range("B19").formula = "=SUMIF(C7:C" & Row + 5 & ",True,G7:G" & Row + 5 & ")"
     End With
     
     Application.EnableEvents = True
@@ -755,7 +755,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long)
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
+Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes()")
     
@@ -776,14 +776,14 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     On Error GoTo 0
     
     'Lock the range
-    ws.Range("C7:C" & row).Locked = True
+    ws.Range("C7:C" & Row).Locked = True
     
     'Protect the worksheet
     ws.Protect UserInterfaceOnly:=True
     
-    wshFAC_Brouillon.Range("C7:C" & row).value = ""  'Remove text left over
-    wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula
-    wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the Grand total formula
+    wshFAC_Brouillon.Range("C7:C" & Row).value = ""  'Remove text left over
+    wshFAC_Brouillon.Range("D" & Row + 2).value = "" 'Remove the TEC selected total formula
+    wshFAC_Brouillon.Range("G" & Row + 2).value = "" 'Remove the Grand total formula
     
     'Unprotect the worksheet to LOCK the cells that were associated with checkbox
 
@@ -873,7 +873,7 @@ Sub Load_Invoice_Template(t As String)
     wshFAC_Finale.Range("B34:E63").ClearContents
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshAdmin.Range("Z999").End(xlUp).row
+    lastUsedRow = wshAdmin.Range("Z999").End(xlUp).Row
     
     'Get the services with the appropriate template letter
     Dim strServices As String

@@ -96,7 +96,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
         
     'Date has changed
-    If Not Intersect(Target, Me.Range("K3")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = CompleteDate(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
@@ -110,7 +110,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("K3").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("K5").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

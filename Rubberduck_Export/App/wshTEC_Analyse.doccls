@@ -65,7 +65,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Or _
         Not Intersect(Target, wshTEC_Analyse.columns("H")) Is Nothing Then
         
-        If Target.Cells.count = 1 And Target.row > 6 Then
+        If Target.Cells.count = 1 And Target.Row > 6 Then
             If Target.value <> "" Then
                 Call Delete_CheckBox
                 'Loop through each row in the target selection
@@ -82,8 +82,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                         End If
                     End If
                 Next cell
-                If Me.Cells(Target.row, 2) = "" Then
-                    Call Build_Hours_Summary(Target.row)
+                If Me.Cells(Target.Row, 2) = "" Then
+                    Call Build_Hours_Summary(Target.Row)
                 End If
             End If
         End If

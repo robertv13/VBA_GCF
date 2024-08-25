@@ -99,7 +99,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Dim suggestedAmount As Double
             suggestedAmount = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
             If suggestedAmount > 0 Then
-                Call Suggest_Amount(Target.row, suggestedAmount)
+                Call Suggest_Amount(Target.Row, suggestedAmount)
             End If
             Application.EnableEvents = True
         End If
@@ -196,7 +196,7 @@ Private Sub Process_Change(ByVal Target As Range)
     If Not Intersect(Target, GLRange) Is Nothing Then
         If Target.value <> "" Then
             Application.EnableEvents = False
-            wshDEB_Saisie.Range("Q" & Target.row).value = _
+            wshDEB_Saisie.Range("Q" & Target.Row).value = _
                 Fn_Get_GL_Code_From_GL_Description(Target.value)
             Application.EnableEvents = True
         End If
@@ -225,12 +225,12 @@ Private Sub Process_Change(ByVal Target As Range)
                 End If
                 cell.Offset(0, 5).Select
             Else
-                Debug.Print "Amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.row).value & " " & _
+                Debug.Print "Amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
                     Target.value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     netAmount
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
                 Call Calculate_gst_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
-                                                   wshDEB_Saisie.Range("H" & Target.row).value, _
+                                                   wshDEB_Saisie.Range("H" & Target.Row).value, _
                                                    Target.value, _
                                                    gst, pst, gstCredit, pstCredit, _
                                                    netAmount)
@@ -257,12 +257,12 @@ Private Sub Process_Change(ByVal Target As Range)
             Debug.Print cellNet.Address & " = " & cellNet.value
             If cellNet.value <> "" Then
                 amount = 0
-                Debug.Print "netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.row).value & " " & _
+                Debug.Print "netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
                     amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     Target.value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
                 Call Calculate_gst_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
-                                                   wshDEB_Saisie.Range("H" & Target.row).value, _
+                                                   wshDEB_Saisie.Range("H" & Target.Row).value, _
                                                    amount, _
                                                    gst, pst, gstCredit, pstCredit, _
                                                    Target.value)

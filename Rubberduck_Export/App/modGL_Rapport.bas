@@ -120,7 +120,7 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
-        lastResultUsedRow = .Range("P99999").End(xlUp).row
+        lastResultUsedRow = .Range("P99999").End(xlUp).Row
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.clear
@@ -157,8 +157,8 @@ Sub print_results_From_GL_Trans(compte As String)
     
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
     Dim solde As Currency
-    lastRowUsed_A = ws.Range("A99999").End(xlUp).row
-    lastRowUsed_B = ws.Range("B99999").End(xlUp).row
+    lastRowUsed_A = ws.Range("A99999").End(xlUp).Row
+    lastRowUsed_B = ws.Range("B99999").End(xlUp).Row
     If lastRowUsed_A > lastRowUsed_B Then
         lastRowUsed_AB = lastRowUsed_A
     Else
@@ -178,7 +178,7 @@ Sub print_results_From_GL_Trans(compte As String)
     End If
     
     Dim lastUsedTrans As Long
-    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row '2024-08-15 @ 15:46
+    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).Row '2024-08-15 @ 15:46
     If lastUsedTrans > 1 Then
         Dim i As Long, sumDT As Currency, sumCT As Currency
         'Read thru the rows
@@ -313,7 +313,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).row + 1
+    lastUsedRow = ThisWorkbook.Worksheets("GL_Rapport_Out").Range("H999999").End(xlUp).Row + 1
     Range("A3:H" & lastUsedRow).Select
     
     With ActiveSheet.PageSetup

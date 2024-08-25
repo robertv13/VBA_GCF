@@ -25,7 +25,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     For Each ws In wb.Worksheets
         ' Trouver la dernière ligne utilisée
         If InStr(ws.name, "Admin") <> 1 Then
-            lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+            lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).Row
             'Supprimer toutes les lignes sauf la première (en-tête)
             If lastUsedRow > 1 Then
                 ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
@@ -34,11 +34,11 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Next ws
 
     'Sauvegarder et fermer le workbook
-    wb.Close saveChanges:=True
+    wb.Close SaveChanges:=True
 
     'Step 2 - Enlève les rangées d'une feuille locale
     Set ws = wshTEC_TDB_Data
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     'Supprimer toutes les lignes sauf la première (en-tête)
     If lastUsedRow > 1 Then
         ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
@@ -96,7 +96,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Application.EnableEvents = True
     
     Set ws = wshzDocLogAppli
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     Application.EnableEvents = False
     ws.Unprotect
     ws.Range("A2:C" & lastUsedRow).clear

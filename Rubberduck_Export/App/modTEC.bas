@@ -166,7 +166,7 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
+        lastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
@@ -181,7 +181,7 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
         
-        lastResultRow = .Range("V99999").End(xlUp).row
+        lastResultRow = .Range("V99999").End(xlUp).Row
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.clear
@@ -231,7 +231,7 @@ Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
 
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A99999").End(xlUp).row 'Last wshTEC_Local Used Row
+        lastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
@@ -249,7 +249,7 @@ Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
         
-        lastResultRow = .Range("V99999").End(xlUp).row
+        lastResultRow = .Range("V99999").End(xlUp).Row
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.clear
@@ -460,7 +460,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     If TECID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
-        nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).row + 1
+        nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).Row + 1
         With wshTEC_Local
             .Range("A" & nextRowNumber).value = wshAdmin.Range("TEC_Current_ID").value
             .Range("B" & nextRowNumber).value = wshAdmin.Range("TEC_Prof_ID").value
@@ -481,7 +481,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TEC_ID
-        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
+        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
         Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(Abs(TECID), lookupRange)
@@ -538,7 +538,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Range("V999").End(xlUp).row
+    lastRow = wshTEC_Local.Range("V999").End(xlUp).Row
     If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
@@ -594,7 +594,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
     
     Dim arr() As Variant
     ReDim arr(1 To lastUsedRow - 2, 1 To 8) '2 rows of Heading
@@ -657,7 +657,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
     
     With wshTEC_Local
         Dim lastUsedRow As Long
-        lastUsedRow = .Range("A99999").End(xlUp).row
+        lastUsedRow = .Range("A99999").End(xlUp).Row
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
         .Range("AL10").value = sRng.Address & " - " & _
             .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
@@ -666,7 +666,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
         Dim cRng As Range: Set cRng = .Range("AK2:AO3")
         .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
         
-        lastUsedRow = .Range("AQ99999").End(xlUp).row
+        lastUsedRow = .Range("AQ99999").End(xlUp).Row
         Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
         dRng.Offset(1, 0).ClearContents
         .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
@@ -674,7 +674,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
             
         Dim lastResultRow As Long
-        lastResultRow = .Range("AQ99999").End(xlUp).row
+        lastResultRow = .Range("AQ99999").End(xlUp).Row
             If lastResultRow < 4 Then GoTo No_Sort_Required
             With .Sort
                 .SortFields.clear

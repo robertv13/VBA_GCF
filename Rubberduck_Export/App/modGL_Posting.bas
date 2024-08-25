@@ -87,7 +87,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     
     'What is the last used row in GL_Trans ?
     Dim rowToBeUsed As Long
-    rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).row + 1
+    rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).Row + 1
     
     Dim i As Long, j As Long
     'Loop through the array and post each row

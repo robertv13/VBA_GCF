@@ -67,7 +67,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Invoice Number is selected from Invoices to be confirmed
     If Not Intersect(Target, Me.columns(16)) Is Nothing And Target.Cells.count = 1 Then
         Dim selectedRow As Long
-        selectedRow = Target.row
+        selectedRow = Target.Row
         Me.Range("F5").value = Me.Cells(selectedRow, 16)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If

@@ -142,22 +142,22 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("E9:G23")) Is Nothing Then
         Application.EnableEvents = False
         With wshGL_EJ
-            If .Range("E" & Target.row).value <> "" Then
-                .Range("L" & Target.row).value = Fn_Get_GL_Code_From_GL_Description(.Range("E" & Target.row).value)
+            If .Range("E" & Target.Row).value <> "" Then
+                .Range("L" & Target.Row).value = Fn_Get_GL_Code_From_GL_Description(.Range("E" & Target.Row).value)
             End If
             
-            If Target.row > 9 And _
+            If Target.Row > 9 And _
                 (.Range("H26").value <> 0 Or .Range("I26").value <> 0) And _
                 .Range("H26").value <> .Range("I26").value Then
                     If .Range("H26").value > .Range("I26").value Then
-                        .Range("I" & Target.row).value = .Range("H26").value - .Range("I26").value
+                        .Range("I" & Target.Row).value = .Range("H26").value - .Range("I26").value
                         Application.EnableEvents = True
-                        .Range("I" & Target.row).Select
+                        .Range("I" & Target.Row).Select
                         Application.EnableEvents = False
                     Else
-                        .Range("H" & Target.row).value = .Range("I26").value - .Range("H26").value
+                        .Range("H" & Target.Row).value = .Range("I26").value - .Range("H26").value
                         Application.EnableEvents = True
-                        .Range("H" & Target.row).Select
+                        .Range("H" & Target.Row).Select
                         Application.EnableEvents = False
                     End If
             End If
@@ -167,7 +167,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
     If Not Intersect(Target, Range("H9:I23")) Is Nothing Then
-        If (wshGL_EJ.Range("H" & Target.row).value < 0 Or wshGL_EJ.Range("I" & Target.row).value < 0) Then
+        If (wshGL_EJ.Range("H" & Target.Row).value < 0 Or wshGL_EJ.Range("I" & Target.Row).value < 0) Then
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If

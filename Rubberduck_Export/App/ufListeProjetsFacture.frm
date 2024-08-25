@@ -20,7 +20,7 @@ Private Sub UserForm_Initialize()
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     Dim arr() As Variant

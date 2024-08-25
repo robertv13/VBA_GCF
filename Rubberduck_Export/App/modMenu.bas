@@ -736,7 +736,7 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         Application.EnableEvents = False
         
         Dim wb As Workbook: Set wb = ActiveWorkbook
-        ActiveWorkbook.Close saveChanges:=True
+        ActiveWorkbook.Close SaveChanges:=True
         
         Application.EnableEvents = True
         

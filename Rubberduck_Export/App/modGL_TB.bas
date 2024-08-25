@@ -10,7 +10,8 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Clear TB cells - Contents & formats
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).row
+    lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).Row
+    wshGL_BV.Unprotect '2024-08-24 @ 16:38
     wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).clear
 
     'Clear Detail transaction section
@@ -35,7 +36,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Call GL_TB_AdvancedFilter_By_GL("", minDate, dateCutOff)
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     
-    lastUsedRow = wshGL_Trans.Range("T999999").End(xlUp).row
+    lastUsedRow = wshGL_Trans.Range("T999999").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Sub
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
@@ -187,8 +188,8 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     End With
     
     'Use the Advanced Filter Result already prepared for TB
-    Dim row As Range, foundRow As Long, lastResultUsedRow As Long
-    lastResultUsedRow = wshGL_Trans.Range("T99999").End(xlUp).row
+    Dim Row As Range, foundRow As Long, lastResultUsedRow As Long
+    lastResultUsedRow = wshGL_Trans.Range("T99999").End(xlUp).Row
     If lastResultUsedRow <= 2 Then
         GoTo Exit_Sub
     End If
@@ -197,7 +198,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     'Find the first occurence of GlACct in AdvancedFilter Results on GL_Trans
     Dim searchRange As Range: Set searchRange = wshGL_Trans.Range("T1:T" & lastResultUsedRow)
     Dim foundCell As Range: Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, lookAt:=xlWhole)
-    foundRow = foundCell.row
+    foundRow = foundCell.Row
     
     'Check if the target value was found
     If foundRow = 0 Then
@@ -259,7 +260,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         
     'Set columns width for the detailled transactions list
     Dim rng As Range
-    lastResultUsedRow = ws.Range("M9999").End(xlUp).row
+    lastResultUsedRow = ws.Range("M9999").End(xlUp).Row
     Set rng = ws.Range("M5:M" & lastResultUsedRow)
     rng.ColumnWidth = 11
     Set rng = ws.Range("N5:N" & lastResultUsedRow)
@@ -337,7 +338,7 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
-        lastResultUsedRow = .Range("P99999").End(xlUp).row
+        lastResultUsedRow = .Range("P99999").End(xlUp).Row
         If lastResultUsedRow < 3 Then GoTo NoSort
         
         'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
@@ -434,7 +435,7 @@ Sub GL_TB_Setup_And_Print()
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print()")
     
     Dim lastRow As Long
-    lastRow = Range("D999").End(xlUp).row + 2
+    lastRow = Range("D999").End(xlUp).Row + 2
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
@@ -463,7 +464,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_TB:GL_TB_Setup_And_Print_Trans()")
     
     Dim lastRow As Long
-    lastRow = Range("M9999").End(xlUp).row
+    lastRow = Range("M9999").End(xlUp).Row
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range

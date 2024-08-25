@@ -169,7 +169,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
+    lastUsedRow = wsOutput.Range("A999").End(xlUp).Row 'Last Used Row
     wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
     
     wsOutput.Range("A2").Resize(r, 5).value = output
@@ -186,7 +186,7 @@ Sub Check_Invoice_Template()
     Dim ws As Worksheet: Set ws = wshAdmin
     Dim firstUsedRow As Long, lastUsedRow As Long
     firstUsedRow = 12
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    lastUsedRow = ws.Range("Z9999").End(xlUp).Row
     Dim rng As Range
     Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
     
@@ -305,7 +305,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Next ws
     
     'Close the workbook without saving changes
-    wb.Close saveChanges:=False
+    wb.Close SaveChanges:=False
     
     Call Array_2D_Resizer(arr, r, UBound(arr, 2))
     
@@ -326,7 +326,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & wbName & "' ***"
     
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
@@ -461,7 +461,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).Row
     If lastUsedRow > 1 Then
         wsOutput.Range("A2:F" & lastUsedRow).ClearContents
     End If
@@ -572,7 +572,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         wsOutput.columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Range("B99999").End(xlUp).row
+        lastUsedRow = wsOutput.Range("B99999").End(xlUp).Row
         Dim j As Long, oldWorksheet As String
         oldWorksheet = wsOutput.Range("B" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
@@ -583,7 +583,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Range("B99999").End(xlUp).row
+        lastUsedRow = wsOutput.Range("B99999").End(xlUp).Row
         With wsOutput.Range("B2:H" & lastUsedRow)
             On Error Resume Next
             Cells.FormatConditions.delete
@@ -659,7 +659,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocFormulas.Range("A9999").End(xlUp).row 'Last used row
+    lastUsedRow = wshzDocFormulas.Range("A9999").End(xlUp).Row 'Last used row
     If lastUsedRow > 1 Then wshzDocFormulas.Range("A2:G" & lastUsedRow).ClearContents
     
     'Create an Array to receive the formulas informations
@@ -762,14 +762,14 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
     Dim rng As Range
-    Dim row As Long, col As Long
-    row = ActiveCell.row
+    Dim Row As Long, col As Long
+    Row = ActiveCell.Row
     col = ActiveCell.Column
     
     Application.EnableEvents = False
     
     Dim r As Long
-    r = row
+    r = Row
     ws.Cells(r, col).value = "Type"
     ws.Cells(r, col + 1).value = "Shape Name"
     ws.Cells(r, col + 2).value = "ZOrder"
@@ -780,7 +780,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
     'Loop through all shapes on the worksheet
     Dim shp As Shape
-    r = row + 1
+    r = Row + 1
     For Each shp In ws.Shapes
         ws.Cells(r, col).value = shp.Type
         ws.Cells(r, col + 1).value = shp.name
@@ -848,7 +848,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     ws.Range("A2:I" & lastUsedRow).ClearContents
     
     'Loop through each named range in the workbook
@@ -918,7 +918,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A999").End(xlUp).row
+    lastUsedRow = ws.Range("A999").End(xlUp).Row
     Dim rng As Range: Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
@@ -1079,7 +1079,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         wsOutput.columns(7).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Range("B9999").End(xlUp).row
+        lastUsedRow = wsOutput.Range("B9999").End(xlUp).Row
         Dim j As Long, oldProcedure As String
         oldProcedure = wsOutput.Range("C" & lastUsedRow).value & wsOutput.Range("E" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
@@ -1090,7 +1090,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Range("B9999").End(xlUp).row
+        lastUsedRow = wsOutput.Range("B9999").End(xlUp).Row
         With wsOutput.Range("B2:G" & lastUsedRow)
             On Error Resume Next
             Cells.FormatConditions.delete
@@ -1331,12 +1331,12 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     End If
     
     'Set conditional formatting for the worksheet (alternate colors)
-    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    outputRow = wsOutputSheet.Range("A9999").End(xlUp).Row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
     Debug.Print rngArea.Address
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True) 'There are blankrows to account for
     
-    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    outputRow = wsOutputSheet.Range("A9999").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
     Dim header2 As String: header2 = ThisWorkbook.name
@@ -1464,7 +1464,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocSubsAndFunctions.Range("A9999").End(xlUp).row 'Last Used Row
+    lastUsedRow = wshzDocSubsAndFunctions.Range("A9999").End(xlUp).Row 'Last Used Row
     wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).ClearContents
 
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -1618,7 +1618,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & ThisWorkbook.name & "' ***"
     
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Range("A9999").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.name

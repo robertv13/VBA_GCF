@@ -10,7 +10,7 @@ Sub JE_Update()
     If Fn_Is_Ecriture_Balance = False Then Exit Sub
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).Row  'Last Used Row in wshGL_EJ
     If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
@@ -47,7 +47,7 @@ Sub Save_EJ_Recurrente(ll As Long)
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_EJ:Save_EJ_Recurrente()")
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Range("E99").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Range("E99").End(xlUp).Row  'Last Used Row in wshGL_EJ
     
     Call GL_EJ_Auto_Add_Record_To_DB(ll)
     Call GL_EJ_Auto_Add_Record_Locally(ll)
@@ -62,7 +62,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
-    rowJEAuto = wshGL_EJ_Recurrente.Range("C99999").End(xlUp).row  'Last Row used in wshGL_EJRecuurente
+    rowJEAuto = wshGL_EJ_Recurrente.Range("C99999").End(xlUp).Row  'Last Row used in wshGL_EJRecuurente
     
     Call wshGL_EJ_Clear_All_Cells
     rowJE = 9
@@ -112,10 +112,10 @@ Sub GL_EJ_Auto_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).Row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).row
+    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).Row
     If lastUsedRow2 > 1 Then
         wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
     End If
@@ -228,7 +228,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -338,7 +338,7 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long

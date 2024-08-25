@@ -58,7 +58,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Check if the selected cell is in column C or H
     If Not Intersect(Target, wshCC_Analyse.columns("A:K")) Is Nothing Then
-        If Target.Cells.count = 1 And Target.row > 6 Then
+        If Target.Cells.count = 1 And Target.Row > 6 Then
             'Loop through each row in the target selection
             Dim cell As Range
             Dim rowRange As Range

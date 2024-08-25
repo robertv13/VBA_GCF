@@ -6,7 +6,7 @@ Sub Main()
     'Setup the receiving worksheet and clear the previous results
     Dim ws As Worksheet: Set ws = wshCSV_File
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow > 1 Then
         ws.Range("A2:P" & lastUsedRow).ClearContents
     End If
@@ -39,7 +39,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     End If
     
     Dim lastUsedRow As Long, firstAvailRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     firstAvailRow = lastUsedRow + 1
     
     'Import data from external file into the worksheet
@@ -52,7 +52,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     End With
     
     'Correct all formats
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Range("A9999").End(xlUp).Row
     Call Fix_Columns(ws, firstAvailRow, lastUsedRow)
     
     Debug.Print fn & " a été importée avec succès, " & lastUsedRow - firstAvailRow & " lignes"

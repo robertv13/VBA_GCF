@@ -113,7 +113,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     If Not foundCell Is Nothing Then
         'With the foundCell get the the address, the row number and the value
         foundInfo(1) = foundCell.Address
-        foundInfo(2) = foundCell.row
+        foundInfo(2) = foundCell.Row
         foundInfo(3) = foundCell.Offset(0, cr - cs).value 'Return Column - Searching column
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     Else
@@ -151,7 +151,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         
         'Loop to collect all rows with the value
         Do
-            rowsToDelete.add cell.row
+            rowsToDelete.add cell.Row
             Set cell = searchRange.FindNext(cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
         
@@ -311,7 +311,7 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row '2024-08-18 @ 06:37
+    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).Row '2024-08-18 @ 06:37
     
     Dim resultArr() As Variant
     ReDim resultArr(1 To 1000)
@@ -343,7 +343,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
         Dim cell As Range
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, lookAt:=xlWhole)
         If Not cell Is Nothing Then
-            Fn_Find_Row_Number_TEC_ID = cell.row
+            Fn_Find_Row_Number_TEC_ID = cell.Row
         Else
             Fn_Find_Row_Number_TEC_ID = -1 'Not found
         End If
@@ -374,7 +374,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
 
     'Define the source data
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Range("A99999").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Function
     
     'Define the range for the source data
@@ -386,7 +386,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     
     'Define the destination range & clear the old data
     Dim destinationRng As Range: Set destinationRng = ws.Range("X3:AC3")
-    lastUsedRow = ws.Range("X9999").End(xlUp).row
+    lastUsedRow = ws.Range("X9999").End(xlUp).Row
     If lastUsedRow > 3 Then
         ws.Range("X4:AB" & lastUsedRow).ClearContents
     End If
@@ -394,7 +394,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     'Execute the AdvancedFilter
     sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
     
-    lastUsedRow = ws.Range("X9999").End(xlUp).row
+    lastUsedRow = ws.Range("X9999").End(xlUp).Row
     If lastUsedRow < 3 Then
         Fn_Get_AR_Balance_For_Invoice = 0
     Else
@@ -419,7 +419,7 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 
     Fn_Validate_Client_Number = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Range("B99999").End(xlUp).row
+    lastUsedRow = wshBD_Clients.Range("B99999").End(xlUp).Row
     Dim rngToSearch As Range
     Set rngToSearch = wshBD_Clients.Range("B1:B" & lastUsedRow)
     
@@ -688,7 +688,7 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     'Return the Type of invoice - 'C' for confirmed, 'AC' to be confirmed
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).row
+    lastUsedRow = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).Row
     Dim rngToSearch As Range
     Set rngToSearch = wshFAC_Entête.Range("A1:A" & lastUsedRow)
     
@@ -697,7 +697,7 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, lookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
-        Debug.Print invNo, rngFound.row, rngFound.Offset(0, 2).value
+        Debug.Print invNo, rngFound.Row, rngFound.Offset(0, 2).value
         Fn_Get_Invoice_Type = rngFound.Offset(0, 2).value
     Else
         Fn_Get_Invoice_Type = "C"
@@ -711,17 +711,17 @@ End Function
 
 Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
-    Dim row As Long
+    Dim Row As Long
     Dim rate As Double
     With wshAdmin
-        For row = 18 To 11 Step -1
-            If .Range("L" & row).value = taxType Then
-                If d >= .Range("M" & row).value Then
-                    rate = .Range("N" & row).value
+        For Row = 18 To 11 Step -1
+            If .Range("L" & Row).value = taxType Then
+                If d >= .Range("M" & Row).value Then
+                    rate = .Range("N" & Row).value
                     Exit For
                 End If
             End If
-        Next row
+        Next Row
     End With
     
     Fn_Get_Tax_Rate = rate
@@ -848,7 +848,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     Dim strLastInvoice As String
     strLastInvoice = ws.Cells(lastUsedRow, 1).value
     strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
@@ -865,7 +865,7 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     
     'Iterate through each row of the named range
-    Dim rowNum As Long, row As Range, rowRange As Range
+    Dim rowNum As Long, Row As Range, rowRange As Range
     Dim arr() As String
     If nbCol = 1 Then
         ReDim arr(1 To planComptable.rows.count) As String '1D array
@@ -876,30 +876,30 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
         'Get the entire row as a range
         Set rowRange = planComptable.rows(rowNum)
         'Process each cell in the row
-        For Each row In rowRange.rows
+        For Each Row In rowRange.rows
             If nbCol = 1 Then
-                arr(rowNum) = row.Cells(1, 2)
+                arr(rowNum) = Row.Cells(1, 2)
             ElseIf nbCol = 2 Then
-                arr(rowNum, 1) = row.Cells(1, 2)
-                arr(rowNum, 2) = row.Cells(1, 1)
+                arr(rowNum, 1) = Row.Cells(1, 2)
+                arr(rowNum, 2) = Row.Cells(1, 1)
             ElseIf nbCol = 3 Then
-                arr(rowNum, 1) = row.Cells(1, 2)
-                arr(rowNum, 2) = row.Cells(1, 1)
-                arr(rowNum, 3) = row.Cells(1, 3)
+                arr(rowNum, 1) = Row.Cells(1, 2)
+                arr(rowNum, 2) = Row.Cells(1, 1)
+                arr(rowNum, 3) = Row.Cells(1, 3)
             Else
-                arr(rowNum, 1) = row.Cells(1, 2)
-                arr(rowNum, 2) = row.Cells(1, 1)
-                arr(rowNum, 3) = row.Cells(1, 3)
-                arr(rowNum, 4) = row.Cells(1, 4)
+                arr(rowNum, 1) = Row.Cells(1, 2)
+                arr(rowNum, 2) = Row.Cells(1, 1)
+                arr(rowNum, 3) = Row.Cells(1, 3)
+                arr(rowNum, 4) = Row.Cells(1, 4)
             End If
-        Next row
+        Next Row
     Next rowNum
     
     Fn_Get_Plan_Comptable = arr
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set planComptable = Nothing
-    Set row = Nothing
+    Set Row = Nothing
     Set rowRange = Nothing
     
 End Function

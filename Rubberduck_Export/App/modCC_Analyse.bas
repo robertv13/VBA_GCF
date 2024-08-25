@@ -52,7 +52,7 @@ Sub CC_Sort_Group_And_Subtotal()
     'Set the source worksheet, lastUsedRow and lastUsedCol
     Dim wsSource As Worksheet: Set wsSource = wshFAC_Comptes_Clients
     'Find the last row with data in the source worksheet
-    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).Row
     'Find the first empty column from the left in the source worksheet
     firstEmptyCol = 1
     Do Until IsEmpty(wsSource.Cells(2, firstEmptyCol))
@@ -70,7 +70,7 @@ Sub CC_Sort_Group_And_Subtotal()
     On Error GoTo 0
     
     Dim destLastUsedRow As Long
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     wsDest.Range("A6:K" & destLastUsedRow).clear
     
     'Update the progress bar fill
@@ -125,7 +125,7 @@ Sub CC_Sort_Group_And_Subtotal()
     Application.ScreenUpdating = False
    
     'Find the last row in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
 
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.clear
@@ -152,7 +152,7 @@ Sub CC_Sort_Group_And_Subtotal()
     Application.ScreenUpdating = False
     
     'Add subtotals for amount columns at each change in ClientNom_ID (column C) in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     Application.DisplayAlerts = False
     wsDest.Range("A6:K" & destLastUsedRow).Subtotal GroupBy:=1, Function:=xlSum, _
         TotalList:=Array(6, 7, 8, 9, 10, 11), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
@@ -160,7 +160,7 @@ Sub CC_Sort_Group_And_Subtotal()
 '    wsDest.Range("A:B").EntireColumn.Hidden = True
 
     'Group the data to show subtotals in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     wsDest.Range("F6:K" & destLastUsedRow).NumberFormat = "#,##0.00 $"
     wsDest.Outline.ShowLevels RowLevels:=2
     

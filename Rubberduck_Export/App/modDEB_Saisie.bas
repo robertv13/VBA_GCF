@@ -18,7 +18,7 @@ Sub DEB_Saisie_Update()
     
     'Is every line of the transaction well entered ?
     Dim rowDebSaisie As Long
-    rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
     'Get the Fourn_ID
@@ -156,7 +156,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshDEB_Trans.Range("A99999").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -231,7 +231,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Process every lines
     Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Saisie.Range("E99").End(xlUp).row
+    lastUsedRow = wshDEB_Saisie.Range("E99").End(xlUp).Row
 
     Dim l As Long, arrRow As Long
     arrRow = 2 '1 is already used
@@ -274,7 +274,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto, rowDEB As Long
-    rowDEBAuto = wshDEB_Recurrent.Range("C99999").End(xlUp).row  'Last Row used in wshDEB_Recuurent
+    rowDEBAuto = wshDEB_Recurrent.Range("C99999").End(xlUp).Row  'Last Row used in wshDEB_Recuurent
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -317,7 +317,7 @@ Sub Save_DEB_Recurrent(ll As Long)
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:Save_DEB_Recurrent()")
     
     Dim rowDEBLast As Long
-    rowDEBLast = wshDEB_Saisie.Range("E99").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowDEBLast = wshDEB_Saisie.Range("E99").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
@@ -415,7 +415,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Recurrent.Range("C999").End(xlUp).row
+    lastUsedRow = wshDEB_Recurrent.Range("C999").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -451,10 +451,10 @@ Sub DEB_Recurrent_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshDEB_Recurrent.Range("A9999").End(xlUp).row
+    lastUsedRow1 = wshDEB_Recurrent.Range("A9999").End(xlUp).Row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshDEB_Recurrent.Range("O999").End(xlUp).row
+    lastUsedRow2 = wshDEB_Recurrent.Range("O999").End(xlUp).Row
     If lastUsedRow2 > 1 Then
         wshDEB_Recurrent.Range("O2:Q" & lastUsedRow2).ClearContents
     End If
