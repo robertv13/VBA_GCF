@@ -31,6 +31,9 @@ Private Sub Workbook_Open()
     wshMenu.Activate
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     
+'    'Protéger les structures du classeur avec un mot de passe
+'    ThisWorkbook.Protect Password:="pmdpf", Structure:=True
+
     'Protect wshMenu
     With wshMenu
         .Protect UserInterfaceOnly:=True

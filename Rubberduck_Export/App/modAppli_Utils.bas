@@ -3011,4 +3011,19 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
 End Sub
 
+Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
 
+    'r is the range
+    'ff is the Font Family
+    'fs is the Font Size
+    
+    With r.Font
+        .name = ff
+        .size = fs
+        .Underline = xlUnderlineStyleNone
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+        .ThemeFont = xlThemeFontNone
+    End With
+
+End Sub

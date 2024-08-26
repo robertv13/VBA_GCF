@@ -645,8 +645,10 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
+'    ThisWorkbook.Unprotect Password:="pmdpf"
     Set ws = ThisWorkbook.Worksheets.add(before:=wshMenu)
     ws.name = sheetName
+'    ThisWorkbook.Protect Password:="pmdpf"
     
     'Clean up - 2024-07-11 @ 08:27
     Set ws = Nothing

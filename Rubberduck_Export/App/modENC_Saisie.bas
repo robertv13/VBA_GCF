@@ -18,7 +18,10 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
         End If
         'Is there anything to work with ?
         lastResultRow = .Cells(.rows.count, "A").End(xlUp).Row
-        If lastResultRow < 3 Then Exit Sub
+        If lastResultRow < 3 Then
+            MsgBox "Il n'y aucune facture impayée pour ce client", vbOK + vbInformation
+            Exit Sub
+        End If
         
         'Setup criteria in wshFAC_Comptes_Clients
         .Range("M3").value = clientCode
@@ -138,7 +141,7 @@ Sub ENC_Update() '2024-08-22 @ 09:46
         Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
-        MsgBox "L'encaissement '" & pmtNo & "' a été renregistré avec succès", vbInformation
+        MsgBox "L'encaissement '" & pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
         Call Encaissement_Add_New 'Reset the form
         
@@ -532,10 +535,10 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
         Dim rowToBeUpdated As Long
         If Not foundRange Is Nothing Then
             rowToBeUpdated = foundRange.Row
-            ws.Cells(rowToBeUpdated, 9).value = ws.Cells(rowToBeUpdated, 9).value + wshENC_Saisie.Range("K" & rowToBeUpdated).value
-            ws.Cells(rowToBeUpdated, 10).value = ws.Cells(rowToBeUpdated, 10).value - wshENC_Saisie.Range("K" & rowToBeUpdated).value
-            If ws.Cells(rowToBeUpdated, 10).value = 0 Then
-                ws.Cells(rowToBeUpdated, 5) = "Paid"
+            ws.Range("I" & rowToBeUpdated).value = ws.Range("I" & rowToBeUpdated).value + wshENC_Saisie.Range("K" & r).value
+            ws.Range("J" & rowToBeUpdated).value = ws.Range("J" & rowToBeUpdated).value - wshENC_Saisie.Range("K" & r).value
+            If ws.Range("J" & rowToBeUpdated).value = 0 Then
+                ws.Range("E" & rowToBeUpdated) = "Paid"
             End If
         Else
             MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical

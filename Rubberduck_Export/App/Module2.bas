@@ -1,32 +1,38 @@
 Attribute VB_Name = "Module2"
 Option Explicit
 
-Sub Macro1()
-Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
-    columns("K:P").Select
-    Selection.ColumnWidth = 15
-    Range("P2").Select
-    With ActiveSheet.PivotTables("Tableau croisé dynamique1").PivotFields( _
-        "Hres/TEC")
-        .NumberFormat = "# ##0,00"
+Sub Macro2()
+Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro2 Macro
+'
+
+'
+    Range("M5:T65").Select
+    With Selection.Font
+        .name = "Aptos Narrow"
+        .size = 11
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+        .ThemeFont = xlThemeFontNone
     End With
-    Range("N2").Select
-    ActiveWindow.SmallScroll Down:=190
-    Range("N193").Select
-    With ActiveSheet.PivotTables("Tableau croisé dynamique1").PivotFields( _
-        "Hres/Nfact")
-        .NumberFormat = "# ##0,00"
+    With Selection.Font
+        .name = "Aptos Narrow"
+        .size = 9
+        .Strikethrough = False
+        .Superscript = False
+        .Subscript = False
+        .OutlineFont = False
+        .Shadow = False
+        .Underline = xlUnderlineStyleNone
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+        .ThemeFont = xlThemeFontNone
     End With
-    ActiveWindow.SmallScroll Down:=-80
-    Range("G136").Select
-    ActiveCell.FormulaR1C1 = "1"
-    Range("G137").Select
-    ActiveWindow.SmallScroll Down:=-5
-    Range("L123").Select
-    Calculate
-    Range("G136").Select
-    ActiveCell.FormulaR1C1 = "0"
-    Range("G137").Select
-    ActiveWindow.SmallScroll Down:=-105
-    Range("N7").Select
 End Sub

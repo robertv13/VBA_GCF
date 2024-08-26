@@ -25,7 +25,9 @@ Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("ENC_Saisie")
     
+    On Error Resume Next
     Me.columns("A:B").Hidden = True
+    On Error GoTo 0
     
     'Protect the Worksheet
     With ws

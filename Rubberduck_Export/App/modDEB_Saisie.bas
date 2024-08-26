@@ -46,6 +46,7 @@ Sub DEB_Saisie_Update()
     
     Application.EnableEvents = True
     
+    wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
     Call End_Timer("modDEB_Saisie:DEB_Saisie_Update()", timerStart)

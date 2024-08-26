@@ -223,6 +223,8 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     Dim d As Date, OK As Long
     
+    Application.ScreenUpdating = False
+    
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
@@ -258,21 +260,28 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         End With
     End With
         
-    'Set columns width for the detailled transactions list
     Dim rng As Range
     lastResultUsedRow = ws.Range("M9999").End(xlUp).Row
+    Set rng = ws.Range("M5:T" & lastResultUsedRow)
+    
+    'Fix font size & Family for the detailled transactions list
+    Call Fix_Font_Size_And_Family(rng, "Aptos Narrow", 9)
+    
+    'Set columns width for the detailled transactions list
     Set rng = ws.Range("M5:M" & lastResultUsedRow)
-    rng.ColumnWidth = 11
+    rng.ColumnWidth = 9
+    rng.HorizontalAlignment = xlCenter
+    
     Set rng = ws.Range("N5:N" & lastResultUsedRow)
-    rng.ColumnWidth = 8
+    rng.ColumnWidth = 6
     Set rng = ws.Range("O5:O" & lastResultUsedRow)
     rng.ColumnWidth = 40
     Set rng = ws.Range("P5:P" & lastResultUsedRow)
-    rng.ColumnWidth = 16
+    rng.ColumnWidth = 14
     Set rng = ws.Range("Q5:S" & lastResultUsedRow)
-    rng.ColumnWidth = 16
+    rng.ColumnWidth = 14
     Set rng = ws.Range("T5:T" & lastResultUsedRow)
-    rng.ColumnWidth = 30
+    rng.ColumnWidth = 35
 
     Dim visibleRows As Long
     visibleRows = ActiveWindow.visibleRange.rows.count
@@ -309,6 +318,8 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
 
 Exit_Sub:
 
+    Application.ScreenUpdating = True
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
     Set rng = Nothing
@@ -502,7 +513,7 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
         .FitToPagesTall = pagesTall 'Parameter 2
         'Page Header & Footer
         .LeftHeader = ""
-        .CenterHeader = "&""Aptos Narrow,Gras""&20 " & wshAdmin.Range("NomEntreprise").value
+        .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wshAdmin.Range("NomEntreprise").value
         .RightHeader = ""
         .LeftFooter = "&9&D - &T"
         .CenterFooter = ""
