@@ -7,11 +7,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     Application.ScreenUpdating = False
     
-    'Clear the worksheet from row 5 until the last row used
     Dim wsDest As Worksheet: Set wsDest = wshTEC_Analyse
+    
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
     
+    'Clear the worksheet from row 5 until the last row used
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 5 Then destLastUsedRow = 5
@@ -281,7 +282,15 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
-
+    
+    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
+    With ActiveWindow.Panes(2)
+        .ScrollRow = 7
+    End With
+    
+    'Optionnel : Sélectionne la cellule I7
+'    Range("I7").Select
+    
 '    Application.StatusBar = ""
 
 '    Call End_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
@@ -388,6 +397,9 @@ Sub Build_Hours_Summary(rowSelected As Long)
     Dim prof As Variant
     Dim profID As Long
     Dim tauxHoraire As Currency
+    
+    Application.EnableEvents = False
+    
     ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
         Cells(rowSelected, 10).value = prof
@@ -473,6 +485,8 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Call Add_And_Modify_Checkbox(saveR, rowSelected)
     
+    Application.EnableEvents = False
+
     'Clean up - 2024-07-11 @ 15:20
     Set dictHours = Nothing
     Set rngSort = Nothing
@@ -572,9 +586,9 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
             rs.Fields("Date").value = dateTEC
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
-            Dim valeur As String
-            valeur = "FAUX"
-            rs.Fields("estDetruite") = "Test"
+'            Dim valeur As String
+'            valeur = "FAUX"
+            rs.Fields("estDetruite") = CStr("FAUX")
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
             TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("TimeStamp").value = TimeStamp

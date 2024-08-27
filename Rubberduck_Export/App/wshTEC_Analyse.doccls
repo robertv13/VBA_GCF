@@ -11,6 +11,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    
     'Import transactions from MASTER file
     Call Client_List_Import_All
     Call TEC_Import_All
@@ -22,8 +24,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
-    
     Call TEC_Sort_Group_And_Subtotal
     
     Call SetTabOrder(ws)
@@ -35,13 +35,31 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     ws.Outline.ShowLevels RowLevels:=2
     
-    ActiveWindow.Panes(2).Activate
+    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
+    With ActiveWindow.Panes(2)
+        .ScrollRow = 7
+    End With
+
+    Dim currentScrollRow As Long
+    currentScrollRow = ActiveWindow.Panes(2).ScrollRow
     
+    With ActiveWindow.Panes(1)
+        Activate
+    End With
+    
+    'Désactive les événements pour éviter tout problème lors de la mise à jour
     Application.EnableEvents = False
-    ws.Select
+    
     ws.Range("H3").value = Format$(Now(), "mm/dd/yyyy")
     ws.Range("H3").Select
+    
+    'Réapplique la position du volet inférieur pour maintenir l'affichage à la ligne 7
+    ActiveWindow.Panes(2).ScrollRow = currentScrollRow
+    
+    'Reactive les événements
     Application.EnableEvents = True
+    
+    ws.Visible = xlSheetVisible
     
     'Cleaning memory - 2024-07-11 @ 10:14
     Set ws = Nothing
