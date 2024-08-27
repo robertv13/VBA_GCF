@@ -3,6 +3,7 @@
 Private Sub Worksheet_Activate()
 
     Dim ws As Worksheet: Set ws = wshMenuGL
+    
     With ws
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells

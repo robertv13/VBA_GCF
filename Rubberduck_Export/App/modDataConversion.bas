@@ -369,7 +369,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     Do Until rst.EOF
         rowNum = rowNum + 1
         descriptionGL = rst.Fields(0).value
-        codeGL = Fn_Get_GL_Code_From_GL_Description(descriptionGL)
+        codeGL = Fn_GetGL_Code_From_GL_Description(descriptionGL)
         amount = rst.Fields(1).value
         If amount > 0 Then
             totalDT = totalDT + amount

@@ -99,8 +99,10 @@ Public Sub ProtectCells(rng As Range)
     rng.Locked = True
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceOnly:=True
-
+    With rng.Parent
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
 
 End Sub
 
@@ -110,8 +112,10 @@ Public Sub UnprotectCells(rng As Range)
     rng.Locked = False
     
     'Protect the worksheet
-    rng.Parent.Protect UserInterfaceOnly:=True
-
+    With rng.Parent
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
 
 End Sub
 
@@ -2666,12 +2670,12 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         
         Case "wshGL_EJ_Recurrente"
             With wshGL_EJ_Recurrente
-                Union(.Range("C" & firstDataRow & ":C" & lastUsedRow), _
-                      .Range("E" & firstDataRow & ":E" & lastUsedRow)).HorizontalAlignment = xlCenter
-                Union(.Range("D" & firstDataRow & ":D" & lastUsedRow), _
-                      .Range("F" & firstDataRow & ":F" & lastUsedRow), _
-                      .Range("I" & firstDataRow & ":I" & lastUsedRow)).HorizontalAlignment = xlLeft
-                With .Range("G" & firstDataRow & ":H" & lastUsedRow)
+                Union(.Range("A2:A" & lastUsedRow), _
+                      .Range("C2:C" & lastUsedRow)).HorizontalAlignment = xlCenter
+                Union(.Range("B2:B" & lastUsedRow), _
+                      .Range("D2:D" & lastUsedRow), _
+                      .Range("G2:G" & lastUsedRow)).HorizontalAlignment = xlLeft
+                With .Range("E2:F" & lastUsedRow)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With

@@ -22,7 +22,7 @@ Sub DEB_Saisie_Update()
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
     'Get the Fourn_ID
-    wshDEB_Saisie.Range("B5").value = Fn_FournID_From_Fourn_Name(wshDEB_Saisie.Range("F6").value)
+    wshDEB_Saisie.Range("B5").value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("F6").value)
 
     'Transfert des données vers DEB_Trans, entête d'abord puis une ligne à la fois
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
@@ -507,9 +507,11 @@ Public Sub DEB_Saisie_Clear_All_Cells()
 
     Application.EnableEvents = True
     
-    wshDEB_Saisie.Protect UserInterfaceOnly:=True
-    wshDEB_Saisie.EnableSelection = xlUnlockedCells
-
+    With wshDEB_Saisie
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
     Call End_Timer("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", timerStart)
 
 End Sub

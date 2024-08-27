@@ -142,7 +142,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         With wshGL_EJ
             If .Range("E" & Target.Row).value <> "" Then
-                .Range("L" & Target.Row).value = Fn_Get_GL_Code_From_GL_Description(.Range("E" & Target.Row).value)
+                .Range("L" & Target.Row).value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.Row).value)
             End If
             
             If Target.Row > 9 And _

@@ -31,8 +31,10 @@ Private Sub Worksheet_Activate()
     
     Call DEB_Saisie_Clear_All_Cells
     
-    ws.Protect UserInterfaceOnly:=True
-    ws.EnableSelection = xlUnlockedCells
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -199,7 +201,7 @@ Private Sub Process_Change(ByVal Target As Range)
         If Target.value <> "" Then
             Application.EnableEvents = False
             wshDEB_Saisie.Range("Q" & Target.Row).value = _
-                Fn_Get_GL_Code_From_GL_Description(Target.value)
+                Fn_GetGL_Code_From_GL_Description(Target.value)
             Application.EnableEvents = True
         End If
     End If

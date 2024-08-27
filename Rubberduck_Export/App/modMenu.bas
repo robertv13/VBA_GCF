@@ -652,7 +652,8 @@ Sub menuFacturation_Click()
     
     Call SlideIn_Facturation
     
-    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+    If Fn_Get_Windows_Username = "Guillaume" Or _
+            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
@@ -669,7 +670,8 @@ Sub MenuDEB_Click()
     
     Call SlideIn_Debours
         
-    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+    If Fn_Get_Windows_Username = "Guillaume" Or _
+            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         wshMenuDEB.Visible = xlSheetVisible
         wshMenuDEB.Activate
@@ -686,7 +688,8 @@ Sub menuComptabilite_Click()
     
     Call SlideIn_Comptabilite
         
-    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+    If Fn_Get_Windows_Username = "Guillaume" Or _
+            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
@@ -703,7 +706,8 @@ Sub menuParametres_Click()
     
     Call SlideIn_Parametres
     
-    If Fn_Get_Windows_Username = "GCFiscalite" Or _
+    If Fn_Get_Windows_Username = "Guillaume" Or _
+            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         wshAdmin.Visible = xlSheetVisible
         wshAdmin.Select

@@ -149,22 +149,21 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     With ws
         Dim i As Long, r As Long
         For i = 3 To lastUsedRow
-            If .Range("AA" & i).value < dateMin Or .Range("AA" & i).value > dateMax Then
-                GoTo nextIteration
+            If .Range("AA" & i).value >= dateMin And .Range("AA" & i).value <= dateMax And _
+                .Range("AB" & i).value = "C" Then
+                r = r + 1
+                arr(r, 1) = .Range("Z" & i).value  'Invoice number
+                arr(r, 2) = .Range("AA" & i).value 'Invoice Date
+                arr(r, 3) = .Range("AI" & i).value 'Fees
+                arr(r, 4) = .Range("AK" & i).value 'Misc. 1
+                arr(r, 5) = .Range("AM" & i).value 'Misc. 2
+                arr(r, 6) = .Range("AO" & i).value 'Misc. 3
+                arr(r, 7) = .Range("AQ" & i).value 'GST $
+                arr(r, 8) = .Range("AS" & i).value 'PST $
+                arr(r, 9) = .Range("AU" & i).value 'Deposit
+                arr(r, 10) = .Range("AT" & i).value 'AR_Total
+                arr(r, 11) = Fn_Get_AR_Balance_For_Invoice(ws2, .Range("Z" & i).value)
             End If
-            r = r + 1
-            arr(r, 1) = .Range("Z" & i).value  'Invoice number
-            arr(r, 2) = .Range("AA" & i).value 'Invoice Date
-            arr(r, 3) = .Range("AI" & i).value 'Fees
-            arr(r, 4) = .Range("AK" & i).value 'Misc. 1
-            arr(r, 5) = .Range("AM" & i).value 'Misc. 2
-            arr(r, 6) = .Range("AO" & i).value 'Misc. 3
-            arr(r, 7) = .Range("AQ" & i).value 'GST $
-            arr(r, 8) = .Range("AS" & i).value 'PST $
-            arr(r, 9) = .Range("AU" & i).value 'Deposit
-            arr(r, 10) = .Range("AT" & i).value 'AR_Total
-            arr(r, 11) = Fn_Get_AR_Balance_For_Invoice(ws2, .Range("Z" & i).value)
-nextIteration:
         Next i
     End With
     
@@ -312,7 +311,10 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
     Dim destRange As Range: Set destRange = ws.Range("Z2:AU2")
 
     'Apply the advanced filter
-    srcRange.AdvancedFilter action:=xlFilterCopy, criteriaRange:=criteriaRange, CopyToRange:=destRange, Unique:=False
+    srcRange.AdvancedFilter action:=xlFilterCopy, _
+                            criteriaRange:=criteriaRange, _
+                            CopyToRange:=destRange, _
+                            Unique:=False
     
     Dim lastResultRow As Long
     lastResultRow = ws.Range("Z9999").End(xlUp).Row
@@ -351,26 +353,15 @@ Sub FAC_Historique_Clear_All_Cells()
         wshFAC_Historique.Activate
         wshFAC_Historique.Range("F4").Select
     End With
-    ActiveSheet.Protect UserInterfaceOnly:=True
     
+    With ActiveSheet
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
     Call End_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
 
 End Sub
-
-'Sub Shape_Is_Visible(A As Boolean)
-'
-'    Dim shp As Shape: Set shp = ThisWorkbook.Sheets("FAC_Histo").Shapes("cmdAfficheFactures")
-'
-'    If A = True Then
-'        shp.Visible = True
-'    Else
-'        shp.Visible = False
-'    End If
-'
-'    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
-'    Set shp = Nothing
-'
-'End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 

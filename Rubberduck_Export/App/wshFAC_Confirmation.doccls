@@ -24,7 +24,10 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
-    ws.Protect UserInterfaceOnly:=True
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     Call SetTabOrder(ws)
     

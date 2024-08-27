@@ -6,9 +6,9 @@ Dim payRow As Long
 
 Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Load_OS_Invoices()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Load_OS_Invoices()")
     
-    wshENC_Saisie.Range("E15:K42").ClearContents 'Clear the invoices area before loading it
+    wshENC_Saisie.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
     
     With wshFAC_Comptes_Clients
         'Clear previous results
@@ -19,17 +19,16 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
         'Is there anything to work with ?
         lastResultRow = .Cells(.rows.count, "A").End(xlUp).Row
         If lastResultRow < 3 Then
-            MsgBox "Il n'y aucune facture impayée pour ce client", vbOK + vbInformation
+            MsgBox "Il n'y aucune facture pour ce client", vbOK + vbInformation
             Exit Sub
         End If
         
         'Setup criteria in wshFAC_Comptes_Clients
         .Range("M3").value = clientCode
         
-        .Range("A2:K" & lastResultRow).AdvancedFilter _
-                                            xlFilterCopy, _
-                                            criteriaRange:=.Range("M2:N3"), _
-                                            CopyToRange:=.Range("P2:U2")
+        .Range("A2:K" & lastResultRow).AdvancedFilter xlFilterCopy, _
+                                                      criteriaRange:=.Range("M2:N3"), _
+                                                      CopyToRange:=.Range("P2:U2")
                                             
         'Did the AdvancedFilter return ANYTHING ?
         lastResultRow = .Cells(.rows.count, "P").End(xlUp).Row
@@ -42,7 +41,6 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
         Next r
         
         wshENC_Saisie.Range("B4").value = True 'Set PaymentLoad to True
-'        .Range("T3:T" & lastResultRow).formula = .Range("T1").formula 'Total Payments Formula
 
         'Bring the Result data into our List of Oustanding Invoices
         Dim i As Integer
@@ -56,8 +54,9 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
         End With
         
         Dim rr As Integer: rr = 12
-        For i = 3 To WorksheetFunction.Min(27, lastResultRow)
-            If .Range("U" & i).value <> 0 Then
+        For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
+            If .Range("U" & i).value <> 0 And _
+                            Fn_Invoice_Is_Confirmed(.Range("Q" & i).value) = True Then
                 wshENC_Saisie.Range("F" & rr).value = .Range("Q" & i).value
                 wshENC_Saisie.Range("G" & rr).value = .Range("R" & i).value
                 wshENC_Saisie.Range("H" & rr).value = .Range("S" & i).value
@@ -530,7 +529,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
         Inv_No = CStr(wshENC_Saisie.Range("F" & r).value)
         
         Dim foundRange As Range
-        Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, lookAt:=xlWhole)
+        Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, LookAt:=xlWhole)
     
         Dim rowToBeUpdated As Long
         If Not foundRange Is Nothing Then
@@ -714,7 +713,10 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     Next cell
 
 '    'Protect the worksheet
-'    ws.Protect UserInterfaceOnly:=True
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     Application.EnableEvents = True
 
@@ -791,8 +793,10 @@ Sub ENC_Clear_Cells()
     
     Application.EnableEvents = True
     
-    wshENC_Saisie.Protect UserInterfaceOnly:=True
-    wshENC_Saisie.EnableSelection = xlUnlockedCells
+    With wshENC_Saisie
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
 
     Call End_Timer("modENC_Saisie:ENC_Clear_Cells()", timerStart)
 

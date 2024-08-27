@@ -35,7 +35,10 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    ws.Protect UserInterfaceOnly:=True '2024-08-16 @ 07:08
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents

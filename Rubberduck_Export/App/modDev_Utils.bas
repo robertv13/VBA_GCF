@@ -270,9 +270,9 @@ End Sub
 
 Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
-    Call Erase_And_Create_Worksheet("Feuilles_du_Classeur")
+    Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
 
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Feuilles_du_Classeur")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
     wsOutput.Range("A1").value = "Feuille"
     wsOutput.Range("B1").value = "CodeName"
     wsOutput.Range("C1").value = "TimeStamp"
@@ -332,7 +332,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim header2 As String: header2 = wbName
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
     
-    ThisWorkbook.Worksheets("Feuilles_du_Classeur").Activate
+    ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
     'Cleanup - 2024-07-14 @ 07:03
     Set rngToPrint = Nothing
@@ -645,10 +645,8 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-'    ThisWorkbook.Unprotect Password:="pmdpf"
     Set ws = ThisWorkbook.Worksheets.add(before:=wshMenu)
     ws.name = sheetName
-'    ThisWorkbook.Protect Password:="pmdpf"
     
     'Clean up - 2024-07-11 @ 08:27
     Set ws = Nothing
@@ -1577,9 +1575,9 @@ End Sub
 
 Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
-    Call Erase_And_Create_Worksheet("Feuilles_du_Classeur")
+    Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
 
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Feuilles_du_Classeur")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
     wsOutput.Range("A1").value = "Feuille"
     wsOutput.Range("B1").value = "CodeName"
     wsOutput.Range("C1").value = "TimeStamp"
@@ -1626,7 +1624,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim header2 As String: header2 = ThisWorkbook.name
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
     
-    ThisWorkbook.Worksheets("Feuilles_du_Classeur").Activate
+    ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
     'Cleanup - 2024-07-14 @ 07:03
     Set rngToPrint = Nothing
@@ -1634,12 +1632,14 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
 
 End Sub
 
-Sub SetNumLockOn() '2024-08-10 @ 07:39
+Sub SetNumLockOn() '2024-08-26 @ 09:54
 
-    'Check if NumLock is off (0), and turn it on if so
-    If GetKeyState(&H90) = 0 Then
-        keybd_event &H90, 0, 0, 0 'Turn NumLock on
-    End If
+'    'Check if NumLock is off (0), then turn it on, if so
+'    Call Log_Record("modDev_Utils:SetNumLockOn:Avant = " & CStr(GetKeyState(&H90)), 0)
+'    If GetKeyState(&H90) = 0 Then
+'        keybd_event &H90, 0, 0, 0 'Turn NumLock on
+'    End If
+'    Call Log_Record("modDev_Utils:SetNumLockOn:Après = " & CStr(GetKeyState(&H90)), 0)
     
 End Sub
 
@@ -1648,9 +1648,11 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:SetTabOrder()")
     
     'Clear previous settings AND protect the worksheet
-    ws.EnableSelection = xlNoRestrictions
-    ws.Protect UserInterfaceOnly:=True
-
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions
+    End With
+    
     'Collect all unprotected cells
     Dim cell As Range, unprotectedCells As Range
     For Each cell In ws.usedRange
@@ -1828,7 +1830,7 @@ End Sub
 Sub Log_Analysis()
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "Log.txt"
+    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile

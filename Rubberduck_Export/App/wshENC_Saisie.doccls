@@ -4,6 +4,10 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
+    If fromMenu = False Then
+        MsgBox "Je ne viens pas du menuExit Sub"
+    End If
+    
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshENC_Saisie:Worksheet_Activate()")
     
     Application.ScreenUpdating = False

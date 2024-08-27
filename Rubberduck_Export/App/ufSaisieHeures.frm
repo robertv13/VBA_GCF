@@ -52,7 +52,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Dim userName As String
     userName = Fn_Get_Windows_Username
     Select Case userName
-        Case "GCFiscalite"
+        Case "Guillaume", "GuillaumeCharron"
             cmbProfessionnel.value = "GC"
         Case "vgervais"
             cmbProfessionnel.value = "VG"
@@ -232,7 +232,7 @@ End Sub
 
 Private Sub txtClient_Enter()
 
-    Call SetNumLockOn '2024-08-10 @ 07:53
+    Call SetNumLockOn '2024-08-26 @ 09:55
     
     If rmv_state = rmv_modeInitial Then
         rmv_state = rmv_modeCreation

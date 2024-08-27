@@ -12,6 +12,8 @@ Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
 
+Public fromMenu As Boolean '2024-08-26 @ 07:05
+
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns
     fdebtFirst = 1
@@ -156,7 +158,10 @@ Sub Write_Info_On_Main_Menu()
         .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 
-    wshMenu.Protect UserInterfaceOnly:=True
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     Application.EnableEvents = True
     Application.ScreenUpdating = False

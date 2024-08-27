@@ -4,7 +4,7 @@ Option Explicit
 #If VBA7 Then
     '64-bit Excel (VBA7 and later)
     Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As LongPtr)
 #Else
     '32-bit Excel
     Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
@@ -64,7 +64,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
 End Function
 
-Function Fn_FournID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
+Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
     
@@ -85,9 +85,9 @@ Function Fn_FournID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:1
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
-        Fn_FournID_From_Fourn_Name = result
+        Fn_GetID_From_Fourn_Name = result
     Else
-        Fn_FournID_From_Fourn_Name = 0
+        Fn_GetID_From_Fourn_Name = 0
     End If
     
     'Cleaning memory - 2024-07-03 @ 16:13
@@ -107,7 +107,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
     'Search for the string in a given range (r) at the column specified (cs)
-    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, lookAt:=xlWhole)
+    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
     
     'Check if the string was found
     If Not foundCell Is Nothing Then
@@ -139,7 +139,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
     Dim cell As Range
     Set cell = searchRange.Find(What:=valueToFind, _
                                 LookIn:=xlValues, _
-                                lookAt:=xlWhole)
+                                LookAt:=xlWhole)
     
     'Check if the value is found
     Dim firstAddress As String
@@ -270,9 +270,9 @@ Function GetColumnType(col As Range) As String
     GetColumnType = dataType
 End Function
 
-Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Get_GL_Code_From_GL_Description()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_GetGL_Code_From_GL_Description()")
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
@@ -293,7 +293,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
         "Not Found", 0, 1)
     
     If result <> "Not Found" Then
-        Fn_Get_GL_Code_From_GL_Description = result
+        Fn_GetGL_Code_From_GL_Description = result
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
@@ -302,7 +302,7 @@ Public Function Fn_Get_GL_Code_From_GL_Description(glDescr As String) 'XLOOKUP -
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call End_Timer("modFunctions:Fn_Get_GL_Code_From_GL_Description()", timerStart)
+    Call End_Timer("modFunctions:Fn_GetGL_Code_From_GL_Description()", timerStart)
 
 End Function
 
@@ -341,7 +341,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
     
     On Error Resume Next
         Dim cell As Range
-        Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, lookAt:=xlWhole)
+        Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TEC_ID = cell.Row
         Else
@@ -392,7 +392,10 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     End If
     
     'Execute the AdvancedFilter
-    sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+    sourceRng.AdvancedFilter xlFilterCopy, _
+                             criteriaRng, _
+                             destinationRng, _
+                             False
     
     lastUsedRow = ws.Range("X9999").End(xlUp).Row
     If lastUsedRow < 3 Then
@@ -425,7 +428,7 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 
     
     'Search for the string in a given range (r) at the column specified (cs)
     Dim rngFound As Range
-    Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, lookAt:=xlWhole)
+    Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
         Fn_Validate_Client_Number = True
@@ -694,7 +697,7 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     
     'Find the invNo into rngToSearch
     Dim rngFound As Range
-    Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, lookAt:=xlWhole)
+    Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
         Debug.Print invNo, rngFound.Row, rngFound.Offset(0, 2).value
@@ -750,6 +753,30 @@ Function Fn_Is_Date_Valide(d As String) As Boolean
     Else
         Fn_Is_Date_Valide = True
     End If
+
+End Function
+
+Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
+
+    Fn_Invoice_Is_Confirmed = False
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+
+    'Utilisation de FIND pour trouver la cellule contenant la valeur recherchée dans la colonne A
+    Dim foundCell As Range
+    Set foundCell = ws.Range("A:A").Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+
+    If Not foundCell Is Nothing Then
+        If foundCell.Offset(0, 2).value = "C" Then
+            Fn_Invoice_Is_Confirmed = True
+        End If
+    Else
+        Fn_Invoice_Is_Confirmed = False
+    End If
+
+    'Clean up
+    Set foundCell = Nothing
+    Set ws = Nothing
 
 End Function
 
@@ -923,9 +950,9 @@ End Function
 Public Function ConvertValueBooleanToText(val As Boolean) As String
 
     Select Case val
-        Case 0, "False" 'False
+        Case 0, "False", "Faux" 'False
             ConvertValueBooleanToText = "FAUX"
-        Case -1, "True" 'True
+        Case -1, "True", "Vrai" 'True"
             ConvertValueBooleanToText = "VRAI"
         Case "VRAI", "FAUX"
             

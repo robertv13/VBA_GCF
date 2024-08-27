@@ -62,19 +62,19 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
-    rowJEAuto = wshGL_EJ_Recurrente.Range("C99999").End(xlUp).Row  'Last Row used in wshGL_EJRecuurente
+    rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "A").End(xlUp).Row  'Last Row used in wshGL_EJRecuurente
     
     Call wshGL_EJ_Clear_All_Cells
     rowJE = 9
     
     Dim r As Long
     For r = 2 To rowJEAuto
-        If wshGL_EJ_Recurrente.Range("C" & r).value = NoEJAuto And wshGL_EJ_Recurrente.Range("E" & r).value <> "" Then
-            wshGL_EJ.Range("E" & rowJE).value = wshGL_EJ_Recurrente.Range("F" & r).value
-            wshGL_EJ.Range("H" & rowJE).value = wshGL_EJ_Recurrente.Range("G" & r).value
-            wshGL_EJ.Range("I" & rowJE).value = wshGL_EJ_Recurrente.Range("H" & r).value
-            wshGL_EJ.Range("J" & rowJE).value = wshGL_EJ_Recurrente.Range("I" & r).value
-            wshGL_EJ.Range("L" & rowJE).value = wshGL_EJ_Recurrente.Range("E" & r).value
+        If wshGL_EJ_Recurrente.Range("A" & r).value = NoEJAuto And wshGL_EJ_Recurrente.Range("C" & r).value <> "" Then
+            wshGL_EJ.Range("E" & rowJE).value = wshGL_EJ_Recurrente.Range("D" & r).value
+            wshGL_EJ.Range("H" & rowJE).value = wshGL_EJ_Recurrente.Range("E" & r).value
+            wshGL_EJ.Range("I" & rowJE).value = wshGL_EJ_Recurrente.Range("F" & r).value
+            wshGL_EJ.Range("J" & rowJE).value = wshGL_EJ_Recurrente.Range("G" & r).value
+            wshGL_EJ.Range("L" & rowJE).value = wshGL_EJ_Recurrente.Range("C" & r).value
             rowJE = rowJE + 1
         End If
     Next r
@@ -100,7 +100,11 @@ Sub wshGL_EJ_Clear_All_Cells()
         wshGL_EJ.Activate
         wshGL_EJ.Range("F4").Select
     End With
-    ActiveSheet.Protect UserInterfaceOnly:=True
+    
+    With ActiveSheet
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     Call End_Timer("modGL_EJ:wshGL_EJ_Clear_All_Cells()", timerStart)
 
@@ -112,22 +116,22 @@ Sub GL_EJ_Auto_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshGL_EJ_Recurrente.Range("C999").End(xlUp).Row
+    lastUsedRow1 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "A").End(xlUp).Row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshGL_EJ_Recurrente.Range("K999").End(xlUp).Row
+    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "I").End(xlUp).Row
     If lastUsedRow2 > 1 Then
-        wshGL_EJ_Recurrente.Range("K2:L" & lastUsedRow2).ClearContents
+        wshGL_EJ_Recurrente.Range("I2:J" & lastUsedRow2).ClearContents
     End If
     
     With wshGL_EJ_Recurrente
         Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
-            If .Range("D" & i).value <> oldEntry Then
-                .Range("K" & k).value = .Range("D" & i).value
-                .Range("L" & k).value = "'" & Fn_Pad_A_String(.Range("C" & i).value, " ", 5, "L")
-                oldEntry = .Range("D" & i).value
+            If .Range("A" & i).value <> oldEntry Then
+                .Range("I" & k).value = .Range("B" & i).value
+                .Range("J" & k).value = "'" & Fn_Pad_A_String(.Range("A" & i).value, " ", 5, "L")
+                oldEntry = .Range("A" & i).value
                 k = k + 1
             End If
         Next i

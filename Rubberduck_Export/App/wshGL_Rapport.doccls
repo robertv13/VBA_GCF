@@ -42,6 +42,7 @@ Private Sub Worksheet_Activate()
     With ws
         .Range("A:B").EntireColumn.Hidden = True
         .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
         .EnableCalculation = True
     End With
     

@@ -399,10 +399,14 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     'Step 4 - Paste the copied cells at a predefined location
     Application.EnableEvents = False
-    wshFAC_Brouillon.Unprotect
-    wshFAC_Brouillon.Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
-'    wshFAC_Brouillon.Range("L11").PasteSpecial Paste:=xlPasteValues
-    wshFAC_Brouillon.Protect UserInterfaceOnly:=True
+    
+    With wshFAC_Brouillon
+        .Unprotect
+        .Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
     Application.EnableEvents = True
     Application.CutCopyMode = False
     
@@ -741,6 +745,9 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
         .Range("D" & Row + 2).Font.Bold = True
         
         .Range("B19").formula = "=SUMIF(C7:C" & Row + 5 & ",True,G7:G" & Row + 5 & ")"
+        
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
     End With
     
     Application.EnableEvents = True
@@ -779,7 +786,10 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
     ws.Range("C7:C" & Row).Locked = True
     
     'Protect the worksheet
-    ws.Protect UserInterfaceOnly:=True
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
     
     wshFAC_Brouillon.Range("C7:C" & Row).value = ""  'Remove text left over
     wshFAC_Brouillon.Range("D" & Row + 2).value = "" 'Remove the TEC selected total formula

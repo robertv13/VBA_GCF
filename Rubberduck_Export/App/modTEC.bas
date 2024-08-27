@@ -43,7 +43,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Reset command buttons
         Call Buttons_Enabled_True_Or_False(False, False, False, False)
         
-        Call SetNumLockOn '2024-08-10 @ 07:47
+        Call SetNumLockOn '2024-08-26 @ 09:54
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus

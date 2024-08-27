@@ -12,6 +12,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
+    Call Client_List_Import_All
     Call TEC_Import_All
     Call FAC_Projets_Détails_Import_All
     Call FAC_Projets_Entête_Import_All
@@ -29,16 +30,17 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     With ws
         .Unprotect
-        previousCellAddress = .Range("I3").Address
+        previousCellAddress = .Range("H3").Address
     End With
     
     ws.Outline.ShowLevels RowLevels:=2
     
-'    ActiveWindow.Panes(2).Activate
+    ActiveWindow.Panes(2).Activate
+    
     Application.EnableEvents = False
     ws.Select
-    ws.Range("I3").value = Format$(Now(), "mm/dd/yyyy")
-    ws.Range("I3").Select
+    ws.Range("H3").value = Format$(Now(), "mm/dd/yyyy")
+    ws.Range("H3").Select
     Application.EnableEvents = True
     
     'Cleaning memory - 2024-07-11 @ 10:14
@@ -57,12 +59,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Is date been selected ?
-    If Not Intersect(Target, wshTEC_Analyse.Range("I3")) Is Nothing Then
+    If Not Intersect(Target, wshTEC_Analyse.Range("H3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Check if the selected cell is in column C or H
     If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Or _
+        Not Intersect(Target, wshTEC_Analyse.columns("D")) Is Nothing Or _
         Not Intersect(Target, wshTEC_Analyse.columns("H")) Is Nothing Then
         
         If Target.Cells.count = 1 And Target.Row > 6 Then
@@ -106,8 +109,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
             Call TEC_Sort_Group_And_Subtotal
-
-'            Application.GoTo wshTEC_Analyse.Range("O9")
         Else
             Call MsgBoxInvalidDate
             Application.EnableEvents = False
@@ -154,12 +155,12 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
     
     'Get the row number of the checkBox
     Dim chkboxRow As Long
-    chkboxRow = CLng(Replace(chkBoxPosition, "$O$", ""))
+    chkboxRow = CLng(Replace(chkBoxPosition, "$N$", ""))
 
     'Getting to the Total Row (which is the line before the start of the summary)
     Dim i As Long
     For i = chkboxRow To 7 Step -1
-        If ws.Range("N" & i).value = "" Then
+        If ws.Range("M" & i).value = "" Then
             Exit For
         End If
     Next i
@@ -176,7 +177,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
         
         Select Case cell
             Case "REMPLACER"
-                ws.Range("D" & totalRow).value = ws.Range("N" & chkboxRow).value
+                ws.Range("D" & totalRow).value = ws.Range("M" & chkboxRow).value
                 
                 Dim firstRow As Long: firstRow = totalRow + 1
                 Dim lastRow As Long, r As Long
@@ -187,7 +188,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Loop
                 
                 Dim nomClient As String
-                Dim clientID As Long
+                Dim clientID As String
                 nomClient = ws.Range("C" & firstRow).value
                 clientID = Fn_GetID_From_Client_Name(nomClient)
                 
@@ -196,23 +197,23 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
-                Do While ws.Range("K" & r).value <> ""
+                Do While ws.Range("J" & r).value <> ""
                     r = r + 1
                 Loop
                 r = r - 1 'Last line of summary, excluding totals
                 
                 Dim arr() As Variant
                 ReDim arr(1 To (r - firstRow + 1), 1 To 4)
-                Dim rngSummary As Range: Set rngSummary = ws.Range("K" & firstRow & ":N" & r)
+                Dim rngSummary As Range: Set rngSummary = ws.Range("J" & firstRow & ":M" & r)
                 arr = rngSummary.value
                 
                 'Set the date
                 Dim dateProjet As String
-                dateProjet = Format$(ws.Range("I3").value, "dd/mm/yyyy")
+                dateProjet = Format$(ws.Range("H3").value, "dd/mm/yyyy")
                 
                 'Determine the summary total
                 Dim hono As Double
-                hono = ws.Range("N" & r + 1).value
+                hono = ws.Range("M" & r + 1).value
                 
                 Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
                 Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)

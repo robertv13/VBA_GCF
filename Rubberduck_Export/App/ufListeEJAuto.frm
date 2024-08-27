@@ -19,14 +19,14 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("K999").End(xlUp).Row
+    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "J").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     With lsbEJ_Auto_Desc
         .ColumnHeads = True
         .ColumnCount = 2
         .ColumnWidths = "275; 25"
-        .RowSource = wshGL_EJ_Recurrente.name & "!K2:L" & lastUsedRow
+        .RowSource = wshGL_EJ_Recurrente.name & "!I2:J" & lastUsedRow
     End With
    
 End Sub
