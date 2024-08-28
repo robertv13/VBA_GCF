@@ -484,18 +484,17 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call check_GL_Trans(r, readRows)
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
-    
-    Call TEC_TdB_Update_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
+    
+    Call TEC_Import_All
+    Call TEC_TdB_Update_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     
     Call check_TEC_TdB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
-    
-    Call TEC_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
@@ -1896,7 +1895,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         r = r + 1
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures saisies donne ce résultat:")
     r = r + 1
     
     Dim formattedHours As String
@@ -1904,7 +1903,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures SAISIES         : " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -1918,28 +1917,28 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    r = r + 1
-    
-    formattedHours = Format$(total_hres_facturable, "#,##0.00")
-    If Len(formattedHours) < 10 Then
-        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
-    End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures NETTES          : " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "            Non_facturables : " & formattedHours)
+    r = r + 1
+    
+    formattedHours = Format$(total_hres_facturable, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "            Facturables     : " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_facturees, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures Facturées       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturées       : " & formattedHours)
     r = r + 1
 
     formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
@@ -2313,7 +2312,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     End If
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures donne ce résultat:")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La somme des heures SAISIES donne ce résultat:")
     r = r + 1
     
     Dim formattedHours As String
@@ -2321,7 +2320,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures inscrites       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures SAISIES        :  " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -2335,28 +2334,28 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures restantes       : " & formattedHours)
-    r = r + 1
-    
-    formattedHours = Format$(total_hres_facturable, "#,##0.00")
-    If Len(formattedHours) < 10 Then
-        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
-    End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturables     : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures NETTES          : " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures non_facturables : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "            Non_facturables : " & formattedHours)
     r = r + 1
 
+    formattedHours = Format$(total_hres_facturable, "#,##0.00")
+    If Len(formattedHours) < 10 Then
+        formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
+    End If
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "            Facturables     : " & formattedHours)
+    r = r + 1
+    
     formattedHours = Format$(total_hres_facturees, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures Facturées       : " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Heures facturées       : " & formattedHours)
     r = r + 1
 
     formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")

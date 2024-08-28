@@ -592,8 +592,10 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     Application.ScreenUpdating = False
     
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Projets_Détails.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    ws.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -617,17 +619,18 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshFAC_Projets_Détails workbook
-    wshFAC_Projets_Détails.Range("A2").CopyFromRecordset recSet
+    'Copy to wshFAC_Projets_Détails workbook all rows
+    ws.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
-    'Delete the rows that column (isDétruite) is set to TRUE
+    'Delete the rows that column (isDétruite) is set to TRUE in FAC_Projets_Entête
     Dim i As Long
     For i = lastRow To 2 Step -1
-        If UCase(wshFAC_Projets_Détails.Cells(i, 9).value) = "VRAI" Then
-            wshFAC_Projets_Détails.rows(i).delete
+        If UCase(ws.Cells(i, 9).value) = "VRAI" Or _
+            ws.Cells(i, 9).value = -1 Then
+            ws.rows(i).delete
         End If
     Next i
     
@@ -658,8 +661,10 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     Application.ScreenUpdating = False
     
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Projets_Entête.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
+    ws.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -684,24 +689,25 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     recSet.Open
     
     'Copy to wshFAC_Projets_Entête workbook
-    wshFAC_Projets_Entête.Range("A2").CopyFromRecordset recSet
+    ws.Range("A2").CopyFromRecordset recSet
 
     Dim lastRow As Long
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
     For i = lastRow To 2 Step -1
-        If UCase(wshFAC_Projets_Entête.Cells(i, 26).value) = "VRAI" Then
-            wshFAC_Projets_Entête.rows(i).delete
+        If UCase(ws.Cells(i, 26).value) = "VRAI" Or _
+            ws.Cells(i, 26).value = -1 Then
+            ws.rows(i).delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    lastRow = wshFAC_Projets_Entête.Range("A99999").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     If lastRow > 1 Then
-        Dim rng As Range: Set rng = wshFAC_Projets_Entête.Range("A1").CurrentRegion
-        Call Apply_Worksheet_Format(wshFAC_Projets_Entête, rng, 1)
+        Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
+        Call Apply_Worksheet_Format(ws, rng, 1)
     End If
     
     Application.ScreenUpdating = True

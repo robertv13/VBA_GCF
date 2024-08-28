@@ -547,7 +547,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
+    
     'Initialize recordset
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
     
@@ -586,9 +586,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
             rs.Fields("Date").value = dateTEC
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
-'            Dim valeur As String
-'            valeur = "FAUX"
-            rs.Fields("estDetruite") = CStr("FAUX")
+            rs.Fields("estDetruite") = 0 'Faux
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
             TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("TimeStamp").value = TimeStamp
@@ -660,7 +658,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & sheetName & "$] SET estDetruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -711,7 +709,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
             rs.Fields("TauxH" & c).value = arr(c, 3)
             rs.Fields("Hono" & c).value = arr(c, 4)
         Next c
-        rs.Fields("estDétruite").value = "FAUX"
+        rs.Fields("estDétruite").value = 0 'Faux
         TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         rs.Fields("TimeStamp").value = TimeStamp
     rs.update
@@ -833,7 +831,7 @@ Sub Delete_CheckBox()
 End Sub
 
 Sub Groups_SubTotals_Collapse_A_Client(r As Long)
-
+    
     'Set the worksheet you want to work on
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
 
@@ -845,10 +843,10 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     Loop
 
     r = r - 1
-    ws.rows.ClearOutline
+'    ws.rows.ClearOutline
     
-    ws.rows(saveR & ":" & r).Group
-    ws.rows(saveR & ":" & r).Hidden = True
+'    ws.rows(saveR & ":" & r).rows.Group
+    ws.rows(saveR & ":" & r).EntireRow.Hidden = True
     
 End Sub
 
