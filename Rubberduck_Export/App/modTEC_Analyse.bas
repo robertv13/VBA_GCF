@@ -367,7 +367,7 @@ End Sub
 
 Sub Build_Hours_Summary(rowSelected As Long)
 
-    If rowSelected < 8 Then Exit Sub
+    If rowSelected < 7 Then Exit Sub
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -658,7 +658,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "$] SET estDetruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & sheetName & "$] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -778,7 +778,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = True WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & sheetName & "$] SET estDétruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -843,11 +843,24 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     Loop
 
     r = r - 1
-'    ws.rows.ClearOutline
-    
-'    ws.rows(saveR & ":" & r).rows.Group
     ws.rows(saveR & ":" & r).EntireRow.Hidden = True
     
 End Sub
 
+Sub Clear_Fees_Summary_And_CheckBox()
 
+    'Clean the Fees Summary Area
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Application.EnableEvents = False
+    ws.Range("J7:O9999").clear
+    Application.EnableEvents = True
+    
+    'Clear any leftover CheckBox
+    Dim sh As Shape
+    For Each sh In ws.Shapes
+        If InStr(sh.name, "CheckBox") Then
+            sh.delete
+        End If
+    Next sh
+
+End Sub

@@ -213,7 +213,9 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 clientID = Fn_GetID_From_Client_Name(nomClient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
+                Debug.Print "xxx1", "FAC_Projets_Détails_Add_Record_To_DB", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Debug.Print "xxx2", "FAC_Projets_Détails_Add_Record_Locally", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
@@ -235,7 +237,9 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = ws.Range("M" & r + 1).value
                 
+                Debug.Print "xxx3", "FAC_Projets_Entête_Add_Record_To_DB", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Debug.Print "xxx4", "FAC_Projets_Entête_Add_Record_Locally", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
@@ -248,7 +252,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 
             Case "RIEN_CHANGER"
-'                firstRow = totalRow + 1
+                firstRow = totalRow + 1
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
             
         End Select
@@ -256,6 +260,8 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
         ws.Range("D" & totalRow).value = 0
         'Perform actions when checkbox is unchecked
     End If
+    
+    Call Clear_Fees_Summary_And_CheckBox
     
     Application.EnableEvents = True
     
@@ -300,19 +306,9 @@ End Sub
 
 Sub Back_To_TEC_Menu()
 
-    'Clean the Fees Summary Area
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
-    ws.Range("J7:O9999").clear
+    Call Clear_Fees_Summary_And_CheckBox
     
-    'Clear any leftover CheckBox
-    Dim sh As Shape
-    For Each sh In ws.Shapes
-        If InStr(sh.name, "CheckBox") Then
-            sh.delete
-        End If
-    Next sh
-    
-    ws.Visible = xlSheetHidden
+    wshTEC_Analyse.Visible = xlSheetHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select

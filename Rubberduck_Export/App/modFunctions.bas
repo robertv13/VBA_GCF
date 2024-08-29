@@ -172,7 +172,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                     Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
                 End If
                 
-                'Delete all collected rows from the current workbook
+                'Delete all collected rows from wshFAC_Projets_Détails (locally)
                 Dim i As Long
                 For i = rowsToDelete.count To 1 Step -1
                     ws.rows(rowsToDelete(i)).delete
