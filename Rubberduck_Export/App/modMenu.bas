@@ -719,7 +719,7 @@ Sub menuParametres_Click()
     
 End Sub
 
-Sub Exit_After_Saving() '2024-08-06 @ 14:51
+Sub Exit_After_Saving() '2024-08-30 @ 07:37
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -739,16 +739,14 @@ Sub Exit_After_Saving() '2024-08-06 @ 14:51
         
         Application.EnableEvents = False
         
+        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
+        
+        'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close SaveChanges:=True
         
+        'Never pass here... It's too late
         Application.EnableEvents = True
-        
-        DoEvents '2024-08-21 @ 06:11
-
-        Call End_Timer("message:This session has been terminated N O R M A L L Y", 0)
-        
-        Call Log_Record("***** Session terminée normalement (modMenu:Exit_After_Saving) *****", 0)
         
         Application.Application.Quit
     End If
@@ -784,7 +782,7 @@ End Sub
 '        Application.ScreenUpdating = True
 '        Application.EnableEvents = False
 '
-'        Call End_Timer("message:This  session  has  been  terminated N O R M A L L Y", 0)
+'        Call Log_Record("message:This  session  has  been  terminated N O R M A L L Y", 0)
 '
 '        Application.DisplayAlerts = False
 '        ThisWorkbook.Save
@@ -812,7 +810,7 @@ End Sub
 
 Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Hide_All_Worksheets_Except_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
@@ -826,13 +824,13 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call End_Timer("modAppli:Hide_All_Worksheets_Except_Menu()", timerStart)
+    Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu()", startTime)
     
 End Sub
 
 Sub Slide_In_All_Menu_Options()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:Slide_In_All_Menu_Options()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Slide_In_All_Menu_Options", 0)
     
     Call SlideIn_TEC
     Call SlideIn_Facturation
@@ -841,13 +839,13 @@ Sub Slide_In_All_Menu_Options()
     Call SlideIn_Parametres
     Call SlideIn_Exit
 
-    Call End_Timer("modMenu:Slide_In_All_Menu_Options()", timerStart)
+    Call Log_Record("modMenu:Slide_In_All_Menu_Options()", startTime)
 
 End Sub
 
 Sub Hide_Dev_Shapes_Based_On_Username()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modMenu:Hide_Dev_Shapes_Based_On_Username()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username", 0)
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet
@@ -890,7 +888,7 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         End Select
     Next shp
 
-    Call End_Timer("modMenu:Hide_Dev_Shapes_Based_On_Username()", timerStart)
+    Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username()", startTime)
 
 End Sub
 

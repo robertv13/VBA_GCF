@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshTEC_TDB:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", 0)
    
     Application.ScreenUpdating = False
     
@@ -13,7 +13,7 @@ Private Sub Worksheet_Activate()
 
     Application.ScreenUpdating = True
 
-    Call End_Timer("wshTEC_TDB:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate()", startTime)
 
 End Sub
 

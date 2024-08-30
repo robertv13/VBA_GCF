@@ -6,7 +6,7 @@ Dim payRow As Long
 
 Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Load_OS_Invoices()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Load_OS_Invoices", 0)
     
     wshENC_Saisie.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
     
@@ -74,13 +74,13 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
     wshENC_Saisie.Range("B4").value = False 'Set PaymentLoad to False
     
-    Call End_Timer("modFAC_Enc:Encaissement_Load_Open_Invoices()", timerStart)
+    Call Log_Record("modFAC_Enc:Encaissement_Load_Open_Invoices()", startTime)
 
 End Sub
 
 Sub ENC_Update() '2024-08-22 @ 09:46
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Update()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Update", 0)
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
@@ -149,23 +149,23 @@ Sub ENC_Update() '2024-08-22 @ 09:46
     
 Clean_Exit:
 
-    Call End_Timer("modENC_Saisie:ENC_Update()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Update()", startTime)
 
 End Sub
 
 Sub Encaissement_Add_New() '2024-08-21 @ 14:58
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modEnc_Saisie:Encaissement_Add_New()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modEnc_Saisie:Encaissement_Add_New", 0)
 
     Call ENC_Clear_Cells
     
-    Call End_Timer("modEnc_Saisie:Encaissement_Add_New()", timerStart)
+    Call Log_Record("modEnc_Saisie:Encaissement_Add_New()", startTime)
     
 End Sub
 
 'Sub Encaissement_Previous() '2024-02-14 @ 11:04
 '
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Previous()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Previous",0)
 '
 '    Dim MinPayID As Long, PayID As Long
 '    With wshENC_Saisie
@@ -190,13 +190,13 @@ End Sub
 '        Call Encaissement_Load 'Load Payment
 '    End With
 '
-'    Call End_Timer("modFAC_Enc:Encaissement_Previous()", timerStart)
+'    Call Log_Record("modFAC_Enc:Encaissement_Previous()", startTime)
 '
 'End Sub
 '
 'Sub Encaissement_Next() '2024-02-14 @ 11:04
 '
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Next()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Next",0)
 '
 '    Application.EnableEvents = False
 '
@@ -226,13 +226,13 @@ End Sub
 '
 '    Application.EnableEvents = True
 '
-'    Call End_Timer("modFAC_Enc:Encaissement_Next()", timerStart)
+'    Call Log_Record("modFAC_Enc:Encaissement_Next()", startTime)
 '
 'End Sub
 '
 'Sub Encaissement_Load() '2024-02-14 @ 11:04
 '
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Load()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Load",0)
 '
 '    With wshENC_Saisie
 '        If .Range("B4").value = Empty Then
@@ -270,13 +270,13 @@ End Sub
 '        .Range("B4").value = False 'Payment Load to False
 '    End With
 '
-'    Call End_Timer("modFAC_Enc:Encaissement_Load()", timerStart)
+'    Call Log_Record("modFAC_Enc:Encaissement_Load()", startTime)
 '
 'End Sub
 '
 Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Entete()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete", 0)
     
     Application.ScreenUpdating = False
     
@@ -340,13 +340,13 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modENC_Saisie:ENC_Add_DB_Entete()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete()", startTime)
     
 End Sub
 
 Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -369,13 +369,13 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", timerStart)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", startTime)
 
 End Sub
 
 Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) 'Write to MASTER.xlsx
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Details()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", 0)
     
     Application.ScreenUpdating = False
     
@@ -416,13 +416,13 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modENC_Saisie:ENC_Add_DB_Details()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details()", startTime)
     
 End Sub
 
 Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_Locally_Details()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", 0)
     
     Application.ScreenUpdating = False
     
@@ -446,13 +446,13 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modENC_Saisie:ENC_Add_Locally_Details()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details()", startTime)
 
 End Sub
 
 Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_DB_Details()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", 0)
     
     Application.ScreenUpdating = False
     
@@ -506,13 +506,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modENC_Saisie:ENC_Add_DB_Details()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details()", startTime)
     
 End Sub
 
 Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Add_Locally_Details()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", 0)
     
     Application.ScreenUpdating = False
     
@@ -546,13 +546,13 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("modENC_Saisie:ENC_Add_Locally_Details()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details()", startTime)
 
 End Sub
 
 Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_GL_Posting_DB()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", 0)
     
     Application.ScreenUpdating = False
     
@@ -632,13 +632,13 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modENC_Saisie:ENC_GL_Posting_DB()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB()", startTime)
 
 End Sub
 
 Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_GL_Posting_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -677,13 +677,13 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modENC_Saisie:ENC_GL_Posting_Locally()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally()", startTime)
 
 End Sub
 
 Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Saisie_Add_Check_Boxes()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes", 0)
     
     Application.EnableEvents = False
     
@@ -726,13 +726,13 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call End_Timer("modENC_Saisie:ENC_Saisie_Add_Check_Boxes()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes()", startTime)
 
 End Sub
 
 Sub ENC_Remove_Check_Boxes(Row As Long)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Remove_Check_Boxes()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", 0)
     
     Application.EnableEvents = False
     
@@ -751,13 +751,13 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set cbx = Nothing
     
-    Call End_Timer("modENC_Saisie:ENC_Remove_Check_Boxes()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes()", startTime)
 
 End Sub
 
 Sub ENC_Clear_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Clear_Cells()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Clear_Cells", 0)
     
     wshENC_Saisie.Unprotect
     
@@ -798,7 +798,7 @@ Sub ENC_Clear_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call End_Timer("modENC_Saisie:ENC_Clear_Cells()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Clear_Cells()", startTime)
 
 End Sub
 
@@ -831,7 +831,7 @@ End Sub
 
 Sub ENC_Back_To_FAC_Menu()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modENC_Saisie:ENC_Back_To_FAC_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu", 0)
    
     wshENC_Saisie.Unprotect
     
@@ -846,7 +846,7 @@ Sub ENC_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call End_Timer("modENC_Saisie:ENC_Back_To_FAC_Menu()", timerStart)
+    Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu()", startTime)
 
 End Sub
 

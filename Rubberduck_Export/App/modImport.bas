@@ -58,7 +58,7 @@ End Sub
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modImport:ChartOfAccount_Import_All()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", 0)
     
     Application.StatusBar = "J'importe le plan comptable"
     
@@ -102,7 +102,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Call End_Timer("modImport:ChartOfAccount_Import_All()", timerStart)
+    Call Log_Record("modImport:ChartOfAccount_Import_All()", startTime)
 
 End Sub
 

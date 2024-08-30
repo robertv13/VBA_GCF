@@ -194,72 +194,72 @@ End Sub
 '
 'End Function
 '
-Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
+'Sub Start_Timer(subName As String) '2024-06-06 @ 10:12
+'
+'    Dim modeOper As Long
+'    modeOper = 2
+'
+'    'modeOper = 1 - Dump to immediate Window
+'    If modeOper = 1 Then
+'        Dim l As Long: l = Len(subName)
+'        Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
+'        Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & "Entering: " & subName & _
+'            vbNewLine & String(40 + l, "*")
+'    End If
+'
+'    'modeOper = 2 - Dump to worksheet
+'    If modeOper = 2 Then
+'        With wshzDocLogAppli
+'            Dim lastUsedRow As Long
+'            lastUsedRow = .Range("A99999").End(xlUp).Row
+'            lastUsedRow = lastUsedRow + 1 'Row to write a new record
+'            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
+'            .Range("B" & lastUsedRow).value = ThisWorkbook.name
+'            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+'            .Range("D" & lastUsedRow).value = subName & " - entering"
+'        End With
+'    End If
+'
+'End Sub
 
-    Dim modeOper As Long
-    modeOper = 2
-    
-    'modeOper = 1 - Dump to immediate Window
-    If modeOper = 1 Then
-        Dim l As Long: l = Len(subName)
-        Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
-        Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & "Entering: " & subName & _
-            vbNewLine & String(40 + l, "*")
-    End If
-
-    'modeOper = 2 - Dump to worksheet
-    If modeOper = 2 Then
-        With wshzDocLogAppli
-            Dim lastUsedRow As Long
-            lastUsedRow = .Range("A99999").End(xlUp).Row
-            lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
-            .Range("B" & lastUsedRow).value = ThisWorkbook.name
-            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("D" & lastUsedRow).value = subName & " - entering"
-        End With
-    End If
-
-End Sub
-
-Sub End_Timer(subName As String, t As Double)
-
-    Dim modeOper As Long
-    modeOper = 2 '2024-03-29 @ 11:37
-    
-    'Allows message to be used - 2024-06-06 @ 11:05
-    If InStr(subName, "message:") = 1 Then
-        subName = Right(subName, Len(subName) - 8)
-    Else
-        subName = subName & " - exiting"
-    End If
-    
-    'modeOper = 1 - Dump to immediate Window
-    If modeOper = 1 Then
-        Dim l As Long: l = Len(subName)
-        Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
-        Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & subName & " = " _
-        & Format$(Timer - t, "##0.0000") & " secondes" & vbNewLine & String(40 + l, "*")
-    End If
-
-    'modeOper = 2 - Dump to worksheet
-    If modeOper = 2 Then
-        With wshzDocLogAppli
-            Dim lastUsedRow As Long
-            lastUsedRow = .Range("A99999").End(xlUp).Row
-            lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
-            .Range("B" & lastUsedRow).value = ThisWorkbook.name
-            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("D" & lastUsedRow).value = subName
-            If t Then
-                .Range("E" & lastUsedRow).value = Round(Timer - t, 4)
-                .Range("E" & lastUsedRow).NumberFormat = "#,##0.0000"
-            End If
-        End With
-    End If
-
-End Sub
+'Sub End_Timer(subName As String, t As Double)
+'
+'    Dim modeOper As Long
+'    modeOper = 2 '2024-03-29 @ 11:37
+'
+'    'Allows message to be used - 2024-06-06 @ 11:05
+'    If InStr(subName, "message:") = 1 Then
+'        subName = Right(subName, Len(subName) - 8)
+'    Else
+'        subName = subName & " - exiting"
+'    End If
+'
+'    'modeOper = 1 - Dump to immediate Window
+'    If modeOper = 1 Then
+'        Dim l As Long: l = Len(subName)
+'        Debug.Print vbNewLine & String(40 + l, "*") & vbNewLine & _
+'        Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - " & subName & " = " _
+'        & Format$(Timer - t, "##0.0000") & " secondes" & vbNewLine & String(40 + l, "*")
+'    End If
+'
+'    'modeOper = 2 - Dump to worksheet
+'    If modeOper = 2 Then
+'        With wshzDocLogAppli
+'            Dim lastUsedRow As Long
+'            lastUsedRow = .Range("A99999").End(xlUp).Row
+'            lastUsedRow = lastUsedRow + 1 'Row to write a new record
+'            .Range("A" & lastUsedRow).value = Fn_Get_Windows_Username
+'            .Range("B" & lastUsedRow).value = ThisWorkbook.name
+'            .Range("C" & lastUsedRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+'            .Range("D" & lastUsedRow).value = subName
+'            If t Then
+'                .Range("E" & lastUsedRow).value = Round(Timer - t, 4)
+'                .Range("E" & lastUsedRow).NumberFormat = "#,##0.0000"
+'            End If
+'        End With
+'    End If
+'
+'End Sub
 
 Public Sub ArrayToRange(ByRef data As Variant _
                         , ByVal outRange As Range _
@@ -279,7 +279,7 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli_Utils:CreateOrReplaceWorksheet()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", 0)
     
     Dim ws As Worksheet
     Dim wsExists As Boolean
@@ -307,7 +307,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call End_Timer("modAppli_Utils:CreateOrReplaceWorksheet()", timerStart)
+    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet()", startTime)
 
 End Sub
 
@@ -3029,4 +3029,34 @@ Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
         .ThemeFont = xlThemeFontNone
     End With
 
+End Sub
+
+Sub Search_Search_Results()
+
+    Dim ws As Worksheet: Set ws = Feuil1
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    
+    Dim line As String, l As String, r As String
+    Dim i As Long, ii As Long
+    For i = 2 To lastUsedRow
+        If ws.Cells(i, 1) <> "" Then
+            ii = ii + 1
+            line = Trim(ws.Cells(i, 6).value)
+            l = Left(line, 61)
+            r = Right(line, 20)
+            If InStr(line, "Dim startTime As Double: startTime = Timer: Call Log_Record(""") = 0 And _
+                InStr(line, "Call Log_Record(""") = 0 Then
+                Debug.Print "Début: " & line
+            End If
+            If InStr(line, """, 0)") <> Len(line) - 4 And _
+                InStr(line, """, startTime)") <> Len(line) - 12 Then
+                Debug.Print "Fin  : " & line
+            End If
+        End If
+    Next i
+
+    MsgBox "J'ai analysé " & i & " lignes de code!"
+    
 End Sub

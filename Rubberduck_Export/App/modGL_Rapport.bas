@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub GL_Report_For_Selected_Accounts()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Rapport:GL_Report_For_Selected_Accounts()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", 0)
    
     'Reference the worksheet
     Dim ws As Worksheet:  Set ws = wshGL_Rapport
@@ -89,13 +89,13 @@ Public Sub GL_Report_For_Selected_Accounts()
     Set selectedItems = Nothing
     Set ws = Nothing
     
-    Call End_Timer("modGL_Rapport:GL_Report_For_Selected_Accounts()", timerStart)
+    Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts()", startTime)
 
 End Sub
 
 Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sortType As String)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Rapport:get_GL_Trans_With_AF()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:get_GL_Trans_With_AF", 0)
 
     Dim glNo As String
     glNo = Left(compte, InStr(compte, " ") - 1)
@@ -147,7 +147,7 @@ NoSort:
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
     
-    Call End_Timer("modGL_Rapport:get_GL_Details_For_A_Account()", timerStart)
+    Call Log_Record("modGL_Rapport:get_GL_Details_For_A_Account()", startTime)
 
 End Sub
 
@@ -226,7 +226,7 @@ End Sub
 
 Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Rapport:GL_Rapport_Clear_All_Cells()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", 0)
     
     With ws
         .Range("B3").value = True 'Sort by Date
@@ -236,7 +236,7 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
         .Range("F4").Select
     End With
     
-    Call End_Timer("modGL_Rapport:GL_Rapport_Clear_All_Cells()", timerStart)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells()", startTime)
 
 End Sub
 
@@ -354,7 +354,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
 End Sub
 Sub GL_Rapport_Back_To_Menu()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Rapport:GL_Rapport_Back_To_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", 0)
    
     wshGL_Rapport.Visible = xlSheetHidden
     On Error Resume Next
@@ -364,7 +364,7 @@ Sub GL_Rapport_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call End_Timer("modGL_Rapport:GL_Rapport_Back_To_Menu()", timerStart)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu()", startTime)
     
 End Sub
 

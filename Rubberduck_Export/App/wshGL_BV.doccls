@@ -5,7 +5,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", 0)
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call End_Timer("wshGL_BV:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshGL_BV:Worksheet_Activate()", startTime)
 
 End Sub
 
@@ -140,7 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").value = CDate(Format$(Range("J1").value, "dd/mm/yyyy"))
@@ -172,7 +172,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 '    Sub GL_TB_AdvancedFilter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans", 0)
 
     With wshGL_Trans
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
@@ -212,7 +212,7 @@ NoSort:
     Set rgData = Nothing
     Set rgResult = Nothing
     
-    Call End_Timer("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", timerStart)
+    Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", startTime)
 
 End Sub
 
@@ -240,7 +240,7 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-        Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_BV:wshGL_BV_Adjust_The_Shape()")
+        Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", 0)
         
         Dim lastResultRow As Long
         lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).Row
@@ -295,8 +295,8 @@ Sub wshGL_BV_Adjust_The_Shape()
         'Set shape properties
         With dynamicShape
             .Fill.ForeColor.RGB = RGB(249, 255, 229)
-            .Line.Weight = 2
-            .Line.ForeColor.RGB = vbBlue
+            .line.Weight = 2
+            .line.ForeColor.RGB = vbBlue
             .TextFrame.Characters.text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
             .TextFrame.Characters.Font.name = "Consolas"
@@ -313,7 +313,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
         End With
       
-      Call End_Timer("wshGL_BV:wshGL_BV_Adjust_The_Shape()", timerStart)
+      Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape()", startTime)
       
 End Sub
 

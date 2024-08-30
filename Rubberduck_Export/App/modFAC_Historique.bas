@@ -3,7 +3,7 @@ Option Explicit
 
 Sub Affiche_Liste_Factures()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Historique:Affiche_Liste_Factures()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Historique
     
@@ -34,7 +34,7 @@ Sub Affiche_Liste_Factures()
     Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
     shp.Visible = False
     
-    Call End_Timer("wshFAC_Historique:Affiche_Liste_Factures()", timerStart)
+    Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures()", startTime)
 
 Clean_Exit:
     
@@ -339,7 +339,7 @@ End Sub
 
 Sub FAC_Historique_Clear_All_Cells()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells", 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -359,13 +359,13 @@ Sub FAC_Historique_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call End_Timer("modFAC_Historique:FAC_Historique_Clear_All_Cells()", timerStart)
+    Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells()", startTime)
 
 End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu", 0)
     
     wshFAC_Historique.Visible = xlSheetHidden
     
@@ -377,7 +377,7 @@ Sub FAC_Historique_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call End_Timer("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", timerStart)
+    Call Log_Record("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", startTime)
 
 End Sub
 

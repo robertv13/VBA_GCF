@@ -111,7 +111,7 @@ End Enum
 
 Sub Set_Environment()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Set_Environment()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Set_Environment", 0)
     
     Dim rootPath As String
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
@@ -121,13 +121,13 @@ Sub Set_Environment()
     End If
     wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
     
-    Call End_Timer("modAppli:Set_Environment()", timerStart)
+    Call Log_Record("modAppli:Set_Environment()", startTime)
 
 End Sub
 
 Sub Write_Info_On_Main_Menu()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:Write_Info_On_Main_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Write_Info_On_Main_Menu", 0)
     
     Application.EnableEvents = False
     wshMenu.Unprotect
@@ -168,7 +168,7 @@ Sub Write_Info_On_Main_Menu()
     
     DoEvents '2024-08-23 @ 06:21
 
-    Call End_Timer("modAppli:Write_Info_On_Main_Menu()", timerStart)
+    Call Log_Record("modAppli:Write_Info_On_Main_Menu()", startTime)
 
 End Sub
 

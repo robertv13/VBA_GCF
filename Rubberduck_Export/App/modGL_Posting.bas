@@ -3,7 +3,7 @@ Option Explicit
 
 Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:GL_Posting_To_DB()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
@@ -75,13 +75,13 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modGL_Posting:GL_Posting_To_DB()", timerStart)
+    Call Log_Record("modGL_Posting:GL_Posting_To_DB()", startTime)
 
 End Sub
 
 Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modGL_Posting:GL_Posting_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -114,7 +114,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     
     Application.ScreenUpdating = True
     
-    Call End_Timer("modGL_Posting:GL_Posting_Locally()", timerStart)
+    Call Log_Record("modGL_Posting:GL_Posting_Locally()", startTime)
 
 End Sub
 

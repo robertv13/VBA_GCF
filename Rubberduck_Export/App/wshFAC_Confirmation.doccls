@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Confirmation:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -51,7 +51,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call End_Timer("wshFAC_Confirmation:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshFAC_Confirmation:Worksheet_Activate()", startTime)
 
 End Sub
 
@@ -123,7 +123,7 @@ End Sub
 
 Sub FAC_Confirmation_Back_To_FAC_Menu()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:Back_To_FAC_Menu()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", 0)
    
     wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
     
@@ -134,6 +134,6 @@ Sub FAC_Confirmation_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call End_Timer("modFAC_Confirmation:Back_To_FAC_Menu()", timerStart)
+    Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu()", startTime)
     
 End Sub

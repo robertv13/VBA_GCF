@@ -3,18 +3,18 @@ Option Explicit
 
 Sub CAR_TdB_Update_All()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR:CAR_TdB_Update_All()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR:CAR_TdB_Update_All", 0)
     
     Call CAR_Update_TdB_Data
     Call CAR_Refresh_CAR_PivotTables
     
-    Call End_Timer("modCAR:CAR_TdB_Update_All()", timerStart)
+    Call Log_Record("modCAR:CAR_TdB_Update_All()", startTime)
 
 End Sub
 
 Sub CAR_Update_TdB_Data()
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR:CAR_Update_TdB_Data()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR:CAR_Update_TdB_Data",0)
 
     Dim wsSource As Worksheet: Set wsSource = wshFAC_Comptes_Clients
     Dim lastUsedRow As Long
@@ -58,13 +58,13 @@ Sub CAR_Update_TdB_Data()
     Set wsSource = Nothing
     Set wsTarget = Nothing
     
-'    Call End_Timer("modCAR:CAR_Update_TdB_Data()", timerStart)
+'    Call Log_Record("modCAR:CAR_Update_TdB_Data()", startTime)
 
 End Sub
 
 Sub CAR_Refresh_CAR_PivotTables()
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR:CAR_Refresh_CAR_PivotTables()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR:CAR_Refresh_CAR_PivotTables",0)
     
     Dim pt As PivotTable
     For Each pt In wshCAR_TDB_PivotTable.PivotTables
@@ -74,7 +74,7 @@ Sub CAR_Refresh_CAR_PivotTables()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set pt = Nothing
     
-'    Call End_Timer("modCAR:CAR_Refresh_CAR_PivotTables()", timerStart)
+'    Call Log_Record("modCAR:CAR_Refresh_CAR_PivotTables()", startTime)
 
 End Sub
 

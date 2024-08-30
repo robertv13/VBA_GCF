@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshGL_Rapport:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_Rapport:Worksheet_Activate", 0)
     
     Application.ScreenUpdating = False
     
@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
     Set lb = Nothing
     Set ws = Nothing
     
-    Call End_Timer("wshGL_Rapport:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshGL_Rapport:Worksheet_Activate()", startTime)
 
 End Sub
 
@@ -142,7 +142,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -158,7 +158,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

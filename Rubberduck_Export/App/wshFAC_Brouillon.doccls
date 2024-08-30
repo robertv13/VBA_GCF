@@ -6,7 +6,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Brouillon:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", 0)
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call End_Timer("wshFAC_Brouillon:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate()", startTime)
 
 End Sub
 
@@ -94,7 +94,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshFAC_Brouillon:Worksheet_Change()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", 0)
     
     Application.EnableEvents = False
     
@@ -119,7 +119,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -128,7 +128,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -218,6 +218,6 @@ ExitSub:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
 
-    Call End_Timer("wshFAC_Brouillon:Worksheet_Change()", timerStart)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Change()", startTime)
   
 End Sub

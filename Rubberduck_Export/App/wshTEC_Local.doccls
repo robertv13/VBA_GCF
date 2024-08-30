@@ -2,10 +2,10 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshTEC_Local:Worksheet_Activate()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Local:Worksheet_Activate", 0)
 
     wshTEC_Local.EnableCalculation = True
     
-    Call End_Timer("wshTEC_Local:Worksheet_Activate()", timerStart)
+    Call Log_Record("wshTEC_Local:Worksheet_Activate()", startTime)
 
 End Sub

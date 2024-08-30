@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub PreparationFacture_Click()
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:PreparationFacture_Click()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:PreparationFacture_Click", 0)
 
     Call SlideIn_PrepFact
     
@@ -26,7 +26,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("wshMenuFAC:PreparationFacture_Click()", timerStart)
+    Call Log_Record("wshMenuFAC:PreparationFacture_Click()", startTime)
     
 End Sub
 
@@ -67,7 +67,7 @@ End Sub
 'Option # 4
 Sub FAC_Historique_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:FAC_Historique_Click()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Historique_Click", 0)
 
     Call SlideIn_FAC_Historique
     
@@ -86,14 +86,14 @@ Sub FAC_Historique_Click()
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("wshMenuFAC:FAC_Historique_Click()", timerStart)
+    Call Log_Record("wshMenuFAC:FAC_Historique_Click()", startTime)
 
 End Sub
 
 'Option # 5
 Sub FAC_Confirmation_Click()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("wshMenuFAC:FAC_Confirmation_Click()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)
 
     Call SlideIn_FAC_Confirmation
     
@@ -113,7 +113,7 @@ Sub FAC_Confirmation_Click()
     
     Application.ScreenUpdating = True
 
-    Call End_Timer("wshMenuFAC:FAC_Confirmation_Click()", timerStart)
+    Call Log_Record("wshMenuFAC:FAC_Confirmation_Click()", startTime)
 
 End Sub
 

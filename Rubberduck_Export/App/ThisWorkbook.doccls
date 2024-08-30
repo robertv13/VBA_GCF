@@ -8,10 +8,7 @@ Private Sub Workbook_Open()
 '    Call Handle_Rubberduck_Reference
     
     'Log activity
-    Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
-    Call End_Timer("message:N E W  session  has  started", 0)
-    Dim timerStart As Double: timerStart = Timer
-    Call Start_Timer("ThisWorkbook:Workbook_Open()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
     
     Application.ScreenUpdating = False
     
@@ -50,7 +47,7 @@ Private Sub Workbook_Open()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
     
-    Call End_Timer("ThisWorkbook:Workbook_Open()", timerStart)
+    Call Log_Record("ThisWorkbook:Workbook_Open()", startTime)
     
 End Sub
 
@@ -63,7 +60,7 @@ End Sub
 
 Sub BackupMasterFile()
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:BackupMasterFile()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", 0)
     
     Application.ScreenUpdating = False
     
@@ -98,12 +95,6 @@ Sub BackupMasterFile()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set masterWorkbook = Nothing
     
-    Call End_Timer("modAppli:BackupMasterFile()", timerStart)
-
-End Sub
-
-Private Sub Workbook_Deactivate()
-
-        Call Log_Record("***** Fin de la session (Workbook_Deactivate) *****", 0)
+    Call Log_Record("modAppli:BackupMasterFile()", startTime)
 
 End Sub

@@ -445,7 +445,7 @@ End Sub
 
 Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER", 0)
 
     Application.ScreenUpdating = False
     
@@ -485,13 +485,13 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()", timerStart)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()", startTime)
 
 End Sub
 
 Sub FAC_Confirmation_Update_Locally(invoice As String)
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_Update_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -515,13 +515,13 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_Update_Locally()", timerStart)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally()", startTime)
 
 End Sub
 
 Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Confirmation:FAC_Confirmation_GL_Posting()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting", 0)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -636,7 +636,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     Set ws = Nothing
     On Error GoTo 0
     
-    Call End_Timer("modFAC_Confirmation:FAC_Confirmation_GL_Posting()", timerStart)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting()", startTime)
 
 End Sub
 

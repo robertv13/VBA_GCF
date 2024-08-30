@@ -3,7 +3,7 @@ Option Explicit
 
 Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()")
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Analyse:CAR_Sort_Group_And_Subtotal",0)
     
     Application.ScreenUpdating = False
     
@@ -43,7 +43,7 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     Dim progressBarBg As Shape
     Set progressBarBg = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, barWidth, barHeight)
     progressBarBg.Fill.ForeColor.RGB = RGB(255, 255, 255)  ' White background
-    progressBarBg.Line.Visible = msoTrue  'Show the border of the progress bar
+    progressBarBg.line.Visible = msoTrue  'Show the border of the progress bar
     progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
     progressBarBg.TextFrame.Characters.Font.size = 14
@@ -55,7 +55,7 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     Set progressBarFill = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, 0, barHeight)
     progressBarFill.Fill.ForeColor.RGB = RGB(0, 255, 0)  ' Green fill color
     progressBarFill.Fill.Transparency = 0.6  'Set transparency to 60%
-    progressBarFill.Line.Visible = msoFalse  'Hide the border of the fill
+    progressBarFill.line.Visible = msoFalse  'Hide the border of the fill
     
     'Update the progress bar fill
     progressBarFill.width = 0.15 * barWidth  '15 %
@@ -293,7 +293,7 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     
 '    Application.StatusBar = ""
 
-'    Call End_Timer("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()", timerStart)
+'    Call Log_Record("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()", startTime)
 
 End Sub
 
@@ -535,7 +535,7 @@ End Sub
 
 Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB", 0)
     
     Application.ScreenUpdating = False
     
@@ -608,13 +608,13 @@ Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
+    Call Log_Record("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", startTime)
 
 End Sub
 
 Sub zFAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -641,7 +641,7 @@ Sub zFAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
         rn = rn + 1
     Next i
     
-    Call End_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
+    Call Log_Record("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally()", startTime)
 
     Application.ScreenUpdating = True
 
@@ -674,7 +674,7 @@ Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB", 0)
     
     Application.ScreenUpdating = False
     
@@ -729,13 +729,13 @@ Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
+    Call Log_Record("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", startTime)
 
 End Sub
 
 Sub zFAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -761,7 +761,7 @@ Sub zFAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
-    Call End_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
+    Call Log_Record("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()", startTime)
 
     Application.ScreenUpdating = True
 

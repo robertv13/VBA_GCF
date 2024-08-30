@@ -102,7 +102,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'If found, it returns Variant, with the cell address, the row and the value
     '2024-03-09 - First version
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Find_Data_In_A_Range()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", 0)
     
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
@@ -123,7 +123,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
 
-    Call End_Timer("modFunctions:Fn_Find_Data_In_A_Range()", timerStart)
+    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range()", startTime)
 
 End Function
 
@@ -272,7 +272,7 @@ End Function
 
 Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_GetGL_Code_From_GL_Description()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", 0)
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
@@ -302,7 +302,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call End_Timer("modFunctions:Fn_GetGL_Code_From_GL_Description()", timerStart)
+    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description()", startTime)
 
 End Function
 
@@ -337,7 +337,7 @@ End Function
 
 Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID", 0)
     
     On Error Resume Next
         Dim cell As Range
@@ -349,7 +349,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
         End If
     On Error GoTo 0
     
-    Call End_Timer("modFunctions:Fn_Find_Row_Number_TEC_ID()", timerStart)
+    Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID()", startTime)
     
 End Function
 

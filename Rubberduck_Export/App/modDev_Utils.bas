@@ -1645,7 +1645,7 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modAppli:SetTabOrder()")
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetTabOrder", 0)
     
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1690,7 +1690,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
     
-    Call End_Timer("modAppli:SetTabOrder()", timerStart)
+    Call Log_Record("modAppli:SetTabOrder()", startTime)
 
 End Sub
 
