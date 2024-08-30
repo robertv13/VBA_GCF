@@ -1,13 +1,13 @@
-Attribute VB_Name = "modTEC_Analyse"
+Attribute VB_Name = "modCAR_Analyse"
 Option Explicit
 
-Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
+Sub zCAR_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
+'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()")
     
     Application.ScreenUpdating = False
     
-    Dim wsDest As Worksheet: Set wsDest = wshTEC_Analyse
+    Dim wsDest As Worksheet: Set wsDest = wshCAR_Analyse
     
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
@@ -70,7 +70,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
     'Set the source worksheet, lastUsedRow and lastUsedCol
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
+    Dim wsSource As Worksheet: Set wsSource = wshCAR_Local
     'Find the last row with data in the source worksheet
     lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).Row
     'Find the first empty column from the left in the source worksheet
@@ -105,7 +105,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                     codeClient = wsSource.Cells(i, ftecClient_ID).value
                     nomClientFromMF = dictClients(codeClient)
                     
-                    wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecTEC_ID).value
+                    wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecCAR_ID).value
                     wsDest.Cells(r, 2).value = wsSource.Cells(i, ftecProf_ID).value
                     wsDest.Cells(r, 3).value = nomClientFromMF
                     wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecDate).value
@@ -293,11 +293,11 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
 '    Application.StatusBar = ""
 
-'    Call End_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
+'    Call End_Timer("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()", timerStart)
 
 End Sub
 
-Sub Clean_Up_Summary_Area(ws As Worksheet)
+Sub zClean_Up_Summary_Area(ws As Worksheet)
 
     Application.EnableEvents = False
     
@@ -310,9 +310,9 @@ Sub Clean_Up_Summary_Area(ws As Worksheet)
 
 End Sub
 
-Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow As Long)
+Sub zApply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow As Long)
 
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
     
     'Loop each cell in column C to find Totals row
     Dim totalRange As Range, cell As Range
@@ -365,11 +365,11 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
     
 End Sub
 
-Sub Build_Hours_Summary(rowSelected As Long)
+Sub zBuild_Hours_Summary(rowSelected As Long)
 
     If rowSelected < 7 Then Exit Sub
     
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
     
     'Determine the last row used
     Dim lastUsedRow As Long
@@ -494,13 +494,13 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
 End Sub
     
-Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
+Sub zBring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
 
     Dim wsSource As Worksheet: Set wsSource = wshFAC_Projets_Entête
     Dim sourceLastUsedRow As Long
     sourceLastUsedRow = wsSource.Range("A9999").End(xlUp).Row
     
-    Dim wsActive As Worksheet: Set wsActive = wshTEC_Analyse
+    Dim wsActive As Worksheet: Set wsActive = wshCAR_Analyse
     Dim rngTotal As Range: Set rngTotal = wsActive.Range("C1:C" & activeLastUsedRow)
     
     'Analyze all Invoice Requests (one row at the time)
@@ -533,9 +533,9 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
 
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
+Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -572,22 +572,22 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE 1=0"
     rs.Open strSQL, conn, 2, 3
     
-    'Read all line from TEC_Analyse
+    'Read all line from CAR_Analyse
     Dim dateTEC As String, TimeStamp As String
     Dim l As Long
     For l = fr To lr
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields("ProjetID").value = projetID
-            rs.Fields("NomClient").value = wshTEC_Analyse.Range("C" & l).value
+            rs.Fields("NomClient").value = wshCAR_Analyse.Range("C" & l).value
             rs.Fields("ClientID").value = clientID
-            rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
-            rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
-            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
+            rs.Fields("TECID").value = wshCAR_Analyse.Range("A" & l).value
+            rs.Fields("ProfID").value = wshCAR_Analyse.Range("B" & l).value
+            dateTEC = Format$(wshCAR_Analyse.Range("E" & l).value, "dd/mm/yyyy")
             rs.Fields("Date").value = dateTEC
-            rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
+            rs.Fields("Prof").value = wshCAR_Analyse.Range("F" & l).value
             rs.Fields("estDetruite") = 0 'Faux
-            rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
+            rs.Fields("Heures").value = CDbl(wshCAR_Analyse.Range("H" & l).value)
             TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("TimeStamp").value = TimeStamp
         rs.update
@@ -608,13 +608,13 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
+Sub zFAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -627,27 +627,27 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     Dim i As Long
     For i = fr To lr
         wshFAC_Projets_Détails.Range("A" & rn).value = projetID
-        wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
+        wshFAC_Projets_Détails.Range("B" & rn).value = wshCAR_Analyse.Range("C" & i).value
         wshFAC_Projets_Détails.Range("C" & rn).value = clientID
-        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
-        wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
-        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
+        wshFAC_Projets_Détails.Range("D" & rn).value = wshCAR_Analyse.Range("A" & i).value
+        wshFAC_Projets_Détails.Range("E" & rn).value = wshCAR_Analyse.Range("B" & i).value
+        dateTEC = Format$(wshCAR_Analyse.Range("E" & i).value, "dd/mm/yyyy")
         wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
-        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
-        wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
+        wshFAC_Projets_Détails.Range("G" & rn).value = wshCAR_Analyse.Range("F" & i).value
+        wshFAC_Projets_Détails.Range("H" & rn).value = wshCAR_Analyse.Range("H" & i).value
         wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
         TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
         rn = rn + 1
     Next i
     
-    Call End_Timer("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
+    Call End_Timer("modCAR_Analyse:FAC_Projet_Détails_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
+Sub zSoft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
@@ -667,14 +667,14 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
     
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
+Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
                                         nomClient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB()")
     
     Application.ScreenUpdating = False
     
@@ -729,13 +729,13 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call End_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
+    Call End_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", timerStart)
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub zFAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()")
     
     Application.ScreenUpdating = False
     
@@ -761,13 +761,13 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
-    Call End_Timer("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
+    Call End_Timer("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()", timerStart)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
+Sub zSoft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
@@ -787,10 +787,10 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
     
 End Sub
 
-Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
+Sub zAdd_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
     
     'Define the range for the summary
     Dim summaryRange As Range
@@ -815,10 +815,10 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     
 End Sub
 
-Sub Delete_CheckBox()
+Sub zDelete_CheckBox()
 
     'Set the worksheet
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
     
     'Check if any CheckBox exists and then delete it/them
     Dim Sh As Shape
@@ -830,15 +830,15 @@ Sub Delete_CheckBox()
     
 End Sub
 
-Sub Groups_SubTotals_Collapse_A_Client(r As Long)
+Sub zGroups_SubTotals_Collapse_A_Client(r As Long)
     
     'Set the worksheet you want to work on
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
 
     'Loop through each row starting at row r
     Dim saveR As Long
     saveR = r
-    Do While wshTEC_Analyse.Range("A" & r).value <> ""
+    Do While wshCAR_Analyse.Range("A" & r).value <> ""
         r = r + 1
     Loop
 
@@ -847,10 +847,10 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     
 End Sub
 
-Sub Clear_Fees_Summary_And_CheckBox()
+Sub zClear_Fees_Summary_And_CheckBox()
 
     'Clean the Fees Summary Area
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    Dim ws As Worksheet: Set ws = wshCAR_Analyse
     Application.EnableEvents = False
     ws.Range("J7:O9999").clear
     Application.EnableEvents = True
@@ -864,3 +864,5 @@ Sub Clear_Fees_Summary_And_CheckBox()
     Next Sh
 
 End Sub
+
+

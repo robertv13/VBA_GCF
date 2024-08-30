@@ -107,7 +107,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
-    Dim sh As Worksheet: Set sh = wshTEC_Local
+    Dim Sh As Worksheet: Set Sh = wshTEC_Local
     
     Dim TECID As Long
     'With a negative ID value, it means to soft delete this record
@@ -142,7 +142,7 @@ Clean_Exit:
     ufSaisieHeures.txtClient.SetFocus
 
     'Cleaning memory - 2024-07-01 @ 09:34
-    Set sh = Nothing
+    Set Sh = Nothing
 
     Call End_Timer("modTEC:TEC_Efface_Ligne()", timerStart)
 

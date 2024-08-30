@@ -107,5 +107,3 @@ Private Sub Workbook_Deactivate()
         Call Log_Record("***** Fin de la session (Workbook_Deactivate) *****", 0)
 
 End Sub
-
-

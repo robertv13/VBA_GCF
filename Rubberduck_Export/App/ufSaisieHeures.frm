@@ -245,11 +245,11 @@ Private Sub txtClient_AfterUpdate()
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("ufSaisieHeures:txtClient_AfterUpdate()")
     
     If Me.txtClient.value <> Me.txtSavedClient.value Then
-        If Me.txtTEC_ID.value = "" Then
+'        If Me.txtTEC_ID.value = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
-        Else
-            Call Buttons_Enabled_True_Or_False(True, False, False, False)
-        End If
+'        Else
+'            Call Buttons_Enabled_True_Or_False(True, False, False, False)
+'        End If
     End If
     
     Call End_Timer("ufSaisieHeures:txtClient_AfterUpdate()", timerStart)
@@ -297,13 +297,19 @@ Sub txtHeures_AfterUpdate()
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
+        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
         If Me.txtTEC_ID = "" Then
+        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
             Call Buttons_Enabled_True_Or_False(True, True, False, False)
         Else
+        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, True, False, False", -1)
             Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If
     
+'ufSaisieHeures:txtHeures_AfterUpdate - ? 0,30 <>  (sortie)|Temps écoulé: 34195,6016 seconds
+'ufSaisieHeures:txtHeures_AfterUpdate - ? Me.txtTEC_ID = " (sortie)|Temps écoulé: 34195,6055 seconds
+
     Call End_Timer("ufSaisieHeures:txtHeures_AfterUpdate()", timerStart)
     
 End Sub

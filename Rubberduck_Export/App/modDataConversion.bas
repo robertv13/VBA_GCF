@@ -1001,5 +1001,123 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
            
 End Sub
 
+Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
 
+    Application.ScreenUpdating = False
+    
+    'Declare and open the 2 workbooks
+    Dim wb1 As Workbook
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\CAR_A_COMPLÉTER.xlsx")
+    Dim wb2 As Workbook
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
 
+    'Declare the 2 worksheets
+    Dim ws1 As Worksheet: Set ws1 = wb1.Worksheets("Feuil1")
+    Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entête")
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws1.Cells(ws1.rows.count, "A").End(xlUp).Row
+    Dim lastUsedRowTarget As Long
+    lastUsedRowTarget = ws2.Cells(ws2.rows.count, "A").End(xlUp).Row
+    
+    'Define the target Range
+    Dim rngTarget As Range: Set rngTarget = ws2.Range("A2:A" & lastUsedRowTarget)
+    
+    Dim invNo As String
+    Dim hono As Currency, af1 As Currency, af2 As Currency, af3 As Currency
+    Dim tps As Currency, tvq As Currency, arTotal As Currency, depot As Currency
+    Dim af1Str As String, af2Str As String, af3Str As String
+    Dim foundCells As Range
+    Dim t() As Currency
+    ReDim t(1 To 8)
+
+    Dim i As Integer, ii As Integer
+    
+    For i = 2 To lastUsedRow
+        invNo = ws1.Cells(i, 1).value
+        
+        hono = ws1.Cells(i, 10).value
+        af1Str = ws1.Cells(i, 11).value
+        af1 = ws1.Cells(i, 12).value
+        af2Str = ws1.Cells(i, 13).value
+        af2 = ws1.Cells(i, 14).value
+        af3Str = ws1.Cells(i, 15).value
+        af3 = ws1.Cells(i, 16).value
+        tps = ws1.Cells(i, 18).value
+        tvq = ws1.Cells(i, 20).value
+        arTotal = ws1.Cells(i, 21).value
+        depot = ws1.Cells(i, 22).value
+
+        If hono + af1 + af2 + af3 + tps + tvq <> arTotal Then
+            MsgBox "Une ligne (" & i & ") ne balance pas !!!", vbCritical
+        End If
+        
+        'Find the InvNo in wshFAC_Entête
+        Set foundCells = rngTarget.columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+        If foundCells Is Nothing Then
+            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
+        Else
+            ii = foundCells.Row
+        End If
+        
+        If ws2.Cells(ii, 21).value <> arTotal Then
+            MsgBox "Problème d'intégrité pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
+        End If
+        
+        'Replace values in Target, with the Source info
+        ws2.Cells(ii, 10).value = hono
+        If af1 <> 0 And af1Str <> ws2.Cells(ii, 11) Then
+            ws2.Cells(ii, 11).value = af1Str
+        End If
+        ws2.Cells(ii, 12).value = af1
+        
+        If af2 <> 0 And af2Str <> ws2.Cells(ii, 13) Then
+            ws2.Cells(ii, 13).value = af2Str
+        End If
+        ws2.Cells(ii, 14).value = af2
+        
+        If af3 <> 0 And af3Str <> ws2.Cells(ii, 15) Then
+            ws2.Cells(ii, 15).value = af3Str
+        End If
+        ws2.Cells(ii, 16).value = af3
+        
+        ws2.Cells(ii, 18).value = tps
+        ws2.Cells(ii, 20).value = tvq
+        
+        ws2.Cells(ii, 22).value = depot
+        
+        If ws2.Cells(ii, 10) + ws2.Cells(ii, 12) + ws2.Cells(ii, 14) + ws2.Cells(ii, 16) + _
+            ws2.Cells(ii, 18) + ws2.Cells(ii, 20) <> ws2.Cells(ii, 21).value Then
+            MsgBox "Problème avec les assignations...", vbCritical
+        End If
+        
+        t(1) = t(1) + ws2.Cells(ii, 10)
+        t(2) = t(2) + ws2.Cells(ii, 12)
+        t(3) = t(3) + ws2.Cells(ii, 14)
+        t(4) = t(4) + ws2.Cells(ii, 16)
+        t(5) = t(5) + ws2.Cells(ii, 18)
+        t(6) = t(6) + ws2.Cells(ii, 20)
+        t(7) = t(7) + ws2.Cells(ii, 21)
+        t(8) = t(8) + ws2.Cells(ii, 22)
+        
+        Debug.Print "x8", invNo, ii, Format(i / lastUsedRow, "##0.00 %")
+    
+    Next i
+    
+    Debug.Print t(1), t(2), t(3), t(4), t(5), t(6), t(7), t(8)
+    
+    Application.ScreenUpdating = True
+    
+    'Close the workbooks without saving
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=True
+    
+    'Cleanup
+    Set wb1 = Nothing
+    Set wb2 = Nothing
+    Set ws1 = Nothing
+    Set ws2 = Nothing
+    
+    MsgBox "Le traitement est complété", vbInformation
+           
+End Sub
