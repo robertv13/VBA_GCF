@@ -3,7 +3,7 @@ Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()")
     
     Application.ScreenUpdating = False
     
@@ -293,7 +293,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
 '    Application.StatusBar = ""
 
-'    Call End_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
+    Call End_Timer("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", timerStart)
 
 End Sub
 

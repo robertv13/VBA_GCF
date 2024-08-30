@@ -675,7 +675,7 @@ End Sub
 
 Sub FAC_Brouillon_Back_To_FAC_Menu()
 
-'    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
+    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()")
    
     Application.EnableEvents = False
     wshFAC_Brouillon.Range("B27").value = False
@@ -692,7 +692,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshMenuFAC.Range("A1").Select
     
-'    Call End_Timer("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
+    Call End_Timer("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", timerStart)
 
 End Sub
 

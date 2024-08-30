@@ -1,7 +1,7 @@
 Attribute VB_Name = "modCAR_Analyse"
 Option Explicit
 
-Sub zCAR_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
+Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
 
 '    Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modCAR_Analyse:CAR_Sort_Group_And_Subtotal()")
     
@@ -70,7 +70,7 @@ Sub zCAR_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
     'Set the source worksheet, lastUsedRow and lastUsedCol
-    Dim wsSource As Worksheet: Set wsSource = wshCAR_Local
+    Dim wsSource As Worksheet: Set wsSource = wshFAC_Comptes_Clients
     'Find the last row with data in the source worksheet
     lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).Row
     'Find the first empty column from the left in the source worksheet
