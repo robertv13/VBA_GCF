@@ -15,7 +15,7 @@ Function Fn_Does_Client_Code_Exist() As Boolean
     End If
     
     'Validating Duplicate Entries
-    If Not ws.Range("B:B").Find(what:=iCodeClient, LookAt:=xlWhole) Is Nothing Then
+    If Not ws.Range("B:B").Find(What:=iCodeClient, LookAt:=xlWhole) Is Nothing Then
         Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "VRAI", -1)
         Fn_Does_Client_Code_Exist = True
     Else

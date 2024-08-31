@@ -55,6 +55,33 @@ Private Sub cmdAddClient_Click()
 
 End Sub
 
+Private Sub cmdDelete_Click()
+
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdDelete_Click", "", 0)
+    
+    Dim clientUtilise As Boolean
+    Call Valider_Client_Avant_Effacement(Me.txtCodeClient.Value, clientUtilise)
+    If clientUtilise = True Then
+        MsgBox "Ce client est utilisé dans au moins une table de données" & _
+                vbNewLine & vbNewLine & "Il est donc impossible de détruire ce client", _
+                vbInformation, "Code de client est utilisé dans les tables"
+        GoTo Clean_Exit
+    End If
+    
+    Call Delete_Client(Me.txtCodeClient.Value)
+            
+    Call CM_Reset_UserForm
+        
+    ufClientMF.txtCodeClient.Enabled = False
+    
+Clean_Exit:
+    
+    ufClientMF.cmdDelete = False
+    
+    Call CM_Log_Record("ufClientMF:cmdDelete_Click", "", startTime)
+
+End Sub
+
 Private Sub cmdCancel_Click()
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdCancel_Click", "", 0)
@@ -168,6 +195,78 @@ Clean_Exit:
 
 End Sub
 
+Private Sub Delete_Client(clientID)
+    
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:Delete_Client", "", 0)
+    
+    Dim msgValue As VbMsgBoxResult
+    msgValue = MsgBox("Désirez-vous vraiment DÉTRUIRE le présent client ?", vbYesNo + vbInformation, "Détruire le client de façon PERMANENTE")
+    If msgValue = vbYes Then
+        'Définir le nom du fichier en fonction de l'utilisateur
+        Dim targetFileName As String
+        If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+            targetFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+        Else
+            targetFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+        End If
+        Dim targetWorksheet As String: targetWorksheet = "Clients"
+
+        Dim wb As Workbook: Set wb = Workbooks.Open(targetFileName)
+        Dim ws As Worksheet: Set ws = wb.Sheets(targetWorksheet)
+        
+        Dim foundCell As Range
+        Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
+        If Not foundCell Is Nothing Then
+            ws.Rows(foundCell.Row).Delete
+        Else
+            MsgBox "Le client '" & clientID & "' ne peut être trouvé dans Clients", vbCritical
+        End If
+        
+        'Onglet Données
+        Set ws = wshClients
+        Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
+        If Not foundCell Is Nothing Then
+            ws.Rows(foundCell.Row).Delete
+        Else
+            MsgBox "Le client '" & clientID & "' ne peut être trouvé dans Données", vbCritical
+        End If
+        
+        'Onglet DonnéesRecherche
+        Set ws = wshSearchData
+        Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
+        If Not foundCell Is Nothing Then
+            ws.Rows(foundCell.Row).Delete
+        Else
+            MsgBox "Le client '" & clientID & "' ne peut être trouvé dans DonnéesRecherche", vbCritical
+        End If
+        
+        MsgBox "Le client '" & Me.txtCodeClient.Value & "' a été détruit" & vbNewLine & _
+                vbNewLine & "de façon PERMANENTE", vbInformation
+    End If
+    
+    Me.txtSearch.Value = ""
+    Call CM_Reset_UserForm
+    
+    ufClientMF.cmdSave.Enabled = False
+    ufClientMF.cmdCancel.Enabled = False
+    
+    If wshMENU.Range("B4").Value >= 0 And _
+        wshMENU.Range("B4").Value < ufClientMF.lstDonnées.ListCount Then
+            ufClientMF.lstDonnées.ListIndex = wshMENU.Range("B4").Value
+            If wshMENU.Range("B4").Value > 15 Then
+                ufClientMF.lstDonnées.TopIndex = wshMENU.Range("B4").Value - 8
+            End If
+    End If
+    
+    'Ferme ET sauvegarde le fichier Excel
+    wb.Close SaveChanges:=True
+
+Clean_Exit:
+
+    Call CM_Log_Record("ufClientMF:Delete_Client", "", startTime)
+
+End Sub
+
 Private Sub cmdSearch_Click()
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdSearch_Click", "", 0)
@@ -197,6 +296,10 @@ Private Sub Fix_Some_Fields()
 
 End Sub
 
+Private Sub CommandButton1_Click()
+
+End Sub
+
 Private Sub lstDonnées_Click()
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:lstDonnées_Click", "", 0)
@@ -214,6 +317,7 @@ Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:lstDonnées_DblClick", "", 0)
     
+    Me.cmdDelete.Enabled = True
     Me.cmdEdit.Enabled = False
     Me.cmdAddClient.Enabled = False
     
@@ -296,6 +400,7 @@ Private Sub UserForm_Initialize()
         .AddItem "Décembre"
     End With
     
+    ufClientMF.cmdDelete.Enabled = False
     ufClientMF.cmdSave.Enabled = False
     ufClientMF.cmdCancel.Enabled = False
 

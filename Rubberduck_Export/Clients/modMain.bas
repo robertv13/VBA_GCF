@@ -19,10 +19,10 @@ Sub CM_Reset_UserForm()
     iRow = [Counta(Données!A:A)] 'Identifying the number of rows
     lastUsedRow = wshClients.Cells(wshClients.Rows.Count, "A").End(xlUp).Row
     'Do we have the same number of used rows ?
-    If iRow <> lastUsedRow Then
-        MsgBox "Il semble y avoir une incongruité entre 2 pointeurs" & vbNewLine & vbNewLine & _
-               "Pointeur iRow = " & iRow & " - pointeur lastUsedRow = " & lastUsedRow, vbInformation
-    End If
+'    If iRow <> lastUsedRow Then
+'        MsgBox "Il semble y avoir une incongruité entre 2 pointeurs" & vbNewLine & vbNewLine & _
+'               "Pointeur iRow = " & iRow & " - pointeur lastUsedRow = " & lastUsedRow, vbInformation
+'    End If
     
     With ufClientMF
         'Empty all fields

@@ -103,7 +103,7 @@ Sub CM_Verify_DDM(fullFileName As String)
     
     'Record to the log the difference between NOW and the date of last modifcation
     Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
-    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 2 Then
+    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 3 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
@@ -111,4 +111,104 @@ Sub CM_Verify_DDM(fullFileName As String)
                "Le fichier n'est pas à jour sur disque"
     End If
 
+End Sub
+
+Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExiste As Boolean = False) '2024-08-30 @ 18:15
+    
+    ' Liste des workbooks à vérifier (à adapter selon vos besoins)
+    Dim listeWorkbooks As Variant
+    listeWorkbooks = Array("GCF_BD_MASTER.xlsx")
+    
+    Dim dataFilesPath As String
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        dataFilesPath = "P:\Administration\APP\GCF\DataFiles"
+    Else
+        dataFilesPath = "C:\VBA\GC_FISCALITÉ\DataFiles"
+    End If
+
+    'Boucle pour vérifier dans les workbooks fermés
+    Dim fullFileName As String
+    Dim sql As String
+    Dim conn As Object
+    Dim rs As Object
+    Dim i As Integer
+    For i = LBound(listeWorkbooks) To UBound(listeWorkbooks)
+        fullFileName = dataFilesPath & "\" & listeWorkbooks(i)
+        
+        'Vérifier l'existence du fichier
+        If Dir(fullFileName) <> "" Then
+            'Utiliser ADO pour ouvrir le workbook fermé
+            Set conn = CreateObject("ADODB.Connection")
+            conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullFileName & ";Extended Properties=""Excel 12.0;HDR=Yes;IMEX=1"";"
+            
+            'Boucle sur les feuilles à vérifier (exemple: "Sheet1", "Sheet2")
+            Dim feuilleRechercher As Variant
+            Dim plageRechercher As String, colName As String, feuilleName As String
+            For Each feuilleRechercher In Array("ENC_Entête|codeClient", _
+                                                "FAC_Comptes_Clients|CodeClient", _
+                                                "FAC_Entête|Cust_ID", _
+                                                "FAC_Projets_Détails|ClientID", _
+                                                "FAC_Projets_Entête|ClientID", _
+                                                "TEC_Local|Client_ID")
+                colName = Mid(feuilleRechercher, InStr(feuilleRechercher, "|") + 1)
+                feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
+'                Debug.Print fullFileName, feuilleName, colName
+                plageRechercher = feuilleName & "$"
+                
+                ' Construire la requête SQL pour chercher le client
+                sql = "SELECT * FROM [" & plageRechercher & "] WHERE [" & colName & "] = '" & clientID & "'"
+                
+                Set rs = conn.Execute(sql)
+                If Not rs.EOF Then
+'                    Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'"
+                    clientExiste = True
+                    Exit Sub
+                End If
+                rs.Close
+            Next feuilleRechercher
+            
+            conn.Close
+        End If
+    Next i
+    
+    'Boucle pour vérifier dans les worksheets du workbook actif
+    Dim wb As Workbook
+    
+'    Debug.Print Application.Workbooks.Count
+    
+    For Each wb In Application.Workbooks
+        Dim ws As Worksheet
+        For Each ws In wb.Worksheets
+            Dim foundCell As Range
+            Debug.Print wb.Name, ws.Name
+            If ws.Name = "Données" Or ws.Name = "DonnéesRecherche" Or ws.Name = "Clients" Then
+                GoTo Next_Worksheet
+            End If
+            Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
+            If Not foundCell Is Nothing Then
+'                Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'"
+                clientExiste = True
+                Exit Sub
+            End If
+Next_Worksheet:
+        Next ws
+    Next wb
+    
+    'clean up
+    Set conn = Nothing
+    Set foundCell = Nothing
+    Set rs = Nothing
+    Set wb = Nothing
+    Set ws = Nothing
+    
+End Sub
+
+Sub Test_Valider_Client_Avant_Effacement()
+
+    Dim clientExiste As Boolean
+    
+    Call Valider_Client_Avant_Effacement("193x", clientExiste)
+    
+    Debug.Print clientExiste
+    
 End Sub
