@@ -539,26 +539,29 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     Application.ScreenUpdating = False
     
     'Declare and open the 2 workbooks
-    Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER_ACO.xlsx")
-    Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Dim wbWas As Workbook
+    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER_20240830_103558.xlsx")
+    Dim wbNow As Workbook
+    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
 
     'Declare the 2 worksheets
-    Dim ws1 As Worksheet
-    Set ws1 = wb1.Worksheets("CAR")
-    Dim ws2 As Worksheet
-    Set ws2 = wb2.Worksheets("CAR")
+    Dim wsWas As Worksheet
+    Set wsWas = wbWas.Worksheets("TEC_Local")
+    Dim wsNow As Worksheet
+    Set wsNow = wbNow.Worksheets("TEC_Local")
     
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences")
-    Set wsDiff = ThisWorkbook.Worksheets("Différences")
-    wsDiff.Range("A1").value = "Position"
-    wsDiff.Range("B1").value = "CodeClient"
-    wsDiff.Range("C1").value = "Valeur originale"
-    wsDiff.Range("D1").value = "Valeur corrigée"
-    Call Make_It_As_Header(wsDiff.Range("A1:D1"))
+    Call CreateOrReplaceWorksheet("X_Différences")
+    Set wsDiff = ThisWorkbook.Worksheets("X_Différences")
+    wsDiff.Range("A1").value = "Ligne"
+    wsDiff.Range("B1").value = "Colonne"
+    wsDiff.Range("C1").value = "TEC_ID"
+    wsDiff.Range("D1").value = "Prof"
+    wsDiff.Range("E1").value = "Date"
+    wsDiff.Range("F1").value = "Valeur originale"
+    wsDiff.Range("G1").value = "Valeur corrigée"
+    Call Make_It_As_Header(wsDiff.Range("A1:F1"))
 
     Dim diffRow As Long
     diffRow = 2                                  'Take into consideration the Header
@@ -566,20 +569,23 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     diffCol = 1
 
     'Loop through each cell and compare
-    Dim cell1 As Range
-    Dim cell2 As Range
+    Dim cellWas As Range
+    Dim cellNow As Range
     Dim readCells As Long
-    For Each cell1 In ws1.usedRange
-        Set cell2 = ws2.Cells(cell1.Row, cell1.Column)
+    For Each cellWas In wsWas.usedRange
+        Set cellNow = wsNow.Cells(cellWas.Row, cellWas.Column)
         readCells = readCells + 1
-        If cell1.value <> cell2.value Then
-            wsDiff.Cells(diffRow, 1).value = "Ligne " & cell1.Row & ", Colonne " & cell1.Column
-            wsDiff.Cells(diffRow, 2).value = ws1.Cells(cell1.Row, 4).value
-            wsDiff.Cells(diffRow, 3).value = cell1.value
-            wsDiff.Cells(diffRow, 4).value = cell2.value
+        If cellWas.value <> cellNow.value Then
+            wsDiff.Cells(diffRow, 1).value = cellWas.Row
+            wsDiff.Cells(diffRow, 2).value = cellWas.Column
+            wsDiff.Cells(diffRow, 3).value = wsWas.Cells(cellWas.Row, 1).value
+            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 3).value
+            wsDiff.Cells(diffRow, 5).value = wsWas.Cells(cellWas.Row, 4).value
+            wsDiff.Cells(diffRow, 6).value = cellWas.value
+            wsDiff.Cells(diffRow, 7).value = cellNow.value
             diffRow = diffRow + 1
         End If
-    Next cell1
+    Next cellWas
 
     wsDiff.columns.AutoFit
     
@@ -589,7 +595,7 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
                                         " cellules analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:D" & diffRow)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
 
     'Setup print parameters
@@ -603,17 +609,17 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     wsDiff.Activate
 
     'Close the workbooks without saving
-    wb1.Close False
-    wb2.Close False
+    wbWas.Close False
+    wbNow.Close False
     
     'Cleanup
-    Set cell1 = Nothing
-    Set cell2 = Nothing
+    Set cellWas = Nothing
+    Set cellNow = Nothing
     Set rngToPrint = Nothing
-    Set wb1 = Nothing
-    Set wb2 = Nothing
-    Set ws1 = Nothing
-    Set ws2 = Nothing
+    Set wbWas = Nothing
+    Set wbNow = Nothing
+    Set wsWas = Nothing
+    Set wsNow = Nothing
     Set wsDiff = Nothing
     
     MsgBox "Comparison complete. " & vbNewLine & vbNewLine & _
@@ -1164,7 +1170,7 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
         End If
         
         'Find the InvNo in wshFAC_Entête
-        Set foundCells = rngTarget.columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+        Set foundCells = rngTarget.columns(1).Find(What:=invNo, LookIn:=xlValues, lookat:=xlWhole)
         If foundCells Is Nothing Then
             MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
         Else

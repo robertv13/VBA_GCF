@@ -64,14 +64,16 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
         
         .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr(10) & "&11" & header2
         
-        .LeftFooter = "&11&D - &T"
-        .CenterFooter = "&11&KFF0000&A"
-        .RightFooter = "Page &P of &N"
+        .LeftFooter = "&9&D - &T"
+        .CenterFooter = "&9&KFF0000&A"
+        .RightFooter = "&""Segoe UI,Normal""&9Page &P of &N"
         
         .TopMargin = Application.InchesToPoints(0.75)
         .LeftMargin = Application.InchesToPoints(0.15)
         .RightMargin = Application.InchesToPoints(0.15)
         .BottomMargin = Application.InchesToPoints(0.55)
+        
+        .CenterHorizontally = True
         
         If Orient = "L" Then
             .Orientation = xlLandscape

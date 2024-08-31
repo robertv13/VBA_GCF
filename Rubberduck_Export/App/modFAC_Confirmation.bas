@@ -276,7 +276,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
-    Set cell = wsFees.Range("A2:A" & lastUsedRow).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = wsFees.Range("A2:A" & lastUsedRow).Find(What:=invNo, LookIn:=xlValues, lookat:=xlWhole)
     
     'Check if the invNo was found at all
     Dim firstAddress As String
@@ -405,7 +405,7 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
     
     'Use Range.Find to locate the first cell with the invNo
     Dim cell As Range
-    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACTURE:" & invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set cell = wsGL.Range("D2:D" & lastUsedRow).Find(What:="FACTURE:" & invNo, LookIn:=xlValues, lookat:=xlWhole)
     
     'Check if the invNo was found at all
     Dim firstAddress As String
@@ -501,7 +501,7 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range
-    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, lookat:=xlWhole)
     
     Dim r As Long, rowToBeUpdated As Long, TECID As Long
     If Not foundRange Is Nothing Then
@@ -531,7 +531,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range
-    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, lookat:=xlWhole)
     
     Dim r As Long
     If Not foundRange Is Nothing Then

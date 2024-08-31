@@ -13,12 +13,12 @@ Sub Generer_Liste_Agée_CAR()
     On Error Resume Next
     Dim wsResultat As Worksheet
     Application.DisplayAlerts = False
-    Set wsResultat = ThisWorkbook.Sheets("ListeAgee")
+    Set wsResultat = ThisWorkbook.Sheets("X_Liste_Âgée_CAR")
     If Not wsResultat Is Nothing Then wsResultat.delete
     Application.DisplayAlerts = True
     On Error GoTo 0
     Set wsResultat = ThisWorkbook.Sheets.add
-    wsResultat.name = "ListeAgee"
+    wsResultat.name = "X_Liste_Âgée_CAR"
     Dim rngResultat As Range
     Set rngResultat = wsResultat.Range("A1")
     
@@ -28,10 +28,21 @@ Sub Generer_Liste_Agée_CAR()
     
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase(niveauDetail) = "client" Then
-        wsResultat.Range("A1:F1").value = Array("Client", "Total", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:F1").value = Array("Client", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        Call Make_It_As_Header(wsResultat.Range("A1:F1"))
     End If
 
-    Call Make_It_As_Header(wsResultat.Range("A1:F1"))
+    'Entêtes de colonnes en fonction du niveau de détail (Facture)
+    If LCase(niveauDetail) = "facture" Then
+        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date Facture", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        Call Make_It_As_Header(wsResultat.Range("A1:H1"))
+    End If
+
+    'Entêtes de colonnes en fonction du niveau de détail (Transaction)
+    If LCase(niveauDetail) = "transaction" Then
+        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date", "Montant", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        Call Make_It_As_Header(wsResultat.Range("A1:H1"))
+    End If
 
     'Initialiser le dictionnaire pour les résultats (Nom du client, Solde)
     Dim dictClients As Object ' Utilisez un dictionnaire pour stocker les résultats
@@ -56,8 +67,9 @@ Sub Generer_Liste_Agée_CAR()
     Dim montantRestant As Currency
     Dim ageFacture As Long
     Dim tranche As String
-    Dim i As Long
+    Dim i As Long, r As Long
     
+    r = 1
     For i = 1 To rngFactures.rows.count
         'Récupérer les données de la facture directement du Range
         client = rngFactures.Cells(i, 4).value
@@ -71,6 +83,11 @@ Sub Generer_Liste_Agée_CAR()
         'Obtenir les paiemnets pour cette facture
         montantPaye = CCur(Application.WorksheetFunction.SumIf(wsPaiements.Range("B:B"), numFacture, wsPaiements.Range("E:E")))
         montantRestant = montantFacture - montantPaye
+        
+        'Exclus les soldes de facture à 0,00 $
+        If montantRestant = 0 Then
+            GoTo Next_Invoice
+        End If
         
         'Calcul de l'âge de la facture
         ageFacture = WorksheetFunction.Max(dateAujourdhui - dateDue, 0)
@@ -114,43 +131,61 @@ Sub Generer_Liste_Agée_CAR()
                     Case "90+ jours"
                         tableau(4) = tableau(4) + montantRestant
                 End Select
-                dictClients(client) = tableau ' Remplacer le tableau dans le dictionnaire
+                dictClients(client) = tableau ' Replacer le tableau dans le dictionnaire
             Case "facture"
                 'Ajouter chaque facture avec son montant restant dû
-                wsResultat.Cells(i, 1).value = client
-                wsResultat.Cells(i, 2).value = numFacture
-                wsResultat.Cells(i, 3).value = dateFacture
-                wsResultat.Cells(i, 4).value = montantFacture
-                wsResultat.Cells(i, 5).value = montantRestant
-                wsResultat.Cells(i, 6).value = tranche
+                r = r + 1
+                wsResultat.Cells(r, 1).value = client
+                wsResultat.Cells(r, 2).value = numFacture
+                wsResultat.Cells(r, 3).value = dateFacture
+                wsResultat.Cells(r, 4).value = montantRestant
+                Select Case tranche
+                    Case "0-30 jours"
+                        wsResultat.Cells(r, 5).value = montantRestant
+                    Case "31-60 jours"
+                        wsResultat.Cells(r, 6).value = montantRestant
+                    Case "61-90 jours"
+                        wsResultat.Cells(r, 7).value = montantRestant
+                    Case "90+ jours"
+                        wsResultat.Cells(r, 8).value = montantRestant
+                End Select
                 
             Case "transaction"
                 'Type Facture
-                wsResultat.Cells(rowOffset, 1).value = client
-                wsResultat.Cells(rowOffset, 2).value = "Facture"
-                wsResultat.Cells(rowOffset, 3).value = numFacture
-                wsResultat.Cells(rowOffset, 4).value = montantFacture
-                wsResultat.Cells(rowOffset, 5).value = tranche
-                wsResultat.Cells(rowOffset, 6).value = dateFacture
-                wsResultat.Cells(rowOffset, 7).value = ""
-                rowOffset = rowOffset + 1
+                r = r + 1
+                wsResultat.Cells(r, 1).value = client
+                wsResultat.Cells(r, 2).value = numFacture
+                wsResultat.Cells(r, 3).value = dateFacture
+                wsResultat.Cells(r, 4).value = montantFacture
+                Select Case tranche
+                    Case "0-30 jours"
+                        wsResultat.Cells(r, 5).value = montantRestant
+                    Case "31-60 jours"
+                        wsResultat.Cells(r, 6).value = montantRestant
+                    Case "61-90 jours"
+                        wsResultat.Cells(r, 7).value = montantRestant
+                    Case "90+ jours"
+                        wsResultat.Cells(r, 8).value = montantRestant
+                End Select
                 
-                'Type paiements
+                'Transactions de type paiements
                 Dim rngPaiementsAssoc As Range
-                Set rngPaiementsAssoc = wsPaiements.Range("B:B").Find(numFacture, , xlValues, xlWhole)
-                Do Until rngPaiementsAssoc Is Nothing
-                    wsResultat.Cells(rowOffset, 1).value = client
-                    wsResultat.Cells(rowOffset, 2).value = "Paiement"
-                    wsResultat.Cells(rowOffset, 3).value = rngPaiementsAssoc.value
-                    wsResultat.Cells(rowOffset, 4).value = rngPaiementsAssoc.Offset(0, 1).value ' Montant du paiement
-                    wsResultat.Cells(rowOffset, 5).value = tranche
-                    wsResultat.Cells(rowOffset, 6).value = ""
-                    wsResultat.Cells(rowOffset, 7).value = rngPaiementsAssoc.Offset(0, 2).value ' Date du paiement
-                    
-                    Set rngPaiementsAssoc = wsPaiements.Range("B:B").FindNext(rngPaiementsAssoc)
-                    rowOffset = rowOffset + 1
-                Loop
+                Dim firstAddress As String
+                Set rngPaiementsAssoc = wsPaiements.Range("B:B").Find(numFacture, LookIn:=xlValues, lookat:=xlWhole)
+                If Not rngPaiementsAssoc Is Nothing Then
+                    firstAddress = rngPaiementsAssoc.Address
+                        Do
+                        r = r + 1
+                        wsResultat.Cells(r, 1).value = client
+                        wsResultat.Cells(r, 2).value = numFacture
+                        wsResultat.Cells(r, 3).value = rngPaiementsAssoc.Offset(0, 2).value
+                        wsResultat.Cells(r, 4).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
+                        Set rngPaiementsAssoc = wsPaiements.columns("B:B").FindNext(rngPaiementsAssoc)
+                    Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
+                End If
         End Select
+
+Next_Invoice:
     Next i
     
     'Si niveau de détail est "Client", ajouter les résultats au tableau final
@@ -158,21 +193,19 @@ Sub Generer_Liste_Agée_CAR()
         i = 2
         Dim cle As Variant
         For Each cle In dictClients.keys
-            If dictClients(cle)(0) <> 0 Then
-                wsResultat.Cells(i, 1).value = cle ' Nom du client
-                wsResultat.Cells(i, 2).value = dictClients(cle)(0) ' Total
-                wsResultat.Cells(i, 3).value = dictClients(cle)(1) ' 0-30 jours
-                wsResultat.Cells(i, 4).value = dictClients(cle)(2) ' 31-60 jours
-                wsResultat.Cells(i, 5).value = dictClients(cle)(3) ' 61-90 jours
-                wsResultat.Cells(i, 6).value = dictClients(cle)(4) ' 90+ jours
-                i = i + 1
-            End If
+            wsResultat.Cells(i, 1).value = cle ' Nom du client
+            wsResultat.Cells(i, 2).value = dictClients(cle)(0) ' Total
+            wsResultat.Cells(i, 3).value = dictClients(cle)(1) ' 0-30 jours
+            wsResultat.Cells(i, 4).value = dictClients(cle)(2) ' 31-60 jours
+            wsResultat.Cells(i, 5).value = dictClients(cle)(3) ' 61-90 jours
+            wsResultat.Cells(i, 6).value = dictClients(cle)(4) ' 90+ jours
+            i = i + 1
         Next cle
     End If
     
     'Tri alphabétique par nom de client
     derniereLigne = wsResultat.Cells(wsResultat.rows.count, "A").End(xlUp).Row
-    Set rngResultat = wsResultat.Range("A1:F" & derniereLigne)
+    Set rngResultat = wsResultat.Range("A1:H" & derniereLigne)
     With wsResultat.Sort
         .SortFields.clear
         .SortFields.add key:=wsResultat.Range("A2"), Order:=xlAscending 'Trier par la colonne A
@@ -181,18 +214,77 @@ Sub Generer_Liste_Agée_CAR()
         .Apply
     End With
     
+    derniereLigne = derniereLigne + 2
     With wsResultat
         .columns("A:A").ColumnWidth = 55
-        .columns("B:F").ColumnWidth = 14
-        .Range("B" & derniereLigne + 2).formula = "=Sum(B2:B" & derniereLigne & ")"
-        .Range("C" & derniereLigne + 2).formula = "=Sum(C2:C" & derniereLigne & ")"
-        .Range("D" & derniereLigne + 2).formula = "=Sum(D2:D" & derniereLigne & ")"
-        .Range("E" & derniereLigne + 2).formula = "=Sum(E2:E" & derniereLigne & ")"
-        .Range("F" & derniereLigne + 2).formula = "=Sum(F2:F" & derniereLigne & ")"
-        .Range("B" & derniereLigne + 2 & ":F" & derniereLigne + 2).Font.Bold = True
+        .columns("B:H").ColumnWidth = 12
+        Select Case LCase(niveauDetail)
+            Case "client"
+                .Range("C2:F" & derniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("B" & derniereLigne).formula = "=Sum(B2:B" & derniereLigne - 2 & ")"
+                .Range("C" & derniereLigne).formula = "=Sum(C2:C" & derniereLigne - 2 & ")"
+                .Range("D" & derniereLigne).formula = "=Sum(D2:D" & derniereLigne - 2 & ")"
+                .Range("E" & derniereLigne).formula = "=Sum(E2:E" & derniereLigne - 2 & ")"
+                .Range("F" & derniereLigne).formula = "=Sum(F2:F" & derniereLigne - 2 & ")"
+                .Range("B" & derniereLigne & ":F" & derniereLigne).Font.Bold = True
+            Case "facture"
+                .columns("B:C").HorizontalAlignment = xlCenter
+                .Range("D2:H" & derniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("D" & derniereLigne).formula = "=Sum(D2:D" & derniereLigne - 2 & ")"
+                .Range("E" & derniereLigne).formula = "=Sum(E2:E" & derniereLigne - 2 & ")"
+                .Range("F" & derniereLigne).formula = "=Sum(F2:F" & derniereLigne - 2 & ")"
+                .Range("G" & derniereLigne).formula = "=Sum(G2:G" & derniereLigne - 2 & ")"
+                .Range("H" & derniereLigne).formula = "=Sum(H2:H" & derniereLigne - 2 & ")"
+                .Range("D" & derniereLigne & ":H" & derniereLigne).Font.Bold = True
+            Case "transaction"
+                .columns("B:C").HorizontalAlignment = xlCenter
+                .Range("D2:H" & derniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("D" & derniereLigne).formula = "=Sum(D2:D" & derniereLigne - 2 & ")"
+                .Range("E" & derniereLigne).formula = "=Sum(E2:E" & derniereLigne - 2 & ")"
+                .Range("F" & derniereLigne).formula = "=Sum(F2:F" & derniereLigne - 2 & ")"
+                .Range("G" & derniereLigne).formula = "=Sum(G2:G" & derniereLigne - 2 & ")"
+                .Range("H" & derniereLigne).formula = "=Sum(H2:H" & derniereLigne - 2 & ")"
+                .Range("D" & derniereLigne & ":H" & derniereLigne).Font.Bold = True
+        End Select
     End With
     
-    MsgBox "Liste âgée générée avec succès."
+    'Result print setup - 2024-08-31 @ 12:19
+    Dim lastUsedRow As Long
+    lastUsedRow = derniereLigne
     
+    Dim rngToPrint As Range:
+    Select Case LCase(niveauDetail)
+        Case "client"
+            Set rngToPrint = wsResultat.Range("A2:F" & lastUsedRow)
+        Case "facture"
+            Set rngToPrint = wsResultat.Range("A2:H" & lastUsedRow)
+        Case "transaction"
+            Set rngToPrint = wsResultat.Range("A2:H" & lastUsedRow)
+    End Select
+    Call Apply_Conditional_Formatting_Alternate(rngToPrint, 1, False)
+    With rngToPrint.Font
+        .name = "Segoe UI"
+        .size = 9
+    End With
+    Dim header1 As String: header1 = "Liste âgée des comptes clients"
+    Dim header2 As String
+    If LCase(niveauDetail) = "client" Then
+        header2 = "1 ligne par client"
+    ElseIf LCase(niveauDetail) = "facture" Then
+        header2 = "1 ligne par Facture"
+    Else
+        header2 = "1 ligne par transaction"
+    End If
+    header2 = "Par ordre alphabétique - " & header2
+    
+    Call Simple_Print_Setup(wsResultat, rngToPrint, header1, header2, "L")
+    
+    MsgBox "La préparation est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'X_Liste_Âgée_CAR'", vbInformation
+    
+    ThisWorkbook.Worksheets("X_Liste_Âgée_CAR").Activate
+    
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set wsResultat = Nothing
+
 End Sub
 

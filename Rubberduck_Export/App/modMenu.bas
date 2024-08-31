@@ -29,7 +29,7 @@ Sub SlideOut_TEC()
     With wshMenu.Shapes("btnTECMenu")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoTEC").Left = width - 32
+            wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "TEC"
     End With
@@ -64,7 +64,7 @@ Sub SlideOut_Facturation()
     With wshMenu.Shapes("btnFacturationMenu")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-          ActiveSheet.Shapes("icoFacturation").Left = width - 32
+            wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Facturation"
     End With
@@ -81,7 +81,7 @@ Sub SlideIn_Debours()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoDebours").Left = width - 32
+            wshMenu.Shapes("icoDebours").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -99,7 +99,7 @@ Sub SlideOut_Debours()
     With wshMenu.Shapes("btnDeboursMenu")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoDebours").Left = width - 32
+            wshMenu.Shapes("icoDebours").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Débours"
     End With
@@ -116,7 +116,7 @@ Sub SlideIn_Comptabilite()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoComptabilite").Left = width - 32
+            wshMenu.Shapes("icoComptabilite").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -134,7 +134,7 @@ Sub SlideOut_Comptabilite()
     With wshMenu.Shapes("btnComptabiliteMenu")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoComptabilite").Left = width - 32
+            wshMenu.Shapes("icoComptabilite").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Comptabilité"
     End With
@@ -151,7 +151,7 @@ Sub SlideIn_Parametres()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoParametres").Left = width - 32
+            wshMenu.Shapes("icoParametres").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -169,7 +169,7 @@ Sub SlideOut_Parametres()
     With wshMenu.Shapes("btnParametresOption")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoParametres").Left = width - 32
+            wshMenu.Shapes("icoParametres").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Paramètres"
     End With
@@ -204,7 +204,7 @@ Sub SlideOut_Exit()
     With ActiveSheet.Shapes("btnEXIT")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoEXIT").Left = width - 32
+            wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Sortie"
     End With
@@ -297,7 +297,7 @@ Sub SlideIn_PrepFact()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoPrepFact").Left = width - 32
+            wshMenuFAC.Shapes("icoPrepFact").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -315,7 +315,7 @@ Sub SlideOut_PrepFact()
     With wshMenuFAC.Shapes("btnPrepFact")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoPrepFact").Left = width - 32
+            wshMenuFAC.Shapes("icoPrepFact").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Préparation de facture"
     End With
@@ -332,7 +332,7 @@ Sub SlideIn_SuiviCC()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
+            wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -350,7 +350,7 @@ Sub SlideOut_SuiviCC()
     With wshMenuFAC.Shapes("btnSuiviCC")
         For width = 32 To MAXWIDTH Step 1
             .Height = width
-            ActiveSheet.Shapes("icoSuiviCC").Left = width - 32
+            wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Suivi de C/C"
     End With
@@ -367,7 +367,7 @@ Sub SlideIn_Encaissement()
         For width = MAXWIDTH To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEncaissement").Left = width - 32
+            wshMenuFAC.Shapes("icoEncaissement").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -385,7 +385,7 @@ Sub SlideOut_Encaissement()
     With wshMenuFAC.Shapes("btnEncaissement")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoEncaissement").Left = width - 32
+            wshMenuFAC.Shapes("icoEncaissement").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Encaissement"
     End With
@@ -402,7 +402,7 @@ Sub SlideIn_FAC_Historique()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
+            wshMenuFAC.Shapes("icoFAC_Historique").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -420,7 +420,7 @@ Sub SlideOut_FAC_Historique()
     With wshMenuFAC.Shapes("btnFAC_Historique")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoFAC_Historique").Left = width - 32
+            wshMenuFAC.Shapes("icoFAC_Historique").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Historique factures"
     End With
@@ -437,7 +437,7 @@ Sub SlideIn_FAC_Confirmation()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoFAC_Confirmation").Left = width - 32
+            wshMenuFAC.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -455,7 +455,7 @@ Sub SlideOut_FAC_Confirmation()
     With wshMenuFAC.Shapes("btnFAC_Confirmation")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoFAC_Confirmation").Left = width - 32
+            wshMenuFAC.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Confirmation de facture"
     End With
@@ -472,7 +472,7 @@ Sub SlideIn_Paiement()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoPaiement").Left = width - 32
+            wshMenuDEB.Shapes("icoPaiement").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -490,7 +490,7 @@ Sub SlideOut_Paiement()
     With wshMenuDEB.Shapes("btnPaiement")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoPaiement").Left = width - 32
+            wshMenuDEB.Shapes("icoPaiement").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Déboursé"
     End With
@@ -507,7 +507,7 @@ Sub SlideIn_EJ()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEJ").Left = width - 32
+            wshMenuGL.Shapes("icoEJ").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -525,7 +525,7 @@ Sub SlideOut_EJ()
     With wshMenuGL.Shapes("btnEJ")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoEJ").Left = width - 32
+            wshMenuGL.Shapes("icoEJ").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
     End With
@@ -542,7 +542,7 @@ Sub SlideIn_BV()
         For width = 180 To 32 Step -1
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoBV").Left = width - 32
+            wshMenuGL.Shapes("icoBV").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -560,7 +560,7 @@ Sub SlideOut_BV()
     With wshMenuGL.Shapes("btnBV")
         For width = 32 To 180
             .Height = width
-            ActiveSheet.Shapes("icoBV").Left = width - 32
+            wshMenuGL.Shapes("icoBV").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
     End With
@@ -577,7 +577,7 @@ Sub SlideIn_GL_Report()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoGL").Left = width - 32
+            wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = ""
     End With
@@ -593,7 +593,7 @@ Sub SlideOut_GL_Report()
     With wshMenuGL.Shapes("btnGL")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoGL").Left = width - 32
+            wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
     End With
@@ -610,7 +610,7 @@ Sub SlideIn_EF()
         For width = MAXWIDTH To 32 Step -8
             .Height = width
             .Left = width - 32
-            ActiveSheet.Shapes("icoEF").Left = width - 32
+            wshMenuGL.Shapes("icoEF").Left = width - 32
         Next width
         On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
@@ -628,7 +628,7 @@ Sub SlideOut_EF()
     With wshMenuGL.Shapes("btnEF")
         For width = 32 To MAXWIDTH Step 8
             .Height = width
-            ActiveSheet.Shapes("icoEF").Left = width - 32
+            wshMenuGL.Shapes("icoEF").Left = width - 32
         Next width
         .TextFrame2.TextRange.Characters.text = "États financiers"
     End With

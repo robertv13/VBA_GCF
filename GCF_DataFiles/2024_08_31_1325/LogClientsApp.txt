@@ -1,0 +1,116 @@
+Guillaume|20240831_124929|Clients_v2.4.xlsm|***** Début de session - Workbook_Open *****|||
+Guillaume|20240831_124929|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All||
+Guillaume|20240831_124930|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format||
+Guillaume|20240831_124930|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1367 seconds|1279
+Guillaume|20240831_124930|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,9844 seconds|
+Guillaume|20240831_124931|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize||
+Guillaume|20240831_124931|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Guillaume|20240831_124931|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn||
+Guillaume|20240831_124931|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Guillaume|20240831_124931|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0898 seconds|Client_ID
+Guillaume|20240831_124931|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,2500 seconds|
+Guillaume|20240831_124931|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,4688 seconds|1280
+Guillaume|20240831_124931|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,6094 seconds|
+Guillaume|20240831_124939|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Guillaume|20240831_124939|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1016 seconds|ContactFacturation
+Guillaume|20240831_124951|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click||
+Guillaume|20240831_124951|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Guillaume|20240831_124951|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1562 seconds|ContactFacturation:Mylène Lapierre 1
+Guillaume|20240831_124951|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3438 seconds|
+Guillaume|20240831_124952|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Guillaume|20240831_124952|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0898 seconds|
+Guillaume|20240831_124952|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick||
+Guillaume|20240831_124952|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click||
+Guillaume|20240831_124952|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_124952|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0898 seconds|
+Guillaume|20240831_124952|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_124952|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0938 seconds|
+Guillaume|20240831_124952|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,3828 seconds|Mylène Lapierre CPA Inc.
+Guillaume|20240831_124953|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,5234 seconds|
+Guillaume|20240831_124953|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick||
+Guillaume|20240831_124953|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click||
+Guillaume|20240831_124953|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_124953|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0859 seconds|
+Guillaume|20240831_124953|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_124953|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0898 seconds|
+Guillaume|20240831_124953|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4375 seconds|Mylène Lapierre CPA Inc.
+Guillaume|20240831_124953|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,5820 seconds|
+Guillaume|20240831_125013|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit||
+Guillaume|20240831_125013|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1289 seconds|Mylène Lapierre CPA Inc.
+Guillaume|20240831_125059|Clients_v2.4.xlsm|modMain|Fn_Fix_Txt_Fin_Annee||
+Guillaume|20240831_125059|Clients_v2.4.xlsm|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,1211 seconds|
+Guillaume|20240831_125059|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click||
+Guillaume|20240831_125059|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries||
+Guillaume|20240831_125059|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1094 seconds|
+Guillaume|20240831_125059|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields||
+Guillaume|20240831_125059|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0898 seconds|
+Guillaume|20240831_125100|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Guillaume|20240831_125101|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Guillaume|20240831_125101|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,1602 seconds|
+Guillaume|20240831_125101|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||DDM (0.0.0.2)
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 3,1875 seconds|UPDATE 1798
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0859 seconds|UPDATE 1798
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Guillaume|20240831_125104|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Guillaume|20240831_125104|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0859 seconds|
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,3047 seconds|ContactFacturation:Mylène Lapierre 1
+Guillaume|20240831_125104|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,4492 seconds|1280
+Guillaume|20240831_125105|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 5,5273 seconds|6
+Guillaume|20240831_125116|Clients_v2.4.xlsm|***** Fin de session - Workbook_BeforeClose *****|||
+Guillaume|20240831_125423|Clients_v2.4.xlsm|***** Début de session - Workbook_Open *****|||
+Guillaume|20240831_125424|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All||
+Guillaume|20240831_125424|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format||
+Guillaume|20240831_125424|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1367 seconds|1279
+Guillaume|20240831_125424|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,8789 seconds|
+Guillaume|20240831_125425|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize||
+Guillaume|20240831_125425|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Guillaume|20240831_125425|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn||
+Guillaume|20240831_125425|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Guillaume|20240831_125425|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0859 seconds|Client_ID
+Guillaume|20240831_125425|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,2383 seconds|
+Guillaume|20240831_125425|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,5117 seconds|1280
+Guillaume|20240831_125425|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,6641 seconds|
+Guillaume|20240831_125432|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Guillaume|20240831_125432|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0898 seconds|ContactFacturation
+Guillaume|20240831_125437|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click||
+Guillaume|20240831_125437|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Guillaume|20240831_125437|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1680 seconds|ContactFacturation:roxane 3
+Guillaume|20240831_125437|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3320 seconds|
+Guillaume|20240831_125439|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Guillaume|20240831_125440|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0938 seconds|
+Guillaume|20240831_125441|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Guillaume|20240831_125441|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0820 seconds|
+Guillaume|20240831_125442|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick||
+Guillaume|20240831_125442|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click||
+Guillaume|20240831_125442|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_125442|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0859 seconds|
+Guillaume|20240831_125442|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Guillaume|20240831_125442|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0977 seconds|
+Guillaume|20240831_125442|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,3867 seconds|KOB10 Vignoble Kobloth et Fils Inc [Roxane Gauthier]
+Guillaume|20240831_125442|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,5391 seconds|
+Guillaume|20240831_125458|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit||
+Guillaume|20240831_125458|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0977 seconds|NE PAS UTILISER
+Guillaume|20240831_125501|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click||
+Guillaume|20240831_125501|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries||
+Guillaume|20240831_125501|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0938 seconds|
+Guillaume|20240831_125501|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields||
+Guillaume|20240831_125501|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0859 seconds|
+Guillaume|20240831_125503|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Guillaume|20240831_125503|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Guillaume|20240831_125503|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2031 seconds|
+Guillaume|20240831_125503|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+Guillaume|20240831_125506|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||DDM (0.0.0.1)
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 3,2422 seconds|UPDATE 2026
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0938 seconds|UPDATE 2026
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Guillaume|20240831_125507|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Guillaume|20240831_125507|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0938 seconds|
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,3281 seconds|ContactFacturation:roxane 3
+Guillaume|20240831_125507|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,4883 seconds|1280
+Guillaume|20240831_125507|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 6,4336 seconds|6
+Guillaume|20240831_125515|Clients_v2.4.xlsm|***** Fin de session - Workbook_BeforeClose *****|||

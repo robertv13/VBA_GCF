@@ -197,7 +197,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     'Find the first occurence of GlACct in AdvancedFilter Results on GL_Trans
     Dim searchRange As Range: Set searchRange = wshGL_Trans.Range("T1:T" & lastResultUsedRow)
-    Dim foundCell As Range: Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, LookAt:=xlWhole)
+    Dim foundCell As Range: Set foundCell = searchRange.Find(What:=GLAcct, LookIn:=xlValues, lookat:=xlWhole)
     foundRow = foundCell.Row
     
     'Check if the target value was found
