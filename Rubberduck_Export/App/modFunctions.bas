@@ -931,6 +931,28 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     
 End Function
 
+Function Fn_Get_Client_Name(cc As String) As String
+
+    Dim ws As Worksheet
+    Dim foundCell As Range
+    
+    Set ws = wshBD_Clients
+    
+    'Recherche le code de client dans la colonne B
+    Set foundCell = ws.columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
+    If Not foundCell Is Nothing Then
+        ' Si trouvé, retourner le nom du client correspondant
+        Fn_Get_Client_Name = foundCell.Offset(0, -1).value
+    Else
+        Fn_Get_Client_Name = "Client non trouvé (invalide)"
+    End If
+    
+    'celan up
+    Set foundCell = Nothing
+    Set ws = Nothing
+    
+End Function
+
 Public Function Fn_Get_Current_Region(ByVal DataRange As Range, Optional headerSize As Long = 1) As Range
 
     Set Fn_Get_Current_Region = DataRange.CurrentRegion
@@ -1045,32 +1067,6 @@ Public Function GetEndPath(ByVal fullWorkbookName As String) As String
     Else
         GetEndPath = ""
     End If
-    
-End Function
-
-Function GetQuarterDates(fiscalYearStartMonth As Long, fiscalYear As Long) As String
-    Dim startDate As Date
-    Dim endDate As Date
-    Dim quarterDates As String
-    Dim i As Long
-    
-    'Initialize the quarterDates variable
-    quarterDates = ""
-
-    'Loop through the 4 quarters
-    For i = 0 To 3
-        'Calculate the start date of the quarter
-        startDate = DateSerial(fiscalYear, fiscalYearStartMonth + (i * 3), 1)
-        
-        'Calculate the end date of the quarter
-        endDate = DateAdd("m", 3, startDate) - 1
-        
-        'Add the quarter dates to the string
-        quarterDates = quarterDates & "Q" & (i + 1) & ": " & Format$(startDate, "dd/mm/yyyy") & " to " & Format$(endDate, "dd-mmm-yyyy") & vbCrLf
-    Next i
-    
-    'Return the quarter dates
-    GetQuarterDates = quarterDates
     
 End Function
 

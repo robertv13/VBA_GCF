@@ -95,13 +95,6 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     ws.Range("B3").value = 0
     Application.EnableEvents = True
     
-    Set ws = wshzDocLogAppli
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
-    Application.EnableEvents = False
-    ws.Unprotect
-    ws.Range("A2:C" & lastUsedRow).clear
-    Application.EnableEvents = True
-    
     Set ws = wshFAC_Brouillon
     Application.EnableEvents = False
     ws.Unprotect

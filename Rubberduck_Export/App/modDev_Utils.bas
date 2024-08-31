@@ -138,7 +138,6 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:J1"
     r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
-    r = r + 1: arr(r, 1) = "Doc_Log_Appli": arr(r, 2) = "A1:C1"
     r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
     r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
     r = r + 1: arr(r, 1) = "ENC_Entête": arr(r, 2) = "A3:F3"
@@ -1543,26 +1542,6 @@ Sub TestArray_2D_Resizer()
     Next i
 End Sub
 
-Sub TestGetQuarterDates()
-
-    Dim fiscalYearStartMonth As Long
-    Dim fiscalYear As Long
-    Dim result As String
-    
-    'Set the fiscal year start month (e.g., April is 4)
-    fiscalYearStartMonth = 8
-    
-    'Set the fiscal year
-    fiscalYear = 2024
-    
-    'Get the quarter dates
-    result = GetQuarterDates(fiscalYearStartMonth, fiscalYear)
-    
-    'Display the result
-    MsgBox result
-    
-End Sub
-
 Sub Toggle_A1_R1C1_Reference()
 
     If Application.ReferenceStyle = xlA1 Then
@@ -1742,56 +1721,6 @@ Sub Test_Log_Record()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modzDevUtils:Test_Log_Record", 0)
 
     Call Log_Record("modzDevUtils:Test_Log_Record", startTime)
-    
-End Sub
-
-Sub ExportAllVBAComponentsForGitHub()
-
-    Dim vbComp As VBComponent
-    Dim exportPath As String
-    Dim fileName As String
-
-    'Set the directory where you want to export the files
-    exportPath = "C:\VBA\GC_FISCALITÉ\Rubberduck_Export\App\"
-
-    'Ensure the export path ends with a backslash
-    If Right(exportPath, 1) <> "\" Then
-        exportPath = exportPath & "\"
-    End If
-
-    ' Loop through each component in the VBA project
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        Select Case vbComp.Type
-            Case vbext_ct_StdModule
-                fileName = vbComp.name & ".bas"
-            Case vbext_ct_ClassModule
-                ' Export class modules as *.cls
-                fileName = vbComp.name & ".cls"
-            Case vbext_ct_MSForm
-                ' Export user forms as *.frm and their associated *.frx files
-                fileName = vbComp.name & ".frm"
-                vbComp.Export exportPath & fileName
-                ' Copy the associated *.frx file if it exists
-                If Dir(ThisWorkbook.path & "\" & vbComp.name & ".frx") <> "" Then
-                    FileCopy ThisWorkbook.path & "\" & vbComp.name & ".frx", exportPath & vbComp.name & ".frx"
-                End If
-            Case vbext_ct_Document
-                ' Export worksheets and ThisWorkbook as *.doccls
-                fileName = vbComp.name & ".doccls"
-            Case Else
-                'Skip other component types
-                Debug.Print vbComp.Type
-                Stop
-                GoTo NextComponent
-        End Select
-        
-        ' Export the component
-        vbComp.Export exportPath & fileName
-        
-NextComponent:
-    Next vbComp
-
-    MsgBox "Export completed!", vbInformation
     
 End Sub
 

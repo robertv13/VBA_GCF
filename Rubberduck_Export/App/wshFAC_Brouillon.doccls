@@ -26,8 +26,6 @@ Private Sub Worksheet_Activate()
         .Range("A:B").EntireColumn.Hidden = True
     End With
     
-    ws.Range("Q1").value = "Worksheet_Activate(): " & Format$(Now, "dd/mm/yyyy @ hh:mm:ss")
-        
     'Set the zoom factor to 92% when this worksheet is activated
     ActiveWindow.Zoom = 92
     
@@ -43,11 +41,12 @@ Private Sub Worksheet_Activate()
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents
     
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True 'The first input is the customer name
+    Me.Range("E3").Select
+    
     Call FAC_Brouillon_New_Invoice
     
     Application.ScreenUpdating = True
-    
-    Me.Range("E3").Activate 'The first input is the customer name
     
     Application.EnableEvents = True
 
@@ -119,7 +118,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -128,7 +127,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

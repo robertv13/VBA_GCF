@@ -4,9 +4,9 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    If fromMenu = False Then
-        MsgBox "Je ne viens pas du menuExit Sub"
-    End If
+'    If fromMenu = False Then
+'        MsgBox "Je ne viens pas du menuExit Sub"
+'    End If
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", 0)
     
@@ -115,7 +115,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -124,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
         

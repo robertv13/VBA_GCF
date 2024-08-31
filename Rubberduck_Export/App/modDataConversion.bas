@@ -864,7 +864,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     
     'Setup output file
     Dim strOutput As String
-    strOutput = "TEC_Correction_Nom"
+    strOutput = "X_TEC_Correction_Nom"
     Call CreateOrReplaceWorksheet(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
     wsOutput.Range("A1").value = "TEC_Nom_Client"
@@ -935,6 +935,117 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     MsgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
             vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
     
+End Sub
+
+Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
+
+    'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
+    Dim sourceFilePath As String
+    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Master.xlsx"
+    Dim wbSource As Workbook
+    Set wbSource = Workbooks.Open(sourceFilePath)
+    
+    'Client's Master File - Workbook & Worksheet
+    Dim clientMFPath As String
+    clientMFPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    Dim wbMF As Workbook
+    Set wbMF = Workbooks.Open(clientMFPath)
+    Dim wsMF As Worksheet
+    Set wsMF = wbMF.Worksheets("Clients")
+    Dim lastUsedRowClientMF As Long
+    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
+    
+    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim dictClients As Dictionary
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowClientMF
+        dictClients.add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+    Next i
+    
+    'Setup output file
+    Dim strOutput As String
+    strOutput = "X_CAR_Correction_Nom"
+    Call CreateOrReplaceWorksheet(strOutput)
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+    wsOutput.Range("A1").value = "Feuille"
+    wsOutput.Range("B1").value = "No Facture"
+    wsOutput.Range("C1").value = "Nom de client (Facture)"
+    wsOutput.Range("D1").value = "Code_de_Client"
+    wsOutput.Range("E1").value = "Changé pour"
+    Call Make_It_As_Header(wsOutput.Range("A1:E1"))
+    Dim rowOutput As Long
+    rowOutput = 2 'Skip the header
+    
+    'There is 2 worksheets to adjust
+    Dim ws As Variant
+    Dim wsSource As Worksheet
+    Dim casDelta As Long
+    For Each ws In Array("FAC_Entête|4|6", "FAC_Comptes_Clients|4|3")
+        Dim param As String
+        param = Mid(ws, InStr(ws, "|") + 1)
+        ws = Left(ws, InStr(ws, "|") - 1)
+        Dim colClientID As Long, colClientName As Long
+        colClientID = Left(param, InStr(param, "|") - 1)
+        colClientName = Right(param, Len(param) - InStr(param, "|"))
+        'Set the worksheet Object
+        Set wsSource = ThisWorkbook.Sheets(ws)
+        'Détermine la dernière rangée utilisée dans la feuille
+        Dim lastUsedRow As Long
+        lastUsedRow = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).Row
+        Dim codeClientCAR As String, nomClientCAR As String, nomClientFromMF As String
+        For i = 3 To lastUsedRow
+            codeClientCAR = wsSource.Cells(i, colClientID).value
+            nomClientCAR = wsSource.Cells(i, colClientName).value
+            nomClientFromMF = dictClients(codeClientCAR)
+            If nomClientCAR <> nomClientFromMF Then
+                Debug.Print i & " : " & codeClientCAR & " - " & nomClientCAR & " <---> " & nomClientFromMF
+                wsSource.Cells(i, colClientName).value = nomClientFromMF
+                wsOutput.Cells(rowOutput, 1).value = wsSource.Cells(i, 1).value
+                wsOutput.Cells(rowOutput, 2).value = wsSource.name
+                wsOutput.Cells(rowOutput, 3).value = nomClientCAR
+                wsOutput.Cells(rowOutput, 4).value = codeClientCAR
+                wsOutput.Cells(rowOutput, 5).value = nomClientFromMF
+                rowOutput = rowOutput + 1
+                casDelta = casDelta + 1
+            End If
+        Next i
+    Next ws
+    
+    wsOutput.columns.AutoFit
+
+    'Result print setup - 2024-08-05 @ 05:16
+    rowOutput = rowOutput + 1
+    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRow - 1, "###,##0") & _
+                                        " lignes analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
+    Dim header1 As String: header1 = "Correction des noms de clients dans les CAR"
+    Dim header2 As String: header2 = ""
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    
+    'Close the 2 workbooks without saving anything
+    wbSource.Close SaveChanges:=True
+    wbMF.Close SaveChanges:=False
+
+    'Clean up
+    Set dictClients = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set wsOutput = Nothing
+    Set wsSource = Nothing
+    Set wbSource = Nothing
+    Set wsMF = Nothing
+    Set wbMF = Nothing
+    
+''    MsgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
+''            vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
+'
 End Sub
 
 Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58

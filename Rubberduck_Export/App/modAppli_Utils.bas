@@ -2447,13 +2447,23 @@ Sub Make_It_As_Header(r As Range)
         With .Font
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
-            .size = 10
+            .size = 9
             .Italic = True
             .Bold = True
         End With
         .HorizontalAlignment = xlCenter
     End With
     
+    Dim ws As Worksheet
+    Dim wsName As String
+    wsName = r.Worksheet.name
+    Set ws = ThisWorkbook.Sheets(wsName)
+    ws.columns.AutoFit
+    
+    'Clean up
+    Set r = Nothing
+    Set ws = Nothing
+
 End Sub
 
 Sub Add_Message_To_WorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
@@ -2500,8 +2510,7 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
         formula = "=MOD(LIGNE();2)=1"
     End If
     
-    DataRange.FormatConditions.add Type:=xlExpression, Formula1:= _
-        formula
+    DataRange.FormatConditions.add Type:=xlExpression, Formula1:=formula
     DataRange.FormatConditions(DataRange.FormatConditions.count).SetFirstPriority
     With DataRange.FormatConditions(1).Font
         .Strikethrough = False
