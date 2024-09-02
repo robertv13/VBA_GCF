@@ -739,7 +739,11 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         
         Application.EnableEvents = False
         
+        DoEvents
+        
         Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
+        
+        DoEvents
         
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook

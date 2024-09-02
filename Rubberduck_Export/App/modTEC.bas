@@ -332,13 +332,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local"
     
+    On Error GoTo ErrorHandler
+    
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim strConnection As String
+    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & _
+        destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open strConnection
+    
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    
     Dim saveLogTEC_ID As Long
     saveLogTEC_ID = TECID
     
@@ -472,6 +476,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Call Log_Record("modTEC:TEC_Record_Add_Or_Update_To_DB()", startTime)
 
+    Exit Sub
+    
+ErrorHandler:
+
+     'Si une erreur survient, cela signifie que le fichier est en lecture seule
+    MsgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
+           "ou déjà ouvert par un autre utilisateur.", vbCritical, "Problème MAJEUR"
+    On Error GoTo 0
+    If Not conn Is Nothing Then conn.Close
+    Set conn = Nothing
+    
 End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record to local worksheet

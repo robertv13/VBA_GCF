@@ -1,0 +1,83 @@
+Robert_M._Vigneault|2024-09-02_12:31:28|APP_v4.G.3.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:28|APP_v4.G.3.xlsb|modAppli:Set_Environment (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:28|APP_v4.G.3.xlsb|modAppli:Set_Environment() (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-09-02_12:31:28|APP_v4.G.3.xlsb|modAppli:BackupMasterFile (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 0,5234 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2109 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:Slide_In_All_Menu_Options (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|modMenu:Slide_In_All_Menu_Options() (sortie)|Temps écoulé: 0,0586 seconds
+Robert_M._Vigneault|2024-09-02_12:31:29|APP_v4.G.3.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 0,9492 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:49|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-02_12:31:50|APP_v4.G.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0117 seconds
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0039 seconds
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,1172 seconds
+Robert_M._Vigneault|2024-09-02_12:31:52|APP_v4.G.3.xlsb|***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) ***** (entrée)

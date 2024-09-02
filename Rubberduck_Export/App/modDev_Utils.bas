@@ -1681,7 +1681,8 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     On Error GoTo Error_Handler
     
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.txt"
+    logFile = wshAdmin.Range("F5").value & DATA_PATH & _
+        Application.PathSeparator & "LogMainApp.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -1732,7 +1733,8 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-02 @ 10:23
     On Error GoTo Error_Handler
     
     Dim logSaisieHeuresFile As String
-    logSaisieHeuresFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogSaisieHeures.txt"
+    logSaisieHeuresFile = wshAdmin.Range("F5").value & DATA_PATH & _
+        Application.PathSeparator & "LogSaisieHeures.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile
