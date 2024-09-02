@@ -352,7 +352,7 @@ Sub SlideOut_SuiviCC()
             .Height = width
             wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
-        .TextFrame2.TextRange.Characters.text = "Suivi de C/C"
+        .TextFrame2.TextRange.Characters.text = "Liste âgée des C/C"
     End With
 
     Call Log_Record("modMenu:SlideOut_SuiviCC", startTime)
@@ -743,7 +743,7 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
-        ActiveWorkbook.Close SaveChanges:=True
+        ActiveWorkbook.Close saveChanges:=True
         
         'Never pass here... It's too late
         Application.EnableEvents = True

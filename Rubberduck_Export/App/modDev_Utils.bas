@@ -304,7 +304,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Next ws
     
     'Close the workbook without saving changes
-    wb.Close SaveChanges:=False
+    wb.Close saveChanges:=False
     
     Call Array_2D_Resizer(arr, r, UBound(arr, 2))
     
@@ -329,7 +329,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
@@ -616,6 +616,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
                            header1, _
                            header2, _
+                           "$1:$1", _
                            "L")
     
     MsgBox "Data validation list were created in worksheet: " & wsOutput.name
@@ -899,6 +900,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         Call Simple_Print_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
                                header1, _
                                header2, _
+                               "$1:$1", _
                                "L")
     End If
    
@@ -1120,6 +1122,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
                            header1, _
                            header2, _
+                           "$1:$1", _
                            "L")
     
     'Display the final message
@@ -1339,7 +1342,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
     Dim header2 As String: header2 = ThisWorkbook.name
-    Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
@@ -1601,7 +1604,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.name
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
@@ -1721,6 +1724,43 @@ Sub Test_Log_Record()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modzDevUtils:Test_Log_Record", 0)
 
     Call Log_Record("modzDevUtils:Test_Log_Record", startTime)
+    
+End Sub
+
+Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-02 @ 10:23
+
+    On Error GoTo Error_Handler
+    
+    Dim logSaisieHeuresFile As String
+    logSaisieHeuresFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogSaisieHeures.txt"
+    
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    
+    Dim currentTime As String
+    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    
+    Open logSaisieHeuresFile For Append As #fileNum
+    
+    Print #fileNum, Fn_Get_Windows_Username & "|" & _
+                        currentTime & "|" & _
+                        oper & "|" & _
+                        txt
+    Close #fileNum
+    
+    Exit Sub
+    
+Error_Handler:
+
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
+    'Sortir gracieusement de l'application
+    Application.Quit 'No save...
+    
+End Sub
+
+Sub Test_Log_Saisie_Heures()
+
+    Call Log_Saisie_Heures("W", "Test")
     
 End Sub
 

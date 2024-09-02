@@ -40,7 +40,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
     destinationWorkbook.Close
     
     'Close the source workbook without saving
-    sourceWorkbook.Close SaveChanges:=False
+    sourceWorkbook.Close saveChanges:=False
     
     'Clean up
     Set sourceSheet = Nothing
@@ -308,7 +308,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     destinationWorkbook.Close
     
     'Close the source workbook without saving
-    sourceWorkbook.Close SaveChanges:=False
+    sourceWorkbook.Close saveChanges:=False
     
     'Clean up
     Set sourceSheet = Nothing
@@ -534,59 +534,93 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
-
+Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-02 @ 06:24
+    
     Application.ScreenUpdating = False
     
     'Declare and open the 2 workbooks
     Dim wbWas As Workbook
-    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER_20240830_103558.xlsx")
+    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx", ReadOnly:=True)
+    Debug.Print wbWas.name
     Dim wbNow As Workbook
-    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
+    Debug.Print wbNow.name
 
     'Declare the 2 worksheets
     Dim wsWas As Worksheet
-    Set wsWas = wbWas.Worksheets("TEC_Local")
+    Set wsWas = wbWas.Worksheets("Clients")
     Dim wsNow As Worksheet
-    Set wsNow = wbNow.Worksheets("TEC_Local")
+    Set wsNow = wbNow.Worksheets("Clients")
+    
+    'Détermine la dernière ligne utilisée dans chacune des 2 feuilles
+    Dim lastUsedRowWas As Long
+    lastUsedRowWas = wsWas.Cells(wsWas.rows.count, 1).End(xlUp).Row
+    Dim lastUsedRowNOw As Long
+    lastUsedRowNOw = wsNow.Cells(wsNow.rows.count, 1).End(xlUp).Row
+    
+    'Détermine le nombre de colonnes dans l'ancienne feuille
+    Dim lastUsedColWas As Long
+    lastUsedColWas = wsWas.Cells(wsWas.columns.count).End(xlToLeft).Column
     
     'Erase and create a new worksheet for differences
+    Dim wsNameStr As String
+    wsNameStr = "X_Différences"
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("X_Différences")
-    Set wsDiff = ThisWorkbook.Worksheets("X_Différences")
+    Call CreateOrReplaceWorksheet(wsNameStr)
+    Set wsDiff = ThisWorkbook.Worksheets(wsNameStr)
     wsDiff.Range("A1").value = "Ligne"
     wsDiff.Range("B1").value = "Colonne"
-    wsDiff.Range("C1").value = "TEC_ID"
-    wsDiff.Range("D1").value = "Prof"
-    wsDiff.Range("E1").value = "Date"
-    wsDiff.Range("F1").value = "Valeur originale"
-    wsDiff.Range("G1").value = "Valeur corrigée"
-    Call Make_It_As_Header(wsDiff.Range("A1:F1"))
+    wsDiff.Range("C1").value = "CodeClient"
+    wsDiff.Range("D1").value = "Nom du Client"
+    wsDiff.Range("E1").value = "Avant changement"
+    wsDiff.Range("F1").value = "Type"
+    wsDiff.Range("G1").value = "Après changement"
+    Call Make_It_As_Header(wsDiff.Range("A1:G1"))
 
     Dim diffRow As Long
     diffRow = 2                                  'Take into consideration the Header
     Dim diffCol As Long
     diffCol = 1
 
-    'Loop through each cell and compare
-    Dim cellWas As Range
-    Dim cellNow As Range
+    'Parcourir chaque ligne de l'ancienne version
+    Dim cellWas As Range, cellNow As Range
+    Dim foundRow As Range
+    Dim clientCode As String
+    Dim differences As String
     Dim readCells As Long
-    For Each cellWas In wsWas.usedRange
-        Set cellNow = wsNow.Cells(cellWas.Row, cellWas.Column)
-        readCells = readCells + 1
-        If cellWas.value <> cellNow.value Then
-            wsDiff.Cells(diffRow, 1).value = cellWas.Row
-            wsDiff.Cells(diffRow, 2).value = cellWas.Column
-            wsDiff.Cells(diffRow, 3).value = wsWas.Cells(cellWas.Row, 1).value
-            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 3).value
-            wsDiff.Cells(diffRow, 5).value = wsWas.Cells(cellWas.Row, 4).value
-            wsDiff.Cells(diffRow, 6).value = cellWas.value
-            wsDiff.Cells(diffRow, 7).value = cellNow.value
+    Dim i As Long, j As Long
+    For i = 1 To lastUsedRowWas
+        clientCode = CStr(wsWas.Cells(i, 2).value)
+        'Trouver la ligne correspondante dans la nouvelle version
+        Set foundRow = wsNow.columns(2).Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
+        If Not foundRow Is Nothing Then
+            Debug.Print "Ligne : " & i
+            'Comparer les cellules des lignes correspondantes
+            For j = 1 To lastUsedColWas
+                readCells = readCells + 1
+                Set cellWas = wsWas.Cells(i, j)
+                Set cellNow = wsNow.Cells(foundRow.Row, j)
+                If CStr(cellWas.value) <> CStr(cellNow.value) Then
+                    wsDiff.Cells(diffRow, 1).value = i
+                    wsDiff.Cells(diffRow, 2).value = j
+                    wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
+                    wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 1).value
+                    wsDiff.Cells(diffRow, 5).value = cellWas.value
+                    wsDiff.Cells(diffRow, 6).value = "'--->"
+                    wsDiff.Cells(diffRow, 7).value = cellNow.value
+                    diffRow = diffRow + 1
+                End If
+            Next j
+        Else
+            wsDiff.Cells(diffRow, 1).value = i
+            wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
+            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 1).value
+            wsDiff.Cells(diffRow, 5).value = cellWas.value
+            wsDiff.Cells(diffRow, 6).value = "XXXX"
             diffRow = diffRow + 1
         End If
-    Next cellWas
-
+    Next i
+            
     wsDiff.columns.AutoFit
     
     'Result print setup - 2024-08-05 @ 05:16
@@ -602,15 +636,15 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
     Dim header1 As String: header1 = "Vérification des différences"
     Dim header2 As String: header2 = "Clients"
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     Application.ScreenUpdating = True
     
     wsDiff.Activate
 
     'Close the workbooks without saving
-    wbWas.Close False
-    wbNow.Close False
+    wbWas.Close saveChanges:=False
+    wbNow.Close saveChanges:=False
     
     'Cleanup
     Set cellWas = Nothing
@@ -622,8 +656,8 @@ Sub Compare_2_Excel_Files()                      '2024-08-05 @ 05:32
     Set wsNow = Nothing
     Set wsDiff = Nothing
     
-    MsgBox "Comparison complete. " & vbNewLine & vbNewLine & _
-           "Differences have been recorded in the 'Differences' sheet.", vbInformation
+    MsgBox "La comparaison est complétée." & vbNewLine & vbNewLine & _
+           differences, vbInformation
            
 End Sub
 
@@ -926,11 +960,11 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les TEC"
     Dim header2 As String: header2 = ""
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wbSource.Close SaveChanges:=True
-    wbMF.Close SaveChanges:=False
+    wbSource.Close saveChanges:=True
+    wbMF.Close saveChanges:=False
 
     'Clean up
     Set wsSource = Nothing
@@ -1033,11 +1067,11 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les CAR"
     Dim header2 As String: header2 = ""
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wbSource.Close SaveChanges:=True
-    wbMF.Close SaveChanges:=False
+    wbSource.Close saveChanges:=True
+    wbMF.Close saveChanges:=False
 
     'Clean up
     Set dictClients = Nothing
@@ -1105,8 +1139,8 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
     Application.ScreenUpdating = True
     
     'Close the workbooks without saving
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=True
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=True
     
     'Cleanup
     Set wb1 = Nothing
@@ -1170,7 +1204,7 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
         End If
         
         'Find the InvNo in wshFAC_Entête
-        Set foundCells = rngTarget.columns(1).Find(What:=invNo, LookIn:=xlValues, lookat:=xlWhole)
+        Set foundCells = rngTarget.columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
         If foundCells Is Nothing Then
             MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
         Else
@@ -1226,8 +1260,8 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     Application.ScreenUpdating = True
     
     'Close the workbooks without saving
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=True
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=True
     
     'Cleanup
     Set wb1 = Nothing

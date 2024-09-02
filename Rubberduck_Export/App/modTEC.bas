@@ -338,21 +338,28 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
+    
+    Dim saveLogTEC_ID As Long
+    saveLogTEC_ID = TECID
+    
     If TECID < 0 Then 'Soft delete a record
         'Open the recordset for the specified ID
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & Abs(TECID), conn, 2, 3
+        saveLogTEC_ID = TECID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.update
+            Call Log_Saisie_Heures("D", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
+            Call Log_Saisie_Heures("?", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
             Exit Sub
         End If
     Else
@@ -378,6 +385,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             Dim nextID As Long
             nextID = lastRow + 1
             wshAdmin.Range("TEC_Current_ID").value = nextID
+            saveLogTEC_ID = nextID
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
@@ -404,6 +412,16 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = ""
+            'Nouveau log - 2024-09-02 @ 10:40
+            Call Log_Saisie_Heures("Add", saveLogTEC_ID & "|" & _
+                ufSaisieHeures.cmbProfessionnel.value & "|" & _
+                CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
+                wshAdmin.Range("TEC_Client_ID") & "|" & _
+                ufSaisieHeures.txtClient.value & "|" & _
+                ufSaisieHeures.txtActivite.value & "|" & _
+                Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
+                ufSaisieHeures.txtCommNote.value & "|" & _
+                ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
         Else 'Update an existing record
             'Open the recordset for the specified ID
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
@@ -417,9 +435,20 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
                 rs.Fields("VersionApp").value = ThisWorkbook.name
+                'Nouveau log - 2024-09-02 @ 10:40
+                Call Log_Saisie_Heures("Update", saveLogTEC_ID & "|" & _
+                    ufSaisieHeures.cmbProfessionnel.value & "|" & _
+                    CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
+                    wshAdmin.Range("TEC_Client_ID") & "|" & _
+                    ufSaisieHeures.txtClient.value & "|" & _
+                    ufSaisieHeures.txtActivite.value & "|" & _
+                    Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
+                    ufSaisieHeures.txtCommNote.value & "|" & _
+                    ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", vbExclamation
+                Call Log_Saisie_Heures("??", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
                 rs.Close
                 conn.Close
                 Exit Sub

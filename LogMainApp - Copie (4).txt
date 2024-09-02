@@ -1,0 +1,24 @@
+Robert_M._Vigneault|2024-09-01_04:51:14|APP_v4.G.2.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:14|APP_v4.G.2.xlsb|modAppli:Set_Environment (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:14|APP_v4.G.2.xlsb|modAppli:Set_Environment() (sortie)|Temps écoulé: 0,0000 seconds
+Robert_M._Vigneault|2024-09-01_04:51:14|APP_v4.G.2.xlsb|modAppli:BackupMasterFile (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 0,5098 seconds
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0156 seconds
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2480 seconds
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:Slide_In_All_Menu_Options (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:SlideIn_TEC (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,2324 seconds
+Robert_M._Vigneault|2024-09-01_04:51:15|APP_v4.G.2.xlsb|modMenu:SlideIn_Facturation (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,2070 seconds
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Debours (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,2070 seconds
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,2207 seconds
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Parametres (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,1895 seconds
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Exit (entrée)
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,1875 seconds
+Robert_M._Vigneault|2024-09-01_04:51:16|APP_v4.G.2.xlsb|modMenu:Slide_In_All_Menu_Options() (sortie)|Temps écoulé: 1,2754 seconds
+Robert_M._Vigneault|2024-09-01_04:51:17|APP_v4.G.2.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 2,1836 seconds

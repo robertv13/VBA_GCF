@@ -25,7 +25,7 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Application.CutCopyMode = False
 
     'Save and close the workbook
-    wb.Close SaveChanges:=True
+    wb.Close saveChanges:=True
 
 End Sub
 
@@ -51,7 +51,7 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
 End Sub
 
 Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
-                       header2 As String, Optional Orient As String = "L")
+                       header2 As String, titleRows As String, Optional Orient As String = "L")
     
     On Error GoTo CleanUp
     
@@ -59,19 +59,19 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
     
     With ws.PageSetup
         .PrintArea = rng.Address
-        .PrintTitleRows = "$1:$1"
+        .PrintTitleRows = titleRows
         .PrintTitleColumns = ""
         
         .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr(10) & "&11" & header2
         
-        .LeftFooter = "&9&D - &T"
-        .CenterFooter = "&9&KFF0000&A"
-        .RightFooter = "&""Segoe UI,Normal""&9Page &P of &N"
+        .LeftFooter = "&8&D - &T"
+        .CenterFooter = "&8&KFF0000&A"
+        .RightFooter = "&""Segoe UI,Normal""&8Page &P of &N"
         
-        .TopMargin = Application.InchesToPoints(0.75)
-        .LeftMargin = Application.InchesToPoints(0.15)
-        .RightMargin = Application.InchesToPoints(0.15)
-        .BottomMargin = Application.InchesToPoints(0.55)
+        .TopMargin = Application.InchesToPoints(0.8)
+        .LeftMargin = Application.InchesToPoints(0.1)
+        .RightMargin = Application.InchesToPoints(0.1)
+        .BottomMargin = Application.InchesToPoints(0.5)
         
         .CenterHorizontally = True
         
@@ -520,7 +520,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
     Dim header2 As String: header2 = ""
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     
@@ -2495,36 +2495,30 @@ End Sub
 
 Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
 
-    Dim ws As Worksheet: Set ws = rng.Worksheet
-    Dim DataRange As Range
-    
-    'Remove the worksheet conditional formatting
-    ws.Cells.FormatConditions.delete
-    
-    'Determine the range excluding header rows
-    Set DataRange = ws.Range(rng.Cells(headerRows + 1, 1), ws.Cells(ws.Cells(ws.rows.count, rng.Column).End(xlUp).Row, rng.columns.count))
-
-    'Add the standard conditional formatting
-    Dim formula As String
-    If EmptyLine = False Then
-        formula = "=ET($A2<>"""";MOD(LIGNE();2)=1)"
-    Else
-        formula = "=MOD(LIGNE();2)=1"
+    'Avons-nous un Range valide ?
+    If rng Is Nothing Or rng.rows.count <= headerRows Then
+        Exit Sub
     End If
     
-    DataRange.FormatConditions.add Type:=xlExpression, Formula1:=formula
-    DataRange.FormatConditions(DataRange.FormatConditions.count).SetFirstPriority
-    With DataRange.FormatConditions(1).Font
-        .Strikethrough = False
-        .TintAndShade = 0
-    End With
-    With DataRange.FormatConditions(1).Interior
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorAccent1
-        .TintAndShade = 0.799981688894314
-    End With
-    DataRange.FormatConditions(1).StopIfTrue = False
+    Dim ws As Worksheet: Set ws = rng.Worksheet
+    Dim dataRange As Range
+    
+   ' Définir la plage de données à laquelle appliquer la mise en forme conditionnelle, en
+    'excluant les lignes d'en-tête
+    Set dataRange = rng.Resize(rng.rows.count - headerRows).Offset(headerRows, 0)
+    
+    'Effacer les formats conditionnels existants sur la plage de données
+    dataRange.Interior.ColorIndex = xlNone
 
+    'Appliquer les couleurs en alternance
+    Dim i As Long
+    For i = 1 To dataRange.rows.count
+        'Vérifier la position réelle de la ligne dans la feuille
+        If (dataRange.rows(i).Row + headerRows) Mod 2 = 0 Then
+            dataRange.rows(i).Interior.Color = RGB(173, 216, 230) ' Bleu pâle
+        End If
+    Next i
+    
 End Sub
 
 Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
@@ -2849,11 +2843,11 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
     Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
     Dim header2 As String: header2 = ""
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=False
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=False
     
     'Output differences
     If diffLog <> "" Then
@@ -2999,11 +2993,11 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
     Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
     Dim header2 As String: header2 = "Changements de lignes ou cellules"
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "P")
+    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=False
+    wb1.Close saveChanges:=False
+    wb2.Close saveChanges:=False
     
     'Output differences
     If diffLogMess <> "" Then
@@ -3071,3 +3065,63 @@ Sub Search_Search_Results()
     MsgBox "J'ai analysé " & i & " lignes de code!"
     
 End Sub
+
+'Exemple de saisie de cellules non verrouillées dans une feuille - 2024-09-02 @ 06:32 - ChatGPT
+
+'Private Sub Worksheet_Activate()
+'
+'    ' Définir les cellules déverrouillées
+'    Dim unlockedCells As Range
+'    Set unlockedCells = Union(Me.Range("F5"), Me.Range("K5"), Me.Range("F7")) ' Remplacez par vos cellules
+'
+'    ' Définir la cellule active initiale
+'    Application.OnKey "^+F", "ActivateNextCell"
+'
+'    ' Activer la première cellule déverrouillée
+'    If Not IsEmpty(unlockedCells.Cells(1, 1)) Then
+'        unlockedCells.Cells(1, 1).Select
+'    End If
+'End Sub
+'
+'Private Sub Worksheet_Change(ByVal Target As Range) '2024-09-02 @ 06:32 - ChatGPT
+'
+'    Dim unlockedCells As Range
+'    Dim nextCell As Range
+'
+'    ' Définir les cellules déverrouillées
+'    Set unlockedCells = Union(Me.Range("F5"), Me.Range("K5"), Me.Range("F7")) ' Remplacez par vos cellules
+'
+'    ' Si la cellule modifiée est l'une des cellules déverrouillées
+'    If Not Intersect(Target, unlockedCells) Is Nothing Then
+'        ' Déterminer la cellule suivante
+'        Set nextCell = Target.Offset(, 1) ' Par défaut, passe à la cellule suivante à droite
+'
+'        ' Trouver la prochaine cellule déverrouillée
+'        If Not Intersect(nextCell, unlockedCells) Is Nothing Then
+'            ' Si la prochaine cellule est déverrouillée, sélectionnez-la
+'            nextCell.Select
+'        Else
+'            ' Sinon, sélectionner la première cellule déverrouillée
+'            unlockedCells.Cells(1, 1).Select
+'        End If
+'    End If
+'End Sub
+'
+'Public Sub ActivateNextCell()
+'    Static cellIndex As Integer
+'    Dim unlockedCells As Range
+'    Dim cellCount As Integer
+'
+'    ' Définir les cellules déverrouillées
+'    Set unlockedCells = Union(Sheet1.Range("F5"), Sheet1.Range("K5"), Sheet1.Range("F7")) ' Remplacez par vos cellules
+'
+'    cellCount = unlockedCells.Cells.count
+'
+'    ' Passer à la cellule suivante
+'    cellIndex = cellIndex + 1
+'    If cellIndex > cellCount Then cellIndex = 1
+'
+'    ' Activer la cellule
+'    unlockedCells.Cells(cellIndex, 1).Select
+'End Sub
+'

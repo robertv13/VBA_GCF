@@ -385,7 +385,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     If rngSource Is Nothing Then
         MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
-        wbSource.Close SaveChanges:=False
+        wbSource.Close saveChanges:=False
         Set wbSource = Nothing
         Exit Sub
     End If
@@ -411,7 +411,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     Application.CutCopyMode = False
     
     'Step 5 - Close and release the Excel file
-    wbSource.Close SaveChanges:=False
+    wbSource.Close saveChanges:=False
     
     'Cleanup - 2024-07-27 @ 07:39
 '    Set rngDestination = Nothing

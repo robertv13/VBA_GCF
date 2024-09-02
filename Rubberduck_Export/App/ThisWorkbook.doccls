@@ -85,7 +85,7 @@ Sub BackupMasterFile()
     masterWorkbook.SaveCopyAs backupFilePath
 
     'Close the master workbook
-    masterWorkbook.Close SaveChanges:=False
+    masterWorkbook.Close saveChanges:=False
 
 '    'Optional: Notify the user
 '    MsgBox "Backup created: " & vbNewLine & vbNewLine & "'" & backupFilePath & "'"

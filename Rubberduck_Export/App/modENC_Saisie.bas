@@ -529,7 +529,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
         Inv_No = CStr(wshENC_Saisie.Range("F" & r).value)
         
         Dim foundRange As Range
-        Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, lookat:=xlWhole)
+        Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, LookAt:=xlWhole)
     
         Dim rowToBeUpdated As Long
         If Not foundRange Is Nothing Then

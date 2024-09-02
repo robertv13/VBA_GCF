@@ -107,7 +107,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
     'Search for the string in a given range (r) at the column specified (cs)
-    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, lookat:=xlWhole)
+    Dim foundCell As Range: Set foundCell = r.columns(cs).Find(What:=ss, LookIn:=xlValues, LookAt:=xlWhole)
     
     'Check if the string was found
     If Not foundCell Is Nothing Then
@@ -139,7 +139,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
     Dim cell As Range
     Set cell = searchRange.Find(What:=valueToFind, _
                                 LookIn:=xlValues, _
-                                lookat:=xlWhole)
+                                LookAt:=xlWhole)
     
     'Check if the value is found
     Dim firstAddress As String
@@ -341,7 +341,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
     
     On Error Resume Next
         Dim cell As Range
-        Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, lookat:=xlWhole)
+        Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TEC_ID = cell.Row
         Else
@@ -428,7 +428,7 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 
     
     'Search for the string in a given range (r) at the column specified (cs)
     Dim rngFound As Range
-    Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, lookat:=xlWhole)
+    Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
         Fn_Validate_Client_Number = True
@@ -697,10 +697,9 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     
     'Find the invNo into rngToSearch
     Dim rngFound As Range
-    Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, lookat:=xlWhole)
+    Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
-        Debug.Print invNo, rngFound.Row, rngFound.Offset(0, 2).value
         Fn_Get_Invoice_Type = rngFound.Offset(0, 2).value
     Else
         Fn_Get_Invoice_Type = "C"
@@ -764,7 +763,7 @@ Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
 
     'Utilisation de FIND pour trouver la cellule contenant la valeur recherchée dans la colonne A
     Dim foundCell As Range
-    Set foundCell = ws.Range("A:A").Find(What:=invNo, LookIn:=xlValues, lookat:=xlWhole)
+    Set foundCell = ws.Range("A:A").Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not foundCell Is Nothing Then
         If foundCell.Offset(0, 2).value = "C" Then
@@ -939,7 +938,7 @@ Function Fn_Get_Client_Name(cc As String) As String
     Set ws = wshBD_Clients
     
     'Recherche le code de client dans la colonne B
-    Set foundCell = ws.columns("B").Find(What:=cc, LookIn:=xlValues, lookat:=xlWhole)
+    Set foundCell = ws.columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
     If Not foundCell Is Nothing Then
         ' Si trouvé, retourner le nom du client correspondant
         Fn_Get_Client_Name = foundCell.Offset(0, -1).value
@@ -953,9 +952,9 @@ Function Fn_Get_Client_Name(cc As String) As String
     
 End Function
 
-Public Function Fn_Get_Current_Region(ByVal DataRange As Range, Optional headerSize As Long = 1) As Range
+Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
 
-    Set Fn_Get_Current_Region = DataRange.CurrentRegion
+    Set Fn_Get_Current_Region = dataRange.CurrentRegion
     If headerSize > 0 Then
         With Fn_Get_Current_Region
             'Remove the header

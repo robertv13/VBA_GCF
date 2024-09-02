@@ -689,7 +689,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
-    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookat:=xlWhole)
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
 
     'Check if the projetID was found at all
     Dim firstAddress As String
@@ -774,7 +774,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
-    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, lookat:=xlWhole)
+    Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).Find(What:=projetID, LookIn:=xlValues, LookAt:=xlWhole)
 
     'Check if the projetID was found at all
     Dim firstAddress As String
