@@ -1,7 +1,7 @@
 Attribute VB_Name = "modMain"
 Option Explicit
 
-'Dim InitialValues As Collection
+Public Const DATA_PATH As String = "\DataFiles"
 
 Sub Show_Form()
     
@@ -103,9 +103,9 @@ no_change:
 
 End Sub
 
-Sub CM_Update_External_GCF_BD_Entree(action As String)
+Sub CM_Update_External_GCF_BD_Entrée(action As String)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entree", action, 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", action, 0)
     
     Application.ScreenUpdating = False
     Application.Visible = False
@@ -183,11 +183,11 @@ Sub CM_Update_External_GCF_BD_Entree(action As String)
     Application.Visible = True
     Application.ScreenUpdating = True
     
-    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
     
 End Sub
 
-'Procédure remplacée par CM_Update_External_GCF_BD_Entree - 2024-08-23 - Problème avec ADO...
+'Procédure remplacée par CM_Update_External_GCF_BD_Entrée - 2024-08-23 - Problème avec ADO...
 'Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record to Clients' Master File
 '
 '    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", action, 0)

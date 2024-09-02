@@ -1,0 +1,14 @@
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|***** Début de session - Workbook_Open *****|||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0820 seconds|1206
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2930 seconds|
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0039 seconds|Client_ID
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0078 seconds|
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0547 seconds|1207
+Robert_M._Vigneault|20240902_122900|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,0703 seconds|
+Robert_M._Vigneault|20240902_122922|Clients_v2.4.xlsm|***** Fin de session - Workbook_BeforeClose *****|||

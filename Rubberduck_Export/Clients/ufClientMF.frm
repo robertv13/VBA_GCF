@@ -167,10 +167,10 @@ Private Sub cmdSave_Click()
     clientExists = Fn_Does_Client_Code_Exist
     
     If clientExists = True Then
-        Call CM_Update_External_GCF_BD_Entree("UPDATE")
+        Call CM_Update_External_GCF_BD_Entrée("UPDATE")
         Call CM_Update_Locally_GCF_BD_Entrée("UPDATE")
     Else
-        Call CM_Update_External_GCF_BD_Entree("NEW_RECORD")
+        Call CM_Update_External_GCF_BD_Entrée("NEW_RECORD")
         Call CM_Update_Locally_GCF_BD_Entrée("NEW_RECORD")
     End If
     

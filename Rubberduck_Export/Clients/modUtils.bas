@@ -17,7 +17,7 @@ Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal sta
     End If
 
     Dim logFile As String
-    logFile = rootPath & "\LogClientsApp.txt"
+    logFile = rootPath & DATA_PATH & Application.PathSeparator & "LogClientsApp.txt"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -102,7 +102,7 @@ Sub CM_Verify_DDM(fullFileName As String)
     Call CM_Get_Date_Derniere_Modification(fullFileName, ddm, jours, heures, minutes, secondes)
     
     'Record to the log the difference between NOW and the date of last modifcation
-    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
     If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 3 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
@@ -115,7 +115,7 @@ End Sub
 
 Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExiste As Boolean = False) '2024-08-30 @ 18:15
     
-    ' Liste des workbooks à vérifier (à adapter selon vos besoins)
+    'Liste des workbooks à vérifier (à adapter selon vos besoins)
     Dim listeWorkbooks As Variant
     listeWorkbooks = Array("GCF_BD_MASTER.xlsx")
     
@@ -160,7 +160,7 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-'                    Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'"
+                    Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'"
                     clientExiste = True
                     Exit Sub
                 End If
@@ -174,19 +174,17 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
     'Boucle pour vérifier dans les worksheets du workbook actif
     Dim wb As Workbook
     
-'    Debug.Print Application.Workbooks.Count
-    
     For Each wb In Application.Workbooks
         Dim ws As Worksheet
         For Each ws In wb.Worksheets
             Dim foundCell As Range
-            Debug.Print wb.Name, ws.Name
+'            Debug.Print wb.Name, ws.Name
             If ws.Name = "Données" Or ws.Name = "DonnéesRecherche" Or ws.Name = "Clients" Then
                 GoTo Next_Worksheet
             End If
             Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
-'                Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'"
+                Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'"
                 clientExiste = True
                 Exit Sub
             End If
@@ -207,7 +205,7 @@ Sub Test_Valider_Client_Avant_Effacement()
 
     Dim clientExiste As Boolean
     
-    Call Valider_Client_Avant_Effacement("193x", clientExiste)
+    Call Valider_Client_Avant_Effacement("2026", clientExiste)
     
     Debug.Print clientExiste
     

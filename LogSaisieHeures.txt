@@ -1,6 +1,0 @@
-Robert M. Vigneault|2024-09-02 10:54:33|Add|785|GC|31/août/2024|1698|Nadeau Ultra Tech Inc. [Daniel Mercier]|TEST|3,00||VRAI
-Robert M. Vigneault|2024-09-02 10:55:03|Add|786|GC|31/août/2024|1707|Immo Chambert Inc. [Francis Chamberland]|TEST|0,10||VRAI
-Robert M. Vigneault|2024-09-02 10:55:55|Update|783|GC|31/août/2024|1528|Solutions Huwiz Inc. [Carolljo Maher]|Test|1,60|Commentaires|VRAI
-Robert M. Vigneault|2024-09-02 10:56:04|Update|784|GC|31/août/2024|1516|Les Industries Canplex Ltée [Marco Stocchero]|Test|2,20||VRAI
-Robert M. Vigneault|2024-09-02 10:56:58|Update|785|GC|31/août/2024|1698|Nadeau Ultra Tech Inc. [Daniel Mercier]|TEST|3,00|Commentaires|VRAI
-Robert M. Vigneault|2024-09-02 10:57:08|Update|784|GC|31/août/2024|1516|Les Industries Canplex Ltée [Marco Stocchero]|Test|2,20|C|VRAI

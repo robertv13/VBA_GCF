@@ -1,11 +1,5 @@
 ﻿Option Explicit
 
-Private Sub Workbook_BeforeClose(Cancel As Boolean)
-
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("***** Fin de session - Workbook_BeforeClose *****", "", 0)
-
-End Sub
-
 Private Sub Workbook_Open()
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("***** Début de session - Workbook_Open *****", "", 0)
@@ -38,3 +32,10 @@ Private Sub Workbook_Open()
     ufClientMF.Show vbModeless
 
 End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("***** Fin de session - Workbook_BeforeClose *****", "", 0)
+
+End Sub
+
