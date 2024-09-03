@@ -18,6 +18,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
             .Range("O6").value = Fn_Get_Next_Invoice_Number
             
+            Call FAC_Brouillon_Clear_All_TEC_Displayed
+            
             Call FAC_Brouillon_Setup_All_Cells
             
             Application.EnableEvents = False
@@ -36,6 +38,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("A34:F68").ClearContents
             .Range("E28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
             .Range("B69:F81").ClearContents 'NOT the formulas
+            .Range("L79").value = ""
+            .Range("L81").value = ""
             Application.EnableEvents = True
             
             Call FAC_Finale_Setup_All_Cells
@@ -51,8 +55,6 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         'Ensure all pending events could be processed
         DoEvents
 
-        Call FAC_Brouillon_Clear_All_TEC_Displayed
-        
         'Save button is disabled UNTIL the invoice is saved
         Call FAC_Finale_Disable_Save_Button
     
@@ -60,9 +62,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         DoEvents
 
         'Introduce a small delay to ensure the worksheet is fully updated
-        Application.Wait (Now + TimeValue("0:00:01"))
+'        Application.Wait (Now + TimeValue("0:00:01")) '2024-09-03 @ 06:45
         
-        'Do we have pending requests for invoice ?
+        'Do we have pending requests to invoice ?
         Dim lastUsedRow As Long, liveOne As Long
         lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).Row
         If lastUsedRow > 1 Then
@@ -115,14 +117,20 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 For ii = 44 To 48
                     If arr(ii - 43, 1) <> "" And arr(ii - 43, 2) <> 0 Then
                         wshFAC_Brouillon.Range("R" & r).value = arr(ii - 43, 1)
-                        wshFAC_Brouillon.Range("S" & r).NumberFormat = "#,##0.00"
                         wshFAC_Brouillon.Range("S" & r).value = arr(ii - 43, 2)
-                        wshFAC_Brouillon.Range("T" & r).NumberFormat = "#,##0.00 $"
+                        wshFAC_Brouillon.Range("S" & r).NumberFormat = "#,##0.00"
                         wshFAC_Brouillon.Range("T" & r).value = arr(ii - 43, 3)
+                        wshFAC_Brouillon.Range("T" & r).NumberFormat = "#,##0.00 $"
+                        wshFAC_Brouillon.Range("U" & r).formula = "=S" & r & "*T" & r & ""
                         r = r + 1
                    End If
                 Next ii
             End If
+            
+            'Calcul du total des heures & des honoraires
+            wshFAC_Brouillon.Range("S49").formula = "=sum(S44:S48)"
+            wshFAC_Brouillon.Range("U49").formula = "=sum(U44:U48)"
+            
             'The total fees amount id determined by the fees summary
             wshFAC_Brouillon.Range("O47").value = wshFAC_Brouillon.Range("U49").value
             
@@ -159,7 +167,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 3)
     
     If myInfo(1) = "" Then
-        MsgBox "Je ne peux retrouver ce client dans ma liste", vbCritical
+        MsgBox "M: 101 - Je ne peux retrouver ce client dans ma liste", vbCritical
         GoTo Clean_Exit
     End If
     
@@ -461,10 +469,13 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", 0)
     
     'Set all criteria before calling FAC_Brouillon_TEC_Advanced_Filter_And_Sort
-    Dim c1 As String, c2 As String
+    Dim c1 As String
+    Dim c2 As Date
     Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
-    c2 = "<=" & Format$(d, "mm-dd-yyyy")
+    Dim filterDate As Date
+    filterDate = DateValue(d)
+    c2 = filterDate
     c3 = ConvertValueBooleanToText(True)
     If includeBilledTEC Then
         c4 = ConvertValueBooleanToText(True)
@@ -482,16 +493,18 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 End Sub
 
 Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
-        cutoffDate As String, _
+        cutoffDate As Date, _
         isBillable As String, _
         isInvoiced As String, _
         isDeleted As String)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort", 0)
     
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
     Application.ScreenUpdating = False
 
-    With wshTEC_Local
+    With ws
         'Is there anything to filter ?
         Dim lastSourceRow As Long, lastResultRow As Long
         lastSourceRow = .Range("A99999").End(xlUp).Row 'Last TEC Entry row
@@ -513,7 +526,11 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         Else
             .Range("AK3").value = ""
         End If
-        .Range("AL3").value = cutoffDate
+        Dim filterDate As Date
+        filterDate = DateValue(cutoffDate)
+        .Range("AL3").value = "<=" & filterDate
+        .Range("AL3").NumberFormat = "dd/mm/yyyy"
+        
         .Range("AM3").value = isBillable
         If isInvoiced <> True Then
             .Range("AN3").value = isInvoiced
@@ -524,7 +541,10 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         Set cRng = .Range("AK2:AO3")
         
         'Do the Advanced Filter
-        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, Unique:=True
+        sRng.AdvancedFilter action:=xlFilterCopy, _
+                            criteriaRange:=cRng, _
+                            CopyToRange:=dRng, _
+                            Unique:=True
         
         lastResultRow = .Range("AQ9999").End(xlUp).Row
         If lastResultRow < 3 Then
@@ -660,8 +680,15 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 '        Debug.Print wshFAC_Brouillon.Range("L" & i).value
     Next i
     
+    'Est-ce que le sommaire des honoraires peut-être épuré ?
+    
+    
     Call FAC_Finale_Cacher_Heures
     Call FAC_Finale_Cacher_Sommaire_Taux
+    
+    'Afficher le code et le nom du client, pour faciliter la sauvegarde de la facture (format EXCEL)
+    wshFAC_Finale.Range("L79").value = wshFAC_Brouillon.Range("B18").value
+    wshFAC_Finale.Range("L81").value = wshFAC_Brouillon.Range("E3").value
     
     wshFAC_Finale.Visible = xlSheetVisible
     wshFAC_Finale.Activate

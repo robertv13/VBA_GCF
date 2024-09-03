@@ -18,6 +18,8 @@ Sub PreparationFacture_Click()
 
     Application.EnableEvents = True
     
+    fromMenu = True '2024-09-03 @ 06:20
+    
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
     wshFAC_Finale.Visible = xlSheetVisible
@@ -39,6 +41,8 @@ Sub SuiviCC_Click()
     
     wshCAR_Liste_Agée.Application.Calculation = xlCalculationAutomatic
     
+    fromMenu = True '2024-09-03 @ 06:20
+    
     With wshCAR_Liste_Agée
         .Visible = xlSheetVisible
         .Select
@@ -54,6 +58,8 @@ Sub Encaissement_Click()
     Call SlideIn_Encaissement
     
     Application.ScreenUpdating = False
+    
+    fromMenu = True '2024-09-03 @ 06:20
     
     With wshENC_Saisie
         .Visible = xlSheetVisible
@@ -79,6 +85,8 @@ Sub FAC_Historique_Click()
 
     Application.EnableEvents = True
     
+    fromMenu = True '2024-09-03 @ 06:20
+
     wshFAC_Historique.Visible = xlSheetVisible
     wshFAC_Historique.Activate
     
@@ -105,6 +113,8 @@ Sub FAC_Confirmation_Click()
     Call FAC_Détails_Import_All
 
     Application.EnableEvents = True
+    
+    fromMenu = True '2024-09-03 @ 06:20
     
     wshFAC_Confirmation.Visible = xlSheetVisible
     wshFAC_Confirmation.Activate

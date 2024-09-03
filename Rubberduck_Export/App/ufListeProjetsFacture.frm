@@ -29,7 +29,7 @@ Private Sub UserForm_Initialize()
     'Populate the array with non-contiguous columns
     Dim i As Long, nbRows As Long
     For i = 2 To lastUsedRow
-        If ws.Cells(i, 26).value <> "Vrai" Then 'Exclude those projects with isDétruite set to True
+        If UCase(ws.Cells(i, 26).value) <> "VRAI" Then 'Exclude those projects with isDetruite set to True
             nbRows = nbRows + 1
             arr(nbRows, 1) = ws.Cells(i, 2).value 'nomClient
             arr(nbRows, 2) = ws.Cells(i, 4).value 'date
@@ -85,10 +85,14 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
     projetID = lsbProjetsFacture.List(rowSelected, 3)
     
+    Application.EnableEvents = False
+    
     wshFAC_Brouillon.Range("B51").value = nomClient
     wshFAC_Brouillon.Range("B52").value = projetID
-    wshFAC_Brouillon.Range("B53").value = dte
+    wshFAC_Brouillon.Range("B53").value = Format$(DateValue(dte), "mm/dd/yyyy")
     wshFAC_Brouillon.Range("B54").value = honorairesTotal
+    
+    Application.EnableEvents = True
     
     Unload ufListeProjetsFacture
 

@@ -1299,11 +1299,11 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00$"), " ", 13, "L"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 13, "L"))
-    r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 13, "L"))
     r = r + 2
+'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 13, "L"))
+'    r = r + 1
+'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 13, "L"))
+'    r = r + 2
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - headerRow
@@ -1356,7 +1356,6 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
         GoTo Clean_Exit
     End If
-    
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -1366,11 +1365,13 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         
     Dim i As Long
     Dim projetID As Long, oldProjetID As Long
+    Dim codeClient As String
     Dim lookUpValue As Long, result As Variant
     For i = LBound(arr, 1) To UBound(arr, 1)
         projetID = CLng(arr(i, 1))
         lookUpValue = projetID
         If projetID <> oldProjetID Then
+            If projetID = 4 Then Stop
             result = Application.WorksheetFunction.XLookup(lookUpValue, _
                                                            rngMaster, _
                                                            rngMaster, _
@@ -1383,8 +1384,10 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
             r = r + 1
         End If
-        If IsNumeric(arr(i, 3)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+        'Client valide ?
+        codeClient = Trim(arr(i, 3))
+        If Fn_Validate_Client_Number(codeClient) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
@@ -1463,10 +1466,13 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         
     Dim i As Long
     Dim projetID As String
+    Dim codeClient As String
     For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
         projetID = arr(i, 1)
-        If IsNumeric(arr(i, 3)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Dans le projet '" & projetID & "' à la ligne " & i & " le ClientID est INVALIDE '" & arr(i, 3) & "'")
+        'Client valide ?
+        codeClient = Trim(arr(i, 3))
+        If Fn_Validate_Client_Number(codeClient) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "**** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
         End If
         If IsDate(arr(i, 4)) = False Then
@@ -3036,36 +3042,36 @@ Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
 
 End Sub
 
-Sub Search_Search_Results()
-
-    Dim ws As Worksheet: Set ws = Feuil1
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-    
-    Dim line As String, l As String, r As String
-    Dim i As Long, ii As Long
-    For i = 2 To lastUsedRow
-        If ws.Cells(i, 1) <> "" Then
-            ii = ii + 1
-            line = Trim(ws.Cells(i, 6).value)
-            l = Left(line, 61)
-            r = Right(line, 20)
-            If InStr(line, "Dim startTime As Double: startTime = Timer: Call Log_Record(""") = 0 And _
-                InStr(line, "Call Log_Record(""") = 0 Then
-                Debug.Print "Début: " & line
-            End If
-            If InStr(line, """, 0)") <> Len(line) - 4 And _
-                InStr(line, """, startTime)") <> Len(line) - 12 Then
-                Debug.Print "Fin  : " & line
-            End If
-        End If
-    Next i
-
-    MsgBox "J'ai analysé " & i & " lignes de code!"
-    
-End Sub
-
+'Sub Search_Search_Results()
+'
+'    Dim ws As Worksheet: Set ws = Feuil1
+'
+'    Dim lastUsedRow As Long
+'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+'
+'    Dim line As String, l As String, r As String
+'    Dim i As Long, ii As Long
+'    For i = 2 To lastUsedRow
+'        If ws.Cells(i, 1) <> "" Then
+'            ii = ii + 1
+'            line = Trim(ws.Cells(i, 6).value)
+'            l = Left(line, 61)
+'            r = Right(line, 20)
+'            If InStr(line, "Dim startTime As Double: startTime = Timer: Call Log_Record(""") = 0 And _
+'                InStr(line, "Call Log_Record(""") = 0 Then
+'                Debug.Print "Début: " & line
+'            End If
+'            If InStr(line, """, 0)") <> Len(line) - 4 And _
+'                InStr(line, """, startTime)") <> Len(line) - 12 Then
+'                Debug.Print "Fin  : " & line
+'            End If
+'        End If
+'    Next i
+'
+'    MsgBox "J'ai analysé " & i & " lignes de code!"
+'
+'End Sub
+'
 'Exemple de saisie de cellules non verrouillées dans une feuille - 2024-09-02 @ 06:32 - ChatGPT
 
 'Private Sub Worksheet_Activate()

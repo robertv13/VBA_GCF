@@ -63,8 +63,6 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         Call FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
     End If
         
-'    Call FAC_Brouillon_Clear_All_TEC_Displayed
-    
     'Save Invoice total amount
     Dim invoice_Total As Currency
     invoice_Total = wshFAC_Brouillon.Range("O51").value
@@ -75,6 +73,8 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     'Update TEC_DashBoard
     Call TEC_TdB_Update_All '2024-03-21 @ 12:32
 
+    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    
     Application.ScreenUpdating = True
     
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
@@ -652,7 +652,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE projetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "$] SET estDetruite = -1 WHERE projetID = " & projetID
     
     'Execute the SQL query
     conn.Execute strSQL
@@ -876,6 +876,102 @@ NoItems:
 
 End Sub
 
+Sub Copier_Facture_Vers_Classeur_Ferme(invNo As String, clientID As String)
+
+    Dim wsCopie As Worksheet
+    Dim cheminDest As String
+    Dim nomNouveau As String
+    Dim nomFeuilleBase As String
+    Dim compteur As Integer
+    Dim nomFinal As String
+    
+    'Désactiver les mises à jour de l'écran pour améliorer les performances
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.DisplayAlerts = False
+    
+    On Error GoTo GestionErreur
+    
+    'Définir le classeur source et la feuille source
+    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
+    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
+    
+    'Initialiser la boîte de dialogue de sélection de fichier
+    Dim fd As FileDialog
+    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    
+    With fd
+        .Title = "Sauvegarde de la facture (format EXCEL)"
+        .Filters.clear
+        .Filters.add "Classeur Excel", "*.xlsx; *.xlsm; *.xlsb; *.xls"
+        .AllowMultiSelect = False
+        If .show <> -1 Then
+            MsgBox "Aucun fichier sélectionné. Opération annulée.", vbExclamation
+            GoTo Fin
+        End If
+        cheminDest = .selectedItems(1)
+    End With
+    
+    'Ouvrir le classeur de destination
+    Dim wbDest As Workbook: Set wbDest = Workbooks.Open(cheminDest)
+    
+    'Ajouter une nouvelle feuille dans le classeur de destination
+    Set wsCopie = wbDest.Sheets.add(After:=wbDest.Sheets(wbDest.Sheets.count))
+    
+    'Copier les colonnes A à F de la feuille source vers la nouvelle feuille du classeur de destination
+    wsSource.Range("A:F").Copy Destination:=wsCopie.Range("A1")
+
+    'Supprimer les formules et les remplacer par des valeurs
+    With wsCopie.usedRange
+        .value = .value
+    End With
+
+'    wsSource.Copy After:=wbDest.Sheets(wbDest.Sheets.count)
+'
+'    'Définir la feuille copiée (la dernière feuille du classeur de destination)
+'    Set wsCopie = wbDest.Sheets(wbDest.Sheets.count)
+    
+    'Définir la base du nom de la nouvelle feuille
+    nomFeuilleBase = Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd") & " - " & invNo
+    
+    'Vérifier si le nom existe déjà et ajuster en conséquence
+    compteur = 1
+    nomFinal = nomFeuilleBase
+    Do While NomFeuilleExiste(nomFinal, wbDest)
+        nomFinal = nomFeuilleBase & " V:" & compteur
+        compteur = compteur + 1
+    Loop
+    
+    'Renommer la feuille copiée
+    wsCopie.name = nomFinal
+    
+    'Enregistrer et fermer le classeur de destination
+    wbDest.Save
+    wbDest.Close
+    
+Fin:
+    'Réactiver les mises à jour de l'écran et les alertes
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    Application.DisplayAlerts = True
+    Exit Sub
+    
+GestionErreur:
+
+    MsgBox "Une erreur s'est produite : " & Err.Description, vbCritical
+    Resume Fin
+    
+End Sub
+
+' Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
+Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
+    Dim ws As Worksheet
+    On Error Resume Next
+    Set ws = wb.Sheets(nom)
+    NomFeuilleExiste = Not ws Is Nothing
+    On Error GoTo 0
+End Function
+
 Sub InvoiceGetAllTrans(inv As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:InvoiceGetAllTrans", 0)
@@ -998,6 +1094,11 @@ End Sub
 Sub FAC_Finale_Creation_PDF() 'RMV - 2023-12-17 @ 14:35
     
     Call FAC_Finale_Create_PDF_Sub(wshFAC_Finale.Range("E28").value)
+    
+    DoEvents
+    
+    Call Copier_Facture_Vers_Classeur_Ferme(wshFAC_Finale.Range("E28").value, _
+                                            wshFAC_Brouillon.Range("B18").value)
     
     Call FAC_Finale_Enable_Save_Button
 
@@ -1292,47 +1393,65 @@ End Sub
 
 Sub FAC_Finale_Montrer_Sommaire_Taux()
 
-    'First, determine how many rows there is in the summary
-    Dim nbItems As Long
-    Dim rowSummary As Long
-    For rowSummary = 44 To 48
-        If wshFAC_Brouillon.Range("R" & rowSummary).value <> "" Then
-            nbItems = nbItems + 1
-        End If
-    Next rowSummary
+    'Épure le sommaire des honoraires
+    Dim hres As Currency
+    Dim taux As Currency
+    Dim nbTaux As Integer
+    Dim dictTaux As Object
+    Set dictTaux = CreateObject("Scripting.Dictionary")
+    Dim tauxHeures() As Variant
+    ReDim tauxHeures(1 To 5, 1 To 2)
+    Dim dernierIndex As Integer
+    dernierIndex = UBound(tauxHeures)
     
-    If nbItems > 0 Then
+    Dim i As Integer
+    For i = 44 To 48
+        taux = wshFAC_Brouillon.Range("T" & i).value
+        hres = wshFAC_Brouillon.Range("S" & i).value
+        If taux <> 0 Then
+            If dictTaux.Exists(taux) Then
+                dictTaux(taux) = dictTaux(taux) + hres
+            Else
+                dictTaux.add taux, hres
+                nbTaux = nbTaux + 1
+            End If
+        End If
+    Next i
+    
+    If nbTaux > 0 Then
         Dim rowFAC_Finale As Long
-        rowFAC_Finale = 66 - nbItems
+        rowFAC_Finale = 66 - nbTaux
         Dim rngFeesSummary As Range: Set rngFeesSummary = wshFAC_Finale.Range("C" & rowFAC_Finale & ":D66")
         wshFAC_Finale.Range("C" & rowFAC_Finale).value = "Heures"
         wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Bold = True
         wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Underline = True
-        
+        wshFAC_Finale.Range("C" & rowFAC_Finale).HorizontalAlignment = xlCenter
+
         wshFAC_Finale.Range("D" & rowFAC_Finale).value = "Taux"
         wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Bold = True
         wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Underline = True
-        
-        Dim rowFAC_Brouillon As Long
-        rowFAC_Brouillon = 44
-    
-        Dim i As Long
-        For i = rowFAC_Finale + 1 To 66
+        wshFAC_Finale.Range("D" & rowFAC_Finale).HorizontalAlignment = xlCenter
+
+        Dim t As Variant
+        i = rowFAC_Finale + 1
+        For Each t In dictTaux.keys
             wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
-            wshFAC_Finale.Range("C" & i).value = wshFAC_Brouillon.Range("S" & rowFAC_Brouillon).value
             wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
-            wshFAC_Finale.Range("D" & i).value = wshFAC_Brouillon.Range("T" & rowFAC_Brouillon).value
+            wshFAC_Finale.Range("C" & i).Font.Underline = False
+            wshFAC_Finale.Range("C" & i).Font.name = "Verdana"
+            wshFAC_Finale.Range("C" & i).Font.size = 11
+            wshFAC_Finale.Range("C" & i).value = dictTaux(t)
+            
             wshFAC_Finale.Range("D" & i).NumberFormat = "#,##0.00 $"
             wshFAC_Finale.Range("D" & i).HorizontalAlignment = xlCenter
-            rowFAC_Brouillon = rowFAC_Brouillon + 1
-        Next i
+            wshFAC_Finale.Range("D" & i).Font.Underline = False
+            wshFAC_Finale.Range("D" & i).Font.name = "Verdana"
+            wshFAC_Finale.Range("D" & i).Font.size = 11
+            wshFAC_Finale.Range("D" & i).value = t
+            i = i + 1
+        Next t
         
-        'Label 'Sommaire'
-'        wshFAC_Finale.Range("B" & rowFAC_Finale).HorizontalAlignment = xlRight
-'        wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Color = RGB(0, 0, 0) 'Black Font
-'        wshFAC_Finale.Range("B" & rowFAC_Finale).Font.Bold = True
-'        wshFAC_Finale.Range("B" & rowFAC_Finale).value = "Sommaire:"
     End If
     
 End Sub

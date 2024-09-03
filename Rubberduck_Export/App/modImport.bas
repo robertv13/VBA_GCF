@@ -628,7 +628,9 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Delete the rows that column (isDétruite) is set to TRUE in FAC_Projets_Entête
     Dim i As Long
     For i = lastRow To 2 Step -1
-        If UCase(ws.Cells(i, 9).value) = "VRAI" Or _
+        Debug.Print "&&&", i, UCase(ws.Cells(i, 9).value)
+        If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
+            Trim(ws.Cells(i, 9).value) = "" Or _
             ws.Cells(i, 9).value = -1 Then
             ws.rows(i).delete
         End If

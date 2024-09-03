@@ -4,9 +4,10 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-'    If fromMenu = False Then
-'        MsgBox "Je ne viens pas du menuExit Sub"
-'    End If
+    If fromMenu = False Then
+        Debug.Print "wshENC_Saisie_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", 0)
     

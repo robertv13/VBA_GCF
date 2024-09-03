@@ -698,7 +698,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
-    With wshTEC_Local
+    With ws
         Dim lastUsedRow As Long
         lastUsedRow = .Range("A99999").End(xlUp).Row
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
@@ -706,6 +706,12 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
             .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
             .Range("A2:P" & lastUsedRow).columns.count & " columns"
         
+        Dim filterDate As Date
+        filterDate = DateValue("02/09/2024")
+        .Range("AL3").value = "<=" & filterDate
+        .Range("AL3").NumberFormat = "dd/mm/yyyy"
+        
+'        .Range("AL3").value = "<=" & Format(DateSerial(2024, 8, 23), "DD/mm/yyyy")
         Dim cRng As Range: Set cRng = .Range("AK2:AO3")
         .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
         
@@ -714,8 +720,13 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
         dRng.Offset(1, 0).ClearContents
         .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
         
-        sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
-            
+        On Error GoTo ErrorHandler
+        sRng.AdvancedFilter action:=xlFilterCopy, _
+                            criteriaRange:=cRng, _
+                            CopyToRange:=dRng, _
+                            Unique:=False
+        On Error GoTo 0
+        
         Dim lastResultRow As Long
         lastResultRow = .Range("AQ99999").End(xlUp).Row
             If lastResultRow < 4 Then GoTo No_Sort_Required
@@ -742,11 +753,19 @@ No_Sort_Required:
         wshTEC_Local.Range("AL14").value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
     End With
     
+Cleaning:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set cRng = Nothing
     Set dRng = Nothing
     Set sRng = Nothing
     Set ws = Nothing
+    
+    Exit Sub
+
+ErrorHandler:
+    MsgBox "Une erreur s'est produite lors de l'application du filtre avancé.", vbCritical
+    On Error GoTo 0
+    Resume Cleaning
 
 End Sub
 

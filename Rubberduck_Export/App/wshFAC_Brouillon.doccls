@@ -8,6 +8,11 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", 0)
 
+    If fromMenu = False Then
+        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -41,15 +46,23 @@ Private Sub Worksheet_Activate()
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
     DoEvents
     
-    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True 'The first input is the customer name
-    Me.Range("E3").Select
+    Application.EnableEvents = False
     
-    Call FAC_Brouillon_New_Invoice
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
+    
+    wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
+    wshFAC_Brouillon.Range("O3").value = CDate(Format$(Now(), "dd/mm/yyyy")) '2024-09-03 @ 06:32
+    wshFAC_Brouillon.Range("B27").value = False '2024-09-03 @ 06:33
+
+    Me.Range("E3").Select 'The first input is the customer name
     
     Application.ScreenUpdating = True
-    
     Application.EnableEvents = True
+    
+    fromMenu = False
 
+    Call FAC_Brouillon_New_Invoice
+    
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
@@ -93,7 +106,9 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", 0)
+    
+    Debug.Print Application.EnableEvents, Target.Address '2024-09-02 @ 23:11
     
     Application.EnableEvents = False
     
@@ -217,6 +232,6 @@ ExitSub:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
 
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Change()", startTime)
+'    Call Log_Record("wshFAC_Brouillon:Worksheet_Change()", startTime)
   
 End Sub

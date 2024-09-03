@@ -12,7 +12,7 @@ Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
 
-Public fromMenu As Boolean '2024-08-26 @ 07:05
+Public fromMenu As Boolean '2024-09-03 @ 06:14
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns
