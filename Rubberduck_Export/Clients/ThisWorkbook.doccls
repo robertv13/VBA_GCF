@@ -20,11 +20,14 @@ Private Sub Workbook_Open()
     
     Dim destinationFileName As String
     If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileName = "P:\Administration\APP\GCF\DataFiles"
     Else
-        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles"
     End If
     
+    destinationFileName = destinationFileName & Application.PathSeparator & _
+                            "GCF_BD_Entrée.xlsx"
+                            
     wshMENU.Range("A35").Value = "Environnement - " & destinationFileName
     wshMENU.Range("A35").Font.size = 9
     wshMENU.Range("A35").Font.Color = vbBlack
