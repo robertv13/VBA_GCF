@@ -153,22 +153,6 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     'Update the recordset (create the record)
     rs.update
     
-    Application.EnableEvents = False
-    
-    'Prepare GL Posting - Delayed until Confirmation de Facture
-'    With wshFAC_Brouillon
-'        .Range("B33").value = wshFAC_Finale.Range("E81").value   'AR amount
-'        .Range("B34").value = -wshFAC_Finale.Range("E69").value  'Revenues
-'        .Range("B35").value = -wshFAC_Finale.Range("E70").value  'Misc $ - 1
-'        .Range("B36").value = -wshFAC_Finale.Range("E71").value  'Misc $ - 2
-'        .Range("B37").value = -wshFAC_Finale.Range("E72").value  'Misc $ - 3
-'        .Range("B38").value = -wshFAC_Finale.Range("E74").value  'GST $
-'        .Range("B39").value = -wshFAC_Finale.Range("E75").value  'PST $
-'        .Range("B40").value = wshFAC_Finale.Range("E79").value   'Deposit
-'    End With
-    
-    Application.EnableEvents = True
-    
     'Close recordset and connection
     On Error Resume Next
     rs.Close
@@ -387,8 +371,8 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
                 rs.Fields("Inv_No") = noFacture
                 rs.Fields("Séquence") = seq
                 rs.Fields("Prof") = wshFAC_Brouillon.Range("R" & r).value
-                rs.Fields("Heures") = Format$(wshFAC_Brouillon.Range("S" & r).value, "0.00")
-                rs.Fields("Taux") = Format$(wshFAC_Brouillon.Range("T" & r).value, "0.00")
+                rs.Fields("Heures") = wshFAC_Brouillon.Range("S" & r).value
+                rs.Fields("Taux") = wshFAC_Brouillon.Range("T" & r).value
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
@@ -437,8 +421,10 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
                 .Range("A" & firstFreeRow).value = noFacture
                 .Range("B" & firstFreeRow).value = seq
                 .Range("C" & firstFreeRow).value = wshFAC_Brouillon.Range("R" & i).value
-                .Range("D" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("S" & i).value, "0.00")
-                .Range("E" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("T" & i).value, "0.00")
+                .Range("D" & firstFreeRow).value = CCur(wshFAC_Brouillon.Range("S" & i).value)
+                .Range("D" & firstFreeRow).NumberFormat = "#,##0.00"
+                .Range("E" & firstFreeRow).value = CCur(wshFAC_Brouillon.Range("T" & i).value)
+                .Range("E" & firstFreeRow).NumberFormat = "#,##0.00"
                 firstFreeRow = firstFreeRow + 1
                 seq = seq + 1
             End With
@@ -1100,17 +1086,11 @@ Sub FAC_Finale_Creation_PDF() 'RMV - 2023-12-17 @ 14:35
     Call Copier_Facture_Vers_Classeur_Ferme(wshFAC_Finale.Range("E28").value, _
                                             wshFAC_Brouillon.Range("B18").value)
     
+    DoEvents
+    
     Call FAC_Finale_Enable_Save_Button
 
 End Sub
-
-'Sub FAC_Finale_Creation_PDF_And_Email() 'RMV - 2023-12-17 @ 14:35
-'
-'    Call FAC_Finale_Create_PDF_Email_Sub(wshFAC_Finale.Range("E28").value)
-'
-'    Call FAC_Finale_Enable_Save_Button
-'
-'End Sub
 
 Sub FAC_Finale_Create_PDF_Sub(noFacture As String)
 
@@ -1119,14 +1099,6 @@ Sub FAC_Finale_Create_PDF_Sub(noFacture As String)
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
 
 End Sub
-
-'Sub FAC_Finale_Create_PDF_Email_Sub(noFacture As String)
-'
-'    'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF et préparation du courriel pour envoyer la facture
-'    Dim result As Boolean
-'    result = FAC_Finale_Create_PDF_Email_Func(noFacture, "CreateEmail")
-'
-'End Sub
 
 Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     
@@ -1139,12 +1111,12 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Check if the file already exists
-    Dim FileExists As Boolean
-    FileExists = Dir(SaveAs) <> ""
+    Dim fileExists As Boolean
+    fileExists = Dir(SaveAs) <> ""
     
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
-    If FileExists Then
+    If fileExists Then
         reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
                           "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
                           "Cette facture existe déjà en formt PDF")
@@ -1187,105 +1159,6 @@ EndMacro:
     Application.ScreenUpdating = True
     
 End Function
-
-'Function FAC_Finale_Create_PDF_Email_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
-'
-'    Dim SaveAs As String
-'
-'    Application.ScreenUpdating = False
-'
-'    'Construct the SaveAs filename
-'    SaveAs = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
-'                     noFacture & ".pdf" '2023-12-19 @ 07:28
-'
-'    'Check if the file already exists
-'    Dim FileExists As Boolean
-'    FileExists = Dir(SaveAs) <> ""
-'
-'    'If the file exists, prompt the user for confirmation
-'    Dim reponse As VbMsgBoxResult
-'    If FileExists Then
-'        reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
-'                          "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
-'                          "Cette facture existe déjà en formt PDF")
-'        If reponse = vbNo Then
-'            GoTo EndMacro
-'        End If
-'    End If
-'
-'    'Set Print Quality
-'    On Error Resume Next
-'    ActiveSheet.PageSetup.PrintQuality = 600
-'    Err.clear
-'    On Error GoTo 0
-'
-'    'Adjust Document Properties - 2023-10-06 @ 09:54
-'    With ActiveSheet.PageSetup
-'        .LeftMargin = Application.InchesToPoints(0)
-'        .RightMargin = Application.InchesToPoints(0)
-'        .TopMargin = Application.InchesToPoints(0)
-'        .BottomMargin = Application.InchesToPoints(0)
-'    End With
-'
-'    'Create the PDF file and Save It
-'    On Error GoTo RefLibError
-'    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, fileName:=SaveAs, Quality:=xlQualityStandard, _
-'        IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:=True
-'    On Error GoTo 0
-'
-'    'Construct & Display the Email, allowing the user to modify the Email
-'    If action = "CreateEmail" Then
-'        On Error GoTo SaveOnly
-'
-'        Dim outlookApp As Outlook.Application: Set outlookApp = New Outlook.Application
-'
-'        'Where are the email templates ? - 2024-03-27 @ 07:28
-'        Dim FullTemplatePathAndFile As String
-'        If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
-'            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
-'        Else
-'            FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
-'        End If
-'
-'        Dim myMail As Outlook.MailItem: Set myMail = outlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
-''        Set myMail = outlookApp.CreateItem(olMailItem)
-'
-'        Dim source_file As String
-'        source_file = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
-'                      noFacture & ".pdf" '2023-12-19 @ 07:22
-'
-'        With myMail
-'            .To = "robertv13@hotmail.com"
-'            .CC = "robertv13@me.com"
-'            .BCC = "robertv13@gmail.com"
-'            .Subject = "TEST - GC FISCALITÉ INC. - Facturation - TEST"
-''            .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
-'                vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "GCFiscalite, CPA, CA, M. Fisc." & _
-'                vbNewLine & "Président"
-'            .Attachments.add source_file
-'
-'            .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
-'            'myMail.Send
-'        End With
-'
-'    End If
-'
-'SaveOnly:
-'    FAC_Finale_Create_PDF_Email_Func = True 'Return value
-'    GoTo EndMacro
-'
-'RefLibError:
-'    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-'    FAC_Finale_Create_PDF_Email_Func = False 'Function return value
-'
-'EndMacro:
-'    Application.ScreenUpdating = True
-'
-'    'Cleaning memory - 2024-07-01 @ 09:34
-'    Set myMail = Nothing
-'    Set outlookApp = Nothing
-'
-'End Function
 
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
     

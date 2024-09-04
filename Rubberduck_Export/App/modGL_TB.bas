@@ -191,7 +191,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     Dim Row As Range, foundRow As Long, lastResultUsedRow As Long
     lastResultUsedRow = wshGL_Trans.Range("T99999").End(xlUp).Row
     If lastResultUsedRow <= 2 Then
-        GoTo Exit_Sub
+        GoTo Exit_sub
     End If
     foundRow = 0
     
@@ -316,7 +316,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         .EnableSelection = xlUnlockedCells
     End With
 
-Exit_Sub:
+Exit_sub:
 
     Application.ScreenUpdating = True
     

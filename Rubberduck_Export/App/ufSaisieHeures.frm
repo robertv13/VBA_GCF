@@ -121,13 +121,13 @@ Private Sub UserForm_Terminate()
         wshMenu.Select
     End If
     
-    GoTo Exit_Sub
+    GoTo Exit_sub
     
 MenuSelect:
     wshMenu.Activate
     wshMenu.Select
     
-Exit_Sub:
+Exit_sub:
 
     Call Log_Record("ufSaisieHeures:UserForm_Terminate()", startTime)
 
@@ -183,7 +183,8 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    If CDate(fullDate) > Format$(Now(), "dd/mm/yyyy") Then
+    If CDate(fullDate) > Format$(DateSerial(year(Now), month(Now), day(Now)), "dd/mm/yyyy") Then
+        Debug.Print "DP:101 - ", CDate(fullDate), "vs.", Format$(DateSerial(year(Now), month(Now), day(Now)), "dd/mm/yyyy")
         If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
