@@ -114,7 +114,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = CompleteDate(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.text))
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then

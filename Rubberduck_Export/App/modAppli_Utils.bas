@@ -127,7 +127,7 @@ Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
     Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim wsTgt As Worksheet
-    Set wsTgt = ThisWorkbook.Worksheets("HresJourProf")
+    Set wsTgt = ThisWorkbook.Worksheets("Hres_Jour_Prof")
     
     Dim lastUsedRowSrc As Long
     lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
@@ -160,7 +160,7 @@ Sub Update_Pivot_Table() '2024-08-15 @ 06:34
 
     'Define the worksheet containing the data
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("HresJourProf")
+    Set ws = ThisWorkbook.Sheets("Hres_Jour_Prof")
     
     'Find the last row of your data
     Dim lastUsedRow As Long
@@ -460,6 +460,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     
     Call FAC_Projets_Détails_Import_All
+    Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
@@ -469,7 +470,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
-    Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
@@ -2582,13 +2582,13 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             
         Case "wshDEB_Recurrent"
             With wshDEB_Recurrent
-                .Range("A" & firstDataRow & ":M" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
-                     ", D" & firstDataRow & ":D" & lastUsedRow & _
-                     ", E" & firstDataRow & ":E" & lastUsedRow & _
-                     ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("I" & firstDataRow & ":N" & lastUsedRow)
+                .Range("A2:M" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("C2:C" & lastUsedRow & _
+                     ", D2:D" & lastUsedRow & _
+                     ", E2:E" & lastUsedRow & _
+                     ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("I2:N" & lastUsedRow)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With
@@ -2597,7 +2597,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Case "wshDEB_Trans"
             With wshDEB_Trans
                 .Range("A2:Q" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
                 .Range("C2:C" & lastUsedRow & ", " & _
                        "D2:D" & lastUsedRow & ", " & _
                        "F2:F" & lastUsedRow & ", " & _
@@ -2614,6 +2614,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             With wshENC_Détails
                 .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("C2:C" & lastUsedRow & ", E2:EB" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
                 .Range("E2:E" & lastUsedRow).HorizontalAlignment = xlRight
                 .Range("E2:E" & lastUsedRow).NumberFormat = "#,##0.00"
             End With
@@ -2621,6 +2622,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Case "wshENC_Entête"
             With wshENC_Entête
                 .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
                 .Range("C2:C" & lastUsedRow & ", E2:E" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("F2:F" & lastUsedRow).HorizontalAlignment = xlRight
                 .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00$"
@@ -2628,54 +2630,56 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         
         Case "wshFAC_Comptes_Clients"
             With wshFAC_Comptes_Clients
-                .Range("A" & firstDataRow & ":B" & lastUsedRow & ", " & _
-                       "D" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C" & firstDataRow & ":C" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("H" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("G" & firstDataRow & ":G" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("H" & firstDataRow & ":J" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("A2:B" & lastUsedRow & ", " & _
+                       "D2:G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("C2:C" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H2:J" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("G2:G" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("H2:J" & lastUsedRow).NumberFormat = "#,##0.00 $"
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         
         Case "wshFAC_Détails"
             With usedRange
-                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":C" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & ", G" & firstDataRow & ":G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("D" & firstDataRow & ":E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("C" & firstDataRow & ":C" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("D" & firstDataRow & ":E" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("H" & firstDataRow & ":H" & lastUsedRow & ",J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":T" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("O" & firstDataRow & ":O" & lastUsedRow & ",Q" & firstDataRow & ":Q" & lastUsedRow).NumberFormat = "#0.000 %"
+                .Range("A2:A" & lastUsedRow & ", C2:C" & lastUsedRow & ", F2:F" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("D2:E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("C2:C" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("D2:E" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("H2:H" & lastUsedRow & ", J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:T" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("O2:O" & lastUsedRow & ", Q2:Q" & lastUsedRow).NumberFormat = "#0.000 %"
             End With
         
         Case "wshFAC_Entête"
             With wshFAC_Entête
-                .Range("A" & firstDataRow & ":D" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("E" & firstDataRow & ":I" & lastUsedRow & ",K" & firstDataRow & ":K" & lastUsedRow & ",M" & firstDataRow & ":M" & lastUsedRow & ",O" & firstDataRow & ":O" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":N" & lastUsedRow & ",P" & firstDataRow & ":V" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("J" & firstDataRow & ":J" & lastUsedRow & ",L" & firstDataRow & ":L" & lastUsedRow & ",N" & firstDataRow & ":N" & lastUsedRow & ",P" & firstDataRow & ":V" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("Q" & firstDataRow & ":Q" & lastUsedRow & ",S" & firstDataRow & ":S" & lastUsedRow).NumberFormat = "#0.000 %"
+                .Range("A2:D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("E2:I" & lastUsedRow & ", K2:K" & lastUsedRow & ", M2:M" & lastUsedRow & ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("Q2:Q" & lastUsedRow & ",S2:S" & lastUsedRow).NumberFormat = "#0.000 %"
             End With
 
         Case "wshFAC_Projets_Détails"
             With wshFAC_Projets_Détails
-                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":G" & lastUsedRow & ", I" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("H" & firstDataRow & ":I" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("H" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("A2:A" & lastUsedRow & ", C2:G" & lastUsedRow & ", I2:J" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("H2:I" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("H2:H" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("I2:I" & lastUsedRow).HorizontalAlignment = xlCenter
             End With
         
         Case "wshFAC_Projets_Entête"
             With wshFAC_Projets_Entête
-                .Range("A" & firstDataRow & ":A" & lastUsedRow & ", C" & firstDataRow & ":D" & lastUsedRow & ", F" & firstDataRow & ":F" & lastUsedRow & _
-                       ", J" & firstDataRow & ":J" & lastUsedRow & ", N" & firstDataRow & ":N" & lastUsedRow & ", R" & firstDataRow & ":R" & lastUsedRow & _
-                       ", V" & firstDataRow & ":V" & lastUsedRow & ", Z" & firstDataRow & ":AA" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("E" & firstDataRow & ":E" & lastUsedRow & ", I" & firstDataRow & ":I" & lastUsedRow & ", M" & firstDataRow & ":M" & lastUsedRow & _
-                        ", Q" & firstDataRow & ":Q" & lastUsedRow & ", U" & firstDataRow & ":U" & lastUsedRow & ", Y" & firstDataRow & ":Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("G" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("A2:A" & lastUsedRow & ", C2:D" & lastUsedRow & ", F2:F" & lastUsedRow & _
+                       ", J2:J" & lastUsedRow & ", N2:N" & lastUsedRow & ", R2:R" & lastUsedRow & _
+                       ", V2:V" & lastUsedRow & ", Z2:AA" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("E2:E" & lastUsedRow & ", I2:I" & lastUsedRow & ", M2:M" & lastUsedRow & _
+                        ", Q2:Q" & lastUsedRow & ", U2:U" & lastUsedRow & ", Y2:Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("G2:H" & lastUsedRow).NumberFormat = "#,##0.00"
             End With
         
         Case "wshGL_EJ_Recurrente"
@@ -2693,19 +2697,19 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         
         Case "wshGL_Trans"
             With wshGL_Trans
-                .Range("A" & firstDataRow & ":J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B" & firstDataRow & ":B" & lastUsedRow).NumberFormat = "dd/mm/yyyy"
-                .Range("C" & firstDataRow & ":C" & lastUsedRow & _
-                    ", D" & firstDataRow & ":D" & lastUsedRow & _
-                    ", F" & firstDataRow & ":F" & lastUsedRow & _
-                    ", I" & firstDataRow & ":I" & lastUsedRow) _
+                .Range("A2:J" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("C2:C" & lastUsedRow & _
+                    ", D2:D" & lastUsedRow & _
+                    ", F2:F" & lastUsedRow & _
+                    ", I2:I" & lastUsedRow) _
                         .HorizontalAlignment = xlLeft
-                With .Range("G" & firstDataRow & ":H" & lastUsedRow)
+                With .Range("G2:H" & lastUsedRow)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With
-                With .Range("A" & firstDataRow & ":A" & lastUsedRow) _
-                    .Range("J" & firstDataRow & ":J" & lastUsedRow).Interior
+                With .Range("A2:A" & lastUsedRow) _
+                    .Range("J2:J" & lastUsedRow).Interior
                     .Pattern = xlSolid
                     .PatternColorIndex = xlAutomatic
                     .ThemeColor = xlThemeColorAccent5
@@ -2716,13 +2720,11 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         
         Case "wshTEC_Local"
             With wshTEC_Local
-                .Range("A" & firstDataRow & ":P" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("F" & firstDataRow & ":F" & lastUsedRow & ", G" & firstDataRow & _
-                                            ":G" & lastUsedRow & ", I" & firstDataRow & _
-                                            ":I" & lastUsedRow & ", O" & firstDataRow & _
-                                            ":O" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("H" & firstDataRow & ":H" & lastUsedRow).NumberFormat = "#0.00"
-                .Range("K" & firstDataRow & ":K" & lastUsedRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+                .Range("A2:P" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("F2:F" & lastUsedRow & ", G2:G" & lastUsedRow & ", I2:I" & lastUsedRow & _
+                            ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H2:H" & lastUsedRow).NumberFormat = "#0.00"
+                .Range("K2:K" & lastUsedRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
                 .columns("F").ColumnWidth = 45
                 .columns("G").ColumnWidth = 65
                 .columns("I").ColumnWidth = 25

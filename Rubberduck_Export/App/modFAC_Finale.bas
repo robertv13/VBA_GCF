@@ -1347,7 +1347,7 @@ End Sub
 
 'Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
 '
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:modFAC_Finale",0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:modFAC_Finale", 0)
 '
 '    Dim montant As Double
 '    Dim dateFact As Date

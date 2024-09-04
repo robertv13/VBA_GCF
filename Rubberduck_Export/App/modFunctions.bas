@@ -3,8 +3,10 @@ Option Explicit
 
 #If VBA7 Then
     '64-bit Excel (VBA7 and later)
-    Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As LongPtr)
+'    Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+'    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As LongPtr)
+Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #Else
     '32-bit Excel
     Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
@@ -12,6 +14,11 @@ Option Explicit
 #End If
 
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
+
+'Constantes pour les touches du clavier
+Private Const VK_NUMLOCK As Byte = &H90
+Private Const KEYEVENTF_EXTENDEDKEY As Long = &H1
+Private Const KEYEVENTF_KEYUP As Long = &H2
 
 Function Fn_GetID_From_Initials(i As String)
 
@@ -453,7 +460,7 @@ Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
     regex.Global = False
     
     'Vérifier si l'adresse courriel correspond au pattern
-    Fn_ValiderCourriel = regex.Test(courriel)
+    Fn_ValiderCourriel = regex.test(courriel)
     
 End Function
 
@@ -484,26 +491,27 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
 
 End Function
 
-Function CompleteDate(dateInput As String) As Variant
-    Dim defaultDay As Long
-    Dim defaultMonth As Long
-    Dim defaultYear As Long
+Function Fn_Complete_Date(dateInput As String) As Variant
+    
     Dim dayPart As Long
     Dim monthPart As Long
     Dim yearPart As Long
     Dim parsedDate As Date
-    Dim parts() As String
     
     'Catch all errors
-    On Error GoTo InvalidDate
+    On Error GoTo Invalid_Date
     
     'Get the current date components
+    Dim defaultDay As Long
     defaultDay = day(Date)
+    Dim defaultMonth As Long
     defaultMonth = month(Date)
+    Dim defaultYear As Long
     defaultYear = year(Date)
     
     ' Split the input date into parts, considering different delimiters
     dateInput = Replace(Replace(Replace(dateInput, "/", "-"), ".", "-"), " ", "")
+    Dim parts() As String
     parts = Split(Replace(dateInput, "-01-1900", ""), "-")
     
     Select Case UBound(parts)
@@ -528,24 +536,24 @@ Function CompleteDate(dateInput As String) As Variant
             monthPart = CInt(parts(1)) 'Use entered month
             yearPart = CInt(parts(2))  'Use entered year
         Case Else
-            GoTo InvalidDate
+            GoTo Invalid_Date
     End Select
     
     'Fine validation taking into consideration leap year AND 75 years (past or future)
     If Fn_ValidateDaySpecificMonth(dayPart, monthPart, yearPart) = False Then
-        GoTo InvalidDate
+        GoTo Invalid_Date
     End If
     
     'Construct the full date
     parsedDate = DateSerial(yearPart, monthPart, dayPart)
     
     'Return a VALID date
-    CompleteDate = CDate(parsedDate)
+    Fn_Complete_Date = parsedDate
     Exit Function
 
-InvalidDate:
+Invalid_Date:
 
-    CompleteDate = "Invalid Date"
+    Fn_Complete_Date = "Invalid Date"
     
 End Function
 
@@ -983,92 +991,6 @@ Public Function ConvertValueBooleanToText(val As Boolean) As String
 
 End Function
 
-'Sub Fn_Get_Tax_RateZ(r As Range, d As Date, tx As String)
-    
-'    'Set the range to search
-'    Dim dataRange As Range: Set dataRange = r
-'
-'    'Setup return value (rate)
-'    Dim rate As Double
-'    rate = 0
-'
-'    'Loop through the data range
-'    Dim cell As Range
-'    For Each cell In dataRange.columns(1).Cells
-'        If cell.value = tx And cell.Offset(0, 1).value < d Then
-'            'If the code matches and the date is smaller, store the result
-'            rate = cell.value
-'            rate = cell.Offset(0, 1).value
-'        End If
-'    Next cell
-'
-'    MsgBox "Search complete. Results are in columns D and E."
-    
-'End Sub
-
-Public Function GetOneDrivePath(ByVal fullWorkbookName As String) As String '2024-05-27 @ 10:10
-    
-    'Try the 3 key types in the registry to find the file
-    Dim oneDrive As Variant
-    oneDrive = Array("OneDriveCommercial", "OneDriveConsumer", "OneDrive")
-    
-    Dim ShellScript As Object
-    Set ShellScript = CreateObject("WScript.Shell")
-    Dim oneDriveRegLocalPath As String
-    
-    Dim key As Variant
-    For Each key In oneDrive
-    
-        'Get the Get OneDrive path from the registry - If doesn't exist go to the next key
-        On Error Resume Next
-        oneDriveRegLocalPath = ShellScript.RegRead("HKEY_CURRENT_USER\Environment\" & key)
-        If oneDriveRegLocalPath = vbNullString Then GoTo continue
-        On Error GoTo 0
-                    
-        'Get the end part of the path from the URL name
-        Dim fileEndPart As String
-        fileEndPart = GetEndPath(fullWorkbookName)
-        If Len(fileEndPart) = 0 Then GoTo continue
-        
-        'Build the final filename by combining registry drive and the end part of url
-        GetOneDrivePath = Replace(oneDriveRegLocalPath & fileEndPart, "/", "\")
-        
-        'Check if the file exists
-        If Dir(GetOneDrivePath) = "" Then
-            GetOneDrivePath = ""
-        Else
-            Exit For
-        End If
-continue:
-    Next key
-    
-    If GetOneDrivePath = "" Then Err.Raise 53, "GetOneDrivePath" _
-                , "Could not find the file [" & fullWorkbookName & "] on OneDrive."
-    
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set key = Nothing
-    
-End Function
-
-Public Function GetEndPath(ByVal fullWorkbookName As String) As String
-
-    'Remove the url part of the name which is preceded by the text "/Documents"
-    If InStr(1, fullWorkbookName, "my.sharepoint.com") <> 0 Then
-        'Get the part of the string after "/Documents"
-        Dim arr() As String
-        arr = Split(fullWorkbookName, "/Documents")
-        GetEndPath = arr(UBound(arr))
-    ElseIf InStr(1, fullWorkbookName, "d.docs.live.net") <> 0 Then
-        'Get the part of the filename without the URL
-        Dim firstPart As String
-        firstPart = Split(fullWorkbookName, "/")(4)
-        GetEndPath = Mid(fullWorkbookName, InStr(fullWorkbookName, firstPart) - 1)
-    Else
-        GetEndPath = ""
-    End If
-    
-End Function
-
 Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As String) As Long
     
     'Ensure charToCount is a single character
@@ -1089,4 +1011,18 @@ Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As 
     
 End Function
 
+Sub EnsureNumLockOn()
 
+    'Vérifie l'état actuel de NumLock
+    Dim NumLockState As Boolean
+    NumLockState = GetKeyState(VK_NUMLOCK) And 1
+
+    'Si NumLock est désactivé, on l'active
+    If Not NumLockState Then
+        'Simule l'appui sur la touche NumLock
+        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY, 0
+        'Simule le relâchement de la touche NumLock
+        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY Or KEYEVENTF_KEYUP, 0
+    End If
+    
+End Sub

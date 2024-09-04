@@ -3,7 +3,7 @@ Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal", 0)
     
     Application.ScreenUpdating = False
     
@@ -293,7 +293,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
 '    Application.StatusBar = ""
 
-    Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal()", startTime)
 
 End Sub
 
@@ -535,7 +535,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_To_DB", 0)
     
     Application.ScreenUpdating = False
     
@@ -608,13 +608,13 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", startTime)
 
 End Sub
 
 Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -641,7 +641,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
         rn = rn + 1
     Next i
     
-    Call Log_Record("modTEC_Analyse:FAC_Projet_Détails_Add_Record_Locally()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_Locally()", startTime)
 
     Application.ScreenUpdating = True
 
@@ -674,7 +674,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_To_DB", 0)
     
     Application.ScreenUpdating = False
     
@@ -729,13 +729,13 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", startTime)
 
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -761,7 +761,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
-    Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_Locally()", startTime)
 
     Application.ScreenUpdating = True
 

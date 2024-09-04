@@ -89,7 +89,7 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     wshFAC_Brouillon.Range("B51").value = nomClient
     wshFAC_Brouillon.Range("B52").value = projetID
-    wshFAC_Brouillon.Range("B53").value = Format$(DateValue(dte), "mm/dd/yyyy")
+    wshFAC_Brouillon.Range("B53").value = Format$(dateValue(dte), "mm/dd/yyyy")
     wshFAC_Brouillon.Range("B54").value = honorairesTotal
     
     Application.EnableEvents = True

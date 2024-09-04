@@ -130,7 +130,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        fullDate = CompleteDate(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.text))
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then

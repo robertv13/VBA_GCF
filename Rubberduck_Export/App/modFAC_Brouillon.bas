@@ -474,7 +474,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
     Dim filterDate As Date
-    filterDate = DateValue(d)
+    filterDate = dateValue(d)
     c2 = filterDate
     c3 = ConvertValueBooleanToText(True)
     If includeBilledTEC Then
@@ -527,7 +527,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
             .Range("AK3").value = ""
         End If
         Dim filterDate As Date
-        filterDate = DateValue(cutoffDate)
+        filterDate = dateValue(cutoffDate)
         .Range("AL3").value = "<=" & filterDate
         .Range("AL3").NumberFormat = "dd/mm/yyyy"
         

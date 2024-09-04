@@ -152,13 +152,6 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.ScreenUpdating = True
     
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshBD_Clients.Range("A1").CurrentRegion.rows.count - 1, _
-'            "## ##0") & " clients", _
-'        Title:="Vérification du nombre de clients", _
-'        Buttons:=vbInformation
-
     Application.StatusBar = ""
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -628,7 +621,6 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Delete the rows that column (isDétruite) is set to TRUE in FAC_Projets_Entête
     Dim i As Long
     For i = lastRow To 2 Step -1
-        Debug.Print "&&&", i, UCase(ws.Cells(i, 9).value)
         If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
             Trim(ws.Cells(i, 9).value) = "" Or _
             ws.Cells(i, 9).value = -1 Then

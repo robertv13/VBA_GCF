@@ -34,5 +34,3 @@ vgervais|2024-09-03 18:22:35|Update|822|VG|2024-09-03|5|z_Adiministratif_Autres 
 vgervais|2024-09-03 18:25:55|Update|823|VG|2024-09-03|1757|Messier & Associé, SENCRL [Alain Bélanger]|Préparation mémo Alain Bélanger (monter le mémo en attendant le prix de vente)|3,70||VRAI
 vgervais|2024-09-03 18:26:32|Add|828|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir si changement sommaire à contrat|0,60||VRAI
 vgervais|2024-09-03 18:27:25|Add|829|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir sommairement si changement au contrat|0,60||VRAI
-Robert M. Vigneault|2024-09-04 09:03:36|Add|830|ML|04/sept/2024|193r|9299-2585 Québec Inc [anciennement Informat] [Robert M. Vigneault]|Test - À annuler|0,10||VRAI
-Robert M. Vigneault|2024-09-04 09:04:58|D|-830

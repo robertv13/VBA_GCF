@@ -27,7 +27,6 @@ End Property
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
-    'Special timer for log purpose
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
     
     Call Client_List_Import_All
@@ -62,12 +61,15 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
             cmbProfessionnel.value = "AR"
         Case Else
             cmbProfessionnel.value = ""
-
     End Select
+    
+    wshAdmin.Range("TEC_Date").value = "" 'On vide la date pour forcer la saisie
     
     cmbProfessionnel.SetFocus
    
     rmv_state = rmv_modeInitial
+    
+    EnsureNumLockOn '2024-09-03 @ 22:43
     
     Call Log_Record("ufSaisieHeures:UserForm_Activate()", startTime)
     
@@ -88,6 +90,8 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
+    EnsureNumLockOn '2024-09-03 @ 22:43
+
     Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick()", startTime)
 
 End Sub
@@ -143,10 +147,12 @@ Public Sub cmbProfessionnel_AfterUpdate()
         
         If wshAdmin.Range("TEC_Date").value <> "" Then
             ufSaisieHeures.txtDate.value = wshAdmin.Range("TEC_Date").value
-            Call TEC_AdvancedFilter_And_Sort
+            Call TEC_Get_All_TEC_AF
             Call TEC_Refresh_ListBox_And_Add_Hours
         End If
     End If
+
+    EnsureNumLockOn '2024-09-03 @ 22:43
 
     Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", startTime)
 
@@ -157,6 +163,8 @@ Private Sub txtDate_Enter()
     If ufSaisieHeures.txtDate.value = "" Then
         ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy")
     End If
+    
+'    Debug.Print "DP-102", year(ufSaisieHeures.txtDate.value), month(ufSaisieHeures.txtDate.value), day(ufSaisieHeures.txtDate.value)
 
 End Sub
 
@@ -166,7 +174,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = CompleteDate(CStr(ufSaisieHeures.txtDate.value))
+    fullDate = Fn_Complete_Date(CStr(ufSaisieHeures.txtDate.value))
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
@@ -183,9 +191,11 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    If CDate(fullDate) > Format$(DateSerial(year(Now), month(Now), day(Now)), "dd/mm/yyyy") Then
-        Debug.Print "DP:101 - ", CDate(fullDate), "vs.", Format$(DateSerial(year(Now), month(Now), day(Now)), "dd/mm/yyyy")
-        If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbQuestion, "Utilisation d'une date FUTURE") = vbNo Then
+    If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
+        Debug.Print "DP:101 - ", fullDate, "vs.", DateSerial(year(Now), month(Now), day(Now))
+        If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
+                    "La date saisie est '" & fullDate & "'", vbYesNo + vbQuestion, _
+                    "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
             txtDate.SetFocus
@@ -205,7 +215,10 @@ Private Sub txtDate_AfterUpdate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
     
     If IsDate(ufSaisieHeures.txtDate.value) Then
-        wshAdmin.Range("TEC_Date").value = CDate(ufSaisieHeures.txtDate.value)
+        Dim dateStr As String, dateFormated As Date
+        dateStr = ufSaisieHeures.txtDate.value
+        dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
+        wshAdmin.Range("TEC_Date").value = dateFormated
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
@@ -214,7 +227,7 @@ Private Sub txtDate_AfterUpdate()
     End If
 
     If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
-        Call TEC_AdvancedFilter_And_Sort
+        Call TEC_Get_All_TEC_AF
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
@@ -280,20 +293,30 @@ Sub txtHeures_AfterUpdate()
     Dim strHeures As String
     strHeures = Me.txtHeures.value
     
-    If InStr(strHeures, ".") > 0 Then
-        strHeures = Replace(strHeures, ".", ",")
+'    If InStr(strHeures, ".") > 0 Then
+    strHeures = Replace(strHeures, ".", ",")
+'    End If
+    
+    If IsNumeric(strHeures) = False Then
+        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+                Title:="Validation d'une valeur numérique", _
+                Buttons:=vbCritical
+            Me.txtHeures.SetFocus 'Mettre le focus sur le contrôle en premier
+'            Me.txtHeures.SelStart = 0 'Définir le début de la sélection
+'            Me.txtHeures.SelLength = Len(ufSaisieHeures.txtHeures.value) 'Définir la longueur de la sélection        Exit Sub
+            Exit Sub
     End If
     
-    If IsNumeric(strHeures) = False Or strHeures > 24 Then
+    If strHeures > 24 Then
         MsgBox _
-        Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+        Prompt:="Le nombre d'heures pour une entrée ne peut dépasser 24!", _
         Title:="Validation d'une valeur numérique", _
         Buttons:=vbCritical
-        Me.txtHeures.value = ""
         Me.txtHeures.SetFocus
+        Me.txtHeures.SelLength = Len(ufSaisieHeures.txtHeures.value)
+        Me.txtHeures.SelStart = 0
         Exit Sub
     End If
-    
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
