@@ -26,7 +26,7 @@ End Sub
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     Dim sorted As Boolean
     
     numRows = UBound(arr, 1)
@@ -41,9 +41,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
             If arr(j, 1) > arr(j + 1, 1) Then
                 'Swap rows
                 For c = 1 To numCols
-                    temp = arr(j, c)
+                    Temp = arr(j, c)
                     arr(j, c) = arr(j + 1, c)
-                    arr(j + 1, c) = temp
+                    arr(j + 1, c) = Temp
                 Next c
                 sorted = False
             ElseIf arr(j, 1) = arr(j + 1, 1) Then
@@ -51,9 +51,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
                 If arr(j, 2) > arr(j + 1, 2) Then
                     'Swap rows
                     For c = 1 To numCols
-                        temp = arr(j, c)
+                        Temp = arr(j, c)
                         arr(j, c) = arr(j + 1, c)
-                        arr(j + 1, c) = temp
+                        arr(j + 1, c) = Temp
                     Next c
                     sorted = False
                 End If
@@ -96,15 +96,15 @@ End Sub
 
 Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
-    Dim temp As String
+    Dim Temp As String
     
     For i = LBound(arr) To UBound(arr) - 1
         For j = i + 1 To UBound(arr)
             If arr(i) > arr(j) Then
                 'Swap elements if they are in the wrong order
-                temp = arr(i)
+                Temp = arr(i)
                 arr(i) = arr(j)
-                arr(j) = temp
+                arr(j) = Temp
             End If
         Next j
     Next i
@@ -115,13 +115,13 @@ Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
     'HOW TO USE: Call BubbleSort(MyArray())
     
     Dim i As Long, j As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     For i = LBound(MyArray) To UBound(MyArray) - 1
         For j = i + 1 To UBound(MyArray)
             If MyArray(i) > MyArray(j) Then
-                temp = MyArray(j)
+                Temp = MyArray(j)
                 MyArray(j) = MyArray(i)
-                MyArray(i) = temp
+                MyArray(i) = Temp
             End If
         Next j
     Next i
@@ -956,15 +956,15 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim rowToMove As Range
 
     'Move completed item ($D = a) to the bottom of the list
-    Dim i As Long, lastRow As Long
+    Dim i As Long, LastRow As Long
     i = 2
 
     Application.EnableEvents = False
     
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
-        lastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(lastRow + 1)
+        LastRow = tbl.ListRows.count
+        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(LastRow + 1)
         tbl.ListRows(1).delete
     Wend
 
@@ -1775,16 +1775,16 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     'Sort components (simple bubble sort)
     Dim i As Long, j As Long
     Dim intResult As Integer
-    Dim temp As String
+    Dim Temp As String
     For i = LBound(components) To UBound(components) - 1
         For j = i + 1 To UBound(components)
 '            Debug.Print components(i) & " vs. " & components(j)
             intResult = StrComp(components(i), components(j), vbTextCompare)
             If intResult = 1 Then
                 'Swap components
-                temp = components(i)
+                Temp = components(i)
                 components(i) = components(j)
-                components(j) = temp
+                components(j) = Temp
 '            Debug.Print components(i) & " < " & components(j)
             End If
         Next j

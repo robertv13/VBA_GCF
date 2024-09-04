@@ -132,7 +132,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -141,7 +141,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -200,10 +200,10 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Application.EnableEvents = True
                 
                 Dim firstRow As Long: firstRow = totalRow + 1
-                Dim lastRow As Long, r As Long
+                Dim LastRow As Long, r As Long
                 r = firstRow
                 Do While ws.Range("A" & r).value <> ""
-                    lastRow = r
+                    LastRow = r
                     r = r + 1
                 Loop
                 
@@ -214,9 +214,9 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
                 Debug.Print "xxx1", "FAC_Projets_Détails_Add_Record_To_DB", Format(Now(), "yyyy-mm-dd hh:nn:ss")
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, LastRow, projetID)
                 Debug.Print "xxx2", "FAC_Projets_Détails_Add_Record_Locally", Format(Now(), "yyyy-mm-dd hh:nn:ss")
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, LastRow, projetID)
                 
                 r = firstRow
                 Do While ws.Range("J" & r).value <> ""

@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Finale"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+Dim LastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
@@ -341,9 +341,9 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Long, lastRow As Long
+    Dim firstRow As Long, LastRow As Long
     firstRow = 44
-    lastRow = 48
+    LastRow = 48
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
@@ -363,7 +363,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     noFacture = wshFAC_Finale.Range("E28").value
     Dim seq As Long
     Dim r As Long
-    For r = firstRow To lastRow
+    For r = firstRow To LastRow
         'Add fields to the recordset before updating it
         If wshFAC_Brouillon.Range("R" & r).value <> "" Then
             rs.AddNew
@@ -403,9 +403,9 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Long, lastRow As Long
+    Dim firstRow As Long, LastRow As Long
     firstRow = 44
-    lastRow = 48
+    LastRow = 48
     
     'Get the first free row
     Dim firstFreeRow As Long
@@ -415,7 +415,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     noFacture = wshFAC_Finale.Range("E28").value
     Dim seq As Long
     Dim i As Long
-    For i = firstRow To lastRow
+    For i = firstRow To LastRow
         If wshFAC_Brouillon.Range("R" & i).value <> "" Then
             With wshFAC_Sommaire_Taux
                 .Range("A" & firstFreeRow).value = noFacture
@@ -523,7 +523,7 @@ nothing_to_update:
 
 End Sub
 
-Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
+Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Update Billed Status in DB
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", 0)
 
@@ -541,7 +541,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim r As Long, TEC_ID As Long, SQL As String
-    For r = firstRow To lastRow
+    For r = firstRow To LastRow
         If wshTEC_Local.Range("BA" & r).value = True Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
@@ -827,13 +827,13 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
         wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Load Invoice Detail Items
         With wshFAC_Détails
-            Dim lastRow As Long, lastResultRow As Long
-            lastRow = .Range("A999999").End(xlUp).Row
-            If lastRow < 4 Then Exit Sub 'No Item Lines
+            Dim LastRow As Long, lastResultRow As Long
+            LastRow = .Range("A999999").End(xlUp).Row
+            If LastRow < 4 Then Exit Sub 'No Item Lines
             .Range("I3").value = wshFAC_Brouillon.Range("O6").value
             wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
             'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+            .Range("A3:G" & LastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
             lastResultRow = .Range("O999").End(xlUp).Row
             If lastResultRow < 3 Then GoTo NoItems
             For resultRow = 3 To lastResultRow
@@ -967,15 +967,15 @@ Sub InvoiceGetAllTrans(inv As String)
     wshFAC_Brouillon.Range("B31").value = 0
 
     With wshFAC_Entête
-        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
-        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+        Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+        LastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
+        If LastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
         On Error Resume Next
         .Names("Criterial").delete
         On Error GoTo 0
         .Range("V3").value = wshFAC_Brouillon.Range("O6").value
         'Advanced Filter setup
-        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
+        .Range("A3:T" & LastRow).AdvancedFilter xlFilterCopy, _
             criteriaRange:=.Range("V2:V3"), _
             CopyToRange:=.Range("X2:AQ2"), _
             Unique:=True
@@ -1245,7 +1245,7 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
     'First determine how many rows there is in the Fees Summary
     Dim nbItems As Long
     Dim i As Long
-    For i = 67 To 63 Step -1
+    For i = 66 To 62 Step -1
         If wshFAC_Finale.Range("C" & i).value <> "" Then
             nbItems = nbItems + 1
         End If
@@ -1253,13 +1253,8 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
     
     If nbItems > 0 Then
         Dim rngFeesSummary As Range: Set rngFeesSummary = _
-            wshFAC_Finale.Range("C" & (67 - nbItems) + 1 & ":D67")
+            wshFAC_Finale.Range("C" & (66 - nbItems) + 1 & ":D66")
         rngFeesSummary.ClearContents
-        
-'        Call Fees_Summary_Borders_Invisible(rngFeesSummary)
-        
-        'Clear the contents of the 'Sommaire' cell
-'        wshFAC_Finale.Range("B" & 67 - nbItems).ClearContents
     End If
     
 End Sub

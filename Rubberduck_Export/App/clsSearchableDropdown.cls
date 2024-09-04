@@ -25,19 +25,19 @@ Option Explicit
 '   You can use this code free in any of your software applications and distribute as you wish.
 '   Please do not alter or remove the authors name or website.
 
-Private Const m_conMaxRows As Long = 12
+Private Const m_conMaxRows As Long = 15 '2024-09-04 @ 11:14
 
 'Configurable Settings
-Private m_compareMethod As VbCompareMethod       'Determines case sensitivity in the search
-Private m_listOfItems As Variant                 'This is the array of items that is filtered
-Private m_maxRows As Long                        'The number of rows to be displayed in the listbox.
-Private m_startText As String                    'Start text in the textbox
-Private m_showAllMatches As Boolean              'True: shows all matches. False show the number of rows specified by m_MaxRows
+Private m_compareMethod As VbCompareMethod 'Determines case sensitivity in the search
+Private m_listOfItems As Variant           'This is the array of items that is filtered
+Private m_maxRows As Long                  'The number of rows to be displayed in the listbox.
+Private m_startText As String              'Start text in the textbox
+Private m_showAllMatches As Boolean        'True: shows all matches. False show the number of rows specified by m_MaxRows
 
 'This is used to prevent events running when changes are being made
 Private m_UpdateControl As Boolean
 
-Private m_textboxStartingState As Boolean        'Used to decide when to remove the starting text
+Private m_textboxStartingState As Boolean  'Used to decide when to remove the starting text
 
 Private WithEvents MyListBox As MSForms.ListBox
 Attribute MyListBox.VB_VarHelpID = -1
@@ -110,7 +110,7 @@ Private Sub Class_Initialize()
 
     m_compareMethod = vbTextCompare
     m_maxRows = m_conMaxRows
-    m_startText = "Saisir le nom de la compagnie que vous recherchez"
+    m_startText = "Saisir le nom du client que vous recherchez"
     m_showAllMatches = False
     
 End Sub
@@ -119,8 +119,7 @@ End Sub
 
 Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
-    'If the user doubleclicks or presses enter, place the selected value
-    '   in the textbox
+    'If the user doubleclicks or presses enter, place the selected value in the textbox
     If m_UpdateControl = False Then
         Call SetTextboxValue(MyListBox.value)
         Call ShowListbox(False)
@@ -129,10 +128,10 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
 End Sub
 
+
 Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     
-    'When the key is down in the listbox turn on
-    'm_UpdateControl to prevent the click event occurring
+    'When the key is down in the listbox turn on m_UpdateControl to prevent the click event occurring
     If KeyCode = vbKeyDown Then
         m_UpdateControl = True
     ElseIf KeyCode = vbKeyUp Then
@@ -141,7 +140,9 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        Call SetTextboxValue(MyListBox.value)
+        If MyListBox.value <> 0 Then
+            Call SetTextboxValue(MyListBox.value)
+        End If
         Call ShowListbox(False)
         SendKeys "{TAB}"
     End If

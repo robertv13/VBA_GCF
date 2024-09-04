@@ -48,7 +48,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
     
     wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
     wshFAC_Brouillon.Range("O3").value = CDate(Format$(Now(), "dd/mm/yyyy")) '2024-09-03 @ 06:32
@@ -133,16 +133,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("O3").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If Range("O3").value > Now() Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -164,7 +164,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("L11:L40")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         wshFAC_Finale.Range("B" & Target.Row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & Target.Row).value
         Set rng = wshFAC_Brouillon.Range("M" & Target.Row) 'Hours
-        rng.Select
+'        rng.Select
         GoTo ExitSub
     End If
   

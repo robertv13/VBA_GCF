@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+Dim LastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
@@ -451,11 +451,11 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     
     Application.EnableEvents = False
     
-    Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
-    If lastRow > 6 Then
-        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
+    Dim LastRow As Long
+    LastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
+    If LastRow > 6 Then
+        wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
     End If
     
     Application.EnableEvents = True
@@ -468,7 +468,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", 0)
     
-    'Set all criteria before calling FAC_Brouillon_TEC_Advanced_Filter_And_Sort
+    'Set all criteria before calling FAC_Brouillon_Get_TEC_For_Client_AF
     Dim c1 As String
     Dim c2 As Date
     Dim c3 As String, c4 As String, c5 As String
@@ -485,20 +485,21 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c5 = ConvertValueBooleanToText(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
-    Call FAC_Brouillon_TEC_Advanced_Filter_And_Sort(c1, c2, c3, c4, c5)
+    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
+'    Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()", startTime)
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
+Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         cutoffDate As Date, _
         isBillable As String, _
         isInvoiced As String, _
         isDeleted As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -512,12 +513,14 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         
         'Define the source area Range
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastSourceRow)
+        .Range("AM10").value = sRng.Address
         
         'Define and Clear the destination area Range
         Dim dRng As Range
         lastResultRow = .Range("AQ9999").End(xlUp).Row
         If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).ClearContents
         Set dRng = .Range("AQ2:BE2")
+        .Range("AM11").value = dRng.Address
         
         'Define the Criteria Range
         Dim cRng As Range
@@ -528,8 +531,8 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         End If
         Dim filterDate As Date
         filterDate = dateValue(cutoffDate)
-        .Range("AL3").value = "<=" & filterDate
-        .Range("AL3").NumberFormat = "dd/mm/yyyy"
+        .Range("AL3").value = "'<=" & Format$(cutoffDate, "dd/mm/yyyy")
+'        .Range("AL3").NumberFormat = "dd/mm/yyyy"
         
         .Range("AM3").value = isBillable
         If isInvoiced <> True Then
@@ -539,6 +542,7 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
         End If
         .Range("AO3").value = isDeleted
         Set cRng = .Range("AK2:AO3")
+        .Range("AM12").value = cRng.Address
         
         'Do the Advanced Filter
         sRng.AdvancedFilter action:=xlFilterCopy, _
@@ -547,6 +551,9 @@ Sub FAC_Brouillon_TEC_Advanced_Filter_And_Sort(clientID As String, _
                             Unique:=True
         
         lastResultRow = .Range("AQ9999").End(xlUp).Row
+        .Range("AM13").value = lastResultRow - 2 & " rows returned"
+        .Range("AM14").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -579,8 +586,88 @@ No_Sort_Required:
     Set dRng = Nothing
     Set cRng = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Advanced_Filter_And_Sort()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF()", startTime)
 
+End Sub
+
+Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
+                                        dteCutoff As Date, _
+                                        estFacturable As String, _
+                                        estFacturee As String, _
+                                        estDetruit As String)
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
+    ' Définir la dernière ligne contenant des données
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    
+    Dim rr As Long
+    rr = 3
+    
+    Dim messageFraisDivers As String
+    Dim i As Long
+    With ws
+    'Boucler sur chaque ligne et masquer celles qui ne correspondent pas à tous les critères
+        For i = 3 To LastRow ' Suppose que les données commencent à la ligne 3
+            If ws.Cells(i, "D").value <= dteCutoff And _
+                ws.Cells(i, "E").value = codeClient And _
+                ws.Cells(i, "J").value = estFacturable And _
+                ws.Cells(i, "L").value >= estFacturee And _
+                ws.Cells(i, "N").value = estDetruit Then
+                ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
+                ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
+                ws.Cells(rr, "AS").value = ws.Cells(i, "C").value
+                ws.Cells(rr, "AT").value = ws.Cells(i, "D").value
+                ws.Cells(rr, "AU").value = ws.Cells(i, "E").value
+                ws.Cells(rr, "AV").value = ws.Cells(i, "G").value
+                ws.Cells(rr, "AW").value = ws.Cells(i, "H").value
+                ws.Cells(rr, "AX").value = ws.Cells(i, "I").value
+                ws.Cells(rr, "AY").value = ws.Cells(i, "J").value
+                ws.Cells(rr, "AZ").value = ws.Cells(i, "K").value
+                ws.Cells(rr, "BA").value = ws.Cells(i, "L").value
+                ws.Cells(rr, "BB").value = ws.Cells(i, "M").value
+                ws.Cells(rr, "BC").value = ws.Cells(i, "N").value
+                ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
+                ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
+                rr = rr + 1
+                If Trim(ws.Cells(i, "I").value) <> "" Then
+                    messageFraisDivers = messageFraisDivers & ws.Cells(i, "I").value & vbCrLf
+                End If
+            End If
+        Next i
+        
+        Dim lastResultRow As Long
+        lastResultRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).Row
+        If lastResultRow < 3 Then
+            Application.ScreenUpdating = True
+            Exit Sub
+        End If
+        If lastResultRow < 4 Then GoTo No_Sort_Required
+        With .Sort
+            .SortFields.clear
+            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Prof_ID
+            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+            .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
+            .Apply 'Apply Sort
+        End With
+    End With
+     
+No_Sort_Required:
+    
+    If messageFraisDivers <> "" Then
+        MsgBox messageFraisDivers, vbInformation, "Résumé des commentaires"
+    End If
+    
 End Sub
 
 Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:10
@@ -680,11 +767,8 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 '        Debug.Print wshFAC_Brouillon.Range("L" & i).value
     Next i
     
-    'Est-ce que le sommaire des honoraires peut-être épuré ?
-    
-    
     Call FAC_Finale_Cacher_Heures
-    Call FAC_Finale_Cacher_Sommaire_Taux
+    Call FAC_Finale_Montrer_Sommaire_Taux
     
     'Afficher le code et le nom du client, pour faciliter la sauvegarde de la facture (format EXCEL)
     wshFAC_Finale.Range("L79").value = wshFAC_Brouillon.Range("B18").value
@@ -941,7 +1025,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

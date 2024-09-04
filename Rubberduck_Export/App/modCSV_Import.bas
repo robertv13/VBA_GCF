@@ -59,10 +59,10 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
 
 End Sub
 
-Sub Fix_Columns(ws As Worksheet, first As Long, last As Long)
+Sub Fix_Columns(ws As Worksheet, First As Long, Last As Long)
 
     Dim i As Long
-    For i = first To last
+    For i = First To Last
         'Column B - Change the date format
         ws.Range("D" & i).value = Fn_Correct_Date_Format(ws.Range("D" & i).value)
         ws.Range("D" & i).NumberFormat = "dd/mm/yyyy"

@@ -166,12 +166,12 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
-        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+        LastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
+        If LastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & LastRow)
         .Range("S10").value = sRng.Address '2024-09-04 @ 08:47
         
          'Criteria
@@ -187,7 +187,7 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         
         lastResultRow = .Range("V99999").End(xlUp).Row
         .Range("S13").value = (lastResultRow - 2) & " rows" '2024-09-04 @ 08:47
-        .Range("S14").value = Now() '2024-09-04 @ 08:47
+        .Range("S14").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2024-09-04 @ 08:47
         
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
@@ -387,17 +387,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim lastRow As Long
+            Dim LastRow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 'Handle empty table (assign a default value, e.g., 0)
-                lastRow = 0
+                LastRow = 0
             Else
-                lastRow = rs.Fields("MaxID").value
+                LastRow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = lastRow + 1
+            nextID = LastRow + 1
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
         
@@ -593,9 +593,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     ufSaisieHeures.lsbHresJour.clear '2024-08-10 @ 05:59
     
     'Last Row used in first column of result
-    Dim lastRow As Long
-    lastRow = wshTEC_Local.Range("V999").End(xlUp).Row
-    If lastRow < 3 Then Exit Sub
+    Dim LastRow As Long
+    LastRow = wshTEC_Local.Range("V999").End(xlUp).Row
+    If LastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
@@ -606,7 +606,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+    Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
     Debug.Print rng.Address
      
     Dim i As Long, j As Long

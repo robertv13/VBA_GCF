@@ -161,7 +161,8 @@ End Sub
 Private Sub txtDate_Enter()
 
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy")
+        ufSaisieHeures.txtDate.value = Format(Now(), "Short Date")
+'        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy") '2024-09-04 @ 11:03
     End If
     
 '    Debug.Print "DP-102", year(ufSaisieHeures.txtDate.value), month(ufSaisieHeures.txtDate.value), day(ufSaisieHeures.txtDate.value)

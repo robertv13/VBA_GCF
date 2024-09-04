@@ -563,7 +563,7 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     Dim keys() As Variant
     Dim values() As Variant
     Dim i As Long, j As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     
     ReDim keys(0 To dict.count - 1)
     ReDim values(0 To dict.count - 1)
@@ -580,14 +580,14 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
         For j = i + 1 To UBound(values)
             If (values(i) < values(j) And descending) Or (values(i) > values(j) And Not descending) Then
                 'Swap values
-                temp = values(i)
+                Temp = values(i)
                 values(i) = values(j)
-                values(j) = temp
+                values(j) = Temp
                 
                 'Swap keys accordingly
-                temp = keys(i)
+                Temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = temp
+                keys(j) = Temp
             End If
         Next j
     Next i

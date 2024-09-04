@@ -829,21 +829,21 @@ Sub zSoft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
 End Sub
 
-Sub zAdd_And_Modify_Checkbox(startRow As Long, lastRow As Long)
+Sub zAdd_And_Modify_Checkbox(startRow As Long, LastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agée
     
     'Define the range for the summary
     Dim summaryRange As Range
-    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
+    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(LastRow, 13)) 'Columns J to M
     
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
         Set checkBox = .OLEObjects.add(ClassType:="Forms.CheckBox.1", _
-                    Left:=.Cells(lastRow, 14).Left + 5, _
-                    Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
+                    Left:=.Cells(LastRow, 14).Left + 5, _
+                    Top:=.Cells(LastRow, 14).Top, width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object
