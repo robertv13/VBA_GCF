@@ -574,24 +574,24 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
         
         'Miscellaneous Amount # 1 (misc1)
         If misc1 Then
-            MyArray(3, 1) = "9999"
-            MyArray(3, 2) = "Frais divers # 1"
+            MyArray(3, 1) = "4010"
+            MyArray(3, 2) = "Revenus - Frais de poste"
             MyArray(3, 3) = -misc1
             MyArray(3, 4) = ""
         End If
         
         'Miscellaneous Amount # 2 (misc2)
         If misc2 Then
-            MyArray(4, 1) = "9999"
-            MyArray(4, 2) = "Frais divers # 2"
+            MyArray(4, 1) = "4015"
+            MyArray(4, 2) = "Revenus - Sous-traitants"
             MyArray(4, 3) = -misc2
             MyArray(4, 4) = ""
         End If
         
         'Miscellaneous Amount # 3 (misc3)
         If misc3 Then
-            MyArray(5, 1) = "9999"
-            MyArray(5, 2) = "Frais divers # 3"
+            MyArray(5, 1) = "4020"
+            MyArray(5, 2) = "Revenus - Autres Frais"
             MyArray(5, 3) = -misc3
             MyArray(5, 4) = ""
         End If

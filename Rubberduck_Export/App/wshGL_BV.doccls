@@ -43,7 +43,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    ws.Range("J1").value = Format$(Now(), "dd/mm/yyyy")
+    ws.Range("J1").value = Format$(Now(), "Short Date")
     
     With ws
         .Range("J1").Select

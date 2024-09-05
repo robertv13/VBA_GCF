@@ -51,8 +51,8 @@ Private Sub Worksheet_Activate()
     Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
-    wshFAC_Brouillon.Range("O3").value = Format$(Now(), "dd/mm/yyyy") '2024-09-03 @ 06:32
-    Debug.Print "TypeName = " & TypeName(wshFAC_Brouillon.Range("O3").value)
+    wshFAC_Brouillon.Range("O3").value = Now() '2024-09-05 @ 09:29
+    Debug.Print "Worksheet_Activate_55   "; "wshFAC_Brouillon.Range(""O3"").value   "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
     wshFAC_Brouillon.Range("B27").value = False '2024-09-03 @ 06:33
 
     Me.Range("E3").Select 'The first input is the customer name
@@ -107,9 +107,12 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", 0)
+    Dim targetAddress As String
+    On Error Resume Next
+    targetAddress = Target.Address
+    On Error GoTo 0
     
-    Debug.Print Application.EnableEvents, Target.Address '2024-09-02 @ 23:11
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, 0)
     
     Application.EnableEvents = False
     
@@ -147,6 +150,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End If
         End If
 
+        Debug.Print "Worksheet_Change_153   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
         Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
         
         Set rng = wshFAC_Brouillon.Range("O9")
@@ -233,6 +237,6 @@ ExitSub:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
 
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Change()", startTime)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, startTime)
   
 End Sub

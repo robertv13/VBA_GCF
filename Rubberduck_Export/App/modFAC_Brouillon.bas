@@ -137,7 +137,12 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             wshFAC_Brouillon.Range("E3").value = wshFAC_Brouillon.Range("B51").value
             Call FAC_Brouillon_Client_Change(wshFAC_Brouillon.Range("B51").value)
             
+            Application.EnableEvents = False
+            
+            'Utilisation de la date du projet de facture
+            Debug.Print "FAC_Brouillon_New_Invoice_140   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
             wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
+            Debug.Print "FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
             
             wshFAC_Brouillon.Range("O9").Select
@@ -238,13 +243,6 @@ End Sub
 Sub FAC_Brouillon_Date_Change(d As String)
 
     Application.EnableEvents = False
-    
-    Debug.Print d
-    
-    If Trim(d) = "" Then
-        wshFAC_Brouillon.Range("O6").value = "04-09-2024" '2024-09-04 @ 15:45
-        d = "04-09-2024"
-    End If
     
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
@@ -456,17 +454,15 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", 0)
     
-    Application.EnableEvents = False
-    
     Dim LastRow As Long
     LastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
     If LastRow > 6 Then
+        Application.EnableEvents = False
         wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
+        Application.EnableEvents = True
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
     End If
     
-    Application.EnableEvents = True
-
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()", startTime)
 
 End Sub
@@ -604,7 +600,14 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
                                         estDetruit As String)
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
-    ' Définir la dernière ligne contenant des données
+    'On efface ce qui est déjà là...
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).Row
+    If lastUsedRow > 2 Then
+        ws.Range("AQ3:BE" & lastUsedRow).ClearContents
+    End If
+    
+    'Définir la dernière ligne contenant des données
     Dim LastRow As Long
     LastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
@@ -771,7 +774,6 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
             End If
             iFacFinale = iFacFinale + 1
         End If
-'        Debug.Print wshFAC_Brouillon.Range("L" & i).value
     Next i
     
     Call FAC_Finale_Cacher_Heures

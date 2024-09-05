@@ -15,6 +15,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub UserForm_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+End Sub
+
 Private Sub UserForm_Initialize()
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
@@ -75,13 +79,14 @@ End Sub
 Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
 
     Dim rowSelected As Long
-    Dim nomClient As String, dte As String
+    Dim nomClient As String, dte As Date
     Dim honorairesTotal As Double
     Dim projetID As Long
     
     rowSelected = lsbProjetsFacture.ListIndex
     nomClient = lsbProjetsFacture.List(rowSelected, 0)
-    dte = lsbProjetsFacture.List(rowSelected, 1)
+    dte = CDate(lsbProjetsFacture.List(rowSelected, 1))
+    Debug.Print "lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
     projetID = lsbProjetsFacture.List(rowSelected, 3)
     
@@ -89,7 +94,9 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     wshFAC_Brouillon.Range("B51").value = nomClient
     wshFAC_Brouillon.Range("B52").value = projetID
-    wshFAC_Brouillon.Range("B53").value = Format$(dateValue(dte), "mm/dd/yyyy")
+    Debug.Print "lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
+    wshFAC_Brouillon.Range("B53").value = dte
+    Debug.Print "lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
     wshFAC_Brouillon.Range("B54").value = honorairesTotal
     
     Application.EnableEvents = True

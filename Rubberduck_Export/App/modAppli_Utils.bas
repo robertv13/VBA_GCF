@@ -2097,7 +2097,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If i > 829 Then
+        If i > 861 Then
             'Date de la charge
             yy = year(arr(i, 4))
             mm = month(arr(i, 4))
@@ -2350,7 +2350,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Debug.Print "Clé: " & key & " - Valeur: " & dictDateCharge(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 829) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 861) ")
         r = r + 1
     End If
     
@@ -2370,7 +2370,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 829) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 861) ")
         r = r + 1
     End If
     

@@ -46,7 +46,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
         'Requires a minimum of one line (values)
         ws.Range("A2").value = 0
         ws.Range("B2").value = ""
-        ws.Range("C2").value = Format$(Now(), "dd-mm-yyyy")
+        ws.Range("C2").value = Format$(Now(), "yyyy-mm-dd")
         ws.Range("E2").value = 0
         ws.Range("F2").value = "VRAI"
         ws.Range("G2").value = "FAUX"

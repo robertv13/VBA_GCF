@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Désactive les événements pour éviter tout problème lors de la mise à jour
     Application.EnableEvents = False
     
-    ws.Range("H3").value = Format$(Now(), "mm/dd/yyyy")
+    ws.Range("H3").value = Format$(Now(), "Short Date")
     ws.Range("H3").Select
     
     'Réapplique la position du volet inférieur pour maintenir l'affichage à la ligne 7
