@@ -109,19 +109,30 @@ Public Enum TEC_Data_Columns
     ftecLast = ftecNoFacture
 End Enum
 
-Sub Set_Environment()
+'Sub Set_Environment()
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Set_Environment", 0)
+'
+'    Dim rootPath As String
+'    Call Set_Root_Path(rootPath)
+'
+'    DoEvents
+'
+'    On Error Resume Next
+'    wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur la variable
+'    On Error GoTo 0
+'
+'    Call Log_Record("modAppli:Set_Environment()", startTime)
+'
+'End Sub
+'
+Sub Set_Root_Path(ByRef rootPath As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Set_Environment", 0)
-    
-    Dim rootPath As String
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else
         rootPath = "P:\Administration\APP\GCF"
     End If
-    wshAdmin.Range("F5").value = rootPath 'Évite de perdre la valeur de la variable wshAdmin.Range("F5").value
-    
-    Call Log_Record("modAppli:Set_Environment()", startTime)
 
 End Sub
 
@@ -136,7 +147,7 @@ Sub Write_Info_On_Main_Menu()
     With wshMenu.Range("$A$32")
         .Font.size = 8
         .Font.Color = vbBlue
-        .value = "'" & CStr("Heure - " & Format$(Now(), "hh:mm:ss"))
+        .value = "'" & CStr("Heure - " & Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     End With
     
     With wshMenu.Range("$A$33")
@@ -147,14 +158,14 @@ Sub Write_Info_On_Main_Menu()
     
     With wshMenu.Range("$A$34")
         .Font.size = 8
-        .Font.Color = vbRed
+        .Font.Color = vbBlack
         .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
     
     Dim env As String: env = wshAdmin.Range("F5").value
     With wshMenu.Range("$A$35")
         .Font.size = 8
-        .Font.Color = vbBlack
+        .Font.Color = vbRed
         .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 

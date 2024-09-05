@@ -1,0 +1,76 @@
+GuillaumeCharron|2024-09-02 16:15:18|Add|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,50||VRAI
+GuillaumeCharron|2024-09-02 16:32:14|Update|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,49||VRAI
+GuillaumeCharron|2024-09-02 17:56:07|Update|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,75||VRAI
+GuillaumeCharron|2024-09-03 05:42:22|Add|802|GC|03-09-24|1013d|137888 Canada Inc. [Martine Lachance]|analyse des acomptes provisonnels à verser|0,50||VRAI
+GuillaumeCharron|2024-09-03 06:20:21|Add|803|GC|03-09-24|1798|Mylène Lapierre CPA Inc.|réception de réponses et répondre interrogations|0,50||VRAI
+GuillaumeCharron|2024-09-03 06:35:07|Add|804|GC|03-09-24|1779|9098-2885 Québec Inc. [Denis Bisson]|réception d'informations et courriels|0,75||VRAI
+vgervais|2024-09-03 08:36:49|Add|805|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis des divers courriels |0,60||VRAI
+vgervais|2024-09-03 08:37:23|Add|806|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis des divers courriels|0,60||FAUX
+vgervais|2024-09-03 08:57:10|Add|807|VG|2024-03-09|5|z_Adiministratif_Autres non chargeables|Suivis + Autres|0,60||VRAI
+GuillaumeCharron|2024-09-03 09:54:23|Add|808|GC|03-09-24|1793|9063-6580 Québec Inc [Le Lunettier]|réception des livres des minutes|0,40||VRAI
+GuillaumeCharron|2024-09-03 09:54:40|Add|809|GC|03-09-24|1546|Publipage Inc. [Mélissa Côté]|réception certificat de fusion|0,40||VRAI
+GuillaumeCharron|2024-09-03 09:58:12|Add|810|GC|03-09-24|1696|Photographie Benoit Blain Inc [Kelly Cochelin]|réception de EF de 9198 et validation de soldes|0,40||VRAI
+vgervais|2024-09-03 09:58:51|Add|811|VG|2024-03-09|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Mise à jour mémorandum|0,80||VRAI
+vgervais|2024-09-03 10:46:48|Update|811|VG|2024-09-03|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Mise à jour mémorandum|0,90||VRAI
+vgervais|2024-09-03 10:47:30|Update|807|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis + Autres + lecture mise à jour|0,90||VRAI
+vgervais|2024-09-03 10:52:28|Add|812|VG|2024-09-03|1759|France Morin CPA|Ramonage 4s |0,40||VRAI
+vgervais|2024-09-03 10:52:38|Update|807|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis + Autres + lecture mise à jour|0,90||FAUX
+vgervais|2024-09-03 10:53:18|Add|813|VG|2024-09-03|1759|France Morin CPA|Ramonage 4s (suivi révision des déclarations)|0,50||VRAI
+vgervais|2024-09-03 10:57:52|Add|814|VG|2024-09-03|1759|France Morin CPA|Ramonages |0,50||VRAI
+GuillaumeCharron|2024-09-03 12:57:39|Add|815|GC|03-09-24|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|préparation à la rencontre et closing + déplacement|3,50||VRAI
+GuillaumeCharron|2024-09-03 14:02:39|Add|816|GC|03-09-24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|réception de livre des minutes et courriels|0,75||VRAI
+GuillaumeCharron|2024-09-03 14:04:11|Add|817|GC|03-09-24|1624|Gestion Proped Inc. [Chaussures Villeneuves] [Louis Villeneuve]|réception certificat de modification|0,40||VRAI
+User|2024-09-03 14:23:20|Add|818|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Montage de la stratégie pour obtenir les approbations des clients sur les T1 |1,75||VRAI
+GuillaumeCharron|2024-09-03 14:29:17|Add|819|GC|03-09-24|1013g|9199-5308 Québec Inc [Benoit Alary]|tel avec benoit sur la plan financier|0,40||VRAI
+Annie|2024-09-03 14:31:13|Add|820|AR|2024-09-03|2032|MOR11 Morin, Elliott Associés Ltée [Travis Budd]|Fichier Excellence et rapport de gestion d'août|2.25||VRAI
+vgervais|2024-09-03 18:14:20|Add|821|VG|2024-03-09|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Modifier mémorandum + suivis|1,00||VRAI
+vgervais|2024-09-03 18:14:53|Add|822|VG|2024-03-09|5|z_Adiministratif_Autres non chargeables|Divers suivis + lectures diverses|1,10||FAUX
+vgervais|2024-09-03 18:16:13|Add|823|VG|2024-03-09|1757|Messier & Associé, SENCRL [Alain Bélanger]|Préparation mémo Alain Bélanger (monter le mémo en attendant le prix de vente)|3,60||VRAI
+vgervais|2024-09-03 18:19:37|Add|824|VG|2024-03-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Lecture des courriels (voir étape mémorandum)|1,10||VRAI
+vgervais|2024-09-03 18:21:07|Add|825|VG|2024-03-09|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Calcul du prix de vente selon états financiers|0,70||VRAI
+vgervais|2024-09-03 18:21:34|Add|826|VG|2024-03-09|1759|France Morin CPA|Préparation pour appel + Appel téléphonique|0,50||VRAI
+vgervais|2024-09-03 18:22:22|Add|827|VG|2024-03-09|156|Laurent Harvey, CPA Inc.|Fiducie non produite (suivis) pour fiduice non produite|0,30||VRAI
+vgervais|2024-09-03 18:22:35|Update|822|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Divers suivis + lectures diverses|1,20||FAUX
+vgervais|2024-09-03 18:25:55|Update|823|VG|2024-09-03|1757|Messier & Associé, SENCRL [Alain Bélanger]|Préparation mémo Alain Bélanger (monter le mémo en attendant le prix de vente)|3,70||VRAI
+vgervais|2024-09-03 18:26:32|Add|828|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir si changement sommaire à contrat|0,60||VRAI
+vgervais|2024-09-03 18:27:25|Add|829|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir sommairement si changement au contrat|0,60||VRAI
+vgervais|2024-09-03 18:28:24|Add|830|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir sommairement contrat|0,60||VRAI
+vgervais|2024-09-03 18:29:08|Update|822|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Divers suivis + lectures diverses mise à jour + erreur feuille de temps|1,40||FAUX
+vgervais|2024-09-03 18:29:40|Add|831|VG|2024-09-03|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Suivis modification au contrat|0,60||VRAI
+Annie|2024-09-04 14:35:06|D|-820
+Annie|2024-09-04 14:36:05|Add|831|AR|2024-09-03|2032|MOR11 Morin, Elliott Associés Ltée [Travis Budd]|Fichier Excellence et rapport de gestion d'août|2.25||VRAI
+Annie|2024-09-04 14:37:37|Add|832|AR|2024-09-03|1112|Vignoble Kobloth et fils inc. [Thierry Kobloth]|Comptabilité de juillet|3.50||VRAI
+Annie|2024-09-04 14:39:08|Add|833|AR|2024-09-03|2040|2960-4105 Québec Inc (Mini Excavation BM) [Marc Beaurivage]|Paies et DAS|0.25||VRAI
+Annie|2024-09-04 14:40:27|Add|834|AR|2024-09-04|5|z_Adiministratif_Autres non chargeables|Déjeuner d'équipe|3.00||FAUX
+Annie|2024-09-04 14:48:45|Update|834|AR|2024-09-04|5|z_Adiministratif_Autres non chargeables|Déjeuner d'équipe|4.50||FAUX
+User|2024-09-04 15:47:31|Add|835|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Montage et recherche pour approbation des T1|1,75||VRAI
+User|2024-09-04 15:48:07|Add|836|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Travail sur le fichier client|2,50||FAUX
+User|2024-09-04 15:48:21|Update|835|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Montage et recherche pour approbation des T1|1,75||FAUX
+User|2024-09-04 15:48:47|Add|837|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Test avec Robert|0,50||FAUX
+User|2024-09-04 15:50:26|Add|838|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Travail sur les dossiers d'approbation des T1 (Avec Guillaume)|0,75||FAUX
+User|2024-09-04 15:50:58|Add|839|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Travail sur les fichiers de kilométrage|2,00||FAUX
+User|2024-09-04 15:53:44|Add|840|ML|2024-09-04|5|z_Adiministratif_Autres non chargeables|Réunion d'équipe - départ à 6h et retour à 11h30 - Ste-Julie/brossard/Repentigny et Repentigny/brossard/Ste-julie|5,50||FAUX
+User|2024-09-04 15:54:42|Add|841|ML|2024-09-04|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|Obtention du numéro fédéral pour la fiducie et demande du numéro au provincial|1,00||VRAI
+User|2024-09-04 15:55:22|Add|842|ML|2024-09-04|5|z_Adiministratif_Autres non chargeables|Montage des fichiers de dépenses de kilométrage|2,50||VRAI
+GuillaumeCharron|2024-09-04 17:22:54|Add|843|GC|04/09/24|1731|Les Toitures C.B.C. Inc. [Francis Bélanger]|préparation, déplacement et rencontre avec les clients chez Fanny pour signaturdm scan de tout + envoi au comptable|5,50||VRAI
+GuillaumeCharron|2024-09-04 17:23:07|Update|843|GC|04/09/24|1731|Les Toitures C.B.C. Inc. [Francis Bélanger]|préparation, déplacement et rencontre avec les clients chez Fanny pour signaturdm scan de tout + envoi au comptable|5,50|Frais de poste de 225$|VRAI
+GuillaumeCharron|2024-09-04 17:30:01|Add|844|GC|04/09/24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|courriels avec avocats|0,40||VRAI
+GuillaumeCharron|2024-09-04 17:30:56|Add|845|GC|04/09/24|381|Succession Pierre Sénécal [Michelle Ladouceur (Les Entreprises Lacenes Inc.)]|tel avec scotia + courriel pour pièce d'identité fiduciaire de fiducie|0,50||VRAI
+GuillaumeCharron|2024-09-04 17:31:16|Add|846|GC|04/09/24|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|envoyer tout au comptable|0,40||VRAI
+GuillaumeCharron|2024-09-04 17:31:49|Add|847|GC|04/09/24|1605|1508-5822 Québec Inc. [Groupe Laforest] [Maxime Laforest]|tel avec Maxime - vente du mctavish + terrain + gel de mère à racheter|0,50||VRAI
+GuillaumeCharron|2024-09-04 17:32:15|Add|848|GC|04/09/24|1685|Calfeutrage Prospect Inc [Luc Boisvert]|tel avec luc sur vente + courriel prochaines étapes|0,50||VRAI
+GuillaumeCharron|2024-09-04 17:33:47|Add|849|GC|04/09/24|1669|Ventilabec Inc. [Lora Stoycheva]|tel avec Guillaume sur séparation + transfert d'immeuble + autres + céduler rencontre avec Julie + tel avec Julie pour problématique de dividende vs CRTG vs dividende vs rachats|1,75||VRAI
+GuillaumeCharron|2024-09-04 17:34:35|Update|844|GC|04/09/24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|courriels avec avocats + retourner directives|0,75||VRAI
+GuillaumeCharron|2024-09-04 17:35:14|Add|850|GC|04/09/24|1761|Pépinière Excel Inc [François Racette]|préparation rencontre + rencontre de mise en place + prise de notes|2,00||VRAI
+GuillaumeCharron|2024-09-04 17:35:36|Update|848|GC|04/09/24|1685|Calfeutrage Prospect Inc [Luc Boisvert]|tel avec luc sur vente + courriel prochaines étapes + tel avec Martin Fortier|0,75||VRAI
+GuillaumeCharron|2024-09-04 17:36:14|Add|851|GC|03/09/24|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|courriel sur documentation légale à réviser|0,25||VRAI
+GuillaumeCharron|2024-09-04 17:36:41|Add|852|GC|03/09/24|1798|Mylène Lapierre CPA Inc.|réponse courriel de mylène|0,40||VRAI
+GuillaumeCharron|2024-09-04 17:37:37|Add|853|GC|03/09/24|1505|Le Groupe Ultragen Ltée [Khac Trong Truong]|rencontre teams et préparation à la rencontre 1h - indiquer la date du 25/08 pour que rentre avant la vente|1,00||VRAI
+GuillaumeCharron|2024-09-04 17:38:09|Add|854|GC|03/09/24|1779|9098-2885 Québec Inc. [Denis Bisson]|videoconference avec acheteur et préparation|0,50||VRAI
+GuillaumeCharron|2024-09-04 17:38:45|Add|855|GC|03/09/24|1790|9192-1353 Québec Inc. [Simon-David Williams]|rencontre teams pour structure fiscal des actionnaires et conseils ISM|0,75||VRAI
+GuillaumeCharron|2024-09-04 17:39:19|Add|856|GC|03/09/24|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|réception acte de fiducie, scan de tout + courriel comptable|1,00||VRAI
+GuillaumeCharron|2024-09-04 17:39:44|Add|857|GC|03/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|envoyer livre des minutes à laurent|0,50||VRAI
+GuillaumeCharron|2024-09-04 17:41:16|Add|858|GC|04/09/24|1448|9055-4627 Québec Inc [Guillaume Bruneau-Côté]|courriel pour doc manquants|0,25||VRAI
+GuillaumeCharron|2024-09-04 17:41:41|Add|859|GC|04/09/24|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|courriels pour révisions|0,25||VRAI
+Annie|2024-09-04 17:48:58|Add|860|AR|2024-09-04|1112|Vignoble Kobloth et fils inc. [Thierry Kobloth]|Comptabilité juillet|3.00||VRAI
+vgervais|2024-09-04 17:54:39|Add|861|VG|2024-09-04|5|z_Adiministratif_Autres non chargeables|Déjeuner fiscalité + Administration + suivis + revoir Succession Andrée Prud'homme|4,60||FAUX

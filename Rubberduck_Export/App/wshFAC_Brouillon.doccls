@@ -19,11 +19,11 @@ Private Sub Worksheet_Activate()
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("FAC_Brouillon")
     
     Call Client_List_Import_All
-    
     Call TEC_Import_All
-    
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+    Call FAC_Comptes_Clients_Import_All
     Call FAC_Projets_Entête_Import_All
-    
     Call FAC_Projets_Détails_Import_All
     
     With ws
@@ -48,10 +48,11 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
-    wshFAC_Brouillon.Range("O3").value = CDate(Format$(Now(), "dd/mm/yyyy")) '2024-09-03 @ 06:32
+    wshFAC_Brouillon.Range("O3").value = Format$(Now(), "dd/mm/yyyy") '2024-09-03 @ 06:32
+    Debug.Print "TypeName = " & TypeName(wshFAC_Brouillon.Range("O3").value)
     wshFAC_Brouillon.Range("B27").value = False '2024-09-03 @ 06:33
 
     Me.Range("E3").Select 'The first input is the customer name
@@ -133,7 +134,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -142,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

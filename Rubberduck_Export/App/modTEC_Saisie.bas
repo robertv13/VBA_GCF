@@ -366,7 +366,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.update
-            Call Log_Saisie_Heures("D", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
+            Call Log_Saisie_Heures("D E L E T E", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", _
@@ -450,7 +450,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
                 rs.Fields("VersionApp").value = ThisWorkbook.name
                 'Nouveau log - 2024-09-02 @ 10:40
-                Call Log_Saisie_Heures("Update", saveLogTEC_ID & "|" & _
+                Call Log_Saisie_Heures("UPDATE", saveLogTEC_ID & "|" & _
                     ufSaisieHeures.cmbProfessionnel.value & "|" & _
                     CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
                     wshAdmin.Range("TEC_Client_ID") & "|" & _

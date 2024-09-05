@@ -165,7 +165,7 @@ End Sub
 
 'Sub Encaissement_Previous() '2024-02-14 @ 11:04
 '
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Previous", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Previous", 0)
 '
 '    Dim MinPayID As Long, PayID As Long
 '    With wshENC_Saisie
@@ -196,7 +196,7 @@ End Sub
 '
 'Sub Encaissement_Next() '2024-02-14 @ 11:04
 '
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Next", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Next", 0)
 '
 '    Application.EnableEvents = False
 '
@@ -232,7 +232,7 @@ End Sub
 '
 'Sub Encaissement_Load() '2024-02-14 @ 11:04
 '
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Load", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Load", 0)
 '
 '    With wshENC_Saisie
 '        If .Range("B4").value = Empty Then

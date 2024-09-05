@@ -1694,16 +1694,16 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     
     If startTime = 0 Then
         startTime = Timer 'Start timing
-        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        Replace(currentTime, " ", "_") & "|" & _
+        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
                         procedureName & " (entrée)"
         Close #fileNum
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        Replace(currentTime, " ", "_") & "|" & _
+        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
                         procedureName & " (sortie)" & "|" & _
                         "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds"
@@ -1714,7 +1714,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Erreur au démarrage"
+    MsgBox "Une erreur est survenue avec le LogMainApp: " & Err.Description, vbCritical, "Erreur au démarrage"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     

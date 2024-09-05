@@ -5,16 +5,38 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
-'    Call Handle_Rubberduck_Reference
+    Dim rootPath As String
+    Call Set_Root_Path(rootPath)
+    wshAdmin.Range("F5").value = rootPath
+
+    'Vérification si le chemin est accessible - Premier Essai
+    If Not Fn_Chemin_Existe(rootPath & "\") Then
+        MsgBox "Le chemin réseau est inaccessible." & vbNewLine & vbNewLine & _
+               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, "Incapacité d'accéder au serveur"
+        Exit Sub
+    End If
+
+    'Le réseau est disponible, reste à vérifier si l'affectation a eu lieu...
+    If wshAdmin.Range("F5").value = "" Then
+        MsgBox "L'adresse du serveur n'est pas valide !!!", vbCritical, "Accès au serveur est impossible"
+    End If
     
     'Log activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
     
     Application.ScreenUpdating = False
     
-    Call Set_Environment
+'    Call Set_Environment
     
-    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each startup
+    'Vérification si le chemin est accessible - Deuxième essai
+    If Not Fn_Chemin_Existe(rootPath & "\") Then
+        MsgBox "Le chemin réseau est inaccessible (deuxième essai)." & vbNewLine & vbNewLine & _
+               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, _
+               "Incapacité d'accéder au serveur (2ème essai)"
+        Exit Sub
+    End If
+    
+    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
     Call Hide_Dev_Shapes_Based_On_Username
@@ -57,6 +79,15 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
     ufExitDisable.show
 
 End Sub
+
+'Fonction pour vérifier si un fichier ou un dossier existe
+Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
+
+    On Error Resume Next
+    Fn_Chemin_Existe = (Dir(chemin) <> "")
+    On Error GoTo 0
+    
+End Function
 
 Sub BackupMasterFile()
 

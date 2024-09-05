@@ -10,12 +10,6 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = False
     
-    Call Client_List_Import_All
-    Call FAC_Entête_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Comptes_Clients_Import_All
-    Call GL_Trans_Import_All
-
     Application.EnableEvents = True
     
     fromMenu = True '2024-09-03 @ 06:20

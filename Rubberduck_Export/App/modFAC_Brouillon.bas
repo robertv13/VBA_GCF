@@ -239,6 +239,13 @@ Sub FAC_Brouillon_Date_Change(d As String)
 
     Application.EnableEvents = False
     
+    Debug.Print d
+    
+    If Trim(d) = "" Then
+        wshFAC_Brouillon.Range("O6").value = "04-09-2024" '2024-09-04 @ 15:45
+        d = "04-09-2024"
+    End If
+    
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
         y = Right(year(d), 2)
@@ -796,10 +803,10 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshMenuFAC.Activate
     
-    Call SlideIn_PrepFact
-    Call SlideIn_SuiviCC
-    Call SlideIn_Encaissement
-    Call SlideIn_FAC_Historique
+'    Call SlideIn_PrepFact
+'    Call SlideIn_SuiviCC
+'    Call SlideIn_Encaissement
+'    Call SlideIn_FAC_Historique
     
     wshMenuFAC.Range("A1").Select
     
@@ -1025,7 +1032,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

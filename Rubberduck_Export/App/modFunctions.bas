@@ -881,8 +881,10 @@ End Function
 Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    
     Dim strLastInvoice As String
     strLastInvoice = ws.Cells(lastUsedRow, 1).value
     strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
@@ -1023,6 +1025,33 @@ Sub EnsureNumLockOn()
         keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY, 0
         'Simule le relâchement de la touche NumLock
         keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY Or KEYEVENTF_KEYUP, 0
+    End If
+    
+End Sub
+
+'Fonction de tri rapide (QuickSort) pour trier un tableau
+Sub Fn_Quick_Sort(arr As Variant, ByVal first As Long, ByVal last As Long) '2024-09-05 @ 05:09
+    
+    Dim pivot As Variant, tmp As Variant
+    Dim i As Long, j As Long
+    
+    If first < last Then
+        pivot = arr((first + last) \ 2)
+        i = first
+        j = last
+        Do
+            Do While arr(i) < pivot: i = i + 1: Loop
+            Do While arr(j) > pivot: j = j - 1: Loop
+            If i <= j Then
+                tmp = arr(i)
+                arr(i) = arr(j)
+                arr(j) = tmp
+                i = i + 1
+                j = j - 1
+            End If
+        Loop While i <= j
+        If first < j Then Fn_Quick_Sort arr, first, j
+        If i < last Then Fn_Quick_Sort arr, i, last
     End If
     
 End Sub

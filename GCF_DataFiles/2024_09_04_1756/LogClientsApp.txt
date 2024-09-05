@@ -1235,3 +1235,54 @@ User|20240903_141914|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temp
 User|20240903_141914|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,7539 seconds|1
 User|20240903_141914|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 9,4531 seconds|6
 User|20240903_141922|Clients_v2.4.xlsm|***** Fin de session - Workbook_BeforeClose *****|||
+Annie|20240904_143753|Clients_v2.4.xlsm|***** Début de session - Workbook_Open *****|||
+Annie|20240904_143753|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All||
+Annie|20240904_143754|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format||
+Annie|20240904_143754|Clients_v2.4.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1445 seconds|1143
+Annie|20240904_143754|Clients_v2.4.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0.9961 seconds|
+Annie|20240904_143754|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize||
+Annie|20240904_143754|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Annie|20240904_143754|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn||
+Annie|20240904_143754|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Annie|20240904_143755|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1055 seconds|Client_ID
+Annie|20240904_143755|Clients_v2.4.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0.2969 seconds|
+Annie|20240904_143755|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.4883 seconds|1144
+Annie|20240904_143755|Clients_v2.4.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0.6562 seconds|
+Annie|20240904_143800|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change||
+Annie|20240904_143800|Clients_v2.4.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 seconds|ClientNom
+Annie|20240904_143805|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click||
+Annie|20240904_143805|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Annie|20240904_143805|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1914 seconds|ClientNom:mini 19
+Annie|20240904_143805|Clients_v2.4.xlsm|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3594 seconds|
+Annie|20240904_143825|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Annie|20240904_143825|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0.1094 seconds|
+Annie|20240904_144111|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick||
+Annie|20240904_144112|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click||
+Annie|20240904_144112|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Annie|20240904_144112|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240904_144112|Clients_v2.4.xlsm|modMain|Fn_Selected_List||
+Annie|20240904_144112|Clients_v2.4.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1172 seconds|
+Annie|20240904_144112|Clients_v2.4.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0.4766 seconds|2960-4105 Québec Inc (Mini Excavation BM) [Marc Beaurivage]
+Annie|20240904_144112|Clients_v2.4.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0.6523 seconds|
+Annie|20240904_144124|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit||
+Annie|20240904_144124|Clients_v2.4.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0.0820 seconds|2960-4105 Québec Inc (Mini Excavation MB) [Marc Beaurivage]
+Annie|20240904_144129|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click||
+Annie|20240904_144129|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries||
+Annie|20240904_144129|Clients_v2.4.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240904_144130|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields||
+Annie|20240904_144130|Clients_v2.4.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0.0977 seconds|
+Annie|20240904_144131|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||
+Annie|20240904_144131|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist||VRAI
+Annie|20240904_144132|Clients_v2.4.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0.1719 seconds|
+Annie|20240904_144132|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||DDM (0.0.0.0)
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 2.5391 seconds|UPDATE 2040
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0.1133 seconds|UPDATE 2040
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm||
+Annie|20240904_144134|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche||
+Annie|20240904_144135|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click||
+Annie|20240904_144135|Clients_v2.4.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0.0859 seconds|
+Annie|20240904_144135|Clients_v2.4.xlsm|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.3203 seconds|ClientNom:mini 19
+Annie|20240904_144135|Clients_v2.4.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.4727 seconds|1144
+Annie|20240904_144135|Clients_v2.4.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 5.6211 seconds|6

@@ -31,7 +31,9 @@ Sub SlideOut_TEC()
             .Height = width
             wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "TEC"
+        On Error GoTo 0
     End With
     
     Call Log_Record("modMenu:SlideOut_TEC", startTime)
@@ -66,7 +68,9 @@ Sub SlideOut_Facturation()
             .Height = width
             wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Facturation"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Facturation", startTime)
@@ -101,7 +105,9 @@ Sub SlideOut_Debours()
             .Height = width
             wshMenu.Shapes("icoDebours").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Débours"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Debours", startTime)
@@ -136,7 +142,9 @@ Sub SlideOut_Comptabilite()
             .Height = width
             wshMenu.Shapes("icoComptabilite").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Comptabilité"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Comptabilite", startTime)
@@ -171,7 +179,9 @@ Sub SlideOut_Parametres()
             .Height = width
             wshMenu.Shapes("icoParametres").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Paramètres"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Parametres", startTime)
@@ -206,7 +216,9 @@ Sub SlideOut_Exit()
             .Height = width
             wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Sortie"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Exit", startTime)
@@ -317,7 +329,9 @@ Sub SlideOut_PrepFact()
             .Height = width
             wshMenuFAC.Shapes("icoPrepFact").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Préparation de facture"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_PrepFact", startTime)
@@ -352,7 +366,9 @@ Sub SlideOut_SuiviCC()
             .Height = width
             wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Liste âgée des C/C"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_SuiviCC", startTime)
@@ -387,7 +403,9 @@ Sub SlideOut_Encaissement()
             .Height = width
             wshMenuFAC.Shapes("icoEncaissement").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Encaissement"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Encaissement", startTime)
@@ -422,7 +440,9 @@ Sub SlideOut_FAC_Historique()
             .Height = width
             wshMenuFAC.Shapes("icoFAC_Historique").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Historique factures"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_FAC_Historique", startTime)
@@ -457,7 +477,9 @@ Sub SlideOut_FAC_Confirmation()
             .Height = width
             wshMenuFAC.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Confirmation de facture"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_FAC_Confirmation", startTime)
@@ -492,7 +514,9 @@ Sub SlideOut_Paiement()
             .Height = width
             wshMenuDEB.Shapes("icoPaiement").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Déboursé"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_Paiement", startTime)
@@ -527,7 +551,9 @@ Sub SlideOut_EJ()
             .Height = width
             wshMenuGL.Shapes("icoEJ").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_EJ", startTime)
@@ -562,7 +588,9 @@ Sub SlideOut_BV()
             .Height = width
             wshMenuGL.Shapes("icoBV").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_BV", startTime)
@@ -579,7 +607,9 @@ Sub SlideIn_GL_Report()
             .Left = width - 32
             wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = ""
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideIn_GL_Report", startTime)
@@ -595,7 +625,9 @@ Sub SlideOut_GL_Report()
             .Height = width
             wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_GL_Report", startTime)
@@ -630,7 +662,9 @@ Sub SlideOut_EF()
             .Height = width
             wshMenuGL.Shapes("icoEF").Left = width - 32
         Next width
+        On Error Resume Next
         .TextFrame2.TextRange.Characters.text = "États financiers"
+        On Error GoTo 0
     End With
 
     Call Log_Record("modMenu:SlideOut_EF", startTime)
