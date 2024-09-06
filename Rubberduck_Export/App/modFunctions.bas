@@ -535,6 +535,9 @@ Function Fn_Complete_Date(dateInput As String) As Variant
             dayPart = CInt(parts(0))   'Use entered day
             monthPart = CInt(parts(1)) 'Use entered month
             yearPart = CInt(parts(2))  'Use entered year
+            If yearPart < 100 Then
+                yearPart = yearPart + 2000
+            End If
         Case Else
             GoTo Invalid_Date
     End Select
