@@ -22,7 +22,6 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Get the Client_ID
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
-        
         Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
         Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
         
@@ -162,7 +161,9 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     
     'Set criteria in worksheet
     wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date")
+    Debug.Print "modTEC_Saisie_TEC_Get_All_TEC_AF_163   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   ", TypeName(wshAdmin.Range("TEC_Date").value)
+    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date").value
+    Debug.Print "modTEC_Saisie_TEC_Get_All_TEC_AF_165   wshTEC_Local.Range(""S3"").value = "; wshTEC_Local.Range("S3").value; "   ", TypeName(wshTEC_Local.Range("S3").value)
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
@@ -538,7 +539,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
     Dim rng As Range
     Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
-    Debug.Print rng.Address
+'    Debug.Print rng.Address
      
     Dim i As Long, j As Long
     Dim totalHeures As Double
@@ -724,7 +725,7 @@ Sub Buttons_Enabled_True_Or_False(clear As Boolean, add As Boolean, _
 
 End Sub
 
-Sub MsgBoxInvalidDate() '2024-06-13 @ 12:40
+Sub MsgBoxInvalidDate(location As String) '2024-06-13 @ 12:40
 
     MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
            "Elle doit être obligatoirement de format:" & vbNewLine & _
@@ -733,7 +734,7 @@ Sub MsgBoxInvalidDate() '2024-06-13 @ 12:40
            "     'jj-mm-aaaa'" & vbNewLine & vbNewLine & _
            "Veuillez saisir la date de nouveau SVP", _
            vbCritical, _
-           "La date saisie est INVALIDE"
+           "La date saisie est INVALIDE - " & location
 
 End Sub
 

@@ -1,0 +1,29 @@
+Annie|2024-09-05 11:08:06|Add|862|AR|2024-09-05|1112|Vignoble Kobloth et fils inc. [Thierry Kobloth]|Rapports des ventes juillet|1.25||VRAI
+GuillaumeCharron|2024-09-05 11:13:11|Add|863|GC|05/09/24|1731|Les Toitures C.B.C. Inc. [Francis Bélanger]|préparation rencontre et rencontre Teams CBC pour relève|0,75||VRAI
+GuillaumeCharron|2024-09-05 11:13:30|Add|864|GC|05/09/24|1781|Courtage d'assurance Claude Hétu Inc|poste|0,40|frais de poste de 25$|VRAI
+GuillaumeCharron|2024-09-05 11:13:54|Add|865|GC|05/09/24|1487|Maranda Lauzon Inc. [Sandy Maranda]|préparation à la rencontre et rencontre Teams pour lettre d'intention|1,25||VRAI
+Annie|2024-09-05 11:26:06|Add|866|AR|2024-09-05|5|z_Adiministratif_Autres non chargeables|Problèmes avec APP|0.50||FAUX
+GuillaumeCharron|2024-09-05 11:31:26|Add|867|GC|05/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|analyse question des notaires sur tps/vq terrains vendus et tel avec Nathalie pour les terrains + rachats et dividendes + memo|0,75||VRAI
+GuillaumeCharron|2024-09-05 11:41:38|Add|868|GC|05/09/24|1795|Garage L. Hébert Inc. [Karine Ricard]|tel avec Marc Seymour pour infos manquantes|0,40||VRAI
+GuillaumeCharron|2024-09-05 11:46:41|Add|869|GC|05/09/24|1663|Multi-Plis Inc. [Chantal Veillette]|tel avec Daniel charest pour question organigramme et comptable|0,50||VRAI
+GuillaumeCharron|2024-09-05 11:48:05|UPDATE|869|GC|05/09/24|1663|Multi-Plis Inc. [Chantal Veillette]|tel avec Daniel charest pour question organigramme et comptable + répondre question Chantal|0,75||VRAI
+Annie|2024-09-05 12:19:50|UPDATE|866|AR|2024-09-05|5|z_Adiministratif_Autres non chargeables|Problèmes avec APP|1.00||FAUX
+GuillaumeCharron|2024-09-05 12:25:05|Add|870|GC|05/09/24|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|tel avec Alain sur irrégularité soulevées par acheteurs et tel sur planification modifiée à rechanger + tel avec Vladimir|0,75||VRAI
+GuillaumeCharron|2024-09-05 12:30:09|UPDATE|870|GC|05/09/24|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|tel avec Alain sur irrégularité soulevées par acheteurs et tel sur planification modifiée à rechanger + tel avec Vladimir + directives à Marie-Claude + directives à Vlad|1,25||VRAI
+GuillaumeCharron|2024-09-05 13:06:50|Add|871|GC|05/09/24|1292|Assurancia Inc [François Hamel]|préparation à la rencontre et rencontre Teams sur liquidation/fusion de 360 et autres|0,50||VRAI
+GuillaumeCharron|2024-09-05 13:07:11|Add|872|GC|05/09/24|1648|Frimasco Inc. [Mélanie Mataix]|répondre question de dividende de 150k chacun et optimisation|0,50||VRAI
+GuillaumeCharron|2024-09-05 13:38:42|UPDATE|871|GC|05/09/24|1292|Assurancia Inc [François Hamel]|préparation à la rencontre et rencontre Teams sur liquidation/fusion de 360 et autres + directives à Sophie sur émission d'actions|1,00||VRAI
+User|2024-09-05 13:43:35|Add|873|ML|2024-09-05|5|z_Adiministratif_Autres non chargeables|Examen des normes d'évaluation des CPA|0,75||FAUX
+User|2024-09-05 13:45:33|Add|874|ML|2024-09-05|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Recherche et obtention des numéros des sociétés de gestion au fédéral|0,75||VRAI
+GuillaumeCharron|2024-09-05 13:47:41|UPDATE|871|GC|05/09/24|1292|Assurancia Inc [François Hamel]|préparation à la rencontre et rencontre Teams sur liquidation/fusion de 360 et autres + directives à Sophie sur émission d'actions|1,25||VRAI
+GuillaumeCharron|2024-09-05 13:54:25|Add|873|GC|05/09/24|1448|9055-4627 Québec Inc [Guillaume Bruneau-Côté]|tel avec alexandre boyer et courriel pour validation avec marie-claude|0,50||VRAI
+User|2024-09-05 13:57:33|Add|875|ML|2024-09-05|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Prise de connaissance du dossier et travail sur le fichier tableau|1,00||VRAI
+User|2024-09-05 13:58:42|Add|876|ML|2024-09-05|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Contact avec Francis Desgagnés pour obtenir les NE et finalisation des roulements|1,00||VRAI
+User|2024-09-05 14:00:00|Add|877|ML|2024-09-05|1051|Arthur Malouin Ltée [Yvan Malouin]|Discussion avec Yvan pour le contrat |0,50||VRAI
+GuillaumeCharron|2024-09-05 14:01:43|Add|873|GC|05/09/24|1669|Ventilabec Inc. [Lora Stoycheva]|tel avec lora pour dividende et autres|0,25||VRAI
+GuillaumeCharron|2024-09-05 15:08:59|Add|873|GC|05/09/24|1750|9152-9396 Québec Inc. [Automanie] [Michel Larivée]|question de françois sur financement rénos du chalet de Michel|0,50||VRAI
+GuillaumeCharron|2024-09-05 16:07:19|Add|874|GC|05/09/24|543|Nicole Desjardins [Dominique Grou]|analyse des documents reçus et tel avec Nicole et Dominique Grou|1,50||VRAI
+GuillaumeCharron|2024-09-05 16:10:19|Add|875|GC|05/09/24|1669|Ventilabec Inc. [Lora Stoycheva]|tel avec Lora sur dividende et requêtes|0,50||VRAI
+GuillaumeCharron|2024-09-05 16:21:39|UPDATE|872|GC|05/09/24|1648|Frimasco Inc. [Mélanie Mataix]|répondre question de dividende de 150k chacun et optimisation + tel avec Mélanie|0,75||VRAI
+GuillaumeCharron|2024-09-05 17:28:30|Add|876|GC|05/09/24|1696|Photographie Benoit Blain Inc [Kelly Cochelin]|tel avec Manon Malo sur financement + tel Kelly sur ses questions et financement + courriel de questions et tel Bryan|2,00||VRAI
+GuillaumeCharron|2024-09-05 18:00:14|Add|877|GC|05/09/24|1566|9310-7761 Québec Inc [Pretech] [Alexandra Morana]|tel avec alexandra sur dezetech - factures d'avocats|0,50||VRAI

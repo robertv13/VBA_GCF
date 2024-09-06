@@ -187,7 +187,7 @@ Private Sub Process_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
         Else
-            Call MsgBoxInvalidDate
+            Call MsgBoxInvalidDate("wshDEB_Saisie_190")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

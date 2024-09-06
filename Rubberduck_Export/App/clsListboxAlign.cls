@@ -197,9 +197,9 @@ Public Sub Right(LBox As MSForms.ListBox, Optional WhichColumn As Long = 1)
 
 End Sub
 
-Private Property Get m_GetSizer(Base As MSForms.UserForm) As MSForms.Label
+Private Property Get m_GetSizer(base As MSForms.UserForm) As MSForms.Label
 
-    Set m_GetSizer = Base.Controls.add("Forms.Label.1", "labSizer", True)
+    Set m_GetSizer = base.Controls.add("Forms.Label.1", "labSizer", True)
 
 End Property
 

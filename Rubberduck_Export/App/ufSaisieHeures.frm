@@ -175,13 +175,15 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
+    Debug.Print "ufSaisieHeures_BeforeUpdate_163   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
     fullDate = Fn_Complete_Date(CStr(ufSaisieHeures.txtDate.value))
+    Debug.Print "ufSaisieHeures_BeforeUpdate_165   fullDate = "; fullDate; "   "; TypeName(fullDate)
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
         ufSaisieHeures.txtDate.value = fullDate
     Else
-        Call MsgBoxInvalidDate
+        Call MsgBoxInvalidDate("ufSaisieHeures_169")
         Application.EnableEvents = False
         ufSaisieHeures.txtDate.value = ""
         Application.EnableEvents = True
@@ -192,8 +194,10 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
+    Debug.Print "ufSaisieHeures_BeforeUpdate_182   fullDate = "; fullDate; "   "; TypeName(fullDate)
+    Debug.Print "ufSaisieHeures_BeforeUpdate_183   DateSerial = "; DateSerial(year(Now), month(Now), day(Now)); "   "; TypeName(DateSerial(year(Now), month(Now), day(Now))); "   Future ?"
     If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
-        Debug.Print "DP:101 - ", fullDate, "vs.", DateSerial(year(Now), month(Now), day(Now))
+        Debug.Print "ufSaisieHeures_BeforeUpdate_185   fullDate = "; fullDate; "   "; TypeName(fullDate)
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & fullDate & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
@@ -215,11 +219,15 @@ Private Sub txtDate_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
     
+    Debug.Print "ufSaisieHeures_txtDate_AfterUpdate_207   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
     If IsDate(ufSaisieHeures.txtDate.value) Then
         Dim dateStr As String, dateFormated As Date
         dateStr = ufSaisieHeures.txtDate.value
+        Debug.Print "ufSaisieHeures_txtDate_AfterUpdate_211   dateStr = "; dateStr; "   "; TypeName(dateStr)
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
+        Debug.Print "ufSaisieHeures_txtDate_AfterUpdate_213   dateFormated = "; dateFormated; "   "; TypeName(dateFormated)
         wshAdmin.Range("TEC_Date").value = dateFormated
+        Debug.Print "ufSaisieHeures_txtDate_AfterUpdate_215   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   "; TypeName(wshAdmin.Range("TEC_Date").value)
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)

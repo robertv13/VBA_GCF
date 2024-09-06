@@ -2553,23 +2553,24 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     
     '3) Add the standard conditional formatting
         If Not usedRange Is Nothing Then
-            usedRange.FormatConditions.add Type:=xlExpression, _
-                Formula1:="=ET($A2<>"""";mod(LIGNE();2)=1)"
-    '        usedRange.FormatConditions.add Type:=xlExpression, _
-    '            Formula1:="=ET($A2<>"""";MOD(LIGNE();2)=1)"
-            usedRange.FormatConditions(usedRange.FormatConditions.count).SetFirstPriority
-            With usedRange.FormatConditions(1).Font
-                .Strikethrough = False
-                .TintAndShade = 0
+            With usedRange
+                .FormatConditions.add Type:=xlExpression, _
+                    Formula1:="=MOD(LIGNE();2)=1"
+                .FormatConditions(.FormatConditions.count).SetFirstPriority
+                With .FormatConditions(1).Font
+                    .Strikethrough = False
+                    .TintAndShade = 0
+                End With
+                With .FormatConditions(1).Interior
+                    .PatternColorIndex = xlAutomatic
+                    .ThemeColor = xlThemeColorAccent1
+                    .TintAndShade = 0.799981688894314
+                End With
+                .FormatConditions(1).StopIfTrue = False
             End With
-            With usedRange.FormatConditions(1).Interior
-                .PatternColorIndex = xlAutomatic
-                .ThemeColor = xlThemeColorAccent1
-                .TintAndShade = 0.799981688894314
-            End With
-            usedRange.FormatConditions(1).StopIfTrue = False
+        Else
+            MsgBox "usedRange is Nothing!"
         End If
-        
     'Specific formats to worksheets
     Dim lastUsedRow As Long
     lastUsedRow = rng.rows.count
@@ -3047,6 +3048,161 @@ Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
         .ThemeFont = xlThemeFontNone
     End With
 
+End Sub
+
+Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
+
+    'Mise en place de la feuille de sortie (output)
+    Dim strOutput As String
+    strOutput = "X_TEC_Déplacements"
+    Call CreateOrReplaceWorksheet(strOutput)
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+    wsOutput.Range("A1").value = "Date"
+    wsOutput.Range("B1").value = "Date"
+    wsOutput.Range("C1").value = "Nom du client"
+    wsOutput.Range("D1").value = "Heures"
+    wsOutput.Range("E1").value = "Adresse_1"
+    wsOutput.Range("F1").value = "Adresse_2"
+    wsOutput.Range("G1").value = "Ville"
+    wsOutput.Range("H1").value = "Province"
+    wsOutput.Range("I1").value = "CodePostal"
+    wsOutput.Range("J1").value = "DistanceKM"
+    wsOutput.Range("K1").value = "Montant"
+    Call Make_It_As_Header(wsOutput.Range("A1:K1"))
+    
+    'Feuille pour les clients
+    Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
+    Dim lastUsedRowClientMF As Long
+    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
+    Dim rngClientsMF As Range
+    Set rngClientsMF = wsMF.Range("A1:A" & lastUsedRowClientMF)
+    
+    'Get From and To Dates
+    Dim dateFrom As Date, dateTo As Date
+    dateFrom = wshAdmin.Range("MoisPrecDe").value
+    dateTo = wshAdmin.Range("MoisPrecA").value
+    
+    'Analyse de TEC_Local
+    Call TEC_Import_All
+    
+    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    
+    Dim lastUsedRowTEC As Long
+    lastUsedRowTEC = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).Row
+    
+    Dim rowOutput As Long
+    rowOutput = 2 'Skip the header
+    Dim clientData As Variant
+    Dim i As Long
+    For i = 3 To lastUsedRowTEC
+        If wsTEC.Cells(i, 3).value = "GC" And _
+            wsTEC.Cells(i, 4).value >= dateFrom And _
+            wsTEC.Cells(i, 4).value <= dateTo And _
+            UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
+                wsOutput.Cells(rowOutput, 1).value = CDate(wsTEC.Cells(i, 4).value)
+                wsOutput.Cells(rowOutput, 2).value = CDate(wsTEC.Cells(i, 4).value)
+                wsOutput.Cells(rowOutput, 4).value = wsTEC.Cells(i, 8).value
+                clientData = Fn_Rechercher_Client_Par_ID(Trim(wsTEC.Cells(i, 5).value), wsMF)
+                If IsArray(clientData) Then
+                    wsOutput.Cells(rowOutput, 3).value = clientData(1, 1)
+                    wsOutput.Cells(rowOutput, 5).value = clientData(1, 6)
+                    wsOutput.Cells(rowOutput, 6).value = clientData(1, 7)
+                    wsOutput.Cells(rowOutput, 7).value = clientData(1, 8)
+                    wsOutput.Cells(rowOutput, 8).value = clientData(1, 9)
+                    wsOutput.Cells(rowOutput, 9).value = clientData(1, 10)
+                End If
+                rowOutput = rowOutput + 1
+        End If
+    Next i
+    
+    'Colonne des Heures
+    wsOutput.Range("D2:D" & rowOutput - 1).NumberFormat = "##0.00"
+    
+    'Tri des données
+    With wsOutput.Sort
+        .SortFields.clear
+        .SortFields.add key:=wsOutput.Range("B2"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortTextAsNumbers 'Sort Date
+        .SortFields.add key:=wshTEC_Local.Range("C2"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal 'Sort on Client's name
+        .SortFields.add key:=wshTEC_Local.Range("D2"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlDescending, _
+            DataOption:=xlSortNormal 'Sort on Hours
+        .SetRange wsOutput.Range("A2:K" & rowOutput - 1) 'Set Range
+        .Apply 'Apply Sort
+     End With
+    
+    wsOutput.columns.AutoFit
+
+    'Améliore le Look (saute 1 ligne entre chaque jour)
+    For i = rowOutput To 3 Step -1
+        If Len(Trim(wsOutput.Cells(i, 3).value)) > 0 Then
+            If wsOutput.Cells(i, 2).value <> wsOutput.Cells(i - 1, 2).value Then
+                wsOutput.rows(i).Insert Shift:=xlDown
+                wsOutput.Cells(i, 1).value = wsOutput.Cells(i - 1, 2).value
+            End If
+        End If
+    Next i
+    
+    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).Row
+    
+    'Améliore le Look (cache la date, le client et l'adresse si deux charges & +)
+    Dim base As String
+    For i = 2 To rowOutput
+        If i = 2 Then
+            base = wsOutput.Cells(i, 2).value & wsOutput.Cells(i, 3).value
+        End If
+        If i > 2 And Len(wsOutput.Cells(i, 2).value) > 0 Then
+            If wsOutput.Cells(i, 2).value & wsOutput.Cells(i, 3).value = base Then
+                wsOutput.Cells(i, 2).value = ""
+                wsOutput.Cells(i, 3).value = ""
+                wsOutput.Cells(i, 5).value = ""
+                wsOutput.Cells(i, 6).value = ""
+                wsOutput.Cells(i, 7).value = ""
+                wsOutput.Cells(i, 8).value = ""
+                wsOutput.Cells(i, 9).value = ""
+            Else
+                base = wsOutput.Cells(i, 2).value & wsOutput.Cells(i, 3).value
+            End If
+        End If
+    Next i
+    
+    'Result print setup - 2024-08-05 @ 05:16
+    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).Row
+    
+    For i = 3 To rowOutput
+        If wsOutput.Cells(i, 1).value > wsOutput.Cells(i - 1, 1).value Then
+            wsOutput.Cells(i, 2).Font.Bold = True
+        Else
+            wsOutput.Cells(i, 2).value = ""
+        End If
+    Next i
+    rowOutput = rowOutput + 2
+    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 2, "###,##0") & _
+                                        " charges de temps analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
+    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+
+    'Setup print parameters
+'    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
+    Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
+    Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
+    Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
+    
+    'Clean up
+    Set rngArea = Nothing
+    Set rngClientsMF = Nothing
+    Set wsOutput = Nothing
+    Set wsMF = Nothing
+    Set wsTEC = Nothing
+    
 End Sub
 
 'Sub Search_Search_Results()

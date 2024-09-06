@@ -27,7 +27,9 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     wshGL_BV.Range("C2").value = "Au " & CDate(Format$(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
 
     minDate = CDate("07/31/2024")
-    dateCutOff = CDate(wshGL_BV.Range("J1").value)
+    Debug.Print "modGL_TB_GL_TB_Trial_Balance_29   minDate = "; minDate; TypeName(minDate)
+    dateCutOff = wshGL_BV.Range("J1").value
+    Debug.Print "modGL_TB_GL_TB_Trial_Balance_31   dateCutOff = "; dateCutOff; TypeName(dateCutOff)
     wshGL_BV.Range("B2").value = 3
     wshGL_BV.Range("B10").value = 0
     

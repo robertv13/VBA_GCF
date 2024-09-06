@@ -128,6 +128,16 @@ End Enum
 '
 Sub Set_Root_Path(ByRef rootPath As String)
 
+'    Dim choixEnv As Integer
+'    If Fn_Get_Windows_Username = "RobertM.Vigneault" Then
+'        choixEnv = 1
+'    End If
+'
+'    '2024-09-05 @ 14:19 - SUPER PLUG
+'    rootPath = "P:\Administration\APP\GCF"
+'    MsgBox "PLUG POUR FINS DE TEST - Toujours P:\Administration\...", vbInformation
+'    Exit Sub
+   
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else

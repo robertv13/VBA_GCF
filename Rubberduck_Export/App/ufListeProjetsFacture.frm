@@ -15,10 +15,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub UserForm_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-
-End Sub
-
 Private Sub UserForm_Initialize()
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête

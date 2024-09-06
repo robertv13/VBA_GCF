@@ -112,7 +112,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
         Else
-            Call MsgBoxInvalidDate
+            Call MsgBoxInvalidDate("wshENC_Saisie_115")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

@@ -176,7 +176,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             wshFAC_Historique.Range("C9:P34").ClearContents
             Call Remove_All_PDF_Icons
         Else
-            Call MsgBoxInvalidDate
+            Call MsgBoxInvalidDate("wshFAC_Historique_179")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -196,7 +196,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call Remove_All_PDF_Icons
             Application.EnableEvents = True
         Else
-            Call MsgBoxInvalidDate
+            Call MsgBoxInvalidDate("wshFAC_Historique_199")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

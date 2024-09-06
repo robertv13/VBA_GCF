@@ -563,7 +563,7 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     Dim keys() As Variant
     Dim values() As Variant
     Dim i As Long, j As Long
-    Dim Temp As Variant
+    Dim temp As Variant
     
     ReDim keys(0 To dict.count - 1)
     ReDim values(0 To dict.count - 1)
@@ -580,14 +580,14 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
         For j = i + 1 To UBound(values)
             If (values(i) < values(j) And descending) Or (values(i) > values(j) And Not descending) Then
                 'Swap values
-                Temp = values(i)
+                temp = values(i)
                 values(i) = values(j)
-                values(j) = Temp
+                values(j) = temp
                 
                 'Swap keys accordingly
-                Temp = keys(i)
+                temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = Temp
+                keys(j) = temp
             End If
         Next j
     Next i
@@ -964,6 +964,58 @@ Function Fn_Get_Client_Name(cc As String) As String
     
 End Function
 
+Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As Variant
+
+    'Recherche de l'ID du client dans la colonne B
+    Dim rangeID As Range:
+    Set rangeID = ws.columns("B") 'Contient les ID des clients
+    
+    'Utilisation de Find pour localiser l'ID client
+    Dim foundCells As Range
+    Set foundCells = rangeID.Find(What:=codeClient, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    'Si l'ID client est trouvé
+    Dim ligneTrouvee As Long
+    If Not foundCells Is Nothing Then
+        'Obtenir la ligne où se trouve l'ID client
+        ligneTrouvee = foundCells.Row
+        
+        'Extraire toutes les données (colonnes) de la ligne trouvée
+        Dim clientData As Variant
+        clientData = ws.rows(ligneTrouvee).value
+        
+        'Retourner les données du client (ligne entière)
+        Fn_Rechercher_Client_Par_ID = clientData
+    Else
+        'Si le client n'est pas trouvé, retourner une valeur vide ou une erreur
+        Fn_Rechercher_Client_Par_ID = CVErr(xlErrNA) 'Retourne #N/A pour indiquer que le client n'est pas trouvé
+    End If
+    
+End Function
+
+Sub Test_Fn_Rechercher_Client_Par_ID()
+
+    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim codeClient As String
+    Dim clientData As Variant
+    Dim i As Long
+    
+    codeClient = "1288"
+    
+    'Appeler la fonction pour rechercher le client et récupérer la ligne complète
+    clientData = Fn_Rechercher_Client_Par_ID(codeClient, ws)
+    
+    'Vérifier si un client a été trouvé
+    If IsArray(clientData) Then
+        'Afficher chaque donnée trouvée dans la ligne (colonnes)
+        For i = LBound(clientData, 2) To 15
+            Debug.Print "Colonne " & i & ": " & clientData(1, i)
+        Next i
+    Else
+        MsgBox "Client non trouvé ou erreur."
+    End If
+
+End Sub
 Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
 
     Set Fn_Get_Current_Region = dataRange.CurrentRegion
