@@ -13,12 +13,20 @@ Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal b
     Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #End If
 
+'API pour code d'utilisateur
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
+'API pour récupérer le format de date par défaut - 2024-09-06 @ 08:07
+Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" _
+    (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
+    
 'Constantes pour les touches du clavier
 Private Const VK_NUMLOCK As Byte = &H90
 Private Const KEYEVENTF_EXTENDEDKEY As Long = &H1
 Private Const KEYEVENTF_KEYUP As Long = &H2
+
+Public Const LOCALE_USER_DEFAULT As Long = &H400
+Public Const LOCALE_SSHORTDATE As Long = &H1F
 
 Function Fn_GetID_From_Initials(i As String)
 
@@ -532,15 +540,21 @@ Function Fn_Complete_Date(dateInput As String) As Variant
             yearPart = defaultYear     'Use current year
         Case 2
             'Day, month, and year provided
-            dayPart = CInt(parts(0))   'Use entered day
-            monthPart = CInt(parts(1)) 'Use entered month
-            yearPart = CInt(parts(2))  'Use entered year
+            dayPart = day(dateInput)   'Use entered day
+            monthPart = month(dateInput) 'Use entered month
+            yearPart = year(dateInput) 'Use entered year
             If yearPart < 100 Then
                 yearPart = yearPart + 2000
             End If
         Case Else
             GoTo Invalid_Date
     End Select
+    
+'    MsgBox "On décortique la date..." & vbNewLine & vbNewLine & _
+            "     Année = " & yearPart & vbNewLine & _
+            "      Mois = " & monthPart & vbNewLine & _
+            "      Jour = " & dayPart, _
+            vbInformation
     
     'Fine validation taking into consideration leap year AND 75 years (past or future)
     If Fn_ValidateDaySpecificMonth(dayPart, monthPart, yearPart) = False Then
@@ -552,11 +566,16 @@ Function Fn_Complete_Date(dateInput As String) As Variant
     
     'Return a VALID date
     Fn_Complete_Date = parsedDate
+    
+    Call Log_Record("modFunctions_Fn_Complete_Date_551 y=" & yearPart & " m=" & monthPart & " d=" & dayPart & " parsedDate='" & parsedDate & "'", -1) '2024-09-06 @ 09:02
+    
     Exit Function
 
 Invalid_Date:
 
     Fn_Complete_Date = "Invalid Date"
+    
+    Call Log_Record("modFunctions_Fn_Complete_Date_551 y=" & yearPart & " m=" & monthPart & " d=" & dayPart & " -----> Date INVALIDE - '" & Fn_Get_Date_Format & "'", -1)  '2024-09-06 @ 09:02
     
 End Function
 
@@ -665,6 +684,26 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     Fn_TEC_Is_Data_Valid = True
 
+End Function
+
+Function Fn_Get_Date_Format() As String
+
+    Dim buffer As String
+    Dim length As Long
+    
+    ' Préparer une chaîne tampon
+    buffer = String$(100, 0)
+    
+    ' Obtenir le format de date courte de l'utilisateur
+    length = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SSHORTDATE, buffer, Len(buffer))
+    
+    ' Retourner le format de date
+    If length > 0 Then
+        Fn_Get_Date_Format = Left$(buffer, length - 1) ' Retirer le caractère nul à la fin
+    Else
+        Fn_Get_Date_Format = "Format de date non disponible"
+    End If
+    
 End Function
 
 Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)

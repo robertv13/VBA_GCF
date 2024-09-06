@@ -1688,7 +1688,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     fileNum = FreeFile
     
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
     
     Open logFile For Append As #fileNum
     
@@ -1698,6 +1698,13 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
                         Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
                         procedureName & " (entrée)"
+        Close #fileNum
+    ElseIf startTime < 0 Then
+            startTime = Timer 'Start timing
+        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
+                        ThisWorkbook.name & "|" & _
+                        procedureName
         Close #fileNum
     Else
         Dim elapsedTime As Double

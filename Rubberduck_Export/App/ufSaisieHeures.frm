@@ -177,22 +177,21 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    Debug.Print "ufSaisieHeures_BeforeUpdate_163   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
+    Debug.Print "ufSaisieHeures_BeforeUpdate_165   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
     fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value)
-    Debug.Print "ufSaisieHeures_BeforeUpdate_165   fullDate = "; fullDate; "   "; TypeName(fullDate)
+    Debug.Print "ufSaisieHeures_BeforeUpdate_167   fullDate = "; fullDate; "   "; TypeName(fullDate)
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
         ufSaisieHeures.txtDate.value = fullDate
     Else
-        Call MsgBoxInvalidDate("ufSaisieHeures_169")
-        Application.EnableEvents = False
-        ufSaisieHeures.txtDate.value = ""
-        Application.EnableEvents = True
-        txtDate.SelStart = 0
-        txtDate.SelLength = Len(Me.txtDate.value)
-        txtDate.SetFocus
+        Call MsgBoxInvalidDate("ufSaisieHeures_173")
         Cancel = True
+        With ufSaisieHeures.txtDate
+            .SetFocus 'Remettre le focus sur la TextBox
+            .SelStart = 0 'Début de la sélection
+            .SelLength = Len(.text) 'Sélectionner tout le texte
+        End With
         Exit Sub
     End If
     
@@ -490,5 +489,4 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Set lookupRange = Nothing
     
 End Sub
-
 
