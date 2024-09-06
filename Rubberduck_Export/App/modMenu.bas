@@ -775,7 +775,9 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         
         DoEvents
         
+        On Error Resume Next
         Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
+        On Error GoTo 0
         
         DoEvents
         

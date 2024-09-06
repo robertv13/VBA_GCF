@@ -9,8 +9,6 @@ Private Sub Workbook_Open()
     Call Set_Root_Path(rootPath)
     wshAdmin.Range("F5").value = rootPath
 
-    DoEvents
-    
     'Vérification si le chemin est accessible - Premier Essai
     If Not Fn_Chemin_Existe(rootPath & "\") Then
         MsgBox "Le chemin réseau est inaccessible." & vbNewLine & vbNewLine & _
