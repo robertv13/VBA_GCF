@@ -1,1 +1,3 @@
 Robert M. Vigneault|2024-09-06 08:52:12|Add|878|VG|02/09/24|1564|Fiducie Testamentaire Georges-Gariépy [Distribution FG] [François Gariépy]|Test|1,00||VRAI
+Robert M. Vigneault|2024-09-06 16:43:57|Add|911|GC|06/09/2024|193r|9299-2585 Québec Inc [anciennement Informat] [Robert M. Vigneault]|Test de format de date|0,10||VRAI
+Robert M. Vigneault|2024-09-06 16:46:58|Add|912|GC|06/09/2024|193r|9299-2585 Québec Inc [anciennement Informat] [Robert M. Vigneault]|Test sur le format des heures|0,10||VRAI

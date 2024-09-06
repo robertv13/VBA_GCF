@@ -797,6 +797,10 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", 0)
    
+    DoEvents
+    
+    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-06 @ 13:42
+    
     Application.EnableEvents = False
     wshFAC_Brouillon.Range("B27").value = False
     Application.EnableEvents = True

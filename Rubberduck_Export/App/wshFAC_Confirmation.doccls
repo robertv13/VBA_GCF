@@ -9,6 +9,8 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
+    Call TEC_Import_All
+    
     Call FAC_Entête_Import_All
     
     Call FAC_Sommaire_Taux_Import_All

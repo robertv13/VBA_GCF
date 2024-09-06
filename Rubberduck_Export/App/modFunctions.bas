@@ -334,13 +334,15 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     Dim rowCount As Long
     Dim i As Long
     For i = 3 To lastUsedRow
-        If wsTEC.Cells(i, 16).value = invNo Then
+        If wsTEC.Cells(i, 16).value = invNo And UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
             rowCount = rowCount + 1
             resultArr(rowCount) = i
         End If
     Next i
     
-    ReDim Preserve resultArr(1 To rowCount)
+    If rowCount > 0 Then
+        ReDim Preserve resultArr(1 To rowCount)
+    End If
     
     If rowCount = 0 Then
         Fn_Get_TEC_Invoiced_By_This_Invoice = Array()

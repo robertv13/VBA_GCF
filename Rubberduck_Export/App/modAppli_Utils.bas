@@ -2023,14 +2023,26 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.Offset(2)
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
+    Dim dictFacture As New Dictionary
+    Dim i As Long
     
-    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
+    'Obtenir toutes les factures émises et utiliser un dictionary pour les mémoriser
+    Dim lastUsedRowFAC As Long
+    lastUsedRowFAC = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).Row
+    If lastUsedRowFAC > 2 Then
+        For i = 3 To lastUsedRowFAC
+            dictFacture.add CStr(wshFAC_Entête.Cells(i, 1).value), 0
+        Next i
+    End If
+    
+    Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
+    Dim invNo As String
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
     Dim cas_date_future As Long
     Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
@@ -2097,7 +2109,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If i > 861 Then
+        If i > 877 Then
             'Date de la charge
             yy = year(arr(i, 4))
             mm = month(arr(i, 4))
@@ -2122,12 +2134,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             End If
         End If
 
-        estFacturee = arr(i, 12)
-        If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
+        estFacturee = UCase(arr(i, 12))
+        If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
+        
         estDetruit = arr(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
@@ -2135,6 +2148,29 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
+        invNo = CStr(arr(i, 16))
+        If Len(invNo) > 0 Then
+            If estFacturee <> "VRAI" Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                    " - Incongruité entre le numéro de facture '" & invNo & "' et " & _
+                    "'estFacture' qui vaut '" & estFacturee & "'")
+                r = r + 1
+            End If
+            If dictFacture.Exists(invNo) = False Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                    " - Le numéro de facture '" & invNo & "' " & _
+                    "n'existe pas dans le fichier FAC_Entête")
+                r = r + 1
+            End If
+        Else
+            If estFacturee = "Vrai" Or estFacturee = "VRAI" Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                    " - Incongruité entre le numéro de facture vide et " & _
+                    "'estFacture' qui vaut '" & estFacturee & "'")
+                r = r + 1
+            End If
+        End If
+
         Dim h(1 To 6) As Double
         h(1) = 0
         total_hres_inscrites = total_hres_inscrites + hres
@@ -2350,7 +2386,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Debug.Print "Clé: " & key & " - Valeur: " & dictDateCharge(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 861) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 877) ")
         r = r + 1
     End If
     
@@ -2370,7 +2406,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 861) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 877) ")
         r = r + 1
     End If
     

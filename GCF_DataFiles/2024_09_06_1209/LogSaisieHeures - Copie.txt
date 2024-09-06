@@ -1,0 +1,25 @@
+GuillaumeCharron|2024-09-06 06:10:33|Add|878|GC|06/09/24|1055|Bernard Ducharme Assurances Inc. [Michel Brodeur]|courriel sur acomptes provisionnels|0,40||VRAI
+GuillaumeCharron|2024-09-06 06:15:22|Add|879|GC|06/09/24|1739|Techvac Environnement Inc [Julien Michaud]|courriel avec ef projet et réponse|0,75||VRAI
+GuillaumeCharron|2024-09-06 06:17:06|Add|880|GC|06/09/24|1268|Gestion Marianth inc [Marco Michaud]|courriel sur dûs avec Sylvain Faucher|0,40||VRAI
+GuillaumeCharron|2024-09-06 06:27:53|Add|881|GC|06/09/24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|courriel avec Nathalie - question sur écritures comptables|0,50||VRAI
+GuillaumeCharron|2024-09-06 06:33:55|Add|882|GC|06/09/24|1292|Assurancia Inc [François Hamel]|explication à Michel Duciaume de la conversion de dette en actions privilégiées pour AGT|0,50||VRAI
+GuillaumeCharron|2024-09-06 06:39:05|Add|883|GC|06/09/24|1487|Maranda Lauzon Inc. [Sandy Maranda]|analyse des états financiers internes et explication de l'ajustement de prix de vente et financement de cette portion par les acheteurs|0,50||VRAI
+vgervais|2024-09-06 08:07:56|Add|884|VG|2024-09-06|5|z_Adiministratif_Autres non chargeables|Suivi de dossier + rencontre avec Robert pour feuille de temps|0,80||VRAI
+vgervais|2024-09-06 08:08:19|Add|885|VG|2024-09-06|1193|Solstice CNC Inc. [Alexandre Desmarais]|Suivi courriel|0,20||VRAI
+vgervais|2024-09-06 09:25:12|Add|886|VG|2024-09-06|1739|Techvac Environnement Inc [Julien Michaud]|Voir courriel + suivis de dossier|1,00||VRAI
+vgervais|2024-09-06 09:25:25|UPDATE|886|VG|2024-09-06|1739|Techvac Environnement Inc [Julien Michaud]|Voir courriel + suivis de dossier|1,10||VRAI
+vgervais|2024-09-06 09:30:14|UPDATE|884|VG|2024-09-06|5|z_Adiministratif_Autres non chargeables|Suivi de dossier + rencontre avec Robert pour feuille de temps|0,80||FAUX
+vgervais|2024-09-06 09:55:09|UPDATE|884|VG|2024-09-06|5|z_Adiministratif_Autres non chargeables|Suivi de dossier + rencontre avec Robert pour feuille de temps + régler problème feuille de temps|1,00||FAUX
+User|2024-09-06 10:40:39|Add|887|ML|2024-05-09|5|z_Adiministratif_Autres non chargeables|Examen du dossier des normes d'évaluation|0,75||FAUX
+User|2024-09-06 10:41:11|Add|888|ML|2024-05-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Préparation du dossier pour la rencontre de cet après-midi|0,50||VRAI
+vgervais|2024-09-06 10:41:16|Add|887|VG|2024-06-09|1759|France Morin CPA|Suivi avant rencontre et rencontre et rencontre|0,80||VRAI
+vgervais|2024-09-06 10:45:08|Add|888|VG|2024-06-09|1541|Groupe Teltech Inc. [François Tessier]|Révision roulement|0,20||VRAI
+GuillaumeCharron|2024-09-06 10:57:12|UPDATE|878|GC|06/09/24|1055|Bernard Ducharme Assurances Inc. [Michel Brodeur]|courriel sur acomptes provisionnels|0,50||VRAI
+GuillaumeCharron|2024-09-06 10:58:05|Add|887|GC|06/09/24|1566|9310-7761 Québec Inc [Pretech] [Alexandra Morana]|répondre à demande de vérificatrice sur factures d'honoraires et explications|0,75||VRAI
+User|2024-09-06 11:01:32|Add|889|ML|2024-05-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|MAJ des roulements suite à l'obtention des NE|1,00||VRAI
+User|2024-09-06 11:02:29|Add|890|ML|2024-05-09|5|z_Adiministratif_Autres non chargeables|Travail sur la base de données des clients|1,00||FAUX
+User|2024-09-06 11:03:07|Add|891|ML|2024-05-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Présence au contrat de vente du Groupe Ducharme à Malouin Ass.|2,75||VRAI
+User|2024-09-06 11:03:48|Add|892|ML|2024-05-09|5|z_Adiministratif_Autres non chargeables|Examen de la nouvelle demande pour le CRM|0,75||FAUX
+User|2024-09-06 11:05:24|Add|893|ML|2024-06-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Appel à Revenu Canada pour l'obtention du numéro fédéral - refus - écriture de la procédure pour l'obtention du numéro par Francis Desgagnés et expédition par courriel|0,75||VRAI
+User|2024-09-06 11:06:03|Add|894|ML|2024-06-09|5|z_Adiministratif_Autres non chargeables|Discussion avec Annie pour avoir son avis sur la procédure du CRM|0,50||FAUX
+User|2024-09-06 11:06:52|Add|895|ML|2024-06-09|5|z_Adiministratif_Autres non chargeables|Problème avec l'application de la feuille de temps et discussion avec Robert|0,25||FAUX

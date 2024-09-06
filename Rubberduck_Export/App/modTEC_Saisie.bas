@@ -22,6 +22,28 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Get the Client_ID
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
+        Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:24  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+        Dim y As Integer, m As Integer, d As Integer
+        Dim avant As String, apres As String
+        On Error Resume Next
+            avant = ufSaisieHeures.txtDate.value
+            y = year(ufSaisieHeures.txtDate.value)
+            m = month(ufSaisieHeures.txtDate.value)
+            d = day(ufSaisieHeures.txtDate.value)
+            If y = 2024 And m <> 9 Then
+                Dim temp As Integer
+                temp = m
+                m = d
+                d = temp
+            End If
+            ufSaisieHeures.txtDate.value = DateSerial(y, m, d)
+            apres = ufSaisieHeures.txtDate.value
+            If apres <> avant Then
+                Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:41  Date changée pour corriger le format - " & avant & "---> " & apres, -1)
+            End If
+            Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:43  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+        On Error GoTo 0
+        
         Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
         Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
         
@@ -287,6 +309,10 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.value
+    'Special log to debug Date Format issue... 2024-09-06 @ 16:32
+    Call Log_Record("modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_289  dateValue = " & dateValue & "  " & TypeName(dateValue), -1)
+    Dim y As Integer, m As Integer, d As Integer
+    
     
     If TECID < 0 Then 'Soft delete a record
         'Open the recordset for the specified ID
