@@ -872,7 +872,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
     r = r + 1
     
-    'Transfer data from Worksheet into an Array (arr)
+    'Transfer FAC_Details data from Worksheet into an Array (arr)
     Dim arr As Variant
     arr = wshFAC_Détails.Range("A1").CurrentRegion.Offset(1, 0).value
     
@@ -885,6 +885,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim result As Variant
     For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
         Inv_No = CStr(arr(i, 1))
+        Debug.Print "#887 - Inv_no = ", Inv_No, ", de type ", TypeName(Inv_No)
         If Inv_No <> oldInv_No Then
              result = Application.WorksheetFunction.XLookup(Inv_No, _
                                                     rngMaster, _
@@ -892,7 +893,9 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
                                                     "Not Found", _
                                                     0, _
                                                     1)
-
+            If result = "Not Found" Then
+                Debug.Print "#895 - " & result
+            End If
 '            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
             oldInv_No = Inv_No
         End If
@@ -2037,6 +2040,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
+    Dim maxTECrow As Long
     Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
@@ -2068,7 +2072,11 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Dim strDict As String
 
+    'Lecture et analyse des TEC (TEC_Local)
     For i = LBound(arr, 1) To UBound(arr, 1) - 2
+        If i > maxTECrow Then
+            maxTECrow = i
+        End If
         TECID = arr(i, 1)
         profID = arr(i, 2)
         prof = arr(i, 3)
@@ -2372,7 +2380,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Tri & impression de dictTimeStamp
     If dictDateCharge.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECrow & ")")
         r = r + 1
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2383,7 +2391,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             formattedHours = String(6 - Len(formattedHours), " ") & formattedHours
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       " & key & ":" & formattedHours & " heures")
             r = r + 1
-            Debug.Print "Clé: " & key & " - Valeur: " & dictDateCharge(key)
         Next i
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 877) ")
@@ -2392,7 +2399,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP'")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECrow & ")")
         r = r + 1
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))

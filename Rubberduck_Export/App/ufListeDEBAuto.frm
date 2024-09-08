@@ -3,8 +3,8 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDEBAuto
    Caption         =   "Choisir le déboursé récurrent"
    ClientHeight    =   4470
    ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   7515
+   ClientTop       =   468
+   ClientWidth     =   7512
    OleObjectBlob   =   "ufListeDEBAuto.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
