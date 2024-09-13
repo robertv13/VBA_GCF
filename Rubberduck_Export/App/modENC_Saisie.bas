@@ -1,7 +1,7 @@
 Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
-Dim LastRow As Long, lastResultRow As Long
+Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
 
 Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
@@ -450,7 +450,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
 
 End Sub
 
-Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Write to MASTER.xlsx
+Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", 0)
     
@@ -468,7 +468,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim r As Long
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         If wshENC_Saisie.Range("B" & r).value = True And _
             wshENC_Saisie.Range("K" & r) <> 0 Then
             'Open the recordset for the specified invoice
@@ -510,7 +510,7 @@ Clean_Exit:
     
 End Sub
 
-Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, LastRow As Integer) '2024-08-22 @ 10:55
+Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", 0)
     
@@ -524,7 +524,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, LastRow As Integer) 
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim r As Integer
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         Dim Inv_No As String
         Inv_No = CStr(wshENC_Saisie.Range("F" & r).value)
         

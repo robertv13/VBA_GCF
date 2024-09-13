@@ -1,3 +1,11 @@
 Robert M. Vigneault|2024-09-06 08:52:12|Add|878|VG|02/09/24|1564|Fiducie Testamentaire Georges-Gariépy [Distribution FG] [François Gariépy]|Test|1,00||VRAI
 Robert M. Vigneault|2024-09-06 16:43:57|Add|911|GC|06/09/2024|193r|9299-2585 Québec Inc [anciennement Informat] [Robert M. Vigneault]|Test de format de date|0,10||VRAI
 Robert M. Vigneault|2024-09-06 16:46:58|Add|912|GC|06/09/2024|193r|9299-2585 Québec Inc [anciennement Informat] [Robert M. Vigneault]|Test sur le format des heures|0,10||VRAI
+Robert M. Vigneault|2024-09-12 09:16:00|Add|970|GC|12/09/2024|1564|Fiducie Testamentaire Georges-Gariépy [Distribution FG] [François Gariépy]|Test|0,10||VRAI
+Robert M. Vigneault|2024-09-13 09:11:29|Add|984|GC|12/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10||VRAI|13/09/2024 09:11:29
+Robert M. Vigneault|2024-09-13 09:11:44|Add|985|GC|13/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10||VRAI|13/09/2024 09:11:44
+Robert M. Vigneault|2024-09-13 09:46:33|UPDATE|985|GC|13/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,20|VRAI||2024/09/13 09:46:33
+Robert M. Vigneault|2024-09-13 09:47:43|UPDATE|984|GC|12/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,15|VRAI||2024-09-13 09:47:43
+Robert M. Vigneault|2024-09-13 09:50:57|Add|986|GC|13/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-13 09:50:57
+Robert M. Vigneault|2024-09-13 09:51:04|UPDATE|985|GC|13/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-13 09:51:04
+Robert M. Vigneault|2024-09-13 09:51:24|UPDATE|984|GC|12/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-13 09:51:24

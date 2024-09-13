@@ -27,7 +27,9 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     
     wshCAR_Liste_Agée.Range("B4").value = "Client"
     wshCAR_Liste_Agée.Range("D4").value = "Nom de client"
-    wshCAR_Liste_Agée.Range("F4").value = Format(Now(), "mm/dd/yyyy")
+    wshCAR_Liste_Agée.Range("F4").value = "Non"
+    wshCAR_Liste_Agée.Range("H4").value = Format$(Now(), "yyyy/mm/dd")
+    Debug.Print "#032: - Now() - Y = " & year(wshCAR_Liste_Agée.Range("H4").value) & " - M = " & month(wshCAR_Liste_Agée.Range("H4").value) & " - D = " & day(wshCAR_Liste_Agée.Range("H4").value)
     
     Application.EnableEvents = True
     
@@ -37,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).Row
     If lastUsedRow > 7 Then
-        ws.Range("B8:I" & lastUsedRow + 2).clear
+        ws.Range("B8:J" & lastUsedRow + 2).clear
     End If
 
     With ws
@@ -78,8 +80,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
-    'Is Date Limite been selected ?
+    'Is SOlde à 0,00 $ been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("F4")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
+    'Is Date Limite been selected ?
+    If Not Intersect(Target, wshCAR_Liste_Agée.Range("H4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -115,7 +122,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     'CutOffDate has changed
-    If Not Intersect(Target, Range("F4")) Is Nothing Then
+    If Not Intersect(Target, Range("H4")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(CStr(Target.text))
         If fullDate <> "Invalid Date" Then
@@ -130,7 +137,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("F4").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("H4").value) > Now() Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

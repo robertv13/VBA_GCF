@@ -8,14 +8,14 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
 
     'Find the last row with data in column A
-    Dim LastRow As Long
-    LastRow = ws.Range("A9999").End(xlUp).Row
+    Dim lastRow As Long
+    lastRow = ws.Range("A9999").End(xlUp).Row
     Dim firstNewRow As Long
-    firstNewRow = LastRow - numberRows + 1
+    firstNewRow = lastRow - numberRows + 1
 
     'Set the range for new rows
     Dim newRows As Range
-    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(LastRow, ws.columns.count))
+    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
 
     'Copy formatting from the row above the first new row to the new rows
     ws.rows(firstNewRow - 1).Copy
@@ -885,7 +885,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim result As Variant
     For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
         Inv_No = CStr(arr(i, 1))
-        Debug.Print "#887 - Inv_no = ", Inv_No, ", de type ", TypeName(Inv_No)
+'        Debug.Print "#887 - Inv_no = ", Inv_No, ", de type ", TypeName(Inv_No)
         If Inv_No <> oldInv_No Then
              result = Application.WorksheetFunction.XLookup(Inv_No, _
                                                     rngMaster, _
@@ -2001,6 +2001,9 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
+    Dim lastRowReported As Long
+    lastRowReported = 969 - 2 'Il y a 2 lignes d'entête à considérer
+
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim headerRow As Long: headerRow = 2
@@ -2022,8 +2025,20 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
     r = r + 1
     
+    Dim rngCR As Range
+    Set rngCR = ws.Range("A1").CurrentRegion
+    Dim lastRow As Long, lastcol As Long
+    lastRow = rngCR.rows.count
+    lastcol = rngCR.columns.count
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.Offset(2)
+    If lastRow > 2 Then
+        'Décaler de 2 lignes (pour exclure les en-têtes) et redimensionner la plage
+        arr = rngCR.Offset(2, 0).Resize(lastRow - 2, lastcol).value
+'        arr = ws.Range("A1").CurrentRegion.Offset(2)
+    Else
+        MsgBox "Il n'y a aucune ligne de détail", vbInformation
+        Exit Sub
+    End If
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
     Dim dictFacture As New Dictionary
@@ -2073,7 +2088,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim strDict As String
 
     'Lecture et analyse des TEC (TEC_Local)
-    For i = LBound(arr, 1) To UBound(arr, 1) - 2
+    For i = LBound(arr, 1) To UBound(arr, 1)
         If i > maxTECrow Then
             maxTECrow = i
         End If
@@ -2117,7 +2132,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If i > 877 Then
+        If i > lastRowReported Then
+'            Debug.Print "#2135: "; i; " "; arr(i, 1); " "; arr(i, 4); " ", arr(i, 6); " "; arr(i, 8)
             'Date de la charge
             yy = year(arr(i, 4))
             mm = month(arr(i, 4))
@@ -2127,7 +2143,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             If dictDateCharge.Exists(strDict) Then
                 dictDateCharge(strDict) = dictDateCharge(strDict) + arr(i, 8)
             Else
-                dictDateCharge.add strDict, 1
+                dictDateCharge.add strDict, arr(i, 8)
             End If
             'TimeStamp
             yy = year(arr(i, 11))
@@ -2380,7 +2396,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Tri & impression de dictTimeStamp
     If dictDateCharge.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECrow & ")")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECrow + 2 & ")")
         r = r + 1
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2393,13 +2409,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 877) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastRowReported + 2 & ") ")
         r = r + 1
     End If
     
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECrow & ")")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECrow + 2 & ")")
         r = r + 1
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2410,10 +2426,10 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             formattedHours = String(6 - Len(formattedHours), " ") & formattedHours
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       " & key & ":" & formattedHours & " entrée(s)")
             r = r + 1
-            Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
+'            Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > 877) ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastRowReported + 2 & ") ")
         r = r + 1
     End If
     

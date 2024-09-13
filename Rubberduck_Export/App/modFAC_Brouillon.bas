@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
@@ -454,13 +454,13 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", 0)
     
-    Dim LastRow As Long
-    LastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
-    If LastRow > 6 Then
+    Dim lastRow As Long
+    lastRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row 'First line of data is at row 7
+    If lastRow > 6 Then
         Application.EnableEvents = False
-        wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
+        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Application.EnableEvents = True
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()", startTime)
@@ -608,8 +608,8 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
     End If
     
     'Définir la dernière ligne contenant des données
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     Dim rr As Long
     rr = 3
@@ -618,7 +618,7 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
     Dim i As Long
     With ws
     'Boucler sur chaque ligne et masquer celles qui ne correspondent pas à tous les critères
-        For i = 3 To LastRow ' Suppose que les données commencent à la ligne 3
+        For i = 3 To lastRow ' Suppose que les données commencent à la ligne 3
             If ws.Cells(i, "D").value <= dteCutoff And _
                 ws.Cells(i, "E").value = codeClient And _
                 ws.Cells(i, "J").value = estFacturable And _

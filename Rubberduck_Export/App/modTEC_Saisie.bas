@@ -22,7 +22,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Get the Client_ID
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
-        Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:24  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+        Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
         Dim y As Integer, m As Integer, d As Integer
         Dim avant As String, apres As String
         On Error Resume Next
@@ -39,9 +39,9 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             ufSaisieHeures.txtDate.value = DateSerial(y, m, d)
             apres = ufSaisieHeures.txtDate.value
             If apres <> avant Then
-                Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:41  Date changée pour corriger le format - " & avant & "---> " & apres, -1)
+                Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#41:  La date a été changée pour corriger le format - " & avant & "---> " & apres, -1)
             End If
-            Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_L#:43  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+            Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
         On Error GoTo 0
         
         Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
@@ -189,12 +189,12 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
-        Dim LastRow As Long, lastResultRow As Long, resultRow As Long
-        LastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
-        If LastRow < 3 Then Exit Sub 'Nothing to filter
+        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+        lastRow = .Range("A99999").End(xlUp).Row 'Last wshTEC_Local Used Row
+        If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
-        Dim sRng As Range: Set sRng = .Range("A2:P" & LastRow)
+        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         .Range("S10").value = sRng.Address '2024-09-04 @ 08:47
         
          'Criteria
@@ -284,7 +284,7 @@ End Sub
 
 Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '" & TECID, 0)
 
     Application.ScreenUpdating = False
     
@@ -310,34 +310,45 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
-    Call Log_Record("modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_289  dateValue = " & dateValue & "  " & TypeName(dateValue), -1)
+    Call Log_Record("modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '" & dateValue & "'  Type = " & TypeName(dateValue), -1)
     Dim y As Integer, m As Integer, d As Integer
     
-    
     If TECID < 0 Then 'Soft delete a record
+        
         'Open the recordset for the specified ID
+        
+        Call Log_Record("SoftDeleteStart - " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+        
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & Abs(TECID), conn, 2, 3
         saveLogTEC_ID = TECID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
-            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.update
-            Call Log_Saisie_Heures("D E L E T E", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
-        Else
-            'Handle the case where the specified ID is not found
+            
+            Call Log_Record(CStr(saveLogTEC_ID) & " I S   D E L E T E D", -1) '2024-09-13 @ 08:49
+        
+        Else 'Handle the case where the specified ID is not found - PROBLEM !!!
+            
+            Call Log_Record("#334: N'a pas trouvé le TECID '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-02 @ 10:35
+            
             MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
-            Call Log_Saisie_Heures("?", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
+            
             Exit Sub
         End If
-    Else
-        'If r is 0, add a new record; otherwise, update an existing record
+    
+    Else 'Add a new record (TECID = 0) -OR- update an existing one (TECID <> 0)
+        
         If TECID = 0 Then 'Add a record
-        'SQL select command to find the next available ID
+        
+            Call Log_Record("AddRecordStarting - " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+        
+            'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
             strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & destinationTab & "$]"
         
@@ -345,17 +356,20 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim LastRow As Long
+            Dim lastRow As Long
             If IsNull(rs.Fields("MaxID").value) Then
                 'Handle empty table (assign a default value, e.g., 0)
-                LastRow = 0
+                lastRow = 0
             Else
-                LastRow = rs.Fields("MaxID").value
+                lastRow = rs.Fields("MaxID").value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = LastRow + 1
+            nextID = lastRow + 1
+            
+            Call Log_Record("AddRecord with a new " & CStr(nextID), -1) '2024-09-13 @ 08:35
+
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
         
@@ -363,7 +377,9 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
-            'Add fields to the recordset before updating it
+            Call Log_Record("AddRecord - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
+
+            'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
             rs.Fields("TEC_ID").value = nextID
             rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
@@ -378,26 +394,32 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
             rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
             rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.Fields("EstFacturee").value = ConvertValueBooleanToText(False)
             rs.Fields("DateFacturee").value = Null
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = ""
+            rs.update
+            
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("Add", saveLogTEC_ID & "|" & _
-                ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
-                wshAdmin.Range("TEC_Client_ID") & "|" & _
-                ufSaisieHeures.txtClient.value & "|" & _
-                ufSaisieHeures.txtActivite.value & "|" & _
-                Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                ufSaisieHeures.txtCommNote.value & "|" & _
-                ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
-        Else 'Update an existing record
+                        ufSaisieHeures.cmbProfessionnel.value & "|" & _
+                        dateValue & "|" & _
+                        wshAdmin.Range("TEC_Client_ID") & "|" & _
+                        ufSaisieHeures.txtClient.value & "|" & _
+                        ufSaisieHeures.txtActivite.value & "|" & _
+                        Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
+                        ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & "|" & _
+                        ufSaisieHeures.txtCommNote.value & "|" & _
+                        Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+        
+        Else 'Update an existing record (TECID <> 0)
+        
             'Open the recordset for the specified ID
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
             If Not rs.EOF Then
+                Call Log_Record("Update an existing record - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
                 rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
@@ -405,20 +427,27 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-                rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy/mm/dd hh:mm:ss"))
                 rs.Fields("VersionApp").value = ThisWorkbook.name
                 'Nouveau log - 2024-09-02 @ 10:40
+                
                 Call Log_Saisie_Heures("UPDATE", saveLogTEC_ID & "|" & _
-                    ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                    CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
-                    wshAdmin.Range("TEC_Client_ID") & "|" & _
-                    ufSaisieHeures.txtClient.value & "|" & _
-                    ufSaisieHeures.txtActivite.value & "|" & _
-                    Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                    ufSaisieHeures.txtCommNote.value & "|" & _
-                    ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
+                            ufSaisieHeures.cmbProfessionnel.value & "|" & _
+                            dateValue & "|" & _
+                            wshAdmin.Range("TEC_Client_ID") & "|" & _
+                            ufSaisieHeures.txtClient.value & "|" & _
+                            ufSaisieHeures.txtActivite.value & "|" & _
+                            Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
+                            ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & "|" & _
+                            ufSaisieHeures.txtCommNote.value & "|" & _
+                            Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+            
             Else
-                'Handle the case where the specified ID is not found
+            
+                'Handle the case where the specified ID is not found - PROBLEM !!!
+                
+                Call Log_Record("#448: N'a pas trouvé le TECID '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-13 @ 09:09
+            
                 MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", vbExclamation
                 Call Log_Saisie_Heures("??", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
                 rs.Close
@@ -433,8 +462,8 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     'Close recordset and connection
     On Error Resume Next
     rs.Close
-    On Error GoTo 0
     conn.Close
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
 
@@ -447,13 +476,15 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Exit Sub
     
 ErrorHandler:
-
      'Si une erreur survient, cela signifie que le fichier est en lecture seule
     MsgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
-           "ou déjà ouvert par un autre utilisateur.", vbCritical, "Problème MAJEUR"
-    On Error GoTo 0
+           "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
+           "ou un autre type de problème" & vbNewLine & vbNewLine & _
+           "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Problème MAJEUR"
+    If Not rs Is Nothing Then rs.Close
     If Not conn Is Nothing Then conn.Close
     Set conn = Nothing
+    Set rs = Nothing
     
 End Sub
 
@@ -551,9 +582,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     ufSaisieHeures.lsbHresJour.clear '2024-08-10 @ 05:59
     
     'Last Row used in first column of result
-    Dim LastRow As Long
-    LastRow = wshTEC_Local.Range("V999").End(xlUp).Row
-    If LastRow < 3 Then Exit Sub
+    Dim lastRow As Long
+    lastRow = wshTEC_Local.Range("V999").End(xlUp).Row
+    If lastRow < 3 Then Exit Sub
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
@@ -564,7 +595,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
 '    Debug.Print rng.Address
      
     Dim i As Long, j As Long

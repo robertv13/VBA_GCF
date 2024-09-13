@@ -787,21 +787,21 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
 End Sub
 
-Sub Add_And_Modify_Checkbox(startRow As Long, LastRow As Long)
+Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Define the range for the summary
     Dim summaryRange As Range
-    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(LastRow, 13)) 'Columns J to M
+    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
     
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
         Set checkBox = .OLEObjects.add(ClassType:="Forms.CheckBox.1", _
-                    Left:=.Cells(LastRow, 14).Left + 5, _
-                    Top:=.Cells(LastRow, 14).Top, width:=80, Height:=16)
+                    Left:=.Cells(lastRow, 14).Left + 5, _
+                    Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object

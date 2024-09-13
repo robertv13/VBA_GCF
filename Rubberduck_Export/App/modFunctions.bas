@@ -569,7 +569,7 @@ Function Fn_Complete_Date(dateInput As String) As Variant
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call Log_Record("modFunctions_Fn_Complete_Date_551 y=" & yearPart & " m=" & monthPart & " d=" & dayPart & " parsedDate='" & parsedDate & "'", -1) '2024-09-06 @ 09:02
+    Call Log_Record("modFunctions_Fn_Complete_Date_#551: y = " & yearPart & "   m = " & monthPart & "   d = " & dayPart & " parsedDate='" & parsedDate & "'", -1) '2024-09-06 @ 09:02
     
     Exit Function
 

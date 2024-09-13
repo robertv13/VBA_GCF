@@ -1,8 +1,10 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
 Option Explicit
 
-Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
+Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
 
+    Debug.Print "#005: " & Format$(Now(), "yyyy/mm/dd")
+    
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet
     Set wsFactures = ThisWorkbook.Sheets("FAC_Comptes_Clients")
@@ -16,7 +18,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
     lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).Row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
-        wshCAR_Liste_Agée.Range("B8:I" & lastUsedRow + 5).clear
+        wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).clear
         Application.EnableEvents = True
     End If
     
@@ -40,8 +42,8 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase(niveauDetail) = "transaction" Then
-        wshCAR_Liste_Agée.Range("B8:I8").value = Array("Client", "No. Facture", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:I8"))
+        wshCAR_Liste_Agée.Range("B8:J8").value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
+        Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:J8"))
     End If
 
     Application.EnableEvents = True
@@ -74,13 +76,18 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
         numFacture = CStr(rngFactures.Cells(i, 1).value)
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
-            Debug.Print "Facture rejetée '" & numFacture & "', car son Statut (C_AC) n'est pas 'C' (Confirmée)"
+            Debug.Print "#076 - Facture rejetée '" & numFacture & "', car son Statut (C_AC) n'est pas 'C' (Confirmée)"
             GoTo Next_Invoice
         End If
+        'Est-ce que la facture est à l'intérieur e la date limite ?
+        dateFacture = CDate(rngFactures.Cells(i, 2).value)
+        If rngFactures.Cells(i, 2) > wshCAR_Liste_Agée.Range("H4").value Then
+            GoTo Next_Invoice
+        End If
+        
         client = rngFactures.Cells(i, 4).value
         'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        dateFacture = CDate(rngFactures.Cells(i, 2).value)
         dateDue = CDate(rngFactures.Cells(i, 7).value)
         montantFacture = CCur(rngFactures.Cells(i, 8).value)
         
@@ -88,10 +95,10 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
         montantPaye = CCur(Application.WorksheetFunction.SumIf(wsPaiements.Range("B:B"), numFacture, wsPaiements.Range("E:E")))
         montantRestant = montantFacture - montantPaye
         
-        'Exclus les soldes de facture à 0,00 $
-'        If montantRestant = 0 Then
-'            GoTo Next_Invoice
-'        End If
+        'Exclus les soldes de facture à 0,00 $ SI ET SEULMENT SI F4 = "NON"
+        If UCase(wshCAR_Liste_Agée.Range("F4").value) = "NON" And montantRestant = 0 Then
+            GoTo Next_Invoice
+        End If
         
         'Calcul de l'âge de la facture
         ageFacture = WorksheetFunction.Max(dateAujourdhui - dateDue, 0)
@@ -160,17 +167,18 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
                 r = r + 1
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).value = dateFacture
-                wshCAR_Liste_Agée.Cells(r, 5).value = montantFacture
+                wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
+                wshCAR_Liste_Agée.Cells(r, 5).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
-                        wshCAR_Liste_Agée.Cells(r, 6).value = montantRestant
-                    Case "31 @ 60 jours"
                         wshCAR_Liste_Agée.Cells(r, 7).value = montantRestant
-                    Case "61 @ 90 jours"
+                    Case "31 @ 60 jours"
                         wshCAR_Liste_Agée.Cells(r, 8).value = montantRestant
-                    Case "+ de 90 jours"
+                    Case "61 @ 90 jours"
                         wshCAR_Liste_Agée.Cells(r, 9).value = montantRestant
+                    Case "+ de 90 jours"
+                        wshCAR_Liste_Agée.Cells(r, 10).value = montantRestant
                 End Select
                 
                 'Transactions de paiements par la suite
@@ -184,8 +192,9 @@ Sub CAR_Creer_Liste_Agee() '2024-09-01 @ 04:56
                         r = r + 1
                         wshCAR_Liste_Agée.Cells(r, 2).value = client
                         wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
-                        wshCAR_Liste_Agée.Cells(r, 4).value = rngPaiementsAssoc.Offset(0, 2).value
-                        wshCAR_Liste_Agée.Cells(r, 5).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
+                        wshCAR_Liste_Agée.Cells(r, 4).value = "Paiement"
+                        wshCAR_Liste_Agée.Cells(r, 5).value = rngPaiementsAssoc.Offset(0, 2).value
+                        wshCAR_Liste_Agée.Cells(r, 6).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
                         Set rngPaiementsAssoc = wsPaiements.columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
                 End If
@@ -219,7 +228,7 @@ Next_Invoice:
     
     'Tri alphabétique par nom de client
     derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).Row
-    Set rngResultat = wshCAR_Liste_Agée.Range("B8:I" & derniereLigne)
+    Set rngResultat = wshCAR_Liste_Agée.Range("B8:J" & derniereLigne)
     
     Application.EnableEvents = False
     
@@ -237,12 +246,12 @@ Next_Invoice:
                     key:=wshCAR_Liste_Agée.Range("C8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Trier par nom de client
+                    DataOption:=xlSortNormal 'Trier par numéro de facture
                 .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("D8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Trier par nom de client
+                    DataOption:=xlSortNormal 'Trier date de transaction
             End If
             .SetRange rngResultat
             .Header = xlYes
@@ -270,7 +279,8 @@ Next_Invoice:
                 .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
                 .Range("C" & derniereLigne & ":G" & derniereLigne).Font.Bold = True
             Case "facture"
-                .columns("C:D").HorizontalAlignment = xlCenter
+                .Range("C9:C" & derniereLigne).HorizontalAlignment = xlCenter
+                .Range("D9:D" & derniereLigne).HorizontalAlignment = xlCenter
                 .Range("E9:I" & derniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("E9:I" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
@@ -280,15 +290,16 @@ Next_Invoice:
                 .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
                 .Range("E" & derniereLigne & ":I" & derniereLigne).Font.Bold = True
             Case "transaction"
-                .columns("C:D").HorizontalAlignment = xlCenter
-                .Range("E9:I" & derniereLigne).NumberFormat = "#,##0.00 $"
-                .Range("E9:I" & derniereLigne).HorizontalAlignment = xlRight
-                .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
+                .columns("C:E").HorizontalAlignment = xlCenter
+                .columns("D").HorizontalAlignment = xlLeft
+                .Range("F9:J" & derniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("F9:J" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
                 .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
                 .Range("H" & derniereLigne).formula = "=Sum(H9:H" & derniereLigne - 2 & ")"
                 .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
-                .Range("E" & derniereLigne & ":I" & derniereLigne).Font.Bold = True
+                .Range("J" & derniereLigne).formula = "=Sum(J9:J" & derniereLigne - 2 & ")"
+                .Range("F" & derniereLigne & ":J" & derniereLigne).Font.Bold = True
         End Select
         .Range("B" & derniereLigne).value = "Totaux de la liste"
         .Range("B" & derniereLigne).Font.Bold = True
@@ -306,7 +317,7 @@ Next_Invoice:
         Case "facture"
             Set rngToPrint = wshCAR_Liste_Agée.Range("B9:I" & lastUsedRow)
         Case "transaction"
-            Set rngToPrint = wshCAR_Liste_Agée.Range("B9:I" & lastUsedRow)
+            Set rngToPrint = wshCAR_Liste_Agée.Range("B9:J" & lastUsedRow)
     End Select
     
     Application.EnableEvents = False
@@ -333,7 +344,7 @@ Next_Invoice:
     
     Call Simple_Print_Setup(wshCAR_Liste_Agée, rngToPrint, header1, header2, "$8:$8", "L")
     
-    MsgBox "La préparation de la liste âgée est terminé", vbInformation
+    MsgBox "La préparation de la liste âgée est terminée", vbInformation
     
     Application.EnableEvents = True
 
@@ -829,21 +840,21 @@ Sub zSoft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
 End Sub
 
-Sub zAdd_And_Modify_Checkbox(startRow As Long, LastRow As Long)
+Sub zAdd_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agée
     
     'Define the range for the summary
     Dim summaryRange As Range
-    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(LastRow, 13)) 'Columns J to M
+    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
     
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
         Set checkBox = .OLEObjects.add(ClassType:="Forms.CheckBox.1", _
-                    Left:=.Cells(LastRow, 14).Left + 5, _
-                    Top:=.Cells(LastRow, 14).Top, width:=80, Height:=16)
+                    Left:=.Cells(lastRow, 14).Left + 5, _
+                    Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object

@@ -1,0 +1,31 @@
+GuillaumeCharron|2024-09-08 06:44:58|Add|934|GC|08/09/24|1795|Garage L. Hébert Inc. [Karine Ricard]|analyse de la valeur marchande, préparer tableaux et lettre de présentation|2,00||VRAI
+GuillaumeCharron|2024-09-08 07:14:13|Add|935|GC|08/09/24|1797|Silencieux de l'est Inc. [Martin Montpas]|préparer tableaux d'évaluation et |1,50||VRAI
+GuillaumeCharron|2024-09-08 09:21:15|UPDATE|935|GC|08/09/24|1797|Silencieux de l'est Inc. [Martin Montpas]|analyse de la valeur marchande, préparer tableaux et lettre de présentation + tel avec Martin|2,25||VRAI
+GuillaumeCharron|2024-09-08 12:43:14|UPDATE|935|GC|08/09/24|1797|Silencieux de l'est Inc. [Martin Montpas]|analyse de la valeur marchande, préparer tableaux et lettre de présentation + tel avec Martin|3,00||VRAI
+GuillaumeCharron|2024-09-08 13:36:21|Add|936|GC|08/09/24|1013g|9199-5308 Québec Inc [Benoit Alary]|analyse du plan de retraite et commentaires|2,00||VRAI
+GuillaumeCharron|2024-09-08 14:19:50|Add|937|GC|08/09/24|1782|Les Placements Jean-Luc Roy Inc.|analyse des docuemnts reçus pour comprendre ce qui s'est passé avec la fiducie et écouter appel téléphonique pour me remettre dedans|1,25||VRAI
+GuillaumeCharron|2024-09-09 05:20:47|Add|938|GC|09/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|valider si organigramme à utiliser peut partir d'infos fiscales et obtenir fichier|0,50||VRAI
+GuillaumeCharron|2024-09-09 05:30:51|Add|939|GC|09/09/24|1779|9098-2885 Québec Inc. [Denis Bisson]|faire le tour de ce qu'il manque et courriel à tous sommaire des points en suspens|0,50||VRAI
+GuillaumeCharron|2024-09-09 05:33:34|Add|940|GC|09/09/24|1183|Voyages Synergia Inc. [Richard Kelly]|suivi d'infos manquantes|0,40||VRAI
+vgervais|2024-09-09 08:36:48|Add|941|VG|2024-09-09|5|z_Adiministratif_Autres non chargeables|Administration + Autres suivis|0,60||FAUX
+vgervais|2024-09-09 09:09:16|Add|942|VG|2024-09-09|1727|Nadine Pelletier Inc.|Courriel pour vente du condos commercial|0,30||VRAI
+GuillaumeCharron|2024-09-09 09:13:42|Add|943|GC|09/09/24|1782|Les Placements Jean-Luc Roy Inc.|préparation et appel avec Jean-Luc pour expliquer le résultat de mes analyses + sommaire par courriel à Richard|1,25||VRAI
+GuillaumeCharron|2024-09-09 09:36:37|Add|944|GC|09/09/24|1795|Garage L. Hébert Inc. [Karine Ricard]|tel avec Karine sur explication de jvm et répondre aux questions|0,75||VRAI
+GuillaumeCharron|2024-09-09 09:54:01|Add|945|GC|09/09/24|1085|MPA Société de comptables Professionnels agréés Inc [Alain Girard]|question de Mikael sur roulement d'un bien sans coût fiscal|0,25||VRAI
+GuillaumeCharron|2024-09-09 10:57:17|Add|946|GC|09/09/24|1740|Les Équipements Cofa Inc [Olivier Bertrand]|suivi de l'état avec Olivier et Michael|0,40||VRAI
+GuillaumeCharron|2024-09-09 11:20:34|Add|947|GC|09/09/24|1350|Acier Altitube inc. [Philippe Robillard]|préparation à la rencontre et rencontre Videoconference|1,00||VRAI
+GuillaumeCharron|2024-09-09 11:41:41|Add|948|GC|09/09/24|1150|Groupe Joman Inc. [Johanne Gemme]|tel avec Johanne et envoi de demande à Michael|0,40||VRAI
+GuillaumeCharron|2024-09-09 11:41:52|UPDATE|948|GC|09/09/24|1150|Groupe Joman Inc. [Johanne Gemme]|tel avec Johanne et envoi de demande à Michael|0,50||VRAI
+GuillaumeCharron|2024-09-09 11:47:27|Add|949|GC|09/09/24|1516|Les Industries Canplex Ltée [Marco Stocchero]|suivi finalisation protection d'actifs de Mario|0,40||VRAI
+Annie|2024-09-09 15:33:43|Add|950|AR|2024-09-09|2040|2960-4105 Québec Inc (Mini Excavation MB) [Marc Beaurivage]|Paies|0.25||VRAI
+Annie|2024-09-09 15:34:25|Add|951|AR|2024-09-09|2004|COD10 Agence Code Communications Inc [Pierre Yves Chapdelaine]|Fichier Excellence fin année au 31 juillet 2024|2.00||VRAI
+Annie|2024-09-09 16:43:08|Add|952|AR|2024-09-09|2030|MAR13  Larry Rumsby Maréchal-Ferrant Inc [Louise Mongeau]|Classement des documents reçus et préparation du fichier Excellence pour la nouvelle année fiscale|1.00||VRAI
+vgervais|2024-09-09 18:23:02|Add|953|VG|2024-09-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|RÉvision des roulements|1,10||VRAI
+vgervais|2024-09-09 19:43:18|Add|954|VG|2024-09-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion avec Reynald Goulet + suivi avec courtier dd RBC + courriel à Laurent pour états financiers + préparation mémo|1,20||VRAI
+vgervais|2024-09-09 19:44:26|UPDATE|942|VG|2024-09-09|1727|Nadine Pelletier Inc.|Courriel pour vente du condos commercial + regarder sommairement les documents|0,50||VRAI
+vgervais|2024-09-09 19:46:43|Add|955|VG|2024-09-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Préparer les étapes pour le mémorandum + suivi pour la JVM des actions + discussion avec Michel pour calcul de la JVM|1,20||VRAI
+vgervais|2024-09-09 19:47:25|UPDATE|953|VG|2024-09-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|RÉvision des roulements + Discussion avec avocat pour billet demande paiement absolu|1,50||VRAI
+vgervais|2024-09-09 19:48:56|Add|956|VG|2024-09-09|1796|Alexandre Bourret Courtier Immobilier Inc.|Conversaion téléphoniques avec Alex Bourret + Suivi avec Laurent + reposé les questions (voir éléments manquants|1,30||VRAI
+vgervais|2024-09-09 19:49:51|Add|957|VG|2024-09-09|525|Succession Jean Beaupré [Philippe Beaupré]|Conversation téléphonique avec Danielle Gauthier pour informations supplémentaires|0,40||VRAI
+vgervais|2024-09-09 19:51:07|UPDATE|955|VG|2024-09-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Préparer les étapes pour le mémorandum + suivi pour la JVM des actions + discussion avec Michel pour calcul de la JVM|2,20||VRAI
+vgervais|2024-09-09 19:51:37|UPDATE|941|VG|2024-09-09|5|z_Adiministratif_Autres non chargeables|Administration + Autres suivis|1,10||FAUX

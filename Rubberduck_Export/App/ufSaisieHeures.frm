@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   9255.001
+   ClientHeight    =   9252.001
    ClientLeft      =   132
    ClientTop       =   576
    ClientWidth     =   15564
