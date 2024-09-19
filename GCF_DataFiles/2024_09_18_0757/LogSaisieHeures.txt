@@ -1,0 +1,25 @@
+vgervais|2024-09-17 10:04:20|Add|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparatiohn mémo|1,50|VRAI||2024-09-17 10:04:20
+vgervais|2024-09-17 10:04:31|UPDATE|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparation mémo|1,50|VRAI||2024-09-17 10:04:31
+vgervais|2024-09-17 10:19:21|Add|1040|VG|2024-09-17|5|z_Adiministratif_Autres non chargeables|Suivis + Lecture sommaire EPSP |1,10|VRAI||2024-09-17 10:19:21
+vgervais|2024-09-17 10:19:28|UPDATE|1040|VG|2024-09-17|5|z_Adiministratif_Autres non chargeables|Suivis + Lecture sommaire EPSP |1,10|FAUX||2024-09-17 10:19:28
+vgervais|2024-09-17 11:06:55|UPDATE|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparation mémo|2,30|VRAI||2024-09-17 11:06:55
+vgervais|2024-09-17 11:24:04|Add|1041|VG|2024-09-17|1388|9307-2411 Québec Inc. [Capitaine Vap]|9461-1613 Appel à RQ pour demande de non-production|0,20|VRAI||2024-09-17 11:24:04
+vgervais|2024-09-17 11:35:58|UPDATE|1041|VG|2024-09-17|1388|9307-2411 Québec Inc. [Capitaine Vap]|9461-1613 Appel à RQ pour demande de non-production|0,30|VRAI||2024-09-17 11:35:58
+vgervais|2024-09-17 11:43:33|Add|1042|VG|2024-09-17|1505|Le Groupe Ultragen Ltée [Khac Trong Truong]|DIscussionb avec Daniel Truong à la suite de con sppel|0,20|VRAI||2024-09-17 11:43:33
+vgervais|2024-09-17 11:59:13|Add|1043|VG|2024-09-17|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Discussion téléphonique avec Mathieu (prix de vente)|0,40|VRAI||2024-09-17 11:59:13
+vgervais|2024-09-17 14:22:54|Add|1044|VG|2024-09-17|1348|Maurice Chiasson, CPA|Les Immeubles Marklin C2: Conversation téléphonique avec la cliente (instructions)|0,40|VRAI||2024-09-17 14:22:54
+vgervais|2024-09-17 14:25:48|Add|1045|VG|2024-09-17|1643|Ventilation Pierre Gamache Inc. [Pierre Gamache]|Répondre question créances douteuses de Laura|0,20|VRAI||2024-09-17 14:25:48
+vgervais|2024-09-17 14:27:10|UPDATE|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparation mémo|2,40|VRAI||2024-09-17 14:27:10
+vgervais|2024-09-17 14:27:18|UPDATE|1040|VG|2024-09-17|5|z_Adiministratif_Autres non chargeables|Suivis + Lecture sommaire EPSP |1,20|FAUX||2024-09-17 14:27:18
+vgervais|2024-09-17 15:40:15|UPDATE|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparation mémo + discussion JVM avec Michel|2,60|VRAI||2024-09-17 15:40:15
+vgervais|2024-09-17 15:40:48|Add|1046|VG|2024-09-17|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Suivi avec Michel pour roulement|0,20|VRAI||2024-09-17 15:40:48
+vgervais|2024-09-17 15:41:21|UPDATE|1040|VG|2024-09-17|5|z_Adiministratif_Autres non chargeables|Administration + Suivis + discussion avec Michel Lecture sommaire EPSP |1,60|FAUX||2024-09-17 15:41:21
+vgervais|2024-09-17 15:42:00|Add|1047|VG|2024-09-17|1193|Solstice CNC Inc. [Alexandre Desmarais]|Discussion avec Michel pour JVM mise à jour |0,20|VRAI||2024-09-17 15:42:00
+vgervais|2024-09-17 15:45:29|UPDATE|1041|VG|2024-09-17|1388|9307-2411 Québec Inc. [Capitaine Vap]|9461-1613 Appel à RQ pour demande de non-production|0,50|VRAI||2024-09-17 15:45:29
+vgervais|2024-09-17 15:53:39|UPDATE|1043|VG|2024-09-17|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Discussion téléphonique avec Mathieu (prix de vente)|0,60|VRAI||2024-09-17 15:53:39
+vgervais|2024-09-17 15:53:57|UPDATE|1043|VG|2024-09-17|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Discussion téléphonique avec Mathieu (prix de vente) + DGC|0,60|VRAI||2024-09-17 15:53:57
+vgervais|2024-09-17 16:51:26|Add|1048|VG|2024-09-17|1516|Les Industries Canplex Ltée [Marco Stocchero]|Discussion avrc Marie Claude|0,30|VRAI||2024-09-17 16:51:26
+vgervais|2024-09-17 16:54:54|Add|1049|VG|2024-09-17|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Vérification sommaire MR69|0,20|VRAI||2024-09-17 16:54:54
+vgervais|2024-09-17 17:22:49|UPDATE|1046|VG|2024-09-17|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Suivi avec Michel pour roulement + correction|0,70|VRAI||2024-09-17 17:22:49
+vgervais|2024-09-17 17:24:29|UPDATE|1039|VG|2024-09-17|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Préparation mémo + discussion JVM avec Michel|2,70|VRAI||2024-09-17 17:24:29
+Annie|2024-09-17 18:23:41|Add|1050|AR|2024-09-17|5|z_Adiministratif_Autres non chargeables|Mise à jour des fiches clients|7.00|FAUX||2024-09-17 18:23:41

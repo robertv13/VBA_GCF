@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufExitDisable 
    Caption         =   "Sortie non autorisée"
-   ClientHeight    =   2265
+   ClientHeight    =   2268
    ClientLeft      =   120
    ClientTop       =   468
    ClientWidth     =   7536

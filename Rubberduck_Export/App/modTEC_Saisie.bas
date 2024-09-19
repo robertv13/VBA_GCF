@@ -346,7 +346,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
         If TECID = 0 Then 'Add a record
         
-            Call Log_Record("AddRecordStarting - " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("AddRecordStarting_#348: TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
@@ -368,7 +368,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             Dim nextID As Long
             nextID = lastRow + 1
             
-            Call Log_Record("AddRecord with a new " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("AddRecord #370: TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
 
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
@@ -377,7 +377,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
-            Call Log_Record("AddRecord - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
+            Call Log_Record("AddRecord #379: TECID = " & CStr(nextID))  '2024-09-13 @ 08:35
 
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
@@ -401,6 +401,8 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.Fields("NoFacture").value = ""
             rs.update
+            
+            Call Log_Record("Record added #404: TECID = " & CStr(nextID))  '2024-09-13 @ 08:35
             
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("Add", saveLogTEC_ID & "|" & _

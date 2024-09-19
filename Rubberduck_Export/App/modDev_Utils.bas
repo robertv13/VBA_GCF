@@ -1735,7 +1735,7 @@ Sub Test_Log_Record()
     
 End Sub
 
-Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-02 @ 10:23
+Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
 
     On Error GoTo Error_Handler
     
@@ -1747,12 +1747,12 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-02 @ 10:23
     fileNum = FreeFile
     
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
     
     Open logSaisieHeuresFile For Append As #fileNum
     
-    Print #fileNum, Fn_Get_Windows_Username & "|" & _
-                        currentTime & "|" & _
+    Print #fileNum, currentTime & "|" & _
+                        Fn_Get_Windows_Username & "|" & _
                         oper & "|" & _
                         txt
     Close #fileNum

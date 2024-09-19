@@ -2001,8 +2001,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
-    Dim lastRowReported As Long
-    lastRowReported = 969 - 2 'Il y a 2 lignes d'entête à considérer
+    Dim lastTECIDReported As Long
+    lastTECIDReported = 1050 'What is the last TECID analyze ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2055,7 +2055,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
-    Dim maxTECrow As Long
+    Dim maxTECID As Long
     Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
@@ -2089,10 +2089,10 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
     'Lecture et analyse des TEC (TEC_Local)
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If i > maxTECrow Then
-            maxTECrow = i
-        End If
         TECID = arr(i, 1)
+        If TECID > maxTECID Then
+            maxTECID = TECID
+        End If
         profID = arr(i, 2)
         prof = arr(i, 3)
         dateTEC = arr(i, 4)
@@ -2132,7 +2132,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If i > lastRowReported Then
+        If arr(i, 1) > lastTECIDReported Then
 '            Debug.Print "#2135: "; i; " "; arr(i, 1); " "; arr(i, 4); " ", arr(i, 6); " "; arr(i, 8)
             'Date de la charge
             yy = year(arr(i, 4))
@@ -2396,7 +2396,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Tri & impression de dictTimeStamp
     If dictDateCharge.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECrow + 2 & ")")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECID & ")")
         r = r + 1
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2409,13 +2409,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastRowReported + 2 & ") ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastTECIDReported & ") ")
         r = r + 1
     End If
     
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECrow + 2 & ")")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECID & ")")
         r = r + 1
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2429,7 +2429,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '            Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastRowReported + 2 & ") ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastTECIDReported & ") ")
         r = r + 1
     End If
     

@@ -1,0 +1,42 @@
+vgervais|2024-09-13 07:52:55|Add|984|VG|2024-10-09|1541|Groupe Teltech Inc. [François Tessier]|Révision + correction + suivi avec |1,30||VRAI
+vgervais|2024-09-13 07:54:38|Add|985|VG|2024-10-09|5|z_Adiministratif_Autres non chargeables|Discussion Michel Laframce (apprendre le formulaire) + Autres suivis + Discussion Toma Viktro facturation|1,50||VRAI
+vgervais|2024-09-13 07:57:41|Add|986|VG|2024-10-09|1796|Alexandre Bourret Courtier Immobilier Inc.|Suivi pour obtenir information sur PEC + voir si PTPE + Discussion avec Alexandre Bourret|1,30||VRAI
+vgervais|2024-09-13 07:57:50|UPDATE|985|VG|2024-10-09|5|z_Adiministratif_Autres non chargeables|Discussion Michel Laframce (apprendre le formulaire) + Autres suivis + Discussion Toma Viktro facturation|1,50||FAUX
+vgervais|2024-09-13 07:58:32|Add|987|VG|2024-09-10|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|Suivi pour documentation légale|0,30||VRAI
+vgervais|2024-09-13 08:00:16|Add|988|VG|2024-09-10|1759|France Morin CPA|Voir oprion choix tardif avec France Morin|0,70||VRAI
+vgervais|2024-09-13 08:01:26|Add|989|VG|2024-09-10|1619|Gestion Jujo Inc. [Devolutions Inc.] [David Hervieux / José Astacio]|Revoir condition + voir mise à jour |1,30||VRAI
+vgervais|2024-09-13 08:02:47|Add|990|VG|2024-09-10|1516|Les Industries Canplex Ltée [Marco Stocchero]|Vérifiier demande d'information + suivis |0,50||VRAI
+vgervais|2024-09-13 08:04:14|Add|991|VG|2024-10-09|1619|Gestion Jujo Inc. [Devolutions Inc.] [David Hervieux / José Astacio]|Recherche + répondre courriel OAA|1,30||VRAI
+vgervais|2024-09-13 08:04:59|Add|992|VG|2024-10-09|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|Suivi documentation légale|0,30||VRAI
+vgervais|2024-09-13 08:07:33|Add|993|VG|2024-10-09|1759|France Morin CPA|Ramonages: Vérifier pour choix tardid (modalité) + autres  |1,20||VRAI
+vgervais|2024-09-13 08:09:23|Add|994|VG|2024-10-09|1516|Les Industries Canplex Ltée [Marco Stocchero]|Vérifier demande d'informations + suivis|0,50||VRAI
+vgervais|2024-09-13 08:10:15|Add|995|VG|2024-10-09|1624|Gestion Proped Inc. [Chaussures Villeneuves] [Louis Villeneuve]|Suivi classement documentation légale|0,20||VRAI
+vgervais|2024-09-13 08:11:18|Add|996|VG|2024-10-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Voir fichier de la SODEC et impact fiscal (voir comment l'ajouter éventuellement à la déclaration|0,30||VRAI
+vgervais|2024-09-13 08:13:48|Add|997|VG|2024-10-09|1760|9516-0966 Québec Inc [Anthony Bergeron]|Voir question comptable pour roulement|0,40||VRAI
+vgervais|2024-09-13 08:26:39|Add|998|VG|2024-10-09|1106|Dr Frédéric Morin Optométriste Inc.|Vérfiier réso de dividende à la demande conseiller légal|0,50||VRAI
+vgervais|2024-09-13 08:26:50|UPDATE|985|VG|2024-10-09|5|z_Adiministratif_Autres non chargeables|Discussion Michel Laframce (apprendre le formulaire) + Autres suivis + Discussion Toma Viktro facturation|1,80||FAUX
+vgervais|2024-09-13 08:31:48|Add|999|VG|2024-11-09|1348|Maurice Chiasson, CPA|Immeubles marklin C2: Discussion avec Comptable pour nouveau client|0,30||VRAI
+vgervais|2024-09-13 08:34:53|Add|1000|VG|2024-11-09|1759|France Morin CPA|Conversatin téléphonique + recherche |0,70||VRAI
+vgervais|2024-09-13 08:38:02|Add|1001|VG|2024-11-09|1727|Nadine Pelletier Inc.|Parler Plus: Rencontre client + recherche AAPE sur vente location d'immeuble + calcul|2,30||VRAI
+vgervais|2024-09-13 08:40:04|Add|1002|VG|2024-11-09|1505|Le Groupe Ultragen Ltée [Khac Trong Truong]|Voir si je peux répondre au courriel (valider exonération + recherche)|0,70||VRAI
+vgervais|2024-09-13 08:42:28|Add|1003|VG|2024-11-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Suivi avec Michel/discussion pour JVM|0,30||VRAI
+vgervais|2024-09-13 08:44:02|Add|1004|VG|2024-11-09|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Suivi pour calcul JVM (tableau)|0,60||VRAI
+vgervais|2024-09-13 08:47:29|Add|1005|VG|2024-11-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Débuter la révision de T2 +Suivi de la JVM avec Michel pour avancer le dossier |1,10||VRAI
+vgervais|2024-09-13 08:48:31|Add|1006|VG|2024-11-09|1106|Dr Frédéric Morin Optométriste Inc.|Conversation avec Chantal Émond pour obtenir relieur ou livre des minutes|0,20||VRAI
+vgervais|2024-09-13 08:50:18|Add|1007|VG|2024-11-09|1689|9049-3990 Québec Inc [Mr Muffler - Mécanique360] [Martin Désilets / Alain Bécotte]|Répondree question client|0,30||VRAI
+vgervais|2024-09-13 08:52:10|Add|1008|VG|2024-11-09|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Avancer mémorandum |2,20||VRAI
+vgervais|2024-09-13 08:53:57|Add|1009|VG|2024-11-09|1796|Alexandre Bourret Courtier Immobilier Inc.|Suivis pour déclaration + Discussion avec Laurent + |0,70||VRAI
+vgervais|2024-09-13 08:54:38|Add|1010|VG|2024-11-09|5|z_Adiministratif_Autres non chargeables|Divers suivi + lecture |0,90||VRAI
+vgervais|2024-09-13 09:07:01|UPDATE|1009|VG|2024-11-09|1796|Alexandre Bourret Courtier Immobilier Inc.|Suivis pour déclaration + Discussion avec Laurent + |0,50||VRAI
+vgervais|2024-09-13 09:10:54|UPDATE|986|VG|2024-10-09|1796|Alexandre Bourret Courtier Immobilier Inc.|Suivi pour obtenir information sur PEC + voir si PTPE + Discussion avec Alexandre Bourret|1,10||VRAI
+vgervais|2024-09-13 17:18:56|Add|1011|VG|2024-09-13|1785|9172-2264 Québec Inc [MFG Technologies] [Alain Normand]|Revoir documentation légale|1,20|VRAI||2024-09-13 17:18:56
+vgervais|2024-09-13 17:20:08|Add|1012|VG|2024-09-13|1516|Les Industries Canplex Ltée [Marco Stocchero]|Préparer certaines informations pour la demande d'informations|0,80|VRAI||2024-09-13 17:20:08
+vgervais|2024-09-13 17:20:50|Add|1013|VG|2024-09-13|1132|Dany Bolduc [Alpha Mosaïk]|Conversattion téléphonique + courriel avec Rcap Leasings|0,40|VRAI||2024-09-13 17:20:50
+vgervais|2024-09-13 17:21:40|Add|1014|VG|2024-09-13|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion Isabelle Goulet (instruction compte de banque et coordination)|0,40|VRAI||2024-09-13 17:21:40
+vgervais|2024-09-13 17:23:19|Add|1015|VG|2024-09-13|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Suivis JVM + voir calcul|0,20|VRAI||2024-09-13 17:23:19
+vgervais|2024-09-13 17:25:09|Add|1016|VG|2024-09-13|1727|Nadine Pelletier Inc.|Parler Plus: Recherche pour voir les conditions pour Immeubles actifs  (liste de services offerts)+ courriel pour les conditions + voir bail + services |1,60|VRAI||2024-09-13 17:25:09
+vgervais|2024-09-13 17:26:53|UPDATE|1016|VG|2024-09-13|1727|Nadine Pelletier Inc.|Parler Plus: Recherche pour voir les conditions pour Immeubles actifs  (liste de services offerts)+ courriel pour les conditions + voir bail + services  + conversations téléphoniques avec Actionnaire|1,80|VRAI||2024-09-13 17:26:53
+vgervais|2024-09-13 17:28:55|Add|1017|VG|2024-09-13|1759|France Morin CPA|RamonagesS:  Recherche + Discussion PTPE (écriture comptable moment)  et du gain de reglement de dette dans l'autre sociétés|1,60|VRAI||2024-09-13 17:28:55
+vgervais|2024-09-13 17:29:17|UPDATE|1017|VG|2024-09-13|1759|France Morin CPA|RamonagesS:  Recherche + Discussion PTPE (écriture comptable moment)  et du gain de reglement de dette dans l'autre sociétés|0,60|VRAI||2024-09-13 17:29:17
+vgervais|2024-09-13 17:31:41|Add|1018|VG|2024-09-13|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Préparation mémo|1,40|VRAI||2024-09-13 17:31:41
+vgervais|2024-09-13 17:33:27|Add|1019|VG|2024-09-13|5|z_Adiministratif_Autres non chargeables|Administration + Divers suivis feuille de temps + Autres/discussion recrutement|1,40|VRAI||2024-09-13 17:33:27
