@@ -18,13 +18,16 @@ Private Sub Workbook_Open()
     wshMENU.Range("A34").Font.size = 9
     wshMENU.Range("A34").Font.Color = vbRed
     
-    Dim destinationFileName As String
+    Dim destinationFileName As String, destinationFileNamePath As String
     If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileNamePath = "P:\Administration\APP\GCF\DataFiles"
     Else
-        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileNamePath = "C:\VBA\GC_FISCALITÉ\DataFiles"
     End If
     
+    destinationFileName = destinationFileNamePath & Application.PathSeparator & _
+                            "GCF_BD_Entrée.xlsx"
+                            
     wshMENU.Range("A35").Value = "Environnement - " & destinationFileName
     wshMENU.Range("A35").Font.size = 9
     wshMENU.Range("A35").Font.Color = vbBlack

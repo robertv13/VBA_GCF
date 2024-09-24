@@ -6,7 +6,7 @@ Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (By
 Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
 
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyymmdd_hhnnss")
+    currentTime = Format$(Now, "yyyymmdd_hhmmss")
     
     'Determine the location of the Log file
     Dim rootPath As String
@@ -35,30 +35,31 @@ Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal sta
     
     If startTime = 0 Then
         startTime = Timer 'Start timing
-        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        currentTime & "|" & _
+        Print #fileNum, currentTime & "|" & _
                         ThisWorkbook.Name & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         moduleName & "|" & _
                         procName & "|" & _
                         "" & "|" & _
                         param1
+                        
     ElseIf startTime <= 0 Then 'Log intermédiaire
-        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        currentTime & "|" & _
+        Print #fileNum, currentTime & "|" & _
                         ThisWorkbook.Name & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         moduleName & "|" & _
                         procName & "|" & _
-                        "" & "|" & _
+                        "checkPoint" & "|" & _
                         param1
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #fileNum, Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        currentTime & "|" & _
+        Print #fileNum, currentTime & "|" & _
                         ThisWorkbook.Name & "|" & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         moduleName & "|" & _
                         procName & " (sortie)" & "|" & _
-                        "Temps écoulé: " & Format(elapsedTime, "#0.0000") & " seconds" & "|" & _
+                        "Temps écoulé: " & Format(elapsedTime, "#0.0000") & " secondes" & "|" & _
                         param1
     End If
     
@@ -127,7 +128,7 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
     End If
 
     'Boucle pour vérifier dans les workbooks fermés
-    Dim fullFileName As String
+    Dim fullFileName As String, message1 As String, message2 As String
     Dim sql As String
     Dim conn As Object
     Dim rs As Object
@@ -152,7 +153,7 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                                                 "TEC_Local|Client_ID")
                 colName = Mid(feuilleRechercher, InStr(feuilleRechercher, "|") + 1)
                 feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
-'                Debug.Print fullFileName, feuilleName, colName
+                Debug.Print "DB.#155 - workbook="; fullFileName; "  feuille="; feuilleName; "   colonne="; colName
                 plageRechercher = feuilleName & "$"
                 
                 ' Construire la requête SQL pour chercher le client
@@ -160,9 +161,9 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'"
+                    message1 = message1 & "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'" & vbCrLf
                     clientExiste = True
-                    Exit Sub
+                GoTo Exit_Sub
                 End If
                 rs.Close
             Next feuilleRechercher
@@ -178,15 +179,14 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
         Dim ws As Worksheet
         For Each ws In wb.Worksheets
             Dim foundCell As Range
-'            Debug.Print wb.Name, ws.Name
             If ws.Name = "Données" Or ws.Name = "DonnéesRecherche" Or ws.Name = "Clients" Then
                 GoTo Next_Worksheet
             End If
             Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
-                Debug.Print "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'"
+                message2 = message2 & "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
                 clientExiste = True
-                Exit Sub
+                GoTo Exit_Sub
             End If
 Next_Worksheet:
         Next ws
@@ -198,6 +198,14 @@ Next_Worksheet:
     Set rs = Nothing
     Set wb = Nothing
     Set ws = Nothing
+
+Exit_Sub:
+    If message1 <> "" Then
+        MsgBox message1, vbCritical, "Ce code de client est utilisé dans le fichier MASTER"
+    End If
+    If message2 <> "" Then
+        MsgBox message2, vbCritical, "Ce code de client est utilisé dans le fichier Clients"
+    End If
     
 End Sub
 

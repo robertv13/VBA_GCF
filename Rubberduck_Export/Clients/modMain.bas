@@ -110,20 +110,22 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
     Application.ScreenUpdating = False
     Application.Visible = False
     
-    Dim foundCell As Range
-
-    'Définir le nom du fichier en fonction de l'utilisateur
-    Dim destinationFileName As String
+    'Définir le nom du fichier en fonction de l'utilisateur (environnement)
+    Dim destinationFileName As String, destinationFileNamePath As String
     If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileNamePath = "P:\Administration\APP\GCF\DataFiles"
     Else
-        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+        destinationFileNamePath = "C:\VBA\GC_FISCALITÉ\DataFiles"
     End If
+    destinationFileName = destinationFileNamePath & Application.PathSeparator & _
+                            "GCF_BD_Entrée.xlsx"
     Dim destinationTab As String: destinationTab = "Clients"
     
     'Ouvrir le fichier GCF_BD_Entrée.xlsx (could be PROD or DEV)
     Dim wb As Workbook: Set wb = Workbooks.Open(destinationFileName, ReadOnly:=False)
     Dim ws As Worksheet: Set ws = wb.Sheets(destinationTab)
+    
+    Dim foundCell As Range
     
     If action = "NEW_RECORD" Then
         'Ajouter un nouvel enregistrement à la première ligne vide (.Offset(1,0))
@@ -165,7 +167,7 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
             foundCell.Offset(0, 12).Value = ufClientMF.txtComptable.Value
             foundCell.Offset(0, 13).Value = ufClientMF.txtNotaireAvocat.Value
         Else
-            MsgBox "Le client '" & ufClientMF.txtCodeClient & "' n'a pas été trouvé dans le fichier!", vbCritical
+            MsgBox "#MB:101 - Le client '" & ufClientMF.txtCodeClient & "' n'a pas été trouvé dans le fichier!", vbCritical
         End If
     End If
 

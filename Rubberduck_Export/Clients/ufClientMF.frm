@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 2.4)"
+   Caption         =   "Gestion du fichier Clients (version 2.5)"
    ClientHeight    =   11415
    ClientLeft      =   6615
    ClientTop       =   2460
@@ -164,7 +164,7 @@ Private Sub cmdSave_Click()
     End If
     
     Dim clientExists As Boolean
-    clientExists = Fn_Does_Client_Code_Exist
+    clientExists = Fn_Is_Client_Code_Already_Used
     
     If clientExists = True Then
         Call CM_Update_External_GCF_BD_Entrée("UPDATE")
@@ -245,7 +245,6 @@ Private Sub Delete_Client(clientID)
     End If
     
     Me.txtSearch.Value = ""
-    
     Call CM_Reset_UserForm
     
     ufClientMF.cmdSave.Enabled = False
@@ -337,9 +336,7 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:txtCodeClient_Exit", "", 0)
     
     Dim clientExists As Boolean
-    clientExists = Fn_Does_Client_Code_Exist
-    
-'    MsgBox "X - " & clientExists & nouveauClient '2024-08-22 @ 07:41
+    clientExists = Fn_Is_Client_Code_Already_Used
     
     If clientExists = True And nouveauClient = True Then
         ufClientMF.txtCodeClient.BackColor = vbRed
