@@ -1,11 +1,11 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-Function Fn_Does_Client_Code_Exist() As Boolean
+Function Fn_Is_Client_Code_Already_Used() As Boolean
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "", 0)
     
-    Fn_Does_Client_Code_Exist = False
+    Fn_Is_Client_Code_Already_Used = False
     
     Dim ws As Worksheet: Set ws = wshClients
     Dim iCodeClient As String
@@ -16,15 +16,15 @@ Function Fn_Does_Client_Code_Exist() As Boolean
     
     'Validating Duplicate Entries
     If Not ws.Range("B:B").Find(What:=iCodeClient, LookAt:=xlWhole) Is Nothing Then
-        Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "VRAI", -1)
-        Fn_Does_Client_Code_Exist = True
+        Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "VRAI", -1)
+        Fn_Is_Client_Code_Already_Used = True
     Else
-        Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "FAUX", -1)
+        Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "FAUX", -1)
     End If
 
 Clean_Exit:
 
-    Call CM_Log_Record("modMain:Fn_Does_Client_Code_Exist", "", startTime)
+    Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "", startTime)
     
     Exit Function
 
