@@ -1700,10 +1700,10 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim dict_TEC_ID As New Dictionary
     Dim dict_prof As New Dictionary
     
-    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date
+    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
     Dim minDate As Date, maxDate As Date
-    Dim hres As Double, estFacturable As Boolean
-    Dim estFacturee As Boolean, estDetruit As Boolean
+    Dim hres As Double, hres_non_detruites As Double
+    Dim estDetruit As Boolean, estFacturable As Boolean, estFacturee As Boolean
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
     Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
     Dim cas_estDetruit_invalide As Long
@@ -1723,37 +1723,60 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
-        hres = arr(i, 5)
+        clientCode = arr(i, 4)
+        hres = arr(i, 6)
         If IsNumeric(hres) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
-        estFacturable = arr(i, 6)
+        estFacturable = arr(i, 7)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
-        estFacturee = arr(i, 7)
+        estFacturee = arr(i, 8)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
-        estDetruit = arr(i, 8)
+        estDetruit = arr(i, 9)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
+        'Heures Inscrites
         total_hres_inscrites = total_hres_inscrites + hres
-        If estDetruit = "Vrai" Then total_hres_detruites = total_hres_detruites + hres
+        hres_non_detruites = hres
         
-        If estDetruit = "Faux" And estFacturable = "Vrai" Then total_hres_facturable = total_hres_facturable + hres
-        If estDetruit = "Faux" And estFacturable = "Faux" Then total_hres_non_facturable = total_hres_non_facturable + hres
-        If estDetruit = "Faux" And estFacturee = "Vrai" Then total_hres_facturees = total_hres_facturees + hres
+        'Heures détruites
+        If estDetruit = "Vrai" Then
+            total_hres_detruites = total_hres_detruites + hres
+            hres_non_detruites = hres_non_detruites - hres
+        End If
+        
+        'Heures FACTURABLES
+        If hres_non_detruites <> 0 And estFacturable = "Vrai" And _
+            Fn_Is_Client_Facturable(clientCode) = True Then
+                total_hres_facturable = total_hres_facturable + hres_non_detruites
+        End If
+        
+        'Heures non-FACTURABLES
+        If hres_non_detruites <> 0 Then
+            If estFacturable = "Faux" Or Fn_Is_Client_Facturable(clientCode) = False Then
+                total_hres_non_facturable = total_hres_non_facturable + hres_non_detruites
+            End If
+        End If
+        
+        'Heures FACTURÉES
+        If hres_non_detruites <> 0 And estDetruit = "Faux" And estFacturee = "Vrai" And _
+            Fn_Is_Client_Facturable(clientCode) = True Then
+                total_hres_facturees = total_hres_facturees + hres_non_detruites
+        End If
         
         'Dictionary
         If dict_TEC_ID.Exists(TECID) = False Then
@@ -1763,6 +1786,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
+        
         If dict_prof.Exists(prof & "-" & profID) = False Then
             dict_prof.add prof & "-" & profID, 0
         End If
@@ -2002,7 +2026,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1050 'What is the last TECID analyze ?
+    lastTECIDReported = 1143 'What is the last TECID analyze ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2195,36 +2219,43 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             End If
         End If
 
+        'Accumule les heures
         Dim h(1 To 6) As Double
-        h(1) = 0
+        
+        'Heures INSCRITES
         total_hres_inscrites = total_hres_inscrites + hres
         h(1) = hres
         
+        'Heures DÉTRUITES
         h(2) = 0
         If estDetruit = "Vrai" Then
             total_hres_detruites = total_hres_detruites + hres
             h(2) = hres
+            hres = 0 'Il ne reste plus d'heures...
         End If
         
+        'Heures FACTURABLES
         h(3) = 0
-        If estDetruit = "Faux" And estFacturable = "Vrai" Then
-            total_hres_facturable = total_hres_facturable + hres
-            h(3) = hres
+        If hres <> 0 And estFacturable = "Vrai" And Fn_Is_Client_Facturable(codeClient) = True Then
+                total_hres_facturable = total_hres_facturable + hres
+                h(3) = hres
         End If
         
+        'Heures NON-FACTURABLES
         h(4) = 0
-        If estDetruit = "Faux" And estFacturable = "Faux" Then
-            total_hres_non_facturable = total_hres_non_facturable + hres
-            h(4) = hres
+        If hres <> 0 Then
+            total_hres_non_facturable = total_hres_non_facturable + hres - h(3)
+            h(4) = hres - h(3)
         End If
         
+        'Heures FACTURÉES
         h(5) = 0
-        If estDetruit = "Faux" And estFacturee = "Vrai" Then
-            total_hres_facturees = total_hres_facturees + hres
-            h(5) = hres
+        If estFacturee = "Vrai" And Fn_Is_Client_Facturable(codeClient) = True Then
+                total_hres_facturees = total_hres_facturees + hres
+                h(5) = hres
         End If
         
-        'TEC = Heures Facturrables - Heures facturées
+        'Heures TEC = Heures Facturables - Heures facturées
         If h(3) Then
             h(6) = h(3) - h(5)
         Else
@@ -2409,7 +2440,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastTECIDReported & ") ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
     
@@ -2429,7 +2460,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '            Debug.Print "Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (ligne > " & lastTECIDReported & ") ")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
     

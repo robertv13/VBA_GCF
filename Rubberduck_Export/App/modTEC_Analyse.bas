@@ -26,7 +26,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+        'On ne considère que les clients FACTURABLES
+        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, 2).value) = True Then
+            dictClients.add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+        End If
     Next i
 
     'Calculate the center of the used range
@@ -96,7 +99,8 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.EnableEvents = False
     For i = 3 To lastUsedRow
         'Conditions for exclusion (adjust as needed)
-        If wsSource.Cells(i, 14).value <> "VRAI" And _
+        If Fn_Is_Client_Facturable(wsSource.Cells(i, ftecClient_ID)) = True And _
+            wsSource.Cells(i, 14).value <> "VRAI" And _
             wsSource.Cells(i, 12).value <> "VRAI" And _
             wsSource.Cells(i, 10).value = "VRAI" Then
                 If wsSource.Cells(i, ftecDate).value <= wsDest.Range("H3").value Then

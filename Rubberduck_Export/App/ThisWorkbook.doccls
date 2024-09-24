@@ -5,7 +5,12 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
-    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-19 @ 07:26
+'    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-19 @ 07:26
+   
+'    MsgBox "On attend un peu...", vbExclamation
+'
+    
+    DoEvents
     
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
@@ -23,11 +28,16 @@ Private Sub Workbook_Open()
         MsgBox "L'adresse du serveur n'est pas valide !!!", vbCritical, "Accès au serveur est impossible"
     End If
     
-    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-19 @ 07:26
+'    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-19 @ 07:26
+'    MsgBox "On attend encore un peu...", vbExclamation
+    DoEvents
     
     'Log activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
     
+'    MsgBox "Le log devrait être démarré...", vbExclamation
+    DoEvents
+
     Application.ScreenUpdating = False
     
     'Vérification si le chemin est accessible - Deuxième essai
@@ -37,7 +47,6 @@ Private Sub Workbook_Open()
                "Incapacité d'accéder au serveur (2ème essai)"
         Exit Sub
     End If
-    
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile

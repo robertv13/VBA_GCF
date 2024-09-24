@@ -1041,8 +1041,8 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
             If nomClientCAR <> nomClientFromMF Then
                 Debug.Print i & " : " & codeClientCAR & " - " & nomClientCAR & " <---> " & nomClientFromMF
                 wsSource.Cells(i, colClientName).value = nomClientFromMF
-                wsOutput.Cells(rowOutput, 1).value = wsSource.Cells(i, 1).value
-                wsOutput.Cells(rowOutput, 2).value = wsSource.name
+                wsOutput.Cells(rowOutput, 1).value = wsSource.name
+                wsOutput.Cells(rowOutput, 2).value = wsSource.Cells(i, 1).value
                 wsOutput.Cells(rowOutput, 3).value = nomClientCAR
                 wsOutput.Cells(rowOutput, 4).value = codeClientCAR
                 wsOutput.Cells(rowOutput, 5).value = nomClientFromMF

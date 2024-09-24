@@ -795,6 +795,17 @@ Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows u
     
 End Function
 
+Public Function Fn_Is_Client_Facturable(clientID As String) As Boolean
+
+    Fn_Is_Client_Facturable = False
+    
+    'Les clients NON FACTURABLES sont compris entre 1 et 99
+    If Len(clientID) > 2 Then
+        Fn_Is_Client_Facturable = True
+    End If
+        
+End Function
+
 Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False

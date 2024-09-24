@@ -644,7 +644,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
     
     Dim arr() As Variant
-    ReDim arr(1 To lastUsedRow - 2, 1 To 8) '2 rows of Heading
+    ReDim arr(1 To lastUsedRow - 2, 1 To 9) '2 rows of Heading
     
     Dim i As Long
     For i = 3 To lastUsedRow
@@ -652,11 +652,12 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
             arr(i - 2, 1) = .Range("A" & i).value 'TEC_ID
             arr(i - 2, 2) = .Range("C" & i).value 'Prof
             arr(i - 2, 3) = .Range("D" & i).value 'Date
-            arr(i - 2, 4) = .Range("F" & i).value 'Client's Name
-            arr(i - 2, 5) = .Range("H" & i).value 'Hours
-            arr(i - 2, 6) = .Range("J" & i).value 'isBillable
-            arr(i - 2, 7) = .Range("L" & i).value 'isInvoiced
-            arr(i - 2, 8) = .Range("N" & i).value 'isDeleted
+            arr(i - 2, 4) = .Range("E" & i).value 'Client's ID - 2024-09-24 @ 09:41
+            arr(i - 2, 5) = .Range("F" & i).value 'Client's Name
+            arr(i - 2, 6) = .Range("H" & i).value 'Hours
+            arr(i - 2, 7) = .Range("J" & i).value 'isBillable
+            arr(i - 2, 8) = .Range("L" & i).value 'isInvoiced
+            arr(i - 2, 9) = .Range("N" & i).value 'isDeleted
         End With
     Next i
 
