@@ -501,6 +501,26 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
 
 End Function
 
+Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
+
+    Fn_Check_Server_Access = False
+    
+    'Créer un FileSystemObject
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    'Vérifier si le fichier existe
+    Dim folderExists As Boolean
+    folderExists = fso.folderExists(serverPath)
+    
+    If folderExists Then
+        Fn_Check_Server_Access = True
+    End If
+    
+    'Libérer l'objet
+    Set fso = Nothing
+    
+End Function
+
 Function Fn_Complete_Date(dateInput As String) As Variant
     
     Dim dayPart As Long

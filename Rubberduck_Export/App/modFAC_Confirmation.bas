@@ -827,7 +827,7 @@ Function Fn_Get_Outlook_Signature_Path() As String
     Set file = Nothing
 End Function
 
-Function ReadSignatureFile(FilePath As String) As String
+Function ReadSignatureFile(filePath As String) As String
     Dim fso As Object
     Dim ts As Object
     Dim sContent As String
@@ -836,8 +836,8 @@ Function ReadSignatureFile(FilePath As String) As String
     Set fso = CreateObject("Scripting.FileSystemObject")
     
     ' Lire le contenu de la signature
-    If fso.fileExists(FilePath) Then
-        Set ts = fso.GetFile(FilePath).OpenAsTextStream(1, -2)
+    If fso.fileExists(filePath) Then
+        Set ts = fso.GetFile(filePath).OpenAsTextStream(1, -2)
         sContent = ts.ReadAll
         ts.Close
     End If
