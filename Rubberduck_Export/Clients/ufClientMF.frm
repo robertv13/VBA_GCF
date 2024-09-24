@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 2.2)"
+   Caption         =   "Gestion du fichier Clients (version 2.4)"
    ClientHeight    =   11415
    ClientLeft      =   6615
    ClientTop       =   2460
@@ -245,6 +245,7 @@ Private Sub Delete_Client(clientID)
     End If
     
     Me.txtSearch.Value = ""
+    
     Call CM_Reset_UserForm
     
     ufClientMF.cmdSave.Enabled = False

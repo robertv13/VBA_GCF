@@ -1,0 +1,90 @@
+2024-09-19 07:30:17|vgervais|UPDATE|1052|VG|2024-09-18|421|Louis Freyd|Estimé frais de garde Simulation + couuriel|0,50|VRAI||2024-09-19 07:30:17
+2024-09-19 07:30:29|vgervais|UPDATE|1069|VG|2024-09-18|1771|LC Combustion Inc. [Christian Laroche]|Suivis de dossier - Classement|0,30|VRAI||2024-09-19 07:30:29
+2024-09-19 07:31:19|vgervais|UPDATE|1055|VG|2024-09-18|1348|Maurice Chiasson, CPA|Immeuble Marklin - SUivi|0,20|VRAI||2024-09-19 07:31:19
+2024-09-19 08:22:50|vgervais|Add|1073|VG|2024-09-19|5|z_Adiministratif_Autres non chargeables|Suivi - Administration diverses - lecture sommaire |0,70|FAUX||2024-09-19 08:22:50
+2024-09-19 08:22:59|vgervais|UPDATE|1073|VG|2024-09-19|5|z_Adiministratif_Autres non chargeables|Suivi - Administration diverses - lecture sommaire CTF|0,70|FAUX||2024-09-19 08:22:59
+2024-09-19 08:23:55|vgervais|Add|1074|VG|2024-09-19|421|Louis Freyd|Répondre courriel |0,10|VRAI||2024-09-19 08:23:55
+2024-09-19 08:24:16|vgervais|Add|1075|VG|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Suivi + voir mémo|0,30|VRAI||2024-09-19 08:24:16
+2024-09-19 08:24:41|vgervais|Add|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi + voir mémo|0,30|VRAI||2024-09-19 08:24:41
+User|2024-09-19 08:55:49|Add|1077|ML|2024-09-18|5|z_Adiministratif_Autres non chargeables|Correction des derniers ajustements dans la base des clients faites par Annie
+|1,00|FAUX||2024-09-19 08:55:49
+2024-09-19 09:01:32|User|Add|1078|ML|2024-09-18|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Correction des roulements
+|0,75|VRAI||2024-09-19 09:01:32
+2024-09-19 09:02:06|User|Add|1079|ML|2024-09-18|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Recherche des NE chez le notaire et le comptable + rééssayer au fédéral
+|0,50|VRAI||2024-09-19 09:02:06
+2024-09-19 09:02:37|User|Add|1080|ML|2024-09-18|1051|Arthur Malouin Ltée [Yvan Malouin]|Vérification des soldes de 2023 pour le consolidé
+|2,00|VRAI||2024-09-19 09:02:37
+2024-09-19 09:03:17|User|Add|1081|ML|2024-09-18|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Gestion des signatures du MR-69
+|0,25|VRAI||2024-09-19 09:03:17
+2024-09-19 09:03:42|User|Add|1082|ML|2024-09-18|1051|Arthur Malouin Ltée [Yvan Malouin]|Montage des écritures comptables pour fermer les comptes de P.Morin
+|1,50|VRAI||2024-09-19 09:03:42
+2024-09-19 09:04:07|User|Add|1083|ML|2024-09-18|1051|Arthur Malouin Ltée [Yvan Malouin]|Examen du fichier de prise en charge des comptes de Ducharme
+|0,75|VRAI||2024-09-19 09:04:07
+2024-09-19 09:04:35|User|Add|1084|ML|2024-09-18|1051|Arthur Malouin Ltée [Yvan Malouin]|Écriture d'une procédure de préparation pour la production des rapports consolidés de septembre 2024
+|0,75|VRAI||2024-09-19 09:04:35
+2024-09-19 09:15:59|vgervais|UPDATE|1073|VG|2024-09-19|5|z_Adiministratif_Autres non chargeables|Suivi - Administration diverses - lecture sommaire CTF + suivi avec Michel|1,10|FAUX||2024-09-19 09:15:59
+2024-09-19 09:44:10|vgervais|Add|1085|VG|2024-09-19|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Suivi documentation légale|0,10|VRAI||2024-09-19 09:44:10
+2024-09-19 11:19:45|vgervais|UPDATE|1085|VG|2024-09-19|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Suivi documentation légale|0,30|VRAI||2024-09-19 11:19:45
+2024-09-19 11:20:28|vgervais|UPDATE|1073|VG|2024-09-19|5|z_Adiministratif_Autres non chargeables|Suivi - Administration diverses - lecture sommaire CTF + suivi avec Michel (correction roulement + suvis de dossiers)|1,60|FAUX||2024-09-19 11:20:28
+2024-09-19 11:22:15|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé|1,30|VRAI||2024-09-19 11:22:15
+2024-09-19 11:23:06|vgervais|Add|1086|VG|2024-09-19|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Changement mémo|0,50|VRAI||2024-09-19 11:23:06
+2024-09-19 11:23:20|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé|1,20|VRAI||2024-09-19 11:23:20
+2024-09-19 13:54:13|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé|1,30|VRAI||2024-09-19 13:54:13
+2024-09-19 13:59:38|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé|1,40|VRAI||2024-09-19 13:59:38
+2024-09-19 14:35:16|vgervais|UPDATE|1073|VG|2024-09-19|5|z_Adiministratif_Autres non chargeables|Suivi - Administration diverses - lecture sommaire CTF + suivi avec Michel (correction roulement + suvis de dossiers) + discussion cliente vérification |1,80|FAUX||2024-09-19 14:35:16
+2024-09-19 16:14:00|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé + Divers conversations téléphonique avec Isabelle|1,60|VRAI||2024-09-19 16:14:00
+2024-09-19 16:40:28|vgervais|Add|1087|VG|2024-09-19|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Préparation mémorandum|2,00|VRAI||2024-09-19 16:40:28
+2024-09-19 16:45:30|Annie|Add|1088|AR|2024-09-19|1112|Vignoble Kobloth et fils Inc. [Thierry Kobloth]|Comptabilité d'août, rapport des taxes à payer, fichier Excellence|4.25|VRAI||2024-09-19 16:45:30
+2024-09-19 16:46:06|Annie|Add|1089|AR|2024-09-19|2038|9471-5117 Québec Inc. [Sébastien Beaudoin]|Paies et DAS septembre|0.25|VRAI||2024-09-19 16:46:06
+2024-09-19 16:46:30|Annie|Add|1090|AR|2024-09-19|2046|Consultation Soqua Inc. [Claire Caron]|Paies et DAS octobre|0.25|VRAI||2024-09-19 16:46:30
+2024-09-19 16:47:22|Annie|UPDATE|1088|AR|2024-09-19|1112|Vignoble Kobloth et fils Inc. [Thierry Kobloth]|Comptabilité d'août, rapport des taxes à payer, fichier Excellence|4.75|VRAI||2024-09-19 16:47:22
+2024-09-19 17:20:31|User|Add|1091|ML|2024-09-19|1051|Arthur Malouin Ltée [Yvan Malouin]|Réponse à une question de Joannie sur la comptabilisation des prêts de la BMO
+|0,25|VRAI||2024-09-19 17:20:31
+2024-09-19 17:20:58|User|Add|1092|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Travail sur la JVM de la société et courriel à Julie Desmarais pour des informations supplémentaire
+|1,25|VRAI||2024-09-19 17:20:58
+2024-09-19 17:21:29|User|Add|1093|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Discussion avec Vladimir sur le dossier Solstice
+|0,25|VRAI||2024-09-19 17:21:29
+2024-09-19 17:21:54|User|Add|1094|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Demande d'informations dans le dossier Sogesco
+|0,25|VRAI||2024-09-19 17:21:54
+2024-09-19 17:22:26|User|Add|1095|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Évaluation de la valeur de Sogesco
+|1,50|VRAI||2024-09-19 17:22:26
+2024-09-19 17:22:53|User|Add|1096|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Révision du fichier d'évaluation
+|0,50|VRAI||2024-09-19 17:22:53
+2024-09-19 17:23:31|User|Add|1097|ML|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision du fichier d'évaluation
+|0,75|VRAI||2024-09-19 17:23:31
+2024-09-19 17:23:55|User|Add|1098|ML|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision du dossier avec Vladimir
+|0,25|VRAI||2024-09-19 17:23:55
+2024-09-19 17:24:19|User|Add|1099|ML|2024-09-19|1193|Solstice CNC Inc. [Alexandre Desmarais]|Révision du dossier avec Vladimir
+|0,25|VRAI||2024-09-19 17:24:19
+2024-09-19 17:24:45|User|Add|1100|ML|2024-09-19|1780|9112-9031 Québec Inc. [Guy Béland]|Montage du roulement fiscal
+|1,75|VRAI||2024-09-19 17:24:45
+2024-09-19 18:36:19|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé + Divers conversations téléphonique avec Isabelle + avancer mémo avec l'information |3,60|VRAI||2024-09-19 18:36:19
+2024-09-19 19:56:39|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé + Divers conversations téléphonique avec Isabelle + avancer mémo avec l'information |4,10|VRAI||2024-09-19 19:56:39
+2024-09-19 19:59:33|vgervais|Add|1101|VG|2024-09-19|1388|9307-2411 Québec Inc. [Capitaine Vap]|9440-2112 Finaliser sans le choix car le locateur n'a pas accpeter de le faire|0,30|VRAI||2024-09-19 19:59:33
+2024-09-19 21:09:24|vgervais|UPDATE|1087|VG|2024-09-19|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Préparation mémorandum|2,20|VRAI||2024-09-19 21:09:24
+2024-09-19 21:09:38|vgervais|UPDATE|1087|VG|2024-09-19|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Préparation mémorandum|2,10|VRAI||2024-09-19 21:09:38
+2024-09-19 21:09:52|vgervais|UPDATE|1076|VG|2024-09-19|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Suivi JVM + Divers courriel pour suivi liquidation placement - ouverture du compte de banque - voir si on a la clé de sociéété et courriel pour la clé + Divers conversations téléphonique avec Isabelle + avancer mémo avec l'information |4,20|VRAI||2024-09-19 21:09:52
+2024-09-19 21:13:13|vgervais|UPDATE|1085|VG|2024-09-19|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Suivi documentation légale + Révision|0,80|VRAI||2024-09-19 21:13:13
+2024-09-19 21:13:29|vgervais|UPDATE|1085|VG|2024-09-19|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Suivi documentation légale|0,80|VRAI||2024-09-19 21:13:29
+2024-09-19 21:43:07|vgervais|Add|1102|VG|2024-09-12|5|z_Adiministratif_Autres non chargeables|Autres Suivis + test pour modification tableau vente actions + Vente actifs + Suivis divers  + Choix 16.1 pour un client qui a facilement été refus pour le locateur|2,10|FAUX||2024-09-19 21:43:07
+2024-09-19 21:43:57|vgervais|Add|1103|VG|2024-09-12|1749|Gestion Éric Lépine et Mélanie Lecavalier Inc. [Éric Lépine]|Suivi pour documentaion légale |0,20|VRAI||2024-09-19 21:43:57
+2024-09-19 21:44:56|vgervais|Add|1104|VG|2024-09-12|1516|Les Industries Canplex Ltée [Marco Stocchero]|recherche + envoie déclaration de revenus|0,20|VRAI||2024-09-19 21:44:56
+2024-09-19 21:50:14|vgervais|Add|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques |1,40|VRAI||2024-09-19 21:50:14
+2024-09-19 21:50:37|vgervais|UPDATE|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques |1,60|VRAI||2024-09-19 21:50:37
+2024-09-19 21:50:59|vgervais|UPDATE|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques |2,10|VRAI||2024-09-19 21:50:59
+2024-09-19 21:53:15|vgervais|Add|1106|VG|2024-09-12|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Discussion avec Stéphane Mongeau + courriel à Stéphane Bérard + regaader les contrats|1,10|VRAI||2024-09-19 21:53:15
+2024-09-19 21:53:55|vgervais|UPDATE|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques + Suivi des actions E absent du livre des minutes|2,30|VRAI||2024-09-19 21:53:55
+2024-09-19 21:55:58|vgervais|Add|1107|VG|2024-09-12|1189|8372276 Canada Inc. [France Pelletier]|Ramonage: Discussion avec Frabnce + vérifeir comptabilisation gains radiation de dette |0,80|VRAI||2024-09-19 21:55:58
+2024-09-19 21:56:25|vgervais|UPDATE|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques + Suivi des actions E absent du livre des minutes|2,40|VRAI||2024-09-19 21:56:25
+2024-09-19 21:58:33|vgervais|Add|1108|VG|2024-09-12|1796|Alexandre Bourret Courtier Immobilier Inc.|Suivi avec Laurent pour finaliser |0,40|VRAI||2024-09-19 21:58:33
+2024-09-19 21:59:21|vgervais|UPDATE|1104|VG|2024-09-12|1516|Les Industries Canplex Ltée [Marco Stocchero]|recherche + envoie déclaration de revenus + répondre question|0,40|VRAI||2024-09-19 21:59:21
+2024-09-19 22:00:40|vgervais|Add|1109|VG|2024-09-12|1193|Solstice CNC Inc. [Alexandre Desmarais]|Suivi avec Michel|0,20|VRAI||2024-09-19 22:00:40
+2024-09-19 22:02:43|vgervais|Add|1110|VG|2024-09-12|1727|Nadine Pelletier Inc.|Recherche/lecture Condition application pour DGC sur immeuble|1,30|VRAI||2024-09-19 22:02:43
+2024-09-19 22:03:26|vgervais|UPDATE|1110|VG|2024-09-12|1727|Nadine Pelletier Inc.|Parler plus: Recherche/lecture Condition application pour DGC sur immeuble|1,10|VRAI||2024-09-19 22:03:26
+2024-09-19 22:03:42|vgervais|UPDATE|1110|VG|2024-09-12|1727|Nadine Pelletier Inc.|Parler plus: Recherche/lecture Condition application pour DGC sur immeuble|1,20|VRAI||2024-09-19 22:03:42
+2024-09-19 22:04:33|vgervais|UPDATE|1102|VG|2024-09-12|5|z_Adiministratif_Autres non chargeables|Autres Suivis + test pour modification tableau vente actions + Vente actifs + Suivis divers  + Choix 16.1 pour un client qui a facilement été refus pour le locateur + Lecture |2,30|FAUX||2024-09-19 22:04:33
+2024-09-19 22:04:48|vgervais|UPDATE|1105|VG|2024-09-12|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Révision T2 + Suivi pour calcul JVM + Discussions téléphonique (M. Ninni de RBC + Isabelle Goulet + Michel Coté et Reynald)+ courriels pour transfert de placements et ouverture des comptes de banques + Suivi des actions E absent du livre des minutes|2,60|VRAI||2024-09-19 22:04:48
+2024-09-19 22:06:18|vgervais|UPDATE|1012|VG|2024-09-13|1516|Les Industries Canplex Ltée [Marco Stocchero]|Préparer certaines informations pour la demande d'informations|0,90|VRAI||2024-09-19 22:06:18
+2024-09-19 22:07:09|vgervais|UPDATE|1013|VG|2024-09-13|1388|9307-2411 Québec Inc. [Capitaine Vap]|9440: Voir si chargeable (courriel a Rcap leasing)|0,40|VRAI||2024-09-19 22:07:09
+2024-09-19 22:08:00|vgervais|UPDATE|1016|VG|2024-09-13|1727|Nadine Pelletier Inc.|Parler Plus: Recherche pour voir les conditions pour Immeubles actifs  (liste de services offerts)+ courriel pour les conditions + voir bail + services  + conversations téléphoniques avec Actionnaire|1,60|VRAI||2024-09-19 22:08:00
+2024-09-19 22:08:15|vgervais|UPDATE|1016|VG|2024-09-13|1727|Nadine Pelletier Inc.|Parler Plus: Recherche pour voir les conditions pour Immeubles actifs  (liste de services offerts)+ courriel pour les conditions + voir bail + services  + conversations téléphoniques avec Actionnaire|1,70|VRAI||2024-09-19 22:08:15

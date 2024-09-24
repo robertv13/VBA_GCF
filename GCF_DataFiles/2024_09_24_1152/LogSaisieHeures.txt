@@ -1,0 +1,95 @@
+2024-09-23 04:22:06|GuillaumeCharron|Add|1144|GC|23/09/24|1663|Multi-Plis Inc. [Chantal Veillette]|question de chantale et Daniel sur formulaire de conservation de numéros de fusion et courriels|0,50|VRAI||2024-09-23 04:22:06
+2024-09-23 05:00:26|GuillaumeCharron|Add|1145|GC|23/09/24|519|Succession Éric Morais [Louise Morais]|courriel de Louise et transfert à Vladimir|0,40|VRAI||2024-09-23 05:00:26
+2024-09-23 05:12:45|GuillaumeCharron|Add|1146|GC|23/09/24|1055|Bernard Ducharme Assurances Inc. [Yvan Malouin]|question de françois et analyse de l'impôt estimatif pour lui|1,00|VRAI||2024-09-23 05:12:45
+2024-09-23 05:36:58|GuillaumeCharron|UPDATE|1146|GC|23/09/24|1055|Bernard Ducharme Assurances Inc. [Yvan Malouin]|question de françois et analyse de l'impôt estimatif pour lui|1,00|VRAI||2024-09-23 05:36:58
+2024-09-23 05:37:18|GuillaumeCharron|Add|1147|GC|23/09/24|130|Gestions Travaux Réseaux Inc. [Jean-François Paré]|analyse des états financiers vs évaluation|0,75|VRAI||2024-09-23 05:37:18
+2024-09-23 08:33:40|vgervais|Add|1148|VG|2024-09-23|5|z_Adiministratif_Autres non chargeables|Administration + autres suivis + lecture mise à jour/lecture 10.1|1,20|VRAI||2024-09-23 08:33:40
+2024-09-23 09:54:39|GuillaumeCharron|Add|1149|GC|23/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|tel avec vlad de mise à jour|0,25|VRAI||2024-09-23 09:54:39
+2024-09-23 09:54:44|GuillaumeCharron|UPDATE|1149|GC|23/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|tel avec vlad de mise à jour|0,40|VRAI||2024-09-23 09:54:44
+2024-09-23 09:55:09|GuillaumeCharron|Add|1150|GC|23/09/24|1785|9172-2264 Québec Inc. [Technologies MFG]|tel avec vlad mise à jour|0,40|VRAI||2024-09-23 09:55:09
+2024-09-23 09:55:36|GuillaumeCharron|Add|1151|GC|23/09/24|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|mise à jour avec Vlad|0,40|VRAI||2024-09-23 09:55:36
+2024-09-23 09:55:59|GuillaumeCharron|Add|1152|GC|23/09/24|1739|Groupe Coalitech Inc. [Techvac Équipement]|tel mise à jour Vladimir|0,40|VRAI||2024-09-23 09:55:59
+2024-09-23 09:56:15|GuillaumeCharron|Add|1153|GC|23/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|tel mise à jour Vlad|0,40|VRAI||2024-09-23 09:56:15
+2024-09-23 09:56:30|GuillaumeCharron|Add|1154|GC|23/09/24|1749|Gestion Éric Lépine et Mélanie Lecavalier Inc. [Éric Lépine]|tel mise à jour Vlad|0,40|VRAI||2024-09-23 09:56:30
+2024-09-23 09:57:12|GuillaumeCharron|Add|1155|GC|23/09/24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|tel avec Vlad mise à jour|0,40|VRAI||2024-09-23 09:57:12
+2024-09-23 11:59:52|GuillaumeCharron|Add|1156|GC|23/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|tel avec Marie-Claude et Vlad|0,75|VRAI||2024-09-23 11:59:52
+2024-09-23 12:22:51|GuillaumeCharron|UPDATE|1149|GC|23/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|tel avec vlad de mise à jour + tel avec Michel sur évaluation|0,75|VRAI||2024-09-23 12:22:51
+2024-09-23 12:24:09|GuillaumeCharron|UPDATE|1153|GC|23/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|tel mise à jour Vlad + tel avec Michel sur évaluation|0,40|VRAI||2024-09-23 12:24:09
+2024-09-23 12:24:19|GuillaumeCharron|UPDATE|1153|GC|23/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|tel mise à jour Vlad + tel avec Michel sur évaluation|0,75|VRAI||2024-09-23 12:24:19
+2024-09-23 13:06:51|GuillaumeCharron|Add|1157|GC|23/09/24|1505|Le Groupe Ultragen Ltée [Khac Trong Truong]|analyse de fiducies et attribution et répondre aux questions + courriels|1,00|VRAI||2024-09-23 13:06:51
+2024-09-23 13:33:22|GuillaumeCharron|Add|1158|GC|23/09/24|1605|1508-5822 Québec Inc. [Maxime Laforest]|analyse + tel avec Maxime sur diverses questions d'exonération à la vente de 9113|0,75|VRAI||2024-09-23 13:33:22
+2024-09-23 13:35:00|GuillaumeCharron|UPDATE|1156|GC|23/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|tel avec Marie-Claude et Vlad + courriels avocats|1,00|VRAI||2024-09-23 13:35:00
+2024-09-23 14:02:39|GuillaumeCharron|Add|1159|GC|23/09/24|1491|Mobilier de bureau Mobilium Inc. [Robert Guindon]|analyse des courriels de robert + tel avec Robert + prise de notes + sommaire|1,25|VRAI||2024-09-23 14:02:39
+2024-09-23 14:13:05|GuillaumeCharron|UPDATE|1159|GC|23/09/24|1491|Mobilier de bureau Mobilium Inc. [Robert Guindon]|analyse des courriels de robert + tel avec Robert + prise de notes + sommaire par courriel|1,50|VRAI||2024-09-23 14:13:05
+2024-09-23 14:15:06|GuillaumeCharron|Add|1160|GC|23/09/24|1751|Empire Pro Inc. [Carlos Luperdigas]|message vocal carlos pour divorce|0,40|VRAI||2024-09-23 14:15:06
+2024-09-23 14:58:36|GuillaumeCharron|UPDATE|1159|GC|23/09/24|1491|Mobilier de bureau Mobilium Inc. [Robert Guindon]|analyse des courriels de robert + tel avec Robert + prise de notes + sommaire par courriel + réception de documents|2,00|VRAI||2024-09-23 14:58:36
+2024-09-23 15:17:53|GuillaumeCharron|Add|1161|GC|23/09/24|1661|Alfred Gemme Inc. [François Gemme]|tel avec François sur ses questions|0,50|VRAI||2024-09-23 15:17:53
+2024-09-23 15:38:54|GuillaumeCharron|UPDATE|1156|GC|23/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|tel avec Marie-Claude et Vlad + courriels avocats|1,25|VRAI||2024-09-23 15:38:54
+2024-09-23 15:41:06|GuillaumeCharron|UPDATE|1156|GC|23/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|tel avec Marie-Claude et Vlad + courriels avocats + tel avec Guy|1,50|VRAI||2024-09-23 15:41:06
+2024-09-23 16:14:42|User|Add|1162|ML|2024-09-23|1051|Arthur Malouin Ltée [Yvan Malouin]|Répondre à un courriel et recherches
+|0,50|FAUX||2024-09-23 16:14:42
+2024-09-23 16:14:51|User|UPDATE|1162|ML|2024-09-23|1051|Arthur Malouin Ltée [Yvan Malouin]|Répondre à un courriel et recherches
+|0,50|VRAI||2024-09-23 16:14:51
+2024-09-23 16:15:57|User|Add|1163|ML|2024-09-23|5|z_Adiministratif_Autres non chargeables|Mise-à-jour des dossiers avec Guillaume
+|0,50|FAUX||2024-09-23 16:15:57
+2024-09-23 16:16:38|User|Add|1164|ML|2024-09-23|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Examen du dossier d'évaluation avec Guillaume
+|0,25|VRAI||2024-09-23 16:16:38
+2024-09-23 16:17:10|User|Add|1165|ML|2024-09-23|1193|Solstice CNC Inc. [Alexandre Desmarais]|Examen du dossier d'évaluation avec Guillaume
+|0,25|VRAI||2024-09-23 16:17:10
+2024-09-23 16:17:56|User|Add|1166|ML|2024-09-23|1763|Déneigement F.M. Inc. [Michael Beaupré]|Roulement - étape 8
+|1,75|VRAI||2024-09-23 16:17:56
+2024-09-23 16:18:52|User|Add|1167|ML|2024-09-23|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Recherche des NE et NI pour 9507-8291 et 9517-3969 Qc Inc.
+|0,50|VRAI||2024-09-23 16:18:52
+2024-09-23 16:19:23|User|Add|1168|ML|2024-09-23|1051|Arthur Malouin Ltée [Yvan Malouin]|Produire la correction sur le T2 de 9405-8641 Québec Inc.
+|1,50|VRAI||2024-09-23 16:19:23
+2024-09-23 16:19:50|User|Add|1169|ML|2024-09-23|5|z_Adiministratif_Autres non chargeables|Montage d'une application pour le suivi de mes dossiers
+|1,25|FAUX||2024-09-23 16:19:50
+2024-09-23 16:20:42|GuillaumeCharron|Add|1170|GC|23/09/24|1350|Acier Altitube Inc. [Philippe Robillard]|courriels et appel avec Michelle pour optimisation de transaction|1,00|VRAI||2024-09-23 16:20:42
+2024-09-23 16:36:36|GuillaumeCharron|UPDATE|1159|GC|23/09/24|1491|Mobilier de bureau Mobilium Inc. [Robert Guindon]|analyse des courriels de robert + tel avec Robert + prise de notes + sommaire par courriel + réception de documents + tel avec Samuel|2,50|VRAI||2024-09-23 16:36:36
+2024-09-23 17:13:03|GuillaumeCharron|UPDATE|1147|GC|23/09/24|130|Gestions Travaux Réseaux Inc. [Jean-François Paré]|analyse des états financiers vs évaluation + tel JF|1,25|VRAI||2024-09-23 17:13:03
+2024-09-23 17:39:26|GuillaumeCharron|UPDATE|1155|GC|23/09/24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|tel avec Vlad mise à jour + tel avec Kelly pour les questions|1,00|VRAI||2024-09-23 17:39:26
+2024-09-23 18:07:04|GuillaumeCharron|UPDATE|1155|GC|23/09/24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|tel avec Vlad mise à jour + tel avec Kelly pour les questions|1,00|VRAI||2024-09-23 18:07:04
+2024-09-23 18:08:34|GuillaumeCharron|Add|1171|GC|23/09/24|104|Groupe Millénium Micro Inc. [Carl Paquin]|tel avec Alain sur annuel|0,40|VRAI||2024-09-23 18:08:34
+2024-09-23 18:22:37|GuillaumeCharron|UPDATE|1149|GC|23/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|tel avec vlad de mise à jour + tel avec Michel sur évaluation + tel avec Alain pour infos manquantes|1,25|VRAI||2024-09-23 18:22:37
+2024-09-23 18:22:53|GuillaumeCharron|UPDATE|1171|GC|23/09/24|104|Groupe Millénium Micro Inc. [Carl Paquin]|tel avec Alain sur annuel|0,50|VRAI||2024-09-23 18:22:53
+2024-09-23 23:19:12|vgervais|Add|1172|VG|2024-09-23|1516|Les Industries Canplex Ltée [Marco Stocchero]|Discussion avec Marie-Claude pour ajout au C3I|0,50|VRAI||2024-09-23 23:19:12
+2024-09-23 23:23:05|vgervais|Add|1173|VG|2024-09-23|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Converation téléphonique avec Michel Côté|0,30|VRAI||2024-09-23 23:23:05
+2024-09-23 23:23:42|vgervais|Add|1174|VG|2024-09-23|1785|9172-2264 Québec Inc. [Technologies MFG]|SUivi avec Michel pour roulement + Suivi avec Guillaume|0,30|VRAI||2024-09-23 23:23:42
+2024-09-23 23:24:57|vgervais|Add|1175|VG|2024-09-23|1749|Gestion Éric Lépine et Mélanie Lecavalier Inc. [Éric Lépine]|Suivi avec Guillaume + suivi Michel Roulement|0,30|VRAI||2024-09-23 23:24:57
+2024-09-23 23:25:20|vgervais|UPDATE|1148|VG|2024-09-23|5|z_Adiministratif_Autres non chargeables|Administration + autres suivis + lecture mise à jour/lecture 10.1 + Discussion Guillaume|1,60|FAUX||2024-09-23 23:25:20
+2024-09-23 23:25:47|vgervais|Add|1176|VG|2024-09-23|1771|LC Combustion Inc. [Christian Laroche]|Suivi Guillaume|0,10|VRAI||2024-09-23 23:25:47
+2024-09-23 23:26:19|vgervais|Add|1177|VG|2024-09-23|1193|Solstice CNC Inc. [Alexandre Desmarais]|Suivi Guillaume + Suivi Michel pour JVM|0,20|VRAI||2024-09-23 23:26:19
+2024-09-23 23:27:04|vgervais|Add|1178|VG|2024-09-23|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Suivi Guillaume pour disposition|0,10|VRAI||2024-09-23 23:27:04
+2024-09-23 23:27:36|vgervais|Add|1179|VG|2024-09-23|1757|Messier & Associé, s.e.n.c.r.l. [Alain Bélanger]|Suivi Guillaume Prix de vente|0,10|VRAI||2024-09-23 23:27:36
+2024-09-23 23:28:34|vgervais|Add|1180|VG|2024-09-23|1739|Groupe Coalitech Inc. [Techvac Équipement]|Suivi avec Guillaume|0,10|VRAI||2024-09-23 23:28:34
+2024-09-23 23:29:05|vgervais|Add|1181|VG|2024-09-23|1763|Déneigement F.M. Inc. [Michael Beaupré]|Sommaire des chèques|0,40|VRAI||2024-09-23 23:29:05
+2024-09-23 23:29:26|vgervais|Add|1182|VG|2024-09-23|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|Suivi Guillaume|0,10|VRAI||2024-09-23 23:29:26
+2024-09-23 23:30:02|vgervais|Add|1183|VG|2024-09-23|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|Suivi pour documentation légale + roulement|0,20|VRAI||2024-09-23 23:30:02
+2024-09-23 23:30:44|vgervais|UPDATE|1181|VG|2024-09-23|1763|Déneigement F.M. Inc. [Michael Beaupré]|Sommaire des chèques|0,70|VRAI||2024-09-23 23:30:44
+2024-09-23 23:31:50|vgervais|Add|1184|VG|2024-09-23|1780|9112-9031 Québec Inc. [Guy Béland]|Suivi courriel DAniel + corriger roulement + vérifier ajustement dans documetation légale pour somme convenue|0,80|VRAI||2024-09-23 23:31:50
+2024-09-23 23:32:29|vgervais|Add|1185|VG|2024-09-23|1388|9307-2411 Québec Inc. [Capitaine Vap]|Discussion téléphonique avec Lise Braun + écrire lettre|0,70|VRAI||2024-09-23 23:32:29
+2024-09-23 23:33:18|vgervais|Add|1186|VG|2024-09-23|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Discussion avec Avocat pour paiement absolu|0,40|VRAI||2024-09-23 23:33:18
+2024-09-23 23:34:02|vgervais|Add|1187|VG|2024-09-23|1348|Maurice Chiasson, CPA|Suivi les immeubles Marklin |0,20|VRAI||2024-09-23 23:34:02
+2024-09-23 23:36:02|vgervais|Add|1188|VG|2024-09-23|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Révision documentation légale + sommaire des chèques|2,50|VRAI||2024-09-23 23:36:02
+2024-09-24 03:53:51|GuillaumeCharron|Add|1189|GC|24/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|courriel pour rectifier info sur gel a alexandre seulement|0,40|VRAI||2024-09-24 03:53:51
+2024-09-24 03:54:37|GuillaumeCharron|Add|1190|GC|24/09/24|1605|1508-5822 Québec Inc. [Maxime Laforest]|courriel avec maxime sur qualification à l'exo de vente de bâtisse mctavish|0,40|VRAI||2024-09-24 03:54:37
+2024-09-24 03:58:18|GuillaumeCharron|Add|1191|GC|24/09/24|1751|Empire Pro Inc. [Carlos Luperdigas]|réception de doc légaux|0,40|VRAI||2024-09-24 03:58:18
+2024-09-24 04:12:10|GuillaumeCharron|Add|1192|GC|24/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|réception des livres des minutes et courriels|0,50|VRAI||2024-09-24 04:12:10
+2024-09-24 04:16:23|GuillaumeCharron|Add|1193|GC|24/09/24|1055|Bernard Ducharme Assurances Inc. [Yvan Malouin]|répondre question de François sur moment de l'impôt à payer|0,50|VRAI||2024-09-24 04:16:23
+2024-09-24 04:16:29|GuillaumeCharron|UPDATE|1192|GC|24/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|réception des livres des minutes et courriels|0,75|VRAI||2024-09-24 04:16:29
+2024-09-24 04:17:37|GuillaumeCharron|Add|1194|GC|24/09/24|1350|Acier Altitube Inc. [Philippe Robillard]|réception info sur montant à ajouter au prix de vente|0,40|VRAI||2024-09-24 04:17:37
+2024-09-24 04:42:34|GuillaumeCharron|Add|1195|GC|24/09/24|1663|Multi-Plis Inc. [Chantal Veillette]|répondre question de t4-R1 de chantal|0,50|VRAI||2024-09-24 04:42:34
+2024-09-24 05:38:21|GuillaumeCharron|Add|1196|GC|24/09/24|500|Succession Michel Gingras [Mécatec D.M. Inc.]|révision réso de CDC|0,40|VRAI||2024-09-24 05:38:21
+2024-09-24 05:44:53|GuillaumeCharron|Add|1197|GC|24/09/24|1738|Assurancia Leduc, Decelles, Dubuc & Ass. Inc. [Lucie Decelles]|répondre commentaire de l'avocate sur documentation de roulement de Lucie|0,50|VRAI||2024-09-24 05:44:53
+2024-09-24 05:50:05|GuillaumeCharron|Add|1198|GC|24/09/24|1779|9098-2885 Québec Inc. [Denis Bisson]|état de la situation, réception de documents et relance de tous|0,50|VRAI||2024-09-24 05:50:05
+2024-09-24 07:30:39|vgervais|Add|1199|VG|2024-09-24|5|z_Adiministratif_Autres non chargeables|Suivis + plan de la journée + divers|0,60|FAUX||2024-09-24 07:30:39
+2024-09-24 07:54:07|vgervais|Add|1200|VG|2024-09-24|1388|9307-2411 Québec Inc. [Capitaine Vap]|Transit Declerq: Révision lettre et courriel à RQ|0,20|VRAI||2024-09-24 07:54:07
+2024-09-24 07:54:17|vgervais|UPDATE|1199|VG|2024-09-24|5|z_Adiministratif_Autres non chargeables|Suivis + plan de la journée + divers|0,70|FAUX||2024-09-24 07:54:17
+2024-09-24 08:32:41|vgervais|Add|1201|VG|2024-09-24|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Courriel à Audrey Lavoie|0,20|VRAI||2024-09-24 08:32:41
+2024-09-24 08:37:29|GuillaumeCharron|UPDATE|1192|GC|24/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|réception des livres des minutes et courriels + débarrer fichiers|1,25|VRAI||2024-09-24 08:37:29
+2024-09-24 08:41:28|GuillaumeCharron|UPDATE|1197|GC|24/09/24|1738|Assurancia Leduc, Decelles, Dubuc & Ass. Inc. [Lucie Decelles]|répondre commentaire de l'avocate sur documentation de roulement de Lucie + courriels|0,75|VRAI||2024-09-24 08:41:28
+2024-09-24 09:32:45|GuillaumeCharron|Add|1202|GC|24/09/24|1516|Les Industries Canplex Ltée [Marco Stocchero]|tel avec Marco sur condo dans le sud et autres|0,75|VRAI||2024-09-24 09:32:45
+2024-09-24 09:47:14|GuillaumeCharron|UPDATE|1202|GC|24/09/24|1516|Les Industries Canplex Ltée [Marco Stocchero]|tel avec Marco sur condo dans le sud et autres + courriel avec Marie-Claude|1,00|VRAI||2024-09-24 09:47:14
+2024-09-24 11:45:01|vgervais|UPDATE|1199|VG|2024-09-24|5|z_Adiministratif_Autres non chargeables|Suivis + plan de la journée + divers + Suivis de dossiers Courriel + formation CDC|1,30|FAUX||2024-09-24 11:45:01
+2024-09-24 11:46:28|vgervais|Add|1203|VG|2024-09-24|1624|Gestion Proped Inc. [Louis Villeneuve]|Révision documentation légale + mettre mémo à jour|2,60|VRAI||2024-09-24 11:46:28
+2024-09-24 11:47:01|vgervais|UPDATE|1203|VG|2024-09-24|1624|Gestion Proped Inc. [Louis Villeneuve]|Révision documentation légale + mettre mémo à jour|2,80|VRAI||2024-09-24 11:47:01

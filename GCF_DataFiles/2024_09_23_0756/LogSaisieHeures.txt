@@ -1,0 +1,33 @@
+2024-09-20 15:19:19|User|Add|1111|ML|2024-09-20|1780|9112-9031 Québec Inc. [Guy Béland]|Préparation des roulements à l'étape 7 et 8|6,50|VRAI||2024-09-20 15:19:19
+2024-09-20 15:20:02|User|Add|1112|ML|2024-09-20|5|z_Adiministratif_Autres non chargeables|Vérification de l'opération de signature sans accès par ordinateur à l'ARC|1,00|FAUX||2024-09-20 15:20:02
+2024-09-20 16:42:15|vgervais|Add|1113|VG|2024-09-20|5|z_Adiministratif_Autres non chargeables|Autres + Administration + COnversation avec Comptable de Mallette + Conversation avec Michel (bureau + procéduirer + debreefing sur obtention des informations)|1,60|FAUX||2024-09-20 16:42:15
+2024-09-20 16:42:45|vgervais|Add|1114|VG|2024-09-20|1566|9310-7761 Québec Inc. [Pretech]|Renvoie instruction livre des minutes|0,20|VRAI||2024-09-20 16:42:45
+2024-09-20 16:45:59|vgervais|Add|1115|VG|2024-09-20|1780|9112-9031 Québec Inc. [Guy Béland]|Regarder dans le mémorandum et dans les courriels d'ou provient les écarts avec notre mémo (contrat vs mémo) + conversation téléphonique avec avocat de Mallette (Grondin) + révision contrat|1,70|VRAI||2024-09-20 16:45:59
+2024-09-20 16:46:56|vgervais|Add|1116|VG|2024-09-20|1388|9307-2411 Québec Inc. [Capitaine Vap]|Transit Nelson: Discussion avec Dany + Appel à RQ|0,40|VRAI||2024-09-20 16:46:56
+2024-09-20 16:47:45|vgervais|Add|1117|VG|2024-09-20|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion avec Isabelle pour clause pour administrateur + états financiers + suivis avec Michel |0,40|VRAI||2024-09-20 16:47:45
+2024-09-20 16:54:16|vgervais|Add|1118|VG|2024-09-20|1193|Solstice CNC Inc. [Alexandre Desmarais]|Vérification  de la JVM + Discussion avec Michel pour oublie usinage + Suivi Michel pour informations manquantes (  EF Sogeso) Mise à jour mémorandum pour que tout soit moné|2,20|VRAI||2024-09-20 16:54:16
+2024-09-20 17:01:29|vgervais|Add|1119|VG|2024-09-20|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|Révision des roulements|1,10|VRAI||2024-09-20 17:01:29
+2024-09-22 09:18:09|GuillaumeCharron|Add|1120|GC|22/09/24|1150|Groupe Joman Inc. [Johanne Gemme]|réception de livre des minutes et fermeture du mandat|0,40|VRAI||2024-09-22 09:18:09
+2024-09-22 09:30:22|GuillaumeCharron|Add|1121|GC|20/09/24|1110|Chauffage Robert Lacombe Inc. [Succession Robert Lacombe]|courriel pour façon de me fournir les informations|0,40|VRAI||2024-09-22 09:30:22
+2024-09-22 09:32:03|GuillaumeCharron|Add|1122|GC|20/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|réception de documents et transfert à vlad|0,40|VRAI||2024-09-22 09:32:03
+2024-09-22 09:33:28|GuillaumeCharron|Add|1123|GC|20/09/24|1624|Gestion Proped Inc. [Louis Villeneuve]|réception de documents légaux pour révision et transfert à Vlad|0,50|VRAI||2024-09-22 09:33:28
+2024-09-22 09:34:58|GuillaumeCharron|Add|1124|GC|20/09/24|1583|Groupe ITES Canada Inc. [Richard Fortin]|question sur structure de détention de nouvelle société aux USA|0,50|VRAI||2024-09-22 09:34:58
+2024-09-22 09:35:55|GuillaumeCharron|Add|1125|GC|20/09/24|1751|Empire Pro Inc. [Carlos Luperdigas]|problématique du divorce vs les planifications en cours et courriels avec Marie-claude|0,50|VRAI||2024-09-22 09:35:55
+2024-09-22 09:36:33|GuillaumeCharron|Add|1126|GC|20/09/24|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|courriels sur détermination de JVM|0,50|VRAI||2024-09-22 09:36:33
+2024-09-22 09:43:48|GuillaumeCharron|Add|1127|GC|20/09/24|1785|9172-2264 Québec Inc. [Technologies MFG]|regarder les courriels passer sur les révisions légaux|0,50|VRAI||2024-09-22 09:43:48
+2024-09-22 09:44:25|GuillaumeCharron|Add|1128|GC|20/09/24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|question de kelly sur financemenet|0,50|VRAI||2024-09-22 09:44:25
+2024-09-22 09:46:12|GuillaumeCharron|Add|1129|GC|20/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|échanges de divers courriels sur réorganisation à faire|0,75|VRAI||2024-09-22 09:46:12
+2024-09-22 09:46:51|GuillaumeCharron|Add|1130|GC|20/09/24|1771|LC Combustion Inc. [Christian Laroche]|transfert de courriels pour ef+t2|0,40|VRAI||2024-09-22 09:46:51
+2024-09-22 09:48:26|GuillaumeCharron|Add|1131|GC|20/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|question sur délais et courriel|0,40|VRAI||2024-09-22 09:48:26
+2024-09-22 09:49:17|GuillaumeCharron|Add|1132|GC|20/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|courriels avec avocats et transférer à Vlad|0,50|VRAI||2024-09-22 09:49:17
+2024-09-22 09:50:40|GuillaumeCharron|Add|1133|GC|20/09/24|1566|9310-7761 Québec Inc. [Pretech]|demande de retourner les directives de dividendes à nouveau|0,50|VRAI||2024-09-22 09:50:40
+2024-09-22 09:51:10|GuillaumeCharron|Add|1134|GC|20/09/24|1055|Bernard Ducharme Assurances Inc. [Yvan Malouin]|courriel avec les comptables sur memo|0,50|VRAI||2024-09-22 09:51:10
+2024-09-22 10:08:23|GuillaumeCharron|Add|1135|GC|22/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|demande du comptable et transfert de la demande à Vladimir|0,40|VRAI||2024-09-22 10:08:23
+2024-09-22 10:27:37|GuillaumeCharron|Add|1136|GC|22/09/24|1669|Ventilabec Inc. [Lora Stoycheva]|demande de l'ordre du syndic pour fetch vision|0,50|VRAI||2024-09-22 10:27:37
+2024-09-22 10:31:20|GuillaumeCharron|Add|1137|GC|22/09/24|500|Succession Michel Gingras [Mécatec D.M. Inc.]|répondre question de l'avocat sur dividende du CDC à préparer|0,50|VRAI||2024-09-22 10:31:20
+2024-09-22 11:16:59|GuillaumeCharron|Add|1138|GC|22/09/24|1350|Acier Altitube Inc. [Philippe Robillard]|suivi des infos manquantes et relancer + courriel de RDV avec Michelle|0,75|VRAI||2024-09-22 11:16:59
+2024-09-22 11:28:30|GuillaumeCharron|Add|1139|GC|22/09/24|1487|Maranda Lauzon Inc. [Sandy Maranda]|révision de la lettre d'intention modifiée|0,75|VRAI||2024-09-22 11:28:30
+2024-09-22 11:28:49|GuillaumeCharron|Add|1140|GC|22/09/24|1491|Mobilier de bureau Mobilium Inc. [Robert Guindon]|lecture du courriel pour la vente finale|0,50|VRAI||2024-09-22 11:28:49
+2024-09-22 11:34:22|GuillaumeCharron|Add|1141|GC|22/09/24|1731|Les Toitures C.B.C. Inc. [Francis Bélanger]|répondre aux questions de Katie sur les chèques à faire|0,75|VRAI||2024-09-22 11:34:22
+2024-09-22 11:38:41|GuillaumeCharron|Add|1142|GC|22/09/24|1430|Librairie Lu-Lu Inc. [Céline Camirand]|quesiton de Yvon sur traitement comptable des avances inter-sociétés et dividendes|0,75|VRAI||2024-09-22 11:38:41
+2024-09-22 12:04:25|GuillaumeCharron|Add|1143|GC|22/09/24|1013g|9199-5308 Québec Inc. [Benoit Alary]|analyse des réponses de Sacha pour le plan de retraite et répondre aux questions et conclusions|1,00|VRAI||2024-09-22 12:04:25
