@@ -153,7 +153,6 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                                                 "TEC_Local|Client_ID")
                 colName = Mid(feuilleRechercher, InStr(feuilleRechercher, "|") + 1)
                 feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
-                Debug.Print "DB.#155 - workbook="; fullFileName; "  feuille="; feuilleName; "   colonne="; colName
                 plageRechercher = feuilleName & "$"
                 
                 ' Construire la requête SQL pour chercher le client
@@ -176,6 +175,9 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
     Dim wb As Workbook
     
     For Each wb In Application.Workbooks
+        If wb.Name = "Vérification de la liste de clients.xlsx" Then
+            GoTo Next_Workbook
+        End If
         Dim ws As Worksheet
         For Each ws In wb.Worksheets
             Dim foundCell As Range
@@ -190,6 +192,7 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
             End If
 Next_Worksheet:
         Next ws
+Next_Workbook:
     Next wb
     
     'clean up
@@ -206,15 +209,5 @@ Exit_Sub:
     If message2 <> "" Then
         MsgBox message2, vbCritical, "Ce code de client est utilisé dans le fichier Clients"
     End If
-    
-End Sub
-
-Sub Test_Valider_Client_Avant_Effacement()
-
-    Dim clientExiste As Boolean
-    
-    Call Valider_Client_Avant_Effacement("2026", clientExiste)
-    
-    Debug.Print clientExiste
     
 End Sub

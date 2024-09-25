@@ -199,20 +199,21 @@ Private Sub Delete_Client(clientID)
     
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:Delete_Client", "", 0)
     
+    'Définir le nom du fichier en fonction de l'utilisateur
+    Dim targetFileName As String
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        targetFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+    Else
+        targetFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    End If
+    Dim targetWorksheet As String: targetWorksheet = "Clients"
+
+    Dim wb As Workbook: Set wb = Workbooks.Open(targetFileName)
+    Dim ws As Worksheet: Set ws = wb.Sheets(targetWorksheet)
+
     Dim msgValue As VbMsgBoxResult
     msgValue = MsgBox("Désirez-vous vraiment DÉTRUIRE le présent client ?", vbYesNo + vbInformation, "Détruire le client de façon PERMANENTE")
     If msgValue = vbYes Then
-        'Définir le nom du fichier en fonction de l'utilisateur
-        Dim targetFileName As String
-        If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-            targetFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
-        Else
-            targetFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
-        End If
-        Dim targetWorksheet As String: targetWorksheet = "Clients"
-
-        Dim wb As Workbook: Set wb = Workbooks.Open(targetFileName)
-        Dim ws As Worksheet: Set ws = wb.Sheets(targetWorksheet)
         
         Dim foundCell As Range
         Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
@@ -220,6 +221,7 @@ Private Sub Delete_Client(clientID)
             ws.Rows(foundCell.Row).Delete
         Else
             MsgBox "Le client '" & clientID & "' ne peut être trouvé dans Clients", vbCritical
+            msgValue = vbNo
         End If
         
         'Onglet Données
@@ -229,6 +231,7 @@ Private Sub Delete_Client(clientID)
             ws.Rows(foundCell.Row).Delete
         Else
             MsgBox "Le client '" & clientID & "' ne peut être trouvé dans Données", vbCritical
+            msgValue = vbNo
         End If
         
         'Onglet DonnéesRecherche
@@ -237,7 +240,7 @@ Private Sub Delete_Client(clientID)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
         Else
-            MsgBox "Le client '" & clientID & "' ne peut être trouvé dans DonnéesRecherche", vbCritical
+            'Pas nécessairement dans l'onglet 'DonnéesRecherche'
         End If
         
         MsgBox "Le client '" & Me.txtCodeClient.Value & "' a été détruit" & vbNewLine & _
@@ -259,7 +262,11 @@ Private Sub Delete_Client(clientID)
     End If
     
     'Ferme ET sauvegarde le fichier Excel
-    wb.Close SaveChanges:=True
+    If msgValue = vbYes Then
+        wb.Close SaveChanges:=True
+    Else
+        wb.Close SaveChanges:=False
+    End If
 
 Clean_Exit:
 
