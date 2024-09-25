@@ -25,6 +25,10 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub lblVersion_Click()
+
+End Sub
+
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)

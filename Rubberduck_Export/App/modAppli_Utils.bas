@@ -2026,7 +2026,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1143 'What is the last TECID analyze ?
+    lastTECIDReported = 1223 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
