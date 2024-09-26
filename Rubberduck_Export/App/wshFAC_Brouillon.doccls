@@ -128,7 +128,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
 '            Application.Goto wshFAC_Brouillon.Range("O9")

@@ -16,8 +16,8 @@ Option Explicit
 'YouTube video: https://youtu.be/gkLB-xu_JTU
 
 'Description: Searchable Dropdown list
-'            The code in this class allows the user to
-'            create a searchable dropdown list of items.
+'             The code in this class allows the user to
+'             create a searchable dropdown list of items.
 '
 'HOW TO USE - See READ ME File - 2023-03-01
 '
@@ -25,7 +25,7 @@ Option Explicit
 '   You can use this code free in any of your software applications and distribute as you wish.
 '   Please do not alter or remove the authors name or website.
 
-Private Const m_conMaxRows As Long = 15 '2024-09-04 @ 11:14
+Private Const m_conMaxRows As Long = 20 '2024-09-25 @ 07:24
 
 'Configurable Settings
 Private m_compareMethod As VbCompareMethod 'Determines case sensitivity in the search
@@ -74,9 +74,9 @@ Public Property Let MaxRows(ByVal value As Long)
 End Property
 
 'Set the text to be displayed in the textbox before the search
-Public Property Let StartText(ByVal text As String)
+Public Property Let StartText(ByVal Text As String)
     
-    m_startText = text
+    m_startText = Text
     SetTextboxValue (m_startText)
 
 End Property
@@ -319,14 +319,14 @@ End Sub
 
 '------------------------------------------------------------------ TEXTBOX SUBS
 
-Private Sub SetTextboxValue(ByVal text As String)
+Private Sub SetTextboxValue(ByVal Text As String)
 
     If m_UpdateControl = False Then
         
         With MyListBox
             m_UpdateControl = True
             'Set the listbox selected value to the textbox and hide the listbox
-            myTextBox.value = text
+            myTextBox.value = Text
             
             Call SelectTextBox
             
@@ -358,7 +358,7 @@ Private Sub RemoveStartingText()
     m_UpdateControl = True
 
     With myTextBox
-        .text = Mid(.value, .SelStart, 1)
+        .Text = Mid(.value, .SelStart, 1)
         '.ForeColor = rgbBlack
     End With
     
@@ -376,6 +376,7 @@ Private Function SelectTextBox()
 End Function
 
 Public Sub FilterListBox() 'Filters the Listbox
+
     'In case a setting like MaxRows is used before the range is set
     If IsEmpty(m_listOfItems) Then Exit Sub
 
@@ -397,6 +398,8 @@ Private Function FilterData() As Variant
     If textPattern = "" Then
         Exit Function
     End If
+    Dim textPatternWithoutAccent As String '2024-09-25 @ 07:19
+    textPatternWithoutAccent = Fn_Remove_All_Accents(textPattern)
     
     'Create an array to store the filtered items
     Dim filteredItems() As String
@@ -405,9 +408,11 @@ Private Function FilterData() As Variant
     'Read through all the items in the full list
     Dim i As Long
     Dim count As Long: count = 0
-    For i = LBound(m_listOfItems) To UBound(m_listOfItems)
+    Dim clientNameWithoutAccent As String
+        For i = LBound(m_listOfItems) To UBound(m_listOfItems)
         'Using Instr instead of Like so we can set the case sensitivity
-        If InStr(1, m_listOfItems(i, 1), textPattern, m_compareMethod) > 0 Then
+        clientNameWithoutAccent = Fn_Remove_All_Accents(m_listOfItems(i, 1)) '2024-09-25 @ 07:19
+        If InStr(1, clientNameWithoutAccent, textPatternWithoutAccent, m_compareMethod) > 0 Then
             filteredItems(count) = m_listOfItems(i, 1)
             count = count + 1
             If m_showAllMatches = False Then

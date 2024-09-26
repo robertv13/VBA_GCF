@@ -43,8 +43,8 @@ Private Sub lsbDEB_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 End Sub
 
 Private Sub UserForm_Terminate()
+
     Unload Me
-    'Clear the class declaration
-'    Set MyListBoxClass2 = Nothing
+    
 End Sub
 

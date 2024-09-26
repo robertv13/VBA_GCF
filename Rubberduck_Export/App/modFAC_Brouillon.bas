@@ -398,7 +398,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     If rngSource Is Nothing Then
         MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
-        wbSource.Close saveChanges:=False
+        wbSource.Close SaveChanges:=False
         Set wbSource = Nothing
         Exit Sub
     End If
@@ -424,7 +424,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     Application.CutCopyMode = False
     
     'Step 5 - Close and release the Excel file
-    wbSource.Close saveChanges:=False
+    wbSource.Close SaveChanges:=False
     
     'Cleanup - 2024-07-27 @ 07:39
 '    Set rngDestination = Nothing
@@ -845,7 +845,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
         With cbx
             .name = "chkBox - " & cell.Row
             .value = True
-            .text = ""
+            .Text = ""
             .linkedCell = cell.Address
             .Display3DShading = True
         End With

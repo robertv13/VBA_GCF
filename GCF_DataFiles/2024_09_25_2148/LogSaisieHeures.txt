@@ -1,0 +1,50 @@
+2024-09-24 18:40:26|vgervais|Add|1224|VG|2024-09-24|1727|Nadine Pelletier Inc.|Parler Plus: Rencontre cliente|0,90|VRAI||2024-09-24 18:40:26
+2024-09-24 18:41:22|vgervais|Add|1225|VG|2024-09-24|1771|LC Combustion Inc. [Christian Laroche]|Appel Cristian Laroche (sans réponse) + voir courriel |0,20|VRAI||2024-09-24 18:41:22
+2024-09-24 18:41:50|vgervais|Add|1226|VG|2024-09-24|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Correction mémo avec Nouvelle valeur|0,80|VRAI||2024-09-24 18:41:50
+2024-09-24 18:42:33|vgervais|Add|1227|VG|2024-09-24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|Préparation sommaire des chèques|0,60|VRAI||2024-09-24 18:42:33
+2024-09-24 18:45:22|vgervais|Add|1228|VG|2024-09-24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion avc Laurentt a reprises + repondre question Isabelle|0,50|VRAI||2024-09-24 18:45:22
+2024-09-24 18:46:10|vgervais|UPDATE|1199|VG|2024-09-24|5|z_Adiministratif_Autres non chargeables|Suivis + plan de la journée + divers + Suivis de dossiers Courriel + formation CDC avec Michel + discussion|1,80|FAUX||2024-09-24 18:46:10
+2024-09-24 18:46:36|vgervais|UPDATE|1203|VG|2024-09-24|1624|Gestion Proped Inc. [Louis Villeneuve]|Révision documentation légale + mettre mémo à jour + Suivis CDC + Roulement|3,30|VRAI||2024-09-24 18:46:36
+2024-09-24 18:46:50|vgervais|UPDATE|1203|VG|2024-09-24|1624|Gestion Proped Inc. [Louis Villeneuve]|Révision documentation légale + mettre mémo à jour + Suivis CDC + Roulement|3,40|VRAI||2024-09-24 18:46:50
+2024-09-24 18:46:57|vgervais|UPDATE|1224|VG|2024-09-24|1727|Nadine Pelletier Inc.|Parler Plus: Rencontre cliente|1,00|VRAI||2024-09-24 18:46:57
+2024-09-24 18:47:11|vgervais|UPDATE|1228|VG|2024-09-24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion avc Laurentt a reprises + repondre question Isabelle|0,60|VRAI||2024-09-24 18:47:11
+2024-09-25 04:47:50|GuillaumeCharron|Add|1229|GC|25/09/24|1738|Assurancia Leduc, Decelles, Dubuc & Ass. Inc. [Lucie Decelles]|révision juridique de CDC modifié|0,50|VRAI||2024-09-25 04:47:50
+2024-09-25 05:10:24|GuillaumeCharron|Add|1230|GC|25/09/24|500|Succession Michel Gingras [Mécatec D.M. Inc.]|assemblage et finalisation de CDC et envoi pour signature|0,75|VRAI||2024-09-25 05:10:24
+2024-09-25 05:13:23|GuillaumeCharron|Add|1231|GC|25/09/24|1051|Arthur Malouin Ltée [Yvan Malouin]|validation de lettre à l'ARC pour demande vs annexe 23|0,40|VRAI||2024-09-25 05:13:23
+2024-09-25 05:36:52|GuillaumeCharron|Add|1232|GC|25/09/24|1782|Les Placements Jean-Luc Roy Inc.|courriel avec richard pour balance de vente|0,40|VRAI||2024-09-25 05:36:52
+2024-09-25 07:22:30|vgervais|Add|1233|VG|2024-09-25|5|z_Adiministratif_Autres non chargeables|Administration diverses + suivis |0,60|VRAI||2024-09-25 07:22:30
+2024-09-25 07:22:42|vgervais|UPDATE|1233|VG|2024-09-25|5|z_Adiministratif_Autres non chargeables|Administration diverses + suivis |0,60|FAUX||2024-09-25 07:22:42
+2024-09-25 09:16:38|GuillaumeCharron|Add|1234|GC|25/09/24|1134|Air Trans Express Inc. [Richard Lavoie]|analyse du testament|1,00|VRAI||2024-09-25 09:16:38
+2024-09-25 10:04:33|GuillaumeCharron|Add|1235|GC|25/09/24|1800|Novologik Inc. [Patrick Sabourin]|préparation et videoconférence avec Patrick|1,00|VRAI||2024-09-25 10:04:33
+2024-09-25 12:03:25|GuillaumeCharron|Add|1236|GC|25/09/24|1349|Patrick Wittmer [anciennement Honda Ste-Rose]|analyse de PTPE et pertes en capital|1,00|VRAI||2024-09-25 12:03:25
+2024-09-25 12:03:36|vgervais|UPDATE|1233|VG|2024-09-25|5|z_Adiministratif_Autres non chargeables|Administration diverses + suivis + Discussion Michel Roulement + Suivis de dossier|1,40|FAUX||2024-09-25 12:03:36
+2024-09-25 12:59:24|GuillaumeCharron|Add|1237|GC|25/09/24|1596|9450-3562 Québec Inc. [Mélanie Jalbert]|tel avec Mélanie pour structure d'achat d'immeuble|0,40|VRAI||2024-09-25 12:59:24
+2024-09-25 13:44:33|GuillaumeCharron|Add|1238|GC|25/09/24|127|Sauvageau Hanley CPA Inc. [Catherine Hanley]|videoconférence|0,50|VRAI||2024-09-25 13:44:33
+2024-09-25 13:44:41|GuillaumeCharron|UPDATE|1238|GC|25/09/24|127|Sauvageau Hanley CPA Inc. [Catherine Hanley]|videoconférence Foisy|0,50|VRAI||2024-09-25 13:44:41
+2024-09-25 14:11:08|GuillaumeCharron|Add|1239|GC|25/09/24|1801|Maçonnerie François Leclerc|analyse de possibilité de roulement et tel avec François|1,00|VRAI||2024-09-25 14:11:08
+2024-09-25 15:46:58|GuillaumeCharron|Add|1240|GC|25/09/24|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|courriel avec Mathieu pour suivi du dossier|0,40|VRAI||2024-09-25 15:46:58
+2024-09-25 15:47:17|GuillaumeCharron|Add|1241|GC|25/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|déplacement du rendez-vous|0,50|VRAI||2024-09-25 15:47:17
+2024-09-25 15:47:45|GuillaumeCharron|Add|1242|GC|25/09/24|1779|9098-2885 Québec Inc. [Denis Bisson]|courriel pour infos manquantes|0,40|VRAI||2024-09-25 15:47:45
+2024-09-25 17:04:12|User|Add|1243|ML|2024-09-25|5|z_Adiministratif_Autres non chargeables|Test sur le fichier des clients avec Robert|0,50|VRAI||2024-09-25 17:04:12
+2024-09-25 17:04:39|User|Add|1244|ML|2024-09-25|1051|Arthur Malouin Ltée [Yvan Malouin]|Envoi d'un courriel et signature de la lettre à Revenu Canada|0,25|VRAI||2024-09-25 17:04:39
+2024-09-25 17:04:49|User|UPDATE|1243|ML|2024-09-25|5|z_Adiministratif_Autres non chargeables|Test sur le fichier des clients avec Robert|0,50|FAUX||2024-09-25 17:04:49
+2024-09-25 17:05:30|User|Add|1245|ML|2024-09-25|5|z_Adiministratif_Autres non chargeables|Purification de la liste des clients|1,75|FAUX||2024-09-25 17:05:30
+2024-09-25 17:06:18|User|Add|1246|ML|2024-09-25|1763|Déneigement F.M. Inc. [Michael Beaupré]|Recherche du NE de 9517-2201 Québec Inc.|0,50|VRAI||2024-09-25 17:06:18
+2024-09-25 17:06:54|User|Add|1247|ML|2024-09-25|1780|9112-9031 Québec Inc. [Guy Béland]|Correction des roulements|0,50|VRAI||2024-09-25 17:06:54
+2024-09-25 17:07:30|User|Add|1248|ML|2024-09-25|1793|9063-6580 Québec Inc. [Le Lunettier]|Évaluation de la société à la JVM |2,00|VRAI||2024-09-25 17:07:30
+2024-09-25 17:09:56|User|Add|1249|ML|2024-09-25|1624|Gestion Proped Inc. [Louis Villeneuve]|Roulement étape 7|1,75|VRAI||2024-09-25 17:09:56
+2024-09-25 17:10:21|User|Add|1250|ML|2024-09-25|1624|Gestion Proped Inc. [Louis Villeneuve]|Examen du mémo pour le CDC et analyse de l'exemple fourni par Vladimir|0,75|VRAI||2024-09-25 17:10:21
+2024-09-25 17:12:02|GuillaumeCharron|UPDATE|1234|GC|25/09/24|1134|Air Trans Express Inc. [Richard Lavoie]|analyse du testament + appel avec Richard et Julie pour passer ensemble leur dossier|2,00|VRAI||2024-09-25 17:12:02
+2024-09-25 17:12:24|GuillaumeCharron|UPDATE|1234|GC|25/09/24|1134|Air Trans Express Inc. [Richard Lavoie]|analyse du testament + appel avec Richard et Julie pour passer ensemble leur dossier|2,50|VRAI||2024-09-25 17:12:24
+2024-09-25 17:28:59|vgervais|Add|1251|VG|2024-09-25|1448|9055-4627 Québec Inc. [Guillaume Bruneau-Côté]|Vérifier le contrat + revoir prise de note|0,30|VRAI||2024-09-25 17:28:59
+2024-09-25 17:29:49|vgervais|Add|1252|VG|2024-09-25|1624|Gestion Proped Inc. [Louis Villeneuve]|Discussion avec Véronique Tessier|0,30|VRAI||2024-09-25 17:29:49
+2024-09-25 17:31:06|vgervais|Add|1253|VG|2024-09-25|1348|Maurice Chiasson, CPA|Les immeubles Markl: communication avec Isabelle + Notaire pour obtenir livre des minutes|0,30|VRAI||2024-09-25 17:31:06
+2024-09-25 17:31:24|vgervais|UPDATE|1252|VG|2024-09-25|1624|Gestion Proped Inc. [Louis Villeneuve]|Discussion avec Véronique Tessier + suivi avec Michel pour roulement|0,40|VRAI||2024-09-25 17:31:24
+2024-09-25 17:31:50|vgervais|UPDATE|1233|VG|2024-09-25|5|z_Adiministratif_Autres non chargeables|Administration diverses + suivis + Discussion Michel Roulement  (JVM) + Suivis de dossier avec Michel (roulement + CDC)|1,60|FAUX||2024-09-25 17:31:50
+2024-09-25 17:35:19|vgervais|Add|1254|VG|2024-09-25|1793|9063-6580 Québec Inc. [Le Lunettier]|Regarder livre des minutes + discussion avec Michel pour JVM + Regarder courriel + préparation mémorandum + préparer organigramme|6,30|VRAI||2024-09-25 17:35:19
+2024-09-25 17:35:31|vgervais|UPDATE|1254|VG|2024-09-25|1793|9063-6580 Québec Inc. [Le Lunettier]|Regarder livre des minutes + discussion avec Michel pour JVM + Regarder courriel + préparation mémorandum + préparer organigramme|5,90|VRAI||2024-09-25 17:35:31
+2024-09-25 17:35:40|vgervais|UPDATE|1254|VG|2024-09-25|1793|9063-6580 Québec Inc. [Le Lunettier]|Regarder livre des minutes + discussion avec Michel pour JVM + Regarder courriel + préparation mémorandum + préparer organigramme|6,10|VRAI||2024-09-25 17:35:40
+2024-09-25 17:42:51|GuillaumeCharron|Add|1255|GC|25/09/24|1802|Martin Lavoie (compagnie à être créée)|tel avec Martin Thibeault + tel avec Martin Lavoie pour début du mandat + tel avec Michael|0,75|VRAI||2024-09-25 17:42:51
+2024-09-25 17:47:03|vgervais|Add|1256|VG|2024-09-25|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Faire mémo avec JVM fournier par Michel|0,60|VRAI||2024-09-25 17:47:03
+2024-09-25 17:49:55|GuillaumeCharron|UPDATE|1234|GC|25/09/24|1134|Air Trans Express Inc. [Richard Lavoie]|analyse du testament + appel avec Richard et Julie pour passer ensemble leur dossier + fournir commentaires à la notaire par courriel|3,00|VRAI||2024-09-25 17:49:55
+2024-09-25 18:04:14|GuillaumeCharron|UPDATE|1236|GC|25/09/24|1349|Patrick Wittmer [anciennement Honda Ste-Rose]|analyse de PTPE et pertes en capital + courriel explicatif|1,50|VRAI||2024-09-25 18:04:14

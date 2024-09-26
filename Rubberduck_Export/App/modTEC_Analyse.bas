@@ -51,7 +51,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
     progressBarBg.TextFrame.Characters.Font.size = 14
     progressBarBg.TextFrame.Characters.Font.Color = RGB(0, 0, 0) 'Black font
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à 0 %"
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à 0 %"
     
     'Create the fill shape of the progress bar
     Dim progressBarFill As Shape
@@ -63,7 +63,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.15 * barWidth  '15 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.15, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.15, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -87,7 +87,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.2 * barWidth  '20 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.2, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.2, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -127,7 +127,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.45 * barWidth  '45 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.45, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.45, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -155,7 +155,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.6 * barWidth  '60 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.6, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.6, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -181,7 +181,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.75 * barWidth  '75 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.75, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.75, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -250,7 +250,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.85 * barWidth  '85 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.85, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.85, "0%")
     
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -270,7 +270,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Update the progress bar fill
     progressBarFill.width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.text = "Préparation complétée à " & Format$(0.95, "0%")
+    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.95, "0%")
     
     'Introduce a small delay to ensure the worksheet is fully updated
     DoEvents

@@ -108,7 +108,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Date has changed
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
         Else

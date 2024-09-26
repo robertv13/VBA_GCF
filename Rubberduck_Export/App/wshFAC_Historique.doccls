@@ -168,7 +168,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'From date has changed
     If Not Intersect(Target, Range("N6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text))
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -187,7 +187,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'To date has changed
     If Not Intersect(Target, Range("P6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text))
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate

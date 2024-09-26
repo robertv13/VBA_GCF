@@ -25,7 +25,7 @@ Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As
     Application.CutCopyMode = False
 
     'Save and close the workbook
-    wb.Close saveChanges:=True
+    wb.Close SaveChanges:=True
 
 End Sub
 
@@ -141,13 +141,6 @@ Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
     'Clear the clipboard
     Application.CutCopyMode = False
     
-'    Dim i As Long, j As Long
-'    For i = 2 To lastUsedRowSrc
-'        For j = 1 To 8
-'            wsTgt.Cells(i, j).value = wsSrc.Cells(i, j).value
-'        Next j
-'    Next i
-
     Call Update_Pivot_Table
     
     MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
@@ -159,26 +152,28 @@ End Sub
 Sub Update_Pivot_Table() '2024-08-15 @ 06:34
 
     'Define the worksheet containing the data
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Hres_Jour_Prof")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Hres_Jour_Prof")
     
     'Find the last row of your data
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Define the new data range
-    Dim rngData As Range
-    Set rngData = ws.Range("A1:H" & lastUsedRow)
+    Dim rngData As Range: Set rngData = ws.Range("A1:H" & lastUsedRow)
     
     'Update the Pivot Table
-    Dim pt As PivotTable
-    Set pt = ws.PivotTables("ptHresJourProf")
+    Dim pt As PivotTable: Set pt = ws.PivotTables("ptHresJourProf")
     pt.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
                         SourceType:=xlDatabase, _
                         SourceData:=rngData)
     
     'Refresh the Pivot Table
     pt.RefreshTable
+    
+    'Let go the Objects
+    Set pt = Nothing
+    Set rngData = Nothing
+    Set ws = Nothing
 
 End Sub
 
@@ -2026,7 +2021,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1223 'What is the last TECID analyzed ?
+    lastTECIDReported = 1256 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2950,8 +2945,8 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=False
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=False
     
     'Output differences
     If diffLog <> "" Then
@@ -3100,8 +3095,8 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=False
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=False
     
     'Output differences
     If diffLogMess <> "" Then

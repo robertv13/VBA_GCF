@@ -123,7 +123,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("H3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
             Call TEC_Sort_Group_And_Subtotal

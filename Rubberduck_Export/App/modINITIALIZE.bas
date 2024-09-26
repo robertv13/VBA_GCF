@@ -34,7 +34,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Next ws
 
     'Sauvegarder et fermer le workbook
-    wb.Close saveChanges:=True
+    wb.Close SaveChanges:=True
 
     'Step 2 - Enlève les rangées d'une feuille locale
     Set ws = wshTEC_TDB_Data

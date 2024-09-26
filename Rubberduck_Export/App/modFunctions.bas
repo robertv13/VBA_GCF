@@ -1,18 +1,6 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-#If VBA7 Then
-    '64-bit Excel (VBA7 and later)
-'    Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-'    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As LongPtr)
-Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
-#Else
-    '32-bit Excel
-    Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
-#End If
-
 'API pour code d'utilisateur
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
@@ -20,11 +8,6 @@ Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (By
 Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" _
     (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
     
-'Constantes pour les touches du clavier
-Private Const VK_NUMLOCK As Byte = &H90
-Private Const KEYEVENTF_EXTENDEDKEY As Long = &H1
-Private Const KEYEVENTF_KEYUP As Long = &H2
-
 Public Const LOCALE_USER_DEFAULT As Long = &H400
 Public Const LOCALE_SSHORTDATE As Long = &H1F
 
@@ -1091,6 +1074,25 @@ Sub Test_Fn_Rechercher_Client_Par_ID()
     End If
 
 End Sub
+
+Function Fn_Remove_All_Accents(ByVal Text As String) As String
+
+    'Liste des caractËres accentuÈs et leurs Èquivalents sans accents
+    Dim AccChars As String
+    AccChars = "¿¡¬√ƒ≈«»… ÀÃÕŒœ—“”‘’÷ÿŸ⁄€‹›‡·‚„‰ÂÁËÈÍÎÏÌÓÔÒÚÛÙıˆ˘˙˚¸˝ˇ"
+    Dim RegChars As String
+    RegChars = "AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiidnooooouuuuyy"
+
+    'Remplacer les accents par des caractËres non accentuÈs
+    Dim i As Long
+    For i = 1 To Len(AccChars)
+        Text = Replace(Text, Mid(AccChars, i, 1), Mid(RegChars, i, 1))
+    Next i
+
+    Fn_Remove_All_Accents = Text
+    
+End Function
+
 Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional headerSize As Long = 1) As Range
 
     Set Fn_Get_Current_Region = dataRange.CurrentRegion
@@ -1141,22 +1143,6 @@ Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As 
     CountCharOccurrences = count
     
 End Function
-
-Sub EnsureNumLockOn()
-
-    'VÈrifie l'Ètat actuel de NumLock
-    Dim NumLockState As Boolean
-    NumLockState = GetKeyState(VK_NUMLOCK) And 1
-
-    'Si NumLock est dÈsactivÈ, on l'active
-    If Not NumLockState Then
-        'Simule l'appui sur la touche NumLock
-        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY, 0
-        'Simule le rel‚chement de la touche NumLock
-        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY Or KEYEVENTF_KEYUP, 0
-    End If
-    
-End Sub
 
 'Fonction de tri rapide (QuickSort) pour trier un tableau
 Sub Fn_Quick_Sort(arr As Variant, ByVal first As Long, ByVal last As Long) '2024-09-05 @ 05:09

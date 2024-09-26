@@ -183,9 +183,9 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     
     'Set criteria in worksheet
     wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    Debug.Print "modTEC_Saisie_TEC_Get_All_TEC_AF_163   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   ", TypeName(wshAdmin.Range("TEC_Date").value)
+    Debug.Print "DB.#185 - modTEC_Saisie_TEC_Get_All_TEC_AF   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   ", TypeName(wshAdmin.Range("TEC_Date").value)
     wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date").value
-    Debug.Print "modTEC_Saisie_TEC_Get_All_TEC_AF_165   wshTEC_Local.Range(""S3"").value = "; wshTEC_Local.Range("S3").value; "   ", TypeName(wshTEC_Local.Range("S3").value)
+    Debug.Print "DB.#187 - modTEC_Saisie_TEC_Get_All_TEC_AF   wshTEC_Local.Range(""S3"").value = "; wshTEC_Local.Range("S3").value; "   ", TypeName(wshTEC_Local.Range("S3").value)
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
@@ -250,6 +250,10 @@ No_Sort_Required:
     Set cRng = Nothing
     Set dRng = Nothing
     Set sRng = Nothing
+    
+'    Application.SendKeys "{NUMLOCK}", True
+    
+    Call VerifierNumLockAvecGetKeyboardState
     
     Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF()", startTime)
 

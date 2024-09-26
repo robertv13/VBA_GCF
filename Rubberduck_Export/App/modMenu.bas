@@ -14,7 +14,7 @@ Sub SlideIn_TEC()
             wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -32,7 +32,7 @@ Sub SlideOut_TEC()
             wshMenu.Shapes("icoTEC").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "TEC"
+        .TextFrame2.TextRange.Characters.Text = "TEC"
         On Error GoTo 0
     End With
     
@@ -51,7 +51,7 @@ Sub SlideIn_Facturation()
             wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -69,7 +69,7 @@ Sub SlideOut_Facturation()
             wshMenu.Shapes("icoFacturation").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Facturation"
+        .TextFrame2.TextRange.Characters.Text = "Facturation"
         On Error GoTo 0
     End With
 
@@ -88,7 +88,7 @@ Sub SlideIn_Debours()
             wshMenu.Shapes("icoDebours").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -106,7 +106,7 @@ Sub SlideOut_Debours()
             wshMenu.Shapes("icoDebours").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Débours"
+        .TextFrame2.TextRange.Characters.Text = "Débours"
         On Error GoTo 0
     End With
 
@@ -125,7 +125,7 @@ Sub SlideIn_Comptabilite()
             wshMenu.Shapes("icoComptabilite").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -143,7 +143,7 @@ Sub SlideOut_Comptabilite()
             wshMenu.Shapes("icoComptabilite").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Comptabilité"
+        .TextFrame2.TextRange.Characters.Text = "Comptabilité"
         On Error GoTo 0
     End With
 
@@ -162,7 +162,7 @@ Sub SlideIn_Parametres()
             wshMenu.Shapes("icoParametres").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -180,7 +180,7 @@ Sub SlideOut_Parametres()
             wshMenu.Shapes("icoParametres").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Paramètres"
+        .TextFrame2.TextRange.Characters.Text = "Paramètres"
         On Error GoTo 0
     End With
 
@@ -199,7 +199,7 @@ Sub SlideIn_Exit()
             wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -217,7 +217,7 @@ Sub SlideOut_Exit()
             wshMenu.Shapes("icoEXIT").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Sortie"
+        .TextFrame2.TextRange.Characters.Text = "Sortie"
         On Error GoTo 0
     End With
 
@@ -312,7 +312,7 @@ Sub SlideIn_PrepFact()
             wshMenuFAC.Shapes("icoPrepFact").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -330,7 +330,7 @@ Sub SlideOut_PrepFact()
             wshMenuFAC.Shapes("icoPrepFact").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Préparation de facture"
+        .TextFrame2.TextRange.Characters.Text = "Préparation de facture"
         On Error GoTo 0
     End With
 
@@ -349,7 +349,7 @@ Sub SlideIn_SuiviCC()
             wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -367,7 +367,7 @@ Sub SlideOut_SuiviCC()
             wshMenuFAC.Shapes("icoSuiviCC").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Liste âgée des C/C"
+        .TextFrame2.TextRange.Characters.Text = "Liste âgée des C/C"
         On Error GoTo 0
     End With
 
@@ -386,7 +386,7 @@ Sub SlideIn_Encaissement()
             wshMenuFAC.Shapes("icoEncaissement").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -404,7 +404,7 @@ Sub SlideOut_Encaissement()
             wshMenuFAC.Shapes("icoEncaissement").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Encaissement"
+        .TextFrame2.TextRange.Characters.Text = "Encaissement"
         On Error GoTo 0
     End With
 
@@ -423,7 +423,7 @@ Sub SlideIn_FAC_Historique()
             wshMenuFAC.Shapes("icoFAC_Historique").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -441,7 +441,7 @@ Sub SlideOut_FAC_Historique()
             wshMenuFAC.Shapes("icoFAC_Historique").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Historique factures"
+        .TextFrame2.TextRange.Characters.Text = "Historique factures"
         On Error GoTo 0
     End With
 
@@ -460,7 +460,7 @@ Sub SlideIn_FAC_Confirmation()
             wshMenuFAC.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -478,7 +478,7 @@ Sub SlideOut_FAC_Confirmation()
             wshMenuFAC.Shapes("icoFAC_Confirmation").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Confirmation de facture"
+        .TextFrame2.TextRange.Characters.Text = "Confirmation de facture"
         On Error GoTo 0
     End With
 
@@ -497,7 +497,7 @@ Sub SlideIn_Paiement()
             wshMenuDEB.Shapes("icoPaiement").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -515,7 +515,7 @@ Sub SlideOut_Paiement()
             wshMenuDEB.Shapes("icoPaiement").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Déboursé"
+        .TextFrame2.TextRange.Characters.Text = "Déboursé"
         On Error GoTo 0
     End With
 
@@ -534,7 +534,7 @@ Sub SlideIn_EJ()
             wshMenuGL.Shapes("icoEJ").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -552,7 +552,7 @@ Sub SlideOut_EJ()
             wshMenuGL.Shapes("icoEJ").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Entrée de Journal"
+        .TextFrame2.TextRange.Characters.Text = "Entrée de Journal"
         On Error GoTo 0
     End With
 
@@ -571,7 +571,7 @@ Sub SlideIn_BV()
             wshMenuGL.Shapes("icoBV").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -589,7 +589,7 @@ Sub SlideOut_BV()
             wshMenuGL.Shapes("icoBV").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Balance de Vérification"
+        .TextFrame2.TextRange.Characters.Text = "Balance de Vérification"
         On Error GoTo 0
     End With
 
@@ -608,7 +608,7 @@ Sub SlideIn_GL_Report()
             wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -626,7 +626,7 @@ Sub SlideOut_GL_Report()
             wshMenuGL.Shapes("icoGL").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "Rapport des transactions"
+        .TextFrame2.TextRange.Characters.Text = "Rapport des transactions"
         On Error GoTo 0
     End With
 
@@ -645,7 +645,7 @@ Sub SlideIn_EF()
             wshMenuGL.Shapes("icoEF").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = ""
+        .TextFrame2.TextRange.Characters.Text = ""
         On Error GoTo 0
     End With
 
@@ -663,7 +663,7 @@ Sub SlideOut_EF()
             wshMenuGL.Shapes("icoEF").Left = width - 32
         Next width
         On Error Resume Next
-        .TextFrame2.TextRange.Characters.text = "États financiers"
+        .TextFrame2.TextRange.Characters.Text = "États financiers"
         On Error GoTo 0
     End With
 
@@ -783,7 +783,7 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
-        ActiveWorkbook.Close saveChanges:=True
+        ActiveWorkbook.Close SaveChanges:=True
         
         'Never pass here... It's too late
         Application.EnableEvents = True

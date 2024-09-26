@@ -304,7 +304,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Next ws
     
     'Close the workbook without saving changes
-    wb.Close saveChanges:=False
+    wb.Close SaveChanges:=False
     
     Call Array_2D_Resizer(arr, r, UBound(arr, 2))
     
@@ -1721,9 +1721,20 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue avec le LogMainApp: " & Err.Description, vbCritical, "Erreur au démarrage"
+    MsgBox "Une erreur est survenue avec le fichier LogMainApp: " & vbNewLine & vbNewLine & _
+                Err.Description, vbCritical, "Fichier de logMainApp n'est pas accessible"
+    
+    'Nettoyage : réactivation des événements, calculs, etc.
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+
+    'Fermeture des classeurs sans sauvegarde si nécessaire
+    On Error Resume Next 'Ignorer les erreurs pendant la fermeture des fichiers
+    ThisWorkbook.Close SaveChanges:=False
+
     'Sortir gracieusement de l'application
-    Application.Quit 'No save...
+    Application.Quit
     
 End Sub
 

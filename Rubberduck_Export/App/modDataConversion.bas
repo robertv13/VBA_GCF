@@ -40,7 +40,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
     destinationWorkbook.Close
     
     'Close the source workbook without saving
-    sourceWorkbook.Close saveChanges:=False
+    sourceWorkbook.Close SaveChanges:=False
     
     'Clean up
     Set sourceSheet = Nothing
@@ -308,7 +308,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     destinationWorkbook.Close
     
     'Close the source workbook without saving
-    sourceWorkbook.Close saveChanges:=False
+    sourceWorkbook.Close SaveChanges:=False
     
     'Clean up
     Set sourceSheet = Nothing
@@ -643,8 +643,8 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
     wsDiff.Activate
 
     'Close the workbooks without saving
-    wbWas.Close saveChanges:=False
-    wbNow.Close saveChanges:=False
+    wbWas.Close SaveChanges:=False
+    wbNow.Close SaveChanges:=False
     
     'Cleanup
     Set cellWas = Nothing
@@ -963,8 +963,8 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wbSource.Close saveChanges:=True
-    wbMF.Close saveChanges:=False
+    wbSource.Close SaveChanges:=True
+    wbMF.Close SaveChanges:=False
 
     'Clean up
     Set wsSource = Nothing
@@ -1029,7 +1029,7 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
         colClientID = Left(param, InStr(param, "|") - 1)
         colClientName = Right(param, Len(param) - InStr(param, "|"))
         'Set the worksheet Object
-        Set wsSource = ThisWorkbook.Sheets(ws)
+        Set wsSource = wbSource.Sheets(ws)
         'Détermine la dernière rangée utilisée dans la feuille
         Dim lastUsedRow As Long
         lastUsedRow = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).Row
@@ -1070,8 +1070,8 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wbSource.Close saveChanges:=True
-    wbMF.Close saveChanges:=False
+    wbSource.Close SaveChanges:=True
+    wbMF.Close SaveChanges:=False
 
     'Clean up
     Set dictClients = Nothing
@@ -1139,8 +1139,8 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
     Application.ScreenUpdating = True
     
     'Close the workbooks without saving
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=True
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=True
     
     'Cleanup
     Set wb1 = Nothing
@@ -1260,8 +1260,8 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     Application.ScreenUpdating = True
     
     'Close the workbooks without saving
-    wb1.Close saveChanges:=False
-    wb2.Close saveChanges:=True
+    wb1.Close SaveChanges:=False
+    wb2.Close SaveChanges:=True
     
     'Cleanup
     Set wb1 = Nothing
