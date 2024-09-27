@@ -25,7 +25,7 @@ Option Explicit
 '   You can use this code free in any of your software applications and distribute as you wish.
 '   Please do not alter or remove the authors name or website.
 
-Private Const m_conMaxRows As Long = 20 '2024-09-25 @ 07:24
+Private Const m_conMaxRows As Long = 10
 
 'Configurable Settings
 Private m_compareMethod As VbCompareMethod 'Determines case sensitivity in the search

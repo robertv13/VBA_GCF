@@ -27,21 +27,24 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         Dim avant As String, apres As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.value
+            Call Settrace("@0029", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
             y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             d = day(ufSaisieHeures.txtDate.value)
-            If y = 2024 And m <> 9 Then
+            Call Settrace("@0033", "modTEC_Saisie", "TEC_Ajoute_Ligne", "***** - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
                 Dim temp As Integer
                 temp = m
                 m = d
                 d = temp
+            Call Settrace("@0039", "modTEC_Saisie", "TEC_Ajoute_Ligne", "***** - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
             ufSaisieHeures.txtDate.value = DateSerial(y, m, d)
+            Call Settrace("@0042", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
             apres = ufSaisieHeures.txtDate.value
             If apres <> avant Then
                 Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#41:  La date a été changée pour corriger le format - " & avant & "---> " & apres, -1)
             End If
-            Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
         On Error GoTo 0
         
         Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
@@ -183,9 +186,9 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     
     'Set criteria in worksheet
     wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    Debug.Print "DB.#185 - modTEC_Saisie_TEC_Get_All_TEC_AF   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   ", TypeName(wshAdmin.Range("TEC_Date").value)
+    Call Settrace("@0188", "modTEC_Saisie", "TEC_Get_All_TEC_AF", "wshAdmin.Range(""TEC_Date"").value = '" & wshAdmin.Range("TEC_Date").value & "'", "type = " & TypeName(wshAdmin.Range("TEC_Date").value))
     wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date").value
-    Debug.Print "DB.#187 - modTEC_Saisie_TEC_Get_All_TEC_AF   wshTEC_Local.Range(""S3"").value = "; wshTEC_Local.Range("S3").value; "   ", TypeName(wshTEC_Local.Range("S3").value)
+    Call Settrace("@0190", "modTEC_Saisie", "TEC_Get_All_TEC_AF", "wshTEC_Local.Range(""S3"").value = '" & wshTEC_Local.Range("S3").value & "'", "type = " & TypeName(wshTEC_Local.Range("S3").value))
     wshTEC_Local.Range("T3").value = "FAUX"
     
     With wshTEC_Local
@@ -314,14 +317,14 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
-    Call Log_Record("modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '" & dateValue & "'  Type = " & TypeName(dateValue), -1)
+    Call Settrace("@0319", "modTEC_Saisie", "TEC_Record_Add_Or_Update_To_DB", "dateValue = '" & dateValue & "'", "type = " & TypeName(dateValue))
     Dim y As Integer, m As Integer, d As Integer
     
     If TECID < 0 Then 'Soft delete a record
         
         'Open the recordset for the specified ID
         
-        Call Log_Record("SoftDeleteStart - " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+        Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - SoftDeleteStart - " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
         
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & Abs(TECID), conn, 2, 3
         saveLogTEC_ID = TECID
@@ -332,7 +335,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("VersionApp").value = ThisWorkbook.name
             rs.update
             
-            Call Log_Record(CStr(saveLogTEC_ID) & " I S   D E L E T E D", -1) '2024-09-13 @ 08:49
+            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & CStr(-(saveLogTEC_ID)) & " I S   D E L E T E D", -1) '2024-09-13 @ 08:49
         
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
@@ -350,7 +353,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
         If TECID = 0 Then 'Add a record
         
-            Call Log_Record("AddRecordStarting_#348: TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
@@ -372,7 +375,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             Dim nextID As Long
             nextID = lastRow + 1
             
-            Call Log_Record("AddRecord #370: TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = " & CStr(nextID), -1) '2024-09-13 @ 08:35
 
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
@@ -381,7 +384,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
-            Call Log_Record("AddRecord #379: TECID = " & CStr(nextID))  '2024-09-13 @ 08:35
+            Call Log_Record("@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet", -1) '2024-09-13 @ 08:35
 
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
@@ -406,18 +409,18 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("NoFacture").value = ""
             rs.update
             
-            Call Log_Record("Record added #404: TECID = " & CStr(nextID))  '2024-09-13 @ 08:35
+            Call Log_Record("@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
             
             'Nouveau log - 2024-09-02 @ 10:40
-            Call Log_Saisie_Heures("Add", saveLogTEC_ID & "|" & _
-                        ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                        dateValue & "|" & _
-                        wshAdmin.Range("TEC_Client_ID") & "|" & _
-                        ufSaisieHeures.txtClient.value & "|" & _
-                        ufSaisieHeures.txtActivite.value & "|" & _
-                        Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                        ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & "|" & _
-                        ufSaisieHeures.txtCommNote.value & "|" & _
+            Call Log_Saisie_Heures("ADD   ", saveLogTEC_ID & " | " & _
+                        ufSaisieHeures.cmbProfessionnel.value & " | " & _
+                        dateValue & " | " & _
+                        wshAdmin.Range("TEC_Client_ID") & " | " & _
+                        ufSaisieHeures.txtClient.value & " | " & _
+                        ufSaisieHeures.txtActivite.value & " | " & _
+                        Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
+                        ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
+                        ufSaisieHeures.txtCommNote.value & " | " & _
                         Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
         
         Else 'Update an existing record (TECID <> 0)
@@ -425,7 +428,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Open the recordset for the specified ID
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
             If Not rs.EOF Then
-                Call Log_Record("Update an existing record - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
+                Call Log_Record("modTEC_Saisie" & "TEC_Record_Add_Or_Update_To_DB" & " - Update an existing record - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
                 rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
@@ -437,15 +440,15 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("VersionApp").value = ThisWorkbook.name
                 'Nouveau log - 2024-09-02 @ 10:40
                 
-                Call Log_Saisie_Heures("UPDATE", saveLogTEC_ID & "|" & _
-                            ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                            dateValue & "|" & _
-                            wshAdmin.Range("TEC_Client_ID") & "|" & _
-                            ufSaisieHeures.txtClient.value & "|" & _
-                            ufSaisieHeures.txtActivite.value & "|" & _
-                            Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                            ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & "|" & _
-                            ufSaisieHeures.txtCommNote.value & "|" & _
+                Call Log_Saisie_Heures("UPDATE", saveLogTEC_ID & " | " & _
+                            ufSaisieHeures.cmbProfessionnel.value & " | " & _
+                            dateValue & " | " & _
+                            wshAdmin.Range("TEC_Client_ID") & " | " & _
+                            ufSaisieHeures.txtClient.value & " | " & _
+                            ufSaisieHeures.txtActivite.value & " | " & _
+                            Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
+                            ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
+                            ufSaisieHeures.txtCommNote.value & " | " & _
                             Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             
             Else
@@ -508,6 +511,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     
     Dim dateValue As Date
     dateValue = ufSaisieHeures.txtDate.value
+    Call Settrace("@0513", "modTEC_Saisie", "TEC_Record_Add_Or_Update_Locally", "dateValue = '" & dateValue & "'", "type = " & TypeName(dateValue))
     
     If TECID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local

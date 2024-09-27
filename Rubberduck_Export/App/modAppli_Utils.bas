@@ -3,29 +3,29 @@ Option Explicit
 
 Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As String, numberRows As Long)
 
-    'Open the workbook
-    Dim wb As Workbook: Set wb = Workbooks.Open(workbookPath)
-    Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
-
-    'Find the last row with data in column A
-    Dim lastRow As Long
-    lastRow = ws.Range("A9999").End(xlUp).Row
-    Dim firstNewRow As Long
-    firstNewRow = lastRow - numberRows + 1
-
-    'Set the range for new rows
-    Dim newRows As Range
-    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
-
-    'Copy formatting from the row above the first new row to the new rows
-    ws.rows(firstNewRow - 1).Copy
-    newRows.PasteSpecial Paste:=xlPasteFormats
-
-    'Clear the clipboard to avoid Excel's cut-copy mode
-    Application.CutCopyMode = False
-
-    'Save and close the workbook
-    wb.Close SaveChanges:=True
+'    'Open the workbook
+'    Dim wb As Workbook: Set wb = Workbooks.Open(workbookPath)
+'    Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
+'
+'    'Find the last row with data in column A
+'    Dim lastRow As Long
+'    lastRow = ws.Range("A9999").End(xlUp).Row
+'    Dim firstNewRow As Long
+'    firstNewRow = lastRow - numberRows + 1
+'
+'    'Set the range for new rows
+'    Dim newRows As Range
+'    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
+'
+'    'Copy formatting from the row above the first new row to the new rows
+'    ws.rows(firstNewRow - 1).Copy
+'    newRows.PasteSpecial Paste:=xlPasteFormats
+'
+'    'Clear the clipboard to avoid Excel's cut-copy mode
+'    Application.CutCopyMode = False
+'
+'    'Save and close the workbook
+'    wb.Close SaveChanges:=True
 
 End Sub
 
@@ -2021,7 +2021,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1256 'What is the last TECID analyzed ?
+    lastTECIDReported = 1295 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

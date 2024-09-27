@@ -604,7 +604,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     conn.Close
     
     'Open the MASTER file to clone the format to newly added lines
-    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
+'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
     
     Application.ScreenUpdating = True
     
@@ -725,7 +725,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     conn.Close
     
     'Open the MASTER file to clone the format to newly added lines
-    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
+'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
     
     Application.ScreenUpdating = True
     

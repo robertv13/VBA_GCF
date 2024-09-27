@@ -1762,9 +1762,9 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
     
     Open logSaisieHeuresFile For Append As #fileNum
     
-    Print #fileNum, currentTime & "|" & _
-                        Fn_Get_Windows_Username & "|" & _
-                        oper & "|" & _
+    Print #fileNum, currentTime & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
+                        oper & " | " & _
                         txt
     Close #fileNum
     
@@ -1781,6 +1781,48 @@ End Sub
 Sub Test_Log_Saisie_Heures()
 
     Call Log_Saisie_Heures("W", "Test")
+    
+End Sub
+
+Sub Settrace(source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
+
+    On Error GoTo Error_Handler
+    
+    Dim settraceFile As String
+    settraceFile = wshAdmin.Range("F5").value & DATA_PATH & _
+        Application.PathSeparator & "LogSettrace.txt"
+    
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    
+    Dim currentTime As String
+    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+    
+    Open settraceFile For Append As #fileNum
+    
+    Print #fileNum, currentTime & " | " & _
+                    Fn_Get_Windows_Username & " | " & _
+                    source & " | " & _
+                    module & " | " & _
+                    procedure & " | " & _
+                    variable & " | " & _
+                    vType
+
+    Close #fileNum
+    
+    Exit Sub
+    
+Error_Handler:
+
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
+    'Sortir gracieusement de l'application
+    Application.Quit 'No save...
+    
+End Sub
+
+Sub Test_Settrace()
+
+    Call Settrace("DB.1824", "modDev_Utils", "Test_Settrace", "date = '" & Date & "'", "type = " & "Date")
     
 End Sub
 

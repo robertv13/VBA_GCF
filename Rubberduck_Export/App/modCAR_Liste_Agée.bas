@@ -232,6 +232,7 @@ Next_Invoice:
     
     Application.EnableEvents = False
     
+    Dim ordreTri As String
     If derniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
         With wshCAR_Liste_Agée.Sort
             .SortFields.clear
@@ -241,6 +242,7 @@ Next_Invoice:
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par nom de client
+                ordreTri = "Ordre de nom de client"
             Else
                 .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("C8"), _
@@ -252,6 +254,7 @@ Next_Invoice:
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier date de transaction
+                ordreTri = "Ordre de numéro de facture"
             End If
             .SetRange rngResultat
             .Header = xlYes
@@ -340,7 +343,7 @@ Next_Invoice:
     Else
         header2 = "1 ligne par transaction"
     End If
-    header2 = "Par ordre alphabétique - " & header2
+    header2 = ordreTri & " - " & header2
     
     Call Simple_Print_Setup(wshCAR_Liste_Agée, rngToPrint, header1, header2, "$8:$8", "L")
     
@@ -653,7 +656,7 @@ Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     conn.Close
     
     'Open the MASTER file to clone the format to newly added lines
-    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
+'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
     
     Application.ScreenUpdating = True
     
@@ -774,7 +777,7 @@ Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     conn.Close
     
     'Open the MASTER file to clone the format to newly added lines
-    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
+'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
     
     Application.ScreenUpdating = True
     

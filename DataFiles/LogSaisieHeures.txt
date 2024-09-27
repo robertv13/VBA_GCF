@@ -1,35 +1,4 @@
-2024-09-25 07:30:24|Robert M. Vigneault|Add|1224|GC|25/09/2024|1013i|Groupe Vétéri Médic Inc. [GVMI] [Sébastien Kfoury]|TEST|1,00|VRAI||2024-09-25 07:30:24
-2024-09-25 07:33:34|Robert M. Vigneault|Add|1225|GC|25/09/2024|113|Bonin McLaughlin [Robert McLaughlin]|TEST2|0,10|VRAI||2024-09-25 07:33:34
-2024-09-25 07:45:44|Robert M. Vigneault|Add|1226|GC|25/09/2024|1013i|Groupe Vétéri Médic Inc. [GVMI] [Sébastien Kfoury]|Test|1,10|VRAI||2024-09-25 07:45:44
-2024-09-25 07:46:31|Robert M. Vigneault|Add|1227|GC|25/09/2024|1013i|Groupe Vétéri Médic Inc. [GVMI] [Sébastien Kfoury]|Test|1,20|VRAI||2024-09-25 07:46:31
-2024-09-25 07:46:59|Robert M. Vigneault|Add|1228|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|2,00|VRAI||2024-09-25 07:46:59
-2024-09-25 07:47:18|Robert M. Vigneault|Add|1229|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST#|3,00|VRAI||2024-09-25 07:47:18
-2024-09-25 07:50:44|Robert M. Vigneault|Add|1230|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|7,00|VRAI||2024-09-25 07:50:44
-2024-09-25 07:51:01|Robert M. Vigneault|UPDATE|1230|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|2,00|VRAI||2024-09-25 07:51:01
-2024-09-25 07:51:10|Robert M. Vigneault|UPDATE|1229|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST#|0,30|VRAI||2024-09-25 07:51:10
-2024-09-25 07:51:35|Robert M. Vigneault|Add|1231|GC|25/09/2024|159|9133-0969 Québec Inc. [Cong Van Kieu]|TEST|2,00|VRAI||2024-09-25 07:51:35
-2024-09-25 07:59:50|Robert M. Vigneault|Add|1232|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|0,20|VRAI||2024-09-25 07:59:50
-2024-09-25 08:00:56|Robert M. Vigneault|Add|1233|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|2,00|VRAI||2024-09-25 08:00:56
-2024-09-25 08:01:06|Robert M. Vigneault|Add|1234|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]||2,00|VRAI||2024-09-25 08:01:06
-2024-09-25 08:02:13|Robert M. Vigneault|Add|1235|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]||2,00|VRAI||2024-09-25 08:02:13
-2024-09-25 12:42:07|Robert M. Vigneault|Add|1236|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|25|2,00|VRAI||2024-09-25 12:42:07
-2024-09-25 14:25:16|Robert M. Vigneault|Add|1237|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|1,00|VRAI||2024-09-25 14:25:16
-2024-09-25 14:25:39|Robert M. Vigneault|Add|1238|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|1,00|VRAI||2024-09-25 14:25:39
-2024-09-25 14:25:48|Robert M. Vigneault|UPDATE|1238|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-25 14:25:48
-2024-09-25 14:29:30|Robert M. Vigneault|UPDATE|1233|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|0,10|VRAI||2024-09-25 14:29:30
-2024-09-25 14:29:40|Robert M. Vigneault|UPDATE|1224|GC|25/09/2024|1013i|Groupe Vétéri Médic Inc. [GVMI] [Sébastien Kfoury]|TEST|0,20|VRAI||2024-09-25 14:29:40
-2024-09-25 14:29:48|Robert M. Vigneault|UPDATE|1228|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|TEST|0,40|VRAI||2024-09-25 14:29:48
-2024-09-25 15:02:05|Robert M. Vigneault|Add|1239|GC|25/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,20|VRAI||2024-09-25 15:02:05
-2024-09-26 07:34:51|Robert M. Vigneault|Add|1257|GC|26/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,40|VRAI||2024-09-26 07:34:51
-2024-09-26 07:35:58|Robert M. Vigneault|Add|1258|GC|26/09/2024|193l|9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier]|Test|0,25|VRAI||2024-09-26 07:35:58
-2024-09-26 07:41:04|Robert M. Vigneault|Add|1259|GC|26/09/2024|1516|Les Industries Canplex Ltée [Marco Stocchero]|Test|0,10|VRAI||2024-09-26 07:41:04
-2024-09-26 07:41:22|Robert M. Vigneault|Add|1260|GC|26/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-26 07:41:22
-2024-09-26 07:41:40|Robert M. Vigneault|Add|1261|GC|26/09/2024|1211|9163-2653 Québec Inc. [Micah Dass]|Test|0,20|VRAI||2024-09-26 07:41:40
-2024-09-26 07:42:14|Robert M. Vigneault|Add|1262|GC|26/09/2024|1083|4470524 Canada Inc. [Jean Rainville]|Test|0,10|VRAI||2024-09-26 07:42:14
-2024-09-26 09:15:02|Robert M. Vigneault|UPDATE|1260|GC|26/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,20|VRAI||2024-09-26 09:15:02
-2024-09-26 09:15:16|Robert M. Vigneault|UPDATE|1257|GC|26/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,30|VRAI||2024-09-26 09:15:16
-2024-09-26 09:15:28|Robert M. Vigneault|UPDATE|1258|GC|26/09/2024|193l|9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier]|Test|0,35|VRAI||2024-09-26 09:15:28
-2024-09-26 09:15:38|Robert M. Vigneault|UPDATE|1259|GC|26/09/2024|1516|Les Industries Canplex Ltée [Marco Stocchero]|Test|0,40|VRAI||2024-09-26 09:15:38
-2024-09-26 09:15:46|Robert M. Vigneault|UPDATE|1260|GC|26/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,50|VRAI||2024-09-26 09:15:46
-2024-09-26 09:15:54|Robert M. Vigneault|UPDATE|1261|GC|26/09/2024|1211|9163-2653 Québec Inc. [Micah Dass]|Test|0,60|VRAI||2024-09-26 09:15:54
-2024-09-26 09:16:01|Robert M. Vigneault|UPDATE|1262|GC|26/09/2024|1083|4470524 Canada Inc. [Jean Rainville]|Test|0,70|VRAI||2024-09-26 09:16:01
+2024-09-26 13:52:43 | Robert M. Vigneault | ADD    | 1280|ML|22/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-26 13:52:43
+2024-09-26 13:52:54 | Robert M. Vigneault | ADD    | 1281|ML|22/09/2024|193l|9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier]|Test|0,20|VRAI||2024-09-26 13:52:54
+2024-09-26 13:53:05 | Robert M. Vigneault | ADD    | 1282|ML|22/09/2024|1276|Bourdon & Guay, CPA Inc. [Patrick Bourdon]|Test|0,20|VRAI||2024-09-26 13:53:05
+2024-09-26 13:53:22 | Robert M. Vigneault | ADD    | 1283|ML|22/09/2024|1161|Les enseignes Gilbert Bourgouin Inc. [Jean-François Bourgouin]|Test|0,20|VRAI||2024-09-26 13:53:22

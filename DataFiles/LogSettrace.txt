@@ -1,0 +1,39 @@
+2024-09-26 13:52:26 | Robert M. Vigneault | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-26 13:52:29 | Robert M. Vigneault | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '22' | type = String
+2024-09-26 13:52:29 | Robert M. Vigneault | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '22/09/2024' | type = Date
+2024-09-26 13:52:29 | Robert M. Vigneault | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '22/09/2024' | type = Date
+2024-09-26 13:52:29 | Robert M. Vigneault | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '26/09/2024' | Vrai
+2024-09-26 13:52:29 | Robert M. Vigneault | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:52:29 | Robert M. Vigneault | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '22/09/2024' | type = String
+2024-09-26 13:52:29 | Robert M. Vigneault | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '22/09/2024' | type = Date
+2024-09-26 13:52:29 | Robert M. Vigneault | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:52:29 | Robert M. Vigneault | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:52:29 | Robert M. Vigneault | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '22/09/2024' | type = Date
+2024-09-26 13:52:43 | Robert M. Vigneault | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:52:43 | Robert M. Vigneault | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | y = 2024, m = 9, d = 22 | type = String
+2024-09-26 13:52:43 | Robert M. Vigneault | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:52:43 | Robert M. Vigneault | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:52:44 | Robert M. Vigneault | @ 513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:52:44 | Robert M. Vigneault | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:52:44 | Robert M. Vigneault | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '22/09/2024' | type = Date
+2024-09-26 13:52:54 | Robert M. Vigneault | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:52:54 | Robert M. Vigneault | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | y = 2024, m = 9, d = 22 | type = String
+2024-09-26 13:52:54 | Robert M. Vigneault | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:52:54 | Robert M. Vigneault | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:52:54 | Robert M. Vigneault | @ 513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:52:54 | Robert M. Vigneault | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:52:54 | Robert M. Vigneault | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '22/09/2024' | type = Date
+2024-09-26 13:53:05 | Robert M. Vigneault | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:53:05 | Robert M. Vigneault | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | y = 2024, m = 9, d = 22 | type = String
+2024-09-26 13:53:05 | Robert M. Vigneault | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:53:05 | Robert M. Vigneault | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:53:06 | Robert M. Vigneault | @ 513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:53:06 | Robert M. Vigneault | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:53:06 | Robert M. Vigneault | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '22/09/2024' | type = Date
+2024-09-26 13:53:22 | Robert M. Vigneault | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:53:22 | Robert M. Vigneault | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | y = 2024, m = 9, d = 22 | type = String
+2024-09-26 13:53:22 | Robert M. Vigneault | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '22/09/2024' | type = String
+2024-09-26 13:53:22 | Robert M. Vigneault | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:53:22 | Robert M. Vigneault | @ 513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '22/09/2024' | type = Date
+2024-09-26 13:53:22 | Robert M. Vigneault | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '22/09/2024' | type = Date
+2024-09-26 13:53:22 | Robert M. Vigneault | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '22/09/2024' | type = Date

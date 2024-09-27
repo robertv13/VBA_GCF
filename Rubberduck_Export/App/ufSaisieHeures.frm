@@ -25,10 +25,6 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub lblVersion_Click()
-
-End Sub
-
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
@@ -44,7 +40,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
         Set .SearchTextBox = txtClient
-        .MaxRows = 15
+        .MaxRows = 10
         .ShowAllMatches = False
         .CompareMethod = vbTextCompare
     End With
@@ -153,7 +149,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         wshAdmin.Range("TEC_Initials").value = ufSaisieHeures.cmbProfessionnel.value
         wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
         
-        Debug.Print "DB.#137 - ufSaisieHeures_cmbProfessionnel_AfterUpdate_133   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   "; TypeName(wshAdmin.Range("TEC_Date").value)
+        Call Settrace("@0137", "ufSaisieHeures", "cmbProfessionnel_AfterUpdate", "wshAdmin.Range(""TEC_Date"").value = '" & wshAdmin.Range("TEC_Date").value & "'", "type = " & TypeName(wshAdmin.Range("TEC_Date").value))
         If wshAdmin.Range("TEC_Date").value <> "" Then '2024-09-05 @ 20:50
             ufSaisieHeures.txtDate.value = wshAdmin.Range("TEC_Date").value
             Debug.Print "ufSaisieHeures_cmbProfessionnel_AfterUpdate_136   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
@@ -187,15 +183,15 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    Debug.Print "DB.#169 - ufSaisieHeures_BeforeUpdate   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
+    Call Settrace("@0171", "ufSaisieHeures", "txtDate_BeforeUpdate", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
     fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value)
-    Debug.Print "DB.#171 - ufSaisieHeures_BeforeUpdate   fullDate = "; fullDate; "   "; TypeName(fullDate)
+    Call Settrace("@0173", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
         ufSaisieHeures.txtDate.value = fullDate
     Else
-        Call MsgBoxInvalidDate("ufSaisieHeures_177")
+        Call MsgBoxInvalidDate("ufSaisieHeures_179")
         Cancel = True
         With ufSaisieHeures.txtDate
             .SetFocus 'Remettre le focus sur la TextBox
@@ -205,8 +201,8 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Debug.Print "DB.#187 - ufSaisieHeures_BeforeUpdate   fullDate = "; fullDate; "   "; TypeName(fullDate)
-    Debug.Print "DB.#188 - ufSaisieHeures_BeforeUpdate   DateSerial = "; DateSerial(year(Now), month(Now), day(Now)); "   "; TypeName(DateSerial(year(Now), month(Now), day(Now))); "   Future ?"
+    Call Settrace("@0189", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
+    Call Settrace("@0190", "ufSaisieHeures", "txtDate_BeforeUpdate", "DateSerial = '" & DateSerial(year(Now), month(Now), day(Now)) & "'", "Type = " & TypeName(DateSerial(year(Now), month(Now), day(Now))) & "   Future ? " & fullDate > DateSerial(year(Now), month(Now), day(Now)))
     If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
         Debug.Print "ufSaisieHeures_BeforeUpdate_185   fullDate = "; fullDate; "   "; TypeName(fullDate)
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
@@ -230,7 +226,7 @@ Private Sub txtDate_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
     
-    Debug.Print "DB.#212 - ufSaisieHeures_txtDate_AfterUpdate   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
+    Call Settrace("@0214", "ufSaisieHeures", "txtDate_AfterUpdate", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
 '    MsgBox "ufSaisieHeures_txtDate_AfterUpdate_208   " & vbNewLine & vbNewLine & _
                 "y = " & year(ufSaisieHeures.txtDate.value) & vbNewLine & vbNewLine & _
                 "m = " & month(ufSaisieHeures.txtDate.value) & vbNewLine & vbNewLine & _
@@ -238,11 +234,11 @@ Private Sub txtDate_AfterUpdate()
     If IsDate(ufSaisieHeures.txtDate.value) Then
         Dim dateStr As String, dateFormated As Date
         dateStr = ufSaisieHeures.txtDate.value
-        Debug.Print "DB.#220 - ufSaisieHeures_txtDate_AfterUpdate   dateStr = "; dateStr; "   "; TypeName(dateStr)
+        Call Settrace("@0222", "ufSaisieHeures", "txtDate_AfterUpdate", "dateStr = '" & dateStr & "'", "type = " & TypeName(dateStr))
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
-        Debug.Print "DB.#222 - ufSaisieHeures_txtDate_AfterUpdate   dateFormated = "; dateFormated; "   "; TypeName(dateFormated)
+        Call Settrace("@0224", "ufSaisieHeures", "txtDate_AfterUpdate", "dateFormated = '" & dateFormated & "'", "type = " & TypeName(dateFormated))
         wshAdmin.Range("TEC_Date").value = dateFormated
-        Debug.Print "DB.#224 - ufSaisieHeures_txtDate_AfterUpdate   wshAdmin.Range(""TEC_Date"").value = "; wshAdmin.Range("TEC_Date").value; "   "; TypeName(wshAdmin.Range("TEC_Date").value)
+        Call Settrace("@0226", "ufSaisieHeures", "txtDate_AfterUpdate", "wshAdmin.Range(""TEC_Date"").value = '" & wshAdmin.Range("TEC_Date").value & "'", "type = " & TypeName(wshAdmin.Range("TEC_Date").value))
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
@@ -499,15 +495,15 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
 End Sub
 
-Sub VerifierNumLock()
-
-    Const VK_NUMLOCK As Long = &H90 ' Code de la touche NUM LOCK
-    
-    ' Appel de l'API Windows pour obtenir l'état de NUM LOCK
-    If GetKeyState(VK_NUMLOCK) And 1 Then
-        MsgBox "Le NUM LOCK est activé.", vbInformation
-    Else
-        MsgBox "Le NUM LOCK est désactivé.", vbInformation
-    End If
-    
-End Sub
+'Sub VerifierNumLock()
+'
+'    Const VK_NUMLOCK As Long = &H90 ' Code de la touche NUM LOCK
+'
+'    ' Appel de l'API Windows pour obtenir l'état de NUM LOCK
+'    If GetKeyState(VK_NUMLOCK) And 1 Then
+'        MsgBox "Le NUM LOCK est activé.", vbInformation
+'    Else
+'        MsgBox "Le NUM LOCK est désactivé.", vbInformation
+'    End If
+'
+'End Sub
