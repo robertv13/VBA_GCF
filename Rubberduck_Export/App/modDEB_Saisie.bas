@@ -224,9 +224,18 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         Case "Chèque", "Virement", "Paiement pré-autorisé"
             MyArray(1, 1) = "1000"
             MyArray(1, 2) = "Encaisse"
-        Case "VISA", "MCARD", "AMEX"
+        Case "Carte de crédit"
             MyArray(1, 1) = "2010"
             MyArray(1, 2) = "Carte de crédit"
+        Case "Avances avec Guillaume Charron"
+            MyArray(1, 1) = "2200"
+            MyArray(1, 2) = "Avances avec Guillaume Charron"
+        Case "Avances avec 9249-3626 Québec inc."
+            MyArray(1, 1) = "2210"
+            MyArray(1, 2) = "Avances avec 9249-3626 Québec inc."
+        Case "Avances avec 9333-4829 Québec inc."
+            MyArray(1, 1) = "2220"
+            MyArray(1, 2) = "Avances avec 9333-4829 Québec inc."
         Case "Autre"
             MyArray(1, 1) = "1000"
             MyArray(1, 2) = "Encaisse"
@@ -577,13 +586,18 @@ Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
         Else
             pst = 0
         End If
-        If taxCode <> "REP" Then
-            gstCredit = gst
-            pstCredit = pst
-        Else
-            gstCredit = Round(gst / 2, 2)
-            pstCredit = Round(pst / 2, 2)
-        End If
+        
+        'PLUG pour saisir les données du mois d'août... TBR - 2024-09-28 @ 05:41
+        gstCredit = gst
+        pstCredit = pst
+        
+'        If taxCode <> "REP" Then
+'            gstCredit = gst
+'            pstCredit = pst
+'        Else
+'            gstCredit = Round(gst / 2, 2)
+'            pstCredit = Round(pst / 2, 2)
+'        End If
         
         total = netAmount + gst + pst
         

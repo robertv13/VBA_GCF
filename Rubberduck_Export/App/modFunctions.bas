@@ -953,6 +953,61 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
 
 End Function
 
+Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
+
+    'Using AdvancedFilter in wshGL_Trans
+    Dim ws As Worksheet: Set ws = wshGL_Trans
+    
+    Fn_Get_Account_Opening_Balance = 0
+    
+    Application.EnableEvents = False
+    
+    'Destination Range
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).Row
+    If lastUsedRow > 1 Then
+        ws.Range("AP2:AY" & lastUsedRow).clear
+    End If
+
+    ws.Range("AL3").FormulaR1C1 = glNo
+    ws.Range("AM3").FormulaR1C1 = ">=7/31/2024"
+    ws.Range("AN3").FormulaR1C1 = "<" & Format$(d, "mm/dd/yyyy")
+    
+    ws.Range("A1:J529").AdvancedFilter action:=xlFilterCopy, _
+                                       criteriaRange:=ws.Range("AL2:AN3"), _
+                                       CopyToRange:=ws.Range("AP1:AY1"), _
+                                       Unique:=False
+
+    Application.EnableEvents = True
+    
+    lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).Row
+    If lastUsedRow < 2 Then
+        Exit Function
+    End If
+        
+    Dim soldeOuverture As Double
+    Dim i As Long
+    For i = 2 To lastUsedRow
+        soldeOuverture = soldeOuverture + ws.Range("AV" & i).value - ws.Range("AW" & i).value
+    Next i
+    
+    Fn_Get_Account_Opening_Balance = soldeOuverture
+    
+End Function
+
+Sub Test_Fn_Get_Account_Opening_Balance()
+
+    Dim openBal As Double
+    openBal = Fn_Get_Account_Opening_Balance("1000", #8/1/2024#)
+    Debug.Print "DB#1001 - 1000 = " & Format$(openBal, "###,##0.00 $")
+    openBal = Fn_Get_Account_Opening_Balance("1205", #8/1/2024#)
+    Debug.Print "DB#1001 - 1205 = " & Format$(openBal, "###,##0.00 $")
+    openBal = Fn_Get_Account_Opening_Balance("1310", #8/1/2024#)
+    Debug.Print "DB#1001 - 1310 = " & Format$(openBal, "###,##0.00 $")
+    openBal = Fn_Get_Account_Opening_Balance("2120", #8/1/2024#)
+    Debug.Print "DB#1001 - 2120 = " & Format$(openBal, "###,##0.00 $")
+
+End Sub
 Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
 
     Debug.Assert nbCol >= 1 And nbCol <= 4 '2024-07-31 @ 19:26

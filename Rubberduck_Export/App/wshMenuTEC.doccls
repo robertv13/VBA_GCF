@@ -34,6 +34,13 @@ Private Sub lblAnalyse_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As I
 
 End Sub
 
+Private Sub lblEvaluation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
+    
+    Call SlideIn_TEC_Analyse
+    Call SlideOut_TEC_Evaluation
+
+End Sub
+
 Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single)
    
     Call SlideIn_SaisieHeures
@@ -84,4 +91,23 @@ Sub TEC_Analyse_Click()
     Application.ScreenUpdating = True
 
 End Sub
+
+Sub TEC_Evaluation_Click()
+
+    Call SlideIn_TEC_Evaluation
+    
+    Application.ScreenUpdating = False
+    
+    wshTEC_TDB.Application.Calculation = xlCalculationAutomatic
+    
+    With wshTEC_Evaluation
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+
+End Sub
+
+
 

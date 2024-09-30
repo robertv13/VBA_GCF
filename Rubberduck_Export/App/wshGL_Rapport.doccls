@@ -8,6 +8,8 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = False
     
+    Call GL_Trans_Import_All
+    
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_Rapport")
     ws.Unprotect
     

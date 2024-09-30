@@ -301,6 +301,31 @@ Sub SlideOut_TEC_Analyse()
 
 End Sub
 
+Sub SlideIn_TEC_Evaluation()
+    
+'    With wshMenuTEC.Shapes("btnTEC_TDB")
+'        For width = MAXWIDTH To 32 Step -8
+'            .Height = width
+'            .Left = width - 32
+'            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = ""
+'    End With
+
+End Sub
+
+Sub SlideOut_TEC_Evaluation()
+    
+'    With wshMenuTEC.Shapes("btnTEC_TDB")
+'        For width = 32 To MAXWIDTH step 8
+'            .Height = width
+'            ActiveSheet.Shapes("icoTEC_TDB").Left = width - 32
+'        Next width
+'        .TextFrame2.TextRange.Characters.text = "Tableau de bord"
+'    End With
+
+End Sub
+
 Sub SlideIn_PrepFact()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SlideIn_PrepFact", 0)

@@ -14,7 +14,8 @@ Public Sub GL_Report_For_Selected_Accounts()
     End If
     
     If Application.WorksheetFunction.Days(ws.Range("H6").value, ws.Range("F6").value) < 0 Then
-        MsgBox "La date de départ doit obligatoirement être antérieure à la date de fin!"
+        MsgBox "La date de départ doit obligatoirement être antérieure" & vbNewLine & vbNewLine & _
+                "ou égale à la date de fin!", vbInformation
         Exit Sub
     End If
     
@@ -61,6 +62,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         End With
         
         Application.ScreenUpdating = False
+        Application.DisplayAlerts = False
         
         'Process one account at the time...
         Dim item As Variant
@@ -70,10 +72,11 @@ Public Sub GL_Report_For_Selected_Accounts()
             
             Call get_GL_Trans_With_AF(compte, dateDeb, dateFin, sortType)
             
-            Call print_results_From_GL_Trans(compte)
+            Call Print_results_From_GL_Trans(compte, dateDeb)
         
         Next item
         
+        Application.DisplayAlerts = True
         Application.ScreenUpdating = True
         
     End If
@@ -151,7 +154,7 @@ NoSort:
 
 End Sub
 
-Sub print_results_From_GL_Trans(compte As String)
+Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
@@ -168,7 +171,15 @@ Sub print_results_From_GL_Trans(compte As String)
     lastRowUsed_AB = lastRowUsed_AB + 2
     ws.Range("A" & lastRowUsed_AB).value = compte
     ws.Range("A" & lastRowUsed_AB).Font.Bold = True
-    solde = 0
+    
+    'Solde d'ouverture pour ce compte
+    Dim soldeOuverture As Double
+    Dim glNo As String
+    glNo = Left(compte, InStr(compte, " ") - 1)
+    soldeOuverture = Fn_Get_Account_Opening_Balance(glNo, dateDeb)
+    solde = soldeOuverture
+    ws.Range("D" & lastRowUsed_AB).value = "Solde d'ouverture"
+    
     ws.Range("H" & lastRowUsed_AB).value = solde
     ws.Range("H" & lastRowUsed_AB).Font.Bold = True
     lastRowUsed_AB = lastRowUsed_AB + 1
@@ -183,41 +194,34 @@ Sub print_results_From_GL_Trans(compte As String)
         Dim i As Long, sumDT As Currency, sumCT As Currency
         'Read thru the rows
         For i = 2 To lastUsedTrans
-            ws.Cells(lastRowUsed_AB, 2) = wshGL_Trans.Range("Q" & i).value
-            ws.Cells(lastRowUsed_AB, 3) = wshGL_Trans.Range("R" & i).value
-            ws.Cells(lastRowUsed_AB, 4) = wshGL_Trans.Range("S" & i).value
-            ws.Cells(lastRowUsed_AB, 5) = wshGL_Trans.Range("P" & i).value
-            ws.Cells(lastRowUsed_AB, 6) = wshGL_Trans.Range("V" & i).value
-            ws.Cells(lastRowUsed_AB, 7) = wshGL_Trans.Range("W" & i).value
-            ws.Cells(lastRowUsed_AB, 8) = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
+            ws.Cells(lastRowUsed_AB, 2).value = wshGL_Trans.Range("Q" & i).value
+            ws.Cells(lastRowUsed_AB, 3).value = wshGL_Trans.Range("R" & i).value
+            ws.Cells(lastRowUsed_AB, 4).value = wshGL_Trans.Range("S" & i).value
+            ws.Cells(lastRowUsed_AB, 5).value = wshGL_Trans.Range("P" & i).value
+            ws.Cells(lastRowUsed_AB, 6).value = wshGL_Trans.Range("V" & i).value
+            ws.Cells(lastRowUsed_AB, 7).value = wshGL_Trans.Range("W" & i).value
             solde = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
+            ws.Cells(lastRowUsed_AB, 8).value = solde
+            
             sumDT = sumDT + wshGL_Trans.Range("V" & i).value
             sumCT = sumCT + wshGL_Trans.Range("W" & i).value
+            
             lastRowUsed_AB = lastRowUsed_AB + 1
         Next i
     End If
     
     ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
-    With ws.Range("F" & lastRowUsed_AB)
+    With ws.Range("F" & lastRowUsed_AB, "G" & lastRowUsed_AB)
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
             .ColorIndex = 0
             .TintAndShade = 0
             .Weight = xlThin
         End With
-        ws.Range("F" & lastRowUsed_AB).value = sumDT
     End With
     
-    With ws.Range("G" & lastRowUsed_AB)
-        With .Borders(xlEdgeTop)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-        ws.Range("G" & lastRowUsed_AB).value = sumCT
-    
-    End With
+    ws.Range("F" & lastRowUsed_AB).value = sumDT
+    ws.Range("G" & lastRowUsed_AB).value = sumCT
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
@@ -301,6 +305,8 @@ Sub Set_Up_Report_Headers_And_Columns()
             .ColumnWidth = 15
         End With
     End With
+    
+    ws.Range("A2:H" & 2500).ClearContents '2024-09-28 @ 06:36
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
@@ -347,11 +353,12 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
 
     Range("A" & lastUsedRow).Select
     
-    MsgBox "Le rapport a été généré avec succès"
+    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
     Application.PrintCommunication = True
 
 End Sub
+
 Sub GL_Rapport_Back_To_Menu()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", 0)

@@ -197,12 +197,11 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", 0)
     
+    'Check if the worksheet exists
     Dim ws As Worksheet
     Dim wsExists As Boolean
-    wsExists = False
-    
-    'Check if the worksheet exists
     For Each ws In ThisWorkbook.Worksheets
+        wsExists = False
         If ws.name = wsName Then
             wsExists = True
             Exit For
@@ -2021,7 +2020,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1295 'What is the last TECID analyzed ?
+    lastTECIDReported = 1344 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

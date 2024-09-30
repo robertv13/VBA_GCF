@@ -6,6 +6,11 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", 0)
     
+    If fromMenu = False Then
+        Debug.Print "wshDEB_Saisie_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -131,9 +136,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Calculate the NET amount (Expense), but also accept user input
     If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
-'        If Range("I" & Target.row).value <> 0 Then
-'            Range("N" & Target.row).formula = "=round(RC[-5]-rc[-2]-rc[-1],2)"
-'        End If
+        If Range("I" & Target.Row).value <> 0 Then
+            Range("N" & Target.Row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
+        End If
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -167,7 +172,7 @@ Private Sub Process_Change(ByVal Target As Range)
     
     Dim GLRange As Range: Set GLRange = ws.Range(startCell.Offset(0, 0), startCell.Offset(14, 0))
     Dim amountRange As Range: Set amountRange = ws.Range(startCell.Offset(0, 2), startCell.Offset(14, 2))
-    Dim netAmountRange As Range: Set netAmountRange = ws.Range(startCell.Offset(0, 7), startCell.Offset(14, 7))
+    Dim netAmountRange As Range: Set netamountRange = ws.Range(startCell.Offset(0, 7), startCell.Offset(14, 7))
     
     Dim fullDate As Variant
     Dim amount As Currency
@@ -210,8 +215,8 @@ Private Sub Process_Change(ByVal Target As Range)
     If Not Intersect(Target, amountRange) Is Nothing Then
         'If the user changes the Amount cell
         Dim cell As Range
-    For Each cell In Target
-            Debug.Print cell.Address & " = " & cell.value
+        For Each cell In Target
+            Debug.Print "DB# 219 - cell.Address = " & cell.Address & "   cell.Value = " & cell.value
             If cell.value = 0 Then
                 cell.Offset(0, 1).value = "" 'Clear GST
                 cell.Offset(0, 2).value = "" 'Clear PST
@@ -220,12 +225,11 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.Offset(0, 5).value = "" 'Clear netAmount
                 'Move focus to netAmount
                 If previousCellAddress <> "" Then
-                    Debug.Print "Previous cell address = " & previousCellAddress
                     Range(previousCellAddress).Interior.Color = xlNone
                 End If
                 cell.Offset(0, 5).Select
             Else
-                Debug.Print "Amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
+                Debug.Print "DB# 233 - Total amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
                     Target.value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     netAmount
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
@@ -243,21 +247,20 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.Offset(0, 5).value = netAmount
                 Application.EnableEvents = True
                 'Move to the next line
-                Debug.Print "Previous cell address = " & previousCellAddress
                 If previousCellAddress <> "" Then
                     Range(previousCellAddress).Interior.Color = xlNone
                 End If
                 cell.Offset(1, -4).Select
             End If
         Next cell
-    ElseIf Not Intersect(Target, netAmountRange) Is Nothing Then
+    ElseIf Not Intersect(Target, netamountRange) Is Nothing Then
         'If the user changes the netAmount cell
         Dim cellNet As Range
         For Each cellNet In Target
             Debug.Print cellNet.Address & " = " & cellNet.value
             If cellNet.value <> "" Then
                 amount = 0
-                Debug.Print "netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
+                Debug.Print "DB# 263 - Net amount (Manual Input) netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
                     amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     Target.value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
@@ -298,7 +301,7 @@ Private Sub Process_Change(ByVal Target As Range)
     Set cell = Nothing
     Set cellNet = Nothing
     Set GLRange = Nothing
-    Set netAmountRange = Nothing
+    Set netamountRange = Nothing
     Set startCell = Nothing
     Set ws = Nothing
     
