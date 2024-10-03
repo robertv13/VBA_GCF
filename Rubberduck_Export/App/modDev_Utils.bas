@@ -693,7 +693,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
                 outputArray(i, 5) = cellsCount
                 outputArray(i, 6) = cell.Address
                 outputArray(i, 7) = "'=" & Mid(cell.formula, 2) 'Add ' to preserve formulas
-                outputArray(i, 8) = Format$(Now(), "yyyy-mm-dd hh:mm") 'Timestamp
+                outputArray(i, 8) = Format$(Now(), "yyyy-mm-dd hh:mm") 'TimeStamp
             End If
         Next cell
 nextIteration:
@@ -1627,16 +1627,20 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetTabOrder", 0)
-    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", 0)
+
     'Clear previous settings AND protect the worksheet
     With ws
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlNoRestrictions
     End With
-    
+
+    Debug.Print "Cell G3 is Locked: " & ws.Range("G3").Locked
+    Debug.Print "Worksheet Protection: " & ws.ProtectContents
+
     'Collect all unprotected cells
-    Dim cell As Range, unprotectedCells As Range
+    Dim cell As Range
+    Dim unprotectedCells As Range
     For Each cell In ws.usedRange
         If Not cell.Locked Then
             If unprotectedCells Is Nothing Then
@@ -1651,7 +1655,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
         Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-    
+
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
         Dim i As Long
@@ -1664,21 +1668,34 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
             End If
         Next i
     End If
-    
+
     Application.EnableEvents = True
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
-    
-    Call Log_Record("modAppli:SetTabOrder()", startTime)
+
+    Call Log_Record("modDev_Utils:SetTabOrder()", startTime)
 
 End Sub
 
+Sub test()
+
+    Dim ws As Worksheet: Set ws = wshTEC_Evaluation
+    Dim cell As Range
+    For Each cell In ws.usedRange
+        If cell.MergeCells Then
+            Debug.Print "Cellule fusionnée à : " & cell.Address
+        End If
+    Next cell
+
+End Sub
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
 
     On Error GoTo Error_Handler
+    
+    Dim ms As String
     
     Dim logFile As String
     logFile = wshAdmin.Range("F5").value & DATA_PATH & _
@@ -1687,33 +1704,39 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     Dim fileNum As Integer
     fileNum = FreeFile
     
-    Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+    'Ajoute les millisecondes à la chaîne de temps
+    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    
+    Dim TimeStamp As String
+    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logFile For Append As #fileNum
     
     If startTime = 0 Then
         startTime = Timer 'Start timing
-        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
-                        procedureName & " (entrée)"
+                        procedureName & " (entrée)" & "|" & _
+                        LOCALE_SSHORTDATE
         Close #fileNum
     ElseIf startTime < 0 Then
             startTime = Timer 'Start timing
-        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
-                        procedureName
+                        procedureName & "|" & _
+                        LOCALE_SSHORTDATE
         Close #fileNum
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #fileNum, Replace(currentTime, " ", "_") & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
                         ThisWorkbook.name & "|" & _
                         procedureName & " (sortie)" & "|" & _
-                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds"
+                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds" & "|" & _
+                        LOCALE_SSHORTDATE
         Close #fileNum
     End If
     
@@ -1750,6 +1773,8 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
 
     On Error GoTo Error_Handler
     
+    Dim ms As String
+    
     Dim logSaisieHeuresFile As String
     logSaisieHeuresFile = wshAdmin.Range("F5").value & DATA_PATH & _
         Application.PathSeparator & "LogSaisieHeures.txt"
@@ -1757,15 +1782,19 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
     Dim fileNum As Integer
     fileNum = FreeFile
     
-    Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+    'Ajoute les millisecondes à la chaîne de temps
+    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    
+    Dim TimeStamp As String
+    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logSaisieHeuresFile For Append As #fileNum
     
-    Print #fileNum, currentTime & " | " & _
+    Print #fileNum, TimeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         oper & " | " & _
-                        txt
+                        txt & " | " & _
+                        LOCALE_SSHORTDATE
     Close #fileNum
     
     Exit Sub
@@ -1788,6 +1817,8 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
 
     On Error GoTo Error_Handler
     
+    Dim ms As String
+    
     Dim settraceFile As String
     settraceFile = wshAdmin.Range("F5").value & DATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
@@ -1795,18 +1826,22 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     Dim fileNum As Integer
     fileNum = FreeFile
     
-    Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+    'Ajoute les millisecondes à la chaîne de temps
+    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    
+    Dim TimeStamp As String
+    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open settraceFile For Append As #fileNum
     
-    Print #fileNum, currentTime & " | " & _
+    Print #fileNum, TimeStamp & " | " & _
                     Fn_Get_Windows_Username & " | " & _
                     source & " | " & _
                     module & " | " & _
                     procedure & " | " & _
                     variable & " | " & _
-                    vType
+                    vType & " | " & _
+                    LOCALE_SSHORTDATE
 
     Close #fileNum
     
@@ -1822,7 +1857,7 @@ End Sub
 
 Sub Test_Settrace()
 
-    Call Settrace("DB.1824", "modDev_Utils", "Test_Settrace", "date = '" & Date & "'", "type = " & "Date")
+    Call Settrace("DB.1854", "modDev_Utils", "Test_Settrace", "date = '" & Date & "'", "type = " & "Date")
     
 End Sub
 

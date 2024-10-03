@@ -132,6 +132,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     'Force TAB order after a cell has been changed
+    On Error Resume Next
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
         Me.Range("K5").Select
     ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
@@ -141,5 +142,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     ElseIf Not Intersect(Target, Me.Range("K7")) Is Nothing Then
         Me.Range("F9").Select
     End If
+    On Error GoTo 0
 
 End Sub

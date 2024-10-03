@@ -534,7 +534,8 @@ Sub DEBOURS_Back_To_Menu()
     
 End Sub
 
-Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
+Sub Calculate_GST_PST_And_Credits(d As Date, _
+                                  taxCode As String, _
                                   total As Currency, _
                                   gst As Currency, pst As Currency, _
                                   gstCredit As Currency, pstCredit As Currency, _
@@ -560,12 +561,12 @@ Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
         End If
         
         'Tax credits - REP cust the credit by 50%
-        If taxCode <> "REP" Then
-            gstCredit = gst
-            pstCredit = pst
-        Else
+        If taxCode = "REP" Then
             gstCredit = Round(gst / 2, 2)
             pstCredit = Round(pst / 2, 2)
+        Else
+            gstCredit = gst
+            pstCredit = pst
         End If
         
         'Net amount (Expense) = Total - gstCredit - pstCredit
@@ -580,6 +581,7 @@ Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
         Else
             gst = 0
         End If
+        
         'PST calculation
         If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             pst = Round(netAmount * pstRate, 2)
@@ -587,19 +589,15 @@ Sub Calculate_GST_PST_And_Credits(d As Date, taxCode As String, _
             pst = 0
         End If
         
-        'PLUG pour saisir les données du mois d'août... TBR - 2024-09-28 @ 05:41
-        gstCredit = gst
-        pstCredit = pst
+        If taxCode = "REP" Then
+            gstCredit = Round(gst / 2, 2)
+            pstCredit = Round(pst / 2, 2)
+        Else
+            gstCredit = gst
+            pstCredit = pst
+        End If
         
-'        If taxCode <> "REP" Then
-'            gstCredit = gst
-'            pstCredit = pst
-'        Else
-'            gstCredit = Round(gst / 2, 2)
-'            pstCredit = Round(pst / 2, 2)
-'        End If
-        
-        total = netAmount + gst + pst
+        total = netAmount + gstCredit + pstCredit
         
     End If
     

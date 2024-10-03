@@ -1,0 +1,1375 @@
+2024-09-30_05:37:33|GuillaumeCharron|APP_v4.I.7.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+2024-09-30_05:37:33|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:BackupMasterFile (entrée)
+2024-09-30_05:37:34|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 1,1270 seconds
+2024-09-30_05:37:34|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)
+2024-09-30_05:37:34|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_05:37:34|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+2024-09-30_05:37:35|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2461 seconds
+2024-09-30_05:37:35|GuillaumeCharron|APP_v4.I.7.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 1,5098 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0215 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0215 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2402 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:TECHover_MouseMove (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_TEC (entrée)
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0215 seconds
+2024-09-30_05:37:37|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0898 seconds
+2024-09-30_05:37:38|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_05:37:38|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_05:37:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:UserForm_Activate (entrée)
+2024-09-30_05:37:39|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:Client_List_Import_All (entrée)
+2024-09-30_05:37:39|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,3516 seconds
+2024-09-30_05:37:39|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:TEC_Import_All (entrée)
+2024-09-30_05:37:40|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3438 seconds
+2024-09-30_05:37:40|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:UserForm_Activate() (sortie)|Temps écoulé: 0,7734 seconds
+2024-09-30_05:37:42|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:cmbProfessionnel_AfterUpdate (entrée)
+2024-09-30_05:37:42|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:cmbProfessionnel_AfterUpdate() (sortie)|Temps écoulé: 0,0605 seconds
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtDate_BeforeUpdate (entrée)
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions_Fn_Complete_Date_#551: y = 2024   m = 9   d = 30 parsedDate='30/09/24'
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtDate_BeforeUpdate() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtDate_AfterUpdate (entrée)
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_05:37:43|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtDate_AfterUpdate() (sortie)|Temps écoulé: 0,2441 seconds
+2024-09-30_08:32:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_08:32:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0215 seconds
+2024-09-30_08:36:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_08:36:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_08:36:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_08:36:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,75' <> '' ?
+2024-09-30_08:36:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_08:36:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0566 seconds
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1345
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1345
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3555 seconds
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1719 seconds
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1758 seconds
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0723 seconds
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_08:37:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_08:37:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_08:37:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_08:37:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1348 seconds
+2024-09-30_08:37:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3516 seconds
+2024-09-30_08:37:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3242 seconds
+2024-09-30_09:01:38|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_09:01:38|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0254 seconds
+2024-09-30_09:01:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_09:01:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0215 seconds
+2024-09-30_09:02:00|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_09:02:00|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_09:02:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_09:02:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,75' <> '' ?
+2024-09-30_09:02:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_09:02:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0566 seconds
+2024-09-30_09:02:11|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_09:02:11|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_09:02:28|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_09:02:28|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,75' <> '' ?
+2024-09-30_09:02:28|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_09:02:28|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0801 seconds
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1346
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1346
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4141 seconds
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1406 seconds
+2024-09-30_09:02:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1562 seconds
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,1191 seconds
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1621 seconds
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1270 seconds
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3379 seconds
+2024-09-30_09:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3848 seconds
+2024-09-30_09:24:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_09:24:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_09:25:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_09:25:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_09:25:36|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_09:25:36|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,50' <> '' ?
+2024-09-30_09:25:36|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_09:25:36|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1347
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_09:25:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1347
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,1562 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_09:25:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2383 seconds
+2024-09-30_09:26:40|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_09:26:40|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_09:26:56|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_09:26:56|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_09:26:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_09:26:57|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,50' <> '' ?
+2024-09-30_09:26:58|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_09:26:58|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_09:26:58|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_09:26:58|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_09:26:58|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1348
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1348
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3164 seconds
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1680 seconds
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_09:26:59|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_09:27:00|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_09:27:00|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_09:27:00|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,1875 seconds
+2024-09-30_10:28:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_10:28:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_10:28:37|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_10:28:37|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_10:28:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_10:28:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,75' <> '' ?
+2024-09-30_10:28:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_10:28:39|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_10:28:40|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_10:28:40|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_10:28:40|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_10:28:40|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1349
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1349
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3320 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_10:28:41|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_10:28:42|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2070 seconds
+2024-09-30_10:42:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_10:42:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_10:43:03|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_10:43:03|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_10:52:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_10:52:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,50' <> '' ?
+2024-09-30_10:52:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_10:52:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/24' de type String
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1350
+2024-09-30_10:52:46|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1350
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3203 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0898 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1562 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3281 seconds
+2024-09-30_10:52:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,1680 seconds
+2024-09-30_10:52:49|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_10:52:49|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_10:52:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_10:52:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_10:53:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_10:53:01|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_10:53:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_10:53:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,75' <> '1,50' ?
+2024-09-30_10:53:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1350' , alors True, True, False, False
+2024-09-30_10:53:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1350 (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2773 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_10:53:09|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,6719 seconds
+2024-09-30_10:55:10|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_10:55:10|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_10:55:24|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_10:55:24|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_10:55:26|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_10:55:26|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '1,50' ?
+2024-09-30_10:55:26|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_10:55:26|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1351
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1351
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3281 seconds
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_10:55:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_10:55:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,1953 seconds
+2024-09-30_11:37:59|vgervais|APP_v4.I.5.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)
+2024-09-30_11:37:59|vgervais|APP_v4.I.5.xlsb|modAppli:BackupMasterFile (entrée)
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 0,7656 seconds
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_11:38:00|vgervais|APP_v4.I.5.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 1,1172 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:38:04|vgervais|APP_v4.I.5.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,4375 seconds
+2024-09-30_11:38:05|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_11:38:05|vgervais|APP_v4.I.5.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:38:06|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:UserForm_Activate (entrée)
+2024-09-30_11:38:06|vgervais|APP_v4.I.5.xlsb|modImport:Client_List_Import_All (entrée)
+2024-09-30_11:38:07|vgervais|APP_v4.I.5.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,3555 seconds
+2024-09-30_11:38:07|vgervais|APP_v4.I.5.xlsb|modImport:TEC_Import_All (entrée)
+2024-09-30_11:38:07|vgervais|APP_v4.I.5.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,4102 seconds
+2024-09-30_11:38:07|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:UserForm_Activate() (sortie)|Temps écoulé: 0,8867 seconds
+2024-09-30_11:38:08|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:cmbProfessionnel_AfterUpdate (entrée)
+2024-09-30_11:38:08|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:cmbProfessionnel_AfterUpdate() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:38:11|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:38:28|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_11:38:28|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:38:32|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_11:38:32|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,20' <> '' ?
+2024-09-30_11:38:32|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_11:38:32|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1055 seconds
+2024-09-30_11:38:33|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 2,3203 seconds
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtDate_BeforeUpdate (entrée)
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|modFunctions_Fn_Complete_Date_#551: y = 2024   m = 9   d = 30 parsedDate='2024-09-30'
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtDate_BeforeUpdate() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtDate_AfterUpdate (entrée)
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_11:38:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtDate_AfterUpdate() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_11:38:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_11:38:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,20' <> '' ?
+2024-09-30_11:38:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_11:38:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_11:38:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_11:38:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:38:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:38:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_11:38:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1352
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1352 (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1352 (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5781 seconds
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0664 seconds
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_11:38:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_11:38:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1055 seconds
+2024-09-30_11:38:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_11:38:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,4062 seconds
+2024-09-30_11:38:56|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:38:56|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:38:56|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_11:38:57|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:38:57|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:38:57|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:39:35|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_11:39:35|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_11:39:46|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_11:39:46|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '2,50' <> '' ?
+2024-09-30_11:39:46|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_11:39:46|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1353
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1353 (entrée)
+2024-09-30_11:39:47|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1353 (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5625 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0781 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3242 seconds
+2024-09-30_11:39:48|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3555 seconds
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:40:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_11:45:55|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_11:45:55|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_11:45:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_11:45:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,30' <> '' ?
+2024-09-30_11:45:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_11:45:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_11:46:10|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_11:46:10|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:46:14|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate (entrée)
+2024-09-30_11:46:14|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:46:15|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate (entrée)
+2024-09-30_11:46:15|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1354
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1354 (entrée)
+2024-09-30_11:46:16|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1354 (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5820 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0664 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,0977 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3086 seconds
+2024-09-30_11:46:17|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3203 seconds
+2024-09-30_11:46:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:46:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_11:46:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_11:46:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:46:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_11:46:38|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:46:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_11:46:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,80' <> '' ?
+2024-09-30_11:46:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_11:46:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0938 seconds
+2024-09-30_11:47:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_11:47:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_11:47:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate (entrée)
+2024-09-30_11:47:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1355
+2024-09-30_11:47:02|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1355 (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1355 (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5977 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,0977 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3047 seconds
+2024-09-30_11:47:03|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3164 seconds
+2024-09-30_12:06:14|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:06:14|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_12:06:17|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_12:06:17|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_12:06:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_12:06:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:06:33|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_12:06:33|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,25' <> '0,75' ?
+2024-09-30_12:06:33|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1345' , alors True, True, False, False
+2024-09-30_12:06:33|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_12:06:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_12:06:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1345 (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3008 seconds
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,2188 seconds
+2024-09-30_12:06:35|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,8672 seconds
+2024-09-30_12:17:49|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:17:49|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_12:17:50|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:17:50|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_12:17:53|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_12:17:53|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_12:17:55|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_12:17:55|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,50' <> '1,25' ?
+2024-09-30_12:17:55|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1345' , alors True, True, False, False
+2024-09-30_12:17:55|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1345 (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2695 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0664 seconds
+2024-09-30_12:17:56|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,6719 seconds
+2024-09-30_12:18:00|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:18:00|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Efface_Formulaire (entrée)
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_12:23:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Efface_Formulaire() (sortie)|Temps écoulé: 0,2695 seconds
+2024-09-30_12:25:20|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:25:20|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:25:23|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_12:25:23|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_12:25:27|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_12:25:27|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,75' <> '1,50' ?
+2024-09-30_12:25:27|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1345' , alors True, True, False, False
+2024-09-30_12:25:27|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1345 (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2812 seconds
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_12:25:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_12:25:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_12:25:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,6719 seconds
+2024-09-30_13:13:55|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_13:13:55|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_13:13:56|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:13:56|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:14:02|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_13:14:02|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_13:14:04|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:14:04|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,00' <> '0,75' ?
+2024-09-30_13:14:04|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1346' , alors True, True, False, False
+2024-09-30_13:14:04|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1346 (entrée)
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2891 seconds
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_13:14:05|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:14:06|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_13:14:06|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:14:06|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_13:14:06|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,6836 seconds
+2024-09-30_13:17:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:17:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:17:23|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_13:17:23|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_13:17:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:17:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,25' <> '0,75' ?
+2024-09-30_13:17:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_13:17:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_13:17:26|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_13:17:26|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_13:17:26|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1356
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1356
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3281 seconds
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1133 seconds
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0820 seconds
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_13:17:27|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_13:17:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_13:17:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_13:17:28|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2031 seconds
+2024-09-30_13:24:18|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:24:18|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:24:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_13:24:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:24:32|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:24:32|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '0,75' ?
+2024-09-30_13:24:32|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_13:24:32|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1357
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1357
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_13:24:33|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1719 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0859 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_13:24:34|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2227 seconds
+2024-09-30_13:36:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:36:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:36:48|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_13:36:48|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_13:36:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:36:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '0,75' ?
+2024-09-30_13:36:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_13:36:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1358
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1358
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1133 seconds
+2024-09-30_13:36:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0820 seconds
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3477 seconds
+2024-09-30_13:36:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2070 seconds
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:46:50|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_13:46:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_13:46:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_13:47:00|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:47:00|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,20' <> '' ?
+2024-09-30_13:47:00|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_13:47:00|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_13:47:01|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1359
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1359 (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1359 (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5547 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0664 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1055 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3086 seconds
+2024-09-30_13:47:02|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3047 seconds
+2024-09-30_13:58:37|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_13:58:37|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_13:58:39|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_13:58:39|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_13:58:41|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_13:58:41|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_13:58:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_13:58:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,00' <> '0,80' ?
+2024-09-30_13:58:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1355' , alors True, True, False, False
+2024-09-30_13:58:43|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1055 seconds
+2024-09-30_13:58:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_13:58:44|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1355 (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4609 seconds
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0781 seconds
+2024-09-30_13:58:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,8828 seconds
+2024-09-30_14:15:01|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_14:15:01|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_14:15:05|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_14:15:05|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_14:15:10|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_14:15:10|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_14:15:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_14:15:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,25' <> '0,75' ?
+2024-09-30_14:15:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1349' , alors True, True, False, False
+2024-09-30_14:15:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_14:15:20|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_14:15:20|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_14:15:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_14:15:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,50' <> '0,75' ?
+2024-09-30_14:15:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1349' , alors True, True, False, False
+2024-09-30_14:15:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_14:15:22|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_14:15:22|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1349 (entrée)
+2024-09-30_14:15:22|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2969 seconds
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,7188 seconds
+2024-09-30_14:15:23|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_14:15:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,7773 seconds
+2024-09-30_14:15:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_14:15:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,2773 seconds
+2024-09-30_14:15:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 2,1602 seconds
+2024-09-30_14:42:12|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_14:42:12|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_14:42:13|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_14:42:13|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_14:42:13|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_14:42:13|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_14:42:51|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_14:42:51|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_14:42:53|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_14:42:53|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_14:42:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate (entrée)
+2024-09-30_14:42:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_14:42:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate (entrée)
+2024-09-30_14:42:58|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:chbFacturable_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30-09-2024' de type String
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#41:  La date a été changée pour corriger le format - 30-09-2024---> 2024-09-30
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1360
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1360 (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1360 (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5742 seconds
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0781 seconds
+2024-09-30_14:43:00|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,2617 seconds
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1055 seconds
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3320 seconds
+2024-09-30_14:43:01|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,6133 seconds
+2024-09-30_15:00:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:00:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_15:00:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick (entrée)
+2024-09-30_15:00:01|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:lstboxNomClient_DblClick() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_15:00:02|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:00:02|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_15:00:17|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:00:17|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_15:00:22|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:00:22|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,20' <> '0,80' ?
+2024-09-30_15:00:22|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:00:22|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0977 seconds
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#43:  ufSaisieHeures.txtDate.Value = '2024-09-30' de type String
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|AddRecordStarting_#348: TECID = 0
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|AddRecord #370: TECID = 1361
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|AddRecord #379: TECID = 1361 (entrée)
+2024-09-30_15:00:26|vgervais|APP_v4.I.5.xlsb|Record added #404: TECID = 1361 (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,5781 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,2305 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3164 seconds
+2024-09-30_15:00:27|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,5352 seconds
+2024-09-30_15:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:02:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:02:47|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:02:48|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:02:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:02:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,25' <> '0,75' ?
+2024-09-30_15:02:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:02:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_15:02:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:02:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:02:53|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1362
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1362
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3633 seconds
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1602 seconds
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0898 seconds
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:02:54|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:02:55|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_15:02:55|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3555 seconds
+2024-09-30_15:02:55|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,3008 seconds
+2024-09-30_15:06:39|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:06:40|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0508 seconds
+2024-09-30_15:06:41|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:06:41|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_15:06:44|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:06:44|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '2,60' <> '2,50' ?
+2024-09-30_15:06:44|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1353' , alors True, True, False, False
+2024-09-30_15:06:44|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_15:06:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_15:06:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1353 (entrée)
+2024-09-30_15:06:45|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_15:06:45|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4570 seconds
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1211 seconds
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,1484 seconds
+2024-09-30_15:06:46|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,9805 seconds
+2024-09-30_15:18:09|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:18:09|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:18:14|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:18:14|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:18:16|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:18:16|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,25' <> '0,75' ?
+2024-09-30_15:18:16|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:18:16|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1363
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1363
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3477 seconds
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:18:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0898 seconds
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1406 seconds
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3555 seconds
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2773 seconds
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:18:18|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:18:19|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:18:19|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:18:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:18:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '2,00' <> '1,25' ?
+2024-09-30_15:18:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1362' , alors True, True, False, False
+2024-09-30_15:18:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1362 (entrée)
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2695 seconds
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1406 seconds
+2024-09-30_15:18:24|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:18:25|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1406 seconds
+2024-09-30_15:18:25|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:18:25|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0664 seconds
+2024-09-30_15:18:25|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,7109 seconds
+2024-09-30_15:21:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:21:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:21:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:21:21|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,50' <> '1,25' ?
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:21:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:21:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:21:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:21:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1364
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1364
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3320 seconds
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1523 seconds
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0859 seconds
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:21:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:21:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_15:21:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3477 seconds
+2024-09-30_15:21:38|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2109 seconds
+2024-09-30_15:32:06|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:32:06|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_15:32:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:32:07|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:32:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:32:12|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:32:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:32:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,50' <> '0,25' ?
+2024-09-30_15:32:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1356' , alors True, True, False, False
+2024-09-30_15:32:13|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_15:32:16|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_15:32:16|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1356 (entrée)
+2024-09-30_15:32:16|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_SaisieTEC_Record_Add_Or_Update_To_DB - Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,2773 seconds
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1289 seconds
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0820 seconds
+2024-09-30_15:32:17|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,7188 seconds
+2024-09-30_15:53:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:53:25|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:53:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:53:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:53:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:53:34|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '0,25' ?
+2024-09-30_15:53:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:53:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1365
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1365
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3438 seconds
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:53:36|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1406 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0977 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3633 seconds
+2024-09-30_15:53:37|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2461 seconds
+2024-09-30_15:53:41|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:53:41|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_15:53:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:53:45|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_15:53:46|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:53:46|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '0,25' ?
+2024-09-30_15:53:46|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:53:46|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1366
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:53:47|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1366
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1328 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1484 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0820 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1367 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3516 seconds
+2024-09-30_15:53:48|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2461 seconds
+2024-09-30_15:53:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_15:53:52|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_15:53:58|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_15:53:58|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_15:53:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_15:53:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '0,40' <> '0,25' ?
+2024-09-30_15:53:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_15:53:59|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0586 seconds
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1367
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1367
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1211 seconds
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1445 seconds
+2024-09-30_15:54:01|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0820 seconds
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1367 seconds
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3594 seconds
+2024-09-30_15:54:02|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2500 seconds
+2024-09-30_16:19:06|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_16:19:06|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_16:19:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:19:30|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_16:19:35|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_16:19:47|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:19:47|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_16:19:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_16:19:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,00' <> '0,25' ?
+2024-09-30_16:19:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '', alors True, True, False, False
+2024-09-30_16:19:50|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0547 seconds
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne (entrée)
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '30/09/2024' de type String
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0 (entrée)
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|@0355 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|@0377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = 1368
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|@0386 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|@0411 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = 1368
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,3398 seconds
+2024-09-30_16:19:51|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1211 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,1484 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0938 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1641 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1367 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3477 seconds
+2024-09-30_16:19:52|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie:TEC_Ajoute_Ligne() (sortie)|Temps écoulé: 1,2344 seconds
+2024-09-30_16:27:19|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:27:19|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_16:27:20|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_16:27:21|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:28:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:28:36|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_16:28:39|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_16:28:39|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,30' <> '0,30' ?
+2024-09-30_16:28:40|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1354' , alors True, True, False, False
+2024-09-30_16:28:40|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1016 seconds
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1354 (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4492 seconds
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1211 seconds
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0625 seconds
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_16:28:42|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0742 seconds
+2024-09-30_16:28:43|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,8438 seconds
+2024-09-30_16:28:46|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:28:46|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:28:47|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_16:28:47|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:29:10|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:29:10|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_16:29:10|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:29:10|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_16:29:12|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:29:12|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:29:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_16:29:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '2,80' <> '2,60' ?
+2024-09-30_16:29:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1353' , alors True, True, False, False
+2024-09-30_16:29:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_16:31:07|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:31:07|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0430 seconds
+2024-09-30_16:31:07|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_16:31:07|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1353 (entrée)
+2024-09-30_16:31:07|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4609 seconds
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1172 seconds
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_16:31:08|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,8555 seconds
+2024-09-30_16:31:20|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:31:20|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_16:31:21|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_16:31:21|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_16:31:26|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate (entrée)
+2024-09-30_16:31:26|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtActivite_AfterUpdate() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:31:30|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_16:31:30|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '1,20' <> '1,00' ?
+2024-09-30_16:31:30|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1355' , alors True, True, False, False
+2024-09-30_16:31:30|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,0977 seconds
+2024-09-30_16:31:31|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_16:31:31|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1355 (entrée)
+2024-09-30_16:31:31|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_16:31:31|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4883 seconds
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,1250 seconds
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,0703 seconds
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,0781 seconds
+2024-09-30_16:31:32|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 0,8945 seconds
+2024-09-30_17:42:18|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:UserForm_Terminate (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|ufSaisieHeures:UserForm_Terminate() (sortie)|Temps écoulé: 3,2891 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0391 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:22|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2227 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2109 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2148 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:DEBHover_MouseMove (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Debours (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:DEBHover_MouseMove (sortie)|Temps écoulé: 0,1133 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:FACHover_MouseMove (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Facturation (entrée)
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:23|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:FACHover_MouseMove (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Facturation (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,1094 seconds
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:24|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2109 seconds
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:42:25|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:42:26|GuillaumeCharron|APP_v4.I.7.xlsb|wshTEC_Analyse:Worksheet_Activate (entrée)
+2024-09-30_17:42:26|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:Client_List_Import_All (entrée)
+2024-09-30_17:42:26|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2305 seconds
+2024-09-30_17:42:26|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:TEC_Import_All (entrée)
+2024-09-30_17:42:27|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3359 seconds
+2024-09-30_17:42:27|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)
+2024-09-30_17:42:28|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 1,6797 seconds
+2024-09-30_17:42:28|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)
+2024-09-30_17:42:29|GuillaumeCharron|APP_v4.I.7.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,2109 seconds
+2024-09-30_17:42:29|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal (entrée)
+2024-09-30_17:42:55|GuillaumeCharron|APP_v4.I.7.xlsb|modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal() (sortie)|Temps écoulé: 25,8984 seconds
+2024-09-30_17:42:55|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:SetTabOrder (entrée)
+2024-09-30_17:42:55|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:SetTabOrder() (sortie)|Temps écoulé: 0,0938 seconds
+2024-09-30_17:42:55|GuillaumeCharron|APP_v4.I.7.xlsb|wshTEC_Analyse:Worksheet_Activate() (sortie)|Temps écoulé: 28,6484 seconds
+2024-09-30_17:43:13|GuillaumeCharron|APP_v4.I.7.xlsb|wshTEC_Analyse:Worksheet_SelectionChange (entrée)
+2024-09-30_17:43:13|GuillaumeCharron|APP_v4.I.7.xlsb|wshTEC_Analyse:Worksheet_SelectionChange() (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2383 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2500 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2422 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (entrée)
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:17|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,2422 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Exit (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0859 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:EXITHover_MouseMove (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0234 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Exit (entrée)
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0195 seconds
+2024-09-30_17:45:18|GuillaumeCharron|APP_v4.I.7.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0898 seconds
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (entrée)
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0273 seconds
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0312 seconds
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,1953 seconds
+2024-09-30_17:45:20|GuillaumeCharron|APP_v4.I.7.xlsb|***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) ***** (entrée)
+2024-09-30_17:50:32|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_17:50:33|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0469 seconds
+2024-09-30_17:50:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate (entrée)
+2024-09-30_17:50:34|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtClient_AfterUpdate() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_17:50:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate (entrée)
+2024-09-30_17:50:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - is '2,80' <> '1,30' ?
+2024-09-30_17:50:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '1354' , alors True, True, False, False
+2024-09-30_17:50:37|vgervais|APP_v4.I.5.xlsb|ufSaisieHeures:txtHeures_AfterUpdate() (sortie)|Temps écoulé: 0,1133 seconds
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne (entrée)
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '1354 (entrée)
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie_TEC_Record_Add_Or_Update_To_DB_#312:  dateValue = '2024-09-30'  Type = Date
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|Update an existing record - Create a new RecordSet 0 (entrée)
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB() (sortie)|Temps écoulé: 0,4531 seconds
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally (entrée)
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID (entrée)
+2024-09-30_17:50:38|vgervais|APP_v4.I.5.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0352 seconds
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Record_Add_Or_Update_Locally() (sortie)|Temps écoulé: 0,3008 seconds
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF (entrée)
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Get_All_TEC_AF() (sortie)|Temps écoulé: 0,2812 seconds
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours (entrée)
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours() (sortie)|Temps écoulé: 0,1133 seconds
+2024-09-30_17:50:39|vgervais|APP_v4.I.5.xlsb|modTEC_Saisie:TEC_Modifie_Ligne() (sortie)|Temps écoulé: 1,2891 seconds

@@ -94,6 +94,38 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
 End Function
 
+Function Fn_Get_Prenom_From_Initials(i As String)
+
+    Dim cell As Range
+    
+    For Each cell In wshAdmin.Range("dnrProf_All")
+        If cell.Value2 = i Then
+            Fn_Get_Prenom_From_Initials = cell.Offset(0, 2).value
+            Exit Function
+        End If
+    Next cell
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    
+End Function
+
+Function Fn_Get_Nom_From_Initials(i As String)
+
+    Dim cell As Range
+    
+    For Each cell In wshAdmin.Range("dnrProf_All")
+        If cell.Value2 = i Then
+            Fn_Get_Nom_From_Initials = cell.Offset(0, 3).value
+            Exit Function
+        End If
+    Next cell
+
+    'Cleaning memory - 2024-07-01 @ 09:34
+    Set cell = Nothing
+    
+End Function
+
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
     'This function is used to retrieve information from a range
@@ -584,6 +616,37 @@ Invalid_Date:
     
 End Function
 
+Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boolean = False) As Variant '2024-10-02 @ 12:02
+    
+    'Sort a dictionary by its keys and return keys in an array
+    Dim keys() As Variant
+    Dim i As Long, j As Long
+    Dim temp As Variant
+    
+    ReDim keys(0 To dict.count - 1)
+    
+    Dim key As Variant
+    i = 0
+    For Each key In dict.keys
+        keys(i) = key
+        i = i + 1
+    Next key
+    
+    For i = LBound(keys) To UBound(keys) - 1
+        For j = i + 1 To UBound(keys)
+            If (keys(i) < keys(j) And descending) Or (keys(i) > keys(j) And Not descending) Then
+                'Swap keys accordingly
+                temp = keys(i)
+                keys(i) = keys(j)
+                keys(j) = temp
+            End If
+        Next j
+    Next i
+    
+    Fn_Sort_Dictionary_By_Keys = keys
+    
+End Function
+
 Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Boolean = False) As Variant '2024-07-11 @ 15:16
     
     'Sort a dictionary by its values and return keys in an array
@@ -704,7 +767,7 @@ Function Fn_Get_Date_Format() As String
     
     ' Retourner le format de date
     If length > 0 Then
-        Fn_Get_Date_Format = Left$(buffer, length - 1) ' Retirer le caractère nul à la fin
+        Fn_Get_Date_Format = Left$(buffer, length - 1) 'Retirer le caractère nul à la fin
     Else
         Fn_Get_Date_Format = "Format de date non disponible"
     End If

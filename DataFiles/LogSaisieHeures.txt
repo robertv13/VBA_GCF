@@ -1,4 +1,1 @@
-2024-09-26 13:52:43 | Robert M. Vigneault | ADD    | 1280|ML|22/09/2024|193r|9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault]|Test|0,10|VRAI||2024-09-26 13:52:43
-2024-09-26 13:52:54 | Robert M. Vigneault | ADD    | 1281|ML|22/09/2024|193l|9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier]|Test|0,20|VRAI||2024-09-26 13:52:54
-2024-09-26 13:53:05 | Robert M. Vigneault | ADD    | 1282|ML|22/09/2024|1276|Bourdon & Guay, CPA Inc. [Patrick Bourdon]|Test|0,20|VRAI||2024-09-26 13:53:05
-2024-09-26 13:53:22 | Robert M. Vigneault | ADD    | 1283|ML|22/09/2024|1161|Les enseignes Gilbert Bourgouin Inc. [Jean-François Bourgouin]|Test|0,20|VRAI||2024-09-26 13:53:22
+2024-10-03 10:20:06.5000 | Robert M. Vigneault | ADD    | 1412 | GC | 03/10/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test | 1,00 | VRAI |  | 2024-10-03 10:20:06

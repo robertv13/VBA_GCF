@@ -53,6 +53,8 @@ Sub SaisieHeures_Click()
 
     Call SlideIn_SaisieHeures
     
+    fromMenu = True '2024-09-03 @ 06:20
+
     Load ufSaisieHeures
     ufSaisieHeures.show vbModeless '2024-08-08 @ 13:56
     
@@ -62,6 +64,8 @@ Sub TEC_TdB_Click()
 
     Call SlideIn_TEC_TDB
     
+    fromMenu = True '2024-09-03 @ 06:20
+
     Application.ScreenUpdating = False
     
     wshTEC_TDB.Application.Calculation = xlCalculationAutomatic
@@ -79,6 +83,8 @@ Sub TEC_Analyse_Click()
 
     Call SlideIn_TEC_Analyse
     
+    fromMenu = True '2024-09-03 @ 06:20
+
     Application.ScreenUpdating = False
     
     wshTEC_TDB.Application.Calculation = xlCalculationAutomatic
@@ -96,6 +102,8 @@ Sub TEC_Evaluation_Click()
 
     Call SlideIn_TEC_Evaluation
     
+    fromMenu = True '2024-09-03 @ 06:20
+
     Application.ScreenUpdating = False
     
     wshTEC_TDB.Application.Calculation = xlCalculationAutomatic

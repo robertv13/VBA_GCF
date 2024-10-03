@@ -12,6 +12,8 @@ Sub DEB_Saisie_Click()
     
     Application.EnableEvents = True
     
+    fromMenu = True '2024-09-30 @ 09:33
+    
     With wshDEB_Saisie
         .Visible = xlSheetVisible
         .Activate

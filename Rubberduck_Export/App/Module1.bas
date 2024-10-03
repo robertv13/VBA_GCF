@@ -8,15 +8,16 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Range("L3").Select
-    ActiveCell.FormulaR1C1 = "1000"
-    Range("M3").Select
-    ActiveCell.FormulaR1C1 = ">=31/07/2024"
-    Range("N3").Select
-    ActiveCell.FormulaR1C1 = "<01/08/2024"
-    Range("O3").Select
-    Application.CutCopyMode = False
-    Application.CutCopyMode = False
-    Range("A1:J529").AdvancedFilter action:=xlFilterCopy, criteriaRange:=Range( _
-        "L2:N3"), CopyToRange:=Range("P1:Y1"), Unique:=False
+    ActiveWindow.SmallScroll Down:=-8
+    Range("B4:H41").Select
+    Selection.FormatConditions.add Type:=xlExpression, Formula1:= _
+        "=MOD(LIGNE();2)=1"
+    Selection.FormatConditions(Selection.FormatConditions.count).SetFirstPriority
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = -0.14996795556505
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    ActiveWindow.SmallScroll Down:=-8
 End Sub
