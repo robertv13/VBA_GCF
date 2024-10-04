@@ -216,7 +216,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     End If
     
     'Add the new worksheet
-    Set ws = ThisWorkbook.Worksheets.add(before:=wshMenu)
+    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
     ws.name = wsName
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -2020,7 +2020,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1411 'What is the last TECID analyzed ?
+    lastTECIDReported = 1483 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

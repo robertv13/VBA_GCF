@@ -129,6 +129,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         ws.Range("K" & currentRow).HorizontalAlignment = xlRight
         ws.Range("K" & currentRow).value = Format$(dictHours(prof)(4), "#,##0.00")
         
+        Dim ii As Integer
         For ii = 0 To 4
             total(ii) = total(ii) + dictHours(prof)(ii)
         Next ii

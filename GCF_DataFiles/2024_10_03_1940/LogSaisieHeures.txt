@@ -1,0 +1,111 @@
+2024-10-02 10:58:20 | vgervais | ADD    | 1412 | VG | 2024-10-02 | 5 | z_Adiministratif_Autres non chargeables | Déjeuner rencontre + déplacement + suivis | 3,70 | FAUX |  | 2024-10-02 10:58:20
+2024-10-02 11:05:56 | vgervais | ADD    | 1413 | VG | 2024-10-02 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Conversation téléphonique avec Virginine pour option d'achat d'actions | 0,30 | FAUX |  | 2024-10-02 11:05:56
+2024-10-02 11:12:00 | GuillaumeCharron | ADD    | 1414 | GC | 02/10/24 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | rencontre avec alain pour prix de vente et explications + préparation | 1,75 | VRAI |  | 2024-10-02 11:12:00
+2024-10-02 11:22:53 | GuillaumeCharron | UPDATE | 1414 | GC | 02/10/24 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | rencontre avec alain pour prix de vente et explications + préparation | 2,00 | VRAI |  | 2024-10-02 11:22:53
+2024-10-02 11:34:04 | vgervais | UPDATE | 1413 | VG | 2024-10-02 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Conversation téléphonique avec Virginine pour option d'achat d'actions + Vérifier extrait de résolution + voir clause OOA + Appel avocat de l'acheteur pour détention d'Actions | 0,80 | VRAI |  | 2024-10-02 11:34:04
+2024-10-02 12:01:22 | vgervais | UPDATE | 1413 | VG | 2024-10-02 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Conversation téléphonique avec Virginine pour option d'achat d'actions + Vérifier extrait de résolution + voir clause OOA + Appel avocat de l'acheteur pour détention d'Actions + voir article 49 | 1,10 | VRAI |  | 2024-10-02 12:01:22
+2024-10-02 13:37:06 | Guillaume | ADD    | 1415 | GC | 02/oct/2024 | 1134 | Air Trans Express Inc. [Richard Lavoie] | tel avec Jade sur révision de testament de Richard et réflexions + préparation | 1,00 | VRAI |  | 2024-10-02 13:37:06
+2024-10-02 13:37:27 | Guillaume | ADD    | 1416 | GC | 02/oct/2024 | 1566b | Groupe Dezetech Inc. [Alexandra Morana] | tel avec alexandra sur vérification fiscale | 0,40 | VRAI |  | 2024-10-02 13:37:27
+2024-10-02 13:38:41 | Guillaume | ADD    | 1417 | GC | 02/oct/2024 | 1643 | Ventilation Pierre Gamache Inc. [Pierre Gamache] | tel avec alexandre boyer sur qui détient nouvelle société | 0,25 | VRAI |  | 2024-10-02 13:38:41
+2024-10-02 14:15:12 | Guillaume | ADD    | 1418 | GC | 02/oct/2024 | 1738 | Assurancia Leduc, Decelles, Dubuc & Ass. Inc. [Lucie Decelles] | courriel pour irrégularités | 0,40 | VRAI |  | 2024-10-02 14:15:12
+2024-10-02 14:26:40 | vgervais | ADD    | 1419 | VG | 2024-10-02 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Suivi avec Reynald (courriel + Appel) | 0,30 | VRAI |  | 2024-10-02 14:26:40
+2024-10-02 14:33:11 | Guillaume | ADD    | 1420 | GC | 02/oct/2024 | 1430 | Librairie Lu-Lu Inc. [Céline Camirand] | questions de Céline et retourner roulement à signer via une autre plateforme | 0,75 | VRAI |  | 2024-10-02 14:33:11
+2024-10-02 14:45:07 | Guillaume | ADD    | 1421 | GC | 02/oct/2024 | 1142 | Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient] | réception des livres des minutes des différentes sociétés | 0,50 | VRAI |  | 2024-10-02 14:45:07
+2024-10-02 14:48:18 | vgervais | ADD    | 1422 | VG | 2024-10-02 | 1771 | L C Combustion Inc. [Christian Laroche] | Appel le courtier de Industrielle Alliance + Appel le courtier de Giverny pour roulement du portefeuille de placements | 0,40 | VRAI |  | 2024-10-02 14:48:18
+2024-10-02 15:06:36 | Guillaume | ADD    | 1423 | GC | 02/oct/2024 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | suivi avec michel de l'état du dossier | 0,40 | VRAI |  | 2024-10-02 15:06:36
+2024-10-02 15:18:59 | vgervais | UPDATE | 1412 | VG | 2024-10-02 | 5 | z_Adiministratif_Autres non chargeables | Déjeuner rencontre + déplacement + suivis + Discussion Michel NE fiducie + rencontre | 4,10 | FAUX |  | 2024-10-02 15:18:59
+2024-10-02 15:25:18 | Guillaume | ADD    | 1424 | GC | 02/oct/2024 | 1780 | 9112-9031 Québec Inc. [Guy Béland] | révision de la siumulation d'impôts personnels de Guy et Louise et commentaires à France | 0,75 | VRAI |  | 2024-10-02 15:25:18
+2024-10-02 15:25:56 | Guillaume | ADD    | 1425 | GC | 02/oct/2024 | 1797 | Silencieux de l'est Inc. [Martin Montpas] | courriel avec notaire pour livres des minutes | 0,40 | VRAI |  | 2024-10-02 15:25:56
+2024-10-02 15:28:00 | User | ADD    | 1426 | ML | 2024-10-01 | 1624 | Gestion Proped Inc. [Louis Villeneuve] | Contact avec M. Villeneuve pour obtention du NE, NI et du contrat d'assurance pour le CDC
+ | 0,75 | VRAI |  | 2024-10-02 15:28:00
+2024-10-02 15:28:26 | User | ADD    | 1427 | ML | 2024-10-01 | 1624 | Gestion Proped Inc. [Louis Villeneuve] | Ajout des infos sur les roulements et le CDC
+ | 0,75 | VRAI |  | 2024-10-02 15:28:26
+2024-10-02 15:29:07 | User | ADD    | 1428 | ML | 2024-10-01 | 5 | z_Adiministratif_Autres non chargeables | Formation sur l'application des chèques à faire et prise de notes
+ | 0,75 | VRAI |  | 2024-10-02 15:29:07
+2024-10-02 15:29:34 | User | ADD    | 1429 | ML | 2024-10-01 | 5 | z_Adiministratif_Autres non chargeables | Travail sur Outlook - fichiers clients
+ | 4,50 | FAUX |  | 2024-10-02 15:29:34
+2024-10-02 15:29:40 | User | UPDATE | 1428 | ML | 2024-10-01 | 5 | z_Adiministratif_Autres non chargeables | Formation sur l'application des chèques à faire et prise de notes
+ | 0,75 | FAUX |  | 2024-10-02 15:29:40
+2024-10-02 15:30:07 | User | ADD    | 1430 | ML | 2024-01-10 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Transfert des états financiers de 2023 à Yvan et du fichier de budget à Joannie
+ | 0,50 | VRAI |  | 2024-10-02 15:30:07
+2024-10-02 15:30:51 | User | ADD    | 1431 | ML | 2024-01-10 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Transfert des états financiers de 2023 à Yvan et du fichier de budget à Joannie
+ | 0,50 | VRAI |  | 2024-10-02 15:30:51
+2024-10-02 15:36:22 | Guillaume | UPDATE | 1414 | GC | 02/oct/2024 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | rencontre avec alain pour prix de vente et explications + préparation + valider T1 de 2023 pour salaire | 2,50 | VRAI |  | 2024-10-02 15:36:22
+2024-10-02 15:49:28 | Guillaume | ADD    | 1432 | GC | 02/oct/2024 | 1523 | Bernier Rhéaume Renaud CPA [Richard Bernier] | tel avec Richard sur succession avec Duplex qui a été cédé au décès et revendu avant transmission à conjointe | 0,40 | VRAI |  | 2024-10-02 15:49:28
+2024-10-02 15:56:52 | Guillaume | ADD    | 1433 | GC | 02/oct/2024 | 1731 | Les Toitures C.B.C. Inc. [Francis Bélanger] | réception de chèques pour validation | 0,40 | VRAI |  | 2024-10-02 15:56:52
+2024-10-02 16:23:42 | Guillaume | ADD    | 1434 | GC | 02/oct/2024 | 1528 | Solutions Huwiz Inc. [Carolljo Maher] | lecture de courriel LOI et tel avec Martyne | 0,50 | VRAI |  | 2024-10-02 16:23:42
+2024-10-02 16:50:43 | User | ADD    | 1435 | ML | 2024-10-02 | 5 | z_Adiministratif_Autres non chargeables | Rencontre d'équipe
+ | 4,00 | FAUX |  | 2024-10-02 16:50:43
+2024-10-02 16:51:03 | User | ADD    | 1436 | ML | 2024-10-02 | 5 | z_Adiministratif_Autres non chargeables | Travail sur Outlook - fichiers clients
+ | 3,00 | FAUX |  | 2024-10-02 16:51:03
+2024-10-02 16:51:20 | User | ADD    | 1437 | ML | 2024-10-02 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Appel à l'ARC pour correction 
+ | 1,00 | VRAI |  | 2024-10-02 16:51:20
+2024-10-02 17:06:11 | vgervais | ADD    | 1438 | VG | 2024-10-02 | 1780 | 9112-9031 Québec Inc. [Guy Béland] | Vérification sommaire courriel  | 0,20 | VRAI |  | 2024-10-02 17:06:11
+2024-10-02 17:18:54 | Guillaume | ADD    | 1439 | GC | 02/oct/2024 | 1348 | Maurice Chiasson, CPA | révision du mémorandum de BCF sur transfert de Luc Lebel | 2,00 | VRAI |  | 2024-10-02 17:18:54
+2024-10-02 17:25:14 | vgervais | ADD    | 1440 | VG | 2024-10-02 | 1448 | 9055-4627 Québec Inc. [Guillaume Bruneau-Côté] | Épuration mémo pour qu'il soit pret + lecture des dievrs contrats (courriel+  | 1,60 | VRAI |  | 2024-10-02 17:25:14
+2024-10-02 17:29:27 | vgervais | ADD    | 1441 | VG | 2024-10-02 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Envoyé mémo | 0,10 | VRAI |  | 2024-10-02 17:29:27
+2024-10-02 17:34:13 | Guillaume | ADD    | 1442 | GC | 02/oct/2024 | 1740 | Les Équipements Cofa Inc. [Olivier Bertrand] | tel avec Olivier sur précision | 0,50 | VRAI |  | 2024-10-02 17:34:13
+2024-10-02 18:14:44 | vgervais | ADD    | 1443 | VG | 2024-10-02 | 1696 | Photographie Benoit Blain Inc. [Kelly Cochelin] | Revoir les corrections et classé les résolutions pour que Michel fasse les packages | 0,60 | VRAI |  | 2024-10-02 18:14:44
+2024-10-02 18:24:53 | vgervais | ADD    | 1444 | VG | 2024-10-02 | 1744 | Centre Canin Laka Inc. [Nicolas Desflammes] | Suivi pour roulement à finaliser | 0,10 | VRAI |  | 2024-10-02 18:24:53
+2024-10-02 18:32:59 | vgervais | ADD    | 1445 | VG | 2024-10-02 | 1348 | Maurice Chiasson, CPA | Immeuble Marklin: Analyse livre des minutes | 0,50 | VRAI |  | 2024-10-02 18:32:59
+2024-10-02 19:25:13 | Guillaume | UPDATE | 1415 | GC | 02/oct/2024 | 1134 | Air Trans Express Inc. [Richard Lavoie] | tel avec Jade sur révision de testament de Richard et réflexions + préparation + révision de la version modifiée des directives concernant les actions | 1,75 | VRAI |  | 2024-10-02 19:25:13
+2024-10-02 21:12:40 | vgervais | UPDATE | 1445 | VG | 2024-10-02 | 1348 | Maurice Chiasson, CPA | Immeuble Marklin: Analyse livre des minutes + FINALISATION organigramme | 0,70 | VRAI |  | 2024-10-02 21:12:40
+2024-10-03 06:32:19 | vgervais | ADD    | 1446 | VG | 2024-10-03 | 5 | z_Adiministratif_Autres non chargeables | Planning + suivi  | 0,50 | FAUX |  | 2024-10-03 06:32:19
+2024-10-03 06:41:58 | vgervais | ADD    | 1447 | VG | 2024-10-03 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Suivi dans les courriels | 0,30 | VRAI |  | 2024-10-03 06:41:58
+2024-10-03 06:45:08 | vgervais | UPDATE | 1447 | VG | 2024-10-03 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Suivi avec avocat pour OAA | 0,30 | VRAI |  | 2024-10-03 06:45:08
+2024-10-03 06:46:49 | vgervais | ADD    | 1448 | VG | 2024-03-10 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Recherche à travers les courriels | 0,20 | VRAI |  | 2024-10-03 06:46:49
+2024-10-03 06:47:43 | vgervais | ADD    | 1449 | VG | 2024-03-10 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Suivi dans les courriels | 0,30 | VRAI |  | 2024-10-03 06:47:43
+2024-10-03 09:31:41 | Guillaume | ADD    | 1450 | GC | 03/oct/2024 | 104 | Groupe Millénium Micro Inc. [Carl Paquin] | analyse de valeur de EStaff | 1,50 | VRAI |  | 2024-10-03 09:31:41
+2024-10-03 09:31:56 | Guillaume | ADD    | 1451 | GC | 03/oct/2024 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | suivi avec alain de JVM | 0,25 | VRAI |  | 2024-10-03 09:31:56
+2024-10-03 09:32:18 | Guillaume | ADD    | 1452 | GC | 03/oct/2024 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | sommaire des conclusions par courriel | 0,50 | VRAI |  | 2024-10-03 09:32:18
+2024-10-03 09:32:51 | Guillaume | ADD    | 1453 | GC | 03/oct/2024 | 1643 | Ventilation Pierre Gamache Inc. [Pierre Gamache] | fournir infos à Alexandre sur nouvelle société + tel | 0,50 | VRAI |  | 2024-10-03 09:32:51
+2024-10-03 09:33:22 | Guillaume | ADD    | 1454 | GC | 03/oct/2024 | 1780 | 9112-9031 Québec Inc. [Guy Béland] | tel avec France pour estimé IMR + autres | 0,25 | VRAI |  | 2024-10-03 09:33:22
+2024-10-03 10:16:01 | vgervais | ADD    | 1455 | VG | 2024-10-03 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Regarder à travers courriel + écrire un message à comptable | 0,40 | VRAI |  | 2024-10-03 10:16:01
+2024-10-03 10:17:14 | vgervais | UPDATE | 1446 | VG | 2024-10-03 | 5 | z_Adiministratif_Autres non chargeables | Planning + suivi + porbleme feuille de temps (courriel à Robert + redemarrer l'application à 2-3 reeprises) | 0,90 | FAUX |  | 2024-10-03 10:17:14
+2024-10-03 10:19:17 | vgervais | ADD    | 1456 | VG | 2024-03-10 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | Préparer Mémo + organigramme avec JVM reçu | 2,50 | VRAI |  | 2024-10-03 10:19:17
+2024-10-03 10:21:23 | vgervais | ADD    | 1457 | VG | 2024-03-10 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] |  | 2,50 | VRAI |  | 2024-10-03 10:21:23
+2024-10-03 10:35:54 | Guillaume | ADD    | 1458 | GC | 03/oct/2024 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | tel avec alain sur jvm + rencontre teams | 1,00 | VRAI |  | 2024-10-03 10:35:54
+2024-10-03 11:33:33 | Guillaume | UPDATE | 1458 | GC | 03/oct/2024 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | tel avec alain sur jvm + rencontre teams | 1,50 | VRAI |  | 2024-10-03 11:33:33
+2024-10-03 12:07:32 | Guillaume | UPDATE | 1458 | GC | 03/oct/2024 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | tel avec alain sur jvm + rencontre teams + tel avec vlad | 2,00 | VRAI |  | 2024-10-03 12:07:32
+2024-10-03 12:08:53 | Guillaume | ADD    | 1459 | GC | 03/oct/2024 | 1448 | 9055-4627 Québec Inc. [Guillaume Bruneau-Côté] | tel avec vlad | 0,25 | VRAI |  | 2024-10-03 12:08:53
+2024-10-03 12:16:35 | Guillaume | ADD    | 1460 | GC | 03/oct/2024 | 1797 | Silencieux de l'est Inc. [Martin Montpas] | tel sur memo | 0,40 | VRAI |  | 2024-10-03 12:16:35
+2024-10-03 12:54:15 | Guillaume | ADD    | 1461 | GC | 03/10/24 | 1523 | Bernier Rhéaume Renaud CPA [Richard Bernier] | regarder agenda de cloture pour Groupe Sarrazin | 0,50 | VRAI |  | 2024-10-03 12:54:15
+2024-10-03 13:00:26 | Guillaume | ADD    | 1462 | GC | 03/10/24 | 1740 | Les Équipements Cofa Inc. [Olivier Bertrand] | répondre aux questions de la comptabilité chez cofa pour écritures comptables des chèques | 0,50 | VRAI |  | 2024-10-03 13:00:26
+2024-10-03 13:06:56 | Guillaume | UPDATE | 1461 | GC | 03/10/24 | 1523 | Bernier Rhéaume Renaud CPA [Richard Bernier] | regarder agenda de cloture pour Groupe Sarrazin + tel avec Richard explication dividende en actions High-Low | 0,75 | VRAI |  | 2024-10-03 13:06:56
+2024-10-03 13:45:51 | Guillaume | UPDATE | 1454 | GC | 03/10/24 | 1780 | 9112-9031 Québec Inc. [Guy Béland] | tel avec France pour estimé IMR + faire ma simulation pour IMR | 1,50 | VRAI |  | 2024-10-03 13:45:51
+2024-10-03 14:13:18 | Guillaume | ADD    | 1463 | GC | 03/10/24 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | courriel explicatif argent à recevoir et création de sociétés | 0,40 | VRAI |  | 2024-10-03 14:13:18
+2024-10-03 14:15:35 | Guillaume | ADD    | 1464 | GC | 03/10/24 | 1749 | Gestion Éric Lépine et Mélanie Lecavalier Inc. [Éric Lépine] | suivi de l'état de révision | 0,40 | VRAI |  | 2024-10-03 14:15:35
+2024-10-03 14:40:20 | Guillaume | ADD    | 1465 | GC | 03/10/24 | 1514 | R.I. Résidence de Bellechasse Inc. [Sylvie Rocheleau] | tel avec sylvie pour AMP et courriel hugo | 0,75 | VRAI |  | 2024-10-03 14:40:20
+2024-10-03 14:52:12 | Guillaume | UPDATE | 1465 | GC | 03/10/24 | 1514 | R.I. Résidence de Bellechasse Inc. [Sylvie Rocheleau] | tel avec sylvie pour AMP et courriel hugo | 1,00 | VRAI |  | 2024-10-03 14:52:12
+2024-10-03 15:27:39 | Guillaume | ADD    | 1466 | GC | 03/10/24 | 1798 | Mylène Lapierre CPA Inc. | révision de la documentation de vente d'actions + bail + commentaires | 1,00 | VRAI |  | 2024-10-03 15:27:39
+2024-10-03 15:28:23 | Guillaume | ADD    | 1467 | GC | 03/10/24 | 1669 | Ventilabec Inc. [Lora Stoycheva] | tel avec Lora pour memo de roulement d'immeuble | 0,40 | VRAI |  | 2024-10-03 15:28:23
+2024-10-03 16:01:01 | Guillaume | ADD    | 1468 | GC | 03/10/24 | 1624 | Gestion Proped Inc. [Louis Villeneuve] | réception de documents à réviser | 0,40 | VRAI |  | 2024-10-03 16:01:01
+2024-10-03 16:33:06 | Guillaume | UPDATE | 1450 | GC | 03/10/24 | 104 | Groupe Millénium Micro Inc. [Carl Paquin] | analyse de valeur de EStaff + tel avec Alain et courriels additionnels | 2,00 | VRAI |  | 2024-10-03 16:33:06
+2024-10-03 16:47:26 | User | ADD    | 1469 | ML | 2024-10-03 | 1731 | Les Toitures C.B.C. Inc. [Francis Bélanger] | Suivi des chèques
+ | 0,25 | VRAI |  | 2024-10-03 16:47:26
+2024-10-03 16:47:50 | User | ADD    | 1470 | ML | 2024-10-03 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Examen du dossier et courriel à Joannie concernant un avis de cotisation P.Morin
+ | 0,50 | VRAI |  | 2024-10-03 16:47:50
+2024-10-03 16:49:29 | User | ADD    | 1471 | ML | 2024-10-03 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Revoir l'évaluation au 30 septembre 2024 avec les nouveaux documents
+ | 1,00 | VRAI |  | 2024-10-03 16:49:29
+2024-10-03 16:49:53 | User | ADD    | 1472 | ML | 2024-10-03 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Ménage des fichiers du dossier.
+ | 1,00 | VRAI |  | 2024-10-03 16:49:53
+2024-10-03 16:50:15 | User | ADD    | 1473 | ML | 2024-10-03 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | Revoir les corrections aux dossiers d'évaluation
+ | 0,75 | VRAI |  | 2024-10-03 16:50:15
+2024-10-03 16:50:38 | User | ADD    | 1474 | ML | 2024-10-03 | 1696 | Photographie Benoit Blain Inc. [Kelly Cochelin] | Assemblage des 4 roulements
+ | 1,50 | VRAI |  | 2024-10-03 16:50:38
+2024-10-03 16:51:04 | User | ADD    | 1475 | ML | 2024-10-03 | 5 | z_Adiministratif_Autres non chargeables | Travail sur Outlook - fichiers clients
+ | 2,00 | FAUX |  | 2024-10-03 16:51:04
+2024-10-03 17:15:56 | Guillaume | ADD    | 1476 | GC | 03/10/24 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | analyse de la nouvelle réorg et tel avec Vlad pour expliquer | 2,00 | VRAI |  | 2024-10-03 17:15:56
+2024-10-03 17:22:37 | Guillaume | UPDATE | 1450 | GC | 03/10/24 | 104 | Groupe Millénium Micro Inc. [Carl Paquin] | analyse de valeur de EStaff + tel avec Alain et courriels additionnels | 2,50 | VRAI |  | 2024-10-03 17:22:37
+2024-10-03 17:28:52 | Guillaume | ADD    | 1477 | GC | 03/10/24 | 1430 | Librairie Lu-Lu Inc. [Céline Camirand] | numéro d'entreprise pour bump | 0,40 | VRAI |  | 2024-10-03 17:28:52
+2024-10-03 17:37:26 | Guillaume | UPDATE | 1465 | GC | 03/10/24 | 1514 | R.I. Résidence de Bellechasse Inc. [Sylvie Rocheleau] | tel avec sylvie pour AMP et courriel hugo + demande de documents de Hugo | 1,50 | VRAI |  | 2024-10-03 17:37:26
+2024-10-03 17:42:20 | Guillaume | UPDATE | 1477 | GC | 03/10/24 | 1430 | Librairie Lu-Lu Inc. [Céline Camirand] | numéro d'entreprise pour bump - échanges avec Émilie | 0,75 | VRAI |  | 2024-10-03 17:42:20
+2024-10-03 18:52:10 | vgervais | ADD    | 1478 | VG | 2024-10-03 | 1757 | Messier & Associé, s.e.n.c.r.l. [Alain Bélanger] | Finalisation mémo avec jvm | 2,50 | VRAI |  | 2024-10-03 18:52:10
+2024-10-03 18:53:47 | vgervais | ADD    | 1479 | VG | 2024-10-03 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Finaliser mémo avec JVM + suivi avec Michel pour JVM élevé pour 2 mois | 1,50 | VRAI |  | 2024-10-03 18:53:47
+2024-10-03 18:54:23 | vgervais | ADD    | 1480 | VG | 2024-10-03 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume (mise à jour) mémo | 0,40 | VRAI |  | 2024-10-03 18:54:23
+2024-10-03 18:55:16 | vgervais | UPDATE | 1447 | VG | 2024-10-03 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Suivi avec avocat pour OAA + conversations téléphoniuqes + analyses + courriel | 1,30 | VRAI |  | 2024-10-03 18:55:16
+2024-10-03 18:55:48 | vgervais | UPDATE | 1446 | VG | 2024-10-03 | 5 | z_Adiministratif_Autres non chargeables | Planning + suivi + porbleme feuille de temps (courriel à Robert + redemarrer l'application à 2-3 reeprises) + suivis dsossier Guillaume | 1,30 | FAUX |  | 2024-10-03 18:55:48
+2024-10-03 18:56:48 | vgervais | ADD    | 1481 | VG | 2024-03-10 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | DIscussion avec Guillaume pour mise à jour mémo  | 2,30 | VRAI |  | 2024-10-03 18:56:48
+2024-10-03 18:57:53 | vgervais | ADD    | 1482 | VG | 2024-03-10 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Discussion Guillaume mémo | 0,60 | VRAI |  | 2024-10-03 18:57:53
+2024-10-03 19:06:56 | vgervais | UPDATE | 1447 | VG | 2024-10-03 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Suivi avec avocat pour OAA + conversations téléphoniuqes + analyses + courriel + suivi avec Virginie | 1,50 | VRAI |  | 2024-10-03 19:06:56
+2024-10-03 19:12:12 | vgervais | ADD    | 1483 | VG | 2024-03-10 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Discussion ave Guillaume pour changement au mémo + voir modication après | 0,60 | VRAI |  | 2024-10-03 19:12:12

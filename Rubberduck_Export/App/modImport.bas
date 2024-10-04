@@ -26,7 +26,7 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     Debug.Print "Destination: " & targetWorkbook.name & " with " & targetSheetName
     
     'Copy the source worksheet
-    sourceWorkbook.Sheets(sourceSheetName).Copy before:=targetWorkbook.Sheets(2)
+    sourceWorkbook.Sheets(sourceSheetName).Copy Before:=targetWorkbook.Sheets(2)
     Debug.Print "The new sheet is created..."
     Dim tempSheet As Worksheet: Set tempSheet = targetWorkbook.Sheets(2)
     tempSheet.name = "TempSheetName"

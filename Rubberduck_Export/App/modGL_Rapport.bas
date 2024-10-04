@@ -159,6 +159,7 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
+    Dim saveFirstRow As Long
     Dim solde As Currency
     lastRowUsed_A = ws.Range("A99999").End(xlUp).Row
     lastRowUsed_B = ws.Range("B99999").End(xlUp).Row
@@ -183,6 +184,7 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     ws.Range("H" & lastRowUsed_AB).value = solde
     ws.Range("H" & lastRowUsed_AB).Font.Bold = True
     lastRowUsed_AB = lastRowUsed_AB + 1
+    saveFirstRow = lastRowUsed_AB
 
     If wshGL_Trans.Range("P2") = "" Then
         Exit Sub
@@ -209,6 +211,18 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
             lastRowUsed_AB = lastRowUsed_AB + 1
         Next i
     End If
+    
+    'Ajoute le formatage conditionnel pour les transactions
+    With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
+        .FormatConditions.add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
+        .FormatConditions(Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1).FormatConditions.count).SetFirstPriority
+        With .FormatConditions(1).Interior
+            .PatternColorIndex = xlAutomatic
+            .ThemeColor = xlThemeColorDark1
+            .TintAndShade = -0.14996795556505
+        End With
+        .FormatConditions(1).StopIfTrue = False
+    End With
     
     ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
     With ws.Range("F" & lastRowUsed_AB, "G" & lastRowUsed_AB)

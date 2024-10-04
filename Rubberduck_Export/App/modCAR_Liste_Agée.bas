@@ -703,14 +703,14 @@ Sub zFAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
 
 End Sub
 
-Sub zSoft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
+Sub zSoft_Delete_If_Value_Is_Found_In_Master_Details(filepath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filepath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
@@ -823,14 +823,14 @@ Sub zFAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
 
 End Sub
 
-Sub zSoft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
+Sub zSoft_Delete_If_Value_Is_Found_In_Master_Entete(filepath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filepath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String

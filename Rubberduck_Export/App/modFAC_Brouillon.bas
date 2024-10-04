@@ -379,12 +379,12 @@ End Sub
 Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
-    Dim filePath As String
-    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-    If filePath = "False" Then Exit Sub 'User canceled
+    Dim filepath As String
+    filepath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If filepath = "False" Then Exit Sub 'User canceled
     
     Dim wbSource As Workbook
-    Set wbSource = Workbooks.Open(filePath)
+    Set wbSource = Workbooks.Open(filepath)
     Dim wsSource As Worksheet
     Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
     
