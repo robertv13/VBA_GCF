@@ -84,6 +84,36 @@ Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows u
     
 End Function
 
+Function Fn_Incremente_Code(c As String) As String
+
+    Dim i As Integer
+    Dim numericPart As String
+    Dim suffix As String
+    Dim newCode As String
+    
+    'Parcourir le code pour extraire la partie numérique
+    For i = 1 To Len(c)
+        If IsNumeric(Mid(c, i, 1)) Then
+            numericPart = numericPart & Mid(c, i, 1)
+        Else
+            'Dès qu'on trouve un caractère non numérique, on considère que c'est le suffixe
+            suffix = Mid(c, i)
+            Exit For
+        End If
+    Next i
+    
+    'Si la partie numérique est valide, on ajoute 1
+    If Len(numericPart) > 0 Then
+        newCode = CStr(CLng(numericPart) + 1) ' Convertir la partie numérique en nombre et ajouter 1
+    Else
+        newCode = "" 'Si aucun chiffre n'a été trouvé, laisser la nouvelle valeur vide
+    End If
+    
+    'Retourne le nouveau code
+    Fn_Incremente_Code = newCode
+
+End Function
+
 Function Fn_Selected_List() As Long
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Selected_List", "", 0)

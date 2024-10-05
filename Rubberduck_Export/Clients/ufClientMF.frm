@@ -49,7 +49,13 @@ Private Sub cmdAddClient_Click()
     ufClientMF.txtCodeClient.Enabled = True
     ufClientMF.txtCodeClient.SetFocus
     
-    nouveauClient = True
+    'Obtenir le dernier numéro de client utilisé (particulier / corporatif)
+    Dim maxSmallCode As String, maxLargeCode As String
+    Call Max_Code_Values_From_GCF_Entree(maxSmallCode, maxLargeCode)
+    
+    MsgBox "Code à utiliser pour les particuliers = '" & maxSmallCode & "'" & vbNewLine & vbNewLine & _
+           "Code à utiliser pour les entreprises  = '" & maxLargeCode & "'", vbInformation, _
+                                        "Codes à utiliser pour la création d'un nouveau client"
 
     Call CM_Log_Record("ufClientMF:cmdAddClient_Click", "", startTime)
 

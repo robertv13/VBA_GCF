@@ -114,6 +114,73 @@ Sub CM_Verify_DDM(fullFileName As String)
 
 End Sub
 
+Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLargeCodes As String)
+
+    'Analyze Clients List from 'GCF_BD_Entrée.xlsx
+    Dim strFilePath As String, strSheet As String
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        strFilePath = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+    Else
+        strFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    End If
+    strSheet = "Clients$" 'Ne pas oublier le '$' à la fin du nom de la feuille
+    
+    'Crée une connexion à ADO
+    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+    
+    'Connexion pour Excel
+    Dim strConn As String: strConn = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
+                                     "Data Source=" & strFilePath & ";" & _
+                                     "Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
+    'Ouvrir la connexion
+    cn.Open strConn
+
+    'Requête pour trouver la valeur maximale pour les codes de 1 à 999
+    Dim sqlQuery As String
+    sqlQuery = "SELECT MAX(Val(Client_ID)) AS MaxSmallCodes FROM [" & strSheet & "] WHERE Val(Client_ID) >= 1 AND Val(Client_ID) <= 999"
+    Dim rs As Object
+    Set rs = cn.Execute(sqlQuery)
+
+    If Not rs.EOF Then
+        maxSmallCodes = rs.Fields("MaxSmallCodes").Value
+    Else
+        maxSmallCodes = ""
+    End If
+    
+    rs.Close
+
+    'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
+    sqlQuery = "SELECT MAX(Val(Client_ID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(Client_ID) >= 4 AND Val(Client_ID) >= 1000"
+    Set rs = cn.Execute(sqlQuery)
+
+    If Not rs.EOF Then
+        maxLargeCodes = rs.Fields("MaxLargeCodes").Value
+    Else
+        maxLargeCodes = ""
+    End If
+
+    'Fermer le Recordset et la connexion
+    rs.Close
+    cn.Close
+    
+    If maxSmallCodes <> "" Then
+        maxSmallCodes = Fn_Incremente_Code(maxSmallCodes)
+    End If
+
+    If maxLargeCodes <> "" Then
+        maxLargeCodes = Fn_Incremente_Code(maxLargeCodes)
+    End If
+
+'    'Afficher les résultats
+'    MsgBox "Valeur maximale pour les codes de 1 à 999: " & maxSmallCodes
+'    MsgBox "Valeur maximale pour les codes >= 1000: " & maxLargeCodes
+'
+    'Nettoyer les objets
+    Set rs = Nothing
+    Set cn = Nothing
+    
+End Sub
+
 Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExiste As Boolean = False) '2024-08-30 @ 18:15
     
     'Liste des workbooks à vérifier (à adapter selon vos besoins)
