@@ -19,11 +19,6 @@ Option Explicit
 '             The code in this class allows the user to
 '             create a searchable dropdown list of items.
 '
-'HOW TO USE - See READ ME File - 2023-03-01
-'
-'LICENSE ETC.
-'   You can use this code free in any of your software applications and distribute as you wish.
-'   Please do not alter or remove the authors name or website.
 
 Private Const m_conMaxRows As Long = 10
 
@@ -43,8 +38,6 @@ Private WithEvents MyListBox As MSForms.ListBox
 Attribute MyListBox.VB_VarHelpID = -1
 Private WithEvents myTextBox As MSForms.TextBox
 Attribute myTextBox.VB_VarHelpID = -1
-
-'-------------------------------------------------------------------- PROPERTIES
 
 Public Property Let CompareMethod(ByVal value As VbCompareMethod)
 
@@ -103,8 +96,6 @@ Public Property Set SearchTextBox(ByVal oTextBox As MSForms.TextBox)
 
 End Property
 
-'------------------------------------------------------------------ CLASS EVENTS
-
 'Description: Set the defaults
 Private Sub Class_Initialize()
 
@@ -115,8 +106,6 @@ Private Sub Class_Initialize()
     
 End Sub
 
-'---------------------------------------------------------------- LISTBOX EVENTS
-
 Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     'If the user doubleclicks or presses enter, place the selected value in the textbox
@@ -124,10 +113,10 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Call SetTextboxValue(MyListBox.value)
         Call ShowListbox(False)
         SendKeys "{TAB}"
+        
     End If
 
 End Sub
-
 
 Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
     
@@ -138,13 +127,14 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         m_UpdateControl = True
         CheckListBoxFirstItem
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
-        'swallow the enter keycode as it passes on to the ok button
+        'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
         If MyListBox.value <> 0 Then
             Call SetTextboxValue(MyListBox.value)
         End If
         Call ShowListbox(False)
         SendKeys "{TAB}"
+        
     End If
 
 End Sub
@@ -178,7 +168,6 @@ Private Sub List_MoveDown()
 
 End Sub
 
-'------------------------------------------------------------------ LISTBOX SUBS
 Private Sub UpdateListbox(items As Variant)
  
     With MyListBox
@@ -188,7 +177,7 @@ Private Sub UpdateListbox(items As Variant)
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
-            .List = Array("Je n'ai rien trouvé!")
+            .List = Array("Malheureusement, je n'ai rien trouvé!")
             .ForeColor = rgbRed
         Else
             'Items found
@@ -217,8 +206,8 @@ Private Sub MakeAllMatchesAvailable()
         .Height = ResizeListbox(MyListBox, myTextBox.Font.size)
         .IntegralHeight = True
 
-        'List index will not highlight to first unless the second one is
-        'highlighted first. It might be to do with the resizing from the Integral height
+        'List index will not highlight to first unless the second one is highlighted first.
+        'It might be to do with the resizing from the Integral height
         If .ListCount > 1 Then .ListIndex = 1
         .ListIndex = 0
     End With
@@ -280,7 +269,6 @@ Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double)
     
 End Function
 
-'---------------------------------------------------------------- TEXTBOX EVENTS
 Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
@@ -310,19 +298,16 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         End If
         Call ShowListbox(False)
     ElseIf KeyCode = vbKeyEscape Then
-        'swallow the esc keycode
+        'Swallow the esc keycode
         Call InitializeTextBox
         KeyCode = 0
     End If
 
 End Sub
 
-'------------------------------------------------------------------ TEXTBOX SUBS
-
 Private Sub SetTextboxValue(ByVal Text As String)
 
     If m_UpdateControl = False Then
-        
         With MyListBox
             m_UpdateControl = True
             'Set the listbox selected value to the textbox and hide the listbox
@@ -345,7 +330,7 @@ Private Sub InitializeTextBox()
         SetTextboxValue m_startText
     End If
     myTextBox.SelStart = 0
-    'myTextBox.ForeColor = rgbBlue
+    myTextBox.ForeColor = rgbBlue
     
     Call ShowListbox(False)
 
@@ -359,7 +344,7 @@ Private Sub RemoveStartingText()
 
     With myTextBox
         .Text = Mid(.value, .SelStart, 1)
-        '.ForeColor = rgbBlack
+        .ForeColor = rgbBlack
     End With
     
     m_UpdateControl = False
@@ -369,7 +354,7 @@ End Sub
 Private Function SelectTextBox()
     
     With myTextBox
-        'SelStart = 0
+'        SelStart = 0
         .SetFocus
     End With
 

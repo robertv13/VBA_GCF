@@ -603,9 +603,6 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     On Error GoTo 0
     conn.Close
     
-    'Open the MASTER file to clone the format to newly added lines
-'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, (lr - fr + 1))
-    
     Application.ScreenUpdating = True
     
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -723,9 +720,6 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     rs.Close
     On Error GoTo 0
     conn.Close
-    
-    'Open the MASTER file to clone the format to newly added lines
-'    Call Clone_Last_Line_Formatting_For_New_Records(destinationFileName, destinationTab, 1)
     
     Application.ScreenUpdating = True
     

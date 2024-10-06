@@ -26,7 +26,7 @@ End Sub
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     Dim sorted As Boolean
     
     numRows = UBound(arr, 1)
@@ -41,9 +41,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
             If arr(j, 1) > arr(j + 1, 1) Then
                 'Swap rows
                 For c = 1 To numCols
-                    temp = arr(j, c)
+                    Temp = arr(j, c)
                     arr(j, c) = arr(j + 1, c)
-                    arr(j + 1, c) = temp
+                    arr(j + 1, c) = Temp
                 Next c
                 sorted = False
             ElseIf arr(j, 1) = arr(j + 1, 1) Then
@@ -51,9 +51,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
                 If arr(j, 2) > arr(j + 1, 2) Then
                     'Swap rows
                     For c = 1 To numCols
-                        temp = arr(j, c)
+                        Temp = arr(j, c)
                         arr(j, c) = arr(j + 1, c)
-                        arr(j + 1, c) = temp
+                        arr(j + 1, c) = Temp
                     Next c
                     sorted = False
                 End If
@@ -96,15 +96,15 @@ End Sub
 
 Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
-    Dim temp As String
+    Dim Temp As String
     
     For i = LBound(arr) To UBound(arr) - 1
         For j = i + 1 To UBound(arr)
             If arr(i) > arr(j) Then
                 'Swap elements if they are in the wrong order
-                temp = arr(i)
+                Temp = arr(i)
                 arr(i) = arr(j)
-                arr(j) = temp
+                arr(j) = Temp
             End If
         Next j
     Next i
@@ -115,13 +115,13 @@ Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
     'HOW TO USE: Call BubbleSort(MyArray())
     
     Dim i As Long, j As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     For i = LBound(MyArray) To UBound(MyArray) - 1
         For j = i + 1 To UBound(MyArray)
             If MyArray(i) > MyArray(j) Then
-                temp = MyArray(j)
+                Temp = MyArray(j)
                 MyArray(j) = MyArray(i)
-                MyArray(i) = temp
+                MyArray(i) = Temp
             End If
         Next j
     Next i
@@ -1614,17 +1614,6 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
 
 End Sub
 
-Sub SetNumLockOn() '2024-08-26 @ 09:54
-
-'    'Check if NumLock is off (0), then turn it on, if so
-'    Call Log_Record("modDev_Utils:SetNumLockOn:Avant = " & CStr(GetKeyState(&H90)), 0)
-'    If GetKeyState(&H90) = 0 Then
-'        keybd_event &H90, 0, 0, 0 'Turn NumLock on
-'    End If
-'    Call Log_Record("modDev_Utils:SetNumLockOn:Après = " & CStr(GetKeyState(&H90)), 0)
-    
-End Sub
-
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", 0)
@@ -1769,7 +1758,7 @@ Sub Test_Log_Record()
     
 End Sub
 
-Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
+Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boolean = False) '2024-09-14 @ 06:56
 
     On Error GoTo Error_Handler
     
@@ -1789,6 +1778,10 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logSaisieHeuresFile For Append As #fileNum
+    
+    If blankline = True Then
+        Print #fileNum, ""
+    End If
     
     Print #fileNum, TimeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
@@ -1870,16 +1863,16 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     'Sort components (simple bubble sort)
     Dim i As Long, j As Long
     Dim intResult As Integer
-    Dim temp As String
+    Dim Temp As String
     For i = LBound(components) To UBound(components) - 1
         For j = i + 1 To UBound(components)
 '            Debug.Print components(i) & " vs. " & components(j)
             intResult = StrComp(components(i), components(j), vbTextCompare)
             If intResult = 1 Then
                 'Swap components
-                temp = components(i)
+                Temp = components(i)
                 components(i) = components(j)
-                components(j) = temp
+                components(j) = Temp
 '            Debug.Print components(i) & " < " & components(j)
             End If
         Next j

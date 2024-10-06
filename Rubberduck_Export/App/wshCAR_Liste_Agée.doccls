@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     wshCAR_Liste_Agée.Range("D4").value = "Nom de client"
     wshCAR_Liste_Agée.Range("F4").value = "Non"
     wshCAR_Liste_Agée.Range("H4").value = Format$(Now(), "yyyy/mm/dd")
-    Debug.Print "#032: - Now() - Y = " & year(wshCAR_Liste_Agée.Range("H4").value) & " - M = " & month(wshCAR_Liste_Agée.Range("H4").value) & " - D = " & day(wshCAR_Liste_Agée.Range("H4").value)
+    Debug.Print "#032: - Now() - y = " & year(wshCAR_Liste_Agée.Range("H4").value) & " - m = " & month(wshCAR_Liste_Agée.Range("H4").value) & " - d = " & day(wshCAR_Liste_Agée.Range("H4").value)
     
     Application.EnableEvents = True
     

@@ -1154,11 +1154,6 @@ GestionErreur:
     
 End Sub
 
-Sub Test_Copier_Facture_Vers_Classeur_Ferme()
-
-    Call Copier_Facture_Vers_Classeur_Ferme("24-24518", "30/09/2024", "1775", "9513-1926 Québec Inc. [Francis Desgagnés]")
-    
-End Sub
 'Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
 Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
     Dim ws As Worksheet

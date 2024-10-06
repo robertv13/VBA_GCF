@@ -4,17 +4,17 @@ Attribute VB_Name = "modAppli"
 Option Explicit
 
 #If VBA7 Then
-    '64-bit Excel (VBA7 and later)
-'    Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-'    Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As LongPtr)
-Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-Private Declare PtrSafe Function GetKeyboardState Lib "user32" (pbKeyState As Byte) As Long
-Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+    'Déclaration pour les environnements 64 bits
+    Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+'    Private Declare PtrSafe Function GetKeyboardState Lib "user32" (pbKeyState As Byte) As Long
+'    Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #Else
-    '32-bit Excel
-    Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+    '32-bit Excel (anciennes versions)
+    Private Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+'    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #End If
+
+Public Const VK_NUMLOCK As Long = &H90
 
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
@@ -26,11 +26,6 @@ Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
 
 Public fromMenu As Boolean '2024-09-03 @ 06:14
-
-'Constantes pour les touches du clavier
-Private Const VK_NUMLOCK As Byte = &H90
-Private Const KEYEVENTF_EXTENDEDKEY As Long = &H1
-Private Const KEYEVENTF_KEYUP As Long = &H2
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns
@@ -182,69 +177,6 @@ Sub Write_Info_On_Main_Menu()
 
     Call Log_Record("modAppli:Write_Info_On_Main_Menu()", startTime)
 
-End Sub
-
-Sub Ensure_NumLock_Is_On()
-
-    'Vérifie l'état actuel de NumLock
-    Dim NumLockState As Boolean
-    NumLockState = GetKeyState(VK_NUMLOCK) And 1
-    Debug.Print "DB.#190 - NumLockState (avant) = '" & NumLockState & "' - "; Now
-
-    If NumLockState = False Then
-            Application.SendKeys "{NUMLOCK}", True
-    End If
-
-'    'Si NumLock est désactivé, on l'active
-'    If Not NumLockState Then
-'        'Simule l'appui sur la touche NumLock
-'        Debug.Print "     DB.#195 - Simulate PRESS NUM LOCK"
-'        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY, 0
-'        'Simule le relâchement de la touche NumLock
-'        Debug.Print "     DB.#198 - Simulate RELEASE NUM LOCK"
-'        keybd_event VK_NUMLOCK, &H45, KEYEVENTF_EXTENDEDKEY Or KEYEVENTF_KEYUP, 0
-'
-'        'Petite pause pour laisser le temps au système de traiter la modification
-'        Application.Wait Now + TimeValue("00:00:02")
-'
-'        'Check the status AFTER modifications...
-'        NumLockState = GetKeyState(VK_NUMLOCK) And 1
-'        Debug.Print "DB.#203 - NumLockState (after) = "; NumLockState; " "; Now
-'    End If
-
-    NumLockState = GetKeyState(VK_NUMLOCK) And 1
-    Debug.Print "DB.#210 - NumLockState (après) = '" & NumLockState & "' - "; Now
-
-
-End Sub
-
-Sub AssurerNumLockActive()
-    Const VK_NUMLOCK As Long = &H90 ' Code de la touche NUM LOCK
-    
-    ' Vérifie si NUM LOCK est désactivé
-    If Not (GetKeyState(VK_NUMLOCK) And 1) Then
-        'Si désactivé, on l'active en envoyant {NUMLOCK}
-        Application.SendKeys "{NUMLOCK}", True
-        MsgBox "NUM LOCK a été activé."
-    Else
-        MsgBox "NUM LOCK est déjà activé."
-    End If
-End Sub
-
-Sub VerifierNumLockAvecGetKeyboardState()
-
-    Dim keyState(255) As Byte
-    
-    'Appel de l'API pour récupérer l'état des touches du clavier
-    GetKeyboardState keyState(0)
-    
-    ' La touche NUM LOCK est représentée par l'index 144 (0x90)
-    If keyState(&H90) And 1 = 0 Then
-        MsgBox "Le NUM LOCK est désactivé.", vbInformation
-        'Reactive le NUM LOCK
-        Application.SendKeys "{NUMLOCK}", True
-    End If
-    
 End Sub
 
 Sub Handle_Rubberduck_Reference()

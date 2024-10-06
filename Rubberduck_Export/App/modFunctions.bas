@@ -449,6 +449,31 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     
 End Function
 
+'Function IsNumLockActive() As Boolean
+'    ' Utilisation de SendKeys pour vérifier l'état
+'    Dim CurrentState As String
+'    Dim Temp As String
+'
+'    ' Sauvegarde de l'état actuel du NumLock
+'    Application.SendKeys "{NUMLOCK}", True
+'    Application.SendKeys "{NUMLOCK}", True
+'
+'    ' Capturer l'état actuel
+'    Temp = Application.ActiveWindow.Caption
+'    Application.SendKeys "{NUMLOCK}", True
+'    Application.SendKeys "{NUMLOCK}", True
+'
+'    ' Vérification simple pour voir si l'état a changé
+'    CurrentState = Application.ActiveWindow.Caption
+'
+'    ' NumLock est activé si l'état a changé
+'    If Temp <> CurrentState Then
+'        IsNumLockActive = True
+'    Else
+'        IsNumLockActive = False
+'    End If
+'End Function
+'
 Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 @ 10:36
 
     '2024-08-14 @ 10:17 - Verify that a client exists, based on clientCode
@@ -606,7 +631,7 @@ Function Fn_Complete_Date(dateInput As String) As Variant
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call Log_Record("modFunctions_Fn_Complete_Date_#551: y = " & yearPart & "   m = " & monthPart & "   d = " & dayPart & " parsedDate='" & parsedDate & "'", -1) '2024-09-06 @ 09:02
+    Call Log_Record("modFunctions:Fn_Complete_Date @00608   y = " & yearPart & "   m = " & monthPart & "   d = " & dayPart & " parsedDate='" & parsedDate & "'", -1) '2024-09-06 @ 09:02
     
     Exit Function
 
@@ -614,7 +639,7 @@ Invalid_Date:
 
     Fn_Complete_Date = "Invalid Date"
     
-    Call Log_Record("modFunctions_Fn_Complete_Date_551 y=" & yearPart & " m=" & monthPart & " d=" & dayPart & " -----> Date INVALIDE - '" & Fn_Get_Date_Format & "'", -1)  '2024-09-06 @ 09:02
+    Call Log_Record("modFunctions:Fn_Complete_Date @00616   y = " & yearPart & "   m = " & monthPart & "   d = " & dayPart & " est une Date INVALIDE - '" & Fn_Get_Date_Format & "'", -1)  '2024-09-06 @ 09:02
     
 End Function
 
@@ -623,7 +648,7 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
     'Sort a dictionary by its keys and return keys in an array
     Dim keys() As Variant
     Dim i As Long, j As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     
     ReDim keys(0 To dict.count - 1)
     
@@ -638,9 +663,9 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
         For j = i + 1 To UBound(keys)
             If (keys(i) < keys(j) And descending) Or (keys(i) > keys(j) And Not descending) Then
                 'Swap keys accordingly
-                temp = keys(i)
+                Temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = temp
+                keys(j) = Temp
             End If
         Next j
     Next i
@@ -655,7 +680,7 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     Dim keys() As Variant
     Dim values() As Variant
     Dim i As Long, j As Long
-    Dim temp As Variant
+    Dim Temp As Variant
     
     ReDim keys(0 To dict.count - 1)
     ReDim values(0 To dict.count - 1)
@@ -672,14 +697,14 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
         For j = i + 1 To UBound(values)
             If (values(i) < values(j) And descending) Or (values(i) > values(j) And Not descending) Then
                 'Swap values
-                temp = values(i)
+                Temp = values(i)
                 values(i) = values(j)
-                values(j) = temp
+                values(j) = Temp
                 
                 'Swap keys accordingly
-                temp = keys(i)
+                Temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = temp
+                keys(j) = Temp
             End If
         Next j
     Next i

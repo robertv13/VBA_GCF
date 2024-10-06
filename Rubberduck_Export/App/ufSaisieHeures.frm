@@ -16,7 +16,6 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
-'Private MyListBoxClass As clsListboxAlign
 
 'Allows the calling code to set the data
 Public Property Let ListData(ByVal rg As Range)
@@ -27,6 +26,10 @@ End Property
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014", True)
+    
+    Call Log_Record("ufSaisieHeures:UserForm_Activate - Starting @00014", -1)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
     
     Call Client_List_Import_All
@@ -69,9 +72,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
    
     rmv_state = rmv_modeInitial
     
-'    Application.SendKeys "{NUMLOCK}", True
-    
-    Call VerifierNumLockAvecGetKeyboardState '2024-09-03 @ 22:43
+'    Call Forcer_NumLock_Actif
     
     Call Log_Record("ufSaisieHeures:UserForm_Activate()", startTime)
     
@@ -79,6 +80,8 @@ End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
     
     Dim i As Long
@@ -92,21 +95,23 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-'    Application.SendKeys "{NUMLOCK}", True
+'    Call Forcer_NumLock_Actif
     
-    Call VerifierNumLockAvecGetKeyboardState '2024-09-03 @ 22:43
-
     Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick()", startTime)
 
 End Sub
 
 Private Sub UserForm_Initialize()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091", True)
+    
 '    Set MyListBoxClass = New clsListboxAlign
     
 End Sub
 
 Private Sub UserForm_Terminate()
+    
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099", True)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", 0)
 
@@ -143,55 +148,84 @@ End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", 0)
 
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
         wshAdmin.Range("TEC_Initials").value = ufSaisieHeures.cmbProfessionnel.value
         wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
         
-        Call Settrace("@0137", "ufSaisieHeures", "cmbProfessionnel_AfterUpdate", "wshAdmin.Range(""TEC_Date"").value = '" & wshAdmin.Range("TEC_Date").value & "'", "type = " & TypeName(wshAdmin.Range("TEC_Date").value))
         If wshAdmin.Range("TEC_Date").value <> "" Then '2024-09-05 @ 20:50
+            Call Log_Saisie_Heures("event    ", "@00145 - wshAdmin.Range('TEC_Date').value = " & wshAdmin.Range("TEC_Date").value & _
+                    "   y = " & year(wshAdmin.Range("TEC_Date").value) & _
+                    "   m = " & month(wshAdmin.Range("TEC_Date").value) & _
+                    "   d = " & day(wshAdmin.Range("TEC_Date").value) & _
+                    "   type = " & TypeName(wshAdmin.Range("TEC_Date")))
             ufSaisieHeures.txtDate.value = wshAdmin.Range("TEC_Date").value
-            Debug.Print "ufSaisieHeures_cmbProfessionnel_AfterUpdate_136   ufSaisieHeures.txtDate.value = "; ufSaisieHeures.txtDate.value; "   "; TypeName(ufSaisieHeures.txtDate.value)
+            Call Log_Saisie_Heures("event    ", "@00151 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.value & _
+                    "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                    "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                    "   d = " & day(ufSaisieHeures.txtDate.value) & _
+                    "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+                    
             Call TEC_Get_All_TEC_AF
+            
             Call TEC_Refresh_ListBox_And_Add_Hours
+            
         End If
     End If
 
-'    Application.SendKeys "{NUMLOCK}", True
+    Call Forcer_NumLock_Actif
     
-    Call VerifierNumLockAvecGetKeyboardState '2024-09-03 @ 22:43
-
     Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", startTime)
 
 End Sub
 
 Private Sub txtDate_Enter()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172", True)
+    
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Now()
-'        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy") '2024-09-04 @ 11:03
+        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy")
     End If
     
-'    Debug.Print "DP-102", year(ufSaisieHeures.txtDate.value), month(ufSaisieHeures.txtDate.value), day(ufSaisieHeures.txtDate.value)
+    Call Log_Saisie_Heures("info     ", "@00178 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
+                                "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                                "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                                "   d = " & day(ufSaisieHeures.txtDate.value))
 
 End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", 0)
     
     Dim fullDate As Variant
     
-    Call Settrace("@0171", "ufSaisieHeures", "txtDate_BeforeUpdate", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
+    Call Log_Saisie_Heures("info     ", "@00193 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
+                                "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                                "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                                "   d = " & day(ufSaisieHeures.txtDate.value) & _
+                                "   type = " & TypeName(ufSaisieHeures.txtDate.value))
     fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value)
-    Call Settrace("@0173", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
+    Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
+                                "   y = " & year(fullDate) & _
+                                "   m = " & month(fullDate) & _
+                                "   d = " & day(fullDate) & _
+                                "   type = " & TypeName(fullDate))
         
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
         ufSaisieHeures.txtDate.value = fullDate
     Else
-        Call MsgBoxInvalidDate("ufSaisieHeures_179")
+        Call Log_Saisie_Heures("INVALIDE", "@00209 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
+                                    "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                                    "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                                    "   d = " & day(ufSaisieHeures.txtDate.value) & _
+                                    "   type = " & TypeName(ufSaisieHeures.txtDate.value))
         Cancel = True
         With ufSaisieHeures.txtDate
             .SetFocus 'Remettre le focus sur la TextBox
@@ -201,10 +235,23 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Settrace("@00189", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
-    Call Settrace("@00190", "ufSaisieHeures", "txtDate_BeforeUpdate", "DateSerial = '" & DateSerial(year(Now), month(Now), day(Now)) & "'", "Type = " & TypeName(DateSerial(year(Now), month(Now), day(Now))) & "   Future ? " & fullDate > DateSerial(year(Now), month(Now), day(Now)))
+    Call Log_Saisie_Heures("info     ", "@00223 - fullDate = " & fullDate & _
+                                "   y = " & year(fullDate) & _
+                                "   m = " & month(fullDate) & _
+                                "   d = " & day(fullDate) & _
+                                "   type = " & TypeName(fullDate))
+    Call Log_Saisie_Heures("info     ", "@00228 - DateSerial = " & DateSerial(year(Now), month(Now), day(Now)) & _
+                                "   y = " & year(Now) & _
+                                "   m = " & month(Now) & _
+                                "   d = " & day(Now) & _
+                                "   type = " & TypeName(Now))
+                                
     If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
-        Debug.Print "ufSaisieHeures:BeforeUpdate @00192 - fullDate = "; fullDate; "   "; TypeName(fullDate)
+        Call Log_Saisie_Heures("future  ", "@00230 - fullDate = " & fullDate & _
+                                            "   y = " & year(fullDate) & _
+                                            "   m = " & month(fullDate) & _
+                                            "   d = " & day(fullDate) & _
+                                            "   type = " & TypeName(fullDate))
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & fullDate & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
@@ -213,6 +260,12 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
             txtDate.SetFocus
             Cancel = True
             Exit Sub
+        Else
+            Call Log_Saisie_Heures("FUTURE_OK", "@00249 - fullDate = " & fullDate & _
+                                                "   y = " & year(fullDate) & _
+                                                "   m = " & month(fullDate) & _
+                                                "   d = " & day(fullDate) & _
+                                                "   type = " & TypeName(fullDate))
         End If
     End If
     
@@ -224,21 +277,38 @@ End Sub
 
 Private Sub txtDate_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
     
-    Call Settrace("@0214", "ufSaisieHeures", "txtDate_AfterUpdate", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
-'    MsgBox "ufSaisieHeures_txtDate_AfterUpdate_208   " & vbNewLine & vbNewLine & _
-                "y = " & year(ufSaisieHeures.txtDate.value) & vbNewLine & vbNewLine & _
-                "m = " & month(ufSaisieHeures.txtDate.value) & vbNewLine & vbNewLine & _
-                "d = " & day(ufSaisieHeures.txtDate.value), vbInformation, "Format détaillé de la date"
+    Call Log_Saisie_Heures("event    ", "@00269 - .txtDate.value =  = " & ufSaisieHeures.txtDate.value & _
+                                        "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                                        "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                                        "   d = " & day(ufSaisieHeures.txtDate.value) & _
+                                        "   type = " & TypeName(ufSaisieHeures.txtDate.value))
     If IsDate(ufSaisieHeures.txtDate.value) Then
         Dim dateStr As String, dateFormated As Date
         dateStr = ufSaisieHeures.txtDate.value
-        Call Settrace("@0222", "ufSaisieHeures", "txtDate_AfterUpdate", "dateStr = '" & dateStr & "'", "type = " & TypeName(dateStr))
+        Call Log_Saisie_Heures("info     ", "@00277 - dateStr =  = " & dateStr & _
+                                            "   y = " & year(dateStr) & _
+                                            "   m = " & month(dateStr) & _
+                                            "   d = " & day(dateStr) & _
+                                            "   type = " & TypeName(dateStr) & _
+                                            "   après assignation")
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
-        Call Settrace("@0224", "ufSaisieHeures", "txtDate_AfterUpdate", "dateFormated = '" & dateFormated & "'", "type = " & TypeName(dateFormated))
+        Call Log_Saisie_Heures("info     ", "@00284 - dateFormated =  = " & dateFormated & _
+                                            "   y = " & year(dateFormated) & _
+                                            "   m = " & month(dateFormated) & _
+                                            "   d = " & day(dateFormated) & _
+                                            "   type = " & TypeName(dateFormated) & _
+                                            "   après assignation")
         wshAdmin.Range("TEC_Date").value = dateFormated
-        Call Settrace("@0226", "ufSaisieHeures", "txtDate_AfterUpdate", "wshAdmin.Range(""TEC_Date"").value = '" & wshAdmin.Range("TEC_Date").value & "'", "type = " & TypeName(wshAdmin.Range("TEC_Date").value))
+        Call Log_Saisie_Heures("info     ", "@00291 - wshAdmin.Range('TEC_Date').value =  = " & wshAdmin.Range("TEC_Date").value & _
+                                            "   y = " & year(wshAdmin.Range("TEC_Date").value) & _
+                                            "   m = " & month(wshAdmin.Range("TEC_Date").value) & _
+                                            "   d = " & day(wshAdmin.Range("TEC_Date").value) & _
+                                            "   type = " & TypeName(wshAdmin.Range("TEC_Date").value) & _
+                                            "   après assignation")
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
@@ -251,21 +321,13 @@ Private Sub txtDate_AfterUpdate()
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
-    'Enabled the NEW & ADD button if the minimum fields are non empty
-    If Trim(ufSaisieHeures.cmbProfessionnel.value) <> vbNullString And _
-        Trim(ufSaisieHeures.txtDate.value) <> vbNullString And _
-        Trim(ufSaisieHeures.txtClient.value) <> vbNullString And _
-        Trim(ufSaisieHeures.txtHeures.value) <> 0 Then
-        Call Buttons_Enabled_True_Or_False(True, True, False, False)
-    End If
-    
     Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate()", startTime)
     
 End Sub
 
 Private Sub txtClient_Enter()
 
-    Call SetNumLockOn '2024-08-26 @ 09:55
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323", True)
     
     If rmv_state = rmv_modeInitial Then
         rmv_state = rmv_modeCreation
@@ -275,21 +337,13 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", 0)
     
-    Call SetNumLockOn '2024-08-26 @ 09:55
-    
     If Me.txtClient.value <> Me.txtSavedClient.value Then
-'        If Me.txtTEC_ID.value = "" Then
-            Call Buttons_Enabled_True_Or_False(True, False, False, False)
-'        Else
-'            Call Buttons_Enabled_True_Or_False(True, False, False, False)
-'        End If
+        Call Buttons_Enabled_True_Or_False(True, False, False, False)
     End If
-    
-'    Application.SendKeys "{NUMLOCK}", True
-    
-    Call VerifierNumLockAvecGetKeyboardState
     
     Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate()", startTime)
     
@@ -297,19 +351,17 @@ End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", 0)
     
     If Me.txtActivite.value <> Me.txtSavedActivite.value Then
         If Me.txtTEC_ID = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
         Else
-            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+            Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
     End If
-
-'    Application.SendKeys "{NUMLOCK}", True
-    
-    Call VerifierNumLockAvecGetKeyboardState
     
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate()", startTime)
     
@@ -317,6 +369,8 @@ End Sub
 
 Sub txtHeures_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", 0)
     
     'Validation des heures saisies
@@ -349,10 +403,10 @@ Sub txtHeures_AfterUpdate()
         Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
         If Me.txtTEC_ID = "" Then
             Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
-            Call Buttons_Enabled_True_Or_False(True, True, False, False)
+            Call Buttons_Enabled_True_Or_False(True, False, False, True)
         Else
             Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, False, True, True", -1)
-            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+            Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
     End If
     
@@ -362,13 +416,15 @@ End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:chbFacturable_AfterUpdate @00424", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", 0)
     
     If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(True, True, False, False)
+            Call Buttons_Enabled_True_Or_False(True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+            Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
     End If
 
@@ -378,13 +434,15 @@ End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtCommNote_AfterUpdate @00450", True)
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", 0)
     
     If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(True, True, False, False)
+            Call Buttons_Enabled_True_Or_False(True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call Buttons_Enabled_True_Or_False(True, False, True, True)
+            Call Buttons_Enabled_True_Or_False(False, True, True, True)
         End If
     End If
 
@@ -395,18 +453,30 @@ End Sub
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdClear_Click @00469", True)
+    
+    Call Log_Record("ufSaisieHeures:cmdClear_Click was clicked", -1)
+    
     Call TEC_Efface_Formulaire
 
 End Sub
 
 Private Sub cmdAdd_Click()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479", True)
+    
+    Call Log_Record("ufSaisieHeures:cmdAdd_Click was clicked", -1)
+    
     Call TEC_Ajoute_Ligne
 
 End Sub
 
 Private Sub cmdUpdate_Click()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489", True)
+    
+    Call Log_Record("ufSaisieHeures:cmdUpdate_Click was clicked", -1)
+    
     If wshAdmin.Range("TEC_Current_ID").value <> "" Then
         Call TEC_Modifie_Ligne
     Else
@@ -419,6 +489,10 @@ End Sub
 
 Private Sub cmdDelete_Click()
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdDelete_Click @00505", True)
+    
+    Call Log_Record("ufSaisieHeures:cmdDelete_Click was clicked", -1)
+    
     If wshAdmin.Range("TEC_Current_ID").value <> "" Then
         Call TEC_Efface_Ligne
     Else
@@ -432,6 +506,10 @@ End Sub
 'Get a specific row from listBox and display it in the userform
 Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522", True)
+    
+    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick - An entry from the list was double clicked", -1)
+    
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
@@ -451,6 +529,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
         'Has this charge beeing INVOICED ?
         If Not isBilled Then
+            Application.EnableEvents = False
             .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
@@ -477,6 +556,8 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
             savedFacturable = .chbFacturable.value
             .txtSavedFacturable.value = .chbFacturable.value
+            Application.EnableEvents = True
+
         Else
             MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
                         vbNewLine & "une charge déjà FACTURÉE", vbExclamation
@@ -484,7 +565,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
     End With
 
-    Call Buttons_Enabled_True_Or_False(True, False, False, True)
+    Call Buttons_Enabled_True_Or_False(False, False, True, True)
     
     rmv_state = rmv_modeModification
     
@@ -492,16 +573,3 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Set lookupRange = Nothing
     
 End Sub
-
-'Sub VerifierNumLock()
-'
-'    Const VK_NUMLOCK As Long = &H90 ' Code de la touche NUM LOCK
-'
-'    ' Appel de l'API Windows pour obtenir l'état de NUM LOCK
-'    If GetKeyState(VK_NUMLOCK) And 1 Then
-'        MsgBox "Le NUM LOCK est activé.", vbInformation
-'    Else
-'        MsgBox "Le NUM LOCK est désactivé.", vbInformation
-'    End If
-'
-'End Sub

@@ -1,34 +1,42 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
-Sub Clone_Last_Line_Formatting_For_New_Records(workbookPath As String, wSheet As String, numberRows As Long)
+Sub Forcer_NumLock_Actif() '2024-10-06 @ 09:13
 
-'    'Open the workbook
-'    Dim wb As Workbook: Set wb = Workbooks.Open(workbookPath)
-'    Dim ws As Worksheet: Set ws = wb.Sheets(wSheet)
+'    Dim essai As Integer
 '
-'    'Find the last row with data in column A
-'    Dim lastRow As Long
-'    lastRow = ws.Range("A9999").End(xlUp).Row
-'    Dim firstNewRow As Long
-'    firstNewRow = lastRow - numberRows + 1
+'    Dim NumLockWasActive As Boolean
 '
-'    'Set the range for new rows
-'    Dim newRows As Range
-'    Set newRows = ws.Range(ws.Cells(firstNewRow, 1), ws.Cells(lastRow, ws.columns.count))
+'Do_It_Again:
 '
-'    'Copy formatting from the row above the first new row to the new rows
-'    ws.rows(firstNewRow - 1).Copy
-'    newRows.PasteSpecial Paste:=xlPasteFormats
+'    If essai > 3 Then Exit Sub
 '
-'    'Clear the clipboard to avoid Excel's cut-copy mode
-'    Application.CutCopyMode = False
+'    'Vérifiez d'abord l'état de NumLock en l'activant, si nécessaire
+'    NumLockWasActive = IsNumLockActive()
 '
-'    'Save and close the workbook
-'    wb.Close SaveChanges:=True
-
+'    'Si NumLock est désactivé, l'activer
+'    If Not NumLockWasActive Then
+'        Application.SendKeys "{NUMLOCK}"
+'    Else
+'        essai = essai + 1
+'        GoTo Do_It_Again
+'    End If
+    
 End Sub
 
+'Sub Forcer_NumLock_Actif() '2024-10-06 @ 09:13
+'
+'    'Vérifie le statut de NumLock
+'    If Not IsNumLockActive() Then
+'        'NumLock est désactivé, activation de la touche
+'        MsgBox "NumLock est désactivé. Exécution de la procédure."
+'        Application.SendKeys "{NUMLOCK}", True
+'    Else
+'        'NumLock est déjà activé
+'    End If
+'
+'End Sub
+'
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
