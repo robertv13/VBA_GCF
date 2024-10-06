@@ -18,6 +18,10 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
             .Range("O6").value = Fn_Get_Next_Invoice_Number
             
+            On Error Resume Next
+                Unload ufFraisDivers
+            On Error GoTo 0
+            
             Call FAC_Brouillon_Clear_All_TEC_Displayed
             
             Call FAC_Brouillon_Setup_All_Cells
@@ -691,6 +695,9 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     Application.ScreenUpdating = False
     
     Dim totalHres As Double
+    Dim collFraisDivers As Collection: Set collFraisDivers = New Collection
+    Dim ufFraisDivers As Object
+    Dim fraisDiversMsg As String
     Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As Variant
     
@@ -704,6 +711,12 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
             totalHres = totalHres + .Range("AW" & i).value
             arr(i - 2, 5) = .Range("BA" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("AQ" & i).value 'TEC_ID
+            'Commentaires doivent être affichés
+'            If i < 10 And i > 6 Then .Range("AX" & i).value = "Frais de poste à 25,00 $"
+            If Trim(.Range("AX" & i).value) <> "" Then
+                fraisDiversMsg = Trim(.Range("AX" & i).value)
+                collFraisDivers.add fraisDiversMsg
+            End If
         Next i
         'Copy array to worksheet
         Dim rng As Range
@@ -711,6 +724,20 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         Set rng = wshFAC_Brouillon.Range("D7").Resize(lastUsedRow - 2, UBound(arr, 2))
         rng.value = arr 'RMV
     End With
+    
+    'Création du userForm s'il y a quelque chose à afficher
+    If collFraisDivers.count > 0 Then
+        Set ufFraisDivers = UserForms.add("ufFraisDivers")
+        'Nettoyer le userForm avant d'ajouter des éléments
+        ufFraisDivers.ListBox1.clear
+        'Ajouter les éléments dans le listBox
+        Dim item As Variant
+        For Each item In collFraisDivers
+            ufFraisDivers.ListBox1.AddItem item
+        Next item
+        'Afficher le userForm de façon non modale
+        ufFraisDivers.show vbModeless
+    End If
     
     lastUsedRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row
     If lastUsedRow < 7 Then Exit Sub 'No rows

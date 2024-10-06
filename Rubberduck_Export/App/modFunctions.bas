@@ -369,15 +369,17 @@ End Function
 
 Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Get_TEC_Row_Number_By_TEC_ID", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", 0)
     
     On Error Resume Next
         Dim cell As Range
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TEC_ID = cell.Row
+            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - Row # = '" & Fn_Find_Row_Number_TEC_ID & "'", -1)
         Else
             Fn_Find_Row_Number_TEC_ID = -1 'Not found
+            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - TECID = WAS NOT FOUND...", -1)
         End If
     On Error GoTo 0
     

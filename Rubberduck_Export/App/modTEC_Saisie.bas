@@ -22,28 +22,32 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Get the Client_ID
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
-        Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#24:  ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+        Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne (0024) : ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
         Dim y As Integer, m As Integer, d As Integer
         Dim avant As String, apres As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.value
-            Call Settrace("@0029", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            Call Settrace("@00029", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
             y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             d = day(ufSaisieHeures.txtDate.value)
-            Call Settrace("@0033", "modTEC_Saisie", "TEC_Ajoute_Ligne", "***** - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            If m = 10 Then
+                Call Settrace("@00034", "modTEC_Saisie", "TEC_Ajoute_Ligne", "***** - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            Else
+                Call Settrace("@00036", "modTEC_Saisie", "TEC_Ajoute_Ligne", "E R R E U R - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            End If
             If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
                 Dim temp As Integer
                 temp = m
                 m = d
                 d = temp
-            Call Settrace("@0039", "modTEC_Saisie", "TEC_Ajoute_Ligne", "***** - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
+                Call Settrace("@00043", "modTEC_Saisie", "TEC_Ajoute_Ligne", "CORRECTION - y = " & y & ", m = " & m & ", d = " & d, "type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
-            ufSaisieHeures.txtDate.value = DateSerial(y, m, d)
-            Call Settrace("@0042", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
+            ufSaisieHeures.txtDate.value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
+            Call Settrace("@00046", "modTEC_Saisie", "TEC_Ajoute_Ligne", "ufSaisieHeures.txtDate.value = '" & ufSaisieHeures.txtDate.value & "'", "type = " & TypeName(ufSaisieHeures.txtDate.value))
             apres = ufSaisieHeures.txtDate.value
             If apres <> avant Then
-                Call Log_Record("modTEC_Saisie_TEC_Ajoute_Ligne_#41:  La date a été changée pour corriger le format - " & avant & "---> " & apres, -1)
+                Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne @00049 : La date a été changée pour corriger le format - " & avant & "---> " & apres, -1)
             End If
         On Error GoTo 0
         
@@ -132,12 +136,16 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-wshAdmin.Range("TEC_Current_ID").value), -1) '2024-10-05 @ 07:21
+    
     Dim Sh As Worksheet: Set Sh = wshTEC_Local
     
     Dim TECID As Long
     'With a negative ID value, it means to soft delete this record
     TECID = -wshAdmin.Range("TEC_Current_ID").value
+    
     Call TEC_Record_Add_Or_Update_To_DB(TECID)  'Write to external XLSX file - 2023-12-23 @ 07:07
+    
     Call TEC_Record_Add_Or_Update_Locally(TECID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
@@ -159,6 +167,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     rmv_state = rmv_modeCreation
     
     Call TEC_Get_All_TEC_AF
+    
     Call TEC_Refresh_ListBox_And_Add_Hours
     
 Clean_Exit:
@@ -317,8 +326,15 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
-    Call Settrace("@0319", "modTEC_Saisie", "TEC_Record_Add_Or_Update_To_DB", "dateValue = '" & dateValue & "'", "type = " & TypeName(dateValue))
-    Dim y As Integer, m As Integer, d As Integer
+    If month(dateValue) < 10 Then
+        Call Settrace("@00324", "modTEC_Saisie", "TEC_Record_Add_Or_Update_To_DB", "E R R E U R - dateValue = '" & dateValue & "'", "type = " & TypeName(dateValue))
+    End If
+    If TECID = 0 And Now - dateValue > 15 Then
+        MsgBox "La date saisie est plus de 15 jours dans le passé..." & vbNewLine & vbNewLine & _
+                "Veuillez aviser le développeur de cette situation SVP", vbInformation
+        Call Settrace("@00334", "modTEC_Saisie", "TEC_Record_Add_Or_Update_To_DB", "Plus de 15 jours en arrière - dateValue = '" & dateValue & "'", "type = " & TypeName(dateValue))
+    End If
+'    Dim y As Integer, m As Integer, d As Integer
     
     If TECID < 0 Then 'Soft delete a record
         
@@ -337,9 +353,20 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             
             Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & CStr(-(saveLogTEC_ID)) & " I S   D E L E T E D", -1) '2024-09-13 @ 08:49
         
+            Call Log_Saisie_Heures("DELETE", saveLogTEC_ID & " | " & _
+                                    ufSaisieHeures.cmbProfessionnel.value & " | " & _
+                                    dateValue & " | " & _
+                                    wshAdmin.Range("TEC_Client_ID") & " | " & _
+                                    ufSaisieHeures.txtClient.value & " | " & _
+                                    ufSaisieHeures.txtActivite.value & " | " & _
+                                    Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
+                                    ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
+                                    ufSaisieHeures.txtCommNote.value & " | " & _
+                                    Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
-            Call Log_Record("#334: N'a pas trouvé le TECID '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-02 @ 10:35
+            Call Log_Record("N'a pas trouvé le TECID @00367 - '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-02 @ 10:35
             
             MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", _
                 vbExclamation
@@ -536,6 +563,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("P" & nextRowNumber).value = ""
         End With
     Else
+        Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - SoftDeleteStart - " & CStr(TECID), -1) '2024-10-05 @ 07:32
         'What is the row number for the TEC_ID
         lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
         Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)

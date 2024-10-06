@@ -127,15 +127,15 @@ Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
     Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim wsTgt As Worksheet
-    Set wsTgt = ThisWorkbook.Worksheets("Hres_Jour_Prof")
+    Set wsTgt = ThisWorkbook.Worksheets("TEC_Hres_Jour_Prof")
     
     Dim lastUsedRowSrc As Long
     lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
     
-    wsTgt.Range("A2:H" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
+    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
     
     'Copy columns A to H (from Source to Target), using Copy and Paste Special
-    wsSrc.Range("A2:H" & lastUsedRowSrc).Copy
+    wsSrc.Range("A2:I" & lastUsedRowSrc).Copy
     wsTgt.Cells(2, 1).PasteSpecial Paste:=xlPasteValues
     
     'Clear the clipboard
@@ -152,14 +152,14 @@ End Sub
 Sub Update_Pivot_Table() '2024-08-15 @ 06:34
 
     'Define the worksheet containing the data
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Hres_Jour_Prof")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Hres_Jour_Prof")
     
     'Find the last row of your data
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Define the new data range
-    Dim rngData As Range: Set rngData = ws.Range("A1:H" & lastUsedRow)
+    Dim rngData As Range: Set rngData = ws.Range("A1:I" & lastUsedRow)
     
     'Update the Pivot Table
     Dim pt As PivotTable: Set pt = ws.PivotTables("ptHresJourProf")
@@ -283,23 +283,27 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     wsSommaire.Range("B1").value = "Prof."
     wsSommaire.Range("C1").value = "H/Saisies"
     wsSommaire.Range("D1").value = "H/Détruites"
-    wsSommaire.Range("E1").value = "H/Fact"
+    wsSommaire.Range("E1").value = "H/Nettes"
     wsSommaire.Range("F1").value = "H/NFact"
-    wsSommaire.Range("G1").value = "H/Facturées"
-    wsSommaire.Range("H1").value = "H/TEC"
-    Call Make_It_As_Header(wsSommaire.Range("A1:H1"))
+    wsSommaire.Range("G1").value = "H/Fact"
+    wsSommaire.Range("H1").value = "H/Facturées"
+    wsSommaire.Range("I1").value = "H/TEC"
+    Call Make_It_As_Header(wsSommaire.Range("A1:I1"))
 
     'Data starts at row 2
     Dim r As Long: r = 2
     Dim readRows As Long
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
+    wshMenu.Range("H29").value = "Vérification du Plan Comptable"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     
     Call check_Plan_Comptable(r, readRows)
-
+    wshMenu.Range("H29").value = ""
+    
     'wshBD_Clients --------------------------------------------------------------- Clients
+    wshMenu.Range("H29").value = "Vérification des données des clients"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
     
     Call Client_List_Import_All
@@ -308,8 +312,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_Clients(r, readRows)
-
+    wshMenu.Range("H29").value = ""
+    
     'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
+    wshMenu.Range("H29").value = "Vérification des données des fournisseurs"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Fournisseurs")
     
     Call Fournisseur_List_Import_All
@@ -318,8 +324,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_Fournisseurs(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshENC_Détails ---------------------------------------------------------- ENC_Détails
+    wshMenu.Range("H29").value = "Vérification du détail des encaissements"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Détails")
     
     Call ENC_Détails_Import_All
@@ -328,8 +336,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_ENC_Détails(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshENC_Entête ------------------------------------------------------------ ENC_Entête
+    wshMenu.Range("H29").value = "Vérification des entêtes des encaissements"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Entête")
     
     Call ENC_Entête_Import_All
@@ -338,8 +348,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_ENC_Entête(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
+    wshMenu.Range("H29").value = "Vérification des détails des factures"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
     
     Call FAC_Détails_Import_All
@@ -348,8 +360,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Détails(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
+    wshMenu.Range("H29").value = "Vérification des entêtes des factures"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
     
     Call FAC_Entête_Import_All
@@ -358,8 +372,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Entête(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
+    wshMenu.Range("H29").value = "Vérification des comptes clients"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
     
     Call FAC_Comptes_Clients_Import_All
@@ -368,8 +384,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Comptes_Clients(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
+    wshMenu.Range("H29").value = "Vérification des entêtes de projets de factures"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     
     Call FAC_Projets_Détails_Import_All
@@ -379,8 +397,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Projets_Détails(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
+    wshMenu.Range("H29").value = "Vérification des détails de projets de factures"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
@@ -388,8 +408,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Projets_Entête(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
+    wshMenu.Range("H29").value = "Vérification des transactions du Grand Livre"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "GL_Trans")
     
     Call GL_Trans_Import_All
@@ -397,8 +419,10 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
 
     Call check_GL_Trans(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
+    wshMenu.Range("H29").value = "Vérification des données de tableau de bord (TEC)"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
     
     Call TEC_Import_All
@@ -407,13 +431,16 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     
     Call check_TEC_TdB_Data(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
+    wshMenu.Range("H29").value = "Vérification des TEC"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
     r = r + 1
     
     Call check_TEC(r, readRows)
+    wshMenu.Range("H29").value = ""
     
     'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
@@ -422,7 +449,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     End With
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    wsSommaire.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
@@ -945,7 +971,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = ws.Range("A9999").End(xlUp).Row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
-       r = r + 2
+        r = r + 2
         GoTo Clean_Exit
     End If
     Dim firstEmptyCol As Long
@@ -988,6 +1014,10 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         End If
         If arr(i, 3) <> "C" And arr(i, 3) <> "AC" Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le type de facture '" & arr(i, 3) & "' pour la facture '" & Inv_No & "' est INVALIDE")
+            r = r + 1
+        End If
+        If arr(i, 19) <> 0.09975 Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le % de TVQ, soit '" & arr(i, 19) & "' pour la facture '" & Inv_No & "' est ERRONÉ")
             r = r + 1
         End If
         If arr(i, 3) = "C" Then
@@ -2020,7 +2050,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1483 'What is the last TECID analyzed ?
+    lastTECIDReported = 1531 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2470,16 +2500,23 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         dateStr = DateSerial(Mid(dateStr, 1, 4), Mid(dateStr, 5, 2), Mid(dateStr, 7, 2))
         prof = Trim(Mid(components(i), 9, 4))
         pArr = CInt(Mid(components(i), 13, 4))
-        wsSommaire.Cells(r2, 1).value = Format$(dateStr, "mm/dd/yyyy")
+        wsSommaire.Cells(r2, 1).value = Format$(dateStr, "yyyy-mm-dd")
         wsSommaire.Cells(r2, 2).value = prof
-        wsSommaire.Cells(r2, 3).value = arrHres(pArr, 1)
-        wsSommaire.Cells(r2, 4).value = arrHres(pArr, 2)
-        wsSommaire.Cells(r2, 5).value = arrHres(pArr, 3)
-        wsSommaire.Cells(r2, 6).value = arrHres(pArr, 4)
-        wsSommaire.Cells(r2, 7).value = arrHres(pArr, 5)
-        wsSommaire.Cells(r2, 8).value = arrHres(pArr, 6)
+        wsSommaire.Cells(r2, 3).value = arrHres(pArr, 1)                    'Hres inscrites
+        wsSommaire.Cells(r2, 4).value = arrHres(pArr, 2)                    'Hres détruites
+        wsSommaire.Cells(r2, 5).value = arrHres(pArr, 1) - arrHres(pArr, 2) 'Hres Nettes
+        wsSommaire.Cells(r2, 6).value = arrHres(pArr, 3)                    'Hres Facturables
+        wsSommaire.Cells(r2, 7).value = arrHres(pArr, 4)                    'Hres Non/Facturables
+        wsSommaire.Cells(r2, 8).value = arrHres(pArr, 5)                    'Hres Facturées
+        wsSommaire.Cells(r2, 9).value = arrHres(pArr, 6)                    'Hres TEC
         r2 = r2 + 1
     Next i
+    
+    'Ajustement des formats
+    wsSommaire.Range("A2:A" & r2 - 1).NumberFormat = "yyyy-MM-dd"
+    wsSommaire.Range("C2:I" & r2 - 1).NumberFormat = "#,##0.00"
+    wsSommaire.Range("C2:I" & r2 - 1).HorizontalAlignment = xlRight
+    wsSommaire.columns("C:I").ColumnWidth = 10
     
 Clean_Exit:
 

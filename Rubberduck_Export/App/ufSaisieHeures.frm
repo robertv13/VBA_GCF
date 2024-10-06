@@ -169,7 +169,7 @@ End Sub
 Private Sub txtDate_Enter()
 
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format(Now(), "Short Date")
+        ufSaisieHeures.txtDate.value = Now()
 '        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy") '2024-09-04 @ 11:03
     End If
     
@@ -201,10 +201,10 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Settrace("@0189", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
-    Call Settrace("@0190", "ufSaisieHeures", "txtDate_BeforeUpdate", "DateSerial = '" & DateSerial(year(Now), month(Now), day(Now)) & "'", "Type = " & TypeName(DateSerial(year(Now), month(Now), day(Now))) & "   Future ? " & fullDate > DateSerial(year(Now), month(Now), day(Now)))
+    Call Settrace("@00189", "ufSaisieHeures", "txtDate_BeforeUpdate", "fullDate = '" & fullDate & "'", "type = " & TypeName(fullDate))
+    Call Settrace("@00190", "ufSaisieHeures", "txtDate_BeforeUpdate", "DateSerial = '" & DateSerial(year(Now), month(Now), day(Now)) & "'", "Type = " & TypeName(DateSerial(year(Now), month(Now), day(Now))) & "   Future ? " & fullDate > DateSerial(year(Now), month(Now), day(Now)))
     If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
-        Debug.Print "ufSaisieHeures_BeforeUpdate_185   fullDate = "; fullDate; "   "; TypeName(fullDate)
+        Debug.Print "ufSaisieHeures:BeforeUpdate @00192 - fullDate = "; fullDate; "   "; TypeName(fullDate)
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & fullDate & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
@@ -277,6 +277,8 @@ Private Sub txtClient_AfterUpdate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", 0)
     
+    Call SetNumLockOn '2024-08-26 @ 09:55
+    
     If Me.txtClient.value <> Me.txtSavedClient.value Then
 '        If Me.txtTEC_ID.value = "" Then
             Call Buttons_Enabled_True_Or_False(True, False, False, False)
@@ -321,17 +323,13 @@ Sub txtHeures_AfterUpdate()
     Dim strHeures As String
     strHeures = Me.txtHeures.value
     
-'    If InStr(strHeures, ".") > 0 Then
     strHeures = Replace(strHeures, ".", ",")
-'    End If
     
     If IsNumeric(strHeures) = False Then
         MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
             Me.txtHeures.SetFocus 'Mettre le focus sur le contrôle en premier
-'            Me.txtHeures.SelStart = 0 'Définir le début de la sélection
-'            Me.txtHeures.SelLength = Len(ufSaisieHeures.txtHeures.value) 'Définir la longueur de la sélection        Exit Sub
             Exit Sub
     End If
     
@@ -350,10 +348,10 @@ Sub txtHeures_AfterUpdate()
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
         Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
         If Me.txtTEC_ID = "" Then
-        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
+            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
             Call Buttons_Enabled_True_Or_False(True, True, False, False)
         Else
-        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, True, False, False", -1)
+            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, False, True, True", -1)
             Call Buttons_Enabled_True_Or_False(True, False, True, True)
         End If
     End If

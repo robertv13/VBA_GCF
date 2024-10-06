@@ -1705,7 +1705,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1783,7 +1783,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String) '2024-09-14 @ 06:56
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1827,7 +1827,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.0000"), 4) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms

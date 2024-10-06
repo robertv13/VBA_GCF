@@ -1,0 +1,448 @@
+20241005_102955|Clients_v2.5.xlsm|User|***** Début de session - Workbook_Open *****|||
+20241005_102955|Clients_v2.5.xlsm|User|modMain|CM_Client_List_Import_All||
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Apply_Worksheet_Format||
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1289 secondes|1095
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,8711 secondes|
+20241005_102956|Clients_v2.5.xlsm|User|ufClientMF|UserForm_Initialize||
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Reset_UserForm||
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Add_SearchColumn||
+20241005_102956|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_102956|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0469 secondes|Client_ID
+20241005_102956|Clients_v2.5.xlsm|User|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,1367 secondes|
+20241005_102957|Clients_v2.5.xlsm|User|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,4102 secondes|1096
+20241005_102957|Clients_v2.5.xlsm|User|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,5273 secondes|
+20241005_103044|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103044|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0508 secondes|ClientNom
+20241005_103049|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103049|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103050|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5625 secondes|ClientNom:Groupe Millenium Micro Inc. 0
+20241005_103050|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6836 secondes|
+20241005_103052|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103052|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0469 secondes|Client_ID
+20241005_103055|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103055|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103057|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5781 secondes|Client_ID:Groupe Millenium Micro Inc. 0
+20241005_103057|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6914 secondes|
+20241005_103106|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103106|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103108|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 2,1094 secondes|Client_ID:Carl Paquin 0
+20241005_103108|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 2,2500 secondes|
+20241005_103110|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103110|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0625 secondes|ClientNom
+20241005_103113|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103113|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103113|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1484 secondes|ClientNom:Carl Paquin 3
+20241005_103113|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2500 secondes|
+20241005_103115|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103115|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0625 secondes|
+20241005_103115|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103115|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103115|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103115|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103115|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103115|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103115|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2227 secondes|Groupe Millénium Micro Inc. [Carl Paquin]
+20241005_103116|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3281 secondes|
+20241005_103143|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103143|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103143|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2305 secondes|ClientNom:Restaurant l'Étoile de Mascouche 1
+20241005_103143|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3203 secondes|
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103146|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103146|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103146|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103146|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2305 secondes|Restaurant l'Étoile de Mascouche Inc. [Georges Spiropulos]
+20241005_103146|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3242 secondes|
+20241005_103208|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103208|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103208|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103208|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103208|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1953 secondes|ClientNom:Mylène Auger 1
+20241005_103208|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2891 secondes|
+20241005_103224|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103225|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103226|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5586 secondes|ClientNom:Golf de la Presqu'ile 0
+20241005_103226|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6719 secondes|
+20241005_103233|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103234|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103234|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1133 secondes|ClientNom:Suzie Desrosiers 1
+20241005_103234|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,1992 secondes|
+20241005_103235|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103235|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_103235|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103235|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103235|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103235|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103235|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103236|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103236|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2188 secondes|2329-9308 Québec Inc. [Suzie Desrosiers]
+20241005_103236|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3008 secondes|
+20241005_103329|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103329|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103330|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,3867 secondes|ClientNom:Forma Soin 0
+20241005_103330|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5000 secondes|
+20241005_103338|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103338|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103338|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103338|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103339|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1914 secondes|ClientNom:Christiane Poirier 1
+20241005_103339|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2773 secondes|
+20241005_103414|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103414|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103416|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,8789 secondes|ClientNom:Annabelle Caron 0
+20241005_103416|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,9766 secondes|
+20241005_103432|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103432|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103433|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4531 secondes|ClientNom:Jean-Daniel Debkoski Avocat Inc. 0
+20241005_103433|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5703 secondes|
+20241005_103441|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103441|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103443|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,7422 secondes|ClientNom:Jean-Daniel Debkoski 0
+20241005_103443|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,8320 secondes|
+20241005_103457|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103457|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103459|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,3984 secondes|ClientNom:Roulements et Produits Industriels Inc. 0
+20241005_103459|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5234 secondes|
+20241005_103508|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103508|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103509|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5469 secondes|ClientNom:Yvon Boucher 0
+20241005_103510|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6680 secondes|
+20241005_103512|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103512|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0469 secondes|Client_ID
+20241005_103521|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103521|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103522|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5469 secondes|Client_ID:Roulements et Produits Industriels Inc. 0
+20241005_103522|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6602 secondes|
+20241005_103541|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103541|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103543|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4258 secondes|Client_ID:Canplex 0
+20241005_103543|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5391 secondes|
+20241005_103544|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103544|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0508 secondes|ClientNom
+20241005_103547|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103547|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103548|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1094 secondes|ClientNom:Canplex 1
+20241005_103548|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2188 secondes|
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0625 secondes|
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103550|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103550|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_103550|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103550|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2461 secondes|Les Industries Canplex Ltée [Marco Stocchero]
+20241005_103550|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3398 secondes|
+20241005_103637|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103637|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103639|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,2578 secondes|ClientNom:Click Cuisine Inc. 0
+20241005_103639|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,3789 secondes|
+20241005_103646|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103646|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103648|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,8789 secondes|ClientNom:Stéphane Grosso 0
+20241005_103648|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,9961 secondes|
+20241005_103708|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103708|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103709|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,6836 secondes|ClientNom:Le Groupe Ultragen Inc. 0
+20241005_103709|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,7852 secondes|
+20241005_103716|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103716|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103718|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5430 secondes|ClientNom:Daniel Truong 0
+20241005_103718|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6523 secondes|
+20241005_103726|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103726|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0508 secondes|Client_ID
+20241005_103729|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103730|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103731|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,6211 secondes|Client_ID:Le Groupe Ultragen Inc. 0
+20241005_103731|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,7383 secondes|
+20241005_103733|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241005_103733|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0625 secondes|ClientNom
+20241005_103750|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103750|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103751|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103751|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_103751|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1953 secondes|ClientNom:Mathieu Chaîné 1
+20241005_103751|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3164 secondes|
+20241005_103808|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103808|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103809|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4102 secondes|ClientNom:Laboratoire Orthometrix Inc. 0
+20241005_103809|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5000 secondes|
+20241005_103817|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103817|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103817|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1055 secondes|ClientNom:Luc Benoit 1
+20241005_103817|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2109 secondes|
+20241005_103818|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103818|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_103819|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103819|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103819|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103819|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103819|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103819|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103819|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2188 secondes|Laboratoire Orthométrix Inc. [Luc Benoit]
+20241005_103819|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3047 secondes|
+20241005_103844|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103844|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103845|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,6016 secondes|ClientNom:Espaces Stratégies 0
+20241005_103846|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6914 secondes|
+20241005_103854|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103854|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103854|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103854|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103854|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1914 secondes|ClientNom:Nancy Guay 1
+20241005_103854|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2930 secondes|
+20241005_103922|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103922|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0820 secondes|
+20241005_103922|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103922|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103922|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103922|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103922|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103922|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_103922|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2227 secondes|Nancy Guay [Espace Stratégies]
+20241005_103923|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3047 secondes|
+20241005_103949|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103949|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103950|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4688 secondes|ClientNom:Groupe Laforest 0
+20241005_103950|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5781 secondes|
+20241005_103957|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_103957|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_103958|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103958|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103958|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1992 secondes|ClientNom:Maxime Laforest 1
+20241005_103958|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3086 secondes|
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_103959|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103959|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103959|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_103959|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2344 secondes|1508-5822 Québec Inc. [Maxime Laforest]
+20241005_103959|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3281 secondes|
+20241005_104024|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104024|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104026|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5039 secondes|ClientNom:Serge Gariépy 0
+20241005_104026|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6016 secondes|
+20241005_104043|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104043|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104045|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,3867 secondes|ClientNom:Pretech (9310-7761 Québec Inc) 0
+20241005_104045|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,4766 secondes|
+20241005_104051|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104051|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104053|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5195 secondes|ClientNom:Shawn Guilbert 0
+20241005_104053|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6328 secondes|
+20241005_104108|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104108|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104109|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5352 secondes|ClientNom:CNC Solstice inc. 0
+20241005_104109|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6523 secondes|
+20241005_104116|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104116|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104118|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,8789 secondes|ClientNom:Micheline Desmarais 0
+20241005_104118|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 2,0000 secondes|
+20241005_104133|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104133|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104135|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4648 secondes|ClientNom:Services de Pneus Robert Inc. 0
+20241005_104135|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5781 secondes|
+20241005_104141|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104141|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104141|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104141|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0625 secondes|
+20241005_104141|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2109 secondes|ClientNom:Diane Doutre 1
+20241005_104141|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3008 secondes|
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104143|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104143|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104143|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104143|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2383 secondes|9382-1890 Québec Inc. [Diane Doutre]
+20241005_104143|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3320 secondes|
+20241005_104213|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104213|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104213|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104213|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104213|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2227 secondes|ClientNom:Francis Lemieux 1
+20241005_104213|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3320 secondes|
+20241005_104230|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104230|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104230|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1289 secondes|ClientNom:Olivier Cendré 1
+20241005_104230|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2266 secondes|
+20241005_104254|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104254|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104254|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1172 secondes|ClientNom:Transport Gaby Trépanier Inc. 1
+20241005_104254|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2031 secondes|
+20241005_104312|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104312|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104314|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5703 secondes|ClientNom:QuatreCenteQuatre 0
+20241005_104314|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6719 secondes|
+20241005_104322|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104322|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104323|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,3672 secondes|ClientNom:Philippe Trudel Guerbilsky 0
+20241005_104323|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,4961 secondes|
+20241005_104339|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104339|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104339|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1211 secondes|ClientNom:Guy Labbé 1
+20241005_104339|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2227 secondes|
+20241005_104400|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104400|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104400|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1133 secondes|ClientNom:Remorque Terrebonne 1
+20241005_104400|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2305 secondes|
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104403|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104403|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_104403|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104403|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2148 secondes|Remorque Terrebonne 2021 Inc. [Pierre Beauregard]
+20241005_104403|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3086 secondes|
+20241005_104425|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104425|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104425|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104425|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104425|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2109 secondes|ClientNom:Destination Hockey 1
+20241005_104426|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3086 secondes|
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104427|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104427|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104427|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104427|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2188 secondes|Destination Hockey Inc. [Daniel Beaulieu]
+20241005_104427|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3125 secondes|
+20241005_104451|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104451|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104451|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104451|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104451|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1914 secondes|ClientNom:Marie-Claude Lamy 1
+20241005_104451|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2812 secondes|
+20241005_104515|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104515|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104515|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1133 secondes|ClientNom:Remorque Terrebonne 1
+20241005_104515|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,1992 secondes|
+20241005_104516|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104517|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_104517|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104517|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104517|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104517|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_104517|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104517|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0625 secondes|
+20241005_104517|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2656 secondes|Remorque Terrebonne 2021 Inc. [Pierre Beauregard]
+20241005_104517|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3594 secondes|
+20241005_104550|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104550|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104552|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5781 secondes|ClientNom:Luxi Entretien Commercial et Industriel Inc. 0
+20241005_104552|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6719 secondes|
+20241005_104601|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104601|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104601|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104601|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0586 secondes|
+20241005_104601|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1953 secondes|ClientNom:Nathalie Richard 1
+20241005_104601|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2930 secondes|
+20241005_104602|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104602|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104602|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104602|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104603|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104603|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_104603|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104603|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_104603|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2422 secondes|Luxi Soin Inc. [Nathalie Richard]
+20241005_104603|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3320 secondes|
+20241005_104627|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104627|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104627|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104628|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104628|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2227 secondes|ClientNom:Crescendo Pharma Inc. 1
+20241005_104628|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3125 secondes|
+20241005_104650|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104650|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104650|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1094 secondes|ClientNom:Matteau Électrique Inc. 1
+20241005_104650|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,1992 secondes|
+20241005_104708|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104708|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104708|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1133 secondes|ClientNom:Planification M.D. Inc. 1
+20241005_104708|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2109 secondes|
+20241005_104734|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104734|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104734|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1172 secondes|ClientNom:Les Séchoirs à bois St-Roch Inc. 1
+20241005_104734|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2266 secondes|
+20241005_104755|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104755|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104756|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,6719 secondes|ClientNom:QuatreCenteQuatre 0
+20241005_104756|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,7617 secondes|
+20241005_104803|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104803|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104803|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1055 secondes|ClientNom:Mathieu Gagnon 1
+20241005_104803|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2070 secondes|
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_104805|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104805|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104805|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_104805|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0469 secondes|
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2227 secondes|Quatre Cent Quatre Inc. [Mathieu Gagnon]
+20241005_104805|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3125 secondes|
+20241005_104829|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104829|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104831|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5352 secondes|ClientNom:Willy Forge Inc. 0
+20241005_104831|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6445 secondes|
+20241005_104839|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104839|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104840|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4492 secondes|ClientNom:Willy Forge 0
+20241005_104840|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5352 secondes|
+20241005_104857|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104857|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104857|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_104857|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_104857|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1875 secondes|ClientNom:Adam Lachapelle 1
+20241005_104857|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2891 secondes|
+20241005_104913|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104913|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104913|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1289 secondes|ClientNom:Solutions Huwiz Inc. 1
+20241005_104913|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2344 secondes|
+20241005_104950|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104950|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_104952|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,4023 secondes|ClientNom:Le groupe Ultragen Inc. 0
+20241005_104952|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,5273 secondes|
+20241005_104959|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_104959|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_105001|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5430 secondes|ClientNom:K.T. Truong 0
+20241005_105001|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6328 secondes|
+20241005_105016|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_105016|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_105018|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 2,2031 secondes|ClientNom:CLINIQUE VÉTÉRINAIRE QUARTIER DIX30 INC. 0
+20241005_105018|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 2,2969 secondes|
+20241005_105026|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click||
+20241005_105026|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241005_105026|Clients_v2.5.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1055 secondes|ClientNom:Marie-Hélène Tétreault 1
+20241005_105026|Clients_v2.5.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,1992 secondes|
+20241005_105027|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20241005_105027|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_105027|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20241005_105027|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20241005_105027|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_105027|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0508 secondes|
+20241005_105027|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20241005_105027|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0547 secondes|
+20241005_105028|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,2383 secondes|Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault]
+20241005_105028|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,3438 secondes|
+20241005_105050|Clients_v2.5.xlsm|User|ufClientMF|txtNomClient_Exit||
+20241005_105050|Clients_v2.5.xlsm|User|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0703 secondes|Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault]
+20241005_105051|Clients_v2.5.xlsm|User|***** Fin de session - Workbook_BeforeClose *****|||

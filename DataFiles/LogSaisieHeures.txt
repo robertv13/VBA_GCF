@@ -1,1 +1,2 @@
-2024-10-03 10:20:06.5000 | Robert M. Vigneault | ADD    | 1412 | GC | 03/10/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test | 1,00 | VRAI |  | 2024-10-03 10:20:06
+2024-10-05 07:39:45.710 | Robert M. Vigneault | DELETE | -1527 | VG | 10/09/2024 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Suivi pour documentation légale | 0,30 | VRAI |  | 2024-10-05 07:39:45 | 31
+2024-10-05 07:47:02.810 | Robert M. Vigneault | ADD    | 1532 | GC | 05/10/2024 | 1564 | Fiducie Testamentaire Georges-Gariépy [Distribution FG] | Test | 0,10 | VRAI |  | 2024-10-05 07:47:02 | 31

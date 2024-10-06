@@ -862,7 +862,104 @@ NoItems:
 
 End Sub
 
-Sub Copier_Facture_Vers_Classeur_Ferme(invNo As String, invDate As String, clientID As String, clientName As String)
+Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, invNo As String, invDate As String)
+    
+    Dim wbCible As Workbook
+    Dim wsCible As Worksheet
+    
+    clientName = Fn_Strip_Contact_From_Client_Name(clientName)
+    
+    Dim ExcelFilesFullPath As String
+    ExcelFilesFullPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Factures_Excel"
+    
+    ' Définir la feuille source et la plage à copier
+    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
+    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
+    Dim plageSource As Range: Set plageSource = wsSource.Range("A1:F88")
+
+    'Ouvrir un nouveau Workbook (ou choisir un workbook existant)
+    On Error Resume Next
+    Set wbCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'Sélectionner un classeur cible
+    On Error GoTo 0
+    
+    If wbCible Is Nothing Then
+        'Si aucun fichier n'a été sélectionné, créer un nouveau workbook
+        Set wbCible = Workbooks.add
+    End If
+    
+    'Ajouter une nouvelle feuille dans le workbook cible
+    Set wsCible = wbCible.Sheets(1) ' ou ajouter une nouvelle feuille avec wsCible = wbCible.Sheets.Add
+    wsCible.name = invDate & " - " & invNo
+    
+    '1. Copier les valeurs uniquement
+    plageSource.Copy
+    wsCible.Range("A1").PasteSpecial Paste:=xlPasteValues
+    
+    '2. Copier les formats de cellules
+    plageSource.Copy
+    wsCible.Range("A1").PasteSpecial Paste:=xlPasteFormats
+    
+    '3. Conserver la taille des colonnes
+    Dim i As Integer
+    For i = 1 To plageSource.columns.count
+        wsCible.columns(i).ColumnWidth = plageSource.columns(i).ColumnWidth
+    Next i
+    
+    '4. Ajuster les hauteurs de lignes (optionnel si nécessaire)
+    For i = 1 To plageSource.rows.count
+        wsCible.rows(i).RowHeight = plageSource.rows(i).RowHeight
+    Next i
+    
+    '5. Copier l'entête de la facture
+    Dim forme As Shape
+    For Each forme In wsSource.Shapes
+        If forme.name = "GCF_Entête" Then
+            forme.Copy
+            wsCible.Paste
+        End If
+    Next forme
+    
+    '6. Copier les paramètres d'impression
+    With wsCible.PageSetup
+        .Orientation = wsSource.PageSetup.Orientation
+        .PaperSize = wsSource.PageSetup.PaperSize
+        .Zoom = wsSource.PageSetup.Zoom
+        .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
+        .FitToPagesTall = wsSource.PageSetup.FitToPagesTall
+        .LeftMargin = wsSource.PageSetup.LeftMargin
+        .RightMargin = wsSource.PageSetup.RightMargin
+        .TopMargin = wsSource.PageSetup.TopMargin
+        .BottomMargin = wsSource.PageSetup.BottomMargin
+        .HeaderMargin = wsSource.PageSetup.HeaderMargin
+        .FooterMargin = wsSource.PageSetup.FooterMargin
+        .PrintArea = wsSource.PageSetup.PrintArea
+        .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
+        .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
+        .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
+        .CenterVertically = wsSource.PageSetup.CenterVertically
+    End With
+    
+    'Désactiver le mode copier-coller pour libérer la mémoire
+    Application.CutCopyMode = False
+    
+    'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
+    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientName & ".xlsx"
+
+    MsgBox "La feuille a été copiée avec succès !"
+    
+End Sub
+
+Sub test_CopierFeuilleVersNouveauWorkbook()
+
+    Dim clientID As String, clientName As String, invNo As String, invDate As String
+    clientID = "1193"
+    clientName = "Solstice CNC Inc."
+    invNo = "24-24520"
+    invDate = "2024-09-30"
+    Call CopierFeuilleVersNouveauWorkbook(clientID, clientName, invNo, invDate)
+
+End Sub
+Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, clientID As String, clientName As String)
 
     Dim wbNew As Workbook
     Dim wbExisting As Workbook
@@ -1277,11 +1374,15 @@ Sub FAC_Finale_Creation_PDF() 'RMV - 2023-12-17 @ 14:35
     
     DoEvents
     
-    Call Copier_Facture_Vers_Classeur_Ferme(wshFAC_Finale.Range("E28").value, _
+'    Call Copier_Facture_Vers_Classeur_Ferme(wshFAC_Finale.Range("E28").value, _
                                             wshFAC_Brouillon.Range("O3").value, _
                                             wshFAC_Brouillon.Range("B18").value, _
                                             wshFAC_Finale.Range("L81").value)
     
+    Call CopierFeuilleVersNouveauWorkbook(wshFAC_Brouillon.Range("B18").value, _
+                                          wshFAC_Finale.Range("L81").value, _
+                                          wshFAC_Finale.Range("E28").value, _
+                                          Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
     DoEvents
     
     Call FAC_Finale_Enable_Save_Button

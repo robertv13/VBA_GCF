@@ -3,8 +3,6 @@ Option Explicit
 
 Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
 
-    Debug.Print "#005: " & Format$(Now(), "yyyy/mm/dd")
-    
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet
     Set wsFactures = ThisWorkbook.Sheets("FAC_Comptes_Clients")
@@ -268,6 +266,8 @@ Next_Invoice:
     
     Application.EnableEvents = False
     
+    Dim t(0 To 4) As Currency
+    
     With wshCAR_Liste_Agée
         .columns("B:B").ColumnWidth = 55
         .columns("C:I").ColumnWidth = 12
@@ -276,10 +276,15 @@ Next_Invoice:
                 .Range("C9:G" & derniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("C9:G" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("C" & derniereLigne).formula = "=Sum(C9:C" & derniereLigne - 2 & ")"
+                t(0) = .Range("C" & derniereLigne).value
                 .Range("D" & derniereLigne).formula = "=Sum(D9:D" & derniereLigne - 2 & ")"
+                t(1) = .Range("D" & derniereLigne).value
                 .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
+                t(2) = .Range("E" & derniereLigne).value
                 .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
+                t(3) = .Range("F" & derniereLigne).value
                 .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
+                t(4) = .Range("G" & derniereLigne).value
                 .Range("C" & derniereLigne & ":G" & derniereLigne).Font.Bold = True
             Case "facture"
                 .Range("C9:C" & derniereLigne).HorizontalAlignment = xlCenter
@@ -306,6 +311,38 @@ Next_Invoice:
         End Select
         .Range("B" & derniereLigne).value = "Totaux de la liste"
         .Range("B" & derniereLigne).Font.Bold = True
+        derniereLigne = derniereLigne + 1
+        
+        'Ligne de pourcentages
+        .Range("B" & derniereLigne).value = "Pourcentages"
+        .Range("B" & derniereLigne & ":J" & derniereLigne).Font.Bold = True
+        .Range("C" & derniereLigne & ":J" & derniereLigne).NumberFormat = "##0.00"
+        .Range("C" & derniereLigne & ":J" & derniereLigne).HorizontalAlignment = xlRight
+        Dim totalListe As Currency
+        Select Case LCase(niveauDetail)
+            Case "client"
+                totalListe = t(0)
+                .Range("C" & derniereLigne).value = Format$(Round(t(0) / totalListe, 2), "##0.00 %")
+                .Range("D" & derniereLigne).value = Format$(Round(t(1) / totalListe, 2), "##0.00 %")
+                .Range("E" & derniereLigne).value = Format$(Round(t(2) / totalListe, 2), "##0.00 %")
+                .Range("F" & derniereLigne).value = Format$(Round(t(3) / totalListe, 2), "##0.00 %")
+                .Range("G" & derniereLigne).value = Format$(Round(t(4) / totalListe, 2), "##0.00 %")
+            Case "facture"
+                 totalListe = .Range("E" & derniereLigne - 1).value
+                .Range("E" & derniereLigne).value = Round(.Range("E" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("F" & derniereLigne).value = Round(.Range("F" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("G" & derniereLigne).value = Round(.Range("G" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("H" & derniereLigne).value = Round(.Range("H" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("I" & derniereLigne).value = Round(.Range("I" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+            Case "transaction"
+                 totalListe = .Range("F" & derniereLigne - 1).value
+                .Range("F" & derniereLigne).value = Round(.Range("F" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("G" & derniereLigne).value = Round(.Range("G" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("H" & derniereLigne).value = Round(.Range("H" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("I" & derniereLigne).value = Round(.Range("I" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("J" & derniereLigne).value = Round(.Range("J" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+        End Select
+        
     End With
     
     Application.EnableEvents = True
