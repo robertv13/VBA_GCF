@@ -14,7 +14,7 @@ Option Explicit
 '    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #End If
 
-Public Const VK_NUMLOCK As Long = &H90
+'Public Const VK_NUMLOCK As Long = &H90
 
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
@@ -26,6 +26,9 @@ Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
 
 Public fromMenu As Boolean '2024-09-03 @ 06:14
+
+'Niveau de détail pour le log de SaisieHeures
+Public logSaisieHeuresVeryDetailed As Boolean
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns

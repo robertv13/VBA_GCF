@@ -516,7 +516,7 @@ Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
+Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
@@ -534,7 +534,7 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     If isLeapYear Then mdpm(1) = 29 'Adjust February for Leap Year
     
     If m < 1 Or m > 12 Or _
-       d > mdpm(m - 1) Or _
+       D > mdpm(m - 1) Or _
        Abs(year(Now()) - y) > 75 Then
             Exit Function
     Else
@@ -856,14 +856,14 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     
 End Function
 
-Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
+Public Function Fn_Get_Tax_Rate(D As Date, taxType As String) As Double
 
     Dim Row As Long
     Dim rate As Double
     With wshAdmin
         For Row = 18 To 11 Step -1
             If .Range("L" & Row).value = taxType Then
-                If d >= .Range("M" & Row).value Then
+                If D >= .Range("M" & Row).value Then
                     rate = .Range("N" & Row).value
                     Exit For
                 End If
@@ -872,19 +872,6 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     End With
     
     Fn_Get_Tax_Rate = rate
-    
-End Function
-
-Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
-
-    Dim buffer As String * 255
-    Dim size As Long: size = 255
-    
-    If GetUserName(buffer, size) Then
-        Fn_Get_Windows_Username = Left$(buffer, size - 1)
-    Else
-        Fn_Get_Windows_Username = "Unknown"
-    End If
     
 End Function
 
@@ -899,16 +886,29 @@ Public Function Fn_Is_Client_Facturable(clientID As String) As Boolean
         
 End Function
 
-Function Fn_Is_Date_Valide(d As String) As Boolean
+Function Fn_Is_Date_Valide(D As String) As Boolean
 
     Fn_Is_Date_Valide = False
-    If d = "" Or IsDate(d) = False Then
+    If D = "" Or IsDate(D) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
         Fn_Is_Date_Valide = True
     End If
 
+End Function
+
+Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
+
+    Dim buffer As String * 255
+    Dim size As Long: size = 255
+    
+    If GetUserName(buffer, size) Then
+        Fn_Get_Windows_Username = Left$(buffer, size - 1)
+    Else
+        Fn_Get_Windows_Username = "Unknown"
+    End If
+    
 End Function
 
 Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
@@ -1043,7 +1043,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
 
 End Function
 
-Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
+Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
 
     'Using AdvancedFilter in wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
@@ -1056,12 +1056,12 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).Row
     If lastUsedRow > 1 Then
-        ws.Range("AP2:AY" & lastUsedRow).clear
+        ws.Range("AP2:AY" & lastUsedRow).Clear
     End If
 
     ws.Range("AL3").FormulaR1C1 = glNo
     ws.Range("AM3").FormulaR1C1 = ">=7/31/2024"
-    ws.Range("AN3").FormulaR1C1 = "<" & Format$(d, "mm/dd/yyyy")
+    ws.Range("AN3").FormulaR1C1 = "<" & Format$(D, "mm/dd/yyyy")
     
     ws.Range("A1:J529").AdvancedFilter action:=xlFilterCopy, _
                                        criteriaRange:=ws.Range("AL2:AN3"), _
@@ -1085,19 +1085,6 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     
 End Function
 
-Sub Test_Fn_Get_Account_Opening_Balance()
-
-    Dim openBal As Double
-    openBal = Fn_Get_Account_Opening_Balance("1000", #8/1/2024#)
-    Debug.Print "DB#1001 - 1000 = " & Format$(openBal, "###,##0.00 $")
-    openBal = Fn_Get_Account_Opening_Balance("1205", #8/1/2024#)
-    Debug.Print "DB#1001 - 1205 = " & Format$(openBal, "###,##0.00 $")
-    openBal = Fn_Get_Account_Opening_Balance("1310", #8/1/2024#)
-    Debug.Print "DB#1001 - 1310 = " & Format$(openBal, "###,##0.00 $")
-    openBal = Fn_Get_Account_Opening_Balance("2120", #8/1/2024#)
-    Debug.Print "DB#1001 - 2120 = " & Format$(openBal, "###,##0.00 $")
-
-End Sub
 Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
 
     Debug.Assert nbCol >= 1 And nbCol <= 4 '2024-07-31 @ 19:26
@@ -1196,30 +1183,6 @@ Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As V
     
 End Function
 
-Sub Test_Fn_Rechercher_Client_Par_ID()
-
-    Dim ws As Worksheet: Set ws = wshBD_Clients
-    Dim codeClient As String
-    Dim clientData As Variant
-    Dim i As Long
-    
-    codeClient = "1288"
-    
-    'Appeler la fonction pour rechercher le client et récupérer la ligne complète
-    clientData = Fn_Rechercher_Client_Par_ID(codeClient, ws)
-    
-    'Vérifier si un client a été trouvé
-    If IsArray(clientData) Then
-        'Afficher chaque donnée trouvée dans la ligne (colonnes)
-        For i = LBound(clientData, 2) To 15
-            Debug.Print "Colonne " & i & ": " & clientData(1, i)
-        Next i
-    Else
-        MsgBox "Client non trouvé ou erreur."
-    End If
-
-End Sub
-
 Function Fn_Remove_All_Accents(ByVal Text As String) As String
 
     'Liste des caractères accentués et leurs équivalents sans accents
@@ -1314,4 +1277,56 @@ Sub Fn_Quick_Sort(arr As Variant, ByVal first As Long, ByVal last As Long) '2024
         If i < last Then Fn_Quick_Sort arr, i, last
     End If
     
+End Sub
+
+Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
+    
+    Dim DebutAnneeFinanciere As Date
+    DebutAnneeFinanciere = wshAdmin.Range("AnneeDe")
+    
+    'Trouver le jour de la semaine du début de l'année financière (1 = dimanche, 2 = lundi, etc.)
+    Dim JourSemaineDebut As Long
+    JourSemaineDebut = Weekday(DebutAnneeFinanciere, vbMonday)
+    
+    ' Ajuster le début de l'année financière au lundi précédent si ce n'est pas un lundi
+    If JourSemaineDebut > 1 Then
+        DebutAnneeFinanciere = DebutAnneeFinanciere - (JourSemaineDebut - 1)
+    End If
+    
+    ' Calculer le nombre de jours entre la date donnée et le début ajusté de l'année financière
+    Dim NbJours As Long
+    NbJours = DateDonnee - DebutAnneeFinanciere
+    
+    ' Calculer le numéro de la semaine (diviser par 7 et arrondir)
+    Dim Semaine As Integer
+    Semaine = Int(NbJours / 7) + 1
+    
+    ' Retourner le numéro de la semaine
+    Fn_Numero_Semaine_Selon_AnneeFinancière = Semaine
+    
+End Function
+
+'Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
+'
+'    Dim NbJours, Semaine As Long
+'
+'    'Calculer le nombre de jours entre la date donnée et le début de l'année financière
+'    NbJours = DateDonnee - wshAdmin.Range("AnneeDe")
+'
+'    'Calculer le numéro de la semaine (diviser par 7 et arrondir)
+'    Semaine = Int(NbJours / 7) + 1
+'
+'    ' Retourner le numéro de la semaine
+'    Fn_Numero_Semaine_Selon_AnneeFinancière = Semaine
+'
+'End Function
+'
+Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
+
+    Dim D As Date
+    D = #8/11/2024#
+    Dim s As Integer
+    s = Fn_Numero_Semaine_Selon_AnneeFinancière(D)
+    MsgBox "Pour le " & Format$(D, "yyyy-MM-dd") & ", la semaine est " & s
+
 End Sub

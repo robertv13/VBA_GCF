@@ -16,7 +16,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 5 Then destLastUsedRow = 5
-    wsDest.Range("A5:H" & destLastUsedRow).clear
+    wsDest.Range("A5:H" & destLastUsedRow).Clear
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
@@ -138,7 +138,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
 
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
-    wsDest.Sort.SortFields.clear
+    wsDest.Sort.SortFields.Clear
     wsDest.Sort.SortFields.add key:=wsDest.Range("C6:C" & destLastUsedRow), Order:=xlAscending
     wsDest.Sort.SortFields.add key:=wsDest.Range("E6:E" & destLastUsedRow), Order:=xlAscending
     wsDest.Sort.SortFields.add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
@@ -306,7 +306,7 @@ Sub Clean_Up_Summary_Area(ws As Worksheet)
     Application.EnableEvents = False
     
     'Cleanup the summary area (columns K to Q)
-    ws.Range("J:P").clear
+    ws.Range("J:P").Clear
     'Erase any checkbox left over
     Call Delete_CheckBox
     
@@ -850,7 +850,7 @@ Sub Clear_Fees_Summary_And_CheckBox()
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     Application.EnableEvents = False
-    ws.Range("J7:O9999").clear
+    ws.Range("J7:O9999").Clear
     Application.EnableEvents = True
     
     'Clear any leftover CheckBox

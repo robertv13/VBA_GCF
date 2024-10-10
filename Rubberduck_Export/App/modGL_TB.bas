@@ -12,7 +12,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Dim lastUsedRow As Long
     lastUsedRow = wshGL_BV.Range("D99999").End(xlUp).Row
     wshGL_BV.Unprotect '2024-08-24 @ 16:38
-    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).clear
+    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).Clear
 
     'Clear Detail transaction section
     wshGL_BV.Range("L4:T99999").ClearContents
@@ -180,7 +180,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     'Clear the display area & display the account number & description
     With ws
-        .Range("L4:T99999").clear '2024-06-08 @ 15:28
+        .Range("L4:T99999").Clear '2024-06-08 @ 15:28
         .Range("L2").value = "Du " & minDate & " au " & maxDate
     
         .Range("L4").Font.Bold = True
@@ -223,15 +223,15 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         End With
     End With
     
-    Dim d As Date, OK As Long
+    Dim D As Date, OK As Long
     
     Application.ScreenUpdating = False
     
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
-            If d >= minDate And d <= maxDate Then
+            D = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
+            If D >= minDate And D <= maxDate Then
                 .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
                 .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
@@ -356,7 +356,7 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         
         'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
         With .Sort
-                .SortFields.clear
+                .SortFields.Clear
                 .SortFields.add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _

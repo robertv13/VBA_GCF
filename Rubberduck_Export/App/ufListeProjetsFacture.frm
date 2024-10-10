@@ -46,7 +46,7 @@ Private Sub UserForm_Initialize()
         Call Array_2D_Bubble_Sort(arr)
         
         'Clear the ListBox
-        Me.lsbProjetsFacture.clear
+        Me.lsbProjetsFacture.Clear
     
         With lsbProjetsFacture
             .ColumnHeads = True

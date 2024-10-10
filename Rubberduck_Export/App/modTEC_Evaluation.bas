@@ -4,11 +4,11 @@ Option Explicit
 Sub TEC_Evaluation_Procedure(cutoffDate As String)
 
     Dim maxDate As Date
-    Dim y As Integer, m As Integer, d As Integer
+    Dim y As Integer, m As Integer, D As Integer
     y = year(cutoffDate)
     m = month(cutoffDate)
-    d = day(cutoffDate)
-    maxDate = DateSerial(y, m, d)
+    D = day(cutoffDate)
+    maxDate = DateSerial(y, m, D)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local

@@ -534,7 +534,7 @@ Sub DEBOURS_Back_To_Menu()
     
 End Sub
 
-Sub Calculate_GST_PST_And_Credits(d As Date, _
+Sub Calculate_GST_PST_And_Credits(D As Date, _
                                   taxCode As String, _
                                   total As Currency, _
                                   gst As Currency, pst As Currency, _
@@ -542,8 +542,8 @@ Sub Calculate_GST_PST_And_Credits(d As Date, _
                                   netAmount As Currency)
 
     Dim gstRate As Double, pstRate As Double
-    gstRate = Fn_Get_Tax_Rate(d, "TPS")
-    pstRate = Fn_Get_Tax_Rate(d, "TVQ")
+    gstRate = Fn_Get_Tax_Rate(D, "TPS")
+    pstRate = Fn_Get_Tax_Rate(D, "TVQ")
     
     If total <> 0 Then 'Calculate the amount before taxes
         'GST calculation

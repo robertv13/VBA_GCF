@@ -16,7 +16,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
     lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).Row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
-        wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).clear
+        wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).Clear
         Application.EnableEvents = True
     End If
     
@@ -233,7 +233,7 @@ Next_Invoice:
     Dim ordreTri As String
     If derniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
         With wshCAR_Liste_Agée.Sort
-            .SortFields.clear
+            .SortFields.Clear
             If wshCAR_Liste_Agée.Range("D4").value = "Nom de client" Then
                 .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("B8"), _
@@ -395,7 +395,7 @@ Sub zClean_Up_Summary_Area(ws As Worksheet)
     Application.EnableEvents = False
     
     'Cleanup the summary area (columns K to Q)
-    ws.Range("J:P").clear
+    ws.Range("J:P").Clear
     'Erase any checkbox left over
     Call Delete_CheckBox
     
@@ -939,7 +939,7 @@ Sub zClear_Fees_Summary_And_CheckBox()
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agée
     Application.EnableEvents = False
-    ws.Range("J7:O9999").clear
+    ws.Range("J7:O9999").Clear
     Application.EnableEvents = True
     
     'Clear any leftover CheckBox

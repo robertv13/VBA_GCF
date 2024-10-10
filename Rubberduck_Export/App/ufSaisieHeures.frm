@@ -24,7 +24,13 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
+Private Sub lblHresFact_Click()
+
+End Sub
+
 Sub UserForm_Activate() '2024-07-31 @ 07:57
+
+    logSaisieHeuresVeryDetailed = False
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014", True)
     
@@ -68,7 +74,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     
     wshAdmin.Range("TEC_Date").value = "" 'On vide la date pour forcer la saisie
     
-    cmbProfessionnel.SetFocus
+    ufSaisieHeures.cmbProfessionnel.SetFocus
    
     rmv_state = rmv_modeInitial
     
@@ -95,8 +101,6 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-'    Call Forcer_NumLock_Actif
-    
     Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick()", startTime)
 
 End Sub
@@ -104,8 +108,6 @@ End Sub
 Private Sub UserForm_Initialize()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091", True)
-    
-'    Set MyListBoxClass = New clsListboxAlign
     
 End Sub
 
@@ -152,6 +154,28 @@ Public Sub cmbProfessionnel_AfterUpdate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", 0)
 
+    'Restreindre l'accès au professionnel par défaut du code d'utilisateur
+    Select Case Fn_Get_Windows_Username
+        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault"
+        Case "vgervais"
+            cmbProfessionnel.value = "VG"
+            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
+                    vbInformation
+        Case "User"
+            cmbProfessionnel.value = "ML"
+            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
+                    vbInformation
+        Case "vgervais"
+            cmbProfessionnel.value = "AR"
+            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
+                    vbInformation
+        Case Else
+            cmbProfessionnel.value = ""
+    End Select
+
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
         wshAdmin.Range("TEC_Initials").value = ufSaisieHeures.cmbProfessionnel.value
         wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
@@ -176,7 +200,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         End If
     End If
 
-    Call Forcer_NumLock_Actif
+'    Call Forcer_NumLock_Actif
     
     Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", startTime)
 
@@ -572,4 +596,25 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Cleaning memory - 2024-07-31 2 08:34
     Set lookupRange = Nothing
     
+End Sub
+
+Sub imgLogoGCF_Click()
+
+    'Seul les utilisateurs Robert & Guillaume peuvent visualiser pour l'instant
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
+            Application.EnableEvents = False
+            
+            wshTEC_TDB_Data.Range("S6").value = ufSaisieHeures.cmbProfessionnel.value
+        
+            Call TEC_TdB_Update_All
+            
+            Call StatsHeures_AdvancedFilters
+        
+            Application.EnableEvents = True
+            
+            ufStatsHeures.show vbModal
+    End If
+
 End Sub

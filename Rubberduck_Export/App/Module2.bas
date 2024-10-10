@@ -8,20 +8,10 @@ Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    ActiveSheet.Unprotect
-    Range("C1").Select
-    With Selection.Font
-        .name = "Verdana"
-        .size = 11
-        .Strikethrough = False
-        .Superscript = False
-        .Subscript = False
-        .OutlineFont = False
-        .Shadow = False
-        .Underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-    End With
-    Range("C1").Select
+    Application.CutCopyMode = False
+    Application.CutCopyMode = False
+    Range("tblTEC_TDB_Data[#All]").AdvancedFilter action:=xlFilterCopy, _
+        criteriaRange:=Range("S1:U2"), CopyToRange:=Range("W1:AD1"), Unique:= _
+        False
+    ActiveWindow.SmallScroll Down:=-11
 End Sub

@@ -22,7 +22,7 @@ Private Sub Worksheet_Activate()
     If TypeName(lb.Object) = "ListBox" Then
         With lb.Object
             'Clear existing items
-            .clear
+            .Clear
 
             Dim arr As Variant
             arr = Fn_Get_Plan_Comptable(2) 'Returns an array with 2 columns
@@ -144,7 +144,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -160,7 +160,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

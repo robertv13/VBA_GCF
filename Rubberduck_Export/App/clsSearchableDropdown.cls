@@ -112,7 +112,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     If m_UpdateControl = False Then
         Call SetTextboxValue(MyListBox.value)
         Call ShowListbox(False)
-        SendKeys "{TAB}"
+'        SendKeys "{TAB}"
         
     End If
 
@@ -133,7 +133,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
             Call SetTextboxValue(MyListBox.value)
         End If
         Call ShowListbox(False)
-        SendKeys "{TAB}"
+'        SendKeys "{TAB}"
         
     End If
 
@@ -172,7 +172,7 @@ Private Sub UpdateListbox(items As Variant)
  
     With MyListBox
         'Reload listbox
-        .clear
+        .Clear
         .ForeColor = rgbBlack
         'Set the listbox size
         If IsEmpty(items) Then
@@ -330,7 +330,7 @@ Private Sub InitializeTextBox()
         SetTextboxValue m_startText
     End If
     myTextBox.SelStart = 0
-    myTextBox.ForeColor = rgbBlue
+'    myTextBox.ForeColor = rgbBlue
     
     Call ShowListbox(False)
 
@@ -344,7 +344,7 @@ Private Sub RemoveStartingText()
 
     With myTextBox
         .Text = Mid(.value, .SelStart, 1)
-        .ForeColor = rgbBlack
+'        .ForeColor = rgbBlack
     End With
     
     m_UpdateControl = False

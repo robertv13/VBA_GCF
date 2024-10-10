@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     With ws
         .Range("A:B").EntireColumn.Hidden = True
-        .Range("D6:K15").clear
+        .Range("D6:K15").Clear
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
@@ -99,7 +99,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -108,7 +108,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.value)

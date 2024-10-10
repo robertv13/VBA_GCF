@@ -665,7 +665,7 @@ Sub FAC_Finale_Create_PDF_Email_Func(noFacture As String)
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
-    Err.clear
+    Err.Clear
     On Error GoTo 0
 
     'Adjust Document Properties - 2024-09-03 @ 16:46

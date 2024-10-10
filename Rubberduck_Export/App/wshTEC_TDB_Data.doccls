@@ -1,1 +1,18 @@
 ﻿Option Explicit
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    'On change le professionnel pour les Advanced Filter
+    If Not Intersect(Target, wshTEC_TDB_Data.Range("S6")) Is Nothing Then
+        Application.EnableEvents = False
+        
+        Call TEC_TdB_Update_All
+        
+        Call StatsHeures_AdvancedFilters
+        
+        Application.EnableEvents = True
+    End If
+
+End Sub
+
+

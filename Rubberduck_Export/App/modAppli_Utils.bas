@@ -1745,8 +1745,8 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     minDate = "12/31/2999"
     For i = LBound(arr, 1) To UBound(arr, 1) - 1
         TECID = arr(i, 1)
-        prof = arr(i, 2)
-        dateTEC = arr(i, 3)
+        prof = arr(i, 3)
+        dateTEC = arr(i, 4)
         If IsDate(dateTEC) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
@@ -1755,26 +1755,26 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
-        clientCode = arr(i, 4)
-        hres = arr(i, 6)
+        clientCode = arr(i, 5)
+        hres = arr(i, 8)
         If IsNumeric(hres) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
-        estFacturable = arr(i, 7)
+        estFacturable = arr(i, 9)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
-        estFacturee = arr(i, 8)
+        estFacturee = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
-        estDetruit = arr(i, 9)
+        estDetruit = arr(i, 11)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
@@ -2058,7 +2058,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1531 'What is the last TECID analyzed ?
+    lastTECIDReported = 1641 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2112,7 +2112,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
-    Dim d As Integer, m As Integer, y As Integer, p As Integer
+    Dim D As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -2312,10 +2312,10 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Summary by Date
-        d = day(dateTEC)
+        D = day(dateTEC)
         m = month(dateTEC)
         y = year(dateTEC)
-        keyDate = Format$(y, "0000") & Format$(m, "00") & Format$(d, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
+        keyDate = Format$(y, "0000") & Format$(m, "00") & Format$(D, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
         p = InStr(bigStrDateProf, keyDate)
         If p = 0 Then
             rArr = rArr + 1
@@ -3249,7 +3249,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     
     'Tri des données
     With wsOutput.Sort
-        .SortFields.clear
+        .SortFields.Clear
         .SortFields.add key:=wsOutput.Range("B2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _

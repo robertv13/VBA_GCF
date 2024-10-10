@@ -126,7 +126,7 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         lastResultUsedRow = .Range("P99999").End(xlUp).Row
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
-            .SortFields.clear
+            .SortFields.Clear
             If sortType = "Date" Then
                 .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _

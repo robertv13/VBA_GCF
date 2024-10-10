@@ -870,7 +870,7 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     clientName = Fn_Strip_Contact_From_Client_Name(clientName)
     
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Factures_Excel"
+    ExcelFilesFullPath = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
     
     ' Définir la feuille source et la plage à copier
     Dim wbSource As Workbook: Set wbSource = ThisWorkbook
@@ -975,7 +975,7 @@ Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, cli
     Application.DisplayAlerts = False
     
     'Construction du répertoire cible
-    repertoireCible = wshAdmin.Range("F5").value & Application.PathSeparator & "Factures_Excel"
+    repertoireCible = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
     If Dir(repertoireCible, vbDirectory) = "" Then
         MkDir repertoireCible 'Créer le répertoire s'il n'existe pas
     End If
@@ -1420,7 +1420,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
-    Err.clear
+    Err.Clear
     On Error GoTo 0
 
     'Adjust Document Properties - 2023-10-06 @ 09:54

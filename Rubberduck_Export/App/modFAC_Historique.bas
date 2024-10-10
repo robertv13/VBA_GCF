@@ -71,7 +71,7 @@ Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
         lastUsedRow = .Range("Z99999").End(xlUp).Row
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
-            .SortFields.clear
+            .SortFields.Clear
             .SortFields.add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -116,7 +116,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
         lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
-            .SortFields.clear
+            .SortFields.Clear
             .SortFields.add key:=ws.Range("AY3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -320,7 +320,7 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
     lastResultRow = ws.Range("Z9999").End(xlUp).Row
     If lastResultRow < 4 Then Exit Sub
     With ws.Sort 'Sort - Inv_No
-        .SortFields.clear
+        .SortFields.Clear
         .SortFields.add key:=wshTEC_Local.Range("Z3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _

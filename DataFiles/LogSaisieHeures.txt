@@ -1,2 +1,7 @@
-2024-10-05 07:39:45.710 | Robert M. Vigneault | DELETE | -1527 | VG | 10/09/2024 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Suivi pour documentation légale | 0,30 | VRAI |  | 2024-10-05 07:39:45 | 31
-2024-10-05 07:47:02.810 | Robert M. Vigneault | ADD    | 1532 | GC | 05/10/2024 | 1564 | Fiducie Testamentaire Georges-Gariépy [Distribution FG] | Test | 0,10 | VRAI |  | 2024-10-05 07:47:02 | 31
+2024-10-10 08:05:59.250 | Robert M. Vigneault | ADD 1642 + | 1642 | GC | 10/10/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI |  | 2024-10-10 08:05:59 | 31
+2024-10-10 08:06:33.140 | Robert M. Vigneault | UPDATE 1642 | 1642 | GC | 10/10/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test avec flag pour déterminer le niveau de détail du Log_SaisiseHeures | 0,10 | VRAI |  | 2024-10-10 08:06:33 | 31
+2024-10-10 08:06:37.550 | Robert M. Vigneault | DELETE-1642 | -1642 | GC | 10/10/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test avec flag pour déterminer le niveau de détail du Log_SaisiseHeures | 0,10 | VRAI |  | 2024-10-10 08:06:37 | 31
+2024-10-10 08:09:44.120 | Robert M. Vigneault | ADD    1643 | GC | 10/10/2024 | 1112 | Vignoble Kobloth et fils Inc. [Roxane Gauthier] | Test | 0,10 | VRAI |  | 2024-10-10 08:09:44 | 31
+2024-10-10 08:10:01.770 | Robert M. Vigneault | ADD    1644 | GC | 10/10/2024 | 313 | Gilles Lavigne | Test | 0,10 | VRAI |  | 2024-10-10 08:10:01 | 31
+2024-10-10 08:10:50.650 | Robert M. Vigneault | UPDATE 1644 | GC | 10/10/2024 | 313 | Gilles Lavigne | Test - Test | 0,10 | VRAI |  | 2024-10-10 08:10:50 | 31
+2024-10-10 08:10:56.990 | Robert M. Vigneault | DELETE-1643 | GC | 10/10/2024 | 1112 | Vignoble Kobloth et fils Inc. [Roxane Gauthier] | Test | 0,10 | VRAI |  | 2024-10-10 08:10:56 | 31

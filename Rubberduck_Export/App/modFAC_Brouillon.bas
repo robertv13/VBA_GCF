@@ -244,13 +244,13 @@ Clean_Exit:
     
 End Sub
 
-Sub FAC_Brouillon_Date_Change(d As String)
+Sub FAC_Brouillon_Date_Change(D As String)
 
     Application.EnableEvents = False
     
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
-        y = Right(year(d), 2)
+        y = Right(year(D), 2)
         wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
@@ -259,7 +259,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
-    DateTaxRates = d
+    DateTaxRates = D
     wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "TPS")
     wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "TVQ")
         
@@ -268,7 +268,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).Row
     
     Dim dateTauxHoraire As Date
-    dateTauxHoraire = d
+    dateTauxHoraire = D
     Dim i As Long
     For i = 25 To lastUsedProfInSummary
         Dim profID As Long
@@ -289,7 +289,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     'Get all TEC for the client at a certain date
     Dim cutoffDate As Date
-    cutoffDate = d
+    cutoffDate = D
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     
     Dim rng As Range: Set rng = wshFAC_Brouillon.Range("L11")
@@ -471,7 +471,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
 End Sub
 
-Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
+Sub FAC_Brouillon_Get_All_TEC_By_Client(D As Date, includeBilledTEC As Boolean)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", 0)
     
@@ -481,7 +481,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim c3 As String, c4 As String, c5 As String
     c1 = wshFAC_Brouillon.Range("B18").value
     Dim filterDate As Date
-    filterDate = dateValue(d)
+    filterDate = dateValue(D)
     c2 = filterDate
     c3 = ConvertValueBooleanToText(True)
     If includeBilledTEC Then
@@ -567,7 +567,7 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         End If
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
-            .SortFields.clear
+            .SortFields.Clear
             .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -658,7 +658,7 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
         End If
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
-            .SortFields.clear
+            .SortFields.Clear
             .SortFields.add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -729,7 +729,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
@@ -1065,7 +1065,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

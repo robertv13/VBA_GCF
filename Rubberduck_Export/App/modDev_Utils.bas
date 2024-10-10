@@ -924,7 +924,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     With ws.ListObjects("tblTests_And_Todo").Sort
         Application.EnableEvents = False
-        .SortFields.clear
+        .SortFields.Clear
         .SortFields.Add2 _
             key:=Range("tblTests_And_Todo[Statut]"), _
             SortOn:=xlSortOnValues, _
@@ -1190,7 +1190,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     
     'Sort the report by worksheet name and column number
     With reportSheet.Sort
-        .SortFields.clear
+        .SortFields.Clear
         .SortFields.add key:=Range("A2"), Order:=xlAscending ' Worksheet name
         .SortFields.add key:=Range("B2"), Order:=xlAscending ' Column number
         .SetRange Range("A1:F" & outputRow - 1)
@@ -1313,7 +1313,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     If outputRow > 2 Then
         'Sort the data by columns 1, 2, 3, and 4
         With wsOutputSheet.Sort
-            .SortFields.clear
+            .SortFields.Clear
             .SortFields.add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
             .SortFields.add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
             .SortFields.add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
@@ -1680,6 +1680,7 @@ Sub test()
     Next cell
 
 End Sub
+
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
 
     On Error GoTo Error_Handler
@@ -1761,6 +1762,14 @@ End Sub
 Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boolean = False) '2024-09-14 @ 06:56
 
     On Error GoTo Error_Handler
+    
+    If InStr(oper, "ADD") = 0 And _
+        InStr(oper, "UPDATE") = 0 And _
+        InStr(oper, "DELETE") = 0 Then
+        If logSaisieHeuresVeryDetailed = False Then
+            Exit Sub
+        End If
+    End If
     
     Dim ms As String
     
