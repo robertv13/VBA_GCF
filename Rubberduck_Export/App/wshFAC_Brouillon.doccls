@@ -131,7 +131,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         fullDate = Fn_Complete_Date(CStr(Target.Text))
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-'            Application.Goto wshFAC_Brouillon.Range("O9")
+'            Application.GoTo wshFAC_Brouillon.Range("O9")
         Else
             Call MsgBoxInvalidDate("wshFAC_Brouillon_136")
             Application.EnableEvents = False
