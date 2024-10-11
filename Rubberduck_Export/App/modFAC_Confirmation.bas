@@ -119,13 +119,13 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
+    
     'Display all fields from FAC_Entête
     With ws
         .Range("L5").value = wsF.Cells(r, 2).value
     
         ws.Range("F7").value = wsF.Cells(r, 5).value
-        ws.Range("F8").value = Fn_Strip_Contact_From_Client_Name _
-                                                (wsF.Cells(r, 6).value)
+        ws.Range("F8").value = wsF.Cells(r, 6).value
         ws.Range("F9").value = wsF.Cells(r, 7).value
         ws.Range("F10").value = wsF.Cells(r, 8).value
         ws.Range("F11").value = wsF.Cells(r, 9).value
@@ -230,7 +230,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
             Else
-                dictHours.add pro, hres
+                dictHours.Add pro, hres
             End If
         End If
     Next i
@@ -706,7 +706,7 @@ Sub FAC_Finale_Create_PDF_Email_Func(noFacture As String)
 '            .Body = "Bonjour," & vbNewLine & vbNewLine & "Vous trouverez ci-joint notre note d'honoraires." & _
             vbNewLine & vbNewLine & "Merci" & vbNewLine & vbNewLine & vbNewLine & "GCFiscalite, CPA, CA, M. Fisc." & _
             vbNewLine & "Président"
-        .Attachments.add attachmentFullPathName
+        .Attachments.Add attachmentFullPathName
 
         .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
         'myMail.Send
@@ -762,7 +762,7 @@ Sub Envoyer_Email_Avec_Template_Et_Piece_Jointe(noFacture As String)
     Set MailItem = OutlookApp.CreateItemFromTemplate(templatePath)
 
     'Ajout de la pièce jointe
-    MailItem.Attachments.add attachmentFullPathName
+    MailItem.Attachments.Add attachmentFullPathName
 
     'Obtenir la signature par défaut
     Dim signaturePath As String

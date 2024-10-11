@@ -181,7 +181,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         
         'Loop to collect all rows with the value
         Do
-            rowsToDelete.add cell.Row
+            rowsToDelete.Add cell.Row
             Set cell = searchRange.FindNext(cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
         
@@ -727,6 +727,8 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
         Exit Function
     End If
     
+    Dim cn_purged As String
+    
     If posOSB > 1 Then
         Fn_Strip_Contact_From_Client_Name = Trim(Left(cn, posOSB - 1) & Mid(cn, posCSB + 1))
     Else
@@ -739,6 +741,17 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     Loop
     
 End Function
+
+Sub test()
+
+    Dim s As String
+    s = "Les logiciels INFORMAT inc.[Robert][Luc][Daniel]"
+    Do While InStr(s, "[") > 0 And InStr(s, "]") > 0
+        s = Fn_Strip_Contact_From_Client_Name(s)
+    Loop
+    Debug.Print s
+    
+End Sub
 
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 

@@ -122,7 +122,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
         Select Case LCase(niveauDetail)
             Case "client"
                 If Not dictClients.Exists(client) Then
-                    dictClients.add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
+                    dictClients.Add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictClients(client) 'Obtenir le tableau a partir du dictionary
                 
@@ -235,19 +235,19 @@ Next_Invoice:
         With wshCAR_Liste_Agée.Sort
             .SortFields.Clear
             If wshCAR_Liste_Agée.Range("D4").value = "Nom de client" Then
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("B8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par nom de client
                 ordreTri = "Ordre de nom de client"
             Else
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("C8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par numéro de facture
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("D8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
@@ -431,25 +431,25 @@ Sub zApply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRo
         With totalRange.FormatConditions
     
             'Rule for values > 50 (Highest priority)
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
             With .item(.count)
                 .Interior.Color = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
             With .item(.count)
                 .Interior.Color = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
             With .item(.count)
                 .Interior.Color = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
             With .item(.count)
                 .Interior.Color = RGB(144, 238, 144) 'Light green color
             End With
@@ -481,7 +481,7 @@ Sub zBuild_Hours_Summary(rowSelected As Long)
             If dictHours.Exists(Cells(i, 6).value) Then
                 dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
             Else
-                dictHours.add Cells(i, 6).value, Cells(i, 8).value
+                dictHours.Add Cells(i, 6).value, Cells(i, 8).value
             End If
         End If
         i = i + 1
@@ -886,7 +886,7 @@ Sub zAdd_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
-        Set checkBox = .OLEObjects.add(ClassType:="Forms.CheckBox.1", _
+        Set checkBox = .OLEObjects.Add(ClassType:="Forms.CheckBox.1", _
                     Left:=.Cells(lastRow, 14).Left + 5, _
                     Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
         

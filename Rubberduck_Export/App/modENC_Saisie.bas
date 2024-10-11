@@ -699,7 +699,7 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
         Cells(cell.Row, 2).value = "" And _
         Cells(cell.Row, 6).value <> "" Then 'Applied = False
             'Create a checkbox linked to the cell
-            Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.width, cell.Height)
+            Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.width, cell.Height)
             With cbx
                 .name = "chkBox - " & cell.Row
                 .Caption = ""

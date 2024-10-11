@@ -1,18 +1,64 @@
 ﻿Option Explicit
 
+Dim isProcessing As Boolean
+
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    'On change le professionnel pour les Advanced Filter
-    If Not Intersect(Target, wshTEC_TDB_Data.Range("S6")) Is Nothing Then
-        Application.EnableEvents = False
+    Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
+    
+    'Si l'un des 12 cellules suivantes (Prof, DateDe, DateA pour les 4 AdvancedFilters)
+    Dim cellRange As Range
+    Set cellRange = ws.Range("S6, T6, U6, AF6, AG6, AH6, AS6, AT6, AU6, BF6, DG6, DH6")
+    
+    'On change le professionnel et/ou les dates pour un des quatre (4) Advanced Filter
+    Dim intersectRange As Range
+    Set intersectRange = Intersect(Target, cellRange)
+    
+    If Not intersectRange Is Nothing Then
+    
+        If Not isProcessing Then
         
-        Call TEC_TdB_Update_All
+            'Marquer que le traitement commence
+            isProcessing = True
+            
+            Application.EnableEvents = False
+            
+            'Mettre à jour la feuille wshTEC_TDB_Data
+            Call TEC_TdB_Update_All
+            
+            'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
+            Call StatsHeures_AdvancedFilters
+            
+            'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+            Call UpdatePivotTables
+            
+            Application.EnableEvents = True
         
-        Call StatsHeures_AdvancedFilters
+            'Marquer que le traitement est complété
+            isProcessing = False
+            
+        End If
         
-        Application.EnableEvents = True
     End If
+    
+    Set cellRange = Nothing
+    Set ws = Nothing
 
 End Sub
 
+Private Sub UpdatePivotTables()
 
+    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
+    Dim pt As pivotTable
+    
+    'Parcourt tous les PivotTables dans chaque feuille
+    For Each pt In ws.PivotTables
+        On Error Resume Next
+        pt.pivotCache.Refresh 'Actualise le cache Pivot
+        On Error GoTo 0
+    Next pt
+
+    Set pt = Nothing
+    Set ws = Nothing
+    
+End Sub

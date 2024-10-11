@@ -822,7 +822,7 @@ Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
                                             UCase(Format$(dFact, "mmmm")) & " " & _
                                             Format$(dFact, "yyyy")
         wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
-        wshFAC_Finale.Range("B24").value = Fn_Strip_Contact_From_Client_Name(wshFAC_Entête.Range("E" & InvListRow).value)
+        wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
         wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
         wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
         'Load Invoice Detail Items
@@ -867,10 +867,15 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     Dim wbCible As Workbook
     Dim wsCible As Worksheet
     
-    clientName = Fn_Strip_Contact_From_Client_Name(clientName)
+    Dim clientNamePurged As String
+    clientNamePurged = clientName
+    Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
+        clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
+    Loop
     
     Dim ExcelFilesFullPath As String
     ExcelFilesFullPath = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
+    ChDir ExcelFilesFullPath
     
     ' Définir la feuille source et la plage à copier
     Dim wbSource As Workbook: Set wbSource = ThisWorkbook
@@ -884,7 +889,7 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     
     If wbCible Is Nothing Then
         'Si aucun fichier n'a été sélectionné, créer un nouveau workbook
-        Set wbCible = Workbooks.add
+        Set wbCible = Workbooks.Add
     End If
     
     'Ajouter une nouvelle feuille dans le workbook cible
@@ -943,7 +948,7 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     Application.CutCopyMode = False
     
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
-    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientName & ".xlsx"
+    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
 
     MsgBox "La feuille a été copiée avec succès !"
     
@@ -959,200 +964,200 @@ Sub test_CopierFeuilleVersNouveauWorkbook()
     Call CopierFeuilleVersNouveauWorkbook(clientID, clientName, invNo, invDate)
 
 End Sub
-Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, clientID As String, clientName As String)
-
-    Dim wbNew As Workbook
-    Dim wbExisting As Workbook
-    Dim wsCopie As Worksheet
-    Dim repertoireCible As String
-    Dim filepath As String
-    Dim userChoice As Integer
-    Dim suggestedFileName As String
-    
-    'Désactiver les mises à jour de l'écran pour améliorer les performances
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
-    Application.DisplayAlerts = False
-    
-    'Construction du répertoire cible
-    repertoireCible = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
-    If Dir(repertoireCible, vbDirectory) = "" Then
-        MkDir repertoireCible 'Créer le répertoire s'il n'existe pas
-    End If
-        
-    'Construction du nom de fichier proposé
-    clientName = Fn_Strip_Contact_From_Client_Name(clientName)
-    suggestedFileName = clientID & " - " & clientName & ".xlsx"
-    
-    On Error GoTo GestionErreur
-    
-    'Définir le classeur source et la feuille source
-    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
-    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
-    
-    'Définir la plage à copier (par exemple, les cellules A1:D20)
-    Dim rng As Range
-    Set rng = wsSource.Range("A1:F88")
-
-    'Demander à l'utilisateur où enregistrer le nouveau fichier
-    filepath = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , _
-                                           "Choisissez un fichier Excel existant -OU- annulez pour créer un nouveau fichier")
-    
-    'Si l'utilisateur n'a pas sélectionné de fichier
-    If filepath = "False" Or filepath = "Faux" Then
-        'Demander à l'utilisateur s'il veut créer un nouveau fichier
-        userChoice = MsgBox("Aucun fichier n'a été sélectionné." & vbNewLine & vbNewLine & _
-                            "Voulez-vous créer un nouveau fichier ?", vbYesNo + vbQuestion, "Création d'un nouveau fichier ?")
-        
-        'Si l'utilisateur choisit "Non", quitter la procédure
-        If userChoice = vbNo Then
-            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
-            Exit Sub
-        End If
-        
-        'Créer un nouveau fichier Excel
-        Set wbNew = Workbooks.add
-        
-        'Nom de la feuille
-        wbNew.Sheets(1).name = Format$(invDate, "YYYY-MM-DD") & " - " & invNo
-        
-        'Copier la plage de la feuille actuelle
-        rng.Copy
-        
-        'Coller les valeurs et formats dans la nouvelle feuille
-        With wbNew.Sheets(1).Range("A1")
-            .PasteSpecial Paste:=xlPasteAll 'Colle tout, y compris les valeurs, formats, etc.
-        End With
-        
-        'Vider le Presse-papiers (facultatif)
-        Application.CutCopyMode = False
-        
-        'Conserver la largeur des colonnes
-        Dim col As Range
-        For Each col In rng.columns
-            wbNew.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
-        Next col
-
-        'Copier les images
-        Dim shp As Shape
-        For Each shp In wsSource.Shapes
-            shp.Copy
-            wbNew.Sheets(1).Paste Destination:=wbNew.Sheets(1).Range("A1") ' Ajustez la destination si nécessaire
-        Next shp
-        
-        'Copier les en-têtes et pieds de page
-        With wbNew.Sheets(1)
-            .PageSetup.CenterHeader = wsSource.PageSetup.CenterHeader
-            .PageSetup.LeftHeader = wsSource.PageSetup.LeftHeader
-            .PageSetup.RightHeader = wsSource.PageSetup.RightHeader
-            .PageSetup.CenterFooter = wsSource.PageSetup.CenterFooter
-            .PageSetup.LeftFooter = wsSource.PageSetup.LeftFooter
-            .PageSetup.RightFooter = wsSource.PageSetup.RightFooter
-        End With
-        
-        'Demander à l'utilisateur où enregistrer le nouveau fichier
-        filepath = Application.GetSaveAsFilename(repertoireCible & Application.PathSeparator & suggestedFileName, _
-                                                 "Fichiers Excel (*.xlsx), *.xlsx", , _
-                                                 "Enregistrer sous")
-        
-        'Si l'utilisateur annule l'enregistrement
-        If filepath = "False" Then
-            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
-            wbNew.Close False 'Fermer le nouveau fichier sans enregistrer
-            Exit Sub
-        End If
-        
-        'Enregistrer le nouveau fichier
-        wbNew.SaveAs filepath
-        wbNew.Close
-        MsgBox "La feuille a été enregistrée dans un nouveau fichier avec succès.", vbInformation
-        
-    Else
-        
-        'Si un fichier existant est sélectionné, l'ouvrir
-        Set wbExisting = Workbooks.Open(filepath)
-        
-        'Copier la plage de la feuille actuelle
-        rng.Copy
-        
-        'Coller les valeurs et formats dans le fichier existant
-        With wbExisting.Sheets(1).Range("A1")
-            .PasteSpecial Paste:=xlPasteAll ' Colle tout, y compris les valeurs, formats, etc.
-        End With
-        
-        'Vider le Presse-papiers
-        Application.CutCopyMode = False
-        
-        'Conserver la largeur des colonnes
-        For Each col In rng.columns
-            wbExisting.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
-        Next col
-        
+'Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, clientID As String, clientName As String)
+'
+'    Dim wbNew As Workbook
+'    Dim wbExisting As Workbook
+'    Dim wsCopie As Worksheet
+'    Dim repertoireCible As String
+'    Dim filepath As String
+'    Dim userChoice As Integer
+'    Dim suggestedFileName As String
+'
+'    'Désactiver les mises à jour de l'écran pour améliorer les performances
+'    Application.ScreenUpdating = False
+'    Application.EnableEvents = False
+'    Application.DisplayAlerts = False
+'
+'    'Construction du répertoire cible
+'    repertoireCible = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
+'    If Dir(repertoireCible, vbDirectory) = "" Then
+'        MkDir repertoireCible 'Créer le répertoire s'il n'existe pas
+'    End If
+'
+'    'Construction du nom de fichier proposé
+'    clientName = Fn_Strip_Contact_From_Client_Name(clientName)
+'    suggestedFileName = clientID & " - " & clientName & ".xlsx"
+'
+'    On Error GoTo GestionErreur
+'
+'    'Définir le classeur source et la feuille source
+'    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
+'    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
+'
+'    'Définir la plage à copier (par exemple, les cellules A1:D20)
+'    Dim rng As Range
+'    Set rng = wsSource.Range("A1:F88")
+'
+'    'Demander à l'utilisateur où enregistrer le nouveau fichier
+'    filepath = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , _
+'                                           "Choisissez un fichier Excel existant -OU- annulez pour créer un nouveau fichier")
+'
+'    'Si l'utilisateur n'a pas sélectionné de fichier
+'    If filepath = "False" Or filepath = "Faux" Then
+'        'Demander à l'utilisateur s'il veut créer un nouveau fichier
+'        userChoice = MsgBox("Aucun fichier n'a été sélectionné." & vbNewLine & vbNewLine & _
+'                            "Voulez-vous créer un nouveau fichier ?", vbYesNo + vbQuestion, "Création d'un nouveau fichier ?")
+'
+'        'Si l'utilisateur choisit "Non", quitter la procédure
+'        If userChoice = vbNo Then
+'            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
+'            Exit Sub
+'        End If
+'
+'        'Créer un nouveau fichier Excel
+'        Set wbNew = Workbooks.Add
+'
+'        'Nom de la feuille
+'        wbNew.Sheets(1).name = Format$(invDate, "YYYY-MM-DD") & " - " & invNo
+'
+'        'Copier la plage de la feuille actuelle
+'        rng.Copy
+'
+'        'Coller les valeurs et formats dans la nouvelle feuille
+'        With wbNew.Sheets(1).Range("A1")
+'            .PasteSpecial Paste:=xlPasteAll 'Colle tout, y compris les valeurs, formats, etc.
+'        End With
+'
+'        'Vider le Presse-papiers (facultatif)
+'        Application.CutCopyMode = False
+'
+'        'Conserver la largeur des colonnes
+'        Dim col As Range
+'        For Each col In rng.columns
+'            wbNew.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
+'        Next col
+'
 '        'Copier les images
+'        Dim shp As Shape
 '        For Each shp In wsSource.Shapes
-'            If shp.name = "GCF_Entête" Then
-'                shp.Copy
-'                wbExisting.Sheets(1).Paste Destination:=wbExisting.Sheets(1).Range("A1") 'Ajustez la destination si nécessaire
-'            End If
+'            shp.Copy
+'            wbNew.Sheets(1).Paste Destination:=wbNew.Sheets(1).Range("A1") ' Ajustez la destination si nécessaire
 '        Next shp
-        
-        'Copier les en-têtes et pieds de page
-        'Copier la mise en page de la feuille source
-        With wbNew.Sheets(1).PageSetup
-            .Orientation = wsSource.PageSetup.Orientation
-            .PaperSize = wsSource.PageSetup.PaperSize
-            .Zoom = wsSource.PageSetup.Zoom
-            .FitToPage = wsSource.PageSetup.FitToPage
-            .FitToWidth = wsSource.PageSetup.FitToWidth
-            .FitToHeight = wsSource.PageSetup.FitToHeight
-            .LeftMargin = wsSource.PageSetup.LeftMargin
-            .RightMargin = wsSource.PageSetup.RightMargin
-            .TopMargin = wsSource.PageSetup.TopMargin
-            .BottomMargin = wsSource.PageSetup.BottomMargin
-            .HeaderMargin = wsSource.PageSetup.HeaderMargin
-            .FooterMargin = wsSource.PageSetup.FooterMargin
-            .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
-            .CenterVertically = wsSource.PageSetup.CenterVertically
-            .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
-            .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
-            .PrintArea = wsSource.PageSetup.PrintArea
-            .PrintGridlines = wsSource.PageSetup.PrintGridlines
-            .PrintHeadings = wsSource.PageSetup.PrintHeadings
-        End With
-        
-        'Supprimer les formules qui contiennent des références externes
-        Dim cell1 As Range
-        Dim formula As String
-        For Each cell1 In wbExisting.Sheets(wbExisting.Sheets.count).usedRange
-            If cell1.HasFormula Then
-                formula = cell1.formula
-                'Vérifier si la formule contient une référence à un fichier externe (ex: [ ou .xls)
-                If InStr(1, formula, "[") > 0 Or InStr(1, formula, ".xls") > 0 Then
-                    'Remplacer la formule par sa valeur
-                    cell1.value = cell1.value
-                End If
-            End If
-        Next cell1
-        
-        'Enregistrer et fermer le fichier existant
-        wbExisting.Save
-        wbExisting.Close
-        MsgBox "La feuille a été ajoutée au fichier existant avec succès.", vbInformation
-    End If
-
-Fin:
-    'Réactiver les mises à jour de l'écran et les alertes
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
-    Application.DisplayAlerts = True
-    Exit Sub
-    
-GestionErreur:
-
-    MsgBox "Une erreur s'est produite : " & Err.Description, vbCritical
-    Resume Fin
-    
-End Sub
+'
+'        'Copier les en-têtes et pieds de page
+'        With wbNew.Sheets(1)
+'            .PageSetup.CenterHeader = wsSource.PageSetup.CenterHeader
+'            .PageSetup.LeftHeader = wsSource.PageSetup.LeftHeader
+'            .PageSetup.RightHeader = wsSource.PageSetup.RightHeader
+'            .PageSetup.CenterFooter = wsSource.PageSetup.CenterFooter
+'            .PageSetup.LeftFooter = wsSource.PageSetup.LeftFooter
+'            .PageSetup.RightFooter = wsSource.PageSetup.RightFooter
+'        End With
+'
+'        'Demander à l'utilisateur où enregistrer le nouveau fichier
+'        filepath = Application.GetSaveAsFilename(repertoireCible & Application.PathSeparator & suggestedFileName, _
+'                                                 "Fichiers Excel (*.xlsx), *.xlsx", , _
+'                                                 "Enregistrer sous")
+'
+'        'Si l'utilisateur annule l'enregistrement
+'        If filepath = "False" Then
+'            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
+'            wbNew.Close False 'Fermer le nouveau fichier sans enregistrer
+'            Exit Sub
+'        End If
+'
+'        'Enregistrer le nouveau fichier
+'        wbNew.SaveAs filepath
+'        wbNew.Close
+'        MsgBox "La feuille a été enregistrée dans un nouveau fichier avec succès.", vbInformation
+'
+'    Else
+'
+'        'Si un fichier existant est sélectionné, l'ouvrir
+'        Set wbExisting = Workbooks.Open(filepath)
+'
+'        'Copier la plage de la feuille actuelle
+'        rng.Copy
+'
+'        'Coller les valeurs et formats dans le fichier existant
+'        With wbExisting.Sheets(1).Range("A1")
+'            .PasteSpecial Paste:=xlPasteAll ' Colle tout, y compris les valeurs, formats, etc.
+'        End With
+'
+'        'Vider le Presse-papiers
+'        Application.CutCopyMode = False
+'
+'        'Conserver la largeur des colonnes
+'        For Each col In rng.columns
+'            wbExisting.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
+'        Next col
+'
+''        'Copier les images
+''        For Each shp In wsSource.Shapes
+''            If shp.name = "GCF_Entête" Then
+''                shp.Copy
+''                wbExisting.Sheets(1).Paste Destination:=wbExisting.Sheets(1).Range("A1") 'Ajustez la destination si nécessaire
+''            End If
+''        Next shp
+'
+'        'Copier les en-têtes et pieds de page
+'        'Copier la mise en page de la feuille source
+'        With wbNew.Sheets(1).PageSetup
+'            .Orientation = wsSource.PageSetup.Orientation
+'            .PaperSize = wsSource.PageSetup.PaperSize
+'            .Zoom = wsSource.PageSetup.Zoom
+'            .FitToPage = wsSource.PageSetup.FitToPage
+'            .FitToWidth = wsSource.PageSetup.FitToWidth
+'            .FitToHeight = wsSource.PageSetup.FitToHeight
+'            .LeftMargin = wsSource.PageSetup.LeftMargin
+'            .RightMargin = wsSource.PageSetup.RightMargin
+'            .TopMargin = wsSource.PageSetup.TopMargin
+'            .BottomMargin = wsSource.PageSetup.BottomMargin
+'            .HeaderMargin = wsSource.PageSetup.HeaderMargin
+'            .FooterMargin = wsSource.PageSetup.FooterMargin
+'            .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
+'            .CenterVertically = wsSource.PageSetup.CenterVertically
+'            .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
+'            .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
+'            .PrintArea = wsSource.PageSetup.PrintArea
+'            .PrintGridlines = wsSource.PageSetup.PrintGridlines
+'            .PrintHeadings = wsSource.PageSetup.PrintHeadings
+'        End With
+'
+'        'Supprimer les formules qui contiennent des références externes
+'        Dim cell1 As Range
+'        Dim formula As String
+'        For Each cell1 In wbExisting.Sheets(wbExisting.Sheets.count).usedRange
+'            If cell1.HasFormula Then
+'                formula = cell1.formula
+'                'Vérifier si la formule contient une référence à un fichier externe (ex: [ ou .xls)
+'                If InStr(1, formula, "[") > 0 Or InStr(1, formula, ".xls") > 0 Then
+'                    'Remplacer la formule par sa valeur
+'                    cell1.value = cell1.value
+'                End If
+'            End If
+'        Next cell1
+'
+'        'Enregistrer et fermer le fichier existant
+'        wbExisting.Save
+'        wbExisting.Close
+'        MsgBox "La feuille a été ajoutée au fichier existant avec succès.", vbInformation
+'    End If
+'
+'Fin:
+'    'Réactiver les mises à jour de l'écran et les alertes
+'    Application.ScreenUpdating = True
+'    Application.EnableEvents = True
+'    Application.DisplayAlerts = True
+'    Exit Sub
+'
+'GestionErreur:
+'
+'    MsgBox "Une erreur s'est produite : " & Err.Description, vbCritical
+'    Resume Fin
+'
+'End Sub
 
 'Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
 Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
@@ -1193,7 +1198,7 @@ Sub Copier_Feuille_Vers_Classeur_Ferme_B()
             nomProposeClasseur = Application.InputBox("Entrez un nom pour le nouveau classeur :", "Nom du classeur", nomClasseur)
 
             'Créer un nouveau classeur
-            Dim wbDestination As Workbook: Set wbDestination = Workbooks.add
+            Dim wbDestination As Workbook: Set wbDestination = Workbooks.Add
             
             'Demander à l'utilisateur de nommer et d'enregistrer le nouveau classeur
             fichierDestination = Application.GetSaveAsFilename(InitialFileName:=nomProposeClasseur, FileFilter:="Fichiers Excel (*.xlsx), *.xlsx", Title:="Nommer et enregistrer le nouveau classeur")
@@ -1221,7 +1226,7 @@ Sub Copier_Feuille_Vers_Classeur_Ferme_B()
     
     'Ajouter une nouvelle feuille dans le classeur de destination
     Dim wsCopie As Worksheet
-    Set wsCopie = wbDestination.Sheets.add(After:=wbDestination.Sheets(wbDestination.Sheets.count))
+    Set wsCopie = wbDestination.Sheets.Add(After:=wbDestination.Sheets(wbDestination.Sheets.count))
 
     'Copier la feuille de travail active du classeur actuel vers le classeur de destination
     wbSource.Range("A:F").Copy Destination:=wsCopie.Range("A1")
@@ -1572,7 +1577,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
             If dictTaux.Exists(taux) Then
                 dictTaux(taux) = dictTaux(taux) + hres
             Else
-                dictTaux.add taux, hres
+                dictTaux.Add taux, hres
                 nbTaux = nbTaux + 1
             End If
         End If

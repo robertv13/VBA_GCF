@@ -966,7 +966,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.add name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
     
     'Redefine - dnrPlanComptable_All
     'Delete existing dynamic named range (assuming it could exists)
@@ -978,7 +978,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
     Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
 

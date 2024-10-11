@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   9255.001
+   ClientHeight    =   10485
    ClientLeft      =   135
    ClientTop       =   570
    ClientWidth     =   15555
@@ -24,7 +24,7 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub lblHresFact_Click()
+Private Sub TextBox2_Change()
 
 End Sub
 

@@ -28,7 +28,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     For i = 2 To lastUsedRowClient
         'On ne considère que les clients FACTURABLES
         If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, 2).value) = True Then
-            dictClients.add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+            dictClients.Add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
         End If
     Next i
 
@@ -139,9 +139,9 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.Clear
-    wsDest.Sort.SortFields.add key:=wsDest.Range("C6:C" & destLastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.add key:=wsDest.Range("E6:E" & destLastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("C6:C" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("E6:E" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
     
     With wsDest.Sort
         .SetRange wsDest.Range("A6:I" & destLastUsedRow)
@@ -342,25 +342,25 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
         With totalRange.FormatConditions
     
             'Rule for values > 50 (Highest priority)
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
             With .item(.count)
                 .Interior.Color = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
             With .item(.count)
                 .Interior.Color = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
             With .item(.count)
                 .Interior.Color = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
-            .add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
+            .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
             With .item(.count)
                 .Interior.Color = RGB(144, 238, 144) 'Light green color
             End With
@@ -392,7 +392,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
             If dictHours.Exists(Cells(i, 6).value) Then
                 dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
             Else
-                dictHours.add Cells(i, 6).value, Cells(i, 8).value
+                dictHours.Add Cells(i, 6).value, Cells(i, 8).value
             End If
         End If
         i = i + 1
@@ -797,7 +797,7 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
-        Set checkBox = .OLEObjects.add(ClassType:="Forms.CheckBox.1", _
+        Set checkBox = .OLEObjects.Add(ClassType:="Forms.CheckBox.1", _
                     Left:=.Cells(lastRow, 14).Left + 5, _
                     Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
         

@@ -43,7 +43,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     firstAvailRow = lastUsedRow + 1
     
     'Import data from external file into the worksheet
-    With ws.QueryTables.add(Connection:="TEXT;" & fullFileName, Destination:=ws.Range("A" & firstAvailRow))
+    With ws.QueryTables.Add(Connection:="TEXT;" & fullFileName, Destination:=ws.Range("A" & firstAvailRow))
         .TextFileParseType = xlDelimited
         .TextFileCommaDelimiter = True
         .TextFileStartRow = 3

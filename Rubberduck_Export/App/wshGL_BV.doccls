@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Debug.Print "wshGL_BV_Change_149   Range(""B9"").value = "; Range("B9").value; "   "; TypeName(Range("B9").value)
@@ -197,11 +197,11 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.add key:=wshGL_Trans.Range("AF1"), _
+            .SortFields.Add key:=wshGL_Trans.Range("AF1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On GLNo
-            .SortFields.add key:=wshGL_Trans.Range("AH1"), _
+            .SortFields.Add key:=wshGL_Trans.Range("AH1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal 'Sort Based On Date

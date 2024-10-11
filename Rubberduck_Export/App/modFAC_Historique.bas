@@ -72,7 +72,7 @@ Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
-            .SortFields.add key:=ws.Range("Z3"), _
+            .SortFields.Add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
@@ -117,7 +117,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
         If lastUsedRow < 4 Then Exit Sub
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
-            .SortFields.add key:=ws.Range("AY3"), _
+            .SortFields.Add key:=ws.Range("AY3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
@@ -321,7 +321,7 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
     If lastResultRow < 4 Then Exit Sub
     With ws.Sort 'Sort - Inv_No
         .SortFields.Clear
-        .SortFields.add key:=wshTEC_Local.Range("Z3"), _
+        .SortFields.Add key:=wshTEC_Local.Range("Z3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Invoice Number

@@ -61,7 +61,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
             t2 = t2 + .Range("W" & i).value
         End With
         If Not dictSolde.Exists(glNo) Then
-            dictSolde.add glNo, newRowID
+            dictSolde.Add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
 '            Debug.Print glNo & "   " & newRowID
             newRowID = newRowID + 1
@@ -297,7 +297,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     ws.Unprotect
     With ws.Range("M5:T" & lastResultUsedRow)
         On Error Resume Next
-        .FormatConditions.add _
+        .FormatConditions.Add _
             Type:=xlExpression, _
             Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
         .FormatConditions(.FormatConditions.count).SetFirstPriority
@@ -357,15 +357,15 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
         'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
         With .Sort
                 .SortFields.Clear
-                .SortFields.add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
+                .SortFields.Add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortTextAsNumbers 'Returns Numeric only (first), then numeric and letters
-                .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
+                .SortFields.Add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On Date
-                .SortFields.add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
+                .SortFields.Add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On JE Number

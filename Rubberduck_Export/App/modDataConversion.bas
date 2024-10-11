@@ -693,7 +693,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
+        dictClients.Add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
     Next i
     
     Dim codeClient As String, nomClient As String, updatedNomClient As String
@@ -753,7 +753,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
+        dictClients.Add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
 '        Debug.Print referenceSheet.Cells(i, 2).value & " - " & referenceSheet.Cells(i, 1).value
     Next i
     
@@ -920,7 +920,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowTECClient
-        dictClients.add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+        dictClients.Add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
     Next i
     
     'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
@@ -1000,7 +1000,7 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClientMF
-        dictClients.add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+        dictClients.Add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
     Next i
     
     'Setup output file

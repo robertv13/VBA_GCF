@@ -10,7 +10,7 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
     ActiveWindow.SmallScroll Down:=-8
     Range("B4:H41").Select
-    Selection.FormatConditions.add Type:=xlExpression, Formula1:= _
+    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
         "=MOD(LIGNE();2)=1"
     Selection.FormatConditions(Selection.FormatConditions.count).SetFirstPriority
     With Selection.FormatConditions(1).Interior

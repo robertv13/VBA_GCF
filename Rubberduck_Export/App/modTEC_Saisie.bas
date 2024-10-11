@@ -235,15 +235,15 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
             .SortFields.Clear
-            .SortFields.add key:=wshTEC_Local.Range("X3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("X3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("W3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("W3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof
-            .SortFields.add key:=wshTEC_Local.Range("V3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("V3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Tec_ID
@@ -624,9 +624,14 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         GoTo EndOfProcedure
     End If
     
+    'Modifie le critère pour forcer une execution du AdvancedFilter
+    wshTEC_TDB_Data.Range("S6").value = ufSaisieHeures.cmbProfessionnel.value
+    
     ufSaisieHeures.txtTotalHeures.value = ""
     ufSaisieHeures.txtHresFact.value = ""
     ufSaisieHeures.txtHresNF.value = ""
+    ufSaisieHeures.txtHresFactSemaine.value = ""
+    ufSaisieHeures.txtHresNFSemaine.value = ""
 
     ufSaisieHeures.lsbHresJour.RowSource = ""
     ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
@@ -634,7 +639,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     'Last Row used in first column of result
     Dim lastRow As Long
     lastRow = wshTEC_Local.Range("V999").End(xlUp).Row
-    If lastRow < 3 Then Exit Sub
+    If lastRow < 3 Then GoTo Rien_Aujourdhui
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
@@ -670,11 +675,26 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         End If
     Next i
          
-    ufSaisieHeures.Repaint
-    
+Rien_Aujourdhui:
+
     ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
     ufSaisieHeures.txtHresFact.value = Format$(totalHresFact, "#0.00")
     ufSaisieHeures.txtHresNF.value = Format$(totalHresNonFact, "#0.00")
+    
+    'Additionner les charges de la semaine
+    Dim totalHresFactSemaine As Double
+    Dim totalHresNonFactSemaine As Double
+    
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.rows.count, "W").End(xlUp).Row
+    For i = 2 To lastRow
+        totalHresFactSemaine = totalHresFactSemaine + wshTEC_TDB_Data.Range("AC" & i).value
+        totalHresNonFactSemaine = totalHresNonFactSemaine + wshTEC_TDB_Data.Range("AD" & i).value
+    Next i
+    
+    ufSaisieHeures.txtHresFactSemaine.value = Format$(totalHresFactSemaine, "#0.00")
+    ufSaisieHeures.txtHresNFSemaine.value = Format$(totalHresNonFactSemaine, "#0.00")
+    
+    ufSaisieHeures.Repaint
     
     DoEvents '2024-08-12 @ 10:31
     
@@ -758,7 +778,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", 0)
     
-    Dim pt As PivotTable
+    Dim pt As pivotTable
     For Each pt In wshTEC_TDB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
@@ -808,15 +828,15 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
             If lastResultRow < 4 Then GoTo No_Sort_Required
             With .Sort
                 .SortFields.Clear
-                .SortFields.add key:=wshTEC_Local.Range("AT3"), _
+                .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On Date
-                .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+                .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On Prof_ID
-                .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+                .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Sort Based On TEC_ID

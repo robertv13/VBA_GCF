@@ -32,7 +32,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         With lb.Object
             For i = 0 To .ListCount - 1
                 If .Selected(i) And Trim(.List(i)) <> "" Then
-                    selectedItems.add .List(i)
+                    selectedItems.Add .List(i)
                 End If
             Next i
         End With
@@ -128,12 +128,12 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         With .Sort
             .SortFields.Clear
             If sortType = "Date" Then
-                .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
+                .SortFields.Add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortTextAsNumbers 'Sort Based Date
             Else
-                .SortFields.add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
+                .SortFields.Add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortTextAsNumbers 'Sort on Transaction #
@@ -214,7 +214,7 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     
     'Ajoute le formatage conditionnel pour les transactions
     With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
-        .FormatConditions.add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
         .FormatConditions(Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1).FormatConditions.count).SetFirstPriority
         With .FormatConditions(1).Interior
             .PatternColorIndex = xlAutomatic

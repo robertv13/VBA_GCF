@@ -145,7 +145,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             
             'Utilisation de la date du projet de facture
             Debug.Print "FAC_Brouillon_New_Invoice_140   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
-            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
+'            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
+            wshFAC_Brouillon.Range("O3").value = Now()
             Debug.Print "FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
             
@@ -181,7 +182,10 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     End If
     
     Dim clientNamePurged As String
-    clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientName)
+    clientNamePurged = clientName
+    Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
+        clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
+    Loop
         
     Application.EnableEvents = False
     wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
@@ -209,7 +213,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     With wshFAC_Finale
         Application.EnableEvents = False
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
-        .Range("B24").value = Fn_Strip_Contact_From_Client_Name(clientName)
+        .Range("B24").value = clientNamePurged
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
@@ -494,7 +498,9 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(D As Date, includeBilledTEC As Boolean)
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
 '    Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
-    Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon
+    Dim cutOffDateProjet As Date
+    cutOffDateProjet = wshFAC_Brouillon.Range("B53").value
+    Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet)
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()", startTime)
 
@@ -568,15 +574,15 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
-            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -626,7 +632,7 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
             If ws.Cells(i, "D").value <= dteCutoff And _
                 ws.Cells(i, "E").value = codeClient And _
                 ws.Cells(i, "J").value = estFacturable And _
-                ws.Cells(i, "L").value >= estFacturee And _
+                ws.Cells(i, "L").value = estFacturee And _
                 ws.Cells(i, "N").value = estDetruit Then
                 ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
                 ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
@@ -659,15 +665,15 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
-            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -684,7 +690,7 @@ No_Sort_Required:
     
 End Sub
 
-Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:10
+Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", 0)
 
@@ -712,10 +718,9 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
             arr(i - 2, 5) = .Range("BA" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("AQ" & i).value 'TEC_ID
             'Commentaires doivent être affichés
-'            If i < 10 And i > 6 Then .Range("AX" & i).value = "Frais de poste à 25,00 $"
             If Trim(.Range("AX" & i).value) <> "" Then
                 fraisDiversMsg = Trim(.Range("AX" & i).value)
-                collFraisDivers.add fraisDiversMsg
+                collFraisDivers.Add fraisDiversMsg
             End If
         Next i
         'Copy array to worksheet
@@ -727,13 +732,13 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
     
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
-        Set ufFraisDivers = UserForms.add("ufFraisDivers")
+        Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -752,7 +757,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() '2024-03-21 @ 07:
         .Range("G7:G" & lastUsedRow + 2).NumberFormat = "##0.00"
     End With
         
-    Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow) 'Exclude totals row
+    Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow, cutOffDateProjet) 'Exclude totals row
 
     'Adjust the formula in the hours summary
     Call Adjust_Formulas_In_The_Summary(lastUsedRow)
@@ -847,7 +852,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
+Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", 0)
     
@@ -864,22 +869,30 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
     
     Dim cell As Range
     Dim cbx As checkBox
+    Dim newTECapresProjet As Boolean
+    newTECapresProjet = False
+    
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If Cells(cell.Row, 8).value = False Then 'IsInvoiced = False
+    If Cells(cell.Row, 8).value = False Then
         'Create a checkbox linked to the cell
-        Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.width, cell.Height)
+        Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.width, cell.Height)
         With cbx
             .name = "chkBox - " & cell.Row
-            .value = True
             .Text = ""
+            If Cells(cell.Row, 4).value <= dateCutOffProjet Then
+                .value = True
+            Else
+                .value = False
+                newTECapresProjet = True
+            End If
             .linkedCell = cell.Address
             .Display3DShading = True
         End With
         ws.Range("C" & cell.Row).Locked = False
     End If
     Next cell
-
+    
     'Unlock the checkbox to view Billed charges
     Call UnprotectCells(ws.Range("B16"))
 '    ws.Range("B16").Locked = False
@@ -901,7 +914,16 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long)
         .EnableSelection = xlUnlockedCells
     End With
     
+    Application.ScreenUpdating = True
     Application.EnableEvents = True
+
+    DoEvents
+    
+    If newTECapresProjet = True Then
+        MsgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
+                "VOUS DEVEZ EN TENIR COMPTE DANS VOTRE FACTURE", vbInformation + vbExclamation, _
+                "Le date limite du projet de facture < Date de la facture"
+    End If
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set cbx = Nothing
@@ -1065,7 +1087,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

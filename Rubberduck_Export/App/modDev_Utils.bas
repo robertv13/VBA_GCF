@@ -588,7 +588,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             Cells.FormatConditions.delete
             On Error GoTo 0
         
-            .FormatConditions.add Type:=xlExpression, Formula1:= _
+            .FormatConditions.Add Type:=xlExpression, Formula1:= _
                 "=ET($B2<>"""";MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -645,7 +645,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
+    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.name = sheetName
     
     'Clean up - 2024-07-11 @ 08:27
@@ -1097,7 +1097,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
             Cells.FormatConditions.delete
             On Error GoTo 0
         
-            .FormatConditions.add Type:=xlExpression, Formula1:= _
+            .FormatConditions.Add Type:=xlExpression, Formula1:= _
                 "=(MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -1191,8 +1191,8 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     'Sort the report by worksheet name and column number
     With reportSheet.Sort
         .SortFields.Clear
-        .SortFields.add key:=Range("A2"), Order:=xlAscending ' Worksheet name
-        .SortFields.add key:=Range("B2"), Order:=xlAscending ' Column number
+        .SortFields.Add key:=Range("A2"), Order:=xlAscending ' Worksheet name
+        .SortFields.Add key:=Range("B2"), Order:=xlAscending ' Column number
         .SetRange Range("A1:F" & outputRow - 1)
         .Header = xlYes
         .Apply
@@ -1314,10 +1314,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
         'Sort the data by columns 1, 2, 3, and 4
         With wsOutputSheet.Sort
             .SortFields.Clear
-            .SortFields.add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
             .SetRange wsOutputSheet.Range("A1:D" & outputRow - 1)
             .Header = xlYes
             .Apply

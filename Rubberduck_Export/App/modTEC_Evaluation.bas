@@ -73,7 +73,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
                 End Select
                 
                 If Not dictHours.Exists(profInit) Then
-                    dictHours.add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
+                    dictHours.Add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictHours(profInit) 'Obtenir le tableau a partir du dictionary
                 
