@@ -213,9 +213,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 clientID = Fn_GetID_From_Client_Name(nomClient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
-                Debug.Print "xxx1", "FAC_Projets_Détails_Add_Record_To_DB", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
-                Debug.Print "xxx2", "FAC_Projets_Détails_Add_Record_Locally", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
@@ -237,9 +235,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = ws.Range("M" & r + 1).value
                 
-                Debug.Print "xxx3", "FAC_Projets_Entête_Add_Record_To_DB", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
-                Debug.Print "xxx4", "FAC_Projets_Entête_Add_Record_Locally", Format(Now(), "yyyy-mm-dd hh:nn:ss")
                 Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
@@ -259,6 +255,9 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Else
         ws.Range("D" & totalRow).value = 0
         'Perform actions when checkbox is unchecked
+        Application.EnableEvents = True
+        Call Groups_SubTotals_Collapse_A_Client(firstRow)
+
     End If
     
     Call Clear_Fees_Summary_And_CheckBox
@@ -298,7 +297,7 @@ Sub Delete_CheckBox()
         On Error Resume Next
         Set checkBox = ws.OLEObjects("CheckBox" & i)
         If Not checkBox Is Nothing Then
-            checkBox.delete
+            checkBox.Delete
         End If
         On Error GoTo 0
     Next i

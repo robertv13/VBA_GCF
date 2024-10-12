@@ -324,7 +324,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     Dim pic As Picture
     For Each pic In ws.Pictures
-        pic.delete
+        pic.Delete
     Next pic
     
     'Hide both buttons

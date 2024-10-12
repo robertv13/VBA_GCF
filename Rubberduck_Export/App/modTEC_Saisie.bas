@@ -25,27 +25,27 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
         Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne (0024) : ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
-        Dim y As Integer, m As Integer, D As Integer
+        Dim Y As Integer, m As Integer, D As Integer
         Dim avant As String, apres As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.value
             Call Log_Saisie_Heures("info     ", "@00031 - avant = " & avant & "   type = " & TypeName(ufSaisieHeures.txtDate.value) & "   après assignation")
-            y = year(ufSaisieHeures.txtDate.value)
+            Y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             D = day(ufSaisieHeures.txtDate.value)
             If m = 10 Then
-                Call Log_Saisie_Heures("info     ", "@00036 - ufSaisieHeures.txtDate.value --->   y = " & y & "   m = " & m & "   d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+                Call Log_Saisie_Heures("info     ", "@00036 - ufSaisieHeures.txtDate.value --->   y = " & Y & "   m = " & m & "   d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
             Else
-                Call Log_Saisie_Heures("info     ", "@00038  - ufSaisieHeures.txtDate.value - m <> 10 (Erreur) ---->   y = " & y & "   m = " & m & "    d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+                Call Log_Saisie_Heures("info     ", "@00038  - ufSaisieHeures.txtDate.value - m <> 10 (Erreur) ---->   y = " & Y & "   m = " & m & "    d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
-            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
+            If Y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
                 Dim Temp As Integer
                 Temp = m
                 m = D
                 D = Temp
-                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & Y & "   m = " & m & "   d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
-            ufSaisieHeures.txtDate.value = Format$(DateSerial(y, m, D), "yyyy-mm-dd")
+            ufSaisieHeures.txtDate.value = Format$(DateSerial(Y, m, D), "yyyy-mm-dd")
             Call Log_Saisie_Heures("info     ", "@00048 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.value & "   type = " & TypeName(ufSaisieHeures.txtDate.value) & "   après assignation")
             apres = ufSaisieHeures.txtDate.value
             If apres <> avant Then

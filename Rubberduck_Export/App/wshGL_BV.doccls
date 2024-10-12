@@ -36,7 +36,7 @@ Private Sub Worksheet_Activate()
     Dim cbx As Shape
     For Each cbx In wshGL_BV.Shapes
         If InStr(cbx.name, "GL_Trans") Then
-            cbx.delete
+            cbx.Delete
         End If
     Next cbx
 

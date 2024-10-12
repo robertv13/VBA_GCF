@@ -198,3 +198,22 @@ Sub Handle_Rubberduck_Reference()
     End If
 
 End Sub
+
+Sub UpdatePivotTables()
+
+    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
+    Dim pt As pivotTable
+    
+    'Parcourt tous les PivotTables dans chaque feuille
+    For Each pt In ws.PivotTables
+        On Error Resume Next
+        pt.pivotCache.Refresh 'Actualise le cache Pivot
+        On Error GoTo 0
+    Next pt
+
+    Set pt = Nothing
+    Set ws = Nothing
+    
+End Sub
+
+

@@ -575,7 +575,7 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
     For Each shp In ws.Shapes
         Debug.Print shp.name
         If InStr(shp.name, "Rounded Rectangle ") Then
-            shp.delete
+            shp.Delete
         End If
     Next shp
 

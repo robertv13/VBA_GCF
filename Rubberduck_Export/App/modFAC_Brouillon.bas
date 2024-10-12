@@ -253,9 +253,9 @@ Sub FAC_Brouillon_Date_Change(D As String)
     Application.EnableEvents = False
     
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
-        Dim y As String
-        y = Right(year(D), 2)
-        wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
+        Dim Y As String
+        Y = Right(year(D), 2)
+        wshFAC_Brouillon.Range("O6").value = Y & "-" & wshFAC_Brouillon.Range("O6").value
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
     
@@ -734,11 +734,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -944,7 +944,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
     Dim cbx As Shape
     For Each cbx In wshFAC_Brouillon.Shapes
         If InStr(cbx.name, "chkBox - ") Then
-            cbx.delete
+            cbx.Delete
         End If
     Next cbx
     

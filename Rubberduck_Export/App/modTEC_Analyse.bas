@@ -281,8 +281,8 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
     
-    progressBarBg.delete
-    progressBarFill.delete
+    progressBarBg.Delete
+    progressBarFill.Delete
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -331,12 +331,12 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
     Next cell
     
     'Check if any total rows were found
-    rng.FormatConditions.delete
+    rng.FormatConditions.Delete
 
     'Define conditional formatting rules for the total rows
     If Not totalRange Is Nothing Then
         'Clear existing conditional formatting rules in the totalRange
-        totalRange.FormatConditions.delete
+        totalRange.FormatConditions.Delete
         
         'Define conditional formatting rules for the totalRange
         With totalRange.FormatConditions
@@ -822,7 +822,7 @@ Sub Delete_CheckBox()
     Dim Sh As Shape
     For Each Sh In ws.Shapes
         If InStr(Sh.name, "CheckBox") Then
-            Sh.delete
+            Sh.Delete
         End If
     Next Sh
     
@@ -857,7 +857,7 @@ Sub Clear_Fees_Summary_And_CheckBox()
     Dim Sh As Shape
     For Each Sh In ws.Shapes
         If InStr(Sh.name, "CheckBox") Then
-            Sh.delete
+            Sh.Delete
         End If
     Next Sh
 

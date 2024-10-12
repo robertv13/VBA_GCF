@@ -13,3 +13,5 @@
 2024-10-11 11:55:58.320 | Robert M. Vigneault | UPDATE 1662 | GC | 10/10/2024 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | évaluation de l'entreprise + tel avec Mathieu | 0,50 | VRAI |  | 2024-10-11 11:55:58 | 31
 2024-10-11 15:35:46.500 | Robert M. Vigneault | ADD    1686 | GC | 11/10/2024 | 1421 | Clinique d'optométrie l'Assomption Inc. [Frédéric Morin] | Test7 | 0,40 | VRAI |  | 2024-10-11 15:35:46 | 31
 2024-10-11 16:20:02.390 | Robert M. Vigneault | ADD    1687 | GC | 10/10/2024 | 1605 | 1508-5822 Québec Inc. [Maxime Laforest] | Test7 | 2,50 | VRAI |  | 2024-10-11 16:20:02 | 31
+2024-10-12 16:51:38.850 | Robert M. Vigneault | ADD    1696 | GC | 12/10/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test7 | 0,10 | VRAI |  | 2024-10-12 16:51:38 | 31
+2024-10-12 16:52:26.860 | Robert M. Vigneault | ADD    1697 | GC | 12/10/2024 | 1034 | Construction L. Grenier Inc. [Sylvain Grenier] | Test7 | 0,10 | VRAI |  | 2024-10-12 16:52:26 | 31

@@ -185,7 +185,7 @@ Sub Update_Pivot_Table() '2024-08-15 @ 06:34
 
 End Sub
 
-Public Sub ArrayToRange(ByRef data As Variant _
+Public Sub ArrayToRange(ByRef Data As Variant _
                         , ByVal outRange As Range _
                         , Optional ByVal clearExistingData As Boolean = True _
                         , Optional ByVal clearExistingHeaderSize As Long = 1)
@@ -195,9 +195,9 @@ Public Sub ArrayToRange(ByRef data As Variant _
     End If
     
     Dim rows As Long, columns As Long
-    rows = UBound(data, 1) - LBound(data, 1) + 1
-    columns = UBound(data, 2) - LBound(data, 2) + 1
-    outRange.Resize(rows, columns).value = data
+    rows = UBound(Data, 1) - LBound(Data, 1) + 1
+    columns = UBound(Data, 2) - LBound(Data, 2) + 1
+    outRange.Resize(rows, columns).value = Data
     
 End Sub
 
@@ -219,7 +219,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'If the worksheet exists, delete it
     If wsExists Then
         Application.DisplayAlerts = False
-        ws.delete
+        ws.Delete
         Application.DisplayAlerts = True
     End If
     
@@ -2058,7 +2058,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1641 'What is the last TECID analyzed ?
+    lastTECIDReported = 1695 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2112,7 +2112,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
-    Dim D As Integer, m As Integer, y As Integer, p As Integer
+    Dim D As Integer, m As Integer, Y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -2314,8 +2314,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         'Summary by Date
         D = day(dateTEC)
         m = month(dateTEC)
-        y = year(dateTEC)
-        keyDate = Format$(y, "0000") & Format$(m, "00") & Format$(D, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
+        Y = year(dateTEC)
+        keyDate = Format$(Y, "0000") & Format$(m, "00") & Format$(D, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
         p = InStr(bigStrDateProf, keyDate)
         If p = 0 Then
             rArr = rArr + 1
@@ -2668,7 +2668,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     
     'Conditional Formatting (many steps)
     '1) Remove existing conditional formatting
-        rng.Cells.FormatConditions.delete 'Remove the worksheet conditional formatting
+        rng.Cells.FormatConditions.Delete 'Remove the worksheet conditional formatting
     
     '2) Define the usedRange to data only (exclude header row(s))
         Dim numRows As Long

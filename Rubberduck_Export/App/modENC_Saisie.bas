@@ -740,7 +740,7 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
     Dim cbx As Shape
     For Each cbx In wshENC_Saisie.Shapes
         If InStr(cbx.name, "chkBox -") Then
-            cbx.delete
+            cbx.Delete
         End If
     Next cbx
     

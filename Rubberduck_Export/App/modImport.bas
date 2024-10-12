@@ -34,7 +34,7 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
 
     'Delete the old (target) worksheet
     Debug.Print "About to delete '" & targetSheetName & "'"
-    targetWorkbook.Sheets(targetSheetName).delete
+    targetWorkbook.Sheets(targetSheetName).Delete
 
     'Rename the copied worksheet to the target worksheet name
     tempSheet.name = targetSheetName
@@ -624,7 +624,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
         If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
             Trim(ws.Cells(i, 9).value) = "" Or _
             ws.Cells(i, 9).value = -1 Then
-            ws.rows(i).delete
+            ws.rows(i).Delete
         End If
     Next i
     
@@ -693,7 +693,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     For i = lastRow To 2 Step -1
         If UCase(ws.Cells(i, 26).value) = "VRAI" Or _
             ws.Cells(i, 26).value = -1 Then
-            ws.rows(i).delete
+            ws.rows(i).Delete
         End If
     Next i
     
@@ -958,7 +958,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
     On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_Description_Only").delete
+    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
     On Error GoTo 0
     
     'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
@@ -971,7 +971,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     'Redefine - dnrPlanComptable_All
     'Delete existing dynamic named range (assuming it could exists)
     On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_All").delete
+    ThisWorkbook.Names("dnrPlanComptable_All").Delete
     On Error GoTo 0
     
     'Define a new dynamic named range for 'dnrPlanComptable_All'

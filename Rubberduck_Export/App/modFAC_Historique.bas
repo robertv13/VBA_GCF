@@ -282,7 +282,7 @@ Sub Remove_All_PDF_Icons() 'RMV - 2024-07-24 @ 19:58
     
     Dim pic As Picture
     For Each pic In ws.Pictures
-        pic.delete
+        pic.Delete
     Next pic
     
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34

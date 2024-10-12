@@ -205,7 +205,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                 'Delete all collected rows from wshFAC_Projets_Détails (locally)
                 Dim i As Long
                 For i = rowsToDelete.count To 1 Step -1
-                    ws.rows(rowsToDelete(i)).delete
+                    ws.rows(rowsToDelete(i)).Delete
                 Next i
                 
                 'Update rows from MASTER file (details)
@@ -516,13 +516,13 @@ Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, y As Long) As Boolean
+Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, Y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
     
     Dim isLeapYear As Boolean
-    If y Mod 4 = 0 And (y Mod 100 <> 0 Or y Mod 400 = 0) Then
+    If Y Mod 4 = 0 And (Y Mod 100 <> 0 Or Y Mod 400 = 0) Then
         isLeapYear = True
     Else
         isLeapYear = False
@@ -535,7 +535,7 @@ Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, y As Long) As Boolean
     
     If m < 1 Or m > 12 Or _
        D > mdpm(m - 1) Or _
-       Abs(year(Now()) - y) > 75 Then
+       Abs(year(Now()) - Y) > 75 Then
             Exit Function
     Else
         Fn_ValidateDaySpecificMonth = True
@@ -1319,21 +1319,6 @@ Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
     
 End Function
 
-'Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
-'
-'    Dim NbJours, Semaine As Long
-'
-'    'Calculer le nombre de jours entre la date donnée et le début de l'année financière
-'    NbJours = DateDonnee - wshAdmin.Range("AnneeDe")
-'
-'    'Calculer le numéro de la semaine (diviser par 7 et arrondir)
-'    Semaine = Int(NbJours / 7) + 1
-'
-'    ' Retourner le numéro de la semaine
-'    Fn_Numero_Semaine_Selon_AnneeFinancière = Semaine
-'
-'End Function
-'
 Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
 
     Dim D As Date
@@ -1343,3 +1328,25 @@ Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
     MsgBox "Pour le " & Format$(D, "yyyy-MM-dd") & ", la semaine est " & s
 
 End Sub
+
+Function Fn_Valider_Portion_Heures(valeur As Double) As Boolean
+
+    'Tableau des valeurs permises : dixièmes d'heures et quarts d'heure
+    Dim valeursPermises As Variant
+    valeursPermises = Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.25, 0.5, 0.75)
+    
+    Dim i As Integer
+    Fn_Valider_Portion_Heures = False 'Initialisation à Faux
+    
+    'Parcourir les valeurs permises
+    Dim fraction As Double
+    fraction = valeur - Int(valeur)
+    
+    For i = LBound(valeursPermises) To UBound(valeursPermises)
+        If Round(fraction, 2) = valeursPermises(i) Then
+            Fn_Valider_Portion_Heures = True 'La fraction est valide
+            Exit Function
+        End If
+    Next i
+    
+End Function

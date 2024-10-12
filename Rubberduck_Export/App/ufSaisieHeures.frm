@@ -24,10 +24,6 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub TextBox2_Change()
-
-End Sub
-
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     logSaisieHeuresVeryDetailed = False
@@ -120,7 +116,7 @@ Private Sub UserForm_Terminate()
     'Clear the admin control cells
     wshAdmin.Range("B3:B7").ClearContents
     
-    ThisWorkbook.Save
+'    ThisWorkbook.Save
     
     'Clean up
     Set oEventHandler = Nothing
@@ -391,9 +387,63 @@ Private Sub txtActivite_AfterUpdate()
     
 End Sub
 
+Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtHeures_Exit @00377", True)
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit", 0)
+    
+    Dim heure As Double
+    
+    On Error Resume Next
+    heure = CDbl(Me.txtHeures.value)
+    On Error GoTo 0
+    
+    If Not IsNumeric(Me.txtHeures.value) Then
+        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+                Title:="Validation d'une valeur numérique", _
+                Buttons:=vbCritical
+        Cancel = True
+        Me.txtHeures.SetFocus
+        DoEvents
+        Me.txtHeures.SelStart = 0
+        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Exit Sub
+    End If
+
+    If heure < 0 Or heure > 24 Then
+        MsgBox _
+            Prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
+                    "ou dépasser 24 pour une charge", _
+            Title:="Validation d'une valeur numérique", _
+            Buttons:=vbCritical
+        Cancel = True
+        Me.txtHeures.SetFocus
+        DoEvents
+        Me.txtHeures.SelStart = 0
+        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Exit Sub
+    End If
+    
+    If Fn_Valider_Portion_Heures(heure) = False Then
+        MsgBox "La portion fractionnaire (" & heure & ") des heures est invalide" & vbNewLine & vbNewLine & _
+                "Seul les valeurs de dixième et de quart d'heure sont acceptables", vbCritical, _
+                "Les valeurs permises sont les dixièmes et les quarts d'heure seulement"
+        Cancel = True
+        Me.txtHeures.SetFocus
+        DoEvents
+        Me.txtHeures.SelStart = 0
+        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Exit Sub
+    End If
+    
+    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate()", startTime)
+    
+End Sub
+
 Sub txtHeures_AfterUpdate()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369", True)
+    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00427", True)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", 0)
     
@@ -403,24 +453,6 @@ Sub txtHeures_AfterUpdate()
     
     strHeures = Replace(strHeures, ".", ",")
     
-    If IsNumeric(strHeures) = False Then
-        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
-                Title:="Validation d'une valeur numérique", _
-                Buttons:=vbCritical
-            Me.txtHeures.SetFocus 'Mettre le focus sur le contrôle en premier
-            Exit Sub
-    End If
-    
-    If strHeures > 24 Then
-        MsgBox _
-        Prompt:="Le nombre d'heures pour une entrée ne peut dépasser 24!", _
-        Title:="Validation d'une valeur numérique", _
-        Buttons:=vbCritical
-        Me.txtHeures.SetFocus
-        Me.txtHeures.SelLength = Len(ufSaisieHeures.txtHeures.value)
-        Me.txtHeures.SelStart = 0
-        Exit Sub
-    End If
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
@@ -600,9 +632,6 @@ End Sub
 
 Sub imgLogoGCF_Click()
 
-    'Seul les utilisateurs Robert & Guillaume peuvent visualiser pour l'instant
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
             Application.EnableEvents = False
             
@@ -612,9 +641,35 @@ Sub imgLogoGCF_Click()
             
             Call StatsHeures_AdvancedFilters
         
+            'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+            Call UpdatePivotTables
+            
             Application.EnableEvents = True
             
-            ufStatsHeures.show vbModal
+            ufStatsHeures.show vbModeless
     End If
 
 End Sub
+
+Sub imgStats_Click()
+
+        Application.EnableEvents = False
+        
+        ufSaisieHeures.Hide
+        
+        Call TEC_TdB_Update_All
+        
+        Call StatsHeures_AdvancedFilters
+    
+        'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+        Call UpdatePivotTables
+        
+        Application.EnableEvents = True
+        
+        With wshStatsHeuresPivotTables
+            .Visible = xlSheetVisible
+            .Activate
+        End With
+
+End Sub
+

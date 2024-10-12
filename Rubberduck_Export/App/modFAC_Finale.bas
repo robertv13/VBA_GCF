@@ -1262,7 +1262,7 @@ Sub InvoiceGetAllTrans(inv As String)
         lastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
         If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
         On Error Resume Next
-        .Names("Criterial").delete
+        .Names("Criterial").Delete
         On Error GoTo 0
         .Range("V3").value = wshFAC_Brouillon.Range("O6").value
         'Advanced Filter setup

@@ -1,94 +1,94 @@
 Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
-Sub CreatePivotWithSpecificSorting()
-
-    Dim ws As Worksheet
-    Dim wsPivot As Worksheet
-    Dim filterRange As Range
-    Dim resultRange As Range
-    Dim lastRow As Long
-    Dim pivotCache As pivotCache
-    Dim pivotTable As pivotTable
-    
-    Set ws = wshTEC_TDB_Data ' Feuille contenant les données filtrées
-    Set wsPivot = ThisWorkbook.Sheets("PivotSheet") ' Feuille où le tableau croisé sera créé
-    
-    ' Appliquer l'AdvancedFilter
-    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-    Set filterRange = ws.Range("A1:Q" & lastRow) ' Plage de données avec W comme colonne de tri
-    
-    ' Result Range
-    Set resultRange = ws.Range("W1").CurrentRegion
-    resultRange.Offset(1, 0).Clear
-    Set resultRange = ws.Range("W1").CurrentRegion
-    
-    ' Utiliser AdvancedFilter ici
-    filterRange.AdvancedFilter _
-                action:=xlFilterCopy, _
-                criteriaRange:=ws.Range("S1:U2"), _
-                CopyToRange:=ws.Range("W1:AD1"), _
-                Unique:=False
-    
-    ' Définir la plage des résultats filtrés en excluant la colonne W
-    lastRow = ws.Cells(ws.rows.count, "W").End(xlUp).Row ' Supposons que les résultats sont à partir de AD
-    Set resultRange = ws.Range("W1:AD" & lastRow)
-    
-    'Supprimer tout ancien PivotTable
-    RemoveExistingPivotTable wsPivot, "FilteredPivot"
-    
-    ' Créer un cache PivotTable en utilisant les colonnes excluant W
-    Set pivotCache = ThisWorkbook.PivotCaches.Create( _
-        SourceType:=xlDatabase, SourceData:=resultRange.Address)
-    
-    ' Créer le tableau croisé dynamique à partir des résultats filtrés
-    Set pivotTable = wsPivot.PivotTables.Add( _
-        pivotCache:=pivotCache, TableDestination:=wsPivot.Range("A3"), TableName:="FilteredPivot")
-    
-    ' Configurer les champs du tableau croisé dynamique
-    With pivotTable
-        .PivotFields("Prof").Orientation = xlRowField
-        .PivotFields("Date").Orientation = xlRowField
-        
-        ' Configurer le champ de valeurs
-        With .PivotFields("H_N_D")
-            .Orientation = xlDataField
-            .Function = xlSum
-            .NumberFormat = "#,##0.00" ' Appliquer format nombre avec 2 décimales
-            .Position = 1 ' Facultatif : définir la position du champ
-        End With
-        
-        ' Changer le libellé de l'en-tête après avoir ajouté le champ
-        .PivotFields("H_N_D").Caption = "Hres/Nettes" ' Nouveau libellé pour l'en-tête
-        
-        ' Désactiver le tri automatique pour respecter l'ordre filtré
-        .PivotFields("Prof").AutoSort xlManual, .PivotFields("Prof").SourceName
-    End With
-    
-    ' Actualiser le tableau croisé dynamique
-    pivotTable.RefreshTable
-    
-    Set filterRange = Nothing
-    Set pivotCache = Nothing
-    Set pivotTable = Nothing
-    Set resultRange = Nothing
-    Set ws = Nothing
-    Set wsPivot = Nothing
-
-End Sub
-
-Sub RemoveExistingPivotTable(wsPivot As Worksheet, pivotTableName As String)
-    Dim pt As pivotTable
-    On Error Resume Next
-    Set pt = wsPivot.PivotTables(pivotTableName)
-    On Error GoTo 0
-
-    If Not pt Is Nothing Then
-        pt.TableRange2.Clear ' Cela supprime les données du PivotTable
-        pt.RefreshTable ' Cela actualise le tableau croisé dynamique
-    End If
-End Sub
-
+'Sub CreatePivotWithSpecificSorting()
+'
+'    Dim ws As Worksheet
+'    Dim wsPivot As Worksheet
+'    Dim filterRange As Range
+'    Dim resultRange As Range
+'    Dim lastRow As Long
+'    Dim pivotCache As pivotCache
+'    Dim pivotTable As pivotTable
+'
+'    Set ws = wshTEC_TDB_Data ' Feuille contenant les données filtrées
+'    Set wsPivot = ThisWorkbook.Sheets("PivotSheet") ' Feuille où le tableau croisé sera créé
+'
+'    ' Appliquer l'AdvancedFilter
+'    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+'    Set filterRange = ws.Range("A1:Q" & lastRow) ' Plage de données avec W comme colonne de tri
+'
+'    ' Result Range
+'    Set resultRange = ws.Range("W1").CurrentRegion
+'    resultRange.Offset(1, 0).Clear
+'    Set resultRange = ws.Range("W1").CurrentRegion
+'
+'    ' Utiliser AdvancedFilter ici
+'    filterRange.AdvancedFilter _
+'                action:=xlFilterCopy, _
+'                criteriaRange:=ws.Range("S1:U2"), _
+'                CopyToRange:=ws.Range("W1:AD1"), _
+'                Unique:=False
+'
+'    ' Définir la plage des résultats filtrés en excluant la colonne W
+'    lastRow = ws.Cells(ws.rows.count, "W").End(xlUp).Row ' Supposons que les résultats sont à partir de AD
+'    Set resultRange = ws.Range("W1:AD" & lastRow)
+'
+'    'Supprimer tout ancien PivotTable
+'    RemoveExistingPivotTable wsPivot, "FilteredPivot"
+'
+'    ' Créer un cache PivotTable en utilisant les colonnes excluant W
+'    Set pivotCache = ThisWorkbook.PivotCaches.Create( _
+'        SourceType:=xlDatabase, SourceData:=resultRange.Address)
+'
+'    ' Créer le tableau croisé dynamique à partir des résultats filtrés
+'    Set pivotTable = wsPivot.PivotTables.Add( _
+'        pivotCache:=pivotCache, TableDestination:=wsPivot.Range("A3"), TableName:="FilteredPivot")
+'
+'    ' Configurer les champs du tableau croisé dynamique
+'    With pivotTable
+'        .PivotFields("Prof").Orientation = xlRowField
+'        .PivotFields("Date").Orientation = xlRowField
+'
+'        ' Configurer le champ de valeurs
+'        With .PivotFields("H_N_D")
+'            .Orientation = xlDataField
+'            .Function = xlSum
+'            .NumberFormat = "#,##0.00" ' Appliquer format nombre avec 2 décimales
+'            .Position = 1 ' Facultatif : définir la position du champ
+'        End With
+'
+'        ' Changer le libellé de l'en-tête après avoir ajouté le champ
+'        .PivotFields("H_N_D").Caption = "Hres/Nettes" ' Nouveau libellé pour l'en-tête
+'
+'        ' Désactiver le tri automatique pour respecter l'ordre filtré
+'        .PivotFields("Prof").AutoSort xlManual, .PivotFields("Prof").SourceName
+'    End With
+'
+'    ' Actualiser le tableau croisé dynamique
+'    pivotTable.RefreshTable
+'
+'    Set filterRange = Nothing
+'    Set pivotCache = Nothing
+'    Set pivotTable = Nothing
+'    Set resultRange = Nothing
+'    Set ws = Nothing
+'    Set wsPivot = Nothing
+'
+'End Sub
+'
+'Sub RemoveExistingPivotTable(wsPivot As Worksheet, pivotTableName As String)
+'    Dim pt As pivotTable
+'    On Error Resume Next
+'    Set pt = wsPivot.PivotTables(pivotTableName)
+'    On Error GoTo 0
+'
+'    If Not pt Is Nothing Then
+'        pt.TableRange2.Clear ' Cela supprime les données du PivotTable
+'        pt.RefreshTable ' Cela actualise le tableau croisé dynamique
+'    End If
+'End Sub
+'
 Sub StatsHeures_AdvancedFilters()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:StatsHeures_AdvancedFilters", 0)
@@ -280,4 +280,17 @@ Sub StatsHeures_AdvancedFilters()
     Call Log_Record("modStatsHeures:StatsHeures_AdvancedFilters", startTime)
 
 End Sub
+
+Sub Stats_Back_To_ufSaisieHeures()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Stats_Back_To_ufSaisieHeures", 0)
+   
+    wshStatsHeuresPivotTables.Visible = xlSheetHidden
+    
+    ufSaisieHeures.show vbModeless
+
+    Call Log_Record("modStatsHeures:Stats_Back_To_ufSaisieHeures()", startTime)
+
+End Sub
+
 
