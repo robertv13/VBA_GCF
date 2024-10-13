@@ -8,10 +8,10 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", 0)
 
-    If fromMenu = False Then
-        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
-        Exit Sub
-    End If
+'    If fromMenu = False Then
+'        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
+'        Exit Sub
+'    End If
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False

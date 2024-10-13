@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
-   Caption         =   "Factures à préparer"
-   ClientHeight    =   5025
+   Caption         =   "Demandes de factures à préparer"
+   ClientHeight    =   6435
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   8700.001
+   ClientWidth     =   9405.001
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -51,7 +51,7 @@ Private Sub UserForm_Initialize()
         With lsbProjetsFacture
             .ColumnHeads = True
             .ColumnCount = 4
-            .ColumnWidths = "225; 68; 90; 15"
+            .ColumnWidths = "250; 68; 85; 20"
         End With
             
         'Populate the ListBox with the array

@@ -640,7 +640,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
 
 End Sub
 
-Sub FAC_Finale_Create_PDF_Email_Func(noFacture As String)
+Sub FAC_Finale_Create_PDF_Email_Func(noFacture As String) '2024-10-13 @ 08:22
 
     Application.ScreenUpdating = False
 
@@ -657,7 +657,7 @@ Sub FAC_Finale_Create_PDF_Email_Func(noFacture As String)
     Dim reponse As VbMsgBoxResult
     If Not fileExists Then
         reponse = MsgBox("La facture '" & noFacture & "' n'existe pas en format PDF" & _
-                          "Je ne peux donc poas l'envoyer par courriel ?", vbInformation, _
+                          "Je ne peux donc pas l'envoyer par courriel ?", vbInformation, _
                           "Cette facture n'existe pas en format PDF")
         GoTo EndMacro
     End If

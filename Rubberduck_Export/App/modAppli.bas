@@ -30,6 +30,9 @@ Public fromMenu As Boolean '2024-09-03 @ 06:14
 'Niveau de détail pour le log de SaisieHeures
 Public logSaisieHeuresVeryDetailed As Boolean
 
+'Pour assurer un contrôle dans Facture Finale
+Public flagEtapeFacture As Integer
+
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DEB_Trans_data_Columns
     fdebtFirst = 1

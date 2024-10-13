@@ -874,7 +874,7 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     Loop
     
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
+    ExcelFilesFullPath = wshAdmin.Range("F5").value & FACT_EXCEL_PATH
     ChDir ExcelFilesFullPath
     
     ' Définir la feuille source et la plage à copier
@@ -924,10 +924,12 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
         End If
     Next forme
     
+    
+    
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
         .Orientation = wsSource.PageSetup.Orientation
-        .PaperSize = wsSource.PageSetup.PaperSize
+        .PaperSize = xlPaperLetter '2024-10-13 @ 07:45
         .Zoom = wsSource.PageSetup.Zoom
         .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
         .FitToPagesTall = wsSource.PageSetup.FitToPagesTall
@@ -950,20 +952,21 @@ Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, i
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
     wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
 
-    MsgBox "La feuille a été copiée avec succès !"
+'    MsgBox "La feuille a été copiée avec succès !"
     
 End Sub
 
-Sub test_CopierFeuilleVersNouveauWorkbook()
+'Sub test_CopierFeuilleVersNouveauWorkbook()
+'
+'    Dim clientID As String, clientName As String, invNo As String, invDate As String
+'    clientID = "1193"
+'    clientName = "Solstice CNC Inc."
+'    invNo = "24-24520"
+'    invDate = "2024-09-30"
+'    Call CopierFeuilleVersNouveauWorkbook(clientID, clientName, invNo, invDate)
+'
+'End Sub
 
-    Dim clientID As String, clientName As String, invNo As String, invDate As String
-    clientID = "1193"
-    clientName = "Solstice CNC Inc."
-    invNo = "24-24520"
-    invDate = "2024-09-30"
-    Call CopierFeuilleVersNouveauWorkbook(clientID, clientName, invNo, invDate)
-
-End Sub
 'Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, clientID As String, clientName As String)
 '
 '    Dim wbNew As Workbook
@@ -1361,28 +1364,26 @@ Sub FAC_Finale_Setup_All_Cells()
 
 End Sub
 
-Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
-
-    wshFAC_Finale.PrintOut , , 1, True, True, , , , False
-'    wshFAC_Finale.PrintOut , , , True, True, , , , False
+'Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
+'
+'    wshFAC_Finale.PrintOut , , 1, True, True, , , , False
+''    wshFAC_Finale.PrintOut , , , True, True, , , , False
+'
+'End Sub
+'
+Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 07:36
     
-End Sub
-
-Sub FAC_Finale_Creation_PDF() 'RMV - 2023-12-17 @ 14:35
+    flagEtapeFacture = 1
     
     Call FAC_Finale_Create_PDF_Sub(wshFAC_Finale.Range("E28").value)
     
     DoEvents
     
-'    Call Copier_Facture_Vers_Classeur_Ferme(wshFAC_Finale.Range("E28").value, _
-                                            wshFAC_Brouillon.Range("O3").value, _
-                                            wshFAC_Brouillon.Range("B18").value, _
-                                            wshFAC_Finale.Range("L81").value)
-    
     Call CopierFeuilleVersNouveauWorkbook(wshFAC_Brouillon.Range("B18").value, _
                                           wshFAC_Finale.Range("L81").value, _
                                           wshFAC_Finale.Range("E28").value, _
                                           Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
+
     DoEvents
     
     Call FAC_Finale_Enable_Save_Button
@@ -1394,6 +1395,13 @@ Sub FAC_Finale_Create_PDF_Sub(noFacture As String)
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
     Dim result As Boolean
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
+    
+    If result = False Then
+        MsgBox "ATTENTION... La facture ne s'est pas sauvegardé en format PDF", _
+                vbCritical, _
+                "Incapable de sauvegarder la facture en format PDF"
+        flagEtapeFacture = -1
+    End If
 
 End Sub
 
@@ -1637,106 +1645,12 @@ Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
 End Sub
 
-'Sub FAC_Finale_GL_Posting_Preparation() '2024-06-06 @ 10:31
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:modFAC_Finale", 0)
-'
-'    Dim montant As Double
-'    Dim dateFact As Date
-'    Dim descGL_Trans As String, source As String
-'    Dim GL_TransNo As Long
-'
-'    dateFact = wshFAC_Brouillon.Range("O3").value
-'    descGL_Trans = wshFAC_Brouillon.Range("E4").value
-'    source = "FACT-" & wshFAC_Brouillon.Range("O6").value
-'    GL_TransNo = wshFAC_Brouillon.Range("B41").value
-'
-'    Dim MyArray(1 To 8, 1 To 4) As String
-'
-'    'AR amount (wshFAC_Brouillon.Range("B33"))
-'    montant = wshFAC_Brouillon.Range("B33").value
-'    If montant Then
-'        MyArray(1, 1) = "1100"
-'        MyArray(1, 2) = "Comptes clients"
-'        MyArray(1, 3) = montant
-'        MyArray(1, 4) = ""
-'    End If
-'
-'    'Professional Fees (wshFAC_Brouillon.Range("B34"))
-'    montant = wshFAC_Brouillon.Range("B34").value
-'    If montant Then
-'        MyArray(2, 1) = "4000"
-'        MyArray(2, 2) = "Revenus de consultation"
-'        MyArray(2, 3) = montant
-'        MyArray(2, 4) = ""
-'    End If
-'
-'    'Miscellaneous Amount # 1 (wshFAC_Brouillon.Range("B35"))
-'    montant = wshFAC_Brouillon.Range("B35").value
-'    If montant Then
-'        MyArray(3, 1) = "9999"
-'        MyArray(3, 2) = "Frais divers # 1"
-'        MyArray(3, 3) = montant
-'        MyArray(3, 4) = ""
-'    End If
-'
-'    'Miscellaneous Amount # 2 (wshFAC_Brouillon.Range("B36"))
-'    montant = wshFAC_Brouillon.Range("B36").value
-'    If montant Then
-'        MyArray(4, 1) = "9999"
-'        MyArray(4, 2) = "Frais divers # 2"
-'        MyArray(4, 3) = montant
-'        MyArray(4, 4) = ""
-'    End If
-'
-'    'Miscellaneous Amount # 3 (wshFAC_Brouillon.Range("B37"))
-'    montant = wshFAC_Brouillon.Range("B37").value
-'    If montant Then
-'        MyArray(5, 1) = "9999"
-'        MyArray(5, 2) = "Frais divers # 3"
-'        MyArray(5, 3) = montant
-'        MyArray(5, 4) = ""
-'    End If
-'
-'    'GST to pay (wshFAC_Brouillon.Range("B38"))
-'    montant = wshFAC_Brouillon.Range("B38").value
-'    If montant Then
-'        MyArray(6, 1) = "1202"
-'        MyArray(6, 2) = "TPS percues"
-'        MyArray(6, 3) = montant
-'        MyArray(6, 4) = ""
-'    End If
-'
-'    'PST to pay (wshFAC_Brouillon.Range("B39"))
-'    montant = wshFAC_Brouillon.Range("B39").value
-'    If montant Then
-'        MyArray(7, 1) = "1203"
-'        MyArray(7, 2) = "TVQ percues"
-'        MyArray(7, 3) = montant
-'        MyArray(7, 4) = ""
-'    End If
-'
-'    'Deposit applied (wshFAC_Brouillon.Range("B40"))
-'    montant = wshFAC_Brouillon.Range("B40").value
-'    If montant Then
-'        MyArray(8, 1) = "2400"
-'        MyArray(8, 2) = "Produit perçu d'avance"
-'        MyArray(8, 3) = montant
-'        MyArray(8, 4) = ""
-'    End If
-'
-'    Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray)
-'
-'    Call GL_Posting_Locally(dateFact, descGL_Trans, source, GL_TransNo, MyArray)
-'
-'    Call Log_Record("modFAC_Finale:modFAC_Finale()", startTime)
-'
-'End Sub
-'
 Sub FAC_Finale_Enable_Save_Button()
 
     Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
+    
+    flagEtapeFacture = 3
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set shp = Nothing
@@ -1752,49 +1666,3 @@ Sub FAC_Finale_Disable_Save_Button()
     Set shp = Nothing
     
 End Sub
-
-'Sub ExportAllFacInvList() '2024-03-28 @ 14:22
-'    Dim wb As Workbook
-'    Dim wsSource As Worksheet
-'    Dim wsTarget As Worksheet
-'    Dim sourceRange As Range
-'
-'    Application.ScreenUpdating = False
-'
-'    'Work with the source range
-'    Set wsSource = wshFAC_Entête
-'    Dim lastUsedRow As Long
-'    lastUsedRow = wsSource.Range("A99999").End(xlUp).row
-'    wsSource.Range("A4:T" & lastUsedRow).Copy
-'
-'    'Open the target workbook
-'    Workbooks.Open fileName:=wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-'                   "GCF_BD_MASTER.xlsx"
-'
-'    'Set references to the target workbook and target worksheet
-'    Set wb = Workbooks("GCF_BD_MASTER.xlsx")
-'    Set wsTarget = wb.Sheets("FACTURES")
-'
-'    'PasteSpecial directly to the target range
-'    wsTarget.Range("A2").PasteSpecial Paste:=xlPasteValuesAndNumberFormats
-'    Application.CutCopyMode = False
-'
-'    wb.Close SaveChanges:=True
-'
-'    Application.ScreenUpdating = True
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-
-'Sub FAC_Brouillon_Prev_PDF() '2024-03-28 @ 14:49
-'
-'    Call FAC_Brouillon_Goto_Onglet_FAC_Finale
-'    Call FAC_Finale_Preview_PDF
-'    Call FAC_Finale_Goto_Onglet_FAC_Brouillon
-'
-'End Sub
-'
-'-----------------------------------------------------------------------------------------------------------
-
-

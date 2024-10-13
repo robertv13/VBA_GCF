@@ -55,6 +55,24 @@ Private Sub Workbook_Open()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
     
+    If Fn_Get_Windows_Username() = "Robert M. Vigneault" Or _
+        Fn_Get_Windows_Username() = "robertmv" Or _
+        Fn_Get_Windows_Username() = "Guillaume" Or _
+        Fn_Get_Windows_Username() = "GuillaumeCharron" Then
+        With wshFAC_Brouillon.PageSetup
+            Debug.Print "LeftMargin = " & .LeftMargin
+            Debug.Print "RightMargin = " & .RightMargin
+            Debug.Print "TopMargin = " & .TopMargin
+            Debug.Print "BottomMargin = " & .BottomMargin
+            
+            Debug.Print "Orientation = " & .Orientation & " " & xlPortrait
+            
+            Debug.Print "PaperSize = " & .PaperSize & " " & xlPaperLetter
+            
+            Debug.Print "ActivePrinter = " & Application.ActivePrinter
+        End With
+    End If
+    
     Call Log_Record("ThisWorkbook:Workbook_Open()", startTime)
     
 End Sub

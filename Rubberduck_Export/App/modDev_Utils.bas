@@ -1049,9 +1049,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Next X
 
     'Prepare the result worksheet
-    Call Erase_And_Create_Worksheet("Doc_Search_Utility_Results")
+    Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
 
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Doc_Search_Utility_Results")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
     wsOutput.Range("A1").value = "SortKey"
     wsOutput.Range("B1").value = "Type"
     wsOutput.Range("C1").value = "ModuleName"
