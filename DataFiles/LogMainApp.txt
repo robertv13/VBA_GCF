@@ -23992,3 +23992,1428 @@
 2024-10-13_08:36:33.520|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)|31
 2024-10-13_08:36:33.670|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,1504 seconds|31
 2024-10-13_08:36:33.670|Robert_M._Vigneault|APP_v4.K.3.xlsb|***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) ***** (entrée)|31
+2024-10-13_10:08:13.810|Robert_M._Vigneault|APP_v4.K.3.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)|31
+2024-10-13_10:08:13.820|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:BackupMasterFile (entrée)|31
+2024-10-13_10:08:30.930|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_10:08:30.930|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_10:08:30.940|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_10:08:30.940|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_10:08:30.950|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_10:08:30.960|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_10:08:30.960|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:30.960|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_10:08:30.970|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:30.970|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:30.970|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:30.970|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_10:08:30.990|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:30.990|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_10:08:30.000|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_10:08:30.000|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_10:08:31.010|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.010|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_10:08:31.020|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.020|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_10:08:31.020|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.020|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_10:08:31.040|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.040|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.040|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.050|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_10:08:31.050|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.050|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_10:08:31.060|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.060|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_10:08:31.070|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.070|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_10:08:31.090|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.090|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_10:08:31.090|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.090|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_10:08:31.110|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.110|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.120|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.120|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_10:08:31.130|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.130|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_10:08:31.140|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.140|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_10:08:31.150|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.150|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_10:08:31.160|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.160|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_10:08:31.160|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.180|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_10:08:31.180|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.180|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.190|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.190|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_10:08:31.190|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.190|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0547 seconds|31
+2024-10-13_10:08:31.210|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.210|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.220|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.230|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.230|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_10:08:31.230|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_10:08:31.240|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.240|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.250|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_10:08:31.250|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.260|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.260|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_10:08:31.270|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.270|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.280|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.280|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.290|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.290|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_10:08:31.310|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.310|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.310|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_10:08:31.320|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.320|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.320|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_10:08:31.330|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.330|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.340|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.340|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.360|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.360|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_10:08:31.360|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.360|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.380|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.380|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.390|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:31.390|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_10:08:31.400|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_10:08:31.400|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_10:08:31.400|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.410|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_10:08:31.410|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:31.410|Robert_M._Vigneault|APP_v4.K.3.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:08:33.350|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_10:08:33.350|Robert_M._Vigneault|APP_v4.K.3.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_10:08:33.350|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)|31
+2024-10-13_10:08:33.380|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_10:08:33.380|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)|31
+2024-10-13_10:08:33.540|Robert_M._Vigneault|APP_v4.K.3.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,1562 seconds|31
+2024-10-13_10:08:33.550|Robert_M._Vigneault|APP_v4.K.3.xlsb|***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) ***** (entrée)|31
+2024-10-13_10:10:02.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)|31
+2024-10-13_10:10:02.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:BackupMasterFile (entrée)|31
+2024-10-13_10:10:03.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 0,5859 seconds|31
+2024-10-13_10:10:03.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)|31
+2024-10-13_10:10:03.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_10:10:03.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)|31
+2024-10-13_10:10:03.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2344 seconds|31
+2024-10-13_10:10:03.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 1,2852 seconds|31
+2024-10-13_10:14:11.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_10:14:11.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_10:29:21.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon (entrée)|31
+2024-10-13_10:29:21.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_10:29:21.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_10:29:21.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2344 seconds|31
+2024-10-13_10:29:21.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_10:29:22.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3516 seconds|31
+2024-10-13_10:29:22.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_10:29:22.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1328 seconds|31
+2024-10-13_10:29:22.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_10:29:22.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1094 seconds|31
+2024-10-13_10:29:22.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_10:29:22.620|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1133 seconds|31
+2024-10-13_10:29:22.620|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_10:29:22.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,2617 seconds|31
+2024-10-13_10:29:22.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_10:29:25.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 2,3555 seconds|31
+2024-10-13_10:29:25.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_10:29:25.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,3906 seconds|31
+2024-10-13_10:29:25.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_10:29:25.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_10:29:25.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_10:29:25.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_10:29:25.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0508 seconds|31
+2024-10-13_10:29:25.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_10:29:25.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_10:29:29.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 3,6172 seconds|31
+2024-10-13_10:29:29.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 7,7852 seconds|31
+2024-10-13_10:29:29.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon() (sortie)|Temps écoulé: 7,9102 seconds|31
+2024-10-13_10:29:31.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu (entrée)|31
+2024-10-13_10:29:33.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_10:29:33.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_10:29:33.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu() (sortie)|Temps écoulé: 1,1523 seconds|31
+2024-10-13_10:29:33.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_10:29:33.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_10:29:39.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)|31
+2024-10-13_10:29:39.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_10:42:44.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|***** Début d'une nouvelle session (Workbook_Open) ***** (entrée)|31
+2024-10-13_10:42:44.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:BackupMasterFile (entrée)|31
+2024-10-13_10:42:45.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:BackupMasterFile() (sortie)|Temps écoulé: 0,9609 seconds|31
+2024-10-13_10:42:45.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username (entrée)|31
+2024-10-13_10:42:45.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:Hide_Dev_Shapes_Based_On_Username() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_10:42:45.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)|31
+2024-10-13_10:42:45.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2578 seconds|31
+2024-10-13_10:42:46.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|ThisWorkbook:Workbook_Open() (sortie)|Temps écoulé: 1,7734 seconds|31
+2024-10-13_11:35:00.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:00.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:00.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:00.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:00.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:00.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:00.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:00.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:00.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:00.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:00.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_11:35:00.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:00.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:00.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:00.810|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:00.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:00.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:00.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:00.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:00.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:00.870|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0781 seconds|31
+2024-10-13_11:35:00.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:00.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:00.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:00.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:00.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:00.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:00.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:00.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:00.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:00.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0625 seconds|31
+2024-10-13_11:35:00.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:00.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:00.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:00.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:00.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:00.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:00.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:00.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:00.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:01.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:01.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:01.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:01.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_11:35:01.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:01.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:01.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:01.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:01.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:01.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:01.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:01.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_11:35:01.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:01.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:01.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:01.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:01.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:01.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:01.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_11:35:01.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_11:35:01.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:01.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_11:35:01.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:01.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (entrée)|31
+2024-10-13_11:35:01.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:01.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:TECHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:01.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_11:35:01.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:01.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:01.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:01.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:01.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:01.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_11:35:01.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:01.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_11:35:01.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:01.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_11:35:01.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:01.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_11:35:02.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:02.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:02.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:02.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:02.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_11:35:02.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:02.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:02.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_11:35:02.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:02.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_11:35:02.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (entrée)|31
+2024-10-13_11:35:02.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_11:35:02.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_11:35:02.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:02.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (entrée)|31
+2024-10-13_11:35:02.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:FACHover_MouseMove (sortie)|Temps écoulé: 0,0391 seconds|31
+2024-10-13_11:35:02.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_11:35:02.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:02.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:02.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:02.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:02.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_11:35:03.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (entrée)|31
+2024-10-13_11:35:03.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:03.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (sortie)|Temps écoulé: 0,0898 seconds|31
+2024-10-13_11:35:03.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:03.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:03.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0391 seconds|31
+2024-10-13_11:35:03.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (entrée)|31
+2024-10-13_11:35:03.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_11:35:03.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (sortie)|Temps écoulé: 0,0820 seconds|31
+2024-10-13_11:35:03.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:03.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_11:35:03.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (entrée)|31
+2024-10-13_11:35:03.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_SuiviCC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:03.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_11:35:03.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:03.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:03.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:03.350|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:03.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_11:35:03.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:03.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_11:35:03.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_11:35:03.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:03.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:03.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:03.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_11:35:03.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_11:35:03.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:03.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_11:35:03.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0820 seconds|31
+2024-10-13_11:35:03.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:03.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:03.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:03.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_11:35:03.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:03.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_11:35:03.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:03.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_11:35:03.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0820 seconds|31
+2024-10-13_11:35:03.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_11:35:03.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (entrée)|31
+2024-10-13_11:35:03.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_11:35:03.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:03.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (entrée)|31
+2024-10-13_11:35:03.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:03.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_11:35:03.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (entrée)|31
+2024-10-13_11:35:03.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_11:35:03.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (entrée)|31
+2024-10-13_11:35:03.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:03.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:04.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:PreparationFacture_Click (entrée)|31
+2024-10-13_11:35:04.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_11:35:04.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_11:35:04.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_11:35:04.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_11:35:05.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,3281 seconds|31
+2024-10-13_11:35:05.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_11:35:05.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3789 seconds|31
+2024-10-13_11:35:05.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_11:35:05.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1367 seconds|31
+2024-10-13_11:35:05.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_11:35:05.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1250 seconds|31
+2024-10-13_11:35:05.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_11:35:05.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1367 seconds|31
+2024-10-13_11:35:05.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_11:35:06.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,2891 seconds|31
+2024-10-13_11:35:06.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_11:35:08.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 2,4688 seconds|31
+2024-10-13_11:35:08.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_11:35:09.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,4219 seconds|31
+2024-10-13_11:35:09.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_11:35:09.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_11:35:09.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_11:35:09.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_11:35:09.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_11:35:09.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_11:35:09.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:11.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_11:35:11.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_11:35:11.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_11:35:11.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_11:35:11.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:11.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,1406 seconds|31
+2024-10-13_11:35:11.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_11:35:11.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_11:35:11.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_11:35:11.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_11:35:11.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_11:35:11.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,1523 seconds|31
+2024-10-13_11:35:11.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,1758 seconds|31
+2024-10-13_11:35:11.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,3867 seconds|31
+2024-10-13_11:35:11.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 2,7578 seconds|31
+2024-10-13_11:35:11.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 7,3125 seconds|31
+2024-10-13_11:35:12.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:PreparationFacture_Click() (sortie)|Temps écoulé: 7,5703 seconds|31
+2024-10-13_11:35:33.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale (entrée)|31
+2024-10-13_11:35:33.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_11:35:33.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_11:35:33.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale() (sortie)|Temps écoulé: 0,1133 seconds|31
+2024-10-13_11:35:33.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (entrée)|31
+2024-10-13_11:35:33.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:41.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save (entrée)|31
+2024-10-13_13:53:41.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (entrée)|31
+2024-10-13_13:53:41.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB() (sortie)|Temps écoulé: 0,2695 seconds|31
+2024-10-13_13:53:41.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (entrée)|31
+2024-10-13_13:53:41.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (entrée)|31
+2024-10-13_13:53:41.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:53:41.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_13:53:41.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (entrée)|31
+2024-10-13_13:53:42.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB() (sortie)|Temps écoulé: 0,2266 seconds|31
+2024-10-13_13:53:42.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (entrée)|31
+2024-10-13_13:53:42.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:42.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB (entrée)|31
+2024-10-13_13:53:42.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB() (sortie)|Temps écoulé: 0,2109 seconds|31
+2024-10-13_13:53:42.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally (entrée)|31
+2024-10-13_13:53:42.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:53:42.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (entrée)|31
+2024-10-13_13:53:42.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB() (sortie)|Temps écoulé: 0,2070 seconds|31
+2024-10-13_13:53:42.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (entrée)|31
+2024-10-13_13:53:42.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally() (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_13:53:42.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB (entrée)|31
+2024-10-13_13:53:43.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB() (sortie)|Temps écoulé: 0,3086 seconds|31
+2024-10-13_13:53:43.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally (entrée)|31
+2024-10-13_13:53:43.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '939'|31
+2024-10-13_13:53:43.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:53:43.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1197'|31
+2024-10-13_13:53:43.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:53:43.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1241'|31
+2024-10-13_13:53:43.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:53:43.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1318'|31
+2024-10-13_13:53:43.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:53:43.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1422'|31
+2024-10-13_13:53:43.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:53:43.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1642'|31
+2024-10-13_13:53:43.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:53:43.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1693'|31
+2024-10-13_13:53:43.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:43.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:53:43.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1695'|31
+2024-10-13_13:53:43.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:43.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally() (sortie)|Temps écoulé: 0,1953 seconds|31
+2024-10-13_13:53:43.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB (entrée)|31
+2024-10-13_13:53:43.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB() (sortie)|Temps écoulé: 0,2383 seconds|31
+2024-10-13_13:53:43.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally (entrée)|31
+2024-10-13_13:53:43.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:53:43.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB (entrée)|31
+2024-10-13_13:53:43.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB() (sortie)|Temps écoulé: 0,2266 seconds|31
+2024-10-13_13:53:43.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally (entrée)|31
+2024-10-13_13:53:43.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:53:43.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)|31
+2024-10-13_13:53:43.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)|31
+2024-10-13_13:53:43.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,2070 seconds|31
+2024-10-13_13:53:43.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)|31
+2024-10-13_13:53:44.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1836 seconds|31
+2024-10-13_13:53:44.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,4297 seconds|31
+2024-10-13_13:53:44.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:44.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:53:44.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0625 seconds|31
+2024-10-13_13:53:44.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0625 seconds|31
+2024-10-13_13:53:45.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_13:53:45.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_13:53:46.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2422 seconds|31
+2024-10-13_13:53:46.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_13:53:46.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3359 seconds|31
+2024-10-13_13:53:46.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_13:53:46.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1484 seconds|31
+2024-10-13_13:53:46.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_13:53:46.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1172 seconds|31
+2024-10-13_13:53:46.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_13:53:46.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1172 seconds|31
+2024-10-13_13:53:46.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_13:53:47.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,2734 seconds|31
+2024-10-13_13:53:47.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_13:53:49.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 2,5742 seconds|31
+2024-10-13_13:53:49.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_13:53:50.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,3672 seconds|31
+2024-10-13_13:53:50.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:53:50.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:50.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:53:50.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:53:50.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0820 seconds|31
+2024-10-13_13:53:50.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:53:50.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:53:52.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:53:52.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:53:53.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:53:53.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:53.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:53:53.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_13:53:53.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:53:53.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:53.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:53:53.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:53:53.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:53:53.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,2227 seconds|31
+2024-10-13_13:53:53.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,2461 seconds|31
+2024-10-13_13:53:53.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,6406 seconds|31
+2024-10-13_13:53:53.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 3,4297 seconds|31
+2024-10-13_13:53:53.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 7,8359 seconds|31
+2024-10-13_13:53:55.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (entrée)|31
+2024-10-13_13:53:55.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:53:55.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (entrée)|31
+2024-10-13_13:53:55.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:55.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:53:55.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:55.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:53:55.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:53:55.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0391 seconds|31
+2024-10-13_13:53:55.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:53:55.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0508 seconds|31
+2024-10-13_13:53:55.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:53:55.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:53:58.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:53:58.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:53:58.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:53:58.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:58.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:53:58.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_13:53:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:53:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:53:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:53:59.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:53:59.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:53:59.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,1797 seconds|31
+2024-10-13_13:53:59.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,2109 seconds|31
+2024-10-13_13:53:59.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,5781 seconds|31
+2024-10-13_13:53:59.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 4,4141 seconds|31
+2024-10-13_13:53:59.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save() (sortie)|Temps écoulé: 17,8008 seconds|31
+2024-10-13_13:54:27.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale (entrée)|31
+2024-10-13_13:54:27.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_13:54:27.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_13:54:27.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale() (sortie)|Temps écoulé: 0,1836 seconds|31
+2024-10-13_13:54:27.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (entrée)|31
+2024-10-13_13:54:27.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:56.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save (entrée)|31
+2024-10-13_13:56:56.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (entrée)|31
+2024-10-13_13:56:57.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB() (sortie)|Temps écoulé: 0,2539 seconds|31
+2024-10-13_13:56:57.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (entrée)|31
+2024-10-13_13:56:57.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (entrée)|31
+2024-10-13_13:56:57.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:56:57.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally() (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_13:56:57.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (entrée)|31
+2024-10-13_13:56:57.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB() (sortie)|Temps écoulé: 0,2383 seconds|31
+2024-10-13_13:56:57.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (entrée)|31
+2024-10-13_13:56:57.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:56:57.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB (entrée)|31
+2024-10-13_13:56:57.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB() (sortie)|Temps écoulé: 0,2578 seconds|31
+2024-10-13_13:56:57.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally (entrée)|31
+2024-10-13_13:56:57.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally() (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_13:56:57.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (entrée)|31
+2024-10-13_13:56:58.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB() (sortie)|Temps écoulé: 0,2617 seconds|31
+2024-10-13_13:56:58.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (entrée)|31
+2024-10-13_13:56:58.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally() (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_13:56:58.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB (entrée)|31
+2024-10-13_13:56:58.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB() (sortie)|Temps écoulé: 0,3594 seconds|31
+2024-10-13_13:56:58.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally (entrée)|31
+2024-10-13_13:56:58.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1053'|31
+2024-10-13_13:56:58.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:56:58.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.530|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1099'|31
+2024-10-13_13:56:58.530|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:56:58.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1131'|31
+2024-10-13_13:56:58.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:56:58.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1114'|31
+2024-10-13_13:56:58.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1110'|31
+2024-10-13_13:56:58.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:58.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1155'|31
+2024-10-13_13:56:58.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.620|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1183'|31
+2024-10-13_13:56:58.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1240'|31
+2024-10-13_13:56:58.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:58.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1246'|31
+2024-10-13_13:56:58.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:56:58.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1264'|31
+2024-10-13_13:56:58.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1310'|31
+2024-10-13_13:56:58.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1317'|31
+2024-10-13_13:56:58.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1363'|31
+2024-10-13_13:56:58.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1360'|31
+2024-10-13_13:56:58.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:58.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1399'|31
+2024-10-13_13:56:58.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:58.810|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1423'|31
+2024-10-13_13:56:58.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1437'|31
+2024-10-13_13:56:58.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1453'|31
+2024-10-13_13:56:58.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1495'|31
+2024-10-13_13:56:58.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:56:58.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:56:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1623'|31
+2024-10-13_13:56:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:56:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally() (sortie)|Temps écoulé: 0,4375 seconds|31
+2024-10-13_13:56:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB (entrée)|31
+2024-10-13_13:56:59.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB() (sortie)|Temps écoulé: 0,2617 seconds|31
+2024-10-13_13:56:59.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally (entrée)|31
+2024-10-13_13:56:59.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally() (sortie)|Temps écoulé: 0,0625 seconds|31
+2024-10-13_13:56:59.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB (entrée)|31
+2024-10-13_13:56:59.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB() (sortie)|Temps écoulé: 0,2305 seconds|31
+2024-10-13_13:56:59.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally (entrée)|31
+2024-10-13_13:56:59.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:56:59.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)|31
+2024-10-13_13:56:59.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)|31
+2024-10-13_13:56:59.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,2383 seconds|31
+2024-10-13_13:56:59.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)|31
+2024-10-13_13:56:59.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,2070 seconds|31
+2024-10-13_13:56:59.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,4531 seconds|31
+2024-10-13_13:56:59.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:56:59.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:57:00.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0547 seconds|31
+2024-10-13_13:57:00.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_13:57:01.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_13:57:01.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_13:57:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2734 seconds|31
+2024-10-13_13:57:02.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_13:57:02.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3242 seconds|31
+2024-10-13_13:57:02.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_13:57:02.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1602 seconds|31
+2024-10-13_13:57:02.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_13:57:02.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1211 seconds|31
+2024-10-13_13:57:02.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_13:57:02.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1328 seconds|31
+2024-10-13_13:57:02.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_13:57:03.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,3242 seconds|31
+2024-10-13_13:57:03.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_13:57:06.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 3,1289 seconds|31
+2024-10-13_13:57:06.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_13:57:06.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,4219 seconds|31
+2024-10-13_13:57:06.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:57:06.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:06.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:57:06.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:57:07.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0977 seconds|31
+2024-10-13_13:57:07.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:57:07.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:57:14.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:57:14.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:57:14.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:57:14.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:14.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:57:14.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0859 seconds|31
+2024-10-13_13:57:14.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:57:14.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:14.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:57:17.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:57:17.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:57:17.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,3828 seconds|31
+2024-10-13_13:57:17.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,5273 seconds|31
+2024-10-13_13:57:17.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 3,5312 seconds|31
+2024-10-13_13:57:17.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 10,8398 seconds|31
+2024-10-13_13:57:17.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 15,9883 seconds|31
+2024-10-13_13:57:19.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (entrée)|31
+2024-10-13_13:57:19.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:57:19.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (entrée)|31
+2024-10-13_13:57:19.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:57:19.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:57:19.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:19.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:57:19.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_13:57:19.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_13:57:19.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:57:19.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_13:57:19.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:57:19.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:57:24.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:57:24.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:57:24.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:57:24.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:24.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:57:24.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0781 seconds|31
+2024-10-13_13:57:24.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:57:24.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:57:24.530|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:57:26.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:57:26.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:57:27.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,3906 seconds|31
+2024-10-13_13:57:27.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,4609 seconds|31
+2024-10-13_13:57:27.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 2,6406 seconds|31
+2024-10-13_13:57:27.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 8,1484 seconds|31
+2024-10-13_13:57:27.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save() (sortie)|Temps écoulé: 30,2578 seconds|31
+2024-10-13_13:58:06.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (entrée)|31
+2024-10-13_13:58:06.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:58:07.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$O$48 (entrée)|31
+2024-10-13_13:58:07.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$O$48 (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:58:08.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale (entrée)|31
+2024-10-13_13:58:08.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_13:58:08.810|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0508 seconds|31
+2024-10-13_13:58:08.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale() (sortie)|Temps écoulé: 0,1484 seconds|31
+2024-10-13_13:58:49.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save (entrée)|31
+2024-10-13_13:58:49.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (entrée)|31
+2024-10-13_13:58:49.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB() (sortie)|Temps écoulé: 0,2617 seconds|31
+2024-10-13_13:58:49.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (entrée)|31
+2024-10-13_13:58:49.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (entrée)|31
+2024-10-13_13:58:49.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:49.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:58:49.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (entrée)|31
+2024-10-13_13:58:49.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB() (sortie)|Temps écoulé: 0,2344 seconds|31
+2024-10-13_13:58:49.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (entrée)|31
+2024-10-13_13:58:49.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:58:49.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB (entrée)|31
+2024-10-13_13:58:49.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB() (sortie)|Temps écoulé: 0,2500 seconds|31
+2024-10-13_13:58:49.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally (entrée)|31
+2024-10-13_13:58:50.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_13:58:50.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (entrée)|31
+2024-10-13_13:58:50.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB() (sortie)|Temps écoulé: 0,2422 seconds|31
+2024-10-13_13:58:50.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (entrée)|31
+2024-10-13_13:58:50.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_13:58:50.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB (entrée)|31
+2024-10-13_13:58:50.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB() (sortie)|Temps écoulé: 0,3594 seconds|31
+2024-10-13_13:58:50.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally (entrée)|31
+2024-10-13_13:58:50.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '254'|31
+2024-10-13_13:58:50.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:50.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '746'|31
+2024-10-13_13:58:50.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:58:50.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '405'|31
+2024-10-13_13:58:50.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '747'|31
+2024-10-13_13:58:50.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '748'|31
+2024-10-13_13:58:50.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:50.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '749'|31
+2024-10-13_13:58:50.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '752'|31
+2024-10-13_13:58:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '753'|31
+2024-10-13_13:58:50.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '750'|31
+2024-10-13_13:58:50.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '754'|31
+2024-10-13_13:58:50.840|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '755'|31
+2024-10-13_13:58:50.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '756'|31
+2024-10-13_13:58:50.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:50.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '757'|31
+2024-10-13_13:58:50.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '751'|31
+2024-10-13_13:58:50.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:50.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '758'|31
+2024-10-13_13:58:50.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:50.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '759'|31
+2024-10-13_13:58:50.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:50.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:50.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '760'|31
+2024-10-13_13:58:50.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '761'|31
+2024-10-13_13:58:51.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:51.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '762'|31
+2024-10-13_13:58:51.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '895'|31
+2024-10-13_13:58:51.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:51.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1529'|31
+2024-10-13_13:58:51.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:51.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '899'|31
+2024-10-13_13:58:51.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:51.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '953'|31
+2024-10-13_13:58:51.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:58:51.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1530'|31
+2024-10-13_13:58:51.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '960'|31
+2024-10-13_13:58:51.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '979'|31
+2024-10-13_13:58:51.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '980'|31
+2024-10-13_13:58:51.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1028'|31
+2024-10-13_13:58:51.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:51.260|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1023'|31
+2024-10-13_13:58:51.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:51.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1025'|31
+2024-10-13_13:58:51.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:51.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1056'|31
+2024-10-13_13:58:51.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:51.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1057'|31
+2024-10-13_13:58:51.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:51.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.350|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1048'|31
+2024-10-13_13:58:51.350|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:58:51.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1080'|31
+2024-10-13_13:58:51.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1185'|31
+2024-10-13_13:58:51.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:58:51.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1210'|31
+2024-10-13_13:58:51.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:58:51.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1569'|31
+2024-10-13_13:58:51.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:51.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:58:51.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1568'|31
+2024-10-13_13:58:51.470|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:58:51.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally() (sortie)|Temps écoulé: 0,8320 seconds|31
+2024-10-13_13:58:51.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB (entrée)|31
+2024-10-13_13:58:51.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB() (sortie)|Temps écoulé: 0,2539 seconds|31
+2024-10-13_13:58:51.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally (entrée)|31
+2024-10-13_13:58:51.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally() (sortie)|Temps écoulé: 0,1172 seconds|31
+2024-10-13_13:58:51.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB (entrée)|31
+2024-10-13_13:58:52.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB() (sortie)|Temps écoulé: 0,1992 seconds|31
+2024-10-13_13:58:52.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally (entrée)|31
+2024-10-13_13:58:52.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:58:52.060|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)|31
+2024-10-13_13:58:52.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)|31
+2024-10-13_13:58:52.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,2500 seconds|31
+2024-10-13_13:58:52.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)|31
+2024-10-13_13:58:52.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1680 seconds|31
+2024-10-13_13:58:52.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,4258 seconds|31
+2024-10-13_13:58:52.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:58:52.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:58:52.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_13:58:52.570|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0781 seconds|31
+2024-10-13_13:58:54.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_13:58:54.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_13:58:55.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2422 seconds|31
+2024-10-13_13:58:55.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_13:58:55.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3594 seconds|31
+2024-10-13_13:58:55.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_13:58:55.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1484 seconds|31
+2024-10-13_13:58:55.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_13:58:55.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1211 seconds|31
+2024-10-13_13:58:55.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_13:58:55.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1250 seconds|31
+2024-10-13_13:58:55.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_13:58:56.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,3398 seconds|31
+2024-10-13_13:58:56.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_13:58:59.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 3,3164 seconds|31
+2024-10-13_13:58:59.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_13:58:59.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,4023 seconds|31
+2024-10-13_13:59:00.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:59:00.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:00.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:59:00.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:59:00.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_13:59:00.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:59:00.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_13:59:04.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:59:04.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:59:04.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:59:04.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:04.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:59:04.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_13:59:05.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:59:05.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:05.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:59:05.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:59:05.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:59:05.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,1445 seconds|31
+2024-10-13_13:59:05.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,1758 seconds|31
+2024-10-13_13:59:05.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,3984 seconds|31
+2024-10-13_13:59:05.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 5,2891 seconds|31
+2024-10-13_13:59:05.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 10,5898 seconds|31
+2024-10-13_13:59:07.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (entrée)|31
+2024-10-13_13:59:07.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:59:07.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (entrée)|31
+2024-10-13_13:59:07.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:07.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_13:59:07.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:07.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:59:07.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:59:07.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:59:07.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_13:59:07.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0547 seconds|31
+2024-10-13_13:59:07.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_13:59:07.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:12.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_13:59:12.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_13:59:12.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:59:12.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:12.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:59:12.490|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_13:59:12.530|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_13:59:12.530|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:12.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_13:59:12.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_13:59:12.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_13:59:12.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,1328 seconds|31
+2024-10-13_13:59:12.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,1641 seconds|31
+2024-10-13_13:59:12.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,3984 seconds|31
+2024-10-13_13:59:12.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 5,9141 seconds|31
+2024-10-13_13:59:12.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save() (sortie)|Temps écoulé: 23,8086 seconds|31
+2024-10-13_13:59:21.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale (entrée)|31
+2024-10-13_13:59:21.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_13:59:21.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0547 seconds|31
+2024-10-13_13:59:21.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale() (sortie)|Temps écoulé: 0,1523 seconds|31
+2024-10-13_13:59:21.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (entrée)|31
+2024-10-13_13:59:21.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_13:59:56.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save (entrée)|31
+2024-10-13_13:59:56.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (entrée)|31
+2024-10-13_13:59:56.870|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB() (sortie)|Temps écoulé: 0,2266 seconds|31
+2024-10-13_13:59:56.870|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (entrée)|31
+2024-10-13_13:59:56.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (entrée)|31
+2024-10-13_13:59:56.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:59:56.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally() (sortie)|Temps écoulé: 0,0391 seconds|31
+2024-10-13_13:59:56.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (entrée)|31
+2024-10-13_13:59:57.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB() (sortie)|Temps écoulé: 0,2109 seconds|31
+2024-10-13_13:59:57.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (entrée)|31
+2024-10-13_13:59:57.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:57.150|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB (entrée)|31
+2024-10-13_13:59:57.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB() (sortie)|Temps écoulé: 0,2227 seconds|31
+2024-10-13_13:59:57.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally (entrée)|31
+2024-10-13_13:59:57.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:57.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (entrée)|31
+2024-10-13_13:59:57.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB() (sortie)|Temps écoulé: 0,2148 seconds|31
+2024-10-13_13:59:57.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (entrée)|31
+2024-10-13_13:59:57.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_13:59:57.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB (entrée)|31
+2024-10-13_13:59:57.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB() (sortie)|Temps écoulé: 0,2969 seconds|31
+2024-10-13_13:59:57.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally (entrée)|31
+2024-10-13_13:59:57.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:57.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1012'|31
+2024-10-13_13:59:57.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:59:57.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:57.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1040'|31
+2024-10-13_13:59:57.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:59:57.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:57.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1100'|31
+2024-10-13_13:59:57.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:59:58.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:58.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1115'|31
+2024-10-13_13:59:58.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_13:59:58.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:58.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1184'|31
+2024-10-13_13:59:58.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:58.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:58.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1199'|31
+2024-10-13_13:59:58.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:58.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_13:59:58.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1637'|31
+2024-10-13_13:59:58.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:58.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally() (sortie)|Temps écoulé: 0,1367 seconds|31
+2024-10-13_13:59:58.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB (entrée)|31
+2024-10-13_13:59:58.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB() (sortie)|Temps écoulé: 0,2227 seconds|31
+2024-10-13_13:59:58.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally (entrée)|31
+2024-10-13_13:59:58.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_13:59:58.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB (entrée)|31
+2024-10-13_13:59:58.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB() (sortie)|Temps écoulé: 0,2148 seconds|31
+2024-10-13_13:59:58.540|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally (entrée)|31
+2024-10-13_13:59:58.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_13:59:58.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)|31
+2024-10-13_13:59:58.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)|31
+2024-10-13_13:59:58.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,1914 seconds|31
+2024-10-13_13:59:58.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)|31
+2024-10-13_13:59:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1484 seconds|31
+2024-10-13_13:59:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,3594 seconds|31
+2024-10-13_13:59:58.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_13:59:58.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_13:59:58.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_13:59:58.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_14:00:00.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_14:00:00.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_14:00:00.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2500 seconds|31
+2024-10-13_14:00:01.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_14:00:01.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3125 seconds|31
+2024-10-13_14:00:01.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_14:00:01.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1445 seconds|31
+2024-10-13_14:00:01.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_14:00:01.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1211 seconds|31
+2024-10-13_14:00:01.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_14:00:01.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1367 seconds|31
+2024-10-13_14:00:01.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_14:00:02.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,3477 seconds|31
+2024-10-13_14:00:02.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_14:00:05.940|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 3,8711 seconds|31
+2024-10-13_14:00:05.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_14:00:06.360|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,3828 seconds|31
+2024-10-13_14:00:06.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_14:00:06.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:00:06.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:00:06.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_14:00:06.810|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_14:00:06.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_14:00:06.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_14:00:12.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 5,2969 seconds|31
+2024-10-13_14:00:12.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 11,2852 seconds|31
+2024-10-13_14:00:14.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (entrée)|31
+2024-10-13_14:00:14.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:00:14.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (entrée)|31
+2024-10-13_14:00:14.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:00:14.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_14:00:14.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:00:14.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:00:14.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_14:00:14.100|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0547 seconds|31
+2024-10-13_14:00:14.120|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_14:00:14.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:00:15.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 1,3711 seconds|31
+2024-10-13_14:00:15.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save() (sortie)|Temps écoulé: 18,7617 seconds|31
+2024-10-13_14:00:18.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu (entrée)|31
+2024-10-13_14:00:20.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_14:00:20.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:00:20.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu() (sortie)|Temps écoulé: 1,6602 seconds|31
+2024-10-13_14:01:20.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_14:01:20.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_14:01:20.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:01:20.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_14:01:20.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:01:20.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_14:01:20.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_14:01:20.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_14:01:20.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:01:20.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_14:01:20.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:01:20.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_14:01:21.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (entrée)|31
+2024-10-13_14:01:21.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_14:01:21.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:01:21.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (entrée)|31
+2024-10-13_14:01:21.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:01:21.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_14:01:21.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (entrée)|31
+2024-10-13_14:01:21.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_14:01:21.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:01:21.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (entrée)|31
+2024-10-13_14:01:21.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:01:21.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblFAC_Prep_Hover_MouseMove (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_14:01:21.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:PreparationFacture_Click (entrée)|31
+2024-10-13_14:01:21.830|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_14:01:21.850|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:01:21.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_14:01:21.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_14:01:22.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2109 seconds|31
+2024-10-13_14:01:22.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_14:01:22.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3281 seconds|31
+2024-10-13_14:01:22.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_14:01:22.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1211 seconds|31
+2024-10-13_14:01:22.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_14:01:22.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1328 seconds|31
+2024-10-13_14:01:22.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_14:01:22.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1367 seconds|31
+2024-10-13_14:01:22.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_14:01:23.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,3203 seconds|31
+2024-10-13_14:01:23.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_14:01:26.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 3,4609 seconds|31
+2024-10-13_14:01:26.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_14:01:27.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,4102 seconds|31
+2024-10-13_14:01:27.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_14:01:27.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:01:27.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:01:27.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_14:01:27.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0586 seconds|31
+2024-10-13_14:01:27.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_14:01:27.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0312 seconds|31
+2024-10-13_14:01:32.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change (entrée)|31
+2024-10-13_14:01:32.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range (entrée)|31
+2024-10-13_14:01:32.330|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Data_In_A_Range() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:01:32.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:01:32.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:01:32.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Client_Change() (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_14:01:32.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client (entrée)|31
+2024-10-13_14:01:32.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:01:32.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:01:32.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon (entrée)|31
+2024-10-13_14:01:32.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes (entrée)|31
+2024-10-13_14:01:32.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes() (sortie)|Temps écoulé: 0,1289 seconds|31
+2024-10-13_14:01:32.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon() (sortie)|Temps écoulé: 0,1445 seconds|31
+2024-10-13_14:01:32.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client() (sortie)|Temps écoulé: 0,2734 seconds|31
+2024-10-13_14:01:32.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 5,4297 seconds|31
+2024-10-13_14:01:32.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 10,7500 seconds|31
+2024-10-13_14:01:32.740|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:PreparationFacture_Click() (sortie)|Temps écoulé: 10,9102 seconds|31
+2024-10-13_14:01:39.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale (entrée)|31
+2024-10-13_14:01:39.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_14:01:39.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0469 seconds|31
+2024-10-13_14:01:39.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale() (sortie)|Temps écoulé: 0,1719 seconds|31
+2024-10-13_14:01:39.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (entrée)|31
+2024-10-13_14:01:39.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$L$11 (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:14.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save (entrée)|31
+2024-10-13_14:02:14.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (entrée)|31
+2024-10-13_14:02:14.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB() (sortie)|Temps écoulé: 0,2344 seconds|31
+2024-10-13_14:02:14.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (entrée)|31
+2024-10-13_14:02:14.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (entrée)|31
+2024-10-13_14:02:14.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$11 (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:14.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally() (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_14:02:14.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (entrée)|31
+2024-10-13_14:02:14.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB() (sortie)|Temps écoulé: 0,2188 seconds|31
+2024-10-13_14:02:14.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (entrée)|31
+2024-10-13_14:02:14.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_14:02:14.580|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB (entrée)|31
+2024-10-13_14:02:14.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB() (sortie)|Temps écoulé: 0,2227 seconds|31
+2024-10-13_14:02:14.800|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally (entrée)|31
+2024-10-13_14:02:14.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_14:02:14.820|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (entrée)|31
+2024-10-13_14:02:15.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB() (sortie)|Temps écoulé: 0,2305 seconds|31
+2024-10-13_14:02:15.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (entrée)|31
+2024-10-13_14:02:15.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:15.080|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB (entrée)|31
+2024-10-13_14:02:15.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB() (sortie)|Temps écoulé: 0,2852 seconds|31
+2024-10-13_14:02:15.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally (entrée)|31
+2024-10-13_14:02:15.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_14:02:15.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1132'|31
+2024-10-13_14:02:15.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_14:02:15.390|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID (entrée)|31
+2024-10-13_14:02:15.400|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = '1113'|31
+2024-10-13_14:02:15.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFunctions:Fn_Find_Row_Number_TEC_ID() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:15.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally() (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_14:02:15.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB (entrée)|31
+2024-10-13_14:02:15.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB() (sortie)|Temps écoulé: 0,2148 seconds|31
+2024-10-13_14:02:15.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally (entrée)|31
+2024-10-13_14:02:15.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally() (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:15.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB (entrée)|31
+2024-10-13_14:02:15.870|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB() (sortie)|Temps écoulé: 0,2148 seconds|31
+2024-10-13_14:02:15.870|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally (entrée)|31
+2024-10-13_14:02:15.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally() (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:15.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All (entrée)|31
+2024-10-13_14:02:15.880|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data (entrée)|31
+2024-10-13_14:02:16.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data() (sortie)|Temps écoulé: 0,2539 seconds|31
+2024-10-13_14:02:16.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables (entrée)|31
+2024-10-13_14:02:16.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables() (sortie)|Temps écoulé: 0,1641 seconds|31
+2024-10-13_14:02:16.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modTEC_Saisie:TEC_TdB_Update_All() (sortie)|Temps écoulé: 0,4180 seconds|31
+2024-10-13_14:02:16.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:02:16.320|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes (entrée)|31
+2024-10-13_14:02:16.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes() (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_14:02:16.340|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_14:02:18.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate (entrée)|31
+2024-10-13_14:02:18.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (entrée)|31
+2024-10-13_14:02:18.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:Client_List_Import_All (sortie)|Temps écoulé: 0,2617 seconds|31
+2024-10-13_14:02:18.370|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (entrée)|31
+2024-10-13_14:02:18.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:TEC_Import_All (sortie)|Temps écoulé: 0,3398 seconds|31
+2024-10-13_14:02:18.710|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (entrée)|31
+2024-10-13_14:02:18.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Entête_Import_All (sortie)|Temps écoulé: 0,1484 seconds|31
+2024-10-13_14:02:18.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (entrée)|31
+2024-10-13_14:02:19.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Détails_Import_All (sortie)|Temps écoulé: 0,1562 seconds|31
+2024-10-13_14:02:19.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (entrée)|31
+2024-10-13_14:02:19.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Comptes_Clients_Import_All (sortie)|Temps écoulé: 0,1445 seconds|31
+2024-10-13_14:02:19.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (entrée)|31
+2024-10-13_14:02:19.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Entête_Import_All (sortie)|Temps écoulé: 0,3906 seconds|31
+2024-10-13_14:02:19.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (entrée)|31
+2024-10-13_14:02:23.380|Robert_M._Vigneault|APP_v4.K.4.xlsb|modImport:FAC_Projets_Détails_Import_All (sortie)|Temps écoulé: 3,8203 seconds|31
+2024-10-13_14:02:23.410|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder (entrée)|31
+2024-10-13_14:02:23.860|Robert_M._Vigneault|APP_v4.K.4.xlsb|modDev_Utils:SetTabOrder() (sortie)|Temps écoulé: 0,4414 seconds|31
+2024-10-13_14:02:24.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_14:02:24.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:02:24.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:24.110|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_14:02:24.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0859 seconds|31
+2024-10-13_14:02:24.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_14:02:24.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_14:02:26.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 2,6094 seconds|31
+2024-10-13_14:02:26.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Activate() (sortie)|Temps écoulé: 8,5938 seconds|31
+2024-10-13_14:02:28.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (entrée)|31
+2024-10-13_14:02:28.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$E$3 (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:28.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (entrée)|31
+2024-10-13_14:02:28.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Brouillon:Worksheet_Change:$B$27 (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:28.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice (entrée)|31
+2024-10-13_14:02:28.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed (entrée)|31
+2024-10-13_14:02:28.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed() (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:28.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells (entrée)|31
+2024-10-13_14:02:28.130|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells() (sortie)|Temps écoulé: 0,0820 seconds|31
+2024-10-13_14:02:28.140|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells (entrée)|31
+2024-10-13_14:02:28.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Setup_All_Cells() (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_14:02:30.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_New_Invoice() (sortie)|Temps écoulé: 2,4023 seconds|31
+2024-10-13_14:02:30.430|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Finale:FAC_Finale_Save() (sortie)|Temps écoulé: 16,4023 seconds|31
+2024-10-13_14:02:31.560|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu (entrée)|31
+2024-10-13_14:02:33.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate (entrée)|31
+2024-10-13_14:02:33.050|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshFAC_Finale:Worksheet_Activate() (sortie)|Temps écoulé: 0,0195 seconds|31
+2024-10-13_14:02:33.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu() (sortie)|Temps écoulé: 1,5273 seconds|31
+2024-10-13_14:02:33.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_14:02:33.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_14:02:33.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:33.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_14:02:33.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:33.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_14:02:33.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_14:02:33.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_14:02:33.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:33.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_14:02:33.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:33.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0938 seconds|31
+2024-10-13_14:02:33.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (entrée)|31
+2024-10-13_14:02:34.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (entrée)|31
+2024-10-13_14:02:34.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_PrepFact (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:34.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (entrée)|31
+2024-10-13_14:02:34.020|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_SuiviCC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:34.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (entrée)|31
+2024-10-13_14:02:34.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Encaissement (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_14:02:34.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (entrée)|31
+2024-10-13_14:02:34.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Historique (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:34.070|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (entrée)|31
+2024-10-13_14:02:34.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_FAC_Confirmation (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:34.090|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenuFAC:lblMinAll_Hover_MouseMove (sortie)|Temps écoulé: 0,0859 seconds|31
+2024-10-13_14:02:34.720|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)|31
+2024-10-13_14:02:34.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:34.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:34.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:34.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:34.900|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:34.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:34.920|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:34.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:34.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:34.930|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:34.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:34.950|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:34.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:34.960|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:34.970|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0703 seconds|31
+2024-10-13_14:02:34.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:34.980|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:34.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:34.990|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:35.000|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:35.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:35.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:35.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:35.010|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:35.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:35.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:35.030|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:35.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:35.040|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0664 seconds|31
+2024-10-13_14:02:35.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:35.160|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:35.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:35.170|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:35.180|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:35.190|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:35.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:35.200|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:35.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:35.210|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:35.220|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:35.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:35.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:35.230|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_14:02:35.240|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:35.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:35.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:35.250|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:35.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:35.270|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:35.280|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:35.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:35.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:35.290|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:35.300|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:35.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:35.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:35.310|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_14:02:50.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:50.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.420|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:50.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:50.440|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:50.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.450|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:50.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:50.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.460|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:50.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:50.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.480|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0625 seconds|31
+2024-10-13_14:02:50.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.500|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:50.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:50.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:50.510|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:50.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:50.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:50.520|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:50.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0234 seconds|31
+2024-10-13_14:02:50.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:50.550|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:50.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0391 seconds|31
+2024-10-13_14:02:50.590|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0977 seconds|31
+2024-10-13_14:02:50.600|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (entrée)|31
+2024-10-13_14:02:50.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_TEC (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (entrée)|31
+2024-10-13_14:02:50.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Facturation (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:50.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (entrée)|31
+2024-10-13_14:02:50.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Debours (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:50.640|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (entrée)|31
+2024-10-13_14:02:50.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Comptabilite (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:50.660|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:50.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:50.680|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:MinAllHover_MouseMove (sortie)|Temps écoulé: 0,0742 seconds|31
+2024-10-13_14:02:50.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.690|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:50.700|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_14:02:50.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_14:02:50.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0430 seconds|31
+2024-10-13_14:02:50.730|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.750|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0117 seconds|31
+2024-10-13_14:02:50.760|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_14:02:50.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0078 seconds|31
+2024-10-13_14:02:50.770|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0352 seconds|31
+2024-10-13_14:02:50.780|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (entrée)|31
+2024-10-13_14:02:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (entrée)|31
+2024-10-13_14:02:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Parametres (sortie)|Temps écoulé: 0,0039 seconds|31
+2024-10-13_14:02:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (entrée)|31
+2024-10-13_14:02:50.790|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideOut_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:50.810|Robert_M._Vigneault|APP_v4.K.4.xlsb|wshMenu:EXITHover_MouseMove (sortie)|Temps écoulé: 0,0273 seconds|31
+2024-10-13_14:02:52.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (entrée)|31
+2024-10-13_14:02:52.610|Robert_M._Vigneault|APP_v4.K.4.xlsb|modMenu:SlideIn_Exit (sortie)|Temps écoulé: 0,0000 seconds|31
+2024-10-13_14:02:52.630|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu (entrée)|31
+2024-10-13_14:02:52.650|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Hide_All_Worksheets_Except_Menu() (sortie)|Temps écoulé: 0,0156 seconds|31
+2024-10-13_14:02:52.670|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu (entrée)|31
+2024-10-13_14:02:52.890|Robert_M._Vigneault|APP_v4.K.4.xlsb|modAppli:Write_Info_On_Main_Menu() (sortie)|Temps écoulé: 0,2227 seconds|31
+2024-10-13_14:02:52.910|Robert_M._Vigneault|APP_v4.K.4.xlsb|***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) ***** (entrée)|31

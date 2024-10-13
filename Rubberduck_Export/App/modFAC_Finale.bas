@@ -862,100 +862,6 @@ NoItems:
 
 End Sub
 
-Sub CopierFeuilleVersNouveauWorkbook(clientID As String, clientName As String, invNo As String, invDate As String)
-    
-    Dim wbCible As Workbook
-    Dim wsCible As Worksheet
-    
-    Dim clientNamePurged As String
-    clientNamePurged = clientName
-    Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
-        clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
-    Loop
-    
-    Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wshAdmin.Range("F5").value & FACT_EXCEL_PATH
-    ChDir ExcelFilesFullPath
-    
-    ' Définir la feuille source et la plage à copier
-    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
-    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
-    Dim plageSource As Range: Set plageSource = wsSource.Range("A1:F88")
-
-    'Ouvrir un nouveau Workbook (ou choisir un workbook existant)
-    On Error Resume Next
-    Set wbCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'Sélectionner un classeur cible
-    On Error GoTo 0
-    
-    If wbCible Is Nothing Then
-        'Si aucun fichier n'a été sélectionné, créer un nouveau workbook
-        Set wbCible = Workbooks.Add
-    End If
-    
-    'Ajouter une nouvelle feuille dans le workbook cible
-    Set wsCible = wbCible.Sheets(1) ' ou ajouter une nouvelle feuille avec wsCible = wbCible.Sheets.Add
-    wsCible.name = invDate & " - " & invNo
-    
-    '1. Copier les valeurs uniquement
-    plageSource.Copy
-    wsCible.Range("A1").PasteSpecial Paste:=xlPasteValues
-    
-    '2. Copier les formats de cellules
-    plageSource.Copy
-    wsCible.Range("A1").PasteSpecial Paste:=xlPasteFormats
-    
-    '3. Conserver la taille des colonnes
-    Dim i As Integer
-    For i = 1 To plageSource.columns.count
-        wsCible.columns(i).ColumnWidth = plageSource.columns(i).ColumnWidth
-    Next i
-    
-    '4. Ajuster les hauteurs de lignes (optionnel si nécessaire)
-    For i = 1 To plageSource.rows.count
-        wsCible.rows(i).RowHeight = plageSource.rows(i).RowHeight
-    Next i
-    
-    '5. Copier l'entête de la facture
-    Dim forme As Shape
-    For Each forme In wsSource.Shapes
-        If forme.name = "GCF_Entête" Then
-            forme.Copy
-            wsCible.Paste
-        End If
-    Next forme
-    
-    
-    
-    '6. Copier les paramètres d'impression
-    With wsCible.PageSetup
-        .Orientation = wsSource.PageSetup.Orientation
-        .PaperSize = xlPaperLetter '2024-10-13 @ 07:45
-        .Zoom = wsSource.PageSetup.Zoom
-        .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
-        .FitToPagesTall = wsSource.PageSetup.FitToPagesTall
-        .LeftMargin = wsSource.PageSetup.LeftMargin
-        .RightMargin = wsSource.PageSetup.RightMargin
-        .TopMargin = wsSource.PageSetup.TopMargin
-        .BottomMargin = wsSource.PageSetup.BottomMargin
-        .HeaderMargin = wsSource.PageSetup.HeaderMargin
-        .FooterMargin = wsSource.PageSetup.FooterMargin
-        .PrintArea = wsSource.PageSetup.PrintArea
-        .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
-        .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
-        .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
-        .CenterVertically = wsSource.PageSetup.CenterVertically
-    End With
-    
-    'Désactiver le mode copier-coller pour libérer la mémoire
-    Application.CutCopyMode = False
-    
-    'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
-    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
-
-'    MsgBox "La feuille a été copiée avec succès !"
-    
-End Sub
-
 'Sub test_CopierFeuilleVersNouveauWorkbook()
 '
 '    Dim clientID As String, clientName As String, invNo As String, invDate As String
@@ -1371,35 +1277,40 @@ End Sub
 '
 'End Sub
 '
-Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 07:36
+Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     
     flagEtapeFacture = 1
     
-    Call FAC_Finale_Create_PDF_Sub(wshFAC_Finale.Range("E28").value)
+    'Étape 1 - Création du document PDF
+    Call FAC_Finale_Create_PDF(wshFAC_Finale.Range("E28").value)
     
-    DoEvents
-    
-    Call CopierFeuilleVersNouveauWorkbook(wshFAC_Brouillon.Range("B18").value, _
+    'Étape 2 - Copie de la facture en format EXCEL
+    Call FAC_Finale_Copie_Vers_Excel(wshFAC_Brouillon.Range("B18").value, _
                                           wshFAC_Finale.Range("L81").value, _
                                           wshFAC_Finale.Range("E28").value, _
                                           Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
-
-    DoEvents
+    flagEtapeFacture = 3
     
+    'Étape 3 - Envoi du courriel
+    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value)
+    flagEtapeFacture = 4
+    
+    'Étape 4 - Activation du bouton SAUVEGARDE
     Call FAC_Finale_Enable_Save_Button
+    flagEtapeFacture = 5
 
 End Sub
 
-Sub FAC_Finale_Create_PDF_Sub(noFacture As String)
+Sub FAC_Finale_Create_PDF(noFacture As String)
 
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
     Dim result As Boolean
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
     
     If result = False Then
-        MsgBox "ATTENTION... La facture ne s'est pas sauvegardé en format PDF", _
+        MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
                 vbCritical, _
-                "Incapable de sauvegarder la facture en format PDF"
+                "Impossible de sauvegarder la facture en format PDF"
         flagEtapeFacture = -1
     End If
 
@@ -1452,19 +1363,491 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     
 SaveOnly:
     FAC_Finale_Create_PDF_Func = True 'Return value
-'    FAC_Finale_Create_PDF_Email_Func = True 'Return value
+'    FAC_Finale_Create_Email = True 'Return value
     GoTo EndMacro
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
     FAC_Finale_Create_PDF_Func = False 'Function return value
-'    FAC_Finale_Create_PDF_Email_Func = False 'Function return value
+'    FAC_Finale_Create_Email = False 'Function return value
 
 EndMacro:
     Application.ScreenUpdating = True
     
 End Function
 
+Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo As String, invDate As String)
+    
+    Dim wbCible As Workbook
+    Dim wsCible As Worksheet
+    Dim clientNamePurged As String
+    clientNamePurged = clientName
+    
+    Application.ScreenUpdating = False
+    
+    'Purge le nom du client
+    Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
+        clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
+    Loop
+    
+    'Définir le chemin complet du répertoire des fichiers Excel
+    Dim ExcelFilesFullPath As String
+    ExcelFilesFullPath = wshAdmin.Range("F5").value & FACT_EXCEL_PATH
+    ChDir ExcelFilesFullPath
+    
+    'Définir la feuille source et la plage à copier
+    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
+    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
+    Dim plageSource As Range: Set plageSource = wsSource.Range("A1:F88")
+
+    'Désactiver les événements pour éviter Workbook_Activate
+    Application.EnableEvents = False
+    
+    'Ouvrir un nouveau Workbook (ou choisir un workbook existant)
+    On Error Resume Next
+    Dim strCible As String
+    strCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'Sélectionner un classeur cible
+    On Error GoTo 0
+    
+    'Si l'utilisateur annule la sélection du fichier ou il y a une erreur
+    If strCible = "False" Or strCible = "" Then
+        'Créer un nouveau workbook
+        Set wbCible = Workbooks.Add
+        strCible = ""
+    Else
+        'Ouvrir le workbook sélectionné
+        Set wbCible = Workbooks.Open(strCible)
+    End If
+    
+    'Créer une nouvelle feuille si nécessaire
+    Set wsCible = wbCible.Sheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+    wsCible.name = invDate & " - " & invNo ' Renommer la nouvelle feuille
+    
+    '1. Copier les valeurs uniquement
+    plageSource.Copy
+    wsCible.Range("A1").PasteSpecial Paste:=xlPasteValues
+
+    '2. Copier les formats de cellules
+    plageSource.Copy
+    wsCible.Range("A1").PasteSpecial Paste:=xlPasteFormats
+
+    '3. Conserver la taille des colonnes
+    Dim i As Integer
+    For i = 1 To plageSource.columns.count
+        wsCible.columns(i).ColumnWidth = plageSource.columns(i).ColumnWidth
+    Next i
+
+    '4. Ajuster les hauteurs de lignes (optionnel si nécessaire)
+    For i = 1 To plageSource.rows.count
+        wsCible.rows(i).RowHeight = plageSource.rows(i).RowHeight
+    Next i
+
+    '5. Copier l'entête de la facture
+    Dim forme As Shape
+    For Each forme In wsSource.Shapes
+        If forme.name = "GCF_Entête" Then
+            forme.Copy
+            wsCible.Paste
+            'Ajuster la position de la forme si nécessaire
+            wsCible.Shapes(wsCible.Shapes.count).Top = forme.Top
+            wsCible.Shapes(wsCible.Shapes.count).Left = forme.Left
+        End If
+    Next forme
+
+    '6. Copier les paramètres d'impression
+    With wsCible.PageSetup
+        .Orientation = wsSource.PageSetup.Orientation
+        .PaperSize = xlPaperLetter '2024-10-13 @ 07:45
+        .Zoom = wsSource.PageSetup.Zoom
+        .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
+        .FitToPagesTall = wsSource.PageSetup.FitToPagesTall
+        .LeftMargin = wsSource.PageSetup.LeftMargin
+        .RightMargin = wsSource.PageSetup.RightMargin
+        .TopMargin = wsSource.PageSetup.TopMargin
+        .BottomMargin = wsSource.PageSetup.BottomMargin
+        .HeaderMargin = wsSource.PageSetup.HeaderMargin
+        .FooterMargin = wsSource.PageSetup.FooterMargin
+        .PrintArea = wsSource.PageSetup.PrintArea
+        .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
+        .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
+        .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
+        .CenterVertically = wsSource.PageSetup.CenterVertically
+    End With
+    
+    'Désactiver le mode copier-coller pour libérer la mémoire
+    Application.CutCopyMode = False
+    
+    'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
+    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
+
+    'Réactiver les événements après l'ouverture
+    Application.EnableEvents = True
+    
+    'La facture a été sauvegardé en format EXCEL
+    flagEtapeFacture = 3
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub FAC_Finale_Creation_Courriel(noFacture As String) '2024-10-13 @ 11:33
+
+    'Chemin de la pièce jointe
+    Dim attachmentFullPathName As String
+    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
+                     noFacture & ".pdf" '2024-09-03 @ 16:43
+    
+    'Vérification de l'existence de la pièce jointe
+    Dim fileExists As Boolean
+    fileExists = Dir(attachmentFullPathName) <> ""
+    If Not fileExists Then
+        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
+                    "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
+        GoTo Exit_sub
+    End If
+    
+    'Chemin du modèle (template) de courriel
+    Dim templatePath As String
+    templatePath = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
+'    templatePath = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
+
+    'Initialisation de l'application Outlook
+    Dim OutlookApp As Object
+    On Error Resume Next
+    Set OutlookApp = GetObject(, "Outlook.Application")
+    If OutlookApp Is Nothing Then
+        Set OutlookApp = CreateObject("Outlook.Application")
+    End If
+    On Error GoTo 0
+
+    'Création de l'email à partir du modèle
+    Dim MailItem As Object
+    Set MailItem = OutlookApp.CreateItemFromTemplate(templatePath)
+
+    'Ajout de la pièce jointe
+    MailItem.Attachments.Add attachmentFullPathName
+
+    'Obtenir la signature par défaut
+    Dim signaturePath As String
+    signaturePath = Fn_Get_Outlook_Signature_Path()
+    Dim Signature As String
+    Signature = Fn_Get_Outlook_Signature()
+    
+    'Optionnel : Modifiez les éléments de l'email (comme les destinataires)
+    MailItem.To = "robertv13@me.com"
+    MailItem.Subject = "GCF FISCALITÉ INC. - Facturation"
+'    MailItem.Body = Replace(MailItem.Body, "{nom_du_destinataire}", "John Doe")
+
+    'Ajoutez le contenu du corps et la signature
+'    MailItem.HTMLBody = "<p>Contenu de l'email ici...</p>" & Signature
+     
+    'Afficher (.Display) ou envoyer (.Send) le courriel
+    MailItem.Display
+    ' MailItem.Send ' Pour envoyer directement l'email
+
+Exit_sub:
+    'Nettoyage
+    Set MailItem = Nothing
+    Set OutlookApp = Nothing
+    
+End Sub
+
+Sub Test_FAC_Finale_Creation_Courriel()
+
+    Call FAC_Finale_Creation_Courriel("24-24524")
+
+End Sub
+
+Function Fn_Get_Outlook_Signature_Path() As String
+    
+    Dim sPath As String
+    Dim sSignaturePath As String
+    Dim fso As Object
+    Dim file As Object
+
+    'Chemin vers le dossier des signatures
+    sPath = Environ("appdata") & "\Microsoft\Signatures\"
+    
+    'Définir l'objet FileSystem
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    'Trouver le fichier de signature HTML
+    For Each file In fso.GetFolder(sPath).Files
+        If LCase(fso.GetExtensionName(file.name)) = "htm" Then
+            sSignaturePath = file.path
+            Exit For
+        End If
+    Next
+    
+    'Retourner le chemin de la signature
+    Fn_Get_Outlook_Signature_Path = sSignaturePath
+    
+    Set fso = Nothing
+    Set file = Nothing
+    
+End Function
+
+Function Fn_Get_Outlook_Signature() As String
+
+    'Chemin vers le dossier des signatures
+    Dim sPath As String
+    sPath = Environ("appdata") & "\Microsoft\Signatures\"
+    
+    'Définir l'objet FileSystem
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    'Lire la signature par défaut dans le fichier .htm
+    Dim sSignature As String
+    Dim ts As Object
+    If fso.fileExists(sPath & Dir(sPath & "*.htm")) Then
+        Set ts = fso.GetFile(sPath & Dir(sPath & "*.htm")).OpenAsTextStream(1, -2)
+        sSignature = ts.ReadAll
+        ts.Close
+    End If
+    
+    'Retourner la signature
+    Fn_Get_Outlook_Signature = sSignature
+    
+    Set fso = Nothing
+    Set ts = Nothing
+    
+End Function
+
+'Function ReadSignatureFile(filepath As String) As String
+'    Dim fso As Object
+'    Dim ts As Object
+'    Dim sContent As String
+'
+'    ' Définir l'objet FileSystem
+'    Set fso = CreateObject("Scripting.FileSystemObject")
+'
+'    ' Lire le contenu de la signature
+'    If fso.fileExists(filepath) Then
+'        Set ts = fso.GetFile(filepath).OpenAsTextStream(1, -2)
+'        sContent = ts.ReadAll
+'        ts.Close
+'    End If
+'
+'    ' Retourner le contenu de la signature
+'    ReadSignatureFile = sContent
+'
+'    Set fso = Nothing
+'    Set ts = Nothing
+'End Function
+'
+'Sub EnvoyerEmailHTMLAvecSignature()
+'
+'    Dim OutlookApp As Object
+'    Dim MailItem As Object
+'    Dim Destinataire As String
+'    Dim Objet As String
+'    Dim CorpsMessage As String
+'    Dim Signature As String
+'    Dim PieceJointe As String
+'    Dim CheminImageSignature As String
+'
+'    ' Initialiser l'application Outlook
+'    On Error Resume Next
+'    Set OutlookApp = GetObject(Class:="Outlook.Application")
+'    If OutlookApp Is Nothing Then
+'        Set OutlookApp = CreateObject(Class:="Outlook.Application")
+'    End If
+'    On Error GoTo 0
+'
+'    ' Créer un nouvel e-mail
+'    Set MailItem = OutlookApp.CreateItem(0) ' 0 = olMailItem
+'
+'    ' Définir les paramètres de l'e-mail
+'    Destinataire = "destinataire@exemple.com"
+'    Objet = "Objet de votre e-mail"
+'    PieceJointe = "C:\VBA\GC_FISCALITÉ\Factures_PDF\24-24524.pdf"
+'
+'    'Obtenir la signature par défaut
+'    Dim signaturePath As String
+'    signaturePath = Fn_Get_Outlook_Signature_Path()
+'    Dim Signature As String
+'    Signature = Fn_Get_Outlook_Signature()
+'
+'    ' Construire le corps de l'e-mail avec HTML
+'    CorpsMessage = "<p style='text-indent: 40px;'>Bonjour,</p>" & _
+'                   "<p style='text-indent: 40px;'>Veuillez trouver ci-joint le document requis concernant votre demande.</p>" & _
+'                   "<p style='text-indent: 40px;'>Cordialement,</p>"
+'
+'    ' Signature en HTML avec image
+'    Signature = "<br><img src='cid:SignatureImage' width='100' height='100'><br>" & _
+'                "<b>Votre Nom</b><br>" & _
+'                "Votre Fonction<br>" & _
+'                "Votre Société<br>" & _
+'                "Téléphone : +33 1 23 45 67 89<br>" & _
+'                "Email : <a href='mailto:Votre.Email@exemple.com'>Votre.Email@exemple.com</a><br>" & _
+'                "Adresse complète de l'entreprise"
+'
+'    ' Construire l'e-mail avec HTML et la pièce jointe
+'    With MailItem
+'        .To = Destinataire
+'        .Subject = Objet
+'        .HTMLBody = CorpsMessage & Signature
+'
+'        ' Ajouter une pièce jointe si elle existe
+'        If Dir(PieceJointe) <> "" Then
+'            .Attachments.Add PieceJointe
+'        Else
+'            MsgBox "La pièce jointe n'a pas été trouvée.", vbExclamation
+'            Exit Sub
+'        End If
+'
+'        ' Ajouter l'image de la signature dans l'e-mail
+'        If Dir(CheminImageSignature) <> "" Then
+'            .Attachments.Add CheminImageSignature, 1, 0, "SignatureImage" ' L'argument "cid" est utilisé ici
+'        Else
+'            MsgBox "L'image de la signature n'a pas été trouvée.", vbExclamation
+'            Exit Sub
+'        End If
+'
+'        .Display ' Utilisez .Send pour envoyer directement
+'    End With
+'
+'    ' Libérer les objets
+'    Set MailItem = Nothing
+'    Set OutlookApp = Nothing
+'
+'End Sub
+'
+'Sub EnvoyerEmailAvecPieceJointe()
+'
+'    Dim OutlookApp As Object
+'    Dim MailItem As Object
+'    Dim Destinataire As String
+'    Dim Objet As String
+'    Dim CorpsMessage As String
+'    Dim PieceJointe As String
+'    Dim Signature As String
+'
+'    'Initialiser l'application Outlook
+'    On Error Resume Next
+'    Set OutlookApp = GetObject(Class:="Outlook.Application")
+'    If OutlookApp Is Nothing Then
+'        Set OutlookApp = CreateObject(Class:="Outlook.Application")
+'    End If
+'    On Error GoTo 0
+'
+'    'Créer un nouvel e-mail
+'    Set MailItem = OutlookApp.CreateItem(0) ' 0 = olMailItem
+'
+'    'Définir les paramètres de l'e-mail
+'    Destinataire = "robertv13@me.com"
+'    Objet = "GC FISCALITÉ - Facturation"
+'    CorpsMessage = "Bonjour," & vbCrLf & vbCrLf & _
+'                   "Veuillez trouver ci-joint le document requis." & vbCrLf & vbCrLf & _
+'                   "Cordialement," & vbCrLf & _
+'                   "Votre Nom"
+'
+'    PieceJointe = "C:\VBA\GC_FISCALITÉ\Factures_PDF\24-24524.pdf"
+'
+'    'Signature spécifique (vous pouvez ajuster cela ou utiliser la signature par défaut d'Outlook)
+'    Signature = vbCrLf & "Votre Nom" & vbCrLf & _
+'                "Votre Fonction" & vbCrLf & _
+'                "Votre Société" & vbCrLf & _
+'                "Téléphone : +33 1 23 45 67 89" & vbCrLf & _
+'                "Email : votre.email@exemple.com"
+'
+'    'Construire l'e-mail
+'    With MailItem
+'        .To = Destinataire
+'        .Subject = Objet
+'        .Body = CorpsMessage & vbCrLf & vbCrLf & Signature
+'        If Dir(PieceJointe) <> "" Then ' Vérifier si la pièce jointe existe
+'            .Attachments.Add PieceJointe
+'        Else
+'            MsgBox "La pièce jointe n'a pas été trouvée.", vbExclamation
+'            Exit Sub
+'        End If
+'        .Display ' Utilisez .Send pour envoyer directement
+'    End With
+'
+'    ' Libérer les objets
+'    Set MailItem = Nothing
+'    Set OutlookApp = Nothing
+'
+'End Sub
+'
+'Sub FAC_Finale_Create_Email(noFacture As String)
+'
+'    Application.ScreenUpdating = False
+'
+'    'Construct the attachmentFullPathName filename
+'    Dim attachmentFullPathName As String
+'    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
+'                     noFacture & ".pdf" '2024-09-03 @ 16:43
+'
+'    'Check if the file already exists
+'    Dim fileExists As Boolean
+'    fileExists = Dir(attachmentFullPathName) <> ""
+'
+'    'If the file exists, prompt the user for confirmation
+'    Dim reponse As VbMsgBoxResult
+'    If Not fileExists Then
+'        reponse = MsgBox("La facture '" & noFacture & "' n'existe pas en format PDF" & _
+'                          "Je ne peux donc pas l'envoyer par courriel !", vbInformation, _
+'                          "Cette facture n'existe pas en format PDF")
+'        GoTo EndMacro
+'    End If
+'
+'    'Set Print Quality
+'    On Error Resume Next
+'    ActiveSheet.PageSetup.PrintQuality = 600
+'    Err.Clear
+'    On Error GoTo 0
+'
+'    'Adjust Document Properties - 2024-09-03 @ 16:46
+'    With ActiveSheet.PageSetup
+'        .LeftMargin = Application.InchesToPoints(0)
+'        .RightMargin = Application.InchesToPoints(0)
+'        .TopMargin = Application.InchesToPoints(0)
+'        .BottomMargin = Application.InchesToPoints(0)
+'    End With
+'
+'    'Construct & Display the Email, allowing the user to modify the Email
+'    On Error GoTo SaveOnly
+'
+'    Dim OutlookApp As Outlook.Application: Set OutlookApp = New Outlook.Application
+'
+'    'Where are the email templates ? - 2024-03-27 @ 07:28
+'    Dim FullTemplatePathAndFile As String
+'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
+'        FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
+'    Else
+'        FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
+'    End If
+'
+'    Dim myMail As Outlook.MailItem: Set myMail = OutlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
+''        Set myMail = outlookApp.CreateItem(olMailItem)
+'
+'    With myMail
+'        .To = "robertv13@me.com"
+'        .Subject = "GC FISCALITÉ INC. - Facturation"
+'        .Attachments.Add attachmentFullPathName
+'        .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
+'
+'        'myMail.Send
+'    End With
+'
+'SaveOnly:
+'    GoTo EndMacro
+'
+'RefLibError:
+'    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
+'
+'EndMacro:
+'    Application.ScreenUpdating = True
+'
+'    'Cleaning memory - 2024-07-01 @ 09:34
+'    Set myMail = Nothing
+'    Set OutlookApp = Nothing
+'
+'End Sub
+'
 Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Prev_Invoice", 0)
