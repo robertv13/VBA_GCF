@@ -143,7 +143,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         
         rs.Fields("Taux_TPS") = Format$(.Range("C74").value, "0.00")
         rs.Fields("Mnt_TPS") = Format$(.Range("E74").value, "0.00")
-        rs.Fields("Taux_TVQ") = Format$(.Range("C75").value, "0.0000")
+        rs.Fields("Taux_TVQ") = Format$(.Range("C75").value, "0.00000")  '2024-10-15 @ 05:49
         rs.Fields("Mnt_TVQ") = Format$(.Range("E75").value, "0.00")
         
         rs.Fields("AR_Total") = Format$(.Range("E77").value, "0.00")
@@ -1270,13 +1270,13 @@ Sub FAC_Finale_Setup_All_Cells()
 
 End Sub
 
-'Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
-'
-'    wshFAC_Finale.PrintOut , , 1, True, True, , , , False
-''    wshFAC_Finale.PrintOut , , , True, True, , , , False
-'
-'End Sub
-'
+Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
+
+    wshFAC_Finale.PrintOut , , 1, True, True, , , , False
+'    wshFAC_Finale.PrintOut , , , True, True, , , , False
+
+End Sub
+
 Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     
     flagEtapeFacture = 1
@@ -1292,7 +1292,7 @@ Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     flagEtapeFacture = 3
     
     'Étape 3 - Envoi du courriel
-    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value)
+    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
     flagEtapeFacture = 4
     
     'Étape 4 - Activation du bouton SAUVEGARDE
@@ -1410,7 +1410,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     On Error GoTo 0
     
     'Si l'utilisateur annule la sélection du fichier ou il y a une erreur
-    If strCible = "False" Or strCible = "" Then
+    If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
         'Créer un nouveau workbook
         Set wbCible = Workbooks.Add
         strCible = ""
@@ -1421,7 +1421,42 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Créer une nouvelle feuille si nécessaire
     Set wsCible = wbCible.Sheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
-    wsCible.name = invDate & " - " & invNo ' Renommer la nouvelle feuille
+    Dim strName As String
+    strName = invDate & " - " & invNo
+    
+    'On vérifie si le nom de la copie existe déjà ?
+    Dim wsExist As Boolean
+    wsExist = False
+    On Error Resume Next
+    wsExist = Not wbCible.Worksheets(strName) Is Nothing
+    On Error GoTo 0
+    
+    'Si le worksheet existe déjà avec ce nom, demander à l'utilisateur ce qu'il souhaite faire
+    Dim suffixe As Integer
+    Dim reponse As String
+    If wsExist Then
+        reponse = MsgBox("Le worksheet '" & strName & "' existe déjà. Voulez-vous : " & vbCrLf & _
+                         "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & _
+                         "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & _
+                         "Cliquez sur Oui pour remplacer, ou sur Non pour créer un nouvel onglet.", _
+                         vbYesNoCancel + vbQuestion, "L'onglet à créer existe déjà")
+
+        Select Case reponse
+            Case vbYes 'L'utilisateur souhaite remplacer l'onglet
+                Application.DisplayAlerts = False ' Désactiver les alertes pour écraser sans confirmation
+                wbCible.Worksheets(strName).Delete
+                Application.DisplayAlerts = True
+
+            Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
+                suffixe = 1
+                Do While Not wbCible.Worksheets(strName & "_" & suffixe) Is Nothing
+                    suffixe = suffixe + 1
+                Loop
+                strName = strName & "_" & Format$(suffixe, "00") 'Modifier le nom avec un suffixe
+        End Select
+    End If
+    
+    wsCible.name = strName 'Renommer la nouvelle feuille
     
     '1. Copier les valeurs uniquement
     plageSource.Copy
@@ -1448,16 +1483,21 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         If forme.name = "GCF_Entête" Then
             forme.Copy
             wsCible.Paste
-            'Ajuster la position de la forme si nécessaire
-            wsCible.Shapes(wsCible.Shapes.count).Top = forme.Top
-            wsCible.Shapes(wsCible.Shapes.count).Left = forme.Left
+            'Ajuster la position et la taille de la forme
+            With wsCible.Shapes(wsCible.Shapes.count)
+                .Top = forme.Top
+                .Left = forme.Left
+                .Height = 255.15
+            End With
         End If
     Next forme
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
         .Orientation = wsSource.PageSetup.Orientation
+        On Error Resume Next '2024-10-15 @ 06:51
         .PaperSize = xlPaperLetter '2024-10-13 @ 07:45
+        On Error GoTo 0
         .Zoom = wsSource.PageSetup.Zoom
         .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
         .FitToPagesTall = wsSource.PageSetup.FitToPagesTall
@@ -1478,8 +1518,12 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Application.CutCopyMode = False
     
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
-    wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
-
+    If strCible = "" Then
+        wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
+        MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
+                "A été créé pour sauvegarder la facture", vbInformation
+    End If
+    
     'Réactiver les événements après l'ouverture
     Application.EnableEvents = True
     
@@ -1490,15 +1534,16 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
 End Sub
 
-Sub FAC_Finale_Creation_Courriel(noFacture As String) '2024-10-13 @ 11:33
+Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33
 
-    'Chemin de la pièce jointe
+    Dim fileExists As Boolean
+    
+    '1a. Chemin de la pièce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
     attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
-    'Vérification de l'existence de la pièce jointe
-    Dim fileExists As Boolean
+    '1b. Vérification de l'existence de la pièce jointe
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
         MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
@@ -1506,12 +1551,20 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String) '2024-10-13 @ 11:33
         GoTo Exit_sub
     End If
     
-    'Chemin du modèle (template) de courriel
-    Dim templatePath As String
-    templatePath = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
-'    templatePath = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
+    '2a. Chemin du template (.oft) de courriel
+    Dim templateFullPathName As String
+    templateFullPathName = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
 
-    'Initialisation de l'application Outlook
+    '2b. Vérification de l'existence du template
+    fileExists = Dir(templateFullPathName) <> ""
+    If Not fileExists Then
+        MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
+                    "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
+                    vbCritical
+        GoTo Exit_sub
+    End If
+    
+    '3. Initialisation de l'application Outlook
     Dim OutlookApp As Object
     On Error Resume Next
     Set OutlookApp = GetObject(, "Outlook.Application")
@@ -1520,30 +1573,42 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String) '2024-10-13 @ 11:33
     End If
     On Error GoTo 0
 
-    'Création de l'email à partir du modèle
+    '4. Création de l'email à partir du template
     Dim MailItem As Object
-    Set MailItem = OutlookApp.CreateItemFromTemplate(templatePath)
+    Set MailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
 
-    'Ajout de la pièce jointe
+    '5. Ajout de la pièce jointe
     MailItem.Attachments.Add attachmentFullPathName
 
-    'Obtenir la signature par défaut
-    Dim signaturePath As String
-    signaturePath = Fn_Get_Outlook_Signature_Path()
-    Dim Signature As String
-    Signature = Fn_Get_Outlook_Signature()
+'    'Obtenir la signature par défaut
+'    Dim signaturePath As String
+'    signaturePath = Fn_Get_Outlook_Signature_Path()
+'    Dim Signature As String
+'    Signature = Fn_Get_Outlook_Signature()
+'
+        
+    '6. Obtenir l'adresse courriel pour le client
+    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim eMailFacturation As String
+    eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, 5)
+    If eMailFacturation = "uniqueID introuvable" Then
+        MailItem.To = ""
+    Else
+        If Fn_Valider_Courriel(eMailFacturation) = True Then
+            MailItem.To = eMailFacturation
+        Else
+            MsgBox "Je ne peux utiliser l'adresse courriel de ce client" & vbNewLine & vbNewLine & _
+                    "soit '" & eMailFacturation & "' !", vbExclamation
+            MailItem.To = ""
+        End If
+    End If
     
-    'Optionnel : Modifiez les éléments de l'email (comme les destinataires)
-    MailItem.To = "robertv13@me.com"
-    MailItem.Subject = "GCF FISCALITÉ INC. - Facturation"
-'    MailItem.Body = Replace(MailItem.Body, "{nom_du_destinataire}", "John Doe")
+'    'Optionnel : Modifiez les éléments de l'email (comme les destinataires)
+'    MailItem.To = "robertv13@me.com"
 
-    'Ajoutez le contenu du corps et la signature
-'    MailItem.HTMLBody = "<p>Contenu de l'email ici...</p>" & Signature
-     
     'Afficher (.Display) ou envoyer (.Send) le courriel
     MailItem.Display
-    ' MailItem.Send ' Pour envoyer directement l'email
+    'MailItem.Send 'Pour envoyer directement l'email
 
 Exit_sub:
     'Nettoyage
@@ -1554,7 +1619,7 @@ End Sub
 
 Sub Test_FAC_Finale_Creation_Courriel()
 
-    Call FAC_Finale_Creation_Courriel("24-24524")
+    Call FAC_Finale_Creation_Courriel("24-24524", "1793")
 
 End Sub
 
@@ -1969,7 +2034,9 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
                 dictTaux(taux) = dictTaux(taux) + hres
             Else
                 dictTaux.Add taux, hres
-                nbTaux = nbTaux + 1
+                If hres <> 0 Then
+                    nbTaux = nbTaux + 1
+                End If
             End If
         End If
     Next i
@@ -1994,11 +2061,12 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
             wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
             wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
+            wshFAC_Finale.Range("C" & i).Font.Bold = False
             wshFAC_Finale.Range("C" & i).Font.Underline = False
             wshFAC_Finale.Range("C" & i).Font.name = "Verdana"
             wshFAC_Finale.Range("C" & i).Font.size = 11
             wshFAC_Finale.Range("C" & i).value = dictTaux(t)
-            
+            wshFAC_Finale.Range("D" & i).Font.Bold = False
             wshFAC_Finale.Range("D" & i).NumberFormat = "#,##0.00 $"
             wshFAC_Finale.Range("D" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("D" & i).Font.Underline = False

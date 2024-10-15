@@ -5,6 +5,13 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
+    'Le serveur est-il disponible ?
+    If Fn_Is_Server_Available() = False Then
+        MsgBox "Le serveur (P:\) ne semble pas accessible" & vbNewLine & vbNewLine & _
+                "Veuillez vérifier la disponibilité de ce dernier", vbCritical, "Le serveur n'est pas disponible"
+        Application.Quit
+    End If
+    
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
     wshAdmin.Range("F5").value = rootPath
@@ -15,7 +22,7 @@ Private Sub Workbook_Open()
 
     'Vérification si le chemin est accessible
     If isServerUp = False Then
-        MsgBox "Le chemin réseau n'est pas accessible." & vbNewLine & vbNewLine & _
+        MsgBox "Le répertoire principal n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, "Incapacité d'accéder au serveur"
         Exit Sub
     End If
@@ -50,6 +57,15 @@ Private Sub Workbook_Open()
     Dim wb As Workbook: Set wb = ActiveWorkbook
     wb.Application.Calculation = xlCalculationAutomatic
    
+    Dim ws As Worksheet
+    Application.DisplayAlerts = False  'Désactive les messages de confirmation
+    For Each ws In wb.Worksheets
+        If InStr(ws.CodeName, "wsh") <> 1 And InStr(ws.CodeName, "Feuil") = 1 Then
+            ws.Delete
+        End If
+    Next ws
+    Application.DisplayAlerts = True  ' Désactive les messages de confirmation
+    
     Application.ScreenUpdating = True
 
     'Cleaning memory - 2024-07-01 @ 09:34

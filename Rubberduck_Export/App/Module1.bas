@@ -8,16 +8,15 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    ActiveWindow.SmallScroll Down:=-8
-    Range("B4:H41").Select
-    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
-        "=MOD(LIGNE();2)=1"
-    Selection.FormatConditions(Selection.FormatConditions.count).SetFirstPriority
-    With Selection.FormatConditions(1).Interior
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorDark1
-        .TintAndShade = -0.14996795556505
-    End With
-    Selection.FormatConditions(1).StopIfTrue = False
-    ActiveWindow.SmallScroll Down:=-8
+    columns("D:H").Select
+    Selection.EntireColumn.Hidden = True
+End Sub
+Sub Macro2()
+Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Macro2 Macro
+'
+
+'
+    Selection.EntireColumn.Hidden = False
 End Sub

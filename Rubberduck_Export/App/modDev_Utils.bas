@@ -1735,7 +1735,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 Error_Handler:
 
     MsgBox "Une erreur est survenue avec le fichier LogMainApp: " & vbNewLine & vbNewLine & _
-                Err.Description, vbCritical, "Fichier de logMainApp n'est pas accessible"
+                Err.Description, vbCritical, "Fichier 'LogMainApp.txt' n'est pas accessible"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True

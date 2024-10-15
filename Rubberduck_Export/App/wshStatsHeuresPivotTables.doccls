@@ -4,29 +4,27 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", 0)
 
-'    If fromMenu = False Then
-'        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
-'        Exit Sub
-'    End If
-'
+    If fromMenu = False Then
+        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
+
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     
-    Call TEC_Import_All
-    
     ws.Unprotect
+    
+    'Masquer toutes les colonnes, pour la confidentialité
+    ws.Range("D:V").EntireColumn.Hidden = True
+    
+    Call TEC_Import_All
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
     
     Application.Calculation = xlCalculationAutomatic
-    
-'    With ws
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
     
     'Ensure all pending events are processed - 2024-10-12 @ 11:33
     DoEvents
@@ -39,7 +37,7 @@ Private Sub Worksheet_Activate()
     'Batir la liste des options valides en fonction de l'utilisateur
     Dim listeChoixValides As String
     Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault"
+        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "robertmv"
             listeChoixValides = "Tous,Guillaume,Vladimir,Michel,Annie"
         Case "vgervais"
             listeChoixValides = "Vladimir"
@@ -64,6 +62,11 @@ Private Sub Worksheet_Activate()
     'Activer la flèche déroulante pour la sélection
     plageValide.Validation.InCellDropdown = True
     
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
     fromMenu = False
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -78,7 +81,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     
     If Not Intersect(Target, ws.Range("B4")) Is Nothing Then
-        'Changer la valeur sur la feuille TEC_TDB_Data
+        ws.Unprotect
+        
+        'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
         Select Case Target.value
             Case "Guillaume"
                 wshTEC_TDB_Data.Range("S6").value = "GC"
@@ -91,6 +96,23 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Case "Tous"
                 wshTEC_TDB_Data.Range("S6").value = ""
         End Select
+        
+        If wshTEC_TDB_Data.Range("BJ2").value <> "" Then
+            ws.Range("S:V").EntireColumn.Hidden = False
+        End If
+    
+        If wshTEC_TDB_Data.Range("AW2").value <> "" Then
+            ws.Range("N:R").EntireColumn.Hidden = False
+        End If
+    
+        If wshTEC_TDB_Data.Range("AJ2").value <> "" Then
+            ws.Range("I:M").EntireColumn.Hidden = False
+        End If
+    
+        If wshTEC_TDB_Data.Range("W2").value <> "" Then
+            ws.Range("D:H").EntireColumn.Hidden = False
+        End If
+    
     End If
     
     Set ws = Nothing

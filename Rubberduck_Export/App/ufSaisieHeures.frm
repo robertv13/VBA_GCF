@@ -638,9 +638,7 @@ Sub imgLogoGCF_Click()
             wshTEC_TDB_Data.Range("S6").value = ufSaisieHeures.cmbProfessionnel.value
         
             Call TEC_TdB_Update_All
-            
             Call StatsHeures_AdvancedFilters
-        
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call UpdatePivotTables
             
@@ -665,6 +663,8 @@ Sub imgStats_Click()
         Call UpdatePivotTables
         
         Application.EnableEvents = True
+        
+        fromMenu = True
         
         With wshStatsHeuresPivotTables
             .Visible = xlSheetVisible

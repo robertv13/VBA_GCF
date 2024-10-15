@@ -19,6 +19,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("O6").value = Fn_Get_Next_Invoice_Number
             
             On Error Resume Next
+                DoEvents
                 Unload ufFraisDivers
             On Error GoTo 0
             
@@ -375,6 +376,13 @@ Sub FAC_Brouillon_Setup_All_Cells()
         .Range("O57").value = ""
         .Range("O59").formula = "=O55-O57"                              'Deposit Amount
         
+        'ON élimine les cellules qui pourraient avoir du vert pâle...
+        With .Range("E3:F3,O3,O9,L11:N45,O48:O50,M48:M50").Interior
+            .Pattern = xlNone
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        
         'Setup the hours summary to handle different rates
         Call Setup_Hours_Summary
         
@@ -626,7 +634,6 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
     Dim rr As Long
     rr = 3
     
-    Dim messageFraisDivers As String
     Dim i As Long
     With ws
     'Boucler sur chaque ligne et masquer celles qui ne correspondent pas à tous les critères
@@ -652,9 +659,6 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
                 ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
                 ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
                 rr = rr + 1
-                If Trim(ws.Cells(i, "I").value) <> "" Then
-                    messageFraisDivers = messageFraisDivers & ws.Cells(i, "I").value & vbCrLf
-                End If
             End If
         Next i
         
@@ -685,10 +689,6 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
     End With
      
 No_Sort_Required:
-    
-    If messageFraisDivers <> "" Then
-        MsgBox messageFraisDivers, vbInformation, "Résumé des commentaires"
-    End If
     
 End Sub
 
@@ -736,11 +736,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1089,7 +1089,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

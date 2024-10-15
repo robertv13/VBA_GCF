@@ -126,6 +126,45 @@ Function Fn_Get_Nom_From_Initials(i As String)
     
 End Function
 
+Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColumn As Integer, returnColumn As Integer) As Variant
+
+    'Définir la dernière ligne utilisée de la feuille
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.rows.count, keyColumn).End(xlUp).Row
+    
+    'Définir la plage de recherche (toute la colonne de la clé)
+    Dim searchRange As Range
+    Set searchRange = ws.Range(ws.Cells(1, keyColumn), ws.Cells(lastRow, keyColumn))
+    
+    'Rechercher la clé dans la colonne spécifiée
+    Dim foundCell As Range
+    Set foundCell = searchRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    'Si on a trouvé 'uniqueID', retourner la valeur de la colonne de retour
+    If Not foundCell Is Nothing Then
+        Fn_Get_Value_From_UniqueID = ws.Cells(foundCell.Row, returnColumn).value
+    Else
+        'Si l'on a pas trouvée, retourner une valeur d'erreur ou un message
+        Fn_Get_Value_From_UniqueID = "uniqueID introuvable"
+    End If
+    
+End Function
+
+Sub test_Fn_Get_Value_From_UniqueID() '2024-10-15 @ 06:00
+
+    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim uniqueID As String: uniqueID = "7890"
+    
+    Dim eMail As String
+    eMail = Fn_Get_Value_From_UniqueID(ws, uniqueID, 2, 5)
+    If eMail <> "uniqueID introuvable" Then
+        MsgBox "Le courriel du client '" & uniqueID & "' est '" & eMail & "'"
+    Else
+        MsgBox "Je n'ai pas trouvé le client dont le code est '" & uniqueID & "'", vbCritical
+    End If
+
+End Sub
+
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
     'This function is used to retrieve information from a range
@@ -155,6 +194,36 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
     Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range()", startTime)
 
+End Function
+
+Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
+    
+    Fn_Valider_Courriel = False
+    
+    Dim regex As Object
+    Set regex = CreateObject("VBScript.RegExp")
+    
+    'Définir le pattern pour l'expression régulière
+    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    regex.IgnoreCase = True
+    regex.Global = False
+    
+    'Last chance to accept a invalid email address...
+    If regex.test(courriel) = False Then
+        Dim msgValue As VbMsgBoxResult
+        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
+                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
+                            "Désirez-vous quand même conserver cette adresse ?", _
+                            vbYesNo + vbInformation, "Struture de courriel non standard")
+        If msgValue = vbYes Then
+            Fn_Valider_Courriel = True
+        Else
+            Fn_Valider_Courriel = False
+        End If
+    Else
+        Fn_Valider_Courriel = True
+    End If
+    
 End Function
 
 Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
@@ -560,6 +629,19 @@ Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
     
     'Libérer l'objet
     Set fso = Nothing
+    
+End Function
+
+Function Fn_Is_Server_Available() As Boolean
+
+    On Error Resume Next
+    'Tester l'existence d'un fichier ou d'un répertoire sur le lecteur P:
+    If Dir("P:\", vbDirectory) <> "" Then
+        Fn_Is_Server_Available = True
+    Else
+        Fn_Is_Server_Available = False
+    End If
+    On Error GoTo 0
     
 End Function
 
