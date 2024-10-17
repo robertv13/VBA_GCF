@@ -74,12 +74,12 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
         numFacture = CStr(rngFactures.Cells(i, 1).value)
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
-            Debug.Print "#076 - Facture rejetée '" & numFacture & "', car son Statut (C_AC) n'est pas 'C' (Confirmée)"
             GoTo Next_Invoice
         End If
         'Est-ce que la facture est à l'intérieur e la date limite ?
         dateFacture = CDate(rngFactures.Cells(i, 2).value)
-        If rngFactures.Cells(i, 2) > wshCAR_Liste_Agée.Range("H4").value Then
+        If rngFactures.Cells(i, 2).value > wshCAR_Liste_Agée.Range("H4").value Then
+            Debug.Print "#0081 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
             GoTo Next_Invoice
         End If
         
@@ -147,7 +147,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
                 r = r + 1
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 4).value = Format$(dateFacture, "dd/mm/yyyy")
                 wshCAR_Liste_Agée.Cells(r, 5).value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -166,7 +166,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
-                wshCAR_Liste_Agée.Cells(r, 5).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 5).value = Format$(dateFacture, "dd/mm/yyyy")
                 wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -260,17 +260,13 @@ Next_Invoice:
         End With
     End If
     
-    Application.EnableEvents = True
-    
     derniereLigne = derniereLigne + 2
-    
-    Application.EnableEvents = False
     
     Dim t(0 To 4) As Currency
     
     With wshCAR_Liste_Agée
-        .columns("B:B").ColumnWidth = 55
-        .columns("C:I").ColumnWidth = 12
+        .columns("B:B").ColumnWidth = 50
+        .columns("C:J").ColumnWidth = 13
         Select Case LCase(niveauDetail)
             Case "client"
                 .Range("C9:G" & derniereLigne).NumberFormat = "#,##0.00 $"
@@ -292,10 +288,15 @@ Next_Invoice:
                 .Range("E9:I" & derniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("E9:I" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
+                t(0) = .Range("E" & derniereLigne).value
                 .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
+                t(1) = .Range("F" & derniereLigne).value
                 .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
+                t(2) = .Range("G" & derniereLigne).value
                 .Range("H" & derniereLigne).formula = "=Sum(H9:H" & derniereLigne - 2 & ")"
+                t(3) = .Range("H" & derniereLigne).value
                 .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
+                t(4) = .Range("I" & derniereLigne).value
                 .Range("E" & derniereLigne & ":I" & derniereLigne).Font.Bold = True
             Case "transaction"
                 .columns("C:E").HorizontalAlignment = xlCenter
@@ -303,10 +304,15 @@ Next_Invoice:
                 .Range("F9:J" & derniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("F9:J" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
+                t(0) = .Range("F" & derniereLigne).value
                 .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
+                t(1) = .Range("G" & derniereLigne).value
                 .Range("H" & derniereLigne).formula = "=Sum(H9:H" & derniereLigne - 2 & ")"
+                t(2) = .Range("H" & derniereLigne).value
                 .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
+                t(3) = .Range("I" & derniereLigne).value
                 .Range("J" & derniereLigne).formula = "=Sum(J9:J" & derniereLigne - 2 & ")"
+                t(4) = .Range("J" & derniereLigne).value
                 .Range("F" & derniereLigne & ":J" & derniereLigne).Font.Bold = True
         End Select
         .Range("B" & derniereLigne).value = "Totaux de la liste"
@@ -322,31 +328,33 @@ Next_Invoice:
         Select Case LCase(niveauDetail)
             Case "client"
                 totalListe = t(0)
-                .Range("C" & derniereLigne).value = Format$(Round(t(0) / totalListe, 2), "##0.00 %")
-                .Range("D" & derniereLigne).value = Format$(Round(t(1) / totalListe, 2), "##0.00 %")
-                .Range("E" & derniereLigne).value = Format$(Round(t(2) / totalListe, 2), "##0.00 %")
-                .Range("F" & derniereLigne).value = Format$(Round(t(3) / totalListe, 2), "##0.00 %")
-                .Range("G" & derniereLigne).value = Format$(Round(t(4) / totalListe, 2), "##0.00 %")
+                .Range("C" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                .Range("D" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                .Range("E" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                .Range("F" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                .Range("G" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
             Case "facture"
                  totalListe = .Range("E" & derniereLigne - 1).value
-                .Range("E" & derniereLigne).value = Round(.Range("E" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("F" & derniereLigne).value = Round(.Range("F" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("G" & derniereLigne).value = Round(.Range("G" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("H" & derniereLigne).value = Round(.Range("H" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("I" & derniereLigne).value = Round(.Range("I" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("E" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                .Range("F" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                .Range("G" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                .Range("H" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                .Range("I" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
             Case "transaction"
                  totalListe = .Range("F" & derniereLigne - 1).value
-                .Range("F" & derniereLigne).value = Round(.Range("F" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("G" & derniereLigne).value = Round(.Range("G" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("H" & derniereLigne).value = Round(.Range("H" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("I" & derniereLigne).value = Round(.Range("I" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
-                .Range("J" & derniereLigne).value = Round(.Range("J" & derniereLigne - 1).value * 100 / totalListe, 2) & " %"
+                .Range("F" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                .Range("G" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                .Range("H" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                .Range("I" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                .Range("J" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
         End Select
         
     End With
     
     Application.EnableEvents = True
 
+    DoEvents
+    
     'Result print setup - 2024-08-31 @ 12:19
     lastUsedRow = derniereLigne
     
@@ -364,14 +372,17 @@ Next_Invoice:
 
     Call Apply_Conditional_Formatting_Alternate(rngToPrint, 0, False)
     
+    'Caractères pour le rapport
     With rngToPrint.Font
-        .name = "Segoe UI"
-        .size = 9
+        .name = "Aptos Narrow"
+        .size = 10
     End With
     
     Application.EnableEvents = True
+    
+    DoEvents
 
-    Dim header1 As String: header1 = "Liste âgée des comptes clients"
+    Dim header1 As String: header1 = "Liste âgée des comptes clients au " & wshCAR_Liste_Agée.Range("H4").value
     Dim header2 As String
     If LCase(niveauDetail) = "client" Then
         header2 = "1 ligne par client"

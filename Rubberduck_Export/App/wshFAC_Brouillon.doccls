@@ -48,7 +48,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
     wshFAC_Brouillon.Range("O3").value = Now() '2024-09-05 @ 09:29
@@ -112,7 +112,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     targetAddress = Target.Address
     On Error GoTo 0
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
+        targetAddress & " - " & Me.Range("B3").value, 0)
     
     Application.EnableEvents = False
     
@@ -137,7 +138,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -146,7 +147,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -205,6 +206,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 '            wshFAC_Finale.Range("E69").value = wshFAC_Brouillon.Range("O47").value
             'Final Invoice - Misc charges AND move on to next field
             If Target.Row = 48 Then
+                Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
+                    targetAddress & " - " & wshFAC_Brouillon.Range("O48").value, -1)
                 wshFAC_Finale.Range("E70").value = wshFAC_Brouillon.Range("O48").value
                 wshFAC_Brouillon.Range("O49").Select
             End If

@@ -806,6 +806,8 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         
         DoEvents
         
+        Call Delete_User_Active_File
+
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close SaveChanges:=True
@@ -924,5 +926,18 @@ Sub BackToMainMenu()
     
 End Sub
 
+Sub Delete_User_Active_File()
+
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    Dim traceFilePath As String
+    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & userName & "_Actif.txt"
+    
+    If Dir(traceFilePath) <> "" Then
+        Kill traceFilePath
+    End If
+
+End Sub
 
 

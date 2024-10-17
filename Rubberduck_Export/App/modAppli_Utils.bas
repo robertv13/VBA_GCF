@@ -1,42 +1,6 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
-Sub Forcer_NumLock_Actif() '2024-10-06 @ 09:13
-
-'    Dim essai As Integer
-'
-'    Dim NumLockWasActive As Boolean
-'
-'Do_It_Again:
-'
-'    If essai > 3 Then Exit Sub
-'
-'    'Vérifiez d'abord l'état de NumLock en l'activant, si nécessaire
-'    NumLockWasActive = IsNumLockActive()
-'
-'    'Si NumLock est désactivé, l'activer
-'    If Not NumLockWasActive Then
-'        Application.SendKeys "{NUMLOCK}"
-'    Else
-'        essai = essai + 1
-'        GoTo Do_It_Again
-'    End If
-    
-End Sub
-
-'Sub Forcer_NumLock_Actif() '2024-10-06 @ 09:13
-'
-'    'Vérifie le statut de NumLock
-'    If Not IsNumLockActive() Then
-'        'NumLock est désactivé, activation de la touche
-'        MsgBox "NumLock est désactivé. Exécution de la procédure."
-'        Application.SendKeys "{NUMLOCK}", True
-'    Else
-'        'NumLock est déjà activé
-'    End If
-'
-'End Sub
-'
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
@@ -2058,7 +2022,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1710 'What is the last TECID analyzed ?
+    lastTECIDReported = 1757 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

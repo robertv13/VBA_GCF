@@ -210,7 +210,9 @@ Sub UpdatePivotTables()
     'Parcourt tous les PivotTables dans chaque feuille
     For Each pt In ws.PivotTables
         On Error Resume Next
+        Application.EnableEvents = False
         pt.pivotCache.Refresh 'Actualise le cache Pivot
+        Application.EnableEvents = True
         On Error GoTo 0
     Next pt
 

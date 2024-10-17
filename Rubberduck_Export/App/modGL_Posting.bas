@@ -45,7 +45,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
                 rs.Fields("No_Entrée") = glEntryNo
-                rs.Fields("Date") = CDate(df)
+                rs.Fields("Date") = df
                 rs.Fields("Description") = desc
                 rs.Fields("Source") = source
                 rs.Fields("No_Compte") = arr(i, 1)
@@ -95,7 +95,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
                 .Range("A" & rowToBeUsed).value = glEntryNo
-                .Range("B" & rowToBeUsed).value = CDate(df)
+                .Range("B" & rowToBeUsed).value = df
                 .Range("C" & rowToBeUsed).value = desc
                 .Range("D" & rowToBeUsed).value = source
                 .Range("E" & rowToBeUsed).value = arr(i, 1)

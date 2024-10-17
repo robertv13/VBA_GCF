@@ -64,6 +64,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             .txtHeures.value = ""
             .txtCommNote.value = ""
             .chbFacturable = True
+            .txtSavedHeures.value = ""
         End With
         
         Call TEC_Get_All_TEC_AF
@@ -90,6 +91,9 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
+    'Get the Client_ID
+    wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
+    
     Call TEC_Record_Add_Or_Update_To_DB(wshAdmin.Range("TEC_Current_ID").value)  'Write to external XLSX file - 2023-12-16 @ 14:10
     Call TEC_Record_Add_Or_Update_Locally(wshAdmin.Range("TEC_Current_ID").value)  'Write to local worksheet - 2024-02-25 @ 10:38
  
@@ -285,10 +289,11 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     With ufSaisieHeures
         .txtTEC_ID.value = "" '2024-03-01 @ 09:56
         .txtClient.value = ""
-        wshAdmin.Range("TEC_Client_ID").value = 0
+        wshAdmin.Range("TEC_Client_ID").value = ""
         .txtActivite.value = ""
         .txtHeures.value = ""
         .txtCommNote.value = ""
+        .txtSavedHeures = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
     End With
@@ -427,7 +432,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
             rs.Fields("Prof").value = ufSaisieHeures.cmbProfessionnel.value
             rs.Fields("Date").value = dateValue '2024-09-04 @ 09:01
-            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
+            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID").value
             rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
             If Len(ufSaisieHeures.txtActivite.value) > 255 Then
                 ufSaisieHeures.txtActivite.value = Left(ufSaisieHeures.txtActivite.value, 255)

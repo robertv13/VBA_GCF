@@ -16,7 +16,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 5 Then destLastUsedRow = 5
-    wsDest.Range("A5:H" & destLastUsedRow).Clear
+    wsDest.Range("A5:I" & destLastUsedRow).Clear
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
@@ -117,7 +117,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                     wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecDescription).value
                     wsDest.Cells(r, 8).value = wsSource.Cells(i, ftecHeures).value
                     wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
-                    wsDest.Cells(r, 9).value = wsSource.Cells(i, ftecCommentaireNote).value
+'                    wsDest.Cells(r, 9).value = wsSource.Cells(i, ftecCommentaireNote).value
                     r = r + 1
                 End If
         End If
@@ -217,6 +217,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Font
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
+            .name = "Aptos Narrow"
             .Bold = True
             .size = 12
         End With
@@ -244,6 +245,14 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                     .value = "G r a n d   T o t a l"
                 End If
             End With
+            'Mettre de l'emphase sur les cellules d'heures, si le montant du projet <> 0,00 $
+            If wsDest.Range("D" & r).value = 0 Then
+                With wsDest.Range("H" & r).Font
+                    .name = "Aptos Narrow"
+                    .size = 12
+                    .Bold = True
+                End With
+            End If
         End If
     Next r
     
@@ -394,6 +403,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
             Else
                 dictHours.Add Cells(i, 6).value, Cells(i, 8).value
             End If
+            Cells(i, 8).Font.Color = RGB(166, 166, 166) 'RMV_15
         End If
         i = i + 1
     Loop
@@ -415,7 +425,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
         Cells(rowSelected, 11).value = dictHours(prof)
         tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
         Cells(rowSelected, 12).value = tauxHoraire
-        Cells(rowSelected, 13).NumberFormat = "#,##0.00$"
+        Cells(rowSelected, 13).NumberFormat = "#,##0.00 $"
         Cells(rowSelected, 13).FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, 13).HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
@@ -489,7 +499,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Call Add_And_Modify_Checkbox(saveR, rowSelected)
     
-    Application.EnableEvents = False
+    Application.EnableEvents = True
 
     'Clean up - 2024-07-11 @ 15:20
     Set dictHours = Nothing
@@ -845,7 +855,7 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     
 End Sub
 
-Sub Clear_Fees_Summary_And_CheckBox()
+Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
 
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshTEC_Analyse

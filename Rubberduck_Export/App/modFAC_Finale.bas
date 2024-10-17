@@ -6,7 +6,8 @@ Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Save", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Save (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy") & ")", 0)
 
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
@@ -99,7 +100,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_to_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy") & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -123,7 +125,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     rs.AddNew
     With wshFAC_Finale
         rs.Fields("Inv_No") = .Range("E28").value
-        rs.Fields("Date_Facture") = CDate(wshFAC_Brouillon.Range("O3").value)
+        rs.Fields("Date_Facture") = Format$(wshFAC_Brouillon.Range("O3").value, "mm-dd-yyyy")
         rs.Fields("AC_C") = "AC" 'Facture to be confirmed MANUALLY - 2024-08-16 @ 05:46
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
@@ -171,7 +173,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy") & ")", 0)
     
     Application.ScreenUpdating = False
     
@@ -181,7 +184,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
-        .Range("B" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy")
+        .Range("B" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("O3").value, "mm-dd-yyyy")
         .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("E" & firstFreeRow).value = wshFAC_Finale.Range("B23").value
         .Range("F" & firstFreeRow).value = wshFAC_Finale.Range("B24").value
@@ -208,7 +211,9 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("V" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E79").value, "0.00")
     End With
     
+    Application.EnableEvents = False
     wshFAC_Brouillon.Range("B11").value = firstFreeRow
+    Application.EnableEvents = True
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", startTime)
 
@@ -218,7 +223,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_to_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy") & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -301,7 +307,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy") & ")", 0)
     
     Application.ScreenUpdating = False
     
@@ -336,7 +343,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB - " & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
 
     Application.ScreenUpdating = False
     
@@ -398,7 +406,8 @@ End Sub
 
 Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally - " & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
     
@@ -436,9 +445,11 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()", startTime)
 
 End Sub
+
 Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
 
     Application.ScreenUpdating = False
     
@@ -460,12 +471,12 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     rs.AddNew
     With wshFAC_Finale
         rs.Fields("Invoice_No") = .Range("E28").value
-        rs.Fields("Invoice_Date") = CDate(wshFAC_Brouillon.Range("O3").value)
+        rs.Fields("Invoice_Date") = Format$(CDate(wshFAC_Brouillon.Range("O3").value), "mm-dd-yyyy")
         rs.Fields("Customer") = .Range("B24").value
         rs.Fields("CodeClient") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Status") = "Unpaid"
         rs.Fields("Terms") = "Net 30"
-        rs.Fields("Due_Date") = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
+        rs.Fields("Due_Date") = CDate(wshFAC_Brouillon.Range("O3").value) + 30
         rs.Fields("Total") = .Range("E81").value
         'rs.Fields("Total_Paid") = ""
         'rs.Fields("Balance") = ""
@@ -493,7 +504,8 @@ End Sub
 
 Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally (" & _
+        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
     
@@ -508,7 +520,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Range("D" & firstFreeRow).value = wshFAC_Brouillon.Range("B18").value
         .Range("E" & firstFreeRow).value = "Unpaid"
         .Range("F" & firstFreeRow).value = "Net 30"
-        .Range("G" & firstFreeRow).value = CDate(CDate(wshFAC_Brouillon.Range("O3").value) + 30)
+        .Range("G" & firstFreeRow).value = CDate(wshFAC_Brouillon.Range("O3").value) + 30
         .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("E81").value
         .Range("I" & firstFreeRow).formula = ""
         .Range("J" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
@@ -525,7 +537,7 @@ End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB(" & firstRow & ", " & lastRow & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -591,7 +603,7 @@ End Sub
 
 Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally(" & firstResultRow & ", " & lastResultRow & ")", 0)
     
     'Set the range to look for
     Dim lastTECRow As Long
@@ -621,7 +633,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB(" & projetID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -661,7 +673,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally(" & projetID & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     
@@ -699,7 +711,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB(" & projetID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -746,7 +758,7 @@ End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally(" & projetID & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     
@@ -782,428 +794,143 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
 End Sub
 
-Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Invoice_Load", 0)
-
-    With wshFAC_Brouillon
-        If wshFAC_Brouillon.Range("B20").value = Empty Then
-            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
-            GoTo NoItems
-        End If
-        'Could that invoice been cancelled (more than 1 row) ?
-        Call InvoiceGetAllTrans(wshFAC_Brouillon.Range("O6").value)
-        Dim NbTrans As Long
-        NbTrans = .Range("B31").value
-        If NbTrans = 0 Then
-            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
-            GoTo NoItems
-        Else
-            If NbTrans > 1 Then
-                MsgBox "Cette facture a été annulée! Veuillez saisir un numéro de facture VALIDE pour votre recherche"
-                GoTo NoItems
-            End If
-        End If
-        .Range("B24").value = True 'Set Invoice Load to true
-        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
-        wshFAC_Finale.Range("B34:F68").ClearContents
-        Dim InvListRow As Long
-        InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
-        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-        .Range("O3").value = wshFAC_Entête.Range("B" & InvListRow).value
-        .Range("K3").value = wshFAC_Entête.Range("D" & InvListRow).value
-        .Range("K4").value = wshFAC_Entête.Range("E" & InvListRow).value
-        .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
-        .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
-        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-        Dim dFact As Date
-        dFact = wshFAC_Entête.Range("B" & InvListRow).value
-        wshFAC_Finale.Range("B21").value = "Le " & Format$(dFact, "d") & " " & _
-                                            UCase(Format$(dFact, "mmmm")) & " " & _
-                                            Format$(dFact, "yyyy")
-        wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
-        wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
-        wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
-        wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
-        'Load Invoice Detail Items
-        With wshFAC_Détails
-            Dim lastRow As Long, lastResultRow As Long
-            lastRow = .Range("A999999").End(xlUp).Row
-            If lastRow < 4 Then Exit Sub 'No Item Lines
-            .Range("I3").value = wshFAC_Brouillon.Range("O6").value
-            wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
-            'Advanced Filter to get items specific to ONE invoice
-            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
-            lastResultRow = .Range("O999").End(xlUp).Row
-            If lastResultRow < 3 Then GoTo NoItems
-            For resultRow = 3 To lastResultRow
-                invitemRow = .Range("O" & resultRow).value
-                wshFAC_Brouillon.Range("L" & invitemRow & ":O" & invitemRow).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
-                wshFAC_Brouillon.Range("Q" & invitemRow).value = .Range("P" & resultRow).value  'Set Item DB Row
-                wshFAC_Finale.Range("C" & invitemRow + 23 & ":F" & invitemRow + 23).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
-            Next resultRow
-        End With
-        'Proceed with trailer data (Misc. charges & Taxes)
-        .Range("M48").value = wshFAC_Entête.Range("I" & InvListRow).value
-        .Range("O48").value = wshFAC_Entête.Range("J" & InvListRow).value
-        .Range("M49").value = wshFAC_Entête.Range("K" & InvListRow).value
-        .Range("O49").value = wshFAC_Entête.Range("L" & InvListRow).value
-        .Range("M50").value = wshFAC_Entête.Range("M" & InvListRow).value
-        .Range("O50").value = wshFAC_Entête.Range("N" & InvListRow).value
-        .Range("O52").value = wshFAC_Entête.Range("P" & InvListRow).value
-        .Range("O53").value = wshFAC_Entête.Range("R" & InvListRow).value
-        .Range("O57").value = wshFAC_Entête.Range("T" & InvListRow).value
-
-NoItems:
-    .Range("B24").value = False 'Set Invoice Load To false
-    End With
-    
-    Call Log_Record("modFAC_Finale:Invoice_Load()", startTime)
-
-End Sub
-
-'Sub test_CopierFeuilleVersNouveauWorkbook()
+'Sub Invoice_Load() 'Retrieve an existing invoice - 2023-12-21 @ 10:16
 '
-'    Dim clientID As String, clientName As String, invNo As String, invDate As String
-'    clientID = "1193"
-'    clientName = "Solstice CNC Inc."
-'    invNo = "24-24520"
-'    invDate = "2024-09-30"
-'    Call CopierFeuilleVersNouveauWorkbook(clientID, clientName, invNo, invDate)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Invoice_Load", 0)
 '
-'End Sub
-
-'Sub Copier_Facture_Vers_Classeur_Ferme_Z(invNo As String, invDate As String, clientID As String, clientName As String)
-'
-'    Dim wbNew As Workbook
-'    Dim wbExisting As Workbook
-'    Dim wsCopie As Worksheet
-'    Dim repertoireCible As String
-'    Dim filepath As String
-'    Dim userChoice As Integer
-'    Dim suggestedFileName As String
-'
-'    'Désactiver les mises à jour de l'écran pour améliorer les performances
-'    Application.ScreenUpdating = False
-'    Application.EnableEvents = False
-'    Application.DisplayAlerts = False
-'
-'    'Construction du répertoire cible
-'    repertoireCible = wshAdmin.Range("F5").value & Application.PathSeparator & FACT_EXCEL_PATH
-'    If Dir(repertoireCible, vbDirectory) = "" Then
-'        MkDir repertoireCible 'Créer le répertoire s'il n'existe pas
-'    End If
-'
-'    'Construction du nom de fichier proposé
-'    clientName = Fn_Strip_Contact_From_Client_Name(clientName)
-'    suggestedFileName = clientID & " - " & clientName & ".xlsx"
-'
-'    On Error GoTo GestionErreur
-'
-'    'Définir le classeur source et la feuille source
-'    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
-'    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
-'
-'    'Définir la plage à copier (par exemple, les cellules A1:D20)
-'    Dim rng As Range
-'    Set rng = wsSource.Range("A1:F88")
-'
-'    'Demander à l'utilisateur où enregistrer le nouveau fichier
-'    filepath = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , _
-'                                           "Choisissez un fichier Excel existant -OU- annulez pour créer un nouveau fichier")
-'
-'    'Si l'utilisateur n'a pas sélectionné de fichier
-'    If filepath = "False" Or filepath = "Faux" Then
-'        'Demander à l'utilisateur s'il veut créer un nouveau fichier
-'        userChoice = MsgBox("Aucun fichier n'a été sélectionné." & vbNewLine & vbNewLine & _
-'                            "Voulez-vous créer un nouveau fichier ?", vbYesNo + vbQuestion, "Création d'un nouveau fichier ?")
-'
-'        'Si l'utilisateur choisit "Non", quitter la procédure
-'        If userChoice = vbNo Then
-'            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
-'            Exit Sub
+'    With wshFAC_Brouillon
+'        If wshFAC_Brouillon.Range("B20").value = Empty Then
+'            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+'            GoTo NoItems
 '        End If
-'
-'        'Créer un nouveau fichier Excel
-'        Set wbNew = Workbooks.Add
-'
-'        'Nom de la feuille
-'        wbNew.Sheets(1).name = Format$(invDate, "YYYY-MM-DD") & " - " & invNo
-'
-'        'Copier la plage de la feuille actuelle
-'        rng.Copy
-'
-'        'Coller les valeurs et formats dans la nouvelle feuille
-'        With wbNew.Sheets(1).Range("A1")
-'            .PasteSpecial Paste:=xlPasteAll 'Colle tout, y compris les valeurs, formats, etc.
-'        End With
-'
-'        'Vider le Presse-papiers (facultatif)
-'        Application.CutCopyMode = False
-'
-'        'Conserver la largeur des colonnes
-'        Dim col As Range
-'        For Each col In rng.columns
-'            wbNew.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
-'        Next col
-'
-'        'Copier les images
-'        Dim shp As Shape
-'        For Each shp In wsSource.Shapes
-'            shp.Copy
-'            wbNew.Sheets(1).Paste Destination:=wbNew.Sheets(1).Range("A1") ' Ajustez la destination si nécessaire
-'        Next shp
-'
-'        'Copier les en-têtes et pieds de page
-'        With wbNew.Sheets(1)
-'            .PageSetup.CenterHeader = wsSource.PageSetup.CenterHeader
-'            .PageSetup.LeftHeader = wsSource.PageSetup.LeftHeader
-'            .PageSetup.RightHeader = wsSource.PageSetup.RightHeader
-'            .PageSetup.CenterFooter = wsSource.PageSetup.CenterFooter
-'            .PageSetup.LeftFooter = wsSource.PageSetup.LeftFooter
-'            .PageSetup.RightFooter = wsSource.PageSetup.RightFooter
-'        End With
-'
-'        'Demander à l'utilisateur où enregistrer le nouveau fichier
-'        filepath = Application.GetSaveAsFilename(repertoireCible & Application.PathSeparator & suggestedFileName, _
-'                                                 "Fichiers Excel (*.xlsx), *.xlsx", , _
-'                                                 "Enregistrer sous")
-'
-'        'Si l'utilisateur annule l'enregistrement
-'        If filepath = "False" Then
-'            MsgBox "Opération annulée par l'utilisateur.", vbExclamation
-'            wbNew.Close False 'Fermer le nouveau fichier sans enregistrer
-'            Exit Sub
-'        End If
-'
-'        'Enregistrer le nouveau fichier
-'        wbNew.SaveAs filepath
-'        wbNew.Close
-'        MsgBox "La feuille a été enregistrée dans un nouveau fichier avec succès.", vbInformation
-'
-'    Else
-'
-'        'Si un fichier existant est sélectionné, l'ouvrir
-'        Set wbExisting = Workbooks.Open(filepath)
-'
-'        'Copier la plage de la feuille actuelle
-'        rng.Copy
-'
-'        'Coller les valeurs et formats dans le fichier existant
-'        With wbExisting.Sheets(1).Range("A1")
-'            .PasteSpecial Paste:=xlPasteAll ' Colle tout, y compris les valeurs, formats, etc.
-'        End With
-'
-'        'Vider le Presse-papiers
-'        Application.CutCopyMode = False
-'
-'        'Conserver la largeur des colonnes
-'        For Each col In rng.columns
-'            wbExisting.Sheets(1).columns(col.Column).ColumnWidth = col.ColumnWidth
-'        Next col
-'
-''        'Copier les images
-''        For Each shp In wsSource.Shapes
-''            If shp.name = "GCF_Entête" Then
-''                shp.Copy
-''                wbExisting.Sheets(1).Paste Destination:=wbExisting.Sheets(1).Range("A1") 'Ajustez la destination si nécessaire
-''            End If
-''        Next shp
-'
-'        'Copier les en-têtes et pieds de page
-'        'Copier la mise en page de la feuille source
-'        With wbNew.Sheets(1).PageSetup
-'            .Orientation = wsSource.PageSetup.Orientation
-'            .PaperSize = wsSource.PageSetup.PaperSize
-'            .Zoom = wsSource.PageSetup.Zoom
-'            .FitToPage = wsSource.PageSetup.FitToPage
-'            .FitToWidth = wsSource.PageSetup.FitToWidth
-'            .FitToHeight = wsSource.PageSetup.FitToHeight
-'            .LeftMargin = wsSource.PageSetup.LeftMargin
-'            .RightMargin = wsSource.PageSetup.RightMargin
-'            .TopMargin = wsSource.PageSetup.TopMargin
-'            .BottomMargin = wsSource.PageSetup.BottomMargin
-'            .HeaderMargin = wsSource.PageSetup.HeaderMargin
-'            .FooterMargin = wsSource.PageSetup.FooterMargin
-'            .CenterHorizontally = wsSource.PageSetup.CenterHorizontally
-'            .CenterVertically = wsSource.PageSetup.CenterVertically
-'            .PrintTitleRows = wsSource.PageSetup.PrintTitleRows
-'            .PrintTitleColumns = wsSource.PageSetup.PrintTitleColumns
-'            .PrintArea = wsSource.PageSetup.PrintArea
-'            .PrintGridlines = wsSource.PageSetup.PrintGridlines
-'            .PrintHeadings = wsSource.PageSetup.PrintHeadings
-'        End With
-'
-'        'Supprimer les formules qui contiennent des références externes
-'        Dim cell1 As Range
-'        Dim formula As String
-'        For Each cell1 In wbExisting.Sheets(wbExisting.Sheets.count).usedRange
-'            If cell1.HasFormula Then
-'                formula = cell1.formula
-'                'Vérifier si la formule contient une référence à un fichier externe (ex: [ ou .xls)
-'                If InStr(1, formula, "[") > 0 Or InStr(1, formula, ".xls") > 0 Then
-'                    'Remplacer la formule par sa valeur
-'                    cell1.value = cell1.value
-'                End If
+'        'Could that invoice been cancelled (more than 1 row) ?
+'        Call InvoiceGetAllTrans(wshFAC_Brouillon.Range("O6").value)
+'        Dim NbTrans As Long
+'        NbTrans = .Range("B31").value
+'        If NbTrans = 0 Then
+'            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+'            GoTo NoItems
+'        Else
+'            If NbTrans > 1 Then
+'                MsgBox "Cette facture a été annulée! Veuillez saisir un numéro de facture VALIDE pour votre recherche"
+'                GoTo NoItems
 '            End If
-'        Next cell1
+'        End If
+'        .Range("B24").value = True 'Set Invoice Load to true
+'        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
+'        wshFAC_Finale.Range("B34:F68").ClearContents
+'        Dim InvListRow As Long
+'        InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
+'        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
+'        .Range("O3").value = wshFAC_Entête.Range("B" & InvListRow).value
+'        .Range("K3").value = wshFAC_Entête.Range("D" & InvListRow).value
+'        .Range("K4").value = wshFAC_Entête.Range("E" & InvListRow).value
+'        .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
+'        .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
+'        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
+'        Dim dFact As Date
+'        dFact = wshFAC_Entête.Range("B" & InvListRow).value
+'        wshFAC_Finale.Range("B21").value = "Le " & Format$(dFact, "d") & " " & _
+'                                            UCase(Format$(dFact, "mmmm")) & " " & _
+'                                            Format$(dFact, "yyyy")
+'        wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
+'        wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
+'        wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
+'        wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
+'        'Load Invoice Detail Items
+'        With wshFAC_Détails
+'            Dim lastRow As Long, lastResultRow As Long
+'            lastRow = .Range("A999999").End(xlUp).Row
+'            If lastRow < 4 Then Exit Sub 'No Item Lines
+'            .Range("I3").value = wshFAC_Brouillon.Range("O6").value
+'            wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
+'            'Advanced Filter to get items specific to ONE invoice
+'            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
+'            lastResultRow = .Range("O999").End(xlUp).Row
+'            If lastResultRow < 3 Then GoTo NoItems
+'            For resultRow = 3 To lastResultRow
+'                invitemRow = .Range("O" & resultRow).value
+'                wshFAC_Brouillon.Range("L" & invitemRow & ":O" & invitemRow).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
+'                wshFAC_Brouillon.Range("Q" & invitemRow).value = .Range("P" & resultRow).value  'Set Item DB Row
+'                wshFAC_Finale.Range("C" & invitemRow + 23 & ":F" & invitemRow + 23).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
+'            Next resultRow
+'        End With
+'        'Proceed with trailer data (Misc. charges & Taxes)
+'        .Range("M48").value = wshFAC_Entête.Range("I" & InvListRow).value
+'        .Range("O48").value = wshFAC_Entête.Range("J" & InvListRow).value
+'        .Range("M49").value = wshFAC_Entête.Range("K" & InvListRow).value
+'        .Range("O49").value = wshFAC_Entête.Range("L" & InvListRow).value
+'        .Range("M50").value = wshFAC_Entête.Range("M" & InvListRow).value
+'        .Range("O50").value = wshFAC_Entête.Range("N" & InvListRow).value
+'        .Range("O52").value = wshFAC_Entête.Range("P" & InvListRow).value
+'        .Range("O53").value = wshFAC_Entête.Range("R" & InvListRow).value
+'        .Range("O57").value = wshFAC_Entête.Range("T" & InvListRow).value
 '
-'        'Enregistrer et fermer le fichier existant
-'        wbExisting.Save
-'        wbExisting.Close
-'        MsgBox "La feuille a été ajoutée au fichier existant avec succès.", vbInformation
-'    End If
+'NoItems:
+'    .Range("B24").value = False 'Set Invoice Load To false
+'    End With
 '
-'Fin:
-'    'Réactiver les mises à jour de l'écran et les alertes
-'    Application.ScreenUpdating = True
-'    Application.EnableEvents = True
-'    Application.DisplayAlerts = True
-'    Exit Sub
-'
-'GestionErreur:
-'
-'    MsgBox "Une erreur s'est produite : " & Err.Description, vbCritical
-'    Resume Fin
+'    Call Log_Record("modFAC_Finale:Invoice_Load()", startTime)
 '
 'End Sub
 
 'Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
 Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
+    
     Dim ws As Worksheet
     On Error Resume Next
     Set ws = wb.Sheets(nom)
     NomFeuilleExiste = Not ws Is Nothing
     On Error GoTo 0
+    
 End Function
 
-Sub Copier_Feuille_Vers_Classeur_Ferme_B()
-
-    Dim clientID As String, nomClasseur As String, nomFeuille As String
-    clientID = "1780"
-    nomClasseur = "9999 - Les logiciels INFORMAT inc."
-    nomFeuille = "2024-09-09 24-24499"
-    
-    'Définir le classeur source et la feuille source
-    Dim wbSource As Workbook: Set wbSource = ThisWorkbook
-    Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
-    
-    'Ouvre la boîte de dialogue Explorateur pour sélectionner un fichier
-    On Error Resume Next
-    Dim fichierDestination As String
-    fichierDestination = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , "Sauvegarde de la facture (format EXCEL)")
-    On Error GoTo 0
-    
-    ' Si aucun fichier n'est sélectionné, demander à l'utilisateur s'il souhaite en créer un
-    If fichierDestination = "Faux" Then
-        Dim reponse As VbMsgBoxResult
-        reponse = MsgBox("Vous n'avez sélectionné aucun fichier." & vbNewLine & vbNewLine & _
-                            "Voulez-vous créer un nouveau classeur ?", vbYesNo + vbQuestion, _
-                            "Création d'un nouveau classeur pour le client '" & clientID & "'")
-        
-        If reponse = vbYes Then
-            'Proposer un nom de classeur par défaut basé sur le paramètre ou une date
-            Dim nomProposeClasseur As String
-            nomProposeClasseur = Application.InputBox("Entrez un nom pour le nouveau classeur :", "Nom du classeur", nomClasseur)
-
-            'Créer un nouveau classeur
-            Dim wbDestination As Workbook: Set wbDestination = Workbooks.Add
-            
-            'Demander à l'utilisateur de nommer et d'enregistrer le nouveau classeur
-            fichierDestination = Application.GetSaveAsFilename(InitialFileName:=nomProposeClasseur, FileFilter:="Fichiers Excel (*.xlsx), *.xlsx", Title:="Nommer et enregistrer le nouveau classeur")
-
-            ' Sauvegarder le nouveau classeur
-            If fichierDestination <> "Faux" Then
-                wbDestination.SaveAs fileName:=fichierDestination, FileFormat:=xlOpenXMLWorkbook
-            Else
-                MsgBox "Aucun fichier n'a été créé. Opération annulée.", vbExclamation
-                Exit Sub
-            End If
-        Else
-            MsgBox "Comme vous ne désirez pas créé de nouveau classer," & vbNewLine & vbNewLine & _
-                        "cette opération est donc annulée sans sauvegarder la facture.", vbExclamation
-            Exit Sub
-        End If
-    Else
-        'Ouvrir le fichier sélectionné
-        Set wbDestination = Workbooks.Open(fichierDestination)
-    End If
-    
-    'Proposer un nom de feuille par défaut basé sur le paramètre
-    Dim nomProposeFeuille As String
-    nomProposeFeuille = Application.InputBox("Confirmez le nom pour la nouvelle feuille :", "Nom de la feuille", nomFeuille)
-    
-    'Ajouter une nouvelle feuille dans le classeur de destination
-    Dim wsCopie As Worksheet
-    Set wsCopie = wbDestination.Sheets.Add(After:=wbDestination.Sheets(wbDestination.Sheets.count))
-
-    'Copier la feuille de travail active du classeur actuel vers le classeur de destination
-    wbSource.Range("A:F").Copy Destination:=wsCopie.Range("A1")
-    
-    ' Renommer la nouvelle feuille avec le nom proposé ou choisi par l'utilisateur
-    wsCopie.name = nomProposeFeuille
-    
-    ' Sauvegarder les modifications du classeur de destination
-    wbDestination.Save
-    
-        'Supprimer les formules et les remplacer par des valeurs
-    With wsCopie.usedRange
-        .value = .value
-    End With
-
-    'Sauvegarder les modifications du classeur de destination
-    wbDestination.Save
-    
-    MsgBox "La feuille a été copiée avec succès dans " & wbDestination.name, vbInformation
-    
-End Sub
-
-Sub InvoiceGetAllTrans(inv As String)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:InvoiceGetAllTrans", 0)
-
-    Application.ScreenUpdating = False
-
-    wshFAC_Brouillon.Range("B31").value = 0
-
-    With wshFAC_Entête
-        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
-        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
-        On Error Resume Next
-        .Names("Criterial").Delete
-        On Error GoTo 0
-        .Range("V3").value = wshFAC_Brouillon.Range("O6").value
-        'Advanced Filter setup
-        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
-            criteriaRange:=.Range("V2:V3"), _
-            CopyToRange:=.Range("X2:AQ2"), _
-            Unique:=True
-        lastResultRow = .Range("X999").End(xlUp).Row 'How many rows trans for that invoice
-        If lastResultRow < 3 Then
-            GoTo Done
-        End If
-'        With .Sort
-'            .SortFields.Clear
-'            .SortFields.Add Key:=wshFAC_Entête.Range("X2"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based Invoice Number
-'            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal 'Sort Based On TEC_ID
-'            .SetRange wshFAC_Entête.Range("X2:AQ" & lastResultRow) 'Set Range
-'            .Apply 'Apply Sort
-'         End With
-         wshFAC_Brouillon.Range("B31").value = lastResultRow - 2 'Remove Header rows from row count
-Done:
-    End With
-    Application.ScreenUpdating = True
-
-    Call Log_Record("modFAC_Finale:InvoiceGetAllTrans()", startTime)
-
-End Sub
+'Sub InvoiceGetAllTrans(inv As String)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:InvoiceGetAllTrans", 0)
+'
+'    Application.ScreenUpdating = False
+'
+'    wshFAC_Brouillon.Range("B31").value = 0
+'
+'    With wshFAC_Entête
+'        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+'        lastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
+'        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
+'        On Error Resume Next
+'        .Names("Criterial").Delete
+'        On Error GoTo 0
+'        .Range("V3").value = wshFAC_Brouillon.Range("O6").value
+'        'Advanced Filter setup
+'        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
+'            criteriaRange:=.Range("V2:V3"), _
+'            CopyToRange:=.Range("X2:AQ2"), _
+'            Unique:=True
+'        lastResultRow = .Range("X999").End(xlUp).Row 'How many rows trans for that invoice
+'        If lastResultRow < 3 Then
+'            GoTo Done
+'        End If
+''        With .Sort
+''            .SortFields.Clear
+''            .SortFields.Add Key:=wshFAC_Entête.Range("X2"), _
+''                SortOn:=xlSortOnValues, _
+''                Order:=xlAscending, _
+''                DataOption:=xlSortNormal 'Sort Based Invoice Number
+''            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
+''                SortOn:=xlSortOnValues, _
+''                Order:=xlAscending, _
+''                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+''            .SetRange wshFAC_Entête.Range("X2:AQ" & lastResultRow) 'Set Range
+''            .Apply 'Apply Sort
+''         End With
+'         wshFAC_Brouillon.Range("B31").value = lastResultRow - 2 'Remove Header rows from row count
+'Done:
+'    End With
+'    Application.ScreenUpdating = True
+'
+'    Call Log_Record("modFAC_Finale:InvoiceGetAllTrans()", startTime)
+'
+'End Sub
 
 Sub FAC_Finale_Setup_All_Cells()
 
@@ -1279,6 +1006,8 @@ End Sub
 
 Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Bouton_Creation_PDF - '" & wshFAC_Finale.Range("E28").value & "'", 0)
+    
     flagEtapeFacture = 1
     
     'Étape 1 - Création du document PDF
@@ -1299,10 +1028,14 @@ Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     Call FAC_Finale_Enable_Save_Button
     flagEtapeFacture = 5
 
+    Call Log_Record("modFAC_Finale:FAC_Finale_Bouton_Creation_PDF", startTime)
+
 End Sub
 
 Sub FAC_Finale_Create_PDF(noFacture As String)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF(" & noFacture & ")", 0)
+    
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
     Dim result As Boolean
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
@@ -1314,9 +1047,13 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
         flagEtapeFacture = -1
     End If
 
+    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", startTime)
+
 End Sub
 
 Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As String = "SaveOnly") As Boolean
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF_Func(" & noFacture & ", " & action & ")", 0)
     
     Dim SaveAs As String
 
@@ -1374,12 +1111,15 @@ RefLibError:
 EndMacro:
     Application.ScreenUpdating = True
     
+    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF_Func", startTime)
+
 End Function
 
 Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo As String, invDate As String)
     
-    Dim wbCible As Workbook
-    Dim wsCible As Worksheet
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel(" & _
+        clientID & ", " & clientName & ", " & invNo & ", " & invDate & ")", 0)
+    
     Dim clientNamePurged As String
     clientNamePurged = clientName
     
@@ -1410,6 +1150,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     On Error GoTo 0
     
     'Si l'utilisateur annule la sélection du fichier ou il y a une erreur
+    Dim wbCible As Workbook
     If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
         'Créer un nouveau workbook
         Set wbCible = Workbooks.Add
@@ -1419,44 +1160,67 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         Set wbCible = Workbooks.Open(strCible)
     End If
     
-    'Créer une nouvelle feuille si nécessaire
-    Set wsCible = wbCible.Sheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+'    Set wsCible = wbCible.Sheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
     Dim strName As String
-    strName = invDate & " - " & invNo
+    Dim strNameBase As String
+    strNameBase = invDate & " - " & invNo
+    strName = strNameBase
     
-    'On vérifie si le nom de la copie existe déjà ?
+    'On vérifie si le nom de la nouvelle feuille à ajouter existe déjà
     Dim wsExist As Boolean
     wsExist = False
     On Error Resume Next
-    wsExist = Not wbCible.Worksheets(strName) Is Nothing
+    wsExist = Not wbCible.Worksheets(strNameBase) Is Nothing
     On Error GoTo 0
     
     'Si le worksheet existe déjà avec ce nom, demander à l'utilisateur ce qu'il souhaite faire
+    Dim wsCible As Worksheet
     Dim suffixe As Integer
     Dim reponse As String
+    
     If wsExist Then
-        reponse = MsgBox("Le worksheet '" & strName & "' existe déjà. Voulez-vous : " & vbCrLf & _
-                         "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & _
-                         "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & _
+        reponse = MsgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
+                         "Voulez-vous :" & vbCrLf & vbCrLf & _
+                         "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
+                         "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
                          "Cliquez sur Oui pour remplacer, ou sur Non pour créer un nouvel onglet.", _
-                         vbYesNoCancel + vbQuestion, "L'onglet à créer existe déjà")
+                         vbYesNoCancel + vbQuestion, "Le nouvel onglet à créer existe déjà")
 
         Select Case reponse
-            Case vbYes 'L'utilisateur souhaite remplacer l'onglet
+            Case vbYes 'Remplacer l'onglet existant
                 Application.DisplayAlerts = False ' Désactiver les alertes pour écraser sans confirmation
-                wbCible.Worksheets(strName).Delete
+                wbCible.Worksheets(strNameBase).Delete
                 Application.DisplayAlerts = True
+                
+                'Créer une nouvelle feuille avec le même nom
+                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                wsCible.name = strNameBase 'Attribuer le nom d'origine
 
             Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
                 suffixe = 1
-                Do While Not wbCible.Worksheets(strName & "_" & suffixe) Is Nothing
+                'Boucle pour trouver un nom unique de feuille (worksheet)
+                Do
+                    strName = strNameBase & "_" & Format$(suffixe, "00")
+                    On Error Resume Next
+                    Set wsCible = wbCible.Sheets(strName)
+                    On Error GoTo 0
+                    If wsCible Is Nothing Then Exit Do 'Nous avons un nom unique pour la feuille
                     suffixe = suffixe + 1
                 Loop
-                strName = strName & "_" & Format$(suffixe, "00") 'Modifier le nom avec un suffixe
+                
+                'Créer une nouvelle feuille avec ce nom directement lors de la création
+                Application.DisplayAlerts = False ' Désactiver les alertes pour éviter Feuil1
+                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                wsCible.name = strName ' Attribuer le nouveau nom avec suffixe
+                Application.DisplayAlerts = True ' Réactiver les alertes après la création
         End Select
+    Else
+        'Si la feuille n'existe pas, on peut directement la créer
+        Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+        wsCible.name = strNameBase
     End If
     
-    wsCible.name = strName 'Renommer la nouvelle feuille
+'    wsCible.name = strName 'Renommer la nouvelle feuille
     
     '1. Copier les valeurs uniquement
     plageSource.Copy
@@ -1532,10 +1296,15 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     Application.ScreenUpdating = True
     
+    Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", startTime)
+
 End Sub
 
 Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel(" & _
+        noFacture & ", " & clientID & ")", 0)
+    
     Dim fileExists As Boolean
     
     '1a. Chemin de la pièce jointe (Facture en format PDF)
@@ -1615,6 +1384,8 @@ Exit_sub:
     Set MailItem = Nothing
     Set OutlookApp = Nothing
     
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel", startTime)
+
 End Sub
 
 Sub Test_FAC_Finale_Creation_Courriel()
@@ -1623,61 +1394,64 @@ Sub Test_FAC_Finale_Creation_Courriel()
 
 End Sub
 
-Function Fn_Get_Outlook_Signature_Path() As String
-    
-    Dim sPath As String
-    Dim sSignaturePath As String
-    Dim fso As Object
-    Dim file As Object
+'Function Fn_Get_Outlook_Signature_Path() As String
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel(" & _
+'        noFacture & ", " & clientID & ")", 0)
+'
+'    Dim sPath As String
+'    Dim sSignaturePath As String
+'    Dim fso As Object
+'    Dim file As Object
+'
+'    'Chemin vers le dossier des signatures
+'    sPath = Environ("appdata") & "\Microsoft\Signatures\"
+'
+'    'Définir l'objet FileSystem
+'    Set fso = CreateObject("Scripting.FileSystemObject")
+'
+'    'Trouver le fichier de signature HTML
+'    For Each file In fso.GetFolder(sPath).Files
+'        If LCase(fso.GetExtensionName(file.name)) = "htm" Then
+'            sSignaturePath = file.path
+'            Exit For
+'        End If
+'    Next
+'
+'    'Retourner le chemin de la signature
+'    Fn_Get_Outlook_Signature_Path = sSignaturePath
+'
+'    Set fso = Nothing
+'    Set file = Nothing
+'
+'End Function
 
-    'Chemin vers le dossier des signatures
-    sPath = Environ("appdata") & "\Microsoft\Signatures\"
-    
-    'Définir l'objet FileSystem
-    Set fso = CreateObject("Scripting.FileSystemObject")
-    
-    'Trouver le fichier de signature HTML
-    For Each file In fso.GetFolder(sPath).Files
-        If LCase(fso.GetExtensionName(file.name)) = "htm" Then
-            sSignaturePath = file.path
-            Exit For
-        End If
-    Next
-    
-    'Retourner le chemin de la signature
-    Fn_Get_Outlook_Signature_Path = sSignaturePath
-    
-    Set fso = Nothing
-    Set file = Nothing
-    
-End Function
-
-Function Fn_Get_Outlook_Signature() As String
-
-    'Chemin vers le dossier des signatures
-    Dim sPath As String
-    sPath = Environ("appdata") & "\Microsoft\Signatures\"
-    
-    'Définir l'objet FileSystem
-    Dim fso As Object
-    Set fso = CreateObject("Scripting.FileSystemObject")
-    
-    'Lire la signature par défaut dans le fichier .htm
-    Dim sSignature As String
-    Dim ts As Object
-    If fso.fileExists(sPath & Dir(sPath & "*.htm")) Then
-        Set ts = fso.GetFile(sPath & Dir(sPath & "*.htm")).OpenAsTextStream(1, -2)
-        sSignature = ts.ReadAll
-        ts.Close
-    End If
-    
-    'Retourner la signature
-    Fn_Get_Outlook_Signature = sSignature
-    
-    Set fso = Nothing
-    Set ts = Nothing
-    
-End Function
+'Function Fn_Get_Outlook_Signature() As String
+'
+'    'Chemin vers le dossier des signatures
+'    Dim sPath As String
+'    sPath = Environ("appdata") & "\Microsoft\Signatures\"
+'
+'    'Définir l'objet FileSystem
+'    Dim fso As Object
+'    Set fso = CreateObject("Scripting.FileSystemObject")
+'
+'    'Lire la signature par défaut dans le fichier .htm
+'    Dim sSignature As String
+'    Dim ts As Object
+'    If fso.fileExists(sPath & Dir(sPath & "*.htm")) Then
+'        Set ts = fso.GetFile(sPath & Dir(sPath & "*.htm")).OpenAsTextStream(1, -2)
+'        sSignature = ts.ReadAll
+'        ts.Close
+'    End If
+'
+'    'Retourner la signature
+'    Fn_Get_Outlook_Signature = sSignature
+'
+'    Set fso = Nothing
+'    Set ts = Nothing
+'
+'End Function
 
 'Function ReadSignatureFile(filepath As String) As String
 '    Dim fso As Object
@@ -1913,67 +1687,67 @@ End Function
 '
 'End Sub
 '
-Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Prev_Invoice", 0)
-    
-    With wshFAC_Brouillon
-        Dim MininvNumb As Long
-        On Error Resume Next
-        MininvNumb = Application.WorksheetFunction.Min(wshFAC_Entête.Range("Inv_ID"))
-        On Error GoTo 0
-        If MininvNumb = 0 Then
-            MsgBox "Please create and save an Invoice first"
-            Exit Sub
-        End If
-        invNumb = .Range("N6").value
-        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
-            invRow = wshFAC_Entête.Range("A99999").End(xlUp).Row 'On Empty Invoice Go to last one created
-        Else 'On Existing Inv. find Previous one
-            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row - 1
-        End If
-        If .Range("N6").value = 1 Or MininvNumb = 0 Or MininvNumb = .Range("N6").value Then
-            MsgBox "You are at the first invoice"
-            Exit Sub
-        End If
-        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
-        Invoice_Load
-    End With
-    
-    Call Log_Record("modFAC_Finale:Prev_Invoice()", startTime)
+'Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Prev_Invoice", 0)
+'
+'    With wshFAC_Brouillon
+'        Dim MininvNumb As Long
+'        On Error Resume Next
+'        MininvNumb = Application.WorksheetFunction.Min(wshFAC_Entête.Range("Inv_ID"))
+'        On Error GoTo 0
+'        If MininvNumb = 0 Then
+'            MsgBox "Please create and save an Invoice first"
+'            Exit Sub
+'        End If
+'        invNumb = .Range("N6").value
+'        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
+'            invRow = wshFAC_Entête.Range("A99999").End(xlUp).Row 'On Empty Invoice Go to last one created
+'        Else 'On Existing Inv. find Previous one
+'            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row - 1
+'        End If
+'        If .Range("N6").value = 1 Or MininvNumb = 0 Or MininvNumb = .Range("N6").value Then
+'            MsgBox "You are at the first invoice"
+'            Exit Sub
+'        End If
+'        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
+'        Invoice_Load
+'    End With
+'
+'    Call Log_Record("modFAC_Finale:Prev_Invoice()", startTime)
+'
+'End Sub
 
-End Sub
-
-Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Next_Invoice", 0)
-    
-    With wshFAC_Brouillon
-        Dim MaxinvNumb As Long
-        On Error Resume Next
-        MaxinvNumb = Application.WorksheetFunction.Max(wshFAC_Entête.Range("Inv_ID"))
-        On Error GoTo 0
-        If MaxinvNumb = 0 Then
-            MsgBox "Please create and save an Invoice first"
-            Exit Sub
-        End If
-        invNumb = .Range("N6").value
-        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
-            invRow = wshFAC_Entête.Range("A4").value  'On Empty Invoice Go to First one created
-        Else 'On Existing Inv. find Previous one
-            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row + 1
-        End If
-        If .Range("N6").value >= MaxinvNumb Then
-            MsgBox "You are at the last invoice"
-            Exit Sub
-        End If
-        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
-        Invoice_Load
-    End With
-
-    Call Log_Record("modFAC_Finale:Next_Invoice()", startTime)
-
-End Sub
+'Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Next_Invoice", 0)
+'
+'    With wshFAC_Brouillon
+'        Dim MaxinvNumb As Long
+'        On Error Resume Next
+'        MaxinvNumb = Application.WorksheetFunction.Max(wshFAC_Entête.Range("Inv_ID"))
+'        On Error GoTo 0
+'        If MaxinvNumb = 0 Then
+'            MsgBox "Please create and save an Invoice first"
+'            Exit Sub
+'        End If
+'        invNumb = .Range("N6").value
+'        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
+'            invRow = wshFAC_Entête.Range("A4").value  'On Empty Invoice Go to First one created
+'        Else 'On Existing Inv. find Previous one
+'            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row + 1
+'        End If
+'        If .Range("N6").value >= MaxinvNumb Then
+'            MsgBox "You are at the last invoice"
+'            Exit Sub
+'        End If
+'        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
+'        Invoice_Load
+'    End With
+'
+'    Call Log_Record("modFAC_Finale:Next_Invoice()", startTime)
+'
+'End Sub
 
 Sub FAC_Finale_Cacher_Heures()
 

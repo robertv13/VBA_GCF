@@ -1616,7 +1616,7 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder(" & ws.CodeName & ")", 0)
 
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1624,14 +1624,13 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
         .EnableSelection = xlNoRestrictions
     End With
 
-    Debug.Print "Cell G3 is Locked: " & ws.Range("G3").Locked
-    Debug.Print "Worksheet Protection: " & ws.ProtectContents
-
     'Collect all unprotected cells
     Dim cell As Range
     Dim unprotectedCells As Range
+    Application.ScreenUpdating = False
     For Each cell In ws.usedRange
         If Not cell.Locked Then
+            Debug.Print "SetTabOrder - #1631 - " & cell.Address
             If unprotectedCells Is Nothing Then
                 Set unprotectedCells = cell
             Else
@@ -1639,10 +1638,12 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
             End If
         End If
     Next cell
+    Application.ScreenUpdating = True
 
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
-        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
+        Dim sortedCells As Range: Set sortedCells = unprotectedCells
+'        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
         Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
@@ -1681,7 +1682,7 @@ Sub test()
 
 End Sub
 
-Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-08-12 @ 12:12
+Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-10-16 @ 06:29
 
     On Error GoTo Error_Handler
     
@@ -1695,7 +1696,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1704,28 +1705,28 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     
     If startTime = 0 Then
         startTime = Timer 'Start timing
-        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        ThisWorkbook.name & "|" & _
-                        procedureName & " (entrée)" & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & " | " & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+                        ThisWorkbook.name & " | " & _
+                        procedureName & " (entrée)" & " | " & _
                         LOCALE_SSHORTDATE
         Close #fileNum
     ElseIf startTime < 0 Then
             startTime = Timer 'Start timing
-        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        ThisWorkbook.name & "|" & _
-                        procedureName & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & " | " & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+                        ThisWorkbook.name & " | " & _
+                        procedureName & " | " & _
                         LOCALE_SSHORTDATE
         Close #fileNum
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #fileNum, Replace(TimeStamp, " ", "_") & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        ThisWorkbook.name & "|" & _
-                        procedureName & " (sortie)" & "|" & _
-                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds" & "|" & _
+        Print #fileNum, Replace(TimeStamp, " ", "_") & " | " & _
+                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+                        ThisWorkbook.name & " | " & _
+                        procedureName & " (sortie)" & " | " & _
+                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds" & " | " & _
                         LOCALE_SSHORTDATE
         Close #fileNum
     End If
@@ -1781,7 +1782,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1829,7 +1830,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.000"), 3) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
     
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms

@@ -26,10 +26,44 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Dim dateLundi As Date, dateDimanche As Date
         dateLundi = Left(selectedWeek, 10)
         dateDimanche = Right(selectedWeek, 10)
-        MsgBox dateLundi & " - " & dateDimanche
+        
+        'Initialisation du listBox et des totaux
+        ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
+        ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.Clear
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format(0, "##0.00") 'Formatage du total en deux décimales
+
+        'Envoie les deux dates à wshTEC_TDB_Data pour les AdvancedFilters
+        Dim criteriaDate1 As Range
+        Dim formule1 As String
+        Set criteriaDate1 = wshTEC_TDB_Data.Range("T6")
+        formule1 = criteriaDate1.formula
+        criteriaDate1 = dateValue(dateLundi)
+        
+        Dim criteriaDate2 As Range
+        Dim formule2 As String
+        Set criteriaDate2 = wshTEC_TDB_Data.Range("U6")
+        formule2 = criteriaDate2.formula
+        criteriaDate2 = dateValue(dateDimanche)
+        
+        If wshTEC_TDB_Data.Range("W2").value <> "" Then
+            'Force une mise à jour du listBox en changeant le RowSource
+            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = "StatsHeuresSemaine_uf"
+            DoEvents
+            ufStatsHeures.lblTotaux = "Totaux de la semaine (" & dateLundi & " au " & dateDimanche & ")"
+            Call AddColonnesSemaine
+        End If
+        
+        'Rétablir les formules d'origine
+        Application.EnableEvents = False
+        criteriaDate1.formula = "=DateDebutSemaine"
+        criteriaDate2.formula = "=DateFinSemaine"
+        Application.EnableEvents = True
     Else
         MsgBox "Aucun élément sélectionné."
     End If
+    
 End Sub
 
 Private Sub UserForm_Initialize()

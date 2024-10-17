@@ -445,7 +445,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TEC_ID = cell.Row
-            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - Row # = '" & Fn_Find_Row_Number_TEC_ID & "'", -1)
+            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - Row # = " & Fn_Find_Row_Number_TEC_ID, -1)
         Else
             Fn_Find_Row_Number_TEC_ID = -1 'Not found
             Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - TECID = WAS NOT FOUND...", -1)
@@ -1132,7 +1132,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     strLastInvoice = ws.Cells(lastUsedRow, 1).value
     strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
     
-    Debug.Print "modFunctions_Fn_Get_Next_Invoice_Number_891  lastUsedRows = "; lastUsedRow; "   ws.Cells(lastUsedRow, 1).value = "; ws.Cells(lastUsedRow, 1).value; "   strLastInvoice = "; strLastInvoice
+'    Debug.Print "modFunctions_Fn_Get_Next_Invoice_Number_891  lastUsedRows = "; lastUsedRow; "   ws.Cells(lastUsedRow, 1).value = "; ws.Cells(lastUsedRow, 1).value; "   strLastInvoice = "; strLastInvoice
     
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 

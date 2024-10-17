@@ -130,26 +130,20 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        Debug.Print "wshGL_BV_Change_133   Target.value = "; Target.value; "   "; TypeName(Target.value)
         fullDate = Fn_Complete_Date(CStr(Target.value))
-        Debug.Print "wshGL_BV_Change_135   fullDate = "; fullDate; "   "; TypeName(fullDate)
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
-            Debug.Print "wshGL_BV_Change_140   Target.value = "; Target.value; "   "; TypeName(Target.value)
         Else
             Call MsgBoxInvalidDate("wshGL_BV_139")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
-        Debug.Print "wshGL_BV_Change_149   Range(""B9"").value = "; Range("B9").value; "   "; TypeName(Range("B9").value)
         Range("B9").value = Range("J1").value
-        Debug.Print "wshGL_BV_Change_151   Range(""J1"").value = "; Range("J1").value; "   "; TypeName(Range("J1").value)
-        Debug.Print "wshGL_BV_Change_152   Range(""B9"").value = "; Range("B9").value; "   "; TypeName(Range("B9").value)
         Range("L2").value = ""
         
         Call GL_TB_Build_Trial_Balance 'Automatically recalculate Trial Balance

@@ -147,10 +147,10 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             
             'Utilisation de la date du projet de facture
-            Debug.Print "FAC_Brouillon_New_Invoice_140   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
+'            Debug.Print "FAC_Brouillon_New_Invoice_140   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
 '            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
             wshFAC_Brouillon.Range("O3").value = Now()
-            Debug.Print "FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
+'            Debug.Print "FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
             
             wshFAC_Brouillon.Range("O9").Select
@@ -172,7 +172,7 @@ End Sub
 
 Sub FAC_Brouillon_Client_Change(clientName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change(" & clientName & ")", 0)
     
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
@@ -247,7 +247,7 @@ Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rng = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").value & "'", startTime)
     
 End Sub
 
@@ -736,11 +736,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1089,7 +1089,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

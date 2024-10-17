@@ -27,6 +27,9 @@ Private Sub Workbook_Open()
         Exit Sub
     End If
 
+    'Création d'un fichier qui indique de l'utilisateur utilise l'application
+    Call Create_User_Active_File
+    
     'Log activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
     
@@ -71,24 +74,6 @@ Private Sub Workbook_Open()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
     
-'    If Fn_Get_Windows_Username() = "Robert M. Vigneault" Or _
-'        Fn_Get_Windows_Username() = "robertmv" Or _
-'        Fn_Get_Windows_Username() = "Guillaume" Or _
-'        Fn_Get_Windows_Username() = "GuillaumeCharron" Then
-'        With wshFAC_Brouillon.PageSetup
-'            Debug.Print "LeftMargin = " & .LeftMargin
-'            Debug.Print "RightMargin = " & .RightMargin
-'            Debug.Print "TopMargin = " & .TopMargin
-'            Debug.Print "BottomMargin = " & .BottomMargin
-'
-'            Debug.Print "Orientation = " & .Orientation & " " & xlPortrait
-'
-'            Debug.Print "PaperSize = " & .PaperSize & " " & xlPaperLetter
-'
-'            Debug.Print "ActivePrinter = " & Application.ActivePrinter
-'        End With
-'    End If
-    
     Call Log_Record("ThisWorkbook:Workbook_Open()", startTime)
     
 End Sub
@@ -117,8 +102,10 @@ Sub BackupMasterFile()
     
     'Open the master file
     Dim masterWorkbook As Workbook
+    On Error GoTo MASTER_NOT_AVAILABLE
     Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                             "GCF_BD_MASTER.xlsx")
+    On Error GoTo 0
     
     'Get the current date and time in the format YYYYMMDD_HHMMSS
     Dim currentDateAndTime As String
@@ -147,5 +134,30 @@ Sub BackupMasterFile()
     Set masterWorkbook = Nothing
     
     Call Log_Record("modAppli:BackupMasterFile()", startTime)
+    Exit Sub
+
+MASTER_NOT_AVAILABLE:
+    MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
+            "Le fichier nécessite une réparation manuelle", _
+            vbCritical, _
+            "Situation anormale"
+    Application.Quit
+
+End Sub
+
+Sub Create_User_Active_File()
+
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    Dim traceFilePath As String
+    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & userName & "_Actif.txt"
+    
+    Dim fileNumber As Integer
+    fileNumber = FreeFile
+    
+    Open traceFilePath For Output As fileNumber
+    Print #fileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
+    Close fileNumber
 
 End Sub

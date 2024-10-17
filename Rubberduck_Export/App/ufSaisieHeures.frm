@@ -74,8 +74,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
    
     rmv_state = rmv_modeInitial
     
-'    Call Forcer_NumLock_Actif
-    
     Call Log_Record("ufSaisieHeures:UserForm_Activate()", startTime)
     
 End Sub
@@ -152,22 +150,28 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     'Restreindre l'accès au professionnel par défaut du code d'utilisateur
     Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault"
+        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "robertmv"
         Case "vgervais"
+            If cmbProfessionnel.value <> "VG" Then
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devez obligatoirement utiliser le code 'VG'", _
+                    vbInformation
+            End If
             cmbProfessionnel.value = "VG"
-            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
-                    vbInformation
         Case "User"
+            If cmbProfessionnel.value <> "ML" Then
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                        "Vous devez obligatoirement utiliser le code 'ML'", _
+                        vbInformation
+            End If
             cmbProfessionnel.value = "ML"
-            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
+        Case "Annie"
+            If cmbProfessionnel.value <> "AR" Then
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devez obligatoirement utiliser le code 'AR'", _
                     vbInformation
-        Case "vgervais"
+            End If
             cmbProfessionnel.value = "AR"
-            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devz obligatoirement utiliser le code '" & cmbProfessionnel.value & "'", _
-                    vbInformation
         Case Else
             cmbProfessionnel.value = ""
     End Select
@@ -196,8 +200,6 @@ Public Sub cmbProfessionnel_AfterUpdate()
         End If
     End If
 
-'    Call Forcer_NumLock_Actif
-    
     Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", startTime)
 
 End Sub
@@ -362,7 +364,11 @@ Private Sub txtClient_AfterUpdate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", 0)
     
     If Me.txtClient.value <> Me.txtSavedClient.value Then
-        Call Buttons_Enabled_True_Or_False(True, False, False, False)
+        If Me.txtTEC_ID = "" Then
+            Call Buttons_Enabled_True_Or_False(False, False, False, True)
+        Else
+            Call Buttons_Enabled_True_Or_False(False, True, False, True)
+        End If
     End If
     
     Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate()", startTime)
@@ -377,7 +383,7 @@ Private Sub txtActivite_AfterUpdate()
     
     If Me.txtActivite.value <> Me.txtSavedActivite.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(True, False, False, False)
+            Call Buttons_Enabled_True_Or_False(False, False, False, True)
         Else
             Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
@@ -403,11 +409,11 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
-        Cancel = True
-        Me.txtHeures.SetFocus
-        DoEvents
+'        Cancel = True
         Me.txtHeures.SelStart = 0
         Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Me.txtHeures.SetFocus
+        DoEvents
         Exit Sub
     End If
 
@@ -456,12 +462,12 @@ Sub txtHeures_AfterUpdate()
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
-        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
-        If Me.txtTEC_ID = "" Then
-            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
+'        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
+        If Me.txtTEC_ID = "" Then 'Création d'une nouvelle charge
+'            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
             Call Buttons_Enabled_True_Or_False(True, False, False, True)
-        Else
-            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, False, True, True", -1)
+        Else 'Modification d'une charge
+'            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, False, True, True", -1)
             Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
     End If
@@ -645,6 +651,10 @@ Sub imgLogoGCF_Click()
             Application.EnableEvents = True
             
             ufStatsHeures.show vbModeless
+    Else
+        MsgBox "Vous devez minimalement saisir un code de Professionnel" & vbNewLine & vbNewLine & _
+                "avant de pouvoir afficher vos statistiques", vbInformation, _
+                "Statistiques personnelles des heures"
     End If
 
 End Sub
@@ -656,9 +666,7 @@ Sub imgStats_Click()
         ufSaisieHeures.Hide
         
         Call TEC_TdB_Update_All
-        
         Call StatsHeures_AdvancedFilters
-    
         'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
         Call UpdatePivotTables
         

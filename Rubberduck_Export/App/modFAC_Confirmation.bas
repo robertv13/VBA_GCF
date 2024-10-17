@@ -165,6 +165,8 @@ Sub Show_Unconfirmed_Invoice()
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
+    Application.ScreenUpdating = False
+    
     'Clear contents or the area
     Dim lastUsedRow As Long
     lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.rows.count, "P").End(xlUp).Row
@@ -185,10 +187,12 @@ Sub Show_Unconfirmed_Invoice()
     
     wshFAC_Confirmation.Unprotect
     
+    Application.EnableEvents = False
+    
     Dim i As Integer
     For i = 3 To lastUsedRowAF
         With wshFAC_Confirmation
-            wshFAC_Confirmation.rows(i + 1).Locked = False
+            wshFAC_Confirmation.Cells(i + 1, 16).Locked = False
             .Cells(i + 1, 16).value = ws.Cells(i, 51)
             .Cells(i + 1, 17).value = ws.Cells(i, 52)
             .Cells(i + 1, 18).value = ws.Cells(i, 55)
@@ -203,10 +207,14 @@ Sub Show_Unconfirmed_Invoice()
         End With
     Next i
     
+    Application.EnableEvents = True
+    
     With wshFAC_Confirmation
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
+    
+    Application.ScreenUpdating = True
     
 Clean_Exit:
     Set ws = Nothing
@@ -306,26 +314,32 @@ End Sub
 
 Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon", 0)
+    
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    ws.Range("F5,H5,L5").ClearContents
+    Application.ScreenUpdating = False
     
-    ws.Range("F7:I11").ClearContents
+    ws.Range("F5,H5,L5,F7:I11,L13:L19,L21,L23,L25,F13:H17,F20:H24").ClearContents
     
-    ws.Range("L13:L19").ClearContents
-    
-    ws.Range("L21,L23,L25").ClearContents
-    
-    ws.Range("F13:H17").ClearContents
-    
-    ws.Range("F20:H24").ClearContents
+'    ws.Range("F7:I11").ClearContents
+'
+'    ws.Range("L13:L19").ClearContents
+'
+'    ws.Range("L21,L23,L25").ClearContents
+'
+'    ws.Range("F13:H17").ClearContents
+'
+'    ws.Range("F20:H24").ClearContents
     
     Dim pic As Picture
     For Each pic In ws.Pictures
         pic.Delete
     Next pic
+    
+    Application.ScreenUpdating = True
     
     'Hide both buttons
     ws.Shapes("btnFAC_Confirmation").Visible = False
@@ -343,6 +357,8 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     wshFAC_Confirmation.Range("F5").Select
     On Error GoTo 0
     
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon", startTime)
+
 End Sub
 
 Sub FAC_Confirmation_OK_Button_Click()
@@ -360,6 +376,8 @@ End Sub
 
 Sub FAC_Confirmation_Button_Click()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Button_Click", 0)
+    
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim invNo As String
@@ -393,10 +411,14 @@ Clean_Exit:
     'Cleanup - 2024-07-26 @ 00:55
     Set ws = Nothing
     
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Button_Click", startTime)
+
 End Sub
 
 Sub FAC_Confirmation_Get_GL_Posting(invNo)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Get_GL_Posting", 0)
+    
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
     Dim lastUsedRow
@@ -423,10 +445,14 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
         Application.EnableEvents = True
     End If
 
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Get_GL_Posting", startTime)
+
 End Sub
 
 Sub FAC_Confirmation_Facture(invNo As String)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Facture(" & invNo & ")", 0)
+    
     'Update the type of invoice (Master)
     Call FAC_Confirmation_Update_BD_MASTER(invNo)
     
@@ -441,11 +467,13 @@ Sub FAC_Confirmation_Facture(invNo As String)
     'Clear the cells on the current Worksheet
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Facture", startTime)
+    
 End Sub
 
 Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(" & invoice & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -491,7 +519,7 @@ End Sub
 
 Sub FAC_Confirmation_Update_Locally(invoice As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally(" & invoice & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -521,7 +549,7 @@ End Sub
 
 Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting(" & invoice & ")", 0)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -537,7 +565,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     If Not foundRange Is Nothing Then
         r = foundRange.Row
         Dim dateFact As Date
-        dateFact = ws.Cells(r, 2).value
+        dateFact = Left(ws.Cells(r, 2).value, 10)
         Dim hono As Currency
         hono = ws.Cells(r, 10).value
         Dim misc1 As Currency, misc2 As Currency, misc3 As Currency

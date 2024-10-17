@@ -82,7 +82,7 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     rowSelected = lsbProjetsFacture.ListIndex
     nomClient = lsbProjetsFacture.List(rowSelected, 0)
     dte = CDate(lsbProjetsFacture.List(rowSelected, 1))
-    Debug.Print "lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
+'    Debug.Print "lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
     projetID = lsbProjetsFacture.List(rowSelected, 3)
     
@@ -90,9 +90,9 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     wshFAC_Brouillon.Range("B51").value = nomClient
     wshFAC_Brouillon.Range("B52").value = projetID
-    Debug.Print "lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
+'    Debug.Print "lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
     wshFAC_Brouillon.Range("B53").value = dte
-    Debug.Print "lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
+'    Debug.Print "lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
     wshFAC_Brouillon.Range("B54").value = honorairesTotal
     
     Application.EnableEvents = True

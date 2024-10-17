@@ -10,9 +10,8 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     Call TEC_Import_All
-    
     Call FAC_Entête_Import_All
-    
+    Call FAC_Détails_Import_All
     Call FAC_Sommaire_Taux_Import_All
     
     'Set the zoom factor to 95% when this worksheet is activated
@@ -33,7 +32,7 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    Application.EnableEvents = False
+'    Application.EnableEvents = False
     
     'Hide the OK and CANCEL buttons
     ws.Shapes("btnFAC_Confirmation_OK").Visible = False
@@ -41,14 +40,13 @@ Private Sub Worksheet_Activate()
     ws.Activate
     
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
-    
     Call Show_Unconfirmed_Invoice
     
     previousCellAddress = ws.Range("F5").Address
     ws.Range("F5").Select
     
-    Application.ScreenUpdating = True
     Application.EnableEvents = True
+    Application.ScreenUpdating = True
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
@@ -83,6 +81,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    Debug.Print "Worksheet_Change Event - " & Target.Address
     
     'Saisie du numéro de facture
     If Not Intersect(Target, Range("F5")) Is Nothing Then
@@ -129,7 +129,9 @@ Sub FAC_Confirmation_Back_To_FAC_Menu()
    
     wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
     
+    Application.EnableEvents = False
     wshFAC_Confirmation.Range("F5").ClearContents
+    Application.EnableEvents = True
     
     wshFAC_Confirmation.Visible = xlSheetHidden
 
