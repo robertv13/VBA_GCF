@@ -397,12 +397,12 @@ End Sub
 Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
-    Dim filepath As String
-    filepath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-    If filepath = "False" Then Exit Sub 'User canceled
+    Dim filePath As String
+    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If filePath = "False" Then Exit Sub 'User canceled
     
     Dim wbSource As Workbook
-    Set wbSource = Workbooks.Open(filepath)
+    Set wbSource = Workbooks.Open(filePath)
     Dim wsSource As Worksheet
     Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
     
@@ -736,11 +736,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless

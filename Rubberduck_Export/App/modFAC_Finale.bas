@@ -253,7 +253,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
         'Add fields to the recordset before updating it
         rs.AddNew
         With wshFAC_Finale
-            rs.Fields("Inv_No") = noFacture
+            rs.Fields("Inv_No") = CStr(noFacture)
             rs.Fields("Description") = .Range("B" & r).value
             If .Range("C" & r).value <> 0 And _
                .Range("D" & r).value <> 0 And _

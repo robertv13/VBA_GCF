@@ -889,7 +889,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
                 Debug.Print "#895 - " & result
             End If
 '            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
-            oldInv_No = Inv_No
+            oldInv_No = CStr(Inv_No)
         End If
         If result = "Not Found" Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
@@ -983,6 +983,11 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
+        Else
+            If arr(i, 2) <> Int(arr(i, 2)) Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
+                r = r + 1
+            End If
         End If
         If arr(i, 3) <> "C" And arr(i, 3) <> "AC" Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le type de facture '" & arr(i, 3) & "' pour la facture '" & Inv_No & "' est INVALIDE")
@@ -1021,55 +1026,55 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(1, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(4, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(5, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(6, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total Fact. : " & _
-            Fn_Pad_A_String(Format$(totals(7, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(7, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 1), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(8, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 2
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(1, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(4, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(5, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(6, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total Fact. : " & _
-            Fn_Pad_A_String(Format$(totals(7, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(7, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 2), "##,##0.00$"), " ", 12, "L"))
+            Fn_Pad_A_String(Format$(totals(8, 2), "##,##0.00 $"), " ", 14, "L"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1146,8 +1151,13 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         End If
         If IsDate(CDate(arr(i, 2))) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date de facture '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+        Else
+            If arr(i, 2) <> Int(arr(i, 2)) Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
+                r = r + 1
+            End If
         End If
         If Fn_Validate_Client_Number(CStr(arr(i, 4))) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
@@ -1207,20 +1217,20 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00 $"), " ", 14, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00 $"), " ", 14, "L"))
     r = r + 2
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00$"), " ", 13, "L"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00 $"), " ", 14, "L"))
     r = r + 2
-'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00$"), " ", 13, "L"))
+'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00 $"), " ", 14, "L"))
 '    r = r + 1
-'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00$"), " ", 13, "L"))
+'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00 $"), " ", 14, "L"))
 '    r = r + 2
     
     'Add number of rows processed (read)
@@ -1565,6 +1575,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
+        Else
+            If arr(i, 2) <> Int(arr(i, 2)) Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date avec le mauvais format '" & arr(i, 2) & "'")
+                r = r + 1
+            End If
         End If
         glCode = arr(i, 5)
         If InStr(1, strCodeGL, glCode + "|:|") = 0 Then
@@ -2022,7 +2037,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1757 'What is the last TECID analyzed ?
+    lastTECIDReported = 1791 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2724,7 +2739,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                 .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
                 .Range("C2:C" & lastUsedRow & ", E2:E" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("F2:F" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00$"
+                .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00 $"
             End With
         
         Case "wshFAC_Comptes_Clients"
@@ -3298,92 +3313,154 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     
 End Sub
 
-'Sub Search_Search_Results()
-'
-'    Dim ws As Worksheet: Set ws = Feuil1
-'
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-'
-'    Dim line As String, l As String, r As String
-'    Dim i As Long, ii As Long
-'    For i = 2 To lastUsedRow
-'        If ws.Cells(i, 1) <> "" Then
-'            ii = ii + 1
-'            line = Trim(ws.Cells(i, 6).value)
-'            l = Left(line, 61)
-'            r = Right(line, 20)
-'            If InStr(line, "Dim startTime As Double: startTime = Timer: Call Log_Record(""") = 0 And _
-'                InStr(line, "Call Log_Record(""") = 0 Then
-'                Debug.Print "Début: " & line
-'            End If
-'            If InStr(line, """, 0)") <> Len(line) - 4 And _
-'                InStr(line, """, startTime)") <> Len(line) - 12 Then
-'                Debug.Print "Fin  : " & line
-'            End If
-'        End If
-'    Next i
-'
-'    MsgBox "J'ai analysé " & i & " lignes de code!"
-'
-'End Sub
-'
-'Exemple de saisie de cellules non verrouillées dans une feuille - 2024-09-02 @ 06:32 - ChatGPT
+Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
+    
+    Dim filePath As String
+    Dim fileContent As String
+    Dim ligne As String
+    Dim champs() As String
+    Dim i As Long
+    Dim j As Long
+    Dim ligneNum As Long
+    Dim FileNum As Integer
+    
+    ' Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
+    Dim fd As FileDialog
+    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    
+    ' Configuration des filtres de fichiers (TXT uniquement)
+    fd.Title = "Sélectionnez un fichier TXT"
+    fd.Filters.Clear
+    fd.Filters.Add "Fichiers Texte", "*.txt"
+    
+    ' Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+    If fd.show = -1 Then
+        filePath = fd.selectedItems(1)
+    Else
+        MsgBox "Aucun fichier sélectionné.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Ouvre le fichier en mode lecture
+    FileNum = FreeFile
+    Open filePath For Input As FileNum
+    
+    ' Initialise la ligne de départ pour insérer les données dans Excel
+    ligneNum = 1
+    
+    ' Lire chaque ligne du fichier
+    Do While Not EOF(FileNum)
+        Line Input #FileNum, ligne
+        
+        ' Séparer les champs par le séparateur " | "
+        champs = Split(ligne, " | ")
+        
+        ' Insérer les champs dans les colonnes de la feuille Excel
+        For j = LBound(champs) To UBound(champs)
+            Cells(ligneNum, j + 1).value = champs(j)
+        Next j
+        
+        ' Passer à la ligne suivante
+        ligneNum = ligneNum + 1
+    Loop
+    
+    ' Fermer le fichier
+    Close FileNum
+    
+    MsgBox "Le fichier a été importé avec succès.", vbInformation
+End Sub
 
-'Private Sub Worksheet_Activate()
-'
-'    ' Définir les cellules déverrouillées
-'    Dim unlockedCells As Range
-'    Set unlockedCells = Union(Me.Range("F5"), Me.Range("K5"), Me.Range("F7")) ' Remplacez par vos cellules
-'
-'    ' Définir la cellule active initiale
-'    Application.OnKey "^+F", "ActivateNextCell"
-'
-'    ' Activer la première cellule déverrouillée
-'    If Not IsEmpty(unlockedCells.Cells(1, 1)) Then
-'        unlockedCells.Cells(1, 1).Select
-'    End If
-'End Sub
-'
-'Private Sub Worksheet_Change(ByVal Target As Range) '2024-09-02 @ 06:32 - ChatGPT
-'
-'    Dim unlockedCells As Range
-'    Dim nextCell As Range
-'
-'    ' Définir les cellules déverrouillées
-'    Set unlockedCells = Union(Me.Range("F5"), Me.Range("K5"), Me.Range("F7")) ' Remplacez par vos cellules
-'
-'    ' Si la cellule modifiée est l'une des cellules déverrouillées
-'    If Not Intersect(Target, unlockedCells) Is Nothing Then
-'        ' Déterminer la cellule suivante
-'        Set nextCell = Target.Offset(, 1) ' Par défaut, passe à la cellule suivante à droite
-'
-'        ' Trouver la prochaine cellule déverrouillée
-'        If Not Intersect(nextCell, unlockedCells) Is Nothing Then
-'            ' Si la prochaine cellule est déverrouillée, sélectionnez-la
-'            nextCell.Select
-'        Else
-'            ' Sinon, sélectionner la première cellule déverrouillée
-'            unlockedCells.Cells(1, 1).Select
-'        End If
-'    End If
-'End Sub
-'
-'Public Sub ActivateNextCell()
-'    Static cellIndex As Integer
-'    Dim unlockedCells As Range
-'    Dim cellCount As Integer
-'
-'    ' Définir les cellules déverrouillées
-'    Set unlockedCells = Union(Sheet1.Range("F5"), Sheet1.Range("K5"), Sheet1.Range("F7")) ' Remplacez par vos cellules
-'
-'    cellCount = unlockedCells.Cells.count
-'
-'    ' Passer à la cellule suivante
-'    cellIndex = cellIndex + 1
-'    If cellIndex > cellCount Then cellIndex = 1
-'
-'    ' Activer la cellule
-'    unlockedCells.Cells(cellIndex, 1).Select
-'End Sub
-'
+Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
+    
+    
+    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
+    Dim fd As FileDialog
+    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    
+    'Configuration des filtres de fichiers (Excel uniquement)
+    fd.Title = "Sélectionnez un fichier Excel"
+    fd.Filters.Clear
+    fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
+    
+    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+    Dim filePath As String
+    Dim fileSelected As Boolean
+    If fd.show = -1 Then
+        filePath = fd.selectedItems(1)
+        fileSelected = True
+    Else
+        MsgBox "Aucun fichier sélectionné.", vbExclamation
+        fileSelected = False
+    End If
+    
+    'Ouvrir le fichier sélectionné s'il y en a un
+    Dim wb As Workbook
+    If fileSelected Then
+        Set wb = Workbooks.Open(filePath)
+        
+        'Définir les colonnes spécifiques à nettoyer pour chaque feuille
+        Dim colonnesANettoyer As Dictionary
+        Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
+        
+        'Ajouter des feuilles et colonnes spécifiques (exemple)
+        colonnesANettoyer.Add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
+        colonnesANettoyer.Add "DEB_Trans", Array("B") 'Vérifier la colonne B
+        
+        colonnesANettoyer.Add "ENC_Détails", Array("D") 'Vérifier la colonne D
+        colonnesANettoyer.Add "ENC_Entête", Array("B") 'Vérifier la colonne B
+        
+        colonnesANettoyer.Add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
+        colonnesANettoyer.Add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
+        colonnesANettoyer.Add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
+        colonnesANettoyer.Add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
+
+        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
+
+        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
+        
+        'Parcourir chaque feuille définie dans le dictionnaire
+        Dim ws As Worksheet
+        Dim cell As Range
+        Dim dateOnly As Date
+        Dim wsName As Variant
+        Dim cols As Variant
+        Dim col As Variant
+        
+        For Each wsName In colonnesANettoyer.keys
+            'Vérifier si la feuille existe dans le classeur
+            On Error Resume Next
+            Set ws = wb.Sheets(wsName)
+            Debug.Print wsName
+            On Error GoTo 0
+            
+            If Not ws Is Nothing Then
+                'Récupérer les colonnes à traiter pour cette feuille
+                cols = colonnesANettoyer(wsName)
+                
+                'Parcourir chaque colonne spécifiée
+                For Each col In cols
+                    'Parcourir chaque cellule de la colonne spécifiée
+                    For Each cell In ws.columns(col).SpecialCells(xlCellTypeConstants)
+                        'Vérifier si la cellule contient une date avec une heure
+                        If IsDate(cell.value) Then
+                            'Vérifier si la valeur contient des heures (fraction décimale)
+                            If cell.value <> Int(cell.value) Then
+                                'Garde uniquement la partie date (sans heure)
+                                Debug.Print "", wsName & " - " & col & " - " & cell.value
+                                dateOnly = Int(cell.value)
+                                cell.value = dateOnly
+                            End If
+                        End If
+                    Next cell
+                Next col
+            End If
+        Next wsName
+        
+        'Sauvegarder les modifications
+        wb.Save
+        wb.Close
+        
+        MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
+    End If
+End Sub
+

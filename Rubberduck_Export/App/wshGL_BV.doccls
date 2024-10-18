@@ -295,8 +295,8 @@ Sub wshGL_BV_Adjust_The_Shape()
         'Set shape properties
         With dynamicShape
             .Fill.ForeColor.RGB = RGB(249, 255, 229)
-            .line.Weight = 2
-            .line.ForeColor.RGB = vbBlue
+            .Line.Weight = 2
+            .Line.ForeColor.RGB = vbBlue
             .TextFrame.Characters.Text = texteFull
             .TextFrame.Characters.Font.Color = vbBlack
             .TextFrame.Characters.Font.name = "Consolas"

@@ -46,7 +46,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim progressBarBg As Shape
     Set progressBarBg = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, barWidth, barHeight)
     progressBarBg.Fill.ForeColor.RGB = RGB(255, 255, 255)  ' White background
-    progressBarBg.line.Visible = msoTrue  'Show the border of the progress bar
+    progressBarBg.Line.Visible = msoTrue  'Show the border of the progress bar
     progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
     progressBarBg.TextFrame.Characters.Font.size = 14
@@ -58,7 +58,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set progressBarFill = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, 0, barHeight)
     progressBarFill.Fill.ForeColor.RGB = RGB(0, 255, 0)  ' Green fill color
     progressBarFill.Fill.Transparency = 0.6  'Set transparency to 60%
-    progressBarFill.line.Visible = msoFalse  'Hide the border of the fill
+    progressBarFill.Line.Visible = msoFalse  'Hide the border of the fill
     
     'Update the progress bar fill
     progressBarFill.width = 0.15 * barWidth  '15 %
@@ -658,14 +658,14 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filepath As String, _
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filepath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
@@ -775,14 +775,14 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filepath As String, _
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filepath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
