@@ -314,7 +314,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309", True)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '" & TECID, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '" & TECID & "'", 0)
 
     Application.ScreenUpdating = False
     
@@ -346,7 +346,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     If TECID = 0 And Now - dateValue > 15 Then
         MsgBox "La date saisie est plus de 15 jours dans le passé..." & vbNewLine & vbNewLine & _
                 "Veuillez aviser le développeur de cette situation SVP", vbInformation
-        Call Log_Saisie_Heures("Future   ", "@00343 - Plus de 15 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
+        Call Log_Saisie_Heures("Future   ", "Plus de 15 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
     End If
     
     If TECID < 0 Then 'Soft delete a record
@@ -381,7 +381,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", _
                 vbExclamation
                 
-            Call Log_Record("N'a pas trouvé le TECID @00362 - '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-02 @ 10:35
+            Call Log_Record("N'a pas trouvé le TECID - '" & CStr(saveLogTEC_ID) & "'", -1) '2024-09-02 @ 10:35
             
             rs.Close
             conn.Close
@@ -393,7 +393,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
         If TECID = 0 Then 'Add a record
         
-            Call Log_Record("@00377 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
@@ -415,7 +415,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             Dim nextID As Long
             nextID = lastRow + 1
             
-            Call Log_Record("@0399 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à = " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à " & CStr(nextID), -1) '2024-09-13 @ 08:35
 
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
@@ -424,7 +424,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
-            Call Log_Record("@00408 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet", -1) '2024-09-13 @ 08:35
+            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet", -1) '2024-09-13 @ 08:35
 
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
@@ -449,7 +449,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("NoFacture").value = ""
             rs.update
             
-            Call Log_Record("@00433 modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été Updaté avec le TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté avec le TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
             
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("ADD    " & saveLogTEC_ID, ufSaisieHeures.cmbProfessionnel.value & " | " & _

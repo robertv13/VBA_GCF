@@ -398,7 +398,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
         If wshENC_Saisie.Range("B" & r).value = True And _
             wshENC_Saisie.Range("K" & r).value <> 0 Then
             rs.AddNew
-                rs.Fields("Pay_ID").value = pmtNo
+                rs.Fields("Pay_ID").value = CLng(pmtNo)
                 rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & r).value
                 rs.Fields("Customer").value = wshENC_Saisie.Range("F5").value
                 rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("K5").value)

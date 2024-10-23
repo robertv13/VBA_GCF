@@ -29,7 +29,7 @@ Sub Get_Invoice_Data(noFact As String)
         
         Call Display_Invoice_info(ws, matchedRow)
         
-        Call Insert_Big_PDF_Icon
+        Call Insert_PDF_WIP_Icons
         
         Dim resultArr As Variant
         resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(noFact)
@@ -42,6 +42,8 @@ Sub Get_Invoice_Data(noFact As String)
             Dim FeesSummary() As Variant
             ReDim FeesSummary(1 To 5, 1 To 3)
             Call Get_Fees_Summary_For_That_Invoice(resultArr, FeesSummary)
+            
+            
         End If
         
 '        Call FAC_Confirmation_Get_GL_Posting(noFact)
@@ -60,29 +62,47 @@ Clean_Exit:
 
 End Sub
 
-Sub Insert_Big_PDF_Icon()
+Sub Insert_PDF_WIP_Icons()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
+    iconPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Resources"
     
     Dim pic As Picture
     Dim cell As Range
     
-    'Loop through each row and insert the icon if there is data in column E
+    '1. Insert the PDF icon
+    
+    'Set the cell where the icon should be inserted
     Set cell = ws.Cells(7, 12) 'Set the cell where the icon should be inserted
             
-    'Insert the icon
-    Set pic = ws.Pictures.Insert(iconPath)
+    Set pic = ws.Pictures.Insert(iconPath & Application.PathSeparator & "AdobeAcrobatReader.png")
     With pic
+        .name = "PDF"
         .Top = cell.Top + 10
         .Left = cell.Left + 10
         .Height = 50 'cell.Height
         .width = 50 'cell.width
         .Placement = xlMoveAndSize
         .OnAction = "FAC_Confirmation_Display_PDF_Invoice"
+    End With
+    
+    '2. Insert the WIP icon
+    
+    'Set the cell where the icon should be inserted
+    Set cell = ws.Cells(14, 5) 'Set the cell where the icon should be inserted
+    
+    Set pic = ws.Pictures.Insert(iconPath & Application.PathSeparator & "WIP.png")
+    With pic
+        .name = "WIP"
+        .Top = cell.Top + 10
+        .Left = cell.Left + 10
+        .Height = 50 'cell.Height
+        .width = 50 'cell.width
+        .Placement = xlMoveAndSize
+        .OnAction = "FAC_Confirmation_Report_Detailed_TEC"
     End With
     
     'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
@@ -118,7 +138,6 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
-    
     
     'Display all fields from FAC_Entête
     With ws
@@ -161,6 +180,240 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
 
 End Sub
 
+Sub FAC_Confirmation_Report_Detailed_TEC()
+
+    'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
+    Call Get_Detail_TEC_Invoice_AF(invNo)
+
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "BI").End(xlUp).Row
+    
+    'Est-ce que nous avons des TEC pour cette facture ?
+    If lastUsedRow < 3 Then
+        GoTo Nothing_to_Print
+    End If
+    
+    Call FAC_Confirmation_Creer_Rapport_TEC_Factures
+
+    Exit Sub
+    
+Nothing_to_Print:
+    MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
+
+End Sub
+
+Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Creer_Rapport_TEC_Factures", 0)
+    
+    Dim cheminFichier As String
+    
+    'Tenter d'assigner la feuille qui existe peut-être
+    Dim strRapport As String
+    strRapport = "Rapport TEC facturés"
+    Dim wsRapport As Worksheet
+    On Error Resume Next ' Eviter erreur si la feuille existe déjà
+    Set wsRapport = ThisWorkbook.Sheets(strRapport)
+    On Error GoTo 0
+    
+    'Si la feuille "Rapport TEC facturés" n'existe pas, la créer
+    If wsRapport Is Nothing Then
+        Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
+        wsRapport.name = strRapport
+    Else
+        wsRapport.Cells.Clear 'Vider la feuille si elle existe déjà
+    End If
+    
+    'Mettre en forme la feuille de rapport
+    With wsRapport
+        ' Titre du rapport
+        .Range("A1").value = "TEC facturés pour la facture '" & invNo & "'"
+        .Range("A1").Font.Bold = True
+        .Range("A1").Font.size = 12
+        
+        'Ajouter une date de génération du rapport
+        .Range("A2").value = "Date de création : " & Format(Now, "dd/mm/yyyy")
+        .Range("A2").Font.Italic = True
+        .Range("A2").Font.size = 10
+        
+        'Entête du rapport (A4:D4)
+        .Range("A4").value = "Date"
+        .Range("B4").value = "Prof."
+        .Range("C4").value = "Description"
+        .Range("D4").value = "Heures"
+        With .Range("A4:D4")
+            .Font.Bold = True
+            .Font.Italic = True
+            .Font.Color = vbWhite
+            .HorizontalAlignment = xlCenter
+        End With
+        
+        'Corps du rapport
+        .Range("A5:D999").VerticalAlignment = xlTop
+        With .Range("A4:D4").Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 12611584
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        
+        'Supposons que nous résumons des données d'une autre feuille
+        Dim wsSource As Worksheet
+        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BI:BX)
+        
+        'Copier quelques données de la source
+        Dim rngResult As Range
+        Set rngResult = wsSource.Range("BI1").CurrentRegion.Offset(2, 0)
+        'Redimensionner la plage après l'offset pour ajuster la taille (réduire le nombre de lignes)
+        Set rngResult = rngResult.Resize(rngResult.rows.count - 2)
+        'Transfert des données vers un tableau
+        Dim tableau As Variant
+        tableau = rngResult.value
+        
+        Dim r As Long
+        r = 4 'Nombre de lignes d'entête
+        
+        Dim i As Long
+        For i = LBound(tableau, 1) To UBound(tableau, 1)
+            r = r + 1
+            wsRapport.Cells(r, 1) = tableau(i, 4)
+            wsRapport.Cells(r, 2) = tableau(i, 3)
+            wsRapport.Cells(r, 3) = tableau(i, 7)
+            wsRapport.Cells(r, 4) = tableau(i, 8)
+        Next i
+
+        'Ajouter une bordure aux données
+        .Range("A4:D" & r).Borders.LineStyle = xlContinuous
+        With .Range("A5:D" & r).Borders(xlInsideVertical)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        With .Range("A5:D" & r).Borders(xlInsideHorizontal)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        
+        .Range("A4:D" & r).Font.name = "Aptos Narrow"
+        .Range("A4:D" & r).Font.size = 10
+        
+        .columns("A").ColumnWidth = 10
+        .Range("A4:A" & r).HorizontalAlignment = xlCenter
+        
+        .columns("B").ColumnWidth = 6
+        .Range("B4:B" & r).HorizontalAlignment = xlCenter
+        
+        .columns("C").ColumnWidth = 72
+        .columns("C").WrapText = True
+        
+        .columns("D").ColumnWidth = 7
+        .columns("D").NumberFormat = "##0.00"
+        
+    End With
+
+    'Configurer la mise en page pour l'impression ou l'export en PDF
+    With wsRapport.PageSetup
+        .TopMargin = Application.CentimetersToPoints(1)
+        .BottomMargin = Application.CentimetersToPoints(1)
+        .LeftMargin = Application.CentimetersToPoints(0.5)
+        .RightMargin = Application.CentimetersToPoints(0.5)
+        
+        'Ajuster la marge des en-têtes et pieds de page (1 cm)
+        .HeaderMargin = Application.CentimetersToPoints(1)
+        .FooterMargin = Application.CentimetersToPoints(1)
+        
+        .Orientation = xlPortrait 'Portrait
+        .FitToPagesWide = 1 'Ajuster sur une page en largeur
+        .FitToPagesTall = False ' Ne pas ajuster en hauteur
+        .PrintArea = "A1:D" & r ' Définir la zone d'impression
+        .CenterHorizontally = True ' Centrer horizontalement
+        .CenterVertically = False ' Centrer verticalement
+    End With
+    
+    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    
+    'On se déplace à la feuille contenant le rapport
+    wsRapport.Activate
+    
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Creer_Rapport_TEC_Factures", startTime)
+    
+End Sub
+
+Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Get_Detail_TEC_Invoice_AF", 0)
+
+    'Voir la feuille TEC_Local
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'AdvancedFilter par Numéro de Facture
+    
+    'Définir le range des critères (Numéro de Facture)
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("BG2:BG3")
+    ws.Range("BG3").value = CStr(noFact)
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("BI1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
+    Set rngResult = ws.Range("BI2:BX2")
+    
+    'AdvanceFilter
+    ws.Range("tblTEC_Local[#All]").AdvancedFilter _
+                                            action:=xlFilterCopy, _
+                                            criteriaRange:=rngCriteria, _
+                                            CopyToRange:=rngResult, _
+                                            Unique:=False
+        
+    'Tri des informations
+    Dim lastResultRow As Long
+    lastResultRow = ws.Cells(ws.rows.count, "BI").End(xlUp).Row
+    
+    'Est-il nécessaire de trier les résultats ?
+    If lastResultRow > 3 Then
+        With ws.Sort 'Sort - Date, ProfID, TEC_ID
+            .SortFields.Clear
+            'First sort On Date
+            .SortFields.Add key:=ws.Range("BL2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            'Second, sort On Prof_ID
+            .SortFields.Add key:=ws.Range("BJ2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            'Third, sort On TecID
+            .SortFields.Add key:=ws.Range("BI2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            .SetRange ws.Range("BI3:BW" & lastResultRow)
+            .Apply 'Apply Sort
+         End With
+    End If
+
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    
+    'Free memory
+    Set rngCriteria = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modFAC_Confirmation:Get_Detail_TEC_Invoice_AF", startTime)
+    
+End Sub
+
 Sub Show_Unconfirmed_Invoice()
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -185,7 +438,7 @@ Sub Show_Unconfirmed_Invoice()
         GoTo Clean_Exit
     End If
     
-    wshFAC_Confirmation.Unprotect
+'    wshFAC_Confirmation.Unprotect
     
     Application.EnableEvents = False
     
@@ -213,6 +466,8 @@ Sub Show_Unconfirmed_Invoice()
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
+    
+    wshFAC_Confirmation.Range("F5").value = ""
     
     Application.ScreenUpdating = True
     
@@ -246,23 +501,27 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     Dim profID As Long
     Dim rowInWorksheet As Long: rowInWorksheet = 13
     Dim prof As Variant
-    For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
-        Dim strProf As String
-        strProf = prof
-        profID = Fn_GetID_From_Initials(strProf)
-        hres = dictHours(prof)
-        Dim tauxHoraire As Currency
-        tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
-        wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
-        wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
-                CDbl(Format$(hres, "0.00"))
-        wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
-                CDbl(Format$(tauxHoraire, "# ##0.00 $"))
-        rowInWorksheet = rowInWorksheet + 1
-'        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
-'        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
-'        rowSelected = rowSelected + 1
-    Next prof
+    Application.EnableEvents = False
+    If dictHours.count <> 0 Then
+        For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
+            Dim strProf As String
+            strProf = prof
+            profID = Fn_GetID_From_Initials(strProf)
+            hres = dictHours(prof)
+            Dim tauxHoraire As Currency
+            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
+            wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
+            wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
+                    CDbl(Format$(hres, "0.00"))
+            wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
+                    CDbl(Format$(tauxHoraire, "# ##0.00 $"))
+            rowInWorksheet = rowInWorksheet + 1
+    '        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
+    '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
+    '        rowSelected = rowSelected + 1
+        Next prof
+    End If
+    Application.EnableEvents = True
     
     'Cleanup - 2024-07-25 @ 18:06
     Set dictHours = Nothing
@@ -324,19 +583,11 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     ws.Range("F5,H5,L5,F7:I11,L13:L19,L21,L23,L25,F13:H17,F20:H24").ClearContents
     
-'    ws.Range("F7:I11").ClearContents
-'
-'    ws.Range("L13:L19").ClearContents
-'
-'    ws.Range("L21,L23,L25").ClearContents
-'
-'    ws.Range("F13:H17").ClearContents
-'
-'    ws.Range("F20:H24").ClearContents
-    
     Dim pic As Picture
     For Each pic In ws.Pictures
+        On Error Resume Next
         pic.Delete
+        On Error GoTo 0
     Next pic
     
     Application.ScreenUpdating = True
@@ -353,9 +604,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
 
     Application.EnableEvents = True
     
-    On Error Resume Next
     wshFAC_Confirmation.Range("F5").Select
-    On Error GoTo 0
     
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon", startTime)
 

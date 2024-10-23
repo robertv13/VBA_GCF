@@ -267,9 +267,13 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim readRows As Long
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
+    Application.ScreenUpdating = True
+    Application.EnableEvents = False
     wshMenu.Range("H29").value = "Vérification du Plan Comptable"
+    Application.EnableEvents = True
+    Application.ScreenUpdating = False
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     
     Call check_Plan_Comptable(r, readRows)
     wshMenu.Range("H29").value = ""
@@ -280,7 +284,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Client_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_Clients(r, readRows)
@@ -292,7 +296,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call Fournisseur_List_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_Fournisseurs(r, readRows)
@@ -304,7 +308,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call ENC_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_ENC_Détails(r, readRows)
@@ -316,7 +320,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call ENC_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_ENC_Entête(r, readRows)
@@ -328,7 +332,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Détails_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Détails(r, readRows)
@@ -340,7 +344,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Entête(r, readRows)
@@ -352,7 +356,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call FAC_Comptes_Clients_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Comptes_Clients(r, readRows)
@@ -365,7 +369,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call FAC_Projets_Détails_Import_All
     Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Détails(r, readRows)
@@ -376,7 +380,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_FAC_Projets_Entête(r, readRows)
@@ -388,7 +392,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call GL_Trans_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
 
     Call check_GL_Trans(r, readRows)
     wshMenu.Range("H29").value = ""
@@ -400,7 +404,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call TEC_Import_All
     Call TEC_TdB_Update_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     
     Call check_TEC_TdB_Data(r, readRows)
     wshMenu.Range("H29").value = ""
@@ -408,7 +412,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     wshMenu.Range("H29").value = "Vérification des TEC"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "mm/dd/yyyy hh:nn:ss"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     r = r + 1
     
     Call check_TEC(r, readRows)
@@ -1228,10 +1232,6 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00 $"), " ", 14, "L"))
     r = r + 2
-'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00 $"), " ", 14, "L"))
-'    r = r + 1
-'    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "     Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00 $"), " ", 14, "L"))
-'    r = r + 2
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - headerRow
@@ -2037,7 +2037,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1791 'What is the last TECID analyzed ?
+    lastTECIDReported = 1891 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2474,6 +2474,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
+    r = r + 1
     
     Dim r2 As Integer
     r2 = 2 'Output to wsSommaire

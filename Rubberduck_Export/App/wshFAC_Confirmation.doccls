@@ -6,7 +6,6 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", 0)
     
-    Application.ScreenUpdating = False
     Application.EnableEvents = False
     
     Call TEC_Import_All
@@ -14,20 +13,34 @@ Private Sub Worksheet_Activate()
     Call FAC_Détails_Import_All
     Call FAC_Sommaire_Taux_Import_All
     
+    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
+    
+    'Si la feuille est masquée, la rendre visible
+    If ws.Visible = xlSheetHidden Or ws.Visible = xlSheetVeryHidden Then
+        ws.Visible = xlSheetVisible
+    End If
+    
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95
     
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
-    
     On Error Resume Next
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.rows.count, "P").End(xlUp).Row
+    Dim r As Range
+    Set r = ws.Range("P4:P" & lastRow)
+    On Error Resume Next
+    r.Locked = True
+    On Error GoTo 0
+    
+    'Protéger la feuille sans mot de passe et permettre la sélection des cellules verrouillées et non verrouillées
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
     End With
     
     Call SetTabOrder(ws)
@@ -40,13 +53,15 @@ Private Sub Worksheet_Activate()
     ws.Activate
     
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
-    Call Show_Unconfirmed_Invoice
+'    Call Show_Unconfirmed_Invoice
     
     previousCellAddress = ws.Range("F5").Address
+    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    ws.Range("F5").value = ""
+    
     ws.Range("F5").Select
     
     Application.EnableEvents = True
-    Application.ScreenUpdating = True
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
@@ -63,15 +78,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Invoice Number is selected
     If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
-        Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
     If Not Intersect(Target, Me.columns(16)) Is Nothing And Target.Cells.count = 1 Then
-        Dim selectedRow As Long
-        selectedRow = Target.Row
-        Me.Range("F5").value = Me.Cells(selectedRow, 16)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -82,38 +93,13 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Debug.Print "Worksheet_Change Event - " & Target.Address
+    Debug.Print "Worksheet_Change Event - " & Target.Address & " = " & Target.value
     
     'Saisie du numéro de facture
     If Not Intersect(Target, Range("F5")) Is Nothing Then
         invNo = Trim(Target.value)
         If invNo <> "" Then
             Call Get_Invoice_Data(invNo)
-            
-            'Simulate waiting for user input
-            Do
-                DoEvents
-                If Range("B2").value = "OK" Or Range("B2").value = "CONFIRM" Then
-                    Exit Do
-                End If
-            Loop
-            
-            'Handle the user interaction result
-            Select Case Range("B2").value
-                Case "OK"
-                    Call FAC_Confirmation_OK_Button_Click
-                Case "CONFIRM"
-                    Call FAC_Confirmation_Button_Click
-                    Application.EnableEvents = False
-                    Target.ClearContents ' Clear the cell value
-                    Application.EnableEvents = True
-            End Select
-            
-            'Reset flag cell
-            Range("B2").value = ""
-            
-            Application.ScreenUpdating = True
-        
         Else
             On Error Resume Next
             Target.Select

@@ -436,6 +436,38 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     
 End Function
 
+Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
+
+    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).Row
+    
+    Dim resultArr() As Variant
+    ReDim resultArr(1 To 1000, 1 To 16)
+    
+    Dim rowCount As Long
+    Dim i As Long
+    Dim tempRow As Variant
+    For i = 3 To lastUsedRow
+        If wsTEC.Cells(i, 16).value = invNo And UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
+            rowCount = rowCount + 1
+            tempRow = wsTEC.Range(wsTEC.Cells(i, 1), wsTEC.Cells(i, 16)).value
+        End If
+    Next i
+    
+    If rowCount > 0 Then
+        ReDim Preserve resultArr(1 To rowCount)
+    End If
+    
+    If rowCount = 0 Then
+        Fn_Get_TEC_Invoiced_By_This_Invoice = Array()
+    Else
+        Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
+    End If
+    
+End Function
+
 Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", 0)
@@ -763,6 +795,10 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     Dim values() As Variant
     Dim i As Long, j As Long
     Dim Temp As Variant
+    
+    If dict.count = 0 Then
+        Exit Function
+    End If
     
     ReDim keys(0 To dict.count - 1)
     ReDim values(0 To dict.count - 1)
@@ -1432,3 +1468,27 @@ Function Fn_Valider_Portion_Heures(valeur As Double) As Boolean
     Next i
     
 End Function
+
+Function Fn_ConvertElapsedTime_In_HMS(ByRef elapsedTime As Double) As String
+    
+    Debug.Print elapsedTime
+    
+    Dim hours As Long
+    Dim minutes As Long
+    Dim seconds As Double
+
+    'Conversion en heures, minutes et secondes
+    hours = Int(elapsedTime / 3600)
+    minutes = Int((elapsedTime Mod 3600) / 60)
+    seconds = elapsedTime - (hours * 3600) - (minutes * 60)
+
+    'Si le temps écoulé est inférieur à 1 seconde, on affiche uniquement les secondes avec des millisecondes
+    If elapsedTime < 1 Then
+        Fn_ConvertElapsedTime_In_HMS = "00:00:" & Format$(seconds, "00.0000")
+    Else
+        'Sinon, on affiche normalement heures:minutes:secondes
+        Fn_ConvertElapsedTime_In_HMS = Format$(hours, "00") & ":" & Format$(minutes, "00") & ":" & Format$(seconds, "00.00")
+    End If
+    
+End Function
+

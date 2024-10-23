@@ -151,7 +151,7 @@ Sub Create_User_Active_File()
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & userName & "_Actif.txt"
+    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim fileNumber As Integer
     fileNumber = FreeFile
