@@ -166,7 +166,10 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice()", startTime)
+    'Clean up
+    Set rngToSearch = Nothing
+    
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice", startTime)
 
 End Sub
 
@@ -325,7 +328,7 @@ Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
         Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     End If
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", startTime)
 
 End Sub
 
@@ -390,7 +393,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", startTime)
 
 End Sub
 
@@ -401,10 +404,8 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
     If filePath = "False" Then Exit Sub 'User canceled
     
-    Dim wbSource As Workbook
-    Set wbSource = Workbooks.Open(filePath)
-    Dim wsSource As Worksheet
-    Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(filePath)
+    Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
     
     'Step 2 - Let the user selects the cells to be copied
     MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
@@ -444,9 +445,9 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     'Step 5 - Close and release the Excel file
     wbSource.Close SaveChanges:=False
     
-    'Cleanup - 2024-07-27 @ 07:39
+    'Clean up - 2024-07-27 @ 07:39
 '    Set rngDestination = Nothing
-'    Set rngSource = Nothing
+    Set rngSource = Nothing
 '    Set wbDestination = Nothing
     Set wbSource = Nothing
 '    Set wsDestination = Nothing
@@ -481,7 +482,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", startTime)
 
 End Sub
 
@@ -512,7 +513,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(D As Date, includeBilledTEC As Boolean)
     cutOffDateProjet = wshFAC_Brouillon.Range("B53").value
     Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet)
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", startTime)
 
 End Sub
 
@@ -608,8 +609,9 @@ No_Sort_Required:
     Set sRng = Nothing
     Set dRng = Nothing
     Set cRng = Nothing
+    Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", startTime)
 
 End Sub
 
@@ -618,6 +620,7 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
                                         estFacturable As String, _
                                         estFacturee As String, _
                                         estDetruit As String)
+    
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
     'On efface ce qui est déjà là...
@@ -690,6 +693,9 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
      
 No_Sort_Required:
     
+    'Clean up
+    Set ws = Nothing
+    
 End Sub
 
 Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
@@ -736,11 +742,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -766,10 +772,13 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
+    Set collFraisDivers = Nothing
+    Set item = Nothing
+    Set ufFraisDivers = Nothing
     Set rng = Nothing
 
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", startTime)
     
 End Sub
  
@@ -823,7 +832,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", startTime)
 
 End Sub
 
@@ -850,7 +859,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", startTime)
 
 End Sub
 
@@ -933,7 +942,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", startTime)
 
 End Sub
 
@@ -978,7 +987,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes()", startTime)
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes", startTime)
 
 End Sub
 

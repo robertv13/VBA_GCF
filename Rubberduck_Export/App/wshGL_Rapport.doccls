@@ -56,7 +56,7 @@ Private Sub Worksheet_Activate()
     Set lb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_Rapport:Worksheet_Activate()", startTime)
+    Call Log_Record("wshGL_Rapport:Worksheet_Activate", startTime)
 
 End Sub
 

@@ -102,7 +102,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Call Log_Record("modImport:ChartOfAccount_Import_All()", startTime)
+    Call Log_Record("modImport:ChartOfAccount_Import_All", startTime)
 
 End Sub
 
@@ -139,7 +139,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
-    'Copy to wshBD_Clients workbook
+    'Copy to wshBD_Clients worksheet
     wshBD_Clients.Range("A2").CopyFromRecordset recSet
     
     'Setup the format of the worksheet - 2024-07-20 @ 18:31
@@ -154,9 +154,10 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.StatusBar = ""
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
     Set connStr = Nothing
     Set recSet = Nothing
+    Set rng = Nothing
     
     Call Log_Record("modImport:Client_List_Import_All", startTime)
 
@@ -642,6 +643,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modImport:FAC_Projets_Détails_Import_All", startTime)
 
@@ -711,6 +713,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
+    Set ws = Nothing
     
     Application.StatusBar = ""
     

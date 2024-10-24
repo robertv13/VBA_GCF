@@ -189,6 +189,10 @@ Sub StatsHeures_AdvancedFilters()
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
+    'Clean up
+    Set rngCriteria = Nothing
+    Set rngResult = Nothing
+    
     Call Log_Record("modStatsHeures:StatsHeures_AdvancedFilters", startTime)
 
 End Sub
@@ -201,7 +205,7 @@ Sub Stats_Back_To_ufSaisieHeures()
     
     ufSaisieHeures.show vbModeless
 
-    Call Log_Record("modStatsHeures:Stats_Back_To_ufSaisieHeures()", startTime)
+    Call Log_Record("modStatsHeures:Stats_Back_To_ufSaisieHeures", startTime)
 
 End Sub
 

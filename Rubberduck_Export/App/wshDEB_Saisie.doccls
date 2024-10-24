@@ -53,7 +53,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Log_Record("wshDEB_Saisie:Worksheet_Activate()", startTime)
+    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -330,7 +330,7 @@ Private Sub Process_Change(ByVal Target As Range)
         Me.Range("O6").Select
     End If
 
-    'Cleanup - 2024-07-14 @ 08:26
+    'Clean up - 2024-07-14 @ 08:26
     Set amountRange = Nothing
     Set cell = Nothing
     Set cellNet = Nothing
@@ -393,5 +393,9 @@ Sub DEB_Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
     Application.EnableEvents = True
     
     Call Process_Change(targetCell)
+    
+    'Clean up
+    Set targetCell = Nothing
+    Set ws = Nothing
     
 End Sub

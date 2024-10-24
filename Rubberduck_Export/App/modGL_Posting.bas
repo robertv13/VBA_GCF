@@ -75,7 +75,7 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_Posting:GL_Posting_To_DB()", startTime)
+    Call Log_Record("modGL_Posting:GL_Posting_To_DB", startTime)
 
 End Sub
 
@@ -114,7 +114,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_Posting:GL_Posting_Locally()", startTime)
+    Call Log_Record("modGL_Posting:GL_Posting_Locally", startTime)
 
 End Sub
 

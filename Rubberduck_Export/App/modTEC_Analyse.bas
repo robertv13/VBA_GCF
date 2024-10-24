@@ -306,7 +306,16 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
 '    Application.StatusBar = ""
 
-    Call Log_Record("modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal()", startTime)
+    'Clean up
+    Set dictClients = Nothing
+    Set progressBarBg = Nothing
+    Set progressBarFill = Nothing
+    Set rngTotals = Nothing
+    Set wsClientsMF = Nothing
+    Set wsDest = Nothing
+    Set wsSource = Nothing
+    
+    Call Log_Record("modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal", startTime)
 
 End Sub
 
@@ -314,7 +323,7 @@ Sub Clean_Up_Summary_Area(ws As Worksheet)
 
     Application.EnableEvents = False
     
-    'Cleanup the summary area (columns K to Q)
+    'Clean up the summary area (columns K to Q)
     ws.Range("J:P").Clear
     'Erase any checkbox left over
     Call Delete_CheckBox
@@ -376,6 +385,11 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
         End With
     End If
     
+    'Clean up
+    Set cell = Nothing
+    Set totalRange = Nothing
+    Set ws = Nothing
+            
 End Sub
 
 Sub Build_Hours_Summary(rowSelected As Long)
@@ -501,8 +515,9 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Application.EnableEvents = True
 
-    'Clean up - 2024-07-11 @ 15:20
+    'Clean up
     Set dictHours = Nothing
+    Set prof = Nothing
     Set rngSort = Nothing
     Set ws = Nothing
     
@@ -545,6 +560,11 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
         End If
     Next i
 
+    'Clean up
+    Set rngTotal = Nothing
+    Set wsActive = Nothing
+    Set wsSource = Nothing
+    
 End Sub
 
 Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
@@ -619,7 +639,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_To_DB()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -652,7 +672,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
         rn = rn + 1
     Next i
     
-    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_Locally()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Détails_Add_Record_Locally", startTime)
 
     Application.ScreenUpdating = True
 
@@ -737,7 +757,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_To_DB()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -769,7 +789,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
-    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_Locally()", startTime)
+    Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_Locally", startTime)
 
     Application.ScreenUpdating = True
 
@@ -821,6 +841,11 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
         End With
     End With
     
+    'Clean up
+    Set checkBox = Nothing
+    Set summaryRange = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub Delete_CheckBox()
@@ -835,6 +860,10 @@ Sub Delete_CheckBox()
             Sh.Delete
         End If
     Next Sh
+    
+    'Clean up
+    Set Sh = Nothing
+    Set ws = Nothing
     
 End Sub
 
@@ -852,6 +881,9 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
 
     r = r - 1
     ws.rows(saveR & ":" & r).EntireRow.Hidden = True
+    
+    'Clean up
+    Set ws = Nothing
     
 End Sub
 
@@ -871,4 +903,8 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
         End If
     Next Sh
 
+    'Clean up
+    Set Sh = Nothing
+    Set ws = Nothing
+    
 End Sub

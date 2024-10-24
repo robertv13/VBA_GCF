@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_BV:Worksheet_Activate()", startTime)
+    Call Log_Record("wshGL_BV:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -118,6 +118,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         shp.Visible = msoFalse
 
     End If
+    
+    'Clean up
+    Set shp = Nothing
     
 End Sub
 
@@ -212,7 +215,7 @@ NoSort:
     Set rgData = Nothing
     Set rgResult = Nothing
     
-    Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans()", startTime)
+    Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans", startTime)
 
 End Sub
 
@@ -240,80 +243,83 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-        Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", 0)
-        
-        Dim lastResultRow As Long
-        lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).Row
-        If lastResultRow < 2 Then Exit Sub
-        
-        Dim rowSelected As Long
-        rowSelected = wshGL_BV.Range("B10").value
-        
-        Dim texteOneLine As String, texteFull As String
-        
-        Dim i As Long, maxLength As Long
-        With wshGL_Trans
-            For i = 2 To lastResultRow
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", 0)
+    
+    Dim lastResultRow As Long
+    lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).Row
+    If lastResultRow < 2 Then Exit Sub
+    
+    Dim rowSelected As Long
+    rowSelected = wshGL_BV.Range("B10").value
+    
+    Dim texteOneLine As String, texteFull As String
+    
+    Dim i As Long, maxLength As Long
+    With wshGL_Trans
+        For i = 2 To lastResultRow
 '                If Len(.Range("AD2").value) > maxLength Then
 '                    maxLength = Len(.Range("AD2").value)
 '                End If
-                If i = 2 Then
-                    texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
-                    texteFull = texteFull & "Desc    : " & .Range("AD2").value & vbCrLf
-                    If Trim(.Range("AE2").value) <> "" Then
-                        texteFull = texteFull & "Source  : " & .Range("AE2").value & vbCrLf & vbCrLf
-                    Else
-                        texteFull = texteFull & vbCrLf
-                    End If
-                End If
-                texteOneLine = Fn_Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
-                                " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
-                                "  " & Fn_Pad_A_String(Format$(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
-                                "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
-                If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
-                    texteOneLine = " * " & texteOneLine
+            If i = 2 Then
+                texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
+                texteFull = texteFull & "Desc    : " & .Range("AD2").value & vbCrLf
+                If Trim(.Range("AE2").value) <> "" Then
+                    texteFull = texteFull & "Source  : " & .Range("AE2").value & vbCrLf & vbCrLf
                 Else
-                    texteOneLine = "   " & texteOneLine
+                    texteFull = texteFull & vbCrLf
                 End If
-                texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
-                If Trim(.Range("AJ" & i).value) <> "" Then
-                    texteOneLine = texteOneLine & Trim(.Range("AJ" & i).value)
-                End If
-                If Len(texteOneLine) > maxLength Then
-                    maxLength = Len(texteOneLine)
-                    Debug.Print i & " = " & maxLength
-                End If
-                texteFull = texteFull & texteOneLine & vbCrLf
-            Next i
-        End With
-        If Right(texteFull, Len(texteFull) - 1) = vbCrLf Then
-            texteFull = Left(texteFull, Len(texteFull) - 2)
-        End If
-        
-        Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("JE_Detail_Trans")
+            End If
+            texteOneLine = Fn_Pad_A_String(.Range("AF" & i).value, " ", 5, "R") & _
+                            " - " & Fn_Pad_A_String(.Range("AG" & i).value, " ", 35, "R") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AH" & i).value, "#,##0.00 $"), " ", 14, "L") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L")
+            If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
+                texteOneLine = " * " & texteOneLine
+            Else
+                texteOneLine = "   " & texteOneLine
+            End If
+            texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
+            If Trim(.Range("AJ" & i).value) <> "" Then
+                texteOneLine = texteOneLine & Trim(.Range("AJ" & i).value)
+            End If
+            If Len(texteOneLine) > maxLength Then
+                maxLength = Len(texteOneLine)
+                Debug.Print i & " = " & maxLength
+            End If
+            texteFull = texteFull & texteOneLine & vbCrLf
+        Next i
+    End With
+    If Right(texteFull, Len(texteFull) - 1) = vbCrLf Then
+        texteFull = Left(texteFull, Len(texteFull) - 2)
+    End If
+    
+    Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("JE_Detail_Trans")
 
-        'Set shape properties
-        With dynamicShape
-            .Fill.ForeColor.RGB = RGB(249, 255, 229)
-            .Line.Weight = 2
-            .Line.ForeColor.RGB = vbBlue
-            .TextFrame.Characters.Text = texteFull
-            .TextFrame.Characters.Font.Color = vbBlack
-            .TextFrame.Characters.Font.name = "Consolas"
-            .TextFrame.Characters.Font.size = 11
-            .TextFrame.MarginLeft = 4
-            .TextFrame.MarginRight = 4
-            .TextFrame.MarginTop = 3
-            .TextFrame.MarginBottom = 3
-            If maxLength < 80 Then maxLength = 80
-            .width = ((maxLength * 6.7))
+    'Set shape properties
+    With dynamicShape
+        .Fill.ForeColor.RGB = RGB(249, 255, 229)
+        .Line.Weight = 2
+        .Line.ForeColor.RGB = vbBlue
+        .TextFrame.Characters.Text = texteFull
+        .TextFrame.Characters.Font.Color = vbBlack
+        .TextFrame.Characters.Font.name = "Consolas"
+        .TextFrame.Characters.Font.size = 11
+        .TextFrame.MarginLeft = 4
+        .TextFrame.MarginRight = 4
+        .TextFrame.MarginTop = 3
+        .TextFrame.MarginBottom = 3
+        If maxLength < 80 Then maxLength = 80
+        .width = ((maxLength * 6.7))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
-            .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
-            .Left = wshGL_BV.Range("N" & rowSelected).Left + 4
-            .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
-        End With
+        .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
+        .Left = wshGL_BV.Range("N" & rowSelected).Left + 4
+        .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
+    End With
+        
+    'Clean up
+    Set dynamicShape = Nothing
       
-      Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape()", startTime)
+    Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", startTime)
       
 End Sub
 
@@ -325,6 +331,9 @@ Sub wshGL_BV_Show_Dynamic_Shape()
 '    If Not dynamicShape Is Nothing Then
 '        dynamicShape.Visible = True
 '    End If
+
+    'Clean up
+    Set shp = Nothing
     
 End Sub
 

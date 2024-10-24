@@ -41,7 +41,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
     End If
     
+    'Clean up
     Set cellRange = Nothing
+    Set intersectRange = Nothing
     Set ws = Nothing
 
 End Sub

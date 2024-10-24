@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     'Cleaning memory - 2024-07-11 @ 10:14
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Evaluation:Worksheet_Activate()", startTime)
+    Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -78,7 +78,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
-    Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange()", startTime)
+    Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", startTime)
     
 End Sub
 
@@ -120,7 +120,7 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshTEC_Evaluation:Worksheet_Change()", startTime)
+    Call Log_Record("wshTEC_Evaluation:Worksheet_Change", startTime)
   
 End Sub
 

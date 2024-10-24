@@ -63,10 +63,11 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Cleaning memory
+    Set r = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshFAC_Confirmation:Worksheet_Activate()", startTime)
+    Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -124,6 +125,6 @@ Sub FAC_Confirmation_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu()", startTime)
+    Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", startTime)
     
 End Sub

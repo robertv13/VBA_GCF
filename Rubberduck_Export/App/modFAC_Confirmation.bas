@@ -176,6 +176,9 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     'Make OK button visible
     ws.Shapes("btnFAC_Confirmation_OK").Visible = True
     
+    'Clean up
+    Set ws = Nothing
+    
     Application.EnableEvents = True
 
 End Sub
@@ -201,6 +204,9 @@ Sub FAC_Confirmation_Report_Detailed_TEC()
 Nothing_to_Print:
     MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
 
+    'Clean up
+    Set ws = Nothing
+    
 End Sub
 
 Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
@@ -339,6 +345,11 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     
     'On se déplace à la feuille contenant le rapport
     wsRapport.Activate
+    
+    'Clean up
+    Set rngResult = Nothing
+    Set wsRapport = Nothing
+    Set wsSource = Nothing
     
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Creer_Rapport_TEC_Factures", startTime)
     
@@ -523,8 +534,9 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     End If
     Application.EnableEvents = True
     
-    'Cleanup - 2024-07-25 @ 18:06
+    'Clean up
     Set dictHours = Nothing
+    Set prof = Nothing
     Set wsTEC = Nothing
     
 End Sub
@@ -565,7 +577,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
         Application.EnableEvents = True
     End If
     
-    'Cleanup - 2024-07-25 @ 18:06
+    'Clean up - 2024-07-25 @ 18:06
     Set cell = Nothing
     Set wsFees = Nothing
     
@@ -618,7 +630,7 @@ Sub FAC_Confirmation_OK_Button_Click()
     
     ws.Range("F5").Select
     
-    'Cleanup - 2024-07-26 @ 00:55
+    'Clean up - 2024-07-26 @ 00:55
     Set ws = Nothing
     
 End Sub
@@ -657,7 +669,7 @@ Clean_Exit:
 
     wshFAC_Confirmation.Range("F5").Select
     
-    'Cleanup - 2024-07-26 @ 00:55
+    'Clean up - 2024-07-26 @ 00:55
     Set ws = Nothing
     
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Button_Click", startTime)
@@ -694,6 +706,11 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
         Application.EnableEvents = True
     End If
 
+    'Clean up
+    Set cell = Nothing
+    Set rngToSearch = Nothing
+    Set wsGL = Nothing
+    
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Get_GL_Posting", startTime)
 
 End Sub
@@ -762,7 +779,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER()", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER", startTime)
 
 End Sub
 
@@ -788,11 +805,12 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
+    Set foundRange = Nothing
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally()", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally", startTime)
 
 End Sub
 
@@ -913,7 +931,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     Set ws = Nothing
     On Error GoTo 0
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting()", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting", startTime)
 
 End Sub
 

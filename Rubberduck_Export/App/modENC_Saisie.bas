@@ -74,7 +74,7 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
     wshENC_Saisie.Range("B4").value = False 'Set PaymentLoad to False
     
-    Call Log_Record("modFAC_Enc:Encaissement_Load_Open_Invoices()", startTime)
+    Call Log_Record("modFAC_Enc:Encaissement_Load_Open_Invoices", startTime)
 
 End Sub
 
@@ -149,7 +149,7 @@ Sub ENC_Update() '2024-08-22 @ 09:46
     
 Clean_Exit:
 
-    Call Log_Record("modENC_Saisie:ENC_Update()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Update", startTime)
 
 End Sub
 
@@ -159,7 +159,7 @@ Sub Encaissement_Add_New() '2024-08-21 @ 14:58
 
     Call ENC_Clear_Cells
     
-    Call Log_Record("modEnc_Saisie:Encaissement_Add_New()", startTime)
+    Call Log_Record("modEnc_Saisie:Encaissement_Add_New", startTime)
     
 End Sub
 
@@ -190,7 +190,7 @@ End Sub
 '        Call Encaissement_Load 'Load Payment
 '    End With
 '
-'    Call Log_Record("modFAC_Enc:Encaissement_Previous()", startTime)
+'    Call Log_Record("modFAC_Enc:Encaissement_Previous", startTime)
 '
 'End Sub
 '
@@ -226,7 +226,7 @@ End Sub
 '
 '    Application.EnableEvents = True
 '
-'    Call Log_Record("modFAC_Enc:Encaissement_Next()", startTime)
+'    Call Log_Record("modFAC_Enc:Encaissement_Next", startTime)
 '
 'End Sub
 '
@@ -270,7 +270,7 @@ End Sub
 '        .Range("B4").value = False 'Payment Load to False
 '    End With
 '
-'    Call Log_Record("modFAC_Enc:Encaissement_Load()", startTime)
+'    Call Log_Record("modFAC_Enc:Encaissement_Load", startTime)
 '
 'End Sub
 '
@@ -340,7 +340,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete", startTime)
     
 End Sub
 
@@ -369,7 +369,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", startTime)
 
 End Sub
 
@@ -416,7 +416,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", startTime)
     
 End Sub
 
@@ -446,7 +446,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", startTime)
 
 End Sub
 
@@ -506,7 +506,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", startTime)
     
 End Sub
 
@@ -546,7 +546,12 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details()", startTime)
+    'Clean up
+    Set foundRange = Nothing
+    Set lookupRange = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", startTime)
 
 End Sub
 
@@ -632,7 +637,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", startTime)
 
 End Sub
 
@@ -677,7 +682,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", startTime)
 
 End Sub
 
@@ -726,7 +731,7 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes", startTime)
 
 End Sub
 
@@ -751,7 +756,7 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set cbx = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", startTime)
 
 End Sub
 
@@ -798,7 +803,7 @@ Sub ENC_Clear_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call Log_Record("modENC_Saisie:ENC_Clear_Cells()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Clear_Cells", startTime)
 
 End Sub
 
@@ -846,7 +851,7 @@ Sub ENC_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu()", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu", startTime)
 
 End Sub
 

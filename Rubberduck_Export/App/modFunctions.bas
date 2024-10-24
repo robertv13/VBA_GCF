@@ -148,6 +148,11 @@ Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColu
         Fn_Get_Value_From_UniqueID = "uniqueID introuvable"
     End If
     
+    'Clean up
+    Set foundCell = Nothing
+    Set searchRange = Nothing
+    Set ws = Nothing
+    
 End Function
 
 Sub test_Fn_Get_Value_From_UniqueID() '2024-10-15 @ 06:00
@@ -163,6 +168,9 @@ Sub test_Fn_Get_Value_From_UniqueID() '2024-10-15 @ 06:00
         MsgBox "Je n'ai pas trouvé le client dont le code est '" & uniqueID & "'", vbCritical
     End If
 
+    'Clean up
+    Set ws = Nothing
+    
 End Sub
 
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
@@ -192,7 +200,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Cleaning memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
 
-    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range()", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", startTime)
 
 End Function
 
@@ -223,6 +231,9 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     Else
         Fn_Valider_Courriel = True
     End If
+    
+    'Clean up
+    Set regex = Nothing
     
 End Function
 
@@ -318,6 +329,12 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
     End If
     
+    'Clean up
+    Set cell = Nothing
+    Set rowsToDelete = Nothing
+    Set searchRange = Nothing
+    Set ws = Nothing
+    
 End Function
 
 Function GetCheckBoxPosition(chkBox As OLEObject) As String
@@ -367,6 +384,10 @@ Function GetColumnType(col As Range) As String
     Next cell
     
     GetColumnType = dataType
+    
+    'Clean up
+    Set cell = Nothing
+    
 End Function
 
 Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
@@ -401,7 +422,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description()", startTime)
+    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", startTime)
 
 End Function
 
@@ -433,6 +454,9 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     Else
         Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
     End If
+    
+    'Clean up
+    Set wsTEC = Nothing
     
 End Function
 
@@ -466,6 +490,9 @@ Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
         Fn_Get_Detailled_TEC_Invoice = resultArr
     End If
     
+    'Clean up
+    Set wsTEC = Nothing
+    
 End Function
 
 Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
@@ -484,7 +511,10 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
         End If
     On Error GoTo 0
     
-    Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID()", startTime)
+    'Clean up
+    Set cell = Nothing
+    
+    Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", startTime)
     
 End Function
 
@@ -649,18 +679,18 @@ Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = fso.folderExists(serverPath)
+    folderExists = FSO.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer l'objet
-    Set fso = Nothing
+    Set FSO = Nothing
     
 End Function
 
@@ -786,6 +816,9 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
     
     Fn_Sort_Dictionary_By_Keys = keys
     
+    'Clean up
+    Set key = Nothing
+    
 End Function
 
 Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Boolean = False) As Variant '2024-07-11 @ 15:16
@@ -829,6 +862,9 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     
     Fn_Sort_Dictionary_By_Value = keys
     
+    'Clean up
+    Set key = Nothing
+    
 End Function
 
 Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07:44
@@ -853,7 +889,7 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
         Fn_Strip_Contact_From_Client_Name = Trim(Mid(cn, posCSB + 1))
     End If
     
-    'Cleanup extra spaces
+    'Clean up extra spaces
     Do While InStr(Fn_Strip_Contact_From_Client_Name, "  ")
         Fn_Strip_Contact_From_Client_Name = Replace(Fn_Strip_Contact_From_Client_Name, "  ", " ")
     Loop
@@ -934,32 +970,36 @@ End Function
 
 Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
 
-        'Use the Dynamic Named Range
-        Dim rng As Range
-        On Error Resume Next
-        Set rng = ThisWorkbook.Names("dnrTauxHoraire").RefersToRange
-        On Error GoTo 0
+    'Use the Dynamic Named Range
+    Dim rng As Range
+    On Error Resume Next
+    Set rng = ThisWorkbook.Names("dnrTauxHoraire").RefersToRange
+    On Error GoTo 0
 
-        'Check if the range is set correctly
-        If Not rng Is Nothing Then
-            Dim rowRange As Range
-            Dim i As Long
-            'Loop through each row in the range
-            For i = rng.rows.count To 1 Step -1
-                'Set the row range
-                Set rowRange = rng.rows(i)
-                If rowRange.Cells(1, 1).value = profID Then
-                    If CDate(dte) >= CDate(rowRange.Cells(1, 2).value) Then
-                        Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).value
-                        Exit Function
-                    End If
+    'Check if the range is set correctly
+    If Not rng Is Nothing Then
+        Dim rowRange As Range
+        Dim i As Long
+        'Loop through each row in the range
+        For i = rng.rows.count To 1 Step -1
+            'Set the row range
+            Set rowRange = rng.rows(i)
+            If rowRange.Cells(1, 1).value = profID Then
+                If CDate(dte) >= CDate(rowRange.Cells(1, 2).value) Then
+                    Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).value
+                    Exit Function
                 End If
-                'Loop through each cell in the row
-            Next i
-        Else
-            MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
-        End If
+            End If
+            'Loop through each cell in the row
+        Next i
+    Else
+        MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
+    End If
 
+    'Clean up
+    Set rng = Nothing
+    Set rowRange = Nothing
+    
 End Function
 
 Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
@@ -1172,6 +1212,9 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 
+    'Clean up
+    Set ws = Nothing
+    
 End Function
 
 Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
@@ -1213,6 +1256,9 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
     Next i
     
     Fn_Get_Account_Opening_Balance = soldeOuverture
+    
+    'Clean up
+    Set ws = Nothing
     
 End Function
 
@@ -1311,6 +1357,10 @@ Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As V
         'Si le client n'est pas trouvé, retourner une valeur vide ou une erreur
         Fn_Rechercher_Client_Par_ID = CVErr(xlErrNA) 'Retourne #N/A pour indiquer que le client n'est pas trouvé
     End If
+    
+    'Clean up
+    Set foundCells = Nothing
+    Set rangeID = Nothing
     
 End Function
 

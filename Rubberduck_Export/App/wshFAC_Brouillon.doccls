@@ -67,7 +67,7 @@ Private Sub Worksheet_Activate()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate()", startTime)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", startTime)
 
 End Sub
 

@@ -79,7 +79,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", startTime)
 
 End Sub
 
@@ -116,7 +116,7 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", startTime)
 
 End Sub
 
@@ -186,7 +186,7 @@ Clean_Exit:
     'Cleaning memory - 2024-07-01 @ 09:34
     Set Sh = Nothing
 
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", startTime)
 
 End Sub
 
@@ -275,7 +275,7 @@ No_Sort_Required:
     Set dRng = Nothing
     Set sRng = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", startTime)
 
 End Sub
 
@@ -306,7 +306,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", startTime)
 
 End Sub
 
@@ -517,7 +517,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", startTime)
 
     Exit Sub
     
@@ -615,7 +615,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", startTime)
 
 End Sub
 
@@ -711,7 +711,10 @@ EndOfProcedure:
 
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours()", startTime)
+    'Clean up
+    Set rng = Nothing
+    
+    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", startTime)
     
 End Sub
 
@@ -759,7 +762,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data", startTime)
 
 End Sub
 
@@ -773,7 +776,7 @@ Sub TEC_TdB_Update_All()
     
     Call TEC_TdB_Refresh_All_Pivot_Tables
     
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", startTime)
 
 End Sub
 
@@ -788,7 +791,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
         pt.RefreshTable
     Next pt
 
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables()", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", startTime)
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set pt = Nothing

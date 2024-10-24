@@ -118,6 +118,10 @@ Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
     MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
             vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
             vbExclamation
+
+    'Clean up
+    Set wsSrc = Nothing
+    Set wsTgt = Nothing
     
 End Sub
 
@@ -194,7 +198,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet()", startTime)
+    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
 
 End Sub
 
@@ -234,6 +238,11 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
         MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
     End If
     
+    'Clean up
+    Set cell = Nothing
+    Set formulaCells = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
@@ -249,21 +258,44 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
-    Call Erase_And_Create_Worksheet("X_Heures_Jour_Prof")
-    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
-    wsSommaire.Range("A1").value = "Date"
-    wsSommaire.Range("B1").value = "Prof."
-    wsSommaire.Range("C1").value = "H/Saisies"
-    wsSommaire.Range("D1").value = "H/Détruites"
-    wsSommaire.Range("E1").value = "H/Nettes"
-    wsSommaire.Range("F1").value = "H/NFact"
-    wsSommaire.Range("G1").value = "H/Fact"
-    wsSommaire.Range("H1").value = "H/Facturées"
-    wsSommaire.Range("I1").value = "H/TEC"
-    Call Make_It_As_Header(wsSommaire.Range("A1:I1"))
+'    Call Erase_And_Create_Worksheet("X_Heures_Jour_Prof")
+'    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
+'    wsSommaire.Range("A1").value = "Date"
+'    wsSommaire.Range("B1").value = "Prof."
+'    wsSommaire.Range("C1").value = "H/Saisies"
+'    wsSommaire.Range("D1").value = "H/Détruites"
+'    wsSommaire.Range("E1").value = "H/Nettes"
+'    wsSommaire.Range("F1").value = "H/NFact"
+'    wsSommaire.Range("G1").value = "H/Fact"
+'    wsSommaire.Range("H1").value = "H/Facturées"
+'    wsSommaire.Range("I1").value = "H/TEC"
+'    Call Make_It_As_Header(wsSommaire.Range("A1:I1"))
 
     'Data starts at row 2
     Dim r As Long: r = 2
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Répertoire utilisé")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, wshAdmin.Range("FolderSharedData").value & DATA_PATH)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
+    r = r + 1
+
+    'Fichier utilisé
+    Dim masterFileName As String
+    masterFileName = "GCF_BD_MASTER.xlsx"
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Fichier utilisé")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, masterFileName)
+    r = r + 1
+    
+    'Date dernière modification du fichier Maître
+    Dim fullFileName As String
+    fullFileName = wshAdmin.Range("FolderSharedData").value & DATA_PATH & Application.PathSeparator & masterFileName
+    Dim ddm As Date
+    Dim j As Long, h As Long, m As Long, s As Long
+    Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Date dern. modification")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, Format$(ddm, "dd-mm-yyyy hh:mm:ss") & _
+            " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes")
+    r = r + 2
+    
     Dim readRows As Long
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
@@ -441,10 +473,11 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     ThisWorkbook.Worksheets("X_Analyse_Intégrité").Activate
     
-    'Cleaning memory - 2024-07-01 @ 09:34
-    Set wsOutput = Nothing
-    
     Application.ScreenUpdating = True
+    
+    'Clean up
+    Set rngToPrint = Nothing
+    Set wsOutput = Nothing
     
     Call Log_Record("modAppli:Integrity_Verification", startTime)
 
@@ -1665,13 +1698,14 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    Application.ScreenUpdating = True
+    
+    'Clean up
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set v = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
     
     Call Log_Record("modAppli:check_GL_Trans", startTime)
 
@@ -2029,12 +2063,12 @@ End Sub
 
 Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_GL_Trans", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_TEC", 0)
     
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
+'    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
     lastTECIDReported = 1917 'What is the last TECID analyzed ?
@@ -2107,7 +2141,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     minDate = "12/31/2999"
     
-    Dim bigStrDateProf As String
+'    Dim bigStrDateProf As String
     Dim arrHres(1 To 10000, 1 To 6) As Variant
     Dim arrRow As Integer, pArr As Integer, rArr As Integer
     
@@ -2291,27 +2325,27 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Summary by Date
-        D = day(dateTEC)
-        m = month(dateTEC)
-        Y = year(dateTEC)
-        keyDate = Format$(Y, "0000") & Format$(m, "00") & Format$(D, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
-        p = InStr(bigStrDateProf, keyDate)
-        If p = 0 Then
-            rArr = rArr + 1
-            pArr = rArr
-            bigStrDateProf = bigStrDateProf & keyDate & Format$(rArr, "0000") & "|"
-        Else
-            pArr = Mid(bigStrDateProf, p + 12, 4)
-        End If
-        arrHres(pArr, 1) = arrHres(pArr, 1) + h(1)
-        arrHres(pArr, 2) = arrHres(pArr, 2) + h(2)
-        arrHres(pArr, 3) = arrHres(pArr, 3) + h(3)
-        arrHres(pArr, 4) = arrHres(pArr, 4) + h(4)
-        arrHres(pArr, 5) = arrHres(pArr, 5) + h(5)
-        arrHres(pArr, 6) = arrHres(pArr, 6) + h(6)
+'        D = day(dateTEC)
+'        m = month(dateTEC)
+'        Y = year(dateTEC)
+'        keyDate = Format$(Y, "0000") & Format$(m, "00") & Format$(D, "00") & Fn_Pad_A_String(prof, " ", 4, "L")
+'        p = InStr(bigStrDateProf, keyDate)
+'        If p = 0 Then
+'            rArr = rArr + 1
+'            pArr = rArr
+'            bigStrDateProf = bigStrDateProf & keyDate & Format$(rArr, "0000") & "|"
+'        Else
+'            pArr = Mid(bigStrDateProf, p + 12, 4)
+'        End If
+'        arrHres(pArr, 1) = arrHres(pArr, 1) + h(1)
+'        arrHres(pArr, 2) = arrHres(pArr, 2) + h(2)
+'        arrHres(pArr, 3) = arrHres(pArr, 3) + h(3)
+'        arrHres(pArr, 4) = arrHres(pArr, 4) + h(4)
+'        arrHres(pArr, 5) = arrHres(pArr, 5) + h(5)
+'        arrHres(pArr, 6) = arrHres(pArr, 6) + h(6)
     Next i
     
-    Call SortDelimitedString(bigStrDateProf, "|")
+'    Call SortDelimitedString(bigStrDateProf, "|")
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
     r = r + 1
@@ -2436,7 +2470,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim keys() As Variant
     Dim key As Variant
     
-    'Tri & impression de dictTimeStamp
+    'Tri & impression de dictDateCharge
     If dictDateCharge.count > 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECID & ")")
         r = r + 1
@@ -2476,35 +2510,35 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     End If
     r = r + 1
     
-    Dim r2 As Integer
-    r2 = 2 'Output to wsSommaire
+'    Dim r2 As Integer
+'    r2 = 2 'Output to wsSommaire
     
-    Dim components() As String
-    components = Split(bigStrDateProf, "|")
-    
-    Dim dateStr As String
-    For i = LBound(components) To UBound(components)
-        dateStr = Left(components(i), 8)
-        dateStr = DateSerial(Mid(dateStr, 1, 4), Mid(dateStr, 5, 2), Mid(dateStr, 7, 2))
-        prof = Trim(Mid(components(i), 9, 4))
-        pArr = CInt(Mid(components(i), 13, 4))
-        wsSommaire.Cells(r2, 1).value = Format$(dateStr, "yyyy-mm-dd")
-        wsSommaire.Cells(r2, 2).value = prof
-        wsSommaire.Cells(r2, 3).value = arrHres(pArr, 1)                    'Hres inscrites
-        wsSommaire.Cells(r2, 4).value = arrHres(pArr, 2)                    'Hres détruites
-        wsSommaire.Cells(r2, 5).value = arrHres(pArr, 1) - arrHres(pArr, 2) 'Hres Nettes
-        wsSommaire.Cells(r2, 6).value = arrHres(pArr, 3)                    'Hres Facturables
-        wsSommaire.Cells(r2, 7).value = arrHres(pArr, 4)                    'Hres Non/Facturables
-        wsSommaire.Cells(r2, 8).value = arrHres(pArr, 5)                    'Hres Facturées
-        wsSommaire.Cells(r2, 9).value = arrHres(pArr, 6)                    'Hres TEC
-        r2 = r2 + 1
-    Next i
+'    Dim components() As String
+'    components = Split(bigStrDateProf, "|")
+'
+'    Dim dateStr As String
+'    For i = LBound(components) To UBound(components)
+'        dateStr = Left(components(i), 8)
+'        dateStr = DateSerial(Mid(dateStr, 1, 4), Mid(dateStr, 5, 2), Mid(dateStr, 7, 2))
+'        prof = Trim(Mid(components(i), 9, 4))
+'        pArr = CInt(Mid(components(i), 13, 4))
+'        wsSommaire.Cells(r2, 1).value = Format$(dateStr, "yyyy-mm-dd")
+'        wsSommaire.Cells(r2, 2).value = prof
+'        wsSommaire.Cells(r2, 3).value = arrHres(pArr, 1)                    'Hres inscrites
+'        wsSommaire.Cells(r2, 4).value = arrHres(pArr, 2)                    'Hres détruites
+'        wsSommaire.Cells(r2, 5).value = arrHres(pArr, 1) - arrHres(pArr, 2) 'Hres Nettes
+'        wsSommaire.Cells(r2, 6).value = arrHres(pArr, 3)                    'Hres Facturables
+'        wsSommaire.Cells(r2, 7).value = arrHres(pArr, 4)                    'Hres Non/Facturables
+'        wsSommaire.Cells(r2, 8).value = arrHres(pArr, 5)                    'Hres Facturées
+'        wsSommaire.Cells(r2, 9).value = arrHres(pArr, 6)                    'Hres TEC
+'        r2 = r2 + 1
+'    Next i
     
     'Ajustement des formats
-    wsSommaire.Range("A2:A" & r2 - 1).NumberFormat = "yyyy-MM-dd"
-    wsSommaire.Range("C2:I" & r2 - 1).NumberFormat = "#,##0.00"
-    wsSommaire.Range("C2:I" & r2 - 1).HorizontalAlignment = xlRight
-    wsSommaire.columns("C:I").ColumnWidth = 10
+'    wsSommaire.Range("A2:A" & r2 - 1).NumberFormat = "yyyy-MM-dd"
+'    wsSommaire.Range("C2:I" & r2 - 1).NumberFormat = "#,##0.00"
+'    wsSommaire.Range("C2:I" & r2 - 1).HorizontalAlignment = xlRight
+'    wsSommaire.columns("C:I").ColumnWidth = 10
     
 Clean_Exit:
 
@@ -2512,8 +2546,9 @@ Clean_Exit:
     Set dictDateCharge = Nothing
     Set dictTimeStamp = Nothing
     Set dict_TEC_ID = Nothing
+    Set rngCR = Nothing
     Set ws = Nothing
-    Set wsSommaire = Nothing
+'    Set wsSommaire = Nothing
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
@@ -2534,7 +2569,7 @@ Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
         End If
     End With
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
     Set SharedFolder = Nothing
     
 End Sub
@@ -2551,7 +2586,7 @@ Sub ADMIN_Invoices_Excel_Folder_Selection() '2024-08-04 @ 07:30
         End If
     End With
     
-    'Cleaning memory - 2024-08-04 @ 07:28
+    'Clean up
     Set SharedFolder = Nothing
     
 End Sub
@@ -2576,10 +2611,9 @@ Sub Make_It_As_Header(r As Range)
         .HorizontalAlignment = xlCenter
     End With
     
-    Dim ws As Worksheet
     Dim wsName As String
     wsName = r.Worksheet.name
-    Set ws = ThisWorkbook.Sheets(wsName)
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets(wsName)
     ws.columns.AutoFit
     
     'Clean up
@@ -2608,7 +2642,7 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
         End If
     End With
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
     Set PDFFolder = Nothing
 
 End Sub
@@ -2638,6 +2672,10 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
             dataRange.rows(i).Interior.Color = RGB(173, 216, 230) ' Bleu pâle
         End If
     Next i
+    
+    'Clean up
+    Set dataRange = Nothing
+    Set ws = Nothing
     
 End Sub
 
@@ -2680,6 +2718,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Else
             MsgBox "usedRange is Nothing!"
         End If
+        
     'Specific formats to worksheets
     Dim lastUsedRow As Long
     lastUsedRow = rng.rows.count
@@ -2847,6 +2886,9 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 
     End Select
 
+    'Clean up
+    Set usedRange = Nothing
+
 End Sub
 
 Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 16:24
@@ -2979,7 +3021,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         MsgBox "Aucune différence dans les colonnes."
     End If
     
-    'Cleanup
+    'Clean up
     Set col1 = Nothing
     Set col2 = Nothing
     Set rngArea = Nothing
@@ -3129,7 +3171,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         MsgBox "Aucune différence dans les lignes."
     End If
     
-    'Cleanup
+    'Clean up
     Set rngArea = Nothing
     Set rngToPrint = Nothing
     Set rowDev = Nothing
@@ -3314,27 +3356,48 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     
 End Sub
 
+Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
+                                    ByRef jours As Long, ByRef heures As Long, _
+                                    ByRef minutes As Long, ByRef secondes As Long)
+    
+    'Créer une instance de FileSystemObject
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    
+    'Obtenir le fichier
+    Dim fichier As Object: Set fichier = FSO.GetFile(fileName)
+    
+    'Récupérer la date et l'heure de la dernière modification
+    ddm = fichier.DateLastModified
+    
+    'Calculer la différence (jours) entre maintenant et la date de la dernière modification
+    Dim diff As Double
+    diff = Now - ddm
+    
+    'Convertir la différence en jours, heures, minutes et secondes
+    jours = Int(diff)
+    heures = Int((diff - jours) * 24)
+    minutes = Int(((diff - jours) * 24 - heures) * 60)
+    secondes = Int(((((diff - jours) * 24 - heures) * 60) - minutes) * 60)
+    
+    ' Libérer les objets
+    Set fichier = Nothing
+    Set FSO = Nothing
+    
+End Sub
+
 Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     
-    Dim filePath As String
-    Dim fileContent As String
-    Dim ligne As String
-    Dim champs() As String
-    Dim i As Long
-    Dim j As Long
-    Dim ligneNum As Long
-    Dim FileNum As Integer
-    
-    ' Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
+    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
     Dim fd As FileDialog
     Set fd = Application.FileDialog(msoFileDialogFilePicker)
     
-    ' Configuration des filtres de fichiers (TXT uniquement)
+    'Configuration des filtres de fichiers (TXT uniquement)
     fd.Title = "Sélectionnez un fichier TXT"
     fd.Filters.Clear
     fd.Filters.Add "Fichiers Texte", "*.txt"
     
-    ' Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+    Dim filePath As String
     If fd.show = -1 Then
         filePath = fd.selectedItems(1)
     Else
@@ -3342,37 +3405,46 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
         Exit Sub
     End If
     
-    ' Ouvre le fichier en mode lecture
+    'Ouvre le fichier en mode lecture
+    Dim FileNum As Integer
     FileNum = FreeFile
     Open filePath For Input As FileNum
     
-    ' Initialise la ligne de départ pour insérer les données dans Excel
+    'Initialise la ligne de départ pour insérer les données dans Excel
+    Dim ligneNum As Long
     ligneNum = 1
     
-    ' Lire chaque ligne du fichier
+    'Lire chaque ligne du fichier
+    Dim ligne As String
+    Dim champs() As String
+    Dim j As Long
+
     Do While Not EOF(FileNum)
         Line Input #FileNum, ligne
         
-        ' Séparer les champs par le séparateur " | "
+        'Séparer les champs par le séparateur " | "
         champs = Split(ligne, " | ")
         
-        ' Insérer les champs dans les colonnes de la feuille Excel
+        'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
             Cells(ligneNum, j + 1).value = champs(j)
         Next j
         
-        ' Passer à la ligne suivante
+        'Passer à la ligne suivante
         ligneNum = ligneNum + 1
     Loop
     
-    ' Fermer le fichier
+    'Fermer le fichier
     Close FileNum
     
+    'Clean up
+    Set fd = Nothing
+    
     MsgBox "Le fichier a été importé avec succès.", vbInformation
+    
 End Sub
 
 Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
-    
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
     Dim fd As FileDialog
@@ -3461,7 +3533,108 @@ Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
         wb.Save
         wb.Close
         
-        MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
     End If
+    
+    'Clean up
+    Set cell = Nothing
+    Set col = Nothing
+    Set colonnesANettoyer = Nothing
+    Set fd = Nothing
+    Set wb = Nothing
+    Set ws = Nothing
+    Set wsName = Nothing
+    
+    MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
+
 End Sub
 
+Sub Search_Unclean_Set()
+
+    Dim ws As Worksheet: Set ws = Feuil4
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).Row
+    
+    Dim strSet As String
+    Dim strForEach As String
+    Dim strNothing As String
+    Dim code As String
+    Dim saveModule As String
+    Dim saveLineNo As String
+    Dim saveProcedure As String
+    Dim wsOutput As Worksheet: Set wsOutput = Feuil3
+    
+    Dim i As Long
+    Dim j As Long
+    Dim r As Long
+    
+    For i = 2 To lastUsedRow
+        If saveModule = "" Then
+            saveModule = ws.Cells(i, 3)
+            saveLineNo = ws.Cells(i + 1, 4)
+            saveProcedure = ws.Cells(i + 1, 5)
+        End If
+        If i = 1232 Then Stop
+        'On change de procédure
+        If ws.Cells(i, 2) = "" Then
+            If strSet <> "" Or strForEach <> "" Then
+                If strSet <> "" Then
+                    Dim arrSet() As String
+                    arrSet = Split(strSet, "|")
+                    For j = 0 To UBound(arrSet, 1) - 1
+                        If InStr(strNothing, arrSet(j) & "|") = 0 Then
+                            r = r + 1
+                            wsOutput.Cells(r, 1) = i
+                            wsOutput.Cells(r, 2) = saveModule
+                            wsOutput.Cells(r, 3) = saveProcedure
+                            wsOutput.Cells(r, 4) = saveLineNo
+                            wsOutput.Cells(r, 5) = arrSet(j)
+                            wsOutput.Cells(r, 6) = strNothing
+'                            Debug.Print i & " - " & saveModule & ":" & saveProcedure & "." & saveLineNo & " - arrSet(" & j & ") = " & arrSet(j) & " n'existe pas dans '" & strNothing & "'"
+                        End If
+                    Next j
+                End If
+                If strForEach <> "" Then
+                    Dim arrForEach() As String
+                    arrForEach = Split(strForEach, "|")
+                    For j = 0 To UBound(arrForEach, 1) - 1
+                        If InStr(strNothing, arrForEach(j) & "|") = 0 Then
+                            r = r + 1
+                            wsOutput.Cells(r, 1) = i
+                            wsOutput.Cells(r, 2) = saveModule
+                            wsOutput.Cells(r, 3) = saveProcedure
+                            wsOutput.Cells(r, 4) = saveLineNo
+                            wsOutput.Cells(r, 5) = arrForEach(j)
+                            wsOutput.Cells(r, 6) = strNothing
+'                            Debug.Print i & " - " & saveModule & ":" & saveProcedure & "." & saveLineNo & " - arrForEach(" & j & ") = " & arrForEach(j) & " n'existe pas dans '" & strNothing & "'"
+                        End If
+                    Next j
+                End If
+            End If
+            strSet = ""
+            strForEach = ""
+            strNothing = ""
+            saveModule = ws.Cells(i + 1, 3)
+            saveLineNo = ws.Cells(i + 1, 4)
+            saveProcedure = ws.Cells(i + 1, 5)
+        Else
+            code = ws.Cells(i, 6)
+            If InStr(code, "Set ") = 1 And InStr(code, " = Nothing") > 0 Then
+                strNothing = strNothing & Mid(code, 5, Len(code) - 14) & "|"
+            Else
+                code = Replace(code, "RecordSet", "recordset")
+                code = Replace(code, "Property Set", "Property set")
+                If InStr(code, "Set ") > 0 Then
+                    strSet = strSet & Mid(code, InStr(code, "Set ") + 4, InStr(Mid(code, InStr(code, "Set ")), " = ") - 5) & "|"
+                Else
+                    If InStr(code, "For Each") > 0 Then
+                        strForEach = strForEach & Mid(code, InStr(code, "For Each ") + 9, InStr(Mid(code, InStr(code, "For Each ") + 9), " ") - 1) & "|"
+                    End If
+                End If
+            End If
+        End If
+    Next i
+    
+    MsgBox "Traiement terminé " & i
+    
+End Sub

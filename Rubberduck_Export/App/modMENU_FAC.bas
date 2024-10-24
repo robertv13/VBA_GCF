@@ -22,7 +22,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshMenuFAC:PreparationFacture_Click()", startTime)
+    Call Log_Record("wshMenuFAC:PreparationFacture_Click", startTime)
     
 End Sub
 
@@ -88,7 +88,7 @@ Sub FAC_Historique_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshMenuFAC:FAC_Historique_Click()", startTime)
+    Call Log_Record("wshMenuFAC:FAC_Historique_Click", startTime)
 
 End Sub
 
@@ -117,7 +117,7 @@ Sub FAC_Confirmation_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshMenuFAC:FAC_Confirmation_Click()", startTime)
+    Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", startTime)
 
 End Sub
 

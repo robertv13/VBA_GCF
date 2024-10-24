@@ -137,41 +137,48 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         currentRow = currentRow + 1
     Next prof
     
-        currentRow = currentRow + 1
-        With ws.Range("d" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlLeft
-            .value = "* Totaux *"
-        End With
-        With ws.Range("E" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(total(0), "#,##0.00")
-        End With
-        With ws.Range("G" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(totalValeurTEC, "###,##0.00 $")
-        End With
-        With ws.Range("H" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(total(1), "#,##0.00")
-        End With
-        With ws.Range("I" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(total(2), "#,##0.00")
-        End With
-        With ws.Range("J" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(total(3), "#,##0.00")
-        End With
-        With ws.Range("K" & currentRow)
-            .Font.Bold = True
-            .HorizontalAlignment = xlRight
-            .value = Format$(total(4), "#,##0.00")
-        End With
+    currentRow = currentRow + 1
+    With ws.Range("d" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlLeft
+        .value = "* Totaux *"
+    End With
+    With ws.Range("E" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(total(0), "#,##0.00")
+    End With
+    With ws.Range("G" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(totalValeurTEC, "###,##0.00 $")
+    End With
+    With ws.Range("H" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(total(1), "#,##0.00")
+    End With
+    With ws.Range("I" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(total(2), "#,##0.00")
+    End With
+    With ws.Range("J" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(total(3), "#,##0.00")
+    End With
+    With ws.Range("K" & currentRow)
+        .Font.Bold = True
+        .HorizontalAlignment = xlRight
+        .value = Format$(total(4), "#,##0.00")
+    End With
+        
+    'Clean up
+    Set dictHours = Nothing
+    Set prof = Nothing
+    Set ws = Nothing
+    Set wsSource = Nothing
+    
 End Sub
 

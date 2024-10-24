@@ -181,7 +181,7 @@ Sub Write_Info_On_Main_Menu()
     
     DoEvents '2024-08-23 @ 06:21
 
-    Call Log_Record("modAppli:Write_Info_On_Main_Menu()", startTime)
+    Call Log_Record("modAppli:Write_Info_On_Main_Menu", startTime)
 
 End Sub
 
@@ -200,6 +200,9 @@ Sub Handle_Rubberduck_Reference()
         On Error GoTo 0
     End If
 
+    'Clean up
+    Set ref = Nothing
+    
 End Sub
 
 Sub UpdatePivotTables()
@@ -216,6 +219,7 @@ Sub UpdatePivotTables()
         On Error GoTo 0
     Next pt
 
+    'Clean up
     Set pt = Nothing
     Set ws = Nothing
     

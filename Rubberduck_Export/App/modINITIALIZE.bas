@@ -118,8 +118,8 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     ws.Range("B1").value = 1
     Application.EnableEvents = True
     
-    'Cleanup - 2024-07-30 @ 11:56
-'    Set wb = Nothing
+    'Clean up
+    Set wb = Nothing
     Set ws = Nothing
     
     MsgBox "Toutes les données ont été supprimées avec succès," & vbNewLine & vbNewLine & _

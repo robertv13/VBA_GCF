@@ -49,7 +49,7 @@ Sub DEB_Saisie_Update()
     wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_Update()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", startTime)
         
 End Sub
 
@@ -145,7 +145,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -189,7 +189,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", startTime)
 
     Application.ScreenUpdating = True
 
@@ -282,7 +282,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Call GL_Posting_Locally(dateDebours, descGL_Trans, source, MyArray, glEntryNo)
     
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", startTime)
 
 End Sub
 
@@ -326,7 +326,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
 
     Application.EnableEvents = True
 
-    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE()", startTime)
+    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", startTime)
     
 End Sub
 
@@ -340,7 +340,7 @@ Sub Save_DEB_Recurrent(ll As Long)
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
     
-    Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent()", startTime)
+    Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", startTime)
     
 End Sub
 
@@ -417,7 +417,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -459,7 +459,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", startTime)
     
 End Sub
 
@@ -491,7 +491,7 @@ Sub DEB_Recurrent_Build_Summary()
         Next i
     End With
 
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", startTime)
 
 End Sub
 
@@ -521,7 +521,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells()", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", startTime)
 
 End Sub
 

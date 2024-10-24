@@ -66,7 +66,7 @@ Private Sub UserForm_Initialize()
         Unload Me
     End If
     
-    'Cleanup Memory
+    'Clean up Memory
     Set ws = Nothing
     Exit Sub
 

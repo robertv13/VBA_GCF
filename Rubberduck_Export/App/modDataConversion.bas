@@ -4,6 +4,8 @@ Option Explicit
 'Importation des clients à partir de ... \DataConversion\Clients.xlsx
 Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
 
+    Stop 'One shot deal !!!
+    
     Dim sourceRange As Range
     
     'Définir les chemins d'accès des fichiers (source & destination)
@@ -57,12 +59,10 @@ End Sub
 Sub Clients_Ajuste_Nom()
 
     'Declare and open the closed workbook
-    Dim wb As Workbook
-    Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+    Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
 
     'Define the worksheet you want to work with
-    Dim ws As Worksheet
-    Set ws = wb.Worksheets("Clients")
+    Dim ws As Worksheet: Set ws = wb.Worksheets("Clients")
     
     'Find the last used row with data in column A
     Dim lastUsedRow As Long
@@ -98,6 +98,10 @@ Sub Clients_Ajuste_Nom()
     
     wb.Save
     
+    'Clean up
+    Set wb = Nothing
+    Set ws = Nothing
+    
     MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
@@ -106,12 +110,10 @@ End Sub
 Sub Clients_Ajout_Contact_Dans_Nom()
 
     'Declare and open the closed workbook
-    Dim wb As Workbook
-    Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+    Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
 
     'Define the worksheet you want to work with
-    Dim ws As Worksheet
-    Set ws = wb.Worksheets("Clients")
+    Dim ws As Worksheet: Set ws = wb.Worksheets("Clients")
     
     'Find the last used row with data in column A
     Dim lastUsedRow As Long
@@ -144,12 +146,18 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     
     wb.Save
     
+    'Clean up
+    Set wb = Nothing
+    Set ws = Nothing
+    
     MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
 
 Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
 
+    Stop 'One shot deal !!!
+    
     Call Client_List_Import_All
     
     'Define the path to the closed workbook
@@ -246,15 +254,18 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
     'Clean up
     rst.Close
     cnn.Close
-    
     Set rst = Nothing
     Set cnn = Nothing
+    Set rng = Nothing
+    Set wsDest = Nothing
     
 End Sub
 
 'Only valid for this conversion process
 Function Get_ID_From_Initials(p As String) As Long
 
+    Stop 'One shot deal
+    
     Select Case p
         Case "GC"
             Get_ID_From_Initials = 1
@@ -273,6 +284,8 @@ End Function
 'Importation des fournisseurs à partir de ... \DataConversion\Fournisseurs.xlsx
 Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
 
+    Stop 'One shot deal
+    
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
@@ -324,6 +337,8 @@ End Sub
 
 Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
 
+    Stop 'One shot deal
+    
     'Define the path to the closed workbook
     Dim strFilePath As String
     strFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\GL_BV.xlsx"
@@ -405,14 +420,16 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     'Clean up
     rst.Close
     cnn.Close
-    
     Set rst = Nothing
     Set cnn = Nothing
+    Set wsDest = Nothing
     
 End Sub
 
 Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
 
+    Stop 'One shot deal
+    
     Call Client_List_Import_All
     
     Dim strConnection As String
@@ -528,9 +545,10 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     'Clean up
     rst.Close
     cnn.Close
-    
+    Set rng = Nothing
     Set rst = Nothing
     Set cnn = Nothing
+    Set wsDest = Nothing
     
 End Sub
 
@@ -646,9 +664,11 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
     wbWas.Close SaveChanges:=False
     wbNow.Close SaveChanges:=False
     
-    'Cleanup
+    'Clean up
     Set cellWas = Nothing
     Set cellNow = Nothing
+    Set foundRow = Nothing
+    Set rngArea = Nothing
     Set rngToPrint = Nothing
     Set wbWas = Nothing
     Set wbNow = Nothing
@@ -710,6 +730,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     sourceWorkbook.Close
     
     'Clean up
+    Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
@@ -771,6 +792,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     sourceWorkbook.Close
     
     'Clean up
+    Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
@@ -967,7 +989,11 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     wbMF.Close SaveChanges:=False
 
     'Clean up
+    Set dictClients = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
     Set wsSource = Nothing
+    Set wsOutput = Nothing
     Set wbSource = Nothing
     Set wsMF = Nothing
     Set wbMF = Nothing
@@ -1080,6 +1106,7 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     Set wsOutput = Nothing
     Set wsSource = Nothing
     Set wbSource = Nothing
+    Set ws = Nothing
     Set wsMF = Nothing
     Set wbMF = Nothing
     
@@ -1142,7 +1169,7 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'Cleanup
+    'Clean up
     Set wb1 = Nothing
     Set wb2 = Nothing
     Set ws1 = Nothing
@@ -1263,7 +1290,9 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'Cleanup
+    'Clean up
+    Set foundCells = Nothing
+    Set rngTarget = Nothing
     Set wb1 = Nothing
     Set wb2 = Nothing
     Set ws1 = Nothing

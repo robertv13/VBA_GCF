@@ -87,12 +87,13 @@ Public Sub GL_Report_For_Selected_Accounts()
     h3 = "(Du " & dateDeb & " au " & dateFin & ")"
     Call GL_Rapport_Wrap_Up(h1, h2, h3)
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
+    Set item = Nothing
     Set lb = Nothing
     Set selectedItems = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts()", startTime)
+    Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", startTime)
 
 End Sub
 
@@ -150,7 +151,7 @@ NoSort:
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
     
-    Call Log_Record("modGL_Rapport:get_GL_Details_For_A_Account()", startTime)
+    Call Log_Record("modGL_Rapport:get_GL_Details_For_A_Account", startTime)
 
 End Sub
 
@@ -254,7 +255,7 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
         .Range("F4").Select
     End With
     
-    Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells()", startTime)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", startTime)
 
 End Sub
 
@@ -385,7 +386,7 @@ Sub GL_Rapport_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu()", startTime)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", startTime)
     
 End Sub
 

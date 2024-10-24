@@ -23,7 +23,7 @@ Private Sub Workbook_Open()
     'Vérification si le chemin est accessible
     If isServerUp = False Then
         MsgBox "Le répertoire principal n'est pas accessible." & vbNewLine & vbNewLine & _
-               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, "Incapacité d'accéder au serveur"
+               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If
 
@@ -73,8 +73,9 @@ Private Sub Workbook_Open()
 
     'Cleaning memory - 2024-07-01 @ 09:34
     Set wb = Nothing
+    Set ws = Nothing
     
-    Call Log_Record("ThisWorkbook:Workbook_Open()", startTime)
+    Call Log_Record("ThisWorkbook:Workbook_Open", startTime)
     
 End Sub
 
@@ -133,7 +134,7 @@ Sub BackupMasterFile()
     'Cleaning memory - 2024-07-01 @ 09:34
     Set masterWorkbook = Nothing
     
-    Call Log_Record("modAppli:BackupMasterFile()", startTime)
+    Call Log_Record("modAppli:BackupMasterFile", startTime)
     Exit Sub
 
 MASTER_NOT_AVAILABLE:
@@ -156,8 +157,18 @@ Sub Create_User_Active_File()
     Dim fileNumber As Integer
     fileNumber = FreeFile
     
+    On Error GoTo Error_Handling
     Open traceFilePath For Output As fileNumber
+    On Error GoTo 0
+    
     Print #fileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
     Close fileNumber
+    
+    Exit Sub
+
+Error_Handling:
+    MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
+            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
+            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
 
 End Sub

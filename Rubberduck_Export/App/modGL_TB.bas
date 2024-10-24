@@ -132,7 +132,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     Set dictSolde = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modGL_TB:GL_TB_Build_Trial_Balance()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Build_Trial_Balance", startTime)
 
 End Sub
 
@@ -165,7 +165,7 @@ Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
 '            Call Erreur_Totaux_DT_CT
 '        End If
     
-    Call Log_Record("modGL_TB:GL_TB_Display_TB_Totals()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Display_TB_Totals", startTime)
 
 End Sub
 
@@ -325,7 +325,7 @@ Exit_sub:
     Set searchRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_TB:GL_TB_Display_Trans_For_Selected_Account()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Display_Trans_For_Selected_Account", startTime)
 
 End Sub
 
@@ -381,7 +381,7 @@ NoSort:
     Set rgData = Nothing
     Set rgResult = Nothing
     
-    Call Log_Record("modGL_TB:GL_TB_AdvancedFilter_By_GL()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_AdvancedFilter_By_GL", startTime)
 
 End Sub
 
@@ -403,7 +403,7 @@ Sub GL_TB_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
         .Range("B2").value = wshGL_BV.Range("B2").value + 1
     End With
     
-    Call Log_Record("modGL_TB:GL_TB_Sub_Totals()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Sub_Totals", startTime)
 
 End Sub
 
@@ -438,7 +438,7 @@ Sub GL_TB_Determine_From_And_To_Date(period As String)
             wshGL_BV.Range("B9").value = CDate(Format$(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
     End Select
     
-    Call Log_Record("modGL_TB:GL_TB_Determine_From_And_To_Date()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Determine_From_And_To_Date", startTime)
 
 End Sub
 
@@ -467,7 +467,7 @@ Sub GL_TB_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_TB:GL_TB_Setup_And_Print()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Setup_And_Print", startTime)
 
 End Sub
 
@@ -496,7 +496,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_TB:GL_TB_Setup_And_Print_Trans()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_Setup_And_Print_Trans", startTime)
 
 End Sub
 
@@ -551,7 +551,7 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     wshGL_BV.PrintPreview '2024-08-15 @ 14:53
 '    wshGL_BV.PrintOut , , 1, True, True, , , , False
  
-    Call Log_Record("modGL_TB:GL_TB_SetUp_And_Print_Document()", startTime)
+    Call Log_Record("modGL_TB:GL_TB_SetUp_And_Print_Document", startTime)
  
 End Sub
 
@@ -567,6 +567,10 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
         End If
     Next shp
 
+    'Clean up
+    Set shp = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
@@ -578,6 +582,10 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
         Debug.Print shp.name
     Next shp
 
+    'Clean up
+    Set shp = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub GL_TB_Back_To_Menu()

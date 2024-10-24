@@ -676,7 +676,8 @@ Sub menuFacturation_Click()
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+            Fn_Get_Windows_Username = "Robertmv" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -694,7 +695,8 @@ Sub MenuDEB_Click()
         
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+            Fn_Get_Windows_Username = "Robertmv" Then
         wshMenuDEB.Visible = xlSheetVisible
         wshMenuDEB.Activate
         wshMenuDEB.Range("A1").Select
@@ -712,7 +714,8 @@ Sub menuComptabilite_Click()
         
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+            Fn_Get_Windows_Username = "Robertmv" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -730,7 +733,8 @@ Sub menuParametres_Click()
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+            Fn_Get_Windows_Username = "Robertmv" Then
         wshAdmin.Visible = xlSheetVisible
         wshAdmin.Select
     Else
@@ -802,7 +806,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Cleaning memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
-    Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu()", startTime)
+    Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", startTime)
     
 End Sub
 
@@ -817,7 +821,7 @@ End Sub
 '    Call SlideIn_Parametres
 '    Call SlideIn_Exit
 '
-'    Call Log_Record("modMenu:Slide_In_All_Menu_Options()", startTime)
+'    Call Log_Record("modMenu:Slide_In_All_Menu_Options", startTime)
 '
 'End Sub
 '
@@ -835,29 +839,30 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         'Check the username and hide shapes accordingly
         Select Case shp.name
             Case "ChangeReferenceSystem"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "Robertmv" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "VérificationIntégritée"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-                    shp.Visible = msoTrue
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "Robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RechercheCode"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-                    shp.Visible = msoTrue
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "Robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RéférencesCirculaires"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-                    shp.Visible = msoTrue
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "Robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
@@ -866,7 +871,11 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         End Select
     Next shp
 
-    Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username()", startTime)
+    'Clean up
+    Set shp = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username", startTime)
 
 End Sub
 

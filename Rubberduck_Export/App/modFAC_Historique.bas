@@ -34,12 +34,13 @@ Sub Affiche_Liste_Factures()
     Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
     shp.Visible = False
     
-    Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures()", startTime)
+    Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", startTime)
 
 Clean_Exit:
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up
     Set rng = Nothing
+    Set shp = Nothing
     Set ws = Nothing
     
 End Sub
@@ -359,7 +360,7 @@ Sub FAC_Historique_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells()", startTime)
+    Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells", startTime)
 
 End Sub
 
@@ -377,7 +378,7 @@ Sub FAC_Historique_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu()", startTime)
+    Call Log_Record("modFAC_Historique:FAC_Historique_Back_To_FAC_Menu", startTime)
 
 End Sub
 

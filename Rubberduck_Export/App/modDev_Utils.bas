@@ -333,9 +333,10 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'Cleanup - 2024-07-14 @ 07:03
+    'Clean up - 2024-07-14 @ 07:03
     Set rngToPrint = Nothing
     Set wb = Nothing
+    Set ws = Nothing
     Set wsOutput = Nothing
     
 End Sub
@@ -619,6 +620,11 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                            "$1:$1", _
                            "L")
     
+    'Clean up
+    Set cell = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    
     MsgBox "Data validation list were created in worksheet: " & wsOutput.name
     
 End Sub
@@ -708,7 +714,8 @@ nextIteration:
 
     MsgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
+    Set cell = Nothing
     Set wb = Nothing
     Set ws = Nothing
 
@@ -800,31 +807,35 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
 End Sub
 
-Sub Menu_Adjust_Shape_Properties()
-
-    Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
-    
-    Dim shp As Shape
-    For Each shp In ws.Shapes
-        If InStr(shp.name, "Groupe") Then Debug.Print shp.name & " - " & shp.Top
-        If shp.name = "Groupe 01 - TEC" Then shp.Top = 60
-        If shp.name = "Groupe 02 - FACTURATION" Then shp.Top = 120
-        If shp.name = "Groupe 03 - DÉBOURSÉ" Then shp.Top = 180
-        If shp.name = "Groupe 04 - COMPTABILITÉ" Then shp.Top = 240
-        If shp.name = "Groupe 05 - PARAMÈTRES" Then shp.Top = 300
-        If shp.name = "Groupe 06 - SORTIE" Then shp.Top = 360
-        
-        If shp.name = "TECHover" Then shp.Top = 60: shp.Height = 40
-        If shp.name = "FACHover" Then shp.Top = 120: shp.Height = 40
-        If shp.name = "DEBHover" Then shp.Top = 180: shp.Height = 40
-        If shp.name = "GLHover" Then shp.Top = 240: shp.Height = 40
-        If shp.name = "PARAMHover" Then shp.Top = 300: shp.Height = 40
-        If shp.name = "EXITHover" Then shp.Top = 360: shp.Height = 40
-       
-    Next shp
-
-End Sub
-
+'Sub Menu_Adjust_Shape_Properties()
+'
+'    Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
+'
+'    Dim shp As Shape
+'    For Each shp In ws.Shapes
+'        If InStr(shp.name, "Groupe") Then Debug.Print shp.name & " - " & shp.Top
+'        If shp.name = "Groupe 01 - TEC" Then shp.Top = 60
+'        If shp.name = "Groupe 02 - FACTURATION" Then shp.Top = 120
+'        If shp.name = "Groupe 03 - DÉBOURSÉ" Then shp.Top = 180
+'        If shp.name = "Groupe 04 - COMPTABILITÉ" Then shp.Top = 240
+'        If shp.name = "Groupe 05 - PARAMÈTRES" Then shp.Top = 300
+'        If shp.name = "Groupe 06 - SORTIE" Then shp.Top = 360
+'
+'        If shp.name = "TECHover" Then shp.Top = 60: shp.Height = 40
+'        If shp.name = "FACHover" Then shp.Top = 120: shp.Height = 40
+'        If shp.name = "DEBHover" Then shp.Top = 180: shp.Height = 40
+'        If shp.name = "GLHover" Then shp.Top = 240: shp.Height = 40
+'        If shp.name = "PARAMHover" Then shp.Top = 300: shp.Height = 40
+'        If shp.name = "EXITHover" Then shp.Top = 360: shp.Height = 40
+'
+'    Next shp
+'
+'    'Clean up
+'    Set shp = Nothing
+'    Set ws = Nothing
+'
+'End Sub
+'
 Sub List_All_Tables()
 
     'Loop through each worksheet
@@ -837,7 +848,7 @@ Sub List_All_Tables()
         Next lo
     Next ws
     
-    'Cleanup - 2024-07-14 @ 12:05
+    'Clean up
     Set lo = Nothing
     Set ws = Nothing
     
@@ -986,7 +997,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     'Declare arr() to keep results in memory
     Dim arrResult() As Variant
-    ReDim arrResult(1 To 1000, 1 To 7)
+    ReDim arrResult(1 To 2000, 1 To 7)
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
@@ -1198,6 +1209,11 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
         .Apply
     End With
     
+    'Clean up
+    Set col = Nothing
+    Set reportSheet = Nothing
+    Set ws = Nothing
+    
     MsgBox "Le rapport des colonnes a été généré avec succès !", vbInformation
     
 End Sub
@@ -1347,10 +1363,11 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
                 
-    'Cleanup - 2024-07-25 @ 11:07
+    'Clean up - 2024-07-25 @ 11:07
     Set obj = Nothing
     Set wsOutputSheet = Nothing
     Set rngArea = Nothing
+    Set rngToPrint = Nothing
     Set shp = Nothing
     Set ws = Nothing
     
@@ -1482,7 +1499,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                 vbNewLine & "après avoir analysé un total de " & _
                 Format$(lread, "#,##0") & " Lignes de code"
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
     
@@ -1608,8 +1625,9 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'Cleanup - 2024-07-14 @ 07:03
+    'Clean up
     Set rngToPrint = Nothing
+    Set ws = Nothing
     Set wsOutput = Nothing
 
 End Sub
@@ -1666,7 +1684,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
 
-    Call Log_Record("modDev_Utils:SetTabOrder()", startTime)
+    Call Log_Record("modDev_Utils:SetTabOrder", startTime)
 
 End Sub
 
@@ -1680,6 +1698,10 @@ Sub test()
         End If
     Next cell
 
+    'Clean up
+    Set cell = Nothing
+    Set ws = Nothing
+    
 End Sub
 
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-10-16 @ 06:29
@@ -1708,7 +1730,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
-                        procedureName & " (entrée)" & " | " & _
+                        procedureName & " | " & _
                         LOCALE_SSHORTDATE
         Close #FileNum
     ElseIf startTime < 0 Then
@@ -1725,9 +1747,9 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
-                        procedureName & " (sortie)" & " | " & _
-                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " seconds" & " | " & _
-                        LOCALE_SSHORTDATE
+                        procedureName & " | " & _
+                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " secondes" & " | " & _
+                        LOCALE_SSHORTDATE & vbCrLf
         Close #FileNum
     End If
     

@@ -74,7 +74,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
    
     rmv_state = rmv_modeInitial
     
-    Call Log_Record("ufSaisieHeures:UserForm_Activate()", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Activate", startTime)
     
 End Sub
 
@@ -95,7 +95,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick()", startTime)
+    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
 
 End Sub
 
@@ -138,7 +138,7 @@ MenuSelect:
     
 Exit_sub:
 
-    Call Log_Record("ufSaisieHeures:UserForm_Terminate()", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Terminate", startTime)
 
 End Sub
 
@@ -200,7 +200,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", startTime)
 
 End Sub
 
@@ -293,7 +293,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
-    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", startTime)
     
 End Sub
 
@@ -343,7 +343,7 @@ Private Sub txtDate_AfterUpdate()
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
-    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", startTime)
     
 End Sub
 
@@ -371,7 +371,7 @@ Private Sub txtClient_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
     
 End Sub
 
@@ -389,7 +389,7 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", startTime)
     
 End Sub
 
@@ -443,7 +443,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", startTime)
     
 End Sub
 
@@ -472,7 +472,7 @@ Sub txtHeures_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", startTime)
     
 End Sub
 
@@ -490,7 +490,7 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", startTime)
     
 End Sub
 
@@ -508,7 +508,7 @@ Private Sub txtCommNote_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate()", startTime)
+    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", startTime)
     
 End Sub
 

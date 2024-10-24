@@ -69,10 +69,11 @@ Private Sub Worksheet_Activate()
     
     fromMenu = False
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up
+    Set plageValide = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate()", startTime)
+    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", startTime)
 
 End Sub
 

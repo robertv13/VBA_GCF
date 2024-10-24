@@ -13,7 +13,7 @@ Private Sub Worksheet_Activate()
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshTEC_TDB:Worksheet_Activate()", startTime)
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate", startTime)
 
 End Sub
 

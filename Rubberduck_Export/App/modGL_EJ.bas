@@ -38,7 +38,7 @@ Sub JE_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès"
     
-    Call Log_Record("modGL_EJ:JE_Update()", startTime)
+    Call Log_Record("modGL_EJ:JE_Update", startTime)
     
 End Sub
 
@@ -52,7 +52,7 @@ Sub Save_EJ_Recurrente(ll As Long)
     Call GL_EJ_Auto_Add_Record_To_DB(ll)
     Call GL_EJ_Auto_Add_Record_Locally(ll)
     
-    Call Log_Record("modGL_EJ:Save_EJ_Recurrente()", startTime)
+    Call Log_Record("modGL_EJ:Save_EJ_Recurrente", startTime)
     
 End Sub
 
@@ -81,7 +81,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     wshGL_EJ.Range("F6").value = "[Auto]-" & EJAutoDesc
     wshGL_EJ.Range("K4").Activate
 
-    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE()", startTime)
+    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", startTime)
     
 End Sub
 
@@ -106,7 +106,7 @@ Sub wshGL_EJ_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modGL_EJ:wshGL_EJ_Clear_All_Cells()", startTime)
+    Call Log_Record("modGL_EJ:wshGL_EJ_Clear_All_Cells", startTime)
 
 End Sub
 
@@ -137,7 +137,7 @@ Sub GL_EJ_Auto_Build_Summary()
         Next i
     End With
 
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary()", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", startTime)
 
 End Sub
 
@@ -216,7 +216,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB()", startTime)
+    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -256,7 +256,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally()", startTime)
+    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", startTime)
 
 End Sub
 
@@ -326,7 +326,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB()", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB", startTime)
 
 End Sub
 
@@ -365,7 +365,7 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_Locally()", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_Locally", startTime)
     
 End Sub
 

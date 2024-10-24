@@ -94,7 +94,7 @@ Fast_Exit_Sub:
 
     wshFAC_Brouillon.Select
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Save()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Save", startTime)
     
 End Sub
 
@@ -167,7 +167,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Set rs = Nothing
     Set conn = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", startTime)
 
 End Sub
 
@@ -215,7 +215,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     wshFAC_Brouillon.Range("B11").value = firstFreeRow
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", startTime)
 
     Application.ScreenUpdating = True
 
@@ -301,7 +301,7 @@ nothing_to_update:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", startTime)
 
 End Sub
 
@@ -337,7 +337,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
 nothing_to_update:
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", startTime)
 
 End Sub
 
@@ -400,7 +400,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB", startTime)
 
 End Sub
 
@@ -442,7 +442,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally", startTime)
 
 End Sub
 
@@ -498,7 +498,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB", startTime)
 
 End Sub
 
@@ -531,7 +531,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally", startTime)
 
 End Sub
 
@@ -597,7 +597,7 @@ next_iteration:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", startTime)
 
 End Sub
 
@@ -627,7 +627,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     'Cleaning memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", startTime)
 
 End Sub
 
@@ -667,7 +667,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", startTime)
 
 End Sub
 
@@ -705,7 +705,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", startTime)
 
 End Sub
 
@@ -744,7 +744,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     'Cleaning memory - 2024-07-23 @ 15:32
     Set conn = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", startTime)
     Exit Sub
 
 eh:
@@ -790,7 +790,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", startTime)
 
 End Sub
 
@@ -870,7 +870,7 @@ End Sub
 '    .Range("B24").value = False 'Set Invoice Load To false
 '    End With
 '
-'    Call Log_Record("modFAC_Finale:Invoice_Load()", startTime)
+'    Call Log_Record("modFAC_Finale:Invoice_Load", startTime)
 '
 'End Sub
 
@@ -881,6 +881,11 @@ Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
     On Error Resume Next
     Set ws = wb.Sheets(nom)
     NomFeuilleExiste = Not ws Is Nothing
+    On Error GoTo 0
+    
+    'Clean up
+    On Error Resume Next
+    Set ws = Nothing
     On Error GoTo 0
     
 End Function
@@ -928,7 +933,7 @@ End Function
 '    End With
 '    Application.ScreenUpdating = True
 '
-'    Call Log_Record("modFAC_Finale:InvoiceGetAllTrans()", startTime)
+'    Call Log_Record("modFAC_Finale:InvoiceGetAllTrans", startTime)
 '
 'End Sub
 
@@ -993,7 +998,7 @@ Sub FAC_Finale_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", startTime)
 
 End Sub
 
@@ -1296,6 +1301,14 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     Application.ScreenUpdating = True
     
+    'Clean up
+    Set forme = Nothing
+    Set plageSource = Nothing
+    Set wbCible = Nothing
+    Set wbSource = Nothing
+    Set wsCible = Nothing
+    Set wsSource = Nothing
+    
     Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", startTime)
 
 End Sub
@@ -1380,9 +1393,11 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     'MailItem.Send 'Pour envoyer directement l'email
 
 Exit_sub:
-    'Nettoyage
+
+    'Clean up
     Set MailItem = Nothing
     Set OutlookApp = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel", startTime)
 
@@ -1714,7 +1729,7 @@ End Sub
 '        Invoice_Load
 '    End With
 '
-'    Call Log_Record("modFAC_Finale:Prev_Invoice()", startTime)
+'    Call Log_Record("modFAC_Finale:Prev_Invoice", startTime)
 '
 'End Sub
 
@@ -1745,7 +1760,7 @@ End Sub
 '        Invoice_Load
 '    End With
 '
-'    Call Log_Record("modFAC_Finale:Next_Invoice()", startTime)
+'    Call Log_Record("modFAC_Finale:Next_Invoice", startTime)
 '
 'End Sub
 
@@ -1783,6 +1798,9 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
             wshFAC_Finale.Range("C" & (66 - nbItems) + 1 & ":D66")
         rngFeesSummary.ClearContents
     End If
+    
+    'Clean up
+    Set rngFeesSummary = Nothing
     
 End Sub
 
@@ -1852,6 +1870,11 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         
     End If
     
+    'Clean up
+    Set dictTaux = Nothing
+    Set rngFeesSummary = Nothing
+    Set t = Nothing
+    
 End Sub
 
 Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
@@ -1866,7 +1889,7 @@ Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon()", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon", startTime)
 
 End Sub
 

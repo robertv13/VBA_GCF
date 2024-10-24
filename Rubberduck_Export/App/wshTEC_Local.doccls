@@ -6,6 +6,6 @@ Private Sub Worksheet_Activate()
 
     wshTEC_Local.EnableCalculation = True
     
-    Call Log_Record("wshTEC_Local:Worksheet_Activate()", startTime)
+    Call Log_Record("wshTEC_Local:Worksheet_Activate", startTime)
 
 End Sub

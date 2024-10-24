@@ -42,10 +42,11 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Cleaning memory
+    Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshFAC_Historique:Worksheet_Activate()", startTime)
+    Call Log_Record("wshFAC_Historique:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -217,5 +218,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
     Application.EnableEvents = True
+    
+    'Clean up
+    Set shp = Nothing
 
 End Sub
