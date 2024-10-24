@@ -14,41 +14,42 @@ Private Sub Worksheet_Activate()
     
 End Sub
 
-Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_BV
-    Call SlideOut_EJ
-
-End Sub
-
-Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_EJ
-    Call SlideIn_GL_Report
-    Call SlideOut_BV
-
-End Sub
-
-Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_BV
-    Call SlideIn_EF
-    Call SlideOut_GL_Report
-
-End Sub
-
-Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_GL_Report
-    Call SlideOut_EF
-
-End Sub
-
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_EJ
-    Call SlideIn_BV
-    Call SlideIn_GL_Report
-    Call SlideIn_EF
-
-End Sub
+'Private Sub lblJE_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_BV
+'    Call SlideOut_EJ
+'
+'End Sub
+'
+'Private Sub lblBV_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_EJ
+'    Call SlideIn_GL_Report
+'    Call SlideOut_BV
+'
+'End Sub
+'
+'Private Sub lblGL_Report_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_BV
+'    Call SlideIn_EF
+'    Call SlideOut_GL_Report
+'
+'End Sub
+'
+'Private Sub lblEF_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_GL_Report
+'    Call SlideOut_EF
+'
+'End Sub
+'
+'Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_EJ
+'    Call SlideIn_BV
+'    Call SlideIn_GL_Report
+'    Call SlideIn_EF
+'
+'End Sub
+'

@@ -6,7 +6,7 @@ Sub PreparationFacture_Click()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:PreparationFacture_Click", 0)
 
-    Call SlideIn_PrepFact
+'    Call SlideIn_PrepFact
     
     Application.ScreenUpdating = False
     
@@ -29,7 +29,7 @@ End Sub
 'Option # 2
 Sub SuiviCC_Click()
 
-    Call SlideIn_SuiviCC
+'    Call SlideIn_SuiviCC
     
     Application.ScreenUpdating = False
     
@@ -49,7 +49,7 @@ End Sub
 'Option # 3
 Sub Encaissement_Click()
 
-    Call SlideIn_Encaissement
+'    Call SlideIn_Encaissement
     
     Application.ScreenUpdating = False
     
@@ -69,7 +69,7 @@ Sub FAC_Historique_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Historique_Click", 0)
 
-    Call SlideIn_FAC_Historique
+'    Call SlideIn_FAC_Historique
     
     Application.ScreenUpdating = False
     
@@ -97,7 +97,7 @@ Sub FAC_Confirmation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)
 
-    Call SlideIn_FAC_Confirmation
+'    Call SlideIn_FAC_Confirmation
     
     Application.ScreenUpdating = False
     

@@ -555,17 +555,6 @@ Sub GL_TB_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
  
 End Sub
 
-Sub GL_TB_Back_To_Menu()
-    
-    Call Erase_Non_Required_Shapes
-    
-    wshGL_BV.Visible = xlSheetHidden
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-End Sub
-
 Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
@@ -580,7 +569,6 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
 
 End Sub
 
-
 Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
@@ -590,6 +578,17 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
         Debug.Print shp.name
     Next shp
 
+End Sub
+
+Sub GL_TB_Back_To_Menu()
+    
+    Call Erase_Non_Required_Shapes
+    
+    wshGL_BV.Visible = xlSheetHidden
+    
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
+    
 End Sub
 
 

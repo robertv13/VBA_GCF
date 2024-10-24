@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub DEB_Saisie_Click()
     
-    Call SlideIn_Paiement
+'    Call SlideIn_Paiement
     
     Application.ScreenUpdating = False
     

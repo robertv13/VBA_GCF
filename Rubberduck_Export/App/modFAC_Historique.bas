@@ -369,10 +369,10 @@ Sub FAC_Historique_Back_To_FAC_Menu()
     
     wshFAC_Historique.Visible = xlSheetHidden
     
-    Call SlideIn_PrepFact
-    Call SlideIn_SuiviCC
-    Call SlideIn_Encaissement
-    Call SlideIn_FAC_Historique
+'    Call SlideIn_PrepFact
+'    Call SlideIn_SuiviCC
+'    Call SlideIn_Encaissement
+'    Call SlideIn_FAC_Historique
     
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select

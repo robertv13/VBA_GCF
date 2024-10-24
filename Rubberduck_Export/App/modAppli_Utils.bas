@@ -60,9 +60,9 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
 CleanUp:
     On Error Resume Next
     Application.PrintCommunication = True
-    If Err.Number <> 0 Then
-        MsgBox "Error setting PrintCommunication to True: " & Err.Description, vbCritical
-    End If
+'    If Err.Number <> 0 Then
+'        MsgBox "Error setting PrintCommunication to True: " & Err.Description, vbCritical
+'    End If
     On Error GoTo 0
     
 End Sub
@@ -428,7 +428,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
-    lastUsedRow = r + 1
+    lastUsedRow = r
     wsOutput.Range("A" & lastUsedRow).value = "**** " & Format$(readRows, "###,##0") & _
                                     " lignes analysées dans l'ensemble des tables ***"
     
@@ -1473,7 +1473,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " projets de factures a été analysés")
     r = r + 2
     
     'Add number of rows processed (read)
@@ -2037,7 +2037,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1891 'What is the last TECID analyzed ?
+    lastTECIDReported = 1917 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

@@ -13,74 +13,75 @@ Private Sub Worksheet_Activate()
     
 End Sub
 
-Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Prep_Hover_MouseMove", 0)
-        
-    Call SlideIn_SuiviCC
-    Call SlideOut_PrepFact
-
-    Call Log_Record("wshMenuFAC:lblFAC_Prep_Hover_MouseMove", startTime)
-
-End Sub
-
-Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove", 0)
-    
-    Call SlideIn_PrepFact
-    Call SlideIn_Encaissement
-    Call SlideOut_SuiviCC
-
-    Call Log_Record("wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove", startTime)
-
-End Sub
-
-Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Encaissement_Hover_MouseMove", 0)
-    
-    Call SlideIn_SuiviCC
-    Call SlideIn_FAC_Historique
-    Call SlideOut_Encaissement
-
-    Call Log_Record("wshMenuFAC:lblFAC_Encaissement_Hover_MouseMove", startTime)
-
-End Sub
-
-Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Historique_Hover_MouseMove", 0)
-    
-    Call SlideIn_Encaissement
-    Call SlideIn_FAC_Confirmation
-    Call SlideOut_FAC_Historique
-
-    Call Log_Record("wshMenuFAC:lblFAC_Historique_Hover_MouseMove", startTime)
-
-End Sub
-
-Private Sub lblFAC_Confirmation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Confirmation_Hover_MouseMove", 0)
-    
-    Call SlideIn_FAC_Historique
-    Call SlideOut_FAC_Confirmation
-
-    Call Log_Record("wshMenuFAC:lblFAC_Confirmation_Hover_MouseMove", startTime)
-
-End Sub
-
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblMinAll_Hover_MouseMove", 0)
-    
-    Call SlideIn_PrepFact
-    Call SlideIn_SuiviCC
-    Call SlideIn_Encaissement
-    Call SlideIn_FAC_Historique
-    Call SlideIn_FAC_Confirmation
-
-    Call Log_Record("wshMenuFAC:lblMinAll_Hover_MouseMove", startTime)
-
-End Sub
+'Private Sub lblFAC_Prep_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Prep_Hover_MouseMove", 0)
+'
+'    Call SlideIn_SuiviCC
+'    Call SlideOut_PrepFact
+'
+'    Call Log_Record("wshMenuFAC:lblFAC_Prep_Hover_MouseMove", startTime)
+'
+'End Sub
+'
+'Private Sub lblFAC_Suivi_CC_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove", 0)
+'
+'    Call SlideIn_PrepFact
+''    Call SlideIn_Encaissement
+'    Call SlideOut_SuiviCC
+'
+'    Call Log_Record("wshMenuFAC:lblFAC_Suivi_CC_Hover_MouseMove", startTime)
+'
+'End Sub
+'
+'Private Sub lblFAC_Encaissement_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Encaissement_Hover_MouseMove", 0)
+'
+'    Call SlideIn_SuiviCC
+'    Call SlideIn_FAC_Historique
+''    Call SlideOut_Encaissement
+'
+'    Call Log_Record("wshMenuFAC:lblFAC_Encaissement_Hover_MouseMove", startTime)
+'
+'End Sub
+'
+'Private Sub lblFAC_Historique_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Historique_Hover_MouseMove", 0)
+'
+''    Call SlideIn_Encaissement
+'    Call SlideIn_FAC_Confirmation
+'    Call SlideOut_FAC_Historique
+'
+'    Call Log_Record("wshMenuFAC:lblFAC_Historique_Hover_MouseMove", startTime)
+'
+'End Sub
+'
+'Private Sub lblFAC_Confirmation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblFAC_Confirmation_Hover_MouseMove", 0)
+'
+'    Call SlideIn_FAC_Historique
+'    Call SlideOut_FAC_Confirmation
+'
+'    Call Log_Record("wshMenuFAC:lblFAC_Confirmation_Hover_MouseMove", startTime)
+'
+'End Sub
+'
+'Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:lblMinAll_Hover_MouseMove", 0)
+'
+'    Call SlideIn_PrepFact
+'    Call SlideIn_SuiviCC
+''    Call SlideIn_Encaissement
+'    Call SlideIn_FAC_Historique
+'    Call SlideIn_FAC_Confirmation
+'
+'    Call Log_Record("wshMenuFAC:lblMinAll_Hover_MouseMove", startTime)
+'
+'End Sub
+'

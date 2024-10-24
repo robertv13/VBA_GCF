@@ -14,44 +14,44 @@ Private Sub Worksheet_Activate()
   
 End Sub
 
-Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideOut_SaisieHeures
-    
-End Sub
-
-Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_SaisieHeures
-    Call SlideOut_TEC_TDB
-
-End Sub
-
-Private Sub lblAnalyse_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_TEC_TDB
-    Call SlideOut_TEC_Analyse
-
-End Sub
-
-Private Sub lblEvaluation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-    
-    Call SlideIn_TEC_Analyse
-    Call SlideOut_TEC_Evaluation
-
-End Sub
-
-Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-   
-    Call SlideIn_SaisieHeures
-    Call SlideIn_TEC_TDB
-    Call SlideIn_TEC_Analyse
-    
-End Sub
-
+'Private Sub lblSaisieHeures_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideOut_SaisieHeures
+'
+'End Sub
+'
+'Private Sub lblTDB_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_SaisieHeures
+'    Call SlideOut_TEC_TDB
+'
+'End Sub
+'
+'Private Sub lblAnalyse_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_TEC_TDB
+'    Call SlideOut_TEC_Analyse
+'
+'End Sub
+'
+'Private Sub lblEvaluation_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_TEC_Analyse
+'    Call SlideOut_TEC_Evaluation
+'
+'End Sub
+'
+'Private Sub lblMinAll_Hover_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+'
+'    Call SlideIn_SaisieHeures
+'    Call SlideIn_TEC_TDB
+'    Call SlideIn_TEC_Analyse
+'
+'End Sub
+'
 Sub SaisieHeures_Click()
 
-    Call SlideIn_SaisieHeures
+'    Call SlideIn_SaisieHeures
     
     fromMenu = True '2024-09-03 @ 06:20
 
@@ -62,7 +62,7 @@ End Sub
 
 Sub TEC_TdB_Click()
 
-    Call SlideIn_TEC_TDB
+'    Call SlideIn_TEC_TDB
     
     fromMenu = True '2024-09-03 @ 06:20
 
@@ -81,7 +81,7 @@ End Sub
 
 Sub TEC_Analyse_Click()
 
-    Call SlideIn_TEC_Analyse
+'    Call SlideIn_TEC_Analyse
     
     fromMenu = True '2024-09-03 @ 06:20
 
@@ -100,7 +100,7 @@ End Sub
 
 Sub TEC_Evaluation_Click()
 
-    Call SlideIn_TEC_Evaluation
+'    Call SlideIn_TEC_Evaluation
     
     fromMenu = True '2024-09-03 @ 06:20
 

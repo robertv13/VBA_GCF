@@ -461,9 +461,9 @@ Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
     End If
     
     If rowCount = 0 Then
-        Fn_Get_TEC_Invoiced_By_This_Invoice = Array()
+        Fn_Get_Detailled_TEC_Invoice = Array()
     Else
-        Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
+        Fn_Get_Detailled_TEC_Invoice = resultArr
     End If
     
 End Function
