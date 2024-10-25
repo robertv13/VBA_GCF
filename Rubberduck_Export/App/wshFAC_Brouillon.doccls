@@ -64,7 +64,7 @@ Private Sub Worksheet_Activate()
 
     Call FAC_Brouillon_New_Invoice
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", startTime)
@@ -237,7 +237,7 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rng = Nothing
 
     Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, startTime)

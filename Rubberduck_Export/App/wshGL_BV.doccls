@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate()
         previousCellAddress = .Range("J1").Address
     End With
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cbx = Nothing
     Set ws = Nothing
     
@@ -209,7 +209,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
 
 NoSort:
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rgCriteria = Nothing
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
@@ -236,7 +236,7 @@ Sub wshGL_BV_Create_Dynamic_Shape()
 '        Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
 '    End If
 '
-'    'Cleaning memory - 2024-07-01 @ 09:34
+'    'Clean up memory - 2024-07-01 @ 09:34
 '    Set dynamicShape = Nothing
     
 End Sub

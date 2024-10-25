@@ -52,7 +52,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     ws.Range("B4").Select
     previousCellAddress = ws.Range("B4").Address
 
-    'Cleaning memory - 2024-07-11 @ 10:14
+    'Clean up memory - 2024-07-11 @ 10:14
     Set ws = Nothing
     
     Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", startTime)
@@ -149,7 +149,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
 
     Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", startTime)
   

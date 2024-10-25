@@ -19,8 +19,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call FAC_Projets_Détails_Import_All
     Call FAC_Projets_Entête_Import_All
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
 
     Me.Application.Calculation = xlCalculationAutomatic
 
@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     ws.Visible = xlSheetVisible
     
-    'Cleaning memory - 2024-07-11 @ 10:14
+    'Clean up memory - 2024-07-11 @ 10:14
     Set ws = Nothing
     
     Call Log_Record("wshTEC_Analyse:Worksheet_Activate", startTime)

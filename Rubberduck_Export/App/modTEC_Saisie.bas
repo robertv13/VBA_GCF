@@ -183,7 +183,7 @@ Clean_Exit:
     ufSaisieHeures.txtTEC_ID.value = ""
     ufSaisieHeures.txtClient.SetFocus
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set Sh = Nothing
 
     Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", startTime)
@@ -270,7 +270,7 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cRng = Nothing
     Set dRng = Nothing
     Set sRng = Nothing
@@ -513,7 +513,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -612,7 +612,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", startTime)
@@ -758,7 +758,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Dim rngTo As Range: Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.value = arr
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
@@ -793,7 +793,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
     Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", startTime)
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set pt = Nothing
     
 End Sub
@@ -858,7 +858,7 @@ No_Sort_Required:
     End With
     
 Cleaning:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cRng = Nothing
     Set dRng = Nothing
     Set sRng = Nothing

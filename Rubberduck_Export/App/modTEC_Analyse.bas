@@ -11,12 +11,14 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
     
     'Clear the worksheet from row 5 until the last row used
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 5 Then destLastUsedRow = 5
     wsDest.Range("A5:I" & destLastUsedRow).Clear
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - La zone A5:I" & destLastUsedRow & " a été effacée", -1)
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
@@ -31,6 +33,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             dictClients.Add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
         End If
     Next i
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Le dictClients a été créé", -1)
 
     'Calculate the center of the used range
     Dim centerX As Double, centerY As Double
@@ -69,6 +72,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 15 %", -1)
     
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
@@ -93,10 +97,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 20 %", -1)
     
     Dim r As Long
     r = 6
     Application.EnableEvents = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - On doit lire " & lastUsedRow & " lignes dans TEC_Local", -1)
     For i = 3 To lastUsedRow
         'Conditions for exclusion (adjust as needed)
         If Fn_Is_Client_Facturable(wsSource.Cells(i, ftecClient_ID)) = True And _
@@ -117,11 +123,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                     wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecDescription).value
                     wsDest.Cells(r, 8).value = wsSource.Cells(i, ftecHeures).value
                     wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
-'                    wsDest.Cells(r, 9).value = wsSource.Cells(i, ftecCommentaireNote).value
                     r = r + 1
                 End If
         End If
     Next i
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Toutes les lignes ont été lues de TEC_Local", -1)
+    
     Application.EnableEvents = False
    
     'Update the progress bar fill
@@ -133,6 +140,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 45 %", -1)
    
     'Find the last row in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
@@ -151,6 +159,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         .SortMethod = xlPinYin
         .Apply
     End With
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les données sont triées", -1)
     
     'Update the progress bar fill
     progressBarFill.width = 0.6 * barWidth  '60 %
@@ -161,6 +170,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 60 % (dernière étape avant le GroupBy...", -1)
     
     'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
@@ -169,10 +179,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
     Application.DisplayAlerts = True
     wsDest.Range("A:B").EntireColumn.Hidden = True
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Le GroupBy est complété", -1)
 
     'Group the data to show subtotals in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.rows.count, "A").End(xlUp).Row
     wsDest.Outline.ShowLevels RowLevels:=2
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Le 'ShowLevels est ajusté à 2", -1)
     
     'Add a formula to sum the billed amounts at the top row
     wsDest.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
@@ -187,6 +199,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 75 %", -1)
     
     'Change the format of the top row (Total General)
     With wsDest.Range("C6:D6")
@@ -255,6 +268,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             End If
         End If
     Next r
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les ajustements de format ont été complétés", -1)
     
     'Update the progress bar fill
     progressBarFill.width = 0.85 * barWidth  '85 %
@@ -265,21 +279,26 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 85 %", -1)
     
     'Set conditional formats for total hours (Client's total)
     Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
     Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - La mise en forme conditionnelle est en place", -1)
     
     'Bring in all the invoice requests
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Obtenir les requêtes de factures existantes", -1)
     
     'Clean up the summary aera of the worksheet
     Call Clean_Up_Summary_Area(wsDest)
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
     
     'Update the progress bar fill
     progressBarFill.width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.95, "0%")
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 95 %", -1)
     
     'Introduce a small delay to ensure the worksheet is fully updated
     DoEvents
@@ -292,6 +311,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     progressBarBg.Delete
     progressBarFill.Delete
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les ProgressBar sont éliminées", -1)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -300,6 +320,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     With ActiveWindow.Panes(2)
         .ScrollRow = 7
     End With
+    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - La zone de 'Scroll' commence sur la ligne 7", -1)
     
     'Optionnel : Sélectionne la cellule I7
 '    Range("I7").Select
@@ -635,7 +656,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -753,7 +774,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     

@@ -22,7 +22,7 @@ Function Fn_GetID_From_Initials(i As String)
         End If
     Next cell
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     
 End Function
@@ -56,7 +56,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -88,7 +88,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
         Fn_GetID_From_Fourn_Name = 0
     End If
     
-    'Cleaning memory - 2024-07-03 @ 16:13
+    'Clean up memory - 2024-07-03 @ 16:13
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -105,7 +105,7 @@ Function Fn_Get_Prenom_From_Initials(i As String)
         End If
     Next cell
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     
 End Function
@@ -121,7 +121,7 @@ Function Fn_Get_Nom_From_Initials(i As String)
         End If
     Next cell
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     
 End Function
@@ -197,7 +197,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
 
     Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", startTime)
@@ -418,7 +418,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -573,7 +573,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
         Fn_Get_AR_Balance_For_Invoice = balanceFacture
     End If
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
     Set sourceRng = Nothing
@@ -1302,7 +1302,7 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     
     Fn_Get_Plan_Comptable = arr
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set planComptable = Nothing
     Set Row = Nothing
     Set rowRange = Nothing
@@ -1393,7 +1393,7 @@ Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional headerS
         End With
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set Fn_Get_Current_Region = Nothing
     
 End Function

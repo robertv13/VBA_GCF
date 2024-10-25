@@ -677,7 +677,7 @@ Sub menuFacturation_Click()
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "Robertmv" Then
+            Fn_Get_Windows_Username = "robertmv" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -696,7 +696,7 @@ Sub MenuDEB_Click()
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "Robertmv" Then
+            Fn_Get_Windows_Username = "robertmv" Then
         wshMenuDEB.Visible = xlSheetVisible
         wshMenuDEB.Activate
         wshMenuDEB.Range("A1").Select
@@ -715,7 +715,7 @@ Sub menuComptabilite_Click()
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "Robertmv" Then
+            Fn_Get_Windows_Username = "robertmv" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -734,7 +734,7 @@ Sub menuParametres_Click()
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
             Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "Robertmv" Then
+            Fn_Get_Windows_Username = "robertmv" Then
         wshAdmin.Visible = xlSheetVisible
         wshAdmin.Select
     Else
@@ -758,34 +758,34 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
 '        Call SlideIn_Exit
         Call Hide_All_Worksheets_Except_Menu
     
-        Application.ScreenUpdating = True
-        Application.EnableEvents = True
-        
-        Call Write_Info_On_Main_Menu
-        
-        Application.EnableEvents = False
-        
-        DoEvents
-        
-        On Error Resume Next
-        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
-        On Error GoTo 0
+'        Application.EnableEvents = True
+'        Call Write_Info_On_Main_Menu
+'        Application.EnableEvents = False
         
         DoEvents
         
         Call Delete_User_Active_File
 
+        Application.ScreenUpdating = True
+        
+        On Error Resume Next
+        Call Log_Record("***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' *****", 0)
+        Call Log_Record("", -1)
+        
+        On Error GoTo 0
+        
+        DoEvents
+        
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
         ActiveWorkbook.Close SaveChanges:=True
         
         'Never pass here... It's too late
         Application.EnableEvents = True
-        
         Application.Application.Quit
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set wb = Nothing
     
 End Sub
@@ -803,7 +803,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next ws
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", startTime)
@@ -840,7 +840,7 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         Select Case shp.name
             Case "ChangeReferenceSystem"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "Robertmv" Then
+                    Fn_Get_Windows_Username = "robertmv" Then
                     shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
@@ -848,21 +848,21 @@ Sub Hide_Dev_Shapes_Based_On_Username()
 
             Case "VérificationIntégritée"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "Robertmv" Then
+                    Fn_Get_Windows_Username = "robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RechercheCode"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "Robertmv" Then
+                    Fn_Get_Windows_Username = "robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
 
             Case "RéférencesCirculaires"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "Robertmv" Then
+                    Fn_Get_Windows_Username = "robertmv" Then
                 Else
                     shp.Visible = msoFalse
                 End If
@@ -893,13 +893,15 @@ Sub BackToMainMenu()
         .Range("A1").Select
     End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub
 
 Sub Delete_User_Active_File()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", 0)
+    
     Dim userName As String
     userName = Fn_Get_Windows_Username
     
@@ -909,6 +911,8 @@ Sub Delete_User_Active_File()
     If Dir(traceFilePath) <> "" Then
         Kill traceFilePath
     End If
+
+    Call Log_Record("modMenu:Delete_User_Active_File", startTime)
 
 End Sub
 

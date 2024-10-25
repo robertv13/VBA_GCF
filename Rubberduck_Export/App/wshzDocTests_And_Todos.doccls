@@ -28,7 +28,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set intersectRange = Nothing
     Set rng = Nothing

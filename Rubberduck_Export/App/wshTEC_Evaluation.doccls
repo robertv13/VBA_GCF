@@ -58,7 +58,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     fromMenu = True
     
-    'Cleaning memory - 2024-07-11 @ 10:14
+    'Clean up memory - 2024-07-11 @ 10:14
     Set ws = Nothing
     
     Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", startTime)

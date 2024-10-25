@@ -633,7 +633,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -725,7 +725,7 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     
     Application.EnableEvents = True
 
-    'Cleaning memory - 2024-08-21 @ 16:42
+    'Clean up memory - 2024-08-21 @ 16:42
     Set cbx = Nothing
     Set cell = Nothing
     Set chkBoxRange = Nothing
@@ -739,6 +739,7 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", 0)
     
+    Application.ScreenUpdating = False
     Application.EnableEvents = False
     
     'Delete all checkboxes whose name are chkBox - ...
@@ -749,11 +750,10 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
         End If
     Next cbx
     
-'    wshFAC_Brouillon.Range("B12:B" & row).value = ""
-    
     Application.EnableEvents = True
-
-    'Cleaning memory - 2024-07-01 @ 09:34
+    Application.ScreenUpdating = True
+    
+    'Clean up memory
     Set cbx = Nothing
     
     Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", startTime)
@@ -770,9 +770,16 @@ Sub ENC_Clear_Cells()
     
         Application.EnableEvents = False
         
+        .Range("B4").value = False
+        .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
+        .Range("B12:B36").ClearContents
+        
         'Note the lastUsedRow for checkBox deletion
         Dim lastUsedRow As Long
         lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.rows.count, "F").End(xlUp).Row
+        If lastUsedRow > 36 Then
+            lastUsedRow = 36
+        End If
         
         .Range("B4").value = False
         .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields

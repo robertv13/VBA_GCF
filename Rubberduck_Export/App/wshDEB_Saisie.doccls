@@ -11,6 +11,8 @@ Private Sub Worksheet_Activate()
         Exit Sub
     End If
     
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -19,13 +21,11 @@ Private Sub Worksheet_Activate()
     Call GL_Trans_Import_All
     Call Fournisseur_List_Import_All
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
     
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
-    
     'Hide column A & B
     With ws
         .Unprotect
@@ -39,18 +39,21 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
+    Application.ScreenUpdating = True
+    
     Call DEB_Saisie_Clear_All_Cells
     
-    Application.ScreenUpdating = True
     Application.EnableEvents = True
     
     With ws
-        .Range("C3").Activate
+        .Activate
         .Range("F4").Select
+        ActiveWindow.ScrollRow = 1
+        ActiveWindow.ScrollColumn = 3
         previousCellAddress = .Range("F4").Address
     End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)
@@ -68,13 +71,18 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
+    'Beneficiaire is selected
+    If Not Intersect(Target, Range("J4:M4")) Is Nothing Then
+        Target.Interior.Color = HIGHLIGHT_COLOR
+    End If
+    
     'Date is selected
     If Not Intersect(Target, Range("O4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Description is selected
-    If Not Intersect(Target, Range("$F$6:$K$6")) Is Nothing Then
+    If Not Intersect(Target, Range("$F$6:$J$6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -321,6 +329,8 @@ Private Sub Process_Change(ByVal Target As Range)
     
     'Force TAB order after a cell has been changed - 2024-08-25 @ 10:35
     If Not Intersect(Target, Me.Range("F4")) Is Nothing Then
+        Me.Range("J4").Select
+    ElseIf Not Intersect(Target, Me.Range("J4")) Is Nothing Then
         Me.Range("O4").Select
     ElseIf Not Intersect(Target, Me.Range("O4")) Is Nothing Then
         Me.Range("F6").Select
@@ -343,41 +353,6 @@ Private Sub Process_Change(ByVal Target As Range)
     Set startCell = Nothing
     Set ws = Nothing
     
-End Sub
-
-Private Sub Worksheet_Change2(ByVal Target As Range)
-'    Dim MontantTTC As Currency
-'    Dim MontantNet As Currency
-'    Dim Taxe1 As Currency
-'    Dim Taxe2 As Currency
-'
-'    ' Si l'utilisateur modifie le Montant TTC
-'    If Not Intersect(Target, Me.Range("B2")) Is Nothing Then
-'        ' Extraire les taxes à partir du Montant TTC
-'        MontantTTC = Range("B2").value
-'        MontantNet = MontantTTC / (1 + TauxTVA + TauxAutreTaxe)
-'        Taxe1 = MontantTTC - MontantNet
-'        Taxe2 = Taxe1 * TauxAutreTaxe / (TauxTVA + TauxAutreTaxe)
-'
-'        Application.EnableEvents = False
-'        Range("B3").value = MontantNet ' Montant Net
-'        Range("C2").value = Taxe1 ' Taxe 1
-'        Range("D2").value = Taxe2 ' Taxe 2
-'        Application.EnableEvents = True
-'    End If
-'
-'    ' Si l'utilisateur modifie le Montant Net ou les taxes
-'    If Not Intersect(Target, Me.Range("B3,C2,D2")) Is Nothing Then
-'        ' Calculer le Montant TTC à partir du Montant Net et des taxes
-'        MontantNet = Range("B3").value
-'        Taxe1 = Range("C2").value
-'        Taxe2 = Range("D2").value
-'        MontantTTC = MontantNet + Taxe1 + Taxe2
-'
-'        Application.EnableEvents = False
-'        Range("B4").value = MontantTTC ' Montant TTC calculé
-'        Application.EnableEvents = True
-'    End If
 End Sub
 
 Sub DEB_Suggest_Amount(rowNumber As Long, suggestedAmount As Double)

@@ -98,7 +98,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
         
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     
@@ -206,7 +206,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -258,7 +258,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -310,7 +310,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -362,7 +362,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -414,7 +414,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -465,7 +465,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -517,7 +517,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -569,7 +569,7 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -615,19 +615,21 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     'Copy to wshFAC_Projets_Détails workbook all rows
     ws.Range("A2").CopyFromRecordset recSet
+    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La copie à la feuille locale est complétée", -1)
 
     Dim lastRow As Long
     lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Delete the rows that column (isDétruite) is set to TRUE in FAC_Projets_Entête
-    Dim i As Long
-    For i = lastRow To 2 Step -1
-        If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
-            Trim(ws.Cells(i, 9).value) = "" Or _
-            ws.Cells(i, 9).value = -1 Then
-            ws.rows(i).Delete
-        End If
-    Next i
+'    Dim i As Long - 2024-10-25 @ 13:57
+'    For i = lastRow To 2 Step -1
+'        If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
+'            Trim(ws.Cells(i, 9).value) = "" Or _
+'            ws.Cells(i, 9).value = -1 Then
+'            ws.rows(i).Delete
+'        End If
+'    Next i
+'    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La correction (lecture inversée) est terminée", -1)
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
@@ -635,11 +637,12 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
     End If
+    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-20 @ 13:30
+    'Clean up memory - 2024-07-20 @ 13:30
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -709,7 +712,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -776,7 +779,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
 
     Application.StatusBar = ""
 
-    'Cleaning memory - 2024-07-03 @ 15:45
+    'Clean up memory - 2024-07-03 @ 15:45
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -836,7 +839,7 @@ Clean_Exit:
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -893,7 +896,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -945,7 +948,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing

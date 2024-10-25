@@ -1022,11 +1022,17 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim clientName As String
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClientMF
-        dictClients.Add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+        'Enlève les informations de contact
+        clientName = wsMF.Cells(i, 1).value
+        Do While InStr(clientName, "[") > 0 And InStr(clientName, "]") > 0
+            clientName = Fn_Strip_Contact_From_Client_Name(clientName)
+        Loop
+        dictClients.Add CStr(wsMF.Cells(i, 2).value), clientName
     Next i
     
     'Setup output file

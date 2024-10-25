@@ -631,7 +631,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     rmv_state = rmv_modeModification
     
-    'Cleaning memory - 2024-07-31 2 08:34
+    'Clean up memory - 2024-07-31 2 08:34
     Set lookupRange = Nothing
     
 End Sub

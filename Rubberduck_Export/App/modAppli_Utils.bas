@@ -17,7 +17,7 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
         End Select
     Next cell
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     
 End Sub
@@ -93,66 +93,66 @@ Public Sub UnprotectCells(rng As Range)
 
 End Sub
 
-Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
-
-    Dim wsSrc As Worksheet
-    Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
-    
-    Dim wsTgt As Worksheet
-    Set wsTgt = ThisWorkbook.Worksheets("TEC_Hres_Jour_Prof")
-    
-    Dim lastUsedRowSrc As Long
-    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
-    
-    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
-    
-    'Copy columns A to H (from Source to Target), using Copy and Paste Special
-    wsSrc.Range("A2:I" & lastUsedRowSrc).Copy
-    wsTgt.Cells(2, 1).PasteSpecial Paste:=xlPasteValues
-    
-    'Clear the clipboard
-    Application.CutCopyMode = False
-    
-    Call Update_Pivot_Table
-    
-    MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
-            vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
-            vbExclamation
-
-    'Clean up
-    Set wsSrc = Nothing
-    Set wsTgt = Nothing
-    
-End Sub
-
-Sub Update_Pivot_Table() '2024-08-15 @ 06:34
-
-    'Define the worksheet containing the data
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Hres_Jour_Prof")
-    
-    'Find the last row of your data
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-    
-    'Define the new data range
-    Dim rngData As Range: Set rngData = ws.Range("A1:I" & lastUsedRow)
-    
-    'Update the Pivot Table
-    Dim pt As pivotTable: Set pt = ws.PivotTables("ptHresJourProf")
-    pt.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
-                        SourceType:=xlDatabase, _
-                        SourceData:=rngData)
-    
-    'Refresh the Pivot Table
-    pt.RefreshTable
-    
-    'Let go the Objects
-    Set pt = Nothing
-    Set rngData = Nothing
-    Set ws = Nothing
-
-End Sub
-
+'Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
+'
+'    Dim wsSrc As Worksheet
+'    Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
+'
+'    Dim wsTgt As Worksheet
+'    Set wsTgt = ThisWorkbook.Worksheets("TEC_Hres_Jour_Prof")
+'
+'    Dim lastUsedRowSrc As Long
+'    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
+'
+'    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
+'
+'    'Copy columns A to H (from Source to Target), using Copy and Paste Special
+'    wsSrc.Range("A2:I" & lastUsedRowSrc).Copy
+'    wsTgt.Cells(2, 1).PasteSpecial Paste:=xlPasteValues
+'
+'    'Clear the clipboard
+'    Application.CutCopyMode = False
+'
+'    Call Update_Pivot_Table
+'
+'    MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
+'            vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
+'            vbExclamation
+'
+'    'Clean up
+'    Set wsSrc = Nothing
+'    Set wsTgt = Nothing
+'
+'End Sub
+'
+'Sub Update_Pivot_Table() '2024-08-15 @ 06:34
+'
+'    'Define the worksheet containing the data
+'    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Hres_Jour_Prof")
+'
+'    'Find the last row of your data
+'    Dim lastUsedRow As Long
+'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+'
+'    'Define the new data range
+'    Dim rngData As Range: Set rngData = ws.Range("A1:I" & lastUsedRow)
+'
+'    'Update the Pivot Table
+'    Dim pt As pivotTable: Set pt = ws.PivotTables("ptHresJourProf")
+'    pt.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
+'                        SourceType:=xlDatabase, _
+'                        SourceData:=rngData)
+'
+'    'Refresh the Pivot Table
+'    pt.RefreshTable
+'
+'    'Let go the Objects
+'    Set pt = Nothing
+'    Set rngData = Nothing
+'    Set ws = Nothing
+'
+'End Sub
+'
 Public Sub ArrayToRange(ByRef Data As Variant _
                         , ByVal outRange As Range _
                         , Optional ByVal clearExistingData As Boolean = True _
@@ -195,7 +195,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.name = wsName
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
@@ -258,6 +258,8 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
+    Application.ScreenUpdating = True
+    
 '    Call Erase_And_Create_Worksheet("X_Heures_Jour_Prof")
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
 '    wsSommaire.Range("A1").value = "Date"
@@ -299,11 +301,9 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim readRows As Long
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
-    Application.ScreenUpdating = True
     Application.EnableEvents = False
     wshMenu.Range("H29").value = "Vérification du Plan Comptable"
     Application.EnableEvents = True
-    Application.ScreenUpdating = False
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Plan Comptable")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
     
@@ -557,7 +557,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -638,7 +638,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-04 @ 12:37
+    'Clean up memory - 2024-07-04 @ 12:37
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -755,7 +755,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + lastUsedRowDetails - 1
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rngEntete = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
@@ -858,7 +858,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rngClients = Nothing
     Set ws = Nothing
     Set wsClients = Nothing
@@ -953,7 +953,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - 2
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
@@ -1118,7 +1118,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -1270,7 +1270,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -1372,7 +1372,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
@@ -1513,7 +1513,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -1948,7 +1948,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
 
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -2052,7 +2052,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
@@ -2071,7 +2071,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 1917 'What is the last TECID analyzed ?
+    lastTECIDReported = 1945 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2162,8 +2162,11 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         If TECID > maxTECID Then
             maxTECID = TECID
         End If
+        'ProfessionnelID
         profID = arr(i, 2)
+        'Professionnel
         prof = arr(i, 3)
+        'Date
         dateTEC = arr(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
@@ -2178,6 +2181,10 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
             r = r + 1
             cas_date_future = cas_date_future + 1
+        End If
+        If dateTEC <> Int(dateTEC) Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            r = r + 1
         End If
         'Validate clientCode
         codeClient = Trim(arr(i, 5))
@@ -2422,7 +2429,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures SAISIES        :  " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures SAISIES         :  " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -2542,7 +2549,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
 
-    'Cleaning memory - 2024-09-05 @ 05:44
+    'Clean up memory - 2024-09-05 @ 05:44
     Set dictDateCharge = Nothing
     Set dictTimeStamp = Nothing
     Set dict_TEC_ID = Nothing
@@ -2750,17 +2757,20 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
        
         Case "wshDEB_Trans"
             With wshDEB_Trans
-                .Range("A2:Q" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("A2:R" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("C2:C" & lastUsedRow & ", " & _
                        "D2:D" & lastUsedRow & ", " & _
                        "F2:F" & lastUsedRow & ", " & _
-                       "H2:H" & lastUsedRow & ", " & _
-                       "P2:P" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("J2:O" & lastUsedRow)
+                       "G2:G" & lastUsedRow & ", " & _
+                       "I2:I" & lastUsedRow & ", " & _
+                       "Q2:Q" & lastUsedRow).HorizontalAlignment = xlLeft
+                With .Range("K2:P" & lastUsedRow)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With
+                .Range("R2:R" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         

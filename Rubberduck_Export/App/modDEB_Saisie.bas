@@ -22,7 +22,7 @@ Sub DEB_Saisie_Update()
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
     'Get the Fourn_ID
-    wshDEB_Saisie.Range("B5").value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("F6").value)
+    wshDEB_Saisie.Range("B5").value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").value)
 
     'Transfert des données vers DEB_Trans, entête d'abord puis une ligne à la fois
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
@@ -110,8 +110,9 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
             rs.Fields("No_Entrée").value = currDebTransNo
             rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
             rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
-            rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("F6").value
+            rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("J4").value
             rs.Fields("FournID").value = wshDEB_Saisie.Range("B5").value
+            rs.Fields("Description").value = wshDEB_Saisie.Range("F6").value
             rs.Fields("Reference").value = wshDEB_Saisie.Range("M6").value
             rs.Fields("Total").value = wshDEB_Saisie.Range("O6").value
             rs.Fields("No_Compte").value = wshDEB_Saisie.Range("Q" & l).value
@@ -141,7 +142,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -169,23 +170,24 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("A" & rowToBeUsed).value = currentDebTransNo
         wshDEB_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
         wshDEB_Trans.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
-        wshDEB_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
+        wshDEB_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("J4").value
         wshDEB_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("B5").value
-        wshDEB_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
-        wshDEB_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
-        wshDEB_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
-        wshDEB_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
-        wshDEB_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
-        wshDEB_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
-        wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
-        wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
-        wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
+        wshDEB_Trans.Range("F" & rowToBeUsed).value = wshDEB_Saisie.Range("F6").value
+        wshDEB_Trans.Range("G" & rowToBeUsed).value = wshDEB_Saisie.Range("M6").value
+        wshDEB_Trans.Range("H" & rowToBeUsed).value = wshDEB_Saisie.Range("Q" & i).value
+        wshDEB_Trans.Range("I" & rowToBeUsed).value = wshDEB_Saisie.Range("E" & i).value
+        wshDEB_Trans.Range("J" & rowToBeUsed).value = wshDEB_Saisie.Range("H" & i).value
+        wshDEB_Trans.Range("K" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value
+        wshDEB_Trans.Range("L" & rowToBeUsed).value = wshDEB_Saisie.Range("J" & i).value
+        wshDEB_Trans.Range("M" & rowToBeUsed).value = wshDEB_Saisie.Range("K" & i).value
+        wshDEB_Trans.Range("N" & rowToBeUsed).value = wshDEB_Saisie.Range("L" & i).value
+        wshDEB_Trans.Range("O" & rowToBeUsed).value = wshDEB_Saisie.Range("M" & i).value
         '$ dépense = Total - creditTPS - creditTVQ
-        wshDEB_Trans.Range("O" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value _
+        wshDEB_Trans.Range("P" & rowToBeUsed).value = wshDEB_Saisie.Range("I" & i).value _
                                                       - wshDEB_Saisie.Range("L" & i).value _
                                                       - wshDEB_Saisie.Range("M" & i).value
-        wshDEB_Trans.Range("P" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("Q" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+        wshDEB_Trans.Range("Q" & rowToBeUsed).value = ""
+        wshDEB_Trans.Range("R" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -413,7 +415,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -499,23 +501,26 @@ Public Sub DEB_Saisie_Clear_All_Cells()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", 0)
 
-    'Vide les cellules
+    Application.ScreenUpdating = False
     Application.EnableEvents = False
     
     With wshDEB_Saisie
-        .Range("F4:H4, F6:K6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").value = Now()
+        .Range("F4:H4, J4:M4, F6:J6, M6, O6, E9:O23, Q9:Q23").ClearContents
+        .Range("O4").value = Format$(Now(), "dd-mm-yyyy")
         .ckbRecurrente = False
     End With
     
-    With wshDEB_Saisie.Range("F4:H4, O4, F6:I6, M6, O6, E9:O23").Interior '2024-08-25 @ 09:43
+    'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
+    With wshDEB_Saisie.Range("F4:H4, J4:M4, F6:J6, M6, O6, E9:O23, I26, L26:O26").Interior
             .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
     End With
 
     Application.EnableEvents = True
+    Application.ScreenUpdating = True
     
+    'Protection de la feuille, seules les cellules non-verrouillées peuvent être sélectionnées
     With wshDEB_Saisie
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
@@ -529,8 +534,12 @@ Sub DEBOURS_Back_To_Menu()
     
     wshDEB_Saisie.Visible = xlSheetHidden
     
+    Application.ScreenUpdating = False
+    
     wshMenuDEB.Activate
     wshMenuDEB.Range("A1").Select
+    
+    Application.ScreenUpdating = True
     
 End Sub
 

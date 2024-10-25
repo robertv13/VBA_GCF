@@ -63,7 +63,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
 
-    'Cleaning memory
+    'Clean up memory
     Set r = Nothing
     Set ws = Nothing
     
@@ -105,6 +105,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             On Error Resume Next
             Target.Select
             On Error GoTo 0
+        End If
+    End If
+
+    'Sélection d'une facture à confirmer
+    If Not Intersect(Target, Range("P4:P999")) Is Nothing Then
+        invNo = Trim(Target.value)
+        If invNo <> "" Then
+            Call Get_Invoice_Data(invNo)
+        Else
+            Exit Sub
         End If
     End If
 

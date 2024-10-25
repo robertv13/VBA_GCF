@@ -128,7 +128,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     ActiveWindow.ScrollRow = 1
   
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set dictSolde = Nothing
     Set rng = Nothing
     
@@ -319,7 +319,7 @@ Exit_sub:
 
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set foundCell = Nothing
     Set rng = Nothing
     Set searchRange = Nothing
@@ -375,7 +375,7 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
 
 NoSort:
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rgCopyToRange = Nothing
     Set rgCriteria = Nothing
     Set rgData = Nothing
@@ -463,7 +463,7 @@ Sub GL_TB_Setup_And_Print()
     
     shp.Visible = msoTrue
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -492,7 +492,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     shp.Visible = msoTrue
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set printRange = Nothing
     Set shp = Nothing
     

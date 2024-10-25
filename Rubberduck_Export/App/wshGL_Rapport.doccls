@@ -52,7 +52,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set lb = Nothing
     Set ws = Nothing
     
@@ -181,7 +181,7 @@ Private Sub cbTous_Click()
         Next i
     End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set lb = Nothing
     
 End Sub

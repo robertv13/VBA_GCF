@@ -105,7 +105,7 @@ Sub Insert_PDF_WIP_Icons()
         .OnAction = "FAC_Confirmation_Report_Detailed_TEC"
     End With
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set pic = Nothing
     Set ws = Nothing
@@ -128,7 +128,7 @@ Sub FAC_Confirmation_Display_PDF_Invoice()
         MsgBox "Je ne retrouve pas cette facture", vbExclamation
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub
@@ -610,7 +610,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     Call Show_Unconfirmed_Invoice
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
     Set ws = Nothing
 
@@ -775,7 +775,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     

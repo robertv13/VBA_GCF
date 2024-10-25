@@ -163,7 +163,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rs = Nothing
     Set conn = Nothing
     
@@ -297,7 +297,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -396,7 +396,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
    
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -494,7 +494,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -593,7 +593,7 @@ next_iteration:
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -624,7 +624,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
         End If
     Next r
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set lookupRange = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", startTime)
@@ -663,7 +663,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set conn = Nothing
     Set rs = Nothing
     
@@ -701,7 +701,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set ws = Nothing
     
@@ -741,7 +741,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     
     Application.ScreenUpdating = True
 
-    'Cleaning memory - 2024-07-23 @ 15:32
+    'Clean up memory - 2024-07-23 @ 15:32
     Set conn = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", startTime)
@@ -786,7 +786,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set ws = Nothing
     
@@ -1696,7 +1696,7 @@ End Sub
 'EndMacro:
 '    Application.ScreenUpdating = True
 '
-'    'Cleaning memory - 2024-07-01 @ 09:34
+'    'Clean up memory - 2024-07-01 @ 09:34
 '    Set myMail = Nothing
 '    Set OutlookApp = Nothing
 '
@@ -1900,7 +1900,7 @@ Sub FAC_Finale_Enable_Save_Button()
     
     flagEtapeFacture = 3
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set shp = Nothing
     
 End Sub
@@ -1910,7 +1910,7 @@ Sub FAC_Finale_Disable_Save_Button()
     Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set shp = Nothing
     
 End Sub

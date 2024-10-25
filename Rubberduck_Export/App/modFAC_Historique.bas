@@ -82,7 +82,7 @@ Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
          End With
      End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
     Set sourceRng = Nothing
@@ -127,7 +127,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
          End With
      End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
     Set sourceRng = Nothing
@@ -205,7 +205,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
 Clean_Exit:
 
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     Set ws2 = Nothing
     
@@ -241,7 +241,7 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
         End If
     Next i
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set pic = Nothing
     Set ws = Nothing
@@ -271,7 +271,7 @@ Sub Display_PDF_Invoice()
         MsgBox "Je ne retrouve pas cette facture", vbExclamation
     End If
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set targetCell = Nothing
     Set ws = Nothing
     
@@ -286,7 +286,7 @@ Sub Remove_All_PDF_Icons() 'RMV - 2024-07-24 @ 19:58
         pic.Delete
     Next pic
     
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set pic = Nothing
     Set ws = Nothing
     
@@ -330,7 +330,7 @@ Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
         .Apply 'Apply Sort
      End With
 
-    'Cleaning memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
     Set criteriaRange = Nothing
     Set destRange = Nothing
     Set srcRange = Nothing

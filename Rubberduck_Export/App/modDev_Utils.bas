@@ -18,7 +18,7 @@ Sub Add_Columns_To_Active_Worksheet()
     
     Debug.Print colToAdd & " columns added to the worksheet."
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub
@@ -173,7 +173,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     
     wsOutput.Range("A2").Resize(r, 5).value = output
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rng = Nothing
     Set cell = Nothing
     Set wsOutput = Nothing
@@ -472,7 +472,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
    
     MsgBox "J'ai trouvé " & i & " Conditional Formatting"
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set area = Nothing
     Set cf = Nothing
     Set rng = Nothing
@@ -801,7 +801,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set shp = Nothing
     Set ws = Nothing
     
@@ -917,7 +917,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
    
     MsgBox "J'ai trouvé " & i & " named ranges"
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set nr = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -985,7 +985,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Application.ScreenUpdating = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set rng = Nothing
     Set rowToMove = Nothing
     Set tbl = Nothing
@@ -1521,7 +1521,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
     ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
 End Sub
@@ -1648,7 +1648,6 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Application.ScreenUpdating = False
     For Each cell In ws.usedRange
         If Not cell.Locked Then
-            Debug.Print "SetTabOrder - #1631 - " & cell.Address
             If unprotectedCells Is Nothing Then
                 Set unprotectedCells = cell
             Else
@@ -1656,7 +1655,6 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
             End If
         End If
     Next cell
-    Application.ScreenUpdating = True
 
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
@@ -1677,9 +1675,10 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
         Next i
     End If
 
+    Application.ScreenUpdating = True
     Application.EnableEvents = True
 
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set cell = Nothing
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
@@ -1718,30 +1717,35 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     FileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
+    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les centièmes de secondes sous forme de texte
     
+    'TimeStamp avec centièmes de seconde
     Dim TimeStamp As String
     TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logFile For Append As #FileNum
     
-    If startTime = 0 Then
-        startTime = Timer 'Start timing
+    'On laisse une ligne blanche dans le fichier Log
+    If Trim(procedureName) = "" Then
+        Print #FileNum, ""
+        Close #FileNum
+    ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
+'        startTime = Timer 'Start timing
         Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
                         procedureName & " | " & _
                         LOCALE_SSHORTDATE
         Close #FileNum
-    ElseIf startTime < 0 Then
-            startTime = Timer 'Start timing
+    ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
+'        startTime = Timer 'Start timing
         Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
                         procedureName & " | " & _
                         LOCALE_SSHORTDATE
         Close #FileNum
-    Else
+    Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _

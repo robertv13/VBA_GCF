@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     Application.EnableEvents = True
     
-    'Cleaning memory - 2024-07-01 @ 09:34
+    'Clean up memory - 2024-07-01 @ 09:34
     Set ws = Nothing
     
     Call Log_Record("wshGL_EJ:Worksheet_Activate", startTime)
