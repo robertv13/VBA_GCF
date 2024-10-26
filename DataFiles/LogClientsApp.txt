@@ -308,3 +308,30 @@
 20241024_073135|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0684 secondes|1102
 20241024_073135|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,0762 secondes|
 20241024_074100|Clients_v3.0.xlsm|Robert_M._Vigneault|***** Fin de session - Workbook_BeforeClose *****|||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|***** Début de session - Workbook_Open *****|||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Client_List_Import_All||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Apply_Worksheet_Format||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0781 secondes|1102
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,3594 secondes|
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|UserForm_Initialize||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Reset_UserForm||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Add_SearchColumn||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|cmbSearchColumn_Change||
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 secondes|Client_ID
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0156 secondes|
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0664 secondes|1103
+20241026_112558|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,0703 secondes|
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|***** Début de session - Workbook_Open *****|||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Client_List_Import_All||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Apply_Worksheet_Format||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0859 secondes|1102
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,3008 secondes|
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|UserForm_Initialize||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Reset_UserForm||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Add_SearchColumn||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|cmbSearchColumn_Change||
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0000 secondes|Client_ID
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0039 secondes|
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0625 secondes|1103
+20241026_114333|Clients_v3.0.xlsm|Robert_M._Vigneault|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,0664 secondes|
+20241026_114421|Clients_v3.0.xlsm|Robert_M._Vigneault|***** Fin de session - Workbook_BeforeClose *****|||

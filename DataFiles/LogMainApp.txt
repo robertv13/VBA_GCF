@@ -1247,3 +1247,27 @@
 
 2024-10-26_11:17:27.82 | Robert_M._Vigneault | APP_v5.B.1.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** | 31
 
+2024-10-26_11:29:45.21 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 31
+2024-10-26_11:29:45.24 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | Temps écoulé: 0,0234 secondes | 31
+
+2024-10-26_11:29:45.25 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | 31
+2024-10-26_11:29:45.25 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | Temps écoulé: 0,0000 secondes | 31
+
+2024-10-26_11:29:45.30 | Robert_M._Vigneault | APP_v5.C.0.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** | 31
+
+2024-10-26_11:33:26.91 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 31
+2024-10-26_11:33:26.93 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | Temps écoulé: 0,0234 secondes | 31
+
+2024-10-26_11:33:26.95 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | 31
+2024-10-26_11:33:26.96 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | Temps écoulé: 0,0078 secondes | 31
+
+2024-10-26_11:33:26.98 | Robert_M._Vigneault | APP_v5.C.0.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** | 31
+
+2024-10-26_11:39:49.30 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 31
+2024-10-26_11:39:49.32 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | Temps écoulé: 0,0156 secondes | 31
+
+2024-10-26_11:39:49.34 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | 31
+2024-10-26_11:39:49.34 | Robert_M._Vigneault | APP_v5.C.0.xlsb | modMenu:Delete_User_Active_File | Temps écoulé: 0,0000 secondes | 31
+
+2024-10-26_11:39:49.37 | Robert_M._Vigneault | APP_v5.C.0.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** | 31
+
