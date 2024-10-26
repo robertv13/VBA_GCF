@@ -155,13 +155,13 @@ Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColu
     
 End Function
 
-Sub test_Fn_Get_Value_From_UniqueID() '2024-10-15 @ 06:00
+Sub test_Fn_Get_Value_From_UniqueID() '2024-10-26 @ 18:29
 
     Dim ws As Worksheet: Set ws = wshBD_Clients
-    Dim uniqueID As String: uniqueID = "7890"
+    Dim uniqueID As String: uniqueID = "193r"
     
     Dim eMail As String
-    eMail = Fn_Get_Value_From_UniqueID(ws, uniqueID, 2, 5)
+    eMail = Fn_Get_Value_From_UniqueID(ws, uniqueID, 2, fClntMFCourrielFacturation)
     If eMail <> "uniqueID introuvable" Then
         MsgBox "Le courriel du client '" & uniqueID & "' est '" & eMail & "'"
     Else
@@ -175,8 +175,9 @@ End Sub
 
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
-    'This function is used to retrieve information from a range
-    'If found, it returns Variant, with the cell address, the row and the value
+    'This function is used to retrieve information from in a range(r) at column (cs) the value of (ss)
+    'If found, it returns an array, with the cell address(1), the row(2) and the value of column cr(3)
+    'Otherwise it return an empty array
     '2024-03-09 - First version
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", 0)
@@ -204,6 +205,21 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
+Sub test_Fn_Find_Data_In_A_Range()
+
+'        Dim myInfo() As Variant
+'        Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+'        Dim clientCode As String
+'        clientCode = "193r"
+'        Dim client As String
+'        myInfo = Fn_Find_Data_In_A_Range(rng, 2, clientCode, 4)
+'        If myInfo(1) = "" Then
+'            Debug.Print "Le code de client '" & clientCode & "' ne peut être trouvé"
+'        Else
+'            client = myInfo(3)
+'        End If
+
+End Sub
 Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     
     Fn_Valider_Courriel = False
@@ -605,14 +621,14 @@ End Function
 '    End If
 'End Function
 '
-Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 @ 10:36
+Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-10-26 @ 18:30
 
     '2024-08-14 @ 10:17 - Verify that a client exists, based on clientCode
     
     Fn_Validate_Client_Number = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Range("B99999").End(xlUp).Row
+    lastUsedRow = wshBD_Clients.Range("B9999").End(xlUp).Row
     Dim rngToSearch As Range
     Set rngToSearch = wshBD_Clients.Range("B1:B" & lastUsedRow)
     
@@ -632,18 +648,44 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-08-14 
     
 End Function
 
-Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
+Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 14:30
+    
+    'Validation de 0 à n adresses courriel
     
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
     
-    'Définir le pattern pour l'expression régulière
-    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-    regex.IgnoreCase = True
-    regex.Global = False
+    'Initialisation de l'expression régulière pour valider une adresse courriel
+    With regex
+        .Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        .IgnoreCase = True
+        .Global = False
+    End With
     
-    'Vérifier si l'adresse courriel correspond au pattern
-    Fn_ValiderCourriel = regex.test(courriel)
+    'Diviser le paremètre (courriel) en adresses individuelles
+    Dim adressesArray() As String
+    adressesArray = Split(adresses, ";")
+    
+    ' Vérifier chaque adresse
+    Dim adresse As Variant
+    For Each adresse In adressesArray
+        adresse = Trim(adresse)
+        'Passer si l'adresse est vide (Aucune adresse est aussi permis)
+        If adresse <> "" Then
+            'Si l'adresse ne correspond pas au pattern, renvoyer Faux
+            If Not regex.test(adresse) Then
+                Fn_ValiderCourriel = False
+                Exit Function
+            End If
+        End If
+    Next adresse
+    
+    ' Toutes les adresses sont valides
+    Fn_ValiderCourriel = True
+    
+    'Nettoyer la mémoire
+    Set adresse = Nothing
+    Set regex = Nothing
     
 End Function
 
@@ -1319,13 +1361,13 @@ Function Fn_Get_Client_Name(cc As String) As String
     'Recherche le code de client dans la colonne B
     Set foundCell = ws.columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
     If Not foundCell Is Nothing Then
-        ' Si trouvé, retourner le nom du client correspondant
+        'Si trouvé, retourner le nom du client correspondant, 1 colonne à gauche
         Fn_Get_Client_Name = foundCell.Offset(0, -1).value
     Else
         Fn_Get_Client_Name = "Client non trouvé (invalide)"
     End If
     
-    'celan up
+    'Libérer la mémoire
     Set foundCell = Nothing
     Set ws = Nothing
     

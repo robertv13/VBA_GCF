@@ -1372,7 +1372,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     '6. Obtenir l'adresse courriel pour le client
     Dim ws As Worksheet: Set ws = wshBD_Clients
     Dim eMailFacturation As String
-    eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, 5)
+    eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, fClntMFCourrielFacturation)
     If eMailFacturation = "uniqueID introuvable" Then
         MailItem.To = ""
     Else

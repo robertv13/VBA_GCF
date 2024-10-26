@@ -39,8 +39,8 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Range("A9999").End(xlUp).Row
-    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:J" & lastUsedRow)
+    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.rows.count, "A").End(xlUp).Row
+    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:K" & lastUsedRow)
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient

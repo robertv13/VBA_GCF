@@ -29,8 +29,8 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim i As Long
     For i = 2 To lastUsedRowClient
         'On ne considère que les clients FACTURABLES
-        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, 2).value) = True Then
-            dictClients.Add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, fClntMFClient_ID).value) = True Then
+            dictClients.Add CStr(wsClientsMF.Cells(i, fClntMFClient_ID).value), wsClientsMF.Cells(i, fClntMFClientNom).value
         End If
     Next i
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Le dictClients a été créé", -1)

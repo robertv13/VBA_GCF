@@ -34,6 +34,28 @@ Public logSaisieHeuresVeryDetailed As Boolean
 Public flagEtapeFacture As Integer
 
 'Using Enum to specify the column number of worksheets (data)
+Public Enum DB_Clients '2024-10-26 @ 17:41
+    fClntMFFirst = 1
+    fClntMFClientNom = fClntMFFirst
+    fClntMFClient_ID
+    fClntMFNomClientSystème
+    fClntMFContactFacturation
+    fClntMFTitreContactFacturation
+    fClntMFCourrielFacturation
+    fClntMFAdresse_1
+    fClntMFAdresse_2
+    fClntMFVille
+    fClntMFProvince
+    fClntMFCodePostal
+    fClntMFPays
+    fClntMFRéféréPar
+    fClntMFFinAnnée
+    fClntMFComptable
+    fClntMFNotaire_Avocat
+    fClntMFTimeStamp
+    fClntMFLast = fClntMFTimeStamp
+End Enum
+
 Public Enum DEB_Trans_data_Columns
     fdebtFirst = 1
     fdebtNo_Entrée = fdebtFirst

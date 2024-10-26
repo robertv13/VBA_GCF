@@ -509,14 +509,20 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
+    Dim dict_nom_client_systeme As New Dictionary
     
-    Dim i As Long, code As String, nom As String
+    Dim i As Long, code As String, nom As String, nomClientSysteme As String
+    Dim eMail As String
     Dim cas_doublon_nom As Long
     Dim cas_doublon_code As Long
+    Dim cas_doublon_nom_client_Systeme As Long
+    Dim cas_courriel_invalide As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         nom = arr(i, 1)
         code = arr(i, 2)
+        nomClientSysteme = arr(i, 3)
         
+        'Doublon sur le nom ?
         If dict_nom_client.Exists(nom) = False Then
             dict_nom_client.Add nom, code
         Else
@@ -525,12 +531,32 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_nom = cas_doublon_nom + 1
         End If
         
+        'Doublon sur le code de client ?
         If dict_code_client.Exists(code) = False Then
             dict_code_client.Add code, nom
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
+        End If
+        
+        'Doublon sur le nom de client systeme (si utilisé) ?
+        If Trim(nomClientSysteme) <> "" Then
+            If dict_nom_client_systeme.Exists(nomClientSysteme) = False Then
+                dict_nom_client_systeme.Add nomClientSysteme, code
+            Else
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom Système '" & nomClientSysteme & "' est un doublon pour le code '" & code & "'")
+                r = r + 1
+                cas_doublon_nom_client_Systeme = cas_doublon_nom_client_Systeme + 1
+            End If
+        End If
+        
+        If Trim(arr(i, 6)) <> "" Then
+            If Fn_ValiderCourriel(arr(i, 6)) = False Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
+                r = r + 1
+                cas_courriel_invalide = cas_courriel_invalide + 1
+            End If
         End If
         
     Next i
@@ -547,6 +573,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
         r = r + 1
     End If
+    
     If cas_doublon_code = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de code")
         r = r + 1
@@ -554,10 +581,30 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
         r = r + 1
     End If
+    
+    If cas_doublon_nom_client_Systeme = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de nom de client Système")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom_client_Systeme & " cas de doublons pour les noms Système")
+        r = r + 1
+    End If
+    
+    If cas_courriel_invalide = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Toutes les adresses courriel sont valides")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_courriel_invalide & " cas de courriels INVALIDES")
+        r = r + 1
+    End If
+    
     r = r + 1
     
 Clean_Exit:
     'Libérer la mémoire
+    Set dict_code_client = Nothing
+    Set dict_nom_client = Nothing
+    Set dict_nom_client_systeme = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -3264,12 +3311,12 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
                 wsOutput.Cells(rowOutput, 4).value = wsTEC.Cells(i, 8).value
                 clientData = Fn_Rechercher_Client_Par_ID(Trim(wsTEC.Cells(i, 5).value), wsMF)
                 If IsArray(clientData) Then
-                    wsOutput.Cells(rowOutput, 3).value = clientData(1, 1)
-                    wsOutput.Cells(rowOutput, 5).value = clientData(1, 6)
-                    wsOutput.Cells(rowOutput, 6).value = clientData(1, 7)
-                    wsOutput.Cells(rowOutput, 7).value = clientData(1, 8)
-                    wsOutput.Cells(rowOutput, 8).value = clientData(1, 9)
-                    wsOutput.Cells(rowOutput, 9).value = clientData(1, 10)
+                    wsOutput.Cells(rowOutput, 3).value = clientData(1, fClntMFClientNom)
+                    wsOutput.Cells(rowOutput, 5).value = clientData(1, fClntMFAdresse_1)
+                    wsOutput.Cells(rowOutput, 6).value = clientData(1, fClntMFAdresse_2)
+                    wsOutput.Cells(rowOutput, 7).value = clientData(1, fClntMFVille)
+                    wsOutput.Cells(rowOutput, 8).value = clientData(1, fClntMFProvince)
+                    wsOutput.Cells(rowOutput, 9).value = clientData(1, fClntMFCodePostal)
                 End If
                 rowOutput = rowOutput + 1
         End If
@@ -3342,6 +3389,8 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
             wsOutput.Cells(i, 2).value = ""
         End If
     Next i
+    'Première date est en caractère gras
+    wsOutput.Cells(2, 2).Font.Bold = True
     rowOutput = rowOutput + 2
     wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 2, "###,##0") & _
                                         " charges de temps analysées dans l'ensemble du fichier ***"

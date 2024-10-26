@@ -135,7 +135,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     Dim r As Long
     r = 0
     r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:J1"
+    r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:Q1"
     r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
     r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
     r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"

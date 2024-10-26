@@ -121,7 +121,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
-    sourceTab = "Clients"
+    sourceTab = "Clients$"
     
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -136,7 +136,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
-    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
     'Copy to wshBD_Clients worksheet
@@ -739,7 +739,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
-    sourceTab = "Fournisseurs"
+    sourceTab = "Fournisseurs$"
     
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -754,7 +754,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
-    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
     'Copy to wshBD_Fournisseurs workbook

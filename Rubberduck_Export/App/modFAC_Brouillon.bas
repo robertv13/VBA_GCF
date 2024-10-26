@@ -180,7 +180,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 3)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 4)
     
     If myInfo(1) = "" Then
         MsgBox "M: 101 - Je ne peux retrouver ce client dans ma liste", vbCritical
@@ -194,23 +194,23 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     Loop
         
     Application.EnableEvents = False
-    wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), 2)
+    wshFAC_Brouillon.Range("B18").value = wshBD_Clients.Cells(myInfo(2), fClntMFClient_ID)
     Application.EnableEvents = True
     
     With wshFAC_Brouillon
         Application.EnableEvents = False
-        .Range("K3").value = wshBD_Clients.Cells(myInfo(2), 3)
+        .Range("K3").value = wshBD_Clients.Cells(myInfo(2), fClntMFContactFacturation)
         .Range("K4").value = clientNamePurged
-        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
-        If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
-            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
-            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+        .Range("K5").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_1) 'Adresse1
+        If wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_2) <> "" Then
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_2) 'Adresse2
+            .Range("K7").value = wshBD_Clients.Cells(myInfo(2), fClntMFVille) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), fClntMFProvince) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), fClntMFCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("K6").value = wshBD_Clients.Cells(myInfo(2), fClntMFVille) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), fClntMFProvince) & ", " & _
+                                 wshBD_Clients.Cells(myInfo(2), fClntMFCodePostal) 'Ville, Province & Code postal
             .Range("K7").value = ""
         End If
         Application.EnableEvents = True
@@ -218,18 +218,18 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     
     With wshFAC_Finale
         Application.EnableEvents = False
-        .Range("B23").value = wshBD_Clients.Cells(myInfo(2), 3)
+        .Range("B23").value = wshBD_Clients.Cells(myInfo(2), fClntMFContactFacturation)
         .Range("B24").value = clientNamePurged
-        .Range("B25").value = wshBD_Clients.Cells(myInfo(2), 6) 'Adresse1
+        .Range("B25").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_1) 'Adresse1
         If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
-            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 7) 'Adresse2
-            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_2) 'Adresse2
+            .Range("B27").value = wshBD_Clients.Cells(myInfo(2), fClntMFVille) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), fClntMFProvince) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), fClntMFCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), 8) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), 9) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), 10) 'Ville, Province & Code postal
+            .Range("B26").value = wshBD_Clients.Cells(myInfo(2), fClntMFVille) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), fClntMFProvince) & ", " & _
+                                wshBD_Clients.Cells(myInfo(2), fClntMFCodePostal) 'Ville, Province & Code postal
             .Range("B27").value = ""
         End If
         If Trim(.Range("B26").value) = ", ," Then
@@ -447,11 +447,8 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     'Libérer la mémoire
     On Error Resume Next
-    Set rngDestination = Nothing
     Set rngSource = Nothing
-    Set wbDestination = Nothing
     Set wbSource = Nothing
-    Set wsDestination = Nothing
     Set wsSource = Nothing
     On Error GoTo 0
     
@@ -744,11 +741,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless

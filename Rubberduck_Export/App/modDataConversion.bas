@@ -126,9 +126,9 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
-        client = ws.Cells(i, 1).value
-        client_ID = ws.Cells(i, 2).value
-        contactFacturation = Trim(ws.Cells(i, 3).value)
+        client = ws.Cells(i, fClntMFClientNom).value
+        client_ID = ws.Cells(i, fClntMFClient_ID).value
+        contactFacturation = Trim(ws.Cells(i, fClntMFContactFacturation).value)
         
         'Process the data and make adjustments if necessary
         posOpenSquareBracket = InStr(client, "[")
@@ -820,9 +820,9 @@ Sub Check_Client_Name() '2024-08-10 @ 10:13
     Dim codeClient As String, nomClient As String, contactFact As String
     Dim i As Long
     For i = 2 To lastUsedRow
-        codeClient = sourceSheet.Cells(i, 2).value
-        nomClient = Trim(sourceSheet.Cells(i, 1).value)
-        contactFact = Trim(sourceSheet.Cells(i, 3).value)
+        codeClient = sourceSheet.Cells(i, fClntMFClient_ID).value
+        nomClient = Trim(sourceSheet.Cells(i, fClntMFClientNom).value)
+        contactFact = Trim(sourceSheet.Cells(i, fClntMFContactFacturation).value)
         If InStr(nomClient, contactFact) = 0 Then
             Debug.Print i & " : " & codeClient & " - " & nomClient & " on ajoute '" & contactFact & "'"
         End If

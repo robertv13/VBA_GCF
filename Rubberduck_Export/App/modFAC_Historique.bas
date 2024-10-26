@@ -16,7 +16,7 @@ Sub Affiche_Liste_Factures()
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 2)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntMFClient_ID)
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
