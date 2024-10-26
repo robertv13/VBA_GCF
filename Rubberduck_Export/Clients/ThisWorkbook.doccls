@@ -6,7 +6,7 @@ Private Sub Workbook_Open()
 
     Call CM_Client_List_Import_All
     
-    wshMENU.Range("A32").Value = "Heure - " & Format$(Now(), "hh:nn:ss")
+    wshMENU.Range("A32").Value = "Heure - " & Format$(Now(), "hh:mm:ss")
     wshMENU.Range("A32").Font.size = 9
     wshMENU.Range("A32").Font.Color = vbBlue
     

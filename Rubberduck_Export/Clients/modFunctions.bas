@@ -149,6 +149,7 @@ Function Fn_ValidateEntries() As Boolean
         'Default Color
         .txtCodeClient.BackColor = vbWhite
         .txtNomClient.BackColor = vbWhite
+        .txtNomClientSysteme.BackColor = vbWhite
         .txtContactFact.BackColor = vbWhite
         .txtTitreContact.BackColor = vbWhite
         .txtCourrielFact.BackColor = vbWhite

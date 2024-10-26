@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
    Caption         =   "Gestion du fichier Clients (version 2.5)"
-   ClientHeight    =   11415
+   ClientHeight    =   12030
    ClientLeft      =   6615
    ClientTop       =   2460
    ClientWidth     =   18270
@@ -120,24 +120,25 @@ Private Sub cmdEdit_Click()
     'Save selected line number
     wshMENU.Range("B100").Value = Fn_Selected_List
     
-    'Code to update the value to respective controls
+    'Code to update the value to respective controls - .ListIndex is based '0'
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0), _
         ThisWorkbook.Sheets("Données").Range("A:A"), 0)
     Me.txtNomClient.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0)
     Me.txtCodeClient.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 1)
-    Me.txtContactFact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 2)
-    Me.txtTitreContact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 3)
-    Me.txtCourrielFact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 4)
-    Me.txtAdresse1.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 5)
-    Me.txtAdresse2.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 6)
-    Me.txtVille.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 7)
-    Me.txtProvince.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 8)
-    Me.txtCodePostal.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 9)
-    Me.txtPays.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 10)
-    Me.txtReferePar.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 11)
-    Me.txtFinAnnee.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 12)
-    Me.txtComptable.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 13)
-    Me.txtNotaireAvocat.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 14)
+    Me.txtNomClientSysteme.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 2)
+    Me.txtContactFact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 3)
+    Me.txtTitreContact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 4)
+    Me.txtCourrielFact.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 5)
+    Me.txtAdresse1.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 6)
+    Me.txtAdresse2.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 7)
+    Me.txtVille.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 8)
+    Me.txtProvince.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 9)
+    Me.txtCodePostal.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 10)
+    Me.txtPays.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 11)
+    Me.txtReferePar.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 12)
+    Me.txtFinAnnee.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 13)
+    Me.txtComptable.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 14)
+    Me.txtNotaireAvocat.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 15)
     
     nouveauClient = False
     

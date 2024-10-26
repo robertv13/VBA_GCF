@@ -28,6 +28,7 @@ Sub CM_Reset_UserForm()
         'Empty all fields
         .txtCodeClient.Value = ""
         .txtNomClient.Value = ""
+        .txtNomClientSysteme = ""
         .txtContactFact.Value = ""
         .txtTitreContact.Value = ""
         .txtCourrielFact.Value = ""
@@ -46,6 +47,7 @@ Sub CM_Reset_UserForm()
         'Default Color for all fields
         .txtCodeClient.BackColor = vbWhite
         .txtNomClient.BackColor = vbWhite
+        .txtNomClientSysteme.BackColor = vbWhite
         .txtContactFact.BackColor = vbWhite
         .txtTitreContact.BackColor = vbWhite
         .txtCourrielFact.BackColor = vbWhite
@@ -75,15 +77,15 @@ Sub CM_Reset_UserForm()
         ThisWorkbook.Sheets("DonnéesRecherche").Cells.Clear
         
         'ListBox parameters
-        .lstDonnées.ColumnCount = 15
+        .lstDonnées.ColumnCount = 16
         .lstDonnées.ColumnHeads = True
         
-        .lstDonnées.ColumnWidths = "200; 45; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
+        .lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
         
         '.RowSource
         On Error Resume Next
         If iRow > 1 Then
-            .lstDonnées.RowSource = "Données!A2:O" & iRow
+            .lstDonnées.RowSource = "Données!A2:Q" & iRow
         End If
         If Err.Number = 380 Then
             MsgBox "Il y a un problème avec une commande de programmation." & _
@@ -133,19 +135,22 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
         'L'offset Row est toujours à 0, et l'Offset Col varie de 0 @ 14
         foundCell.Offset(0, 0).Value = ufClientMF.txtNomClient.Value
         foundCell.Offset(0, 1).Value = ufClientMF.txtCodeClient.Value
-        foundCell.Offset(0, 2).Value = ufClientMF.txtContactFact.Value
-        foundCell.Offset(0, 3).Value = ufClientMF.txtTitreContact.Value
-        foundCell.Offset(0, 4).Value = ufClientMF.txtCourrielFact.Value
-        foundCell.Offset(0, 5).Value = ufClientMF.txtAdresse1.Value
-        foundCell.Offset(0, 6).Value = ufClientMF.txtAdresse2.Value
-        foundCell.Offset(0, 7).Value = ufClientMF.txtVille.Value
-        foundCell.Offset(0, 8).Value = ufClientMF.txtProvince.Value
-        foundCell.Offset(0, 9).Value = ufClientMF.txtCodePostal.Value
-        foundCell.Offset(0, 10).Value = ufClientMF.txtPays.Value
-        foundCell.Offset(0, 11).Value = ufClientMF.txtReferePar.Value
-        foundCell.Offset(0, 12).Value = ufClientMF.txtFinAnnee.Value
-        foundCell.Offset(0, 13).Value = ufClientMF.txtComptable.Value
-        foundCell.Offset(0, 14).Value = ufClientMF.txtNotaireAvocat.Value
+        foundCell.Offset(0, 2).Value = ufClientMF.txtNomClientSysteme.Value
+        foundCell.Offset(0, 3).Value = ufClientMF.txtContactFact.Value
+        foundCell.Offset(0, 4).Value = ufClientMF.txtTitreContact.Value
+        foundCell.Offset(0, 5).Value = ufClientMF.txtCourrielFact.Value
+        foundCell.Offset(0, 6).Value = ufClientMF.txtAdresse1.Value
+        foundCell.Offset(0, 7).Value = ufClientMF.txtAdresse2.Value
+        foundCell.Offset(0, 8).Value = ufClientMF.txtVille.Value
+        foundCell.Offset(0, 9).Value = ufClientMF.txtProvince.Value
+        foundCell.Offset(0, 10).Value = ufClientMF.txtCodePostal.Value
+        foundCell.Offset(0, 11).Value = ufClientMF.txtPays.Value
+        foundCell.Offset(0, 12).Value = ufClientMF.txtReferePar.Value
+        foundCell.Offset(0, 13).Value = ufClientMF.txtFinAnnee.Value
+        foundCell.Offset(0, 14).Value = ufClientMF.txtComptable.Value
+        foundCell.Offset(0, 15).Value = ufClientMF.txtNotaireAvocat.Value
+        foundCell.Offset(0, 16).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        
     Else
         'Rechercher le client existant par son ID, dans la 2ème colonne
         Set foundCell = ws.Range("B:B").Find(ufClientMF.txtCodeClient.Value, LookIn:=xlValues, LookAt:=xlWhole)
@@ -153,19 +158,22 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
             'Modifier les champs de l'enregistrement existant
             foundCell.Offset(0, -1).Value = ufClientMF.txtNomClient.Value
             foundCell.Offset(0, 0).Value = ufClientMF.txtCodeClient.Value
-            foundCell.Offset(0, 1).Value = ufClientMF.txtContactFact.Value
-            foundCell.Offset(0, 2).Value = ufClientMF.txtTitreContact.Value
-            foundCell.Offset(0, 3).Value = ufClientMF.txtCourrielFact.Value
-            foundCell.Offset(0, 4).Value = ufClientMF.txtAdresse1.Value
-            foundCell.Offset(0, 5).Value = ufClientMF.txtAdresse2.Value
-            foundCell.Offset(0, 6).Value = ufClientMF.txtVille.Value
-            foundCell.Offset(0, 7).Value = ufClientMF.txtProvince.Value
-            foundCell.Offset(0, 8).Value = ufClientMF.txtCodePostal.Value
-            foundCell.Offset(0, 9).Value = ufClientMF.txtPays.Value
-            foundCell.Offset(0, 10).Value = ufClientMF.txtReferePar.Value
-            foundCell.Offset(0, 11).Value = ufClientMF.txtFinAnnee.Value
-            foundCell.Offset(0, 12).Value = ufClientMF.txtComptable.Value
-            foundCell.Offset(0, 13).Value = ufClientMF.txtNotaireAvocat.Value
+            foundCell.Offset(0, 1).Value = ufClientMF.txtNomClientSysteme.Value
+            
+            foundCell.Offset(0, 2).Value = ufClientMF.txtContactFact.Value
+            foundCell.Offset(0, 3).Value = ufClientMF.txtTitreContact.Value
+            foundCell.Offset(0, 4).Value = ufClientMF.txtCourrielFact.Value
+            foundCell.Offset(0, 5).Value = ufClientMF.txtAdresse1.Value
+            foundCell.Offset(0, 6).Value = ufClientMF.txtAdresse2.Value
+            foundCell.Offset(0, 7).Value = ufClientMF.txtVille.Value
+            foundCell.Offset(0, 8).Value = ufClientMF.txtProvince.Value
+            foundCell.Offset(0, 9).Value = ufClientMF.txtCodePostal.Value
+            foundCell.Offset(0, 10).Value = ufClientMF.txtPays.Value
+            foundCell.Offset(0, 11).Value = ufClientMF.txtReferePar.Value
+            foundCell.Offset(0, 12).Value = ufClientMF.txtFinAnnee.Value
+            foundCell.Offset(0, 13).Value = ufClientMF.txtComptable.Value
+            foundCell.Offset(0, 14).Value = ufClientMF.txtNotaireAvocat.Value
+            foundCell.Offset(0, 15).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         Else
             MsgBox "#MB:101 - Le client '" & ufClientMF.txtCodeClient & "' n'a pas été trouvé dans le fichier!", vbCritical
         End If
@@ -330,20 +338,21 @@ Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
     With sh
         .Cells(iRow, 1) = ufClientMF.txtNomClient.Value
         .Cells(iRow, 2) = ufClientMF.txtCodeClient.Value
-        .Cells(iRow, 3) = ufClientMF.txtContactFact.Value
-        .Cells(iRow, 4) = ufClientMF.txtTitreContact.Value
-        .Cells(iRow, 5) = ufClientMF.txtCourrielFact.Value
-        .Cells(iRow, 6) = ufClientMF.txtAdresse1.Value
-        .Cells(iRow, 7) = ufClientMF.txtAdresse2.Value
-        .Cells(iRow, 8) = ufClientMF.txtVille.Value
-        .Cells(iRow, 9) = ufClientMF.txtProvince.Value
-        .Cells(iRow, 10) = ufClientMF.txtCodePostal.Value
-        .Cells(iRow, 11) = ufClientMF.txtPays.Value
-        .Cells(iRow, 12) = ufClientMF.txtReferePar.Value
-        .Cells(iRow, 13) = ufClientMF.txtFinAnnee.Value
-        .Cells(iRow, 14) = ufClientMF.txtComptable.Value
-        .Cells(iRow, 15) = ufClientMF.txtNotaireAvocat.Value
-'        .Cells(iRow, 9) = [Text(Now(), "DD-MM-YYYY HH:MM:SS")]
+        .Cells(iRow, 3) = ufClientMF.txtNomClientSysteme.Value
+        .Cells(iRow, 4) = ufClientMF.txtContactFact.Value
+        .Cells(iRow, 5) = ufClientMF.txtTitreContact.Value
+        .Cells(iRow, 6) = ufClientMF.txtCourrielFact.Value
+        .Cells(iRow, 7) = ufClientMF.txtAdresse1.Value
+        .Cells(iRow, 8) = ufClientMF.txtAdresse2.Value
+        .Cells(iRow, 9) = ufClientMF.txtVille.Value
+        .Cells(iRow, 10) = ufClientMF.txtProvince.Value
+        .Cells(iRow, 11) = ufClientMF.txtCodePostal.Value
+        .Cells(iRow, 12) = ufClientMF.txtPays.Value
+        .Cells(iRow, 13) = ufClientMF.txtReferePar.Value
+        .Cells(iRow, 14) = ufClientMF.txtFinAnnee.Value
+        .Cells(iRow, 15) = ufClientMF.txtComptable.Value
+        .Cells(iRow, 16) = ufClientMF.txtNotaireAvocat.Value
+        .Cells(iRow, 17) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
 
     Call CM_Log_Record("modMain:CM_Update_Locally_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
@@ -360,6 +369,7 @@ Sub CM_Add_SearchColumn()
         .Clear
         .AddItem "ClientNom"
         .AddItem "Client_ID"
+        .AddItem "NomCLientSystème"
         .AddItem "ContactFacturation"
         .AddItem "TitreContactFacturation"
         .AddItem "CourrielFacturation"
@@ -409,7 +419,7 @@ Sub CM_Build_Données_Recherche()
     iDonnéesRow = ThisWorkbook.Sheets("Données").Range("A" & Application.Rows.Count).End(xlUp).Row
     sColumn = ufClientMF.cmbSearchColumn.Value
     sValue = ufClientMF.txtSearch.Value
-    iColumn = Application.WorksheetFunction.Match(sColumn, wshDonnées.Range("A1:O1"), 0)
+    iColumn = Application.WorksheetFunction.Match(sColumn, wshDonnées.Range("A1:Q1"), 0)
     
     'Remove filter from Données worksheet
     If wshDonnées.FilterMode = True Then
@@ -418,9 +428,9 @@ Sub CM_Build_Données_Recherche()
 
     'Apply filter on Données worksheet
     If ufClientMF.cmbSearchColumn.Value = "Code Client" Then
-        wshDonnées.Range("A1:O" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
+        wshDonnées.Range("A1:Q" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
     Else
-        wshDonnées.Range("A1:O" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
+        wshDonnées.Range("A1:Q" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
     End If
     
     Dim searchRowsFound As Long
@@ -431,10 +441,10 @@ Sub CM_Build_Données_Recherche()
         wshDonnées.AutoFilter.Range.Copy wshSearchData.Range("A1")
         Application.CutCopyMode = False
         iSearchRow = wshSearchData.Range("A" & Application.Rows.Count).End(xlUp).Row
-        ufClientMF.lstDonnées.ColumnCount = 15
-        ufClientMF.lstDonnées.ColumnWidths = "200; 45; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
+        ufClientMF.lstDonnées.ColumnCount = 16
+        ufClientMF.lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
         If iSearchRow > 1 Then
-            ufClientMF.lstDonnées.RowSource = "DonnéesRecherche!A2:O" & iSearchRow
+            ufClientMF.lstDonnées.RowSource = "DonnéesRecherche!A2:Q" & iSearchRow
             ufClientMF.lblResultCount = "J'ai trouvé " & iSearchRow - 1 & " clients" '2024-08-24 @ 10:21
         End If
     Else
@@ -448,11 +458,9 @@ Sub CM_Build_Données_Recherche()
 
 End Sub
 
-Sub CM_Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
+Sub CM_Client_List_Import_All() 'Using ADODB - 2024-10-26 @ 12:05
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Client_List_Import_All", "", 0)
-    
-    Application.StatusBar = "J'importe la liste des clients"
     
     Application.ScreenUpdating = False
     
@@ -466,7 +474,7 @@ Sub CM_Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
     Else
         sourceWorkbook = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
     End If
-    sourceTab = "Clients"
+    sourceTab = "Clients$"
     
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -481,7 +489,7 @@ Sub CM_Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     recSet.ActiveConnection = connStr
-    recSet.Source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.Source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
     'Copy to wshBD_Clients workbook
@@ -489,6 +497,7 @@ Sub CM_Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
     
     'Setup the format of the worksheet - 2024-07-20 @ 18:31
     Dim rng As Range: Set rng = wshClients.Range("A1").CurrentRegion
+    
     Call CM_Apply_Worksheet_Format(wshClients, rng, 1)
     
     'Close resource
@@ -497,8 +506,6 @@ Sub CM_Client_List_Import_All() 'Using ADODB - 2024-08-07 @ 11:55
     
     Application.ScreenUpdating = True
     
-    Application.StatusBar = ""
-
     'Cleaning memory - 2024-07-01 @ 09:34
     Set connStr = Nothing
     Set recSet = Nothing

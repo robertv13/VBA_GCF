@@ -51,3 +51,4 @@
 2024-10-16 16:14:35.11 | Robert M. Vigneault | ADD    1735 | GC | 15/10/2024 | 1055d | Fiducie Familiale Anne-Marie Ducharme (2019) | Test 7 | 0,10 | VRAI |  | 2024-10-16 16:14:35 | 31
 2024-10-16 16:16:05.53 | Robert M. Vigneault | ADD    1736 | GC | 15/10/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test 4 | 0,10 | VRAI |  | 2024-10-16 16:16:05 | 31
 2024-10-16 16:19:16.17 | Robert M. Vigneault | ADD    1737 | GC | 15/10/2024 | 1013j | La Mutuelle D'Immeubles Inc. [Tack Immobilier] [Paul-Hubert Tremblay] | Test 9 | 0,10 | VRAI |  | 2024-10-16 16:19:16 | 31
+2024-10-26 18:39:50.80 | Robert M. Vigneault | ADD    1976 | GC | 26/10/2024 | 1140 | Informatique Amérix Inc. [Gilles Fournier] | Test1 | 0,10 | VRAI |  | 2024-10-26 18:39:50 | 31
