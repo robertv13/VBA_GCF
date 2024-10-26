@@ -22,7 +22,7 @@ Function Fn_GetID_From_Initials(i As String)
         End If
     Next cell
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     
 End Function
@@ -56,7 +56,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -88,7 +88,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
         Fn_GetID_From_Fourn_Name = 0
     End If
     
-    'Clean up memory - 2024-07-03 @ 16:13
+    'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -105,7 +105,7 @@ Function Fn_Get_Prenom_From_Initials(i As String)
         End If
     Next cell
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     
 End Function
@@ -121,7 +121,7 @@ Function Fn_Get_Nom_From_Initials(i As String)
         End If
     Next cell
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     
 End Function
@@ -148,7 +148,7 @@ Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColu
         Fn_Get_Value_From_UniqueID = "uniqueID introuvable"
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set foundCell = Nothing
     Set searchRange = Nothing
     Set ws = Nothing
@@ -168,7 +168,7 @@ Sub test_Fn_Get_Value_From_UniqueID() '2024-10-15 @ 06:00
         MsgBox "Je n'ai pas trouvé le client dont le code est '" & uniqueID & "'", vbCritical
     End If
 
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -197,7 +197,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set foundCell = Nothing
 
     Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", startTime)
@@ -232,7 +232,7 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
         Fn_Valider_Courriel = True
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set regex = Nothing
     
 End Function
@@ -329,7 +329,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set rowsToDelete = Nothing
     Set searchRange = Nothing
@@ -385,7 +385,7 @@ Function GetColumnType(col As Range) As String
     
     GetColumnType = dataType
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     
 End Function
@@ -418,7 +418,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
 
@@ -455,7 +455,7 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
         Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set wsTEC = Nothing
     
 End Function
@@ -490,7 +490,7 @@ Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
         Fn_Get_Detailled_TEC_Invoice = resultArr
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set wsTEC = Nothing
     
 End Function
@@ -511,7 +511,7 @@ Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal looku
         End If
     On Error GoTo 0
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     
     Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", startTime)
@@ -573,7 +573,7 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
         Fn_Get_AR_Balance_For_Invoice = balanceFacture
     End If
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set criteriaRng = Nothing
     Set destinationRng = Nothing
     Set sourceRng = Nothing
@@ -816,7 +816,7 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
     
     Fn_Sort_Dictionary_By_Keys = keys
     
-    'Clean up
+    'Libérer la mémoire
     Set key = Nothing
     
 End Function
@@ -862,7 +862,7 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     
     Fn_Sort_Dictionary_By_Value = keys
     
-    'Clean up
+    'Libérer la mémoire
     Set key = Nothing
     
 End Function
@@ -889,7 +889,7 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
         Fn_Strip_Contact_From_Client_Name = Trim(Mid(cn, posCSB + 1))
     End If
     
-    'Clean up extra spaces
+    'Enlever les doubles espaces
     Do While InStr(Fn_Strip_Contact_From_Client_Name, "  ")
         Fn_Strip_Contact_From_Client_Name = Replace(Fn_Strip_Contact_From_Client_Name, "  ", " ")
     Loop
@@ -996,7 +996,7 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
         MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
     End If
 
-    'Clean up
+    'Libérer la mémoire
     Set rng = Nothing
     Set rowRange = Nothing
     
@@ -1100,7 +1100,7 @@ Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
         Fn_Invoice_Is_Confirmed = False
     End If
 
-    'Clean up
+    'Libérer la mémoire
     Set foundCell = Nothing
     Set ws = Nothing
 
@@ -1212,7 +1212,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Function
@@ -1257,7 +1257,7 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
     
     Fn_Get_Account_Opening_Balance = soldeOuverture
     
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Function
@@ -1302,7 +1302,7 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     
     Fn_Get_Plan_Comptable = arr
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set planComptable = Nothing
     Set Row = Nothing
     Set rowRange = Nothing
@@ -1358,7 +1358,7 @@ Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As V
         Fn_Rechercher_Client_Par_ID = CVErr(xlErrNA) 'Retourne #N/A pour indiquer que le client n'est pas trouvé
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set foundCells = Nothing
     Set rangeID = Nothing
     
@@ -1393,7 +1393,7 @@ Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional headerS
         End With
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set Fn_Get_Current_Region = Nothing
     
 End Function

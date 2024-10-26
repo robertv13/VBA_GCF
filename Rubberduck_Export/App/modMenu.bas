@@ -785,7 +785,7 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         Application.Application.Quit
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set wb = Nothing
     
 End Sub
@@ -803,7 +803,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next ws
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
     Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", startTime)
@@ -871,7 +871,7 @@ Sub Hide_Dev_Shapes_Based_On_Username()
         End Select
     Next shp
 
-    'Clean up
+    'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -893,7 +893,7 @@ Sub BackToMainMenu()
         .Range("A1").Select
     End With
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub

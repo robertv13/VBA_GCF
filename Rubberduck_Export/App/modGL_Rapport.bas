@@ -87,7 +87,7 @@ Public Sub GL_Report_For_Selected_Accounts()
     h3 = "(Du " & dateDeb & " au " & dateFin & ")"
     Call GL_Rapport_Wrap_Up(h1, h2, h3)
     
-    'Clean up
+    'Libérer la mémoire
     Set item = Nothing
     Set lb = Nothing
     Set selectedItems = Nothing
@@ -146,7 +146,7 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
 
 NoSort:
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rgCriteria = Nothing
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
@@ -238,7 +238,7 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     ws.Range("F" & lastRowUsed_AB).value = sumDT
     ws.Range("G" & lastRowUsed_AB).value = sumCT
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -323,7 +323,7 @@ Sub Set_Up_Report_Headers_And_Columns()
     
     ws.Range("A2:H" & 2500).ClearContents '2024-09-28 @ 06:36
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub

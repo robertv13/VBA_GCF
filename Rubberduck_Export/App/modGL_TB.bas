@@ -128,7 +128,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     ActiveWindow.ScrollRow = 1
   
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set dictSolde = Nothing
     Set rng = Nothing
     
@@ -319,7 +319,7 @@ Exit_sub:
 
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set foundCell = Nothing
     Set rng = Nothing
     Set searchRange = Nothing
@@ -375,7 +375,7 @@ Sub GL_TB_AdvancedFilter_By_GL(glNo As String, minDate As Date, maxDate As Date)
 
 NoSort:
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rgCopyToRange = Nothing
     Set rgCriteria = Nothing
     Set rgData = Nothing
@@ -463,7 +463,7 @@ Sub GL_TB_Setup_And_Print()
     
     shp.Visible = msoTrue
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -492,7 +492,7 @@ Sub GL_TB_Setup_And_Print_Trans()
     
     shp.Visible = msoTrue
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -567,7 +567,7 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
         End If
     Next shp
 
-    'Clean up
+    'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -582,7 +582,7 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
         Debug.Print shp.name
     Next shp
 
-    'Clean up
+    'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
     

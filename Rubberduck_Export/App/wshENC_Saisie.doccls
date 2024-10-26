@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate()
         previousCellAddress = .Range("F5").Address
     End With
 
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
     Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)

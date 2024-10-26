@@ -85,7 +85,7 @@ Private Sub Workbook_Open()
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
     
@@ -159,7 +159,7 @@ Sub BackupMasterFile()
 
     Application.ScreenUpdating = True
 
-    'Clean up
+    'Libérer la mémoire
     Set masterWorkbook = Nothing
     
     Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)

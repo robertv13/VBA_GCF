@@ -63,7 +63,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
 
-    'Clean up memory
+    'Libérer la mémoire
     Set r = Nothing
     Set ws = Nothing
     

@@ -189,7 +189,7 @@ Sub StatsHeures_AdvancedFilters()
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    'Clean up
+    'Libérer la mémoire
     Set rngCriteria = Nothing
     Set rngResult = Nothing
     

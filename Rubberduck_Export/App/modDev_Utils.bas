@@ -18,7 +18,7 @@ Sub Add_Columns_To_Active_Worksheet()
     
     Debug.Print colToAdd & " columns added to the worksheet."
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -173,7 +173,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     
     wsOutput.Range("A2").Resize(r, 5).value = output
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rng = Nothing
     Set cell = Nothing
     Set wsOutput = Nothing
@@ -333,7 +333,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'Clean up - 2024-07-14 @ 07:03
+    'Libérer la mémoire
     Set rngToPrint = Nothing
     Set wb = Nothing
     Set ws = Nothing
@@ -341,25 +341,28 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
 End Sub
 
-Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
+Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
     ReDim allLinesOfCode(1 To 25000, 1 To 4)
     
-    Application.ScreenUpdating = False
+'    Application.ScreenUpdating = False
+    
     'Allows up to 3 search strings
     Dim search1 As String, search2 As String, search3 As String
     search1 = InputBox("Enter the search string ? ", "Search1")
     search2 = InputBox("Enter the search string ? ", "Search2")
     search3 = InputBox("Enter the search string ? ", "Search3")
-    Application.ScreenUpdating = True
+    
+'    Application.ScreenUpdating = True
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
-    Dim oType As String
     Dim lineNum As Long
     Dim X As Long
+    
     Dim vbComp As Object
+    Dim oType As String
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         Select Case vbComp.Type
         Case 1
@@ -396,7 +399,7 @@ Sub Code_Search_Everywhere() '2024-07-11 @ 06:27
     
     Call Search_Every_Lines_Of_Code(allLinesOfCode, search1, search2, search3)
     
-    'Clean up memory - 2024-07-10 @ 18:08
+    'Libérer la mémoire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
     
@@ -472,7 +475,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
    
     MsgBox "J'ai trouvé " & i & " Conditional Formatting"
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set area = Nothing
     Set cf = Nothing
     Set rng = Nothing
@@ -620,7 +623,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                            "$1:$1", _
                            "L")
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -654,7 +657,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.name = sheetName
     
-    'Clean up - 2024-07-11 @ 08:27
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -714,7 +717,7 @@ nextIteration:
 
     MsgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set wb = Nothing
     Set ws = Nothing
@@ -801,7 +804,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
     Application.EnableEvents = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -830,7 +833,7 @@ End Sub
 '
 '    Next shp
 '
-'    'Clean up
+'    'Libérer la mémoire
 '    Set shp = Nothing
 '    Set ws = Nothing
 '
@@ -848,7 +851,7 @@ Sub List_All_Tables()
         Next lo
     Next ws
     
-    'Clean up
+    'Libérer la mémoire
     Set lo = Nothing
     Set ws = Nothing
     
@@ -917,7 +920,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
    
     MsgBox "J'ai trouvé " & i & " named ranges"
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set nr = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -985,7 +988,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rng = Nothing
     Set rowToMove = Nothing
     Set tbl = Nothing
@@ -1147,7 +1150,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 Format$(X, "#,##0") & " lignes de code"
     End If
     
-    'Clean up - 2024-07-13 @ 08:02
+    'Libérer la mémoire
     Set wsOutput = Nothing
     
 End Sub
@@ -1209,7 +1212,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
         .Apply
     End With
     
-    'Clean up
+    'Libérer la mémoire
     Set col = Nothing
     Set reportSheet = Nothing
     Set ws = Nothing
@@ -1363,7 +1366,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
                 
-    'Clean up - 2024-07-25 @ 11:07
+    'Libérer la mémoire
     Set obj = Nothing
     Set wsOutputSheet = Nothing
     Set rngArea = Nothing
@@ -1499,7 +1502,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                 vbNewLine & "après avoir analysé un total de " & _
                 Format$(lread, "#,##0") & " Lignes de code"
     
-    'Clean up
+    'Libérer la mémoire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
     
@@ -1521,7 +1524,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
     ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -1625,7 +1628,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'Clean up
+    'Libérer la mémoire
     Set rngToPrint = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -1678,7 +1681,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
@@ -1697,7 +1700,7 @@ Sub test()
         End If
     Next cell
 
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set ws = Nothing
     

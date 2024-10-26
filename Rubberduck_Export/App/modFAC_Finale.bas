@@ -163,7 +163,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rs = Nothing
     Set conn = Nothing
     
@@ -297,7 +297,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -396,7 +396,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
    
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -494,7 +494,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -593,7 +593,7 @@ next_iteration:
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -624,7 +624,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
         End If
     Next r
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set lookupRange = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", startTime)
@@ -663,7 +663,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -701,7 +701,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     Set ws = Nothing
     
@@ -741,7 +741,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-23 @ 15:32
+    'Libérer la mémoire
     Set conn = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", startTime)
@@ -786,7 +786,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     Set ws = Nothing
     
@@ -883,7 +883,7 @@ Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
     NomFeuilleExiste = Not ws Is Nothing
     On Error GoTo 0
     
-    'Clean up
+    'Libérer la mémoire
     On Error Resume Next
     Set ws = Nothing
     On Error GoTo 0
@@ -1301,7 +1301,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     Application.ScreenUpdating = True
     
-    'Clean up
+    'Libérer la mémoire
     Set forme = Nothing
     Set plageSource = Nothing
     Set wbCible = Nothing
@@ -1394,7 +1394,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
 
 Exit_sub:
 
-    'Clean up
+    'Libérer la mémoire
     Set MailItem = Nothing
     Set OutlookApp = Nothing
     Set ws = Nothing
@@ -1408,361 +1408,6 @@ Sub Test_FAC_Finale_Creation_Courriel()
     Call FAC_Finale_Creation_Courriel("24-24524", "1793")
 
 End Sub
-
-'Function Fn_Get_Outlook_Signature_Path() As String
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel(" & _
-'        noFacture & ", " & clientID & ")", 0)
-'
-'    Dim sPath As String
-'    Dim sSignaturePath As String
-'    Dim fso As Object
-'    Dim file As Object
-'
-'    'Chemin vers le dossier des signatures
-'    sPath = Environ("appdata") & "\Microsoft\Signatures\"
-'
-'    'Définir l'objet FileSystem
-'    Set fso = CreateObject("Scripting.FileSystemObject")
-'
-'    'Trouver le fichier de signature HTML
-'    For Each file In fso.GetFolder(sPath).Files
-'        If LCase(fso.GetExtensionName(file.name)) = "htm" Then
-'            sSignaturePath = file.path
-'            Exit For
-'        End If
-'    Next
-'
-'    'Retourner le chemin de la signature
-'    Fn_Get_Outlook_Signature_Path = sSignaturePath
-'
-'    Set fso = Nothing
-'    Set file = Nothing
-'
-'End Function
-
-'Function Fn_Get_Outlook_Signature() As String
-'
-'    'Chemin vers le dossier des signatures
-'    Dim sPath As String
-'    sPath = Environ("appdata") & "\Microsoft\Signatures\"
-'
-'    'Définir l'objet FileSystem
-'    Dim fso As Object
-'    Set fso = CreateObject("Scripting.FileSystemObject")
-'
-'    'Lire la signature par défaut dans le fichier .htm
-'    Dim sSignature As String
-'    Dim ts As Object
-'    If fso.fileExists(sPath & Dir(sPath & "*.htm")) Then
-'        Set ts = fso.GetFile(sPath & Dir(sPath & "*.htm")).OpenAsTextStream(1, -2)
-'        sSignature = ts.ReadAll
-'        ts.Close
-'    End If
-'
-'    'Retourner la signature
-'    Fn_Get_Outlook_Signature = sSignature
-'
-'    Set fso = Nothing
-'    Set ts = Nothing
-'
-'End Function
-
-'Function ReadSignatureFile(filepath As String) As String
-'    Dim fso As Object
-'    Dim ts As Object
-'    Dim sContent As String
-'
-'    ' Définir l'objet FileSystem
-'    Set fso = CreateObject("Scripting.FileSystemObject")
-'
-'    ' Lire le contenu de la signature
-'    If fso.fileExists(filepath) Then
-'        Set ts = fso.GetFile(filepath).OpenAsTextStream(1, -2)
-'        sContent = ts.ReadAll
-'        ts.Close
-'    End If
-'
-'    ' Retourner le contenu de la signature
-'    ReadSignatureFile = sContent
-'
-'    Set fso = Nothing
-'    Set ts = Nothing
-'End Function
-'
-'Sub EnvoyerEmailHTMLAvecSignature()
-'
-'    Dim OutlookApp As Object
-'    Dim MailItem As Object
-'    Dim Destinataire As String
-'    Dim Objet As String
-'    Dim CorpsMessage As String
-'    Dim Signature As String
-'    Dim PieceJointe As String
-'    Dim CheminImageSignature As String
-'
-'    ' Initialiser l'application Outlook
-'    On Error Resume Next
-'    Set OutlookApp = GetObject(Class:="Outlook.Application")
-'    If OutlookApp Is Nothing Then
-'        Set OutlookApp = CreateObject(Class:="Outlook.Application")
-'    End If
-'    On Error GoTo 0
-'
-'    ' Créer un nouvel e-mail
-'    Set MailItem = OutlookApp.CreateItem(0) ' 0 = olMailItem
-'
-'    ' Définir les paramètres de l'e-mail
-'    Destinataire = "destinataire@exemple.com"
-'    Objet = "Objet de votre e-mail"
-'    PieceJointe = "C:\VBA\GC_FISCALITÉ\Factures_PDF\24-24524.pdf"
-'
-'    'Obtenir la signature par défaut
-'    Dim signaturePath As String
-'    signaturePath = Fn_Get_Outlook_Signature_Path()
-'    Dim Signature As String
-'    Signature = Fn_Get_Outlook_Signature()
-'
-'    ' Construire le corps de l'e-mail avec HTML
-'    CorpsMessage = "<p style='text-indent: 40px;'>Bonjour,</p>" & _
-'                   "<p style='text-indent: 40px;'>Veuillez trouver ci-joint le document requis concernant votre demande.</p>" & _
-'                   "<p style='text-indent: 40px;'>Cordialement,</p>"
-'
-'    ' Signature en HTML avec image
-'    Signature = "<br><img src='cid:SignatureImage' width='100' height='100'><br>" & _
-'                "<b>Votre Nom</b><br>" & _
-'                "Votre Fonction<br>" & _
-'                "Votre Société<br>" & _
-'                "Téléphone : +33 1 23 45 67 89<br>" & _
-'                "Email : <a href='mailto:Votre.Email@exemple.com'>Votre.Email@exemple.com</a><br>" & _
-'                "Adresse complète de l'entreprise"
-'
-'    ' Construire l'e-mail avec HTML et la pièce jointe
-'    With MailItem
-'        .To = Destinataire
-'        .Subject = Objet
-'        .HTMLBody = CorpsMessage & Signature
-'
-'        ' Ajouter une pièce jointe si elle existe
-'        If Dir(PieceJointe) <> "" Then
-'            .Attachments.Add PieceJointe
-'        Else
-'            MsgBox "La pièce jointe n'a pas été trouvée.", vbExclamation
-'            Exit Sub
-'        End If
-'
-'        ' Ajouter l'image de la signature dans l'e-mail
-'        If Dir(CheminImageSignature) <> "" Then
-'            .Attachments.Add CheminImageSignature, 1, 0, "SignatureImage" ' L'argument "cid" est utilisé ici
-'        Else
-'            MsgBox "L'image de la signature n'a pas été trouvée.", vbExclamation
-'            Exit Sub
-'        End If
-'
-'        .Display ' Utilisez .Send pour envoyer directement
-'    End With
-'
-'    ' Libérer les objets
-'    Set MailItem = Nothing
-'    Set OutlookApp = Nothing
-'
-'End Sub
-'
-'Sub EnvoyerEmailAvecPieceJointe()
-'
-'    Dim OutlookApp As Object
-'    Dim MailItem As Object
-'    Dim Destinataire As String
-'    Dim Objet As String
-'    Dim CorpsMessage As String
-'    Dim PieceJointe As String
-'    Dim Signature As String
-'
-'    'Initialiser l'application Outlook
-'    On Error Resume Next
-'    Set OutlookApp = GetObject(Class:="Outlook.Application")
-'    If OutlookApp Is Nothing Then
-'        Set OutlookApp = CreateObject(Class:="Outlook.Application")
-'    End If
-'    On Error GoTo 0
-'
-'    'Créer un nouvel e-mail
-'    Set MailItem = OutlookApp.CreateItem(0) ' 0 = olMailItem
-'
-'    'Définir les paramètres de l'e-mail
-'    Destinataire = "robertv13@me.com"
-'    Objet = "GC FISCALITÉ - Facturation"
-'    CorpsMessage = "Bonjour," & vbCrLf & vbCrLf & _
-'                   "Veuillez trouver ci-joint le document requis." & vbCrLf & vbCrLf & _
-'                   "Cordialement," & vbCrLf & _
-'                   "Votre Nom"
-'
-'    PieceJointe = "C:\VBA\GC_FISCALITÉ\Factures_PDF\24-24524.pdf"
-'
-'    'Signature spécifique (vous pouvez ajuster cela ou utiliser la signature par défaut d'Outlook)
-'    Signature = vbCrLf & "Votre Nom" & vbCrLf & _
-'                "Votre Fonction" & vbCrLf & _
-'                "Votre Société" & vbCrLf & _
-'                "Téléphone : +33 1 23 45 67 89" & vbCrLf & _
-'                "Email : votre.email@exemple.com"
-'
-'    'Construire l'e-mail
-'    With MailItem
-'        .To = Destinataire
-'        .Subject = Objet
-'        .Body = CorpsMessage & vbCrLf & vbCrLf & Signature
-'        If Dir(PieceJointe) <> "" Then ' Vérifier si la pièce jointe existe
-'            .Attachments.Add PieceJointe
-'        Else
-'            MsgBox "La pièce jointe n'a pas été trouvée.", vbExclamation
-'            Exit Sub
-'        End If
-'        .Display ' Utilisez .Send pour envoyer directement
-'    End With
-'
-'    ' Libérer les objets
-'    Set MailItem = Nothing
-'    Set OutlookApp = Nothing
-'
-'End Sub
-'
-'Sub FAC_Finale_Create_Email(noFacture As String)
-'
-'    Application.ScreenUpdating = False
-'
-'    'Construct the attachmentFullPathName filename
-'    Dim attachmentFullPathName As String
-'    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
-'                     noFacture & ".pdf" '2024-09-03 @ 16:43
-'
-'    'Check if the file already exists
-'    Dim fileExists As Boolean
-'    fileExists = Dir(attachmentFullPathName) <> ""
-'
-'    'If the file exists, prompt the user for confirmation
-'    Dim reponse As VbMsgBoxResult
-'    If Not fileExists Then
-'        reponse = MsgBox("La facture '" & noFacture & "' n'existe pas en format PDF" & _
-'                          "Je ne peux donc pas l'envoyer par courriel !", vbInformation, _
-'                          "Cette facture n'existe pas en format PDF")
-'        GoTo EndMacro
-'    End If
-'
-'    'Set Print Quality
-'    On Error Resume Next
-'    ActiveSheet.PageSetup.PrintQuality = 600
-'    Err.Clear
-'    On Error GoTo 0
-'
-'    'Adjust Document Properties - 2024-09-03 @ 16:46
-'    With ActiveSheet.PageSetup
-'        .LeftMargin = Application.InchesToPoints(0)
-'        .RightMargin = Application.InchesToPoints(0)
-'        .TopMargin = Application.InchesToPoints(0)
-'        .BottomMargin = Application.InchesToPoints(0)
-'    End With
-'
-'    'Construct & Display the Email, allowing the user to modify the Email
-'    On Error GoTo SaveOnly
-'
-'    Dim OutlookApp As Outlook.Application: Set OutlookApp = New Outlook.Application
-'
-'    'Where are the email templates ? - 2024-03-27 @ 07:28
-'    Dim FullTemplatePathAndFile As String
-'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
-'        FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
-'    Else
-'        FullTemplatePathAndFile = "C:\Users\Robert M. Vigneault\AppData\Roaming\Microsoft\Templates\GCF_Facturation.oft"
-'    End If
-'
-'    Dim myMail As Outlook.MailItem: Set myMail = OutlookApp.CreateItemFromTemplate(FullTemplatePathAndFile)
-''        Set myMail = outlookApp.CreateItem(olMailItem)
-'
-'    With myMail
-'        .To = "robertv13@me.com"
-'        .Subject = "GC FISCALITÉ INC. - Facturation"
-'        .Attachments.Add attachmentFullPathName
-'        .Display 'Affiche le courriel, ce qui permet de corriger AVANT l'envoi
-'
-'        'myMail.Send
-'    End With
-'
-'SaveOnly:
-'    GoTo EndMacro
-'
-'RefLibError:
-'    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-'
-'EndMacro:
-'    Application.ScreenUpdating = True
-'
-'    'Clean up memory - 2024-07-01 @ 09:34
-'    Set myMail = Nothing
-'    Set OutlookApp = Nothing
-'
-'End Sub
-'
-'Sub Prev_Invoice() 'TO-DO-RMV 2023-12-17
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Prev_Invoice", 0)
-'
-'    With wshFAC_Brouillon
-'        Dim MininvNumb As Long
-'        On Error Resume Next
-'        MininvNumb = Application.WorksheetFunction.Min(wshFAC_Entête.Range("Inv_ID"))
-'        On Error GoTo 0
-'        If MininvNumb = 0 Then
-'            MsgBox "Please create and save an Invoice first"
-'            Exit Sub
-'        End If
-'        invNumb = .Range("N6").value
-'        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
-'            invRow = wshFAC_Entête.Range("A99999").End(xlUp).Row 'On Empty Invoice Go to last one created
-'        Else 'On Existing Inv. find Previous one
-'            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row - 1
-'        End If
-'        If .Range("N6").value = 1 Or MininvNumb = 0 Or MininvNumb = .Range("N6").value Then
-'            MsgBox "You are at the first invoice"
-'            Exit Sub
-'        End If
-'        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
-'        Invoice_Load
-'    End With
-'
-'    Call Log_Record("modFAC_Finale:Prev_Invoice", startTime)
-'
-'End Sub
-
-'Sub Next_Invoice() 'TO-DO-RMV 2023-12-17
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:Next_Invoice", 0)
-'
-'    With wshFAC_Brouillon
-'        Dim MaxinvNumb As Long
-'        On Error Resume Next
-'        MaxinvNumb = Application.WorksheetFunction.Max(wshFAC_Entête.Range("Inv_ID"))
-'        On Error GoTo 0
-'        If MaxinvNumb = 0 Then
-'            MsgBox "Please create and save an Invoice first"
-'            Exit Sub
-'        End If
-'        invNumb = .Range("N6").value
-'        If invNumb = 0 Or .Range("B20").value = Empty Then 'On New Invoice
-'            invRow = wshFAC_Entête.Range("A4").value  'On Empty Invoice Go to First one created
-'        Else 'On Existing Inv. find Previous one
-'            invRow = wshFAC_Entête.Range("Inv_ID").Find(invNumb, , xlValues, xlWhole).Row + 1
-'        End If
-'        If .Range("N6").value >= MaxinvNumb Then
-'            MsgBox "You are at the last invoice"
-'            Exit Sub
-'        End If
-'        .Range("N3").value = wshFAC_Entête.Range("A" & invRow).value 'Place Inv. ID inside cell
-'        Invoice_Load
-'    End With
-'
-'    Call Log_Record("modFAC_Finale:Next_Invoice", startTime)
-'
-'End Sub
 
 Sub FAC_Finale_Cacher_Heures()
 
@@ -1799,7 +1444,7 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
         rngFeesSummary.ClearContents
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set rngFeesSummary = Nothing
     
 End Sub
@@ -1870,7 +1515,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set dictTaux = Nothing
     Set rngFeesSummary = Nothing
     Set t = Nothing
@@ -1900,7 +1545,7 @@ Sub FAC_Finale_Enable_Save_Button()
     
     flagEtapeFacture = 3
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set shp = Nothing
     
 End Sub
@@ -1910,7 +1555,7 @@ Sub FAC_Finale_Disable_Save_Button()
     Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set shp = Nothing
     
 End Sub

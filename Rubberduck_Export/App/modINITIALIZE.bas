@@ -118,7 +118,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     ws.Range("B1").value = 1
     Application.EnableEvents = True
     
-    'Clean up
+    'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
     

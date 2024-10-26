@@ -17,7 +17,7 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
         End Select
     Next cell
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     
 End Sub
@@ -119,7 +119,7 @@ End Sub
 '            vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
 '            vbExclamation
 '
-'    'Clean up
+'    'Libérer la mémoire
 '    Set wsSrc = Nothing
 '    Set wsTgt = Nothing
 '
@@ -195,7 +195,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.name = wsName
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
     Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
@@ -238,7 +238,7 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
         MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set formulaCells = Nothing
     Set ws = Nothing
@@ -394,8 +394,19 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call check_FAC_Comptes_Clients(r, readRows)
     wshMenu.Range("H29").value = ""
     
-    'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
+    'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     wshMenu.Range("H29").value = "Vérification des entêtes de projets de factures"
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
+    r = r + 1
+    
+    Call check_FAC_Projets_Entête(r, readRows)
+    wshMenu.Range("H29").value = ""
+    
+    'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
+    wshMenu.Range("H29").value = "Vérification des détails de projets de factures"
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     
     Call FAC_Projets_Détails_Import_All
@@ -405,17 +416,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Projets_Détails(r, readRows)
-    wshMenu.Range("H29").value = ""
-    
-    'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
-    wshMenu.Range("H29").value = "Vérification des détails de projets de factures"
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
-    r = r + 1
-    
-    Call check_FAC_Projets_Entête(r, readRows)
     wshMenu.Range("H29").value = ""
     
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
@@ -475,7 +475,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Application.ScreenUpdating = True
     
-    'Clean up
+    'Libérer la mémoire
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
@@ -557,7 +557,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -638,7 +638,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Clean up memory - 2024-07-04 @ 12:37
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -755,7 +755,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + lastUsedRowDetails - 1
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rngEntete = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
@@ -858,7 +858,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rngClients = Nothing
     Set ws = Nothing
     Set wsClients = Nothing
@@ -953,7 +953,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - 2
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
@@ -1118,7 +1118,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -1270,117 +1270,13 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - headerRow
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
     Call Log_Record("modAppli:check_FAC_Comptes_Clients", startTime)
-
-End Sub
-
-Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Détails", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'wshFAC_Projets_Détails
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
-    Dim headerRow As Long: headerRow = 1
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-    If lastUsedRow <= headerRow Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
-        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
-    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
-    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
-    r = r + 1
-    
-    'Transfer data from Worksheet into an Array (arr)
-    Dim numRows As Long
-    numRows = ws.Range("A1").CurrentRegion.rows.count - 1 'Remove header
-    If numRows < 1 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-    Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
-    
-    'Array pointer
-    Dim Row As Long: Row = 1
-    Dim currentRow As Long
-        
-    Dim i As Long
-    Dim projetID As Long, oldProjetID As Long
-    Dim codeClient As String
-    Dim lookUpValue As Long, result As Variant
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        projetID = CLng(arr(i, 1))
-        lookUpValue = projetID
-        If projetID <> oldProjetID Then
-            If projetID = 4 Then Stop
-            result = Application.WorksheetFunction.XLookup(lookUpValue, _
-                                                           rngMaster, _
-                                                           rngMaster, _
-                                                           "Not Found", _
-                                                           0, _
-                                                           1)
-            oldProjetID = projetID
-        End If
-        If result = "Not Found" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
-            r = r + 1
-        End If
-        'Client valide ?
-        codeClient = Trim(arr(i, 3))
-        If Fn_Validate_Client_Number(codeClient) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
-            r = r + 1
-        End If
-        If IsNumeric(arr(i, 4)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
-            r = r + 1
-        End If
-        If IsNumeric(arr(i, 5)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
-            r = r + 1
-        End If
-        If IsNumeric(arr(i, 8)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
-            r = r + 1
-        End If
-    Next i
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
-    r = r + 2
-    
-    'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - headerRow
-    
-Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
-    Set rngMaster = Nothing
-    Set ws = Nothing
-    Set wsMaster = Nothing
-    Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli:check_FAC_Projets_Détails", startTime)
 
 End Sub
 
@@ -1513,13 +1409,116 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
     Call Log_Record("modAppli:check_FAC_Projets_Entête", startTime)
+
+End Sub
+
+Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Détails", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'wshFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    Dim headerRow As Long: headerRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    If lastUsedRow <= headerRow Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow - headerRow, "###,##0") & _
+        " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
+    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
+    r = r + 1
+    
+    'Transfer data from Worksheet into an Array (arr)
+    Dim numRows As Long
+    numRows = ws.Range("A1").CurrentRegion.rows.count - 1 'Remove header
+    If numRows < 1 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    Dim arr As Variant
+    arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
+    
+    'Array pointer
+    Dim Row As Long: Row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim projetID As Long, oldProjetID As Long
+    Dim codeClient As String
+    Dim lookUpValue As Long, result As Variant
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        projetID = CLng(arr(i, 1))
+        lookUpValue = projetID
+        If projetID <> oldProjetID Then
+            result = Application.WorksheetFunction.XLookup(lookUpValue, _
+                                                           rngMaster, _
+                                                           rngMaster, _
+                                                           "Not Found", _
+                                                           0, _
+                                                           1)
+            oldProjetID = projetID
+        End If
+        If result = "Not Found" Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+            r = r + 1
+        End If
+        'Client valide ?
+        codeClient = Trim(arr(i, 3))
+        If Fn_Validate_Client_Number(codeClient) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 4)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 5)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+            r = r + 1
+        End If
+        If IsNumeric(arr(i, 8)) = False Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+            r = r + 1
+        End If
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1) - headerRow
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set rngMaster = Nothing
+    Set ws = Nothing
+    Set wsMaster = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:check_FAC_Projets_Détails", startTime)
 
 End Sub
 
@@ -1700,7 +1699,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
 Clean_Exit:
     Application.ScreenUpdating = True
     
-    'Clean up
+    'Libérer la mémoire
     Set ligne = Nothing
     Set planComptable = Nothing
     Set v = Nothing
@@ -1948,7 +1947,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
 
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -2052,7 +2051,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
 Clean_Exit:
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
@@ -2549,7 +2548,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
 
-    'Clean up memory - 2024-09-05 @ 05:44
+    'Libérer la mémoire
     Set dictDateCharge = Nothing
     Set dictTimeStamp = Nothing
     Set dict_TEC_ID = Nothing
@@ -2576,7 +2575,7 @@ Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
         End If
     End With
     
-    'Clean up
+    'Libérer la mémoire
     Set SharedFolder = Nothing
     
 End Sub
@@ -2593,7 +2592,7 @@ Sub ADMIN_Invoices_Excel_Folder_Selection() '2024-08-04 @ 07:30
         End If
     End With
     
-    'Clean up
+    'Libérer la mémoire
     Set SharedFolder = Nothing
     
 End Sub
@@ -2623,7 +2622,7 @@ Sub Make_It_As_Header(r As Range)
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets(wsName)
     ws.columns.AutoFit
     
-    'Clean up
+    'Libérer la mémoire
     Set r = Nothing
     Set ws = Nothing
 
@@ -2649,7 +2648,7 @@ Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
         End If
     End With
     
-    'Clean up
+    'Libérer la mémoire
     Set PDFFolder = Nothing
 
 End Sub
@@ -2680,7 +2679,7 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
         End If
     Next i
     
-    'Clean up
+    'Libérer la mémoire
     Set dataRange = Nothing
     Set ws = Nothing
     
@@ -2896,7 +2895,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 
     End Select
 
-    'Clean up
+    'Libérer la mémoire
     Set usedRange = Nothing
 
 End Sub
@@ -3031,7 +3030,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         MsgBox "Aucune différence dans les colonnes."
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set col1 = Nothing
     Set col2 = Nothing
     Set rngArea = Nothing
@@ -3181,7 +3180,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         MsgBox "Aucune différence dans les lignes."
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set rngArea = Nothing
     Set rngToPrint = Nothing
     Set rowDev = Nothing
@@ -3357,7 +3356,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
     Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
     
-    'Clean up
+    'Libérer la mémoire
     Set rngArea = Nothing
     Set rngClientsMF = Nothing
     Set wsOutput = Nothing
@@ -3447,7 +3446,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Fermer le fichier
     Close FileNum
     
-    'Clean up
+    'Libérer la mémoire
     Set fd = Nothing
     
     MsgBox "Le fichier a été importé avec succès.", vbInformation
@@ -3545,7 +3544,7 @@ Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
         
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set col = Nothing
     Set colonnesANettoyer = Nothing
@@ -3560,7 +3559,7 @@ End Sub
 
 Sub Search_Unclean_Set()
 
-    Dim ws As Worksheet: Set ws = Feuil4
+    Dim ws As Worksheet: ' Set ws = Feuil4
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).Row
@@ -3572,7 +3571,7 @@ Sub Search_Unclean_Set()
     Dim saveModule As String
     Dim saveLineNo As String
     Dim saveProcedure As String
-    Dim wsOutput As Worksheet: Set wsOutput = Feuil3
+    Dim wsOutput As Worksheet: ' Set wsOutput = Feuil3
     
     Dim i As Long
     Dim j As Long

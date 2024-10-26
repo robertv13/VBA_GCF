@@ -174,7 +174,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         .value = Format$(total(4), "#,##0.00")
     End With
         
-    'Clean up
+    'Libérer la mémoire
     Set dictHours = Nothing
     Set prof = Nothing
     Set ws = Nothing

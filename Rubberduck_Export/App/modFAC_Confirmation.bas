@@ -105,7 +105,7 @@ Sub Insert_PDF_WIP_Icons()
         .OnAction = "FAC_Confirmation_Report_Detailed_TEC"
     End With
     
-    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cell = Nothing
     Set pic = Nothing
     Set ws = Nothing
@@ -128,7 +128,7 @@ Sub FAC_Confirmation_Display_PDF_Invoice()
         MsgBox "Je ne retrouve pas cette facture", vbExclamation
     End If
     
-    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -176,7 +176,7 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     'Make OK button visible
     ws.Shapes("btnFAC_Confirmation_OK").Visible = True
     
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
     Application.EnableEvents = True
@@ -204,7 +204,7 @@ Sub FAC_Confirmation_Report_Detailed_TEC()
 Nothing_to_Print:
     MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
 
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -346,7 +346,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     'On se déplace à la feuille contenant le rapport
     wsRapport.Activate
     
-    'Clean up
+    'Libérer la mémoire
     Set rngResult = Nothing
     Set wsRapport = Nothing
     Set wsSource = Nothing
@@ -534,7 +534,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     End If
     Application.EnableEvents = True
     
-    'Clean up
+    'Libérer la mémoire
     Set dictHours = Nothing
     Set prof = Nothing
     Set wsTEC = Nothing
@@ -577,7 +577,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
         Application.EnableEvents = True
     End If
     
-    'Clean up - 2024-07-25 @ 18:06
+    'Libérer la mémoire
     Set cell = Nothing
     Set wsFees = Nothing
     
@@ -610,7 +610,7 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     Call Show_Unconfirmed_Invoice
     
-    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set pic = Nothing
     Set ws = Nothing
 
@@ -630,7 +630,7 @@ Sub FAC_Confirmation_OK_Button_Click()
     
     ws.Range("F5").Select
     
-    'Clean up - 2024-07-26 @ 00:55
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -669,7 +669,7 @@ Clean_Exit:
 
     wshFAC_Confirmation.Range("F5").Select
     
-    'Clean up - 2024-07-26 @ 00:55
+    'Libérer la mémoire
     Set ws = Nothing
     
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Button_Click", startTime)
@@ -706,7 +706,7 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
         Application.EnableEvents = True
     End If
 
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set rngToSearch = Nothing
     Set wsGL = Nothing
@@ -775,7 +775,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -805,7 +805,7 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set foundRange = Nothing
     Set lookupRange = Nothing
     Set ws = Nothing
@@ -924,7 +924,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
     End If
     
-    'Clean up
+    'Libérer la mémoire
     On Error Resume Next
     Set foundRange = Nothing
     Set lookupRange = Nothing

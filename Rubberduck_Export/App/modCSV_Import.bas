@@ -24,7 +24,7 @@ Sub Main()
     'Fix columns width
     Call Set_Column_Width(ws)
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub

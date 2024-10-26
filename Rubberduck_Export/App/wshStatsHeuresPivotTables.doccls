@@ -69,7 +69,7 @@ Private Sub Worksheet_Activate()
     
     fromMenu = False
 
-    'Clean up
+    'Libérer la mémoire
     Set plageValide = Nothing
     Set ws = Nothing
     

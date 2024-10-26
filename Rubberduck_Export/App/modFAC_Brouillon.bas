@@ -166,7 +166,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    'Clean up
+    'Libérer la mémoire
     Set rngToSearch = Nothing
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice", startTime)
@@ -247,7 +247,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
 Clean_Exit:
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rng = Nothing
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").value & "'", startTime)
@@ -310,7 +310,7 @@ Sub FAC_Brouillon_Date_Change(D As String)
     
     Application.EnableEvents = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set rng = Nothing
     
 End Sub
@@ -445,13 +445,15 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     'Step 5 - Close and release the Excel file
     wbSource.Close SaveChanges:=False
     
-    'Clean up - 2024-07-27 @ 07:39
-'    Set rngDestination = Nothing
+    'Libérer la mémoire
+    On Error Resume Next
+    Set rngDestination = Nothing
     Set rngSource = Nothing
-'    Set wbDestination = Nothing
+    Set wbDestination = Nothing
     Set wbSource = Nothing
-'    Set wsDestination = Nothing
+    Set wsDestination = Nothing
     Set wsSource = Nothing
+    On Error GoTo 0
     
 End Sub
 
@@ -605,7 +607,7 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set sRng = Nothing
     Set dRng = Nothing
     Set cRng = Nothing
@@ -693,7 +695,7 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
      
 No_Sort_Required:
     
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -742,11 +744,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -772,7 +774,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
     Application.ScreenUpdating = True
     
-    'Clean up
+    'Libérer la mémoire
     Set collFraisDivers = Nothing
     Set item = Nothing
     Set ufFraisDivers = Nothing
@@ -936,7 +938,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
                 "Le date limite du projet de facture < Date de la facture"
     End If
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cbx = Nothing
     Set cell = Nothing
     Set chkBoxRange = Nothing
@@ -983,7 +985,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
 
     Application.EnableEvents = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set cbx = Nothing
     Set ws = Nothing
     

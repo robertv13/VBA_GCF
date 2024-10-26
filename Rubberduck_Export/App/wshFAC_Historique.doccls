@@ -42,7 +42,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    'Clean up memory
+    'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -103,7 +103,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Save the current cell Address
     previousCellAddress = Target.Address
 
-    'Clean up memory - 2024-07-01 @ 09:34 memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
 '    Set cell = Nothing
     Set ws = Nothing
 
@@ -219,7 +219,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Application.EnableEvents = True
     
-    'Clean up
+    'Libérer la mémoire
     Set shp = Nothing
 
 End Sub

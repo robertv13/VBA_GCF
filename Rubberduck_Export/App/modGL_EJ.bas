@@ -212,7 +212,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -322,7 +322,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     
     Application.ScreenUpdating = True
 
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     

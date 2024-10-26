@@ -200,7 +200,7 @@ Sub Handle_Rubberduck_Reference()
         On Error GoTo 0
     End If
 
-    'Clean up
+    'Libérer la mémoire
     Set ref = Nothing
     
 End Sub
@@ -219,7 +219,7 @@ Sub UpdatePivotTables()
         On Error GoTo 0
     Next pt
 
-    'Clean up
+    'Libérer la mémoire
     Set pt = Nothing
     Set ws = Nothing
     

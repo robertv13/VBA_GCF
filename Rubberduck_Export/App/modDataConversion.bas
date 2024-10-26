@@ -44,7 +44,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
     'Close the source workbook without saving
     sourceWorkbook.Close SaveChanges:=False
     
-    'Clean up
+    'Libérer la mémoire
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
@@ -98,7 +98,7 @@ Sub Clients_Ajuste_Nom()
     
     wb.Save
     
-    'Clean up
+    'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
     
@@ -146,7 +146,7 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     
     wb.Save
     
-    'Clean up
+    'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
     
@@ -251,7 +251,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
         MsgBox "Tous les TEC ont été importés, pour un total de " & totHres & " heures"
     End If
     
-    'Clean up
+    'Libérer la mémoire
     rst.Close
     cnn.Close
     Set rst = Nothing
@@ -323,7 +323,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     'Close the source workbook without saving
     sourceWorkbook.Close SaveChanges:=False
     
-    'Clean up
+    'Libérer la mémoire
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
@@ -417,7 +417,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
                 vbNewLine & vbNewLine & "un total crédit de " & totalCT
     End If
     
-    'Clean up
+    'Libérer la mémoire
     rst.Close
     cnn.Close
     Set rst = Nothing
@@ -542,7 +542,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
         MsgBox "Tous les CAR ont été importés, pour un total de " & Format$(totCAR, "#,##0.00$")
     End If
     
-    'Clean up
+    'Libérer la mémoire
     rst.Close
     cnn.Close
     Set rng = Nothing
@@ -664,7 +664,7 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
     wbWas.Close SaveChanges:=False
     wbNow.Close SaveChanges:=False
     
-    'Clean up
+    'Libérer la mémoire
     Set cellWas = Nothing
     Set cellNow = Nothing
     Set foundRow = Nothing
@@ -729,7 +729,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     sourceWorkbook.Save
     sourceWorkbook.Close
     
-    'Clean up
+    'Libérer la mémoire
     Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
@@ -791,7 +791,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     sourceWorkbook.Save
     sourceWorkbook.Close
     
-    'Clean up
+    'Libérer la mémoire
     Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
@@ -832,7 +832,7 @@ Sub Check_Client_Name() '2024-08-10 @ 10:13
     sourceWorkbook.Save
     sourceWorkbook.Close
     
-    'Clean up
+    'Libérer la mémoire
     Set sourceSheet = Nothing
     Set sourceWorkbook = Nothing
     
@@ -896,7 +896,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     'Close the source workbook
     sourceWorkbook.Close
     
-    'Clean up
+    'Libérer la mémoire
     Set sourceSheet = Nothing
     Set sourceWorkbook = Nothing
     
@@ -988,7 +988,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     wbSource.Close SaveChanges:=True
     wbMF.Close SaveChanges:=False
 
-    'Clean up
+    'Libérer la mémoire
     Set dictClients = Nothing
     Set rngArea = Nothing
     Set rngToPrint = Nothing
@@ -1105,7 +1105,7 @@ Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     wbSource.Close SaveChanges:=True
     wbMF.Close SaveChanges:=False
 
-    'Clean up
+    'Libérer la mémoire
     Set dictClients = Nothing
     Set rngArea = Nothing
     Set rngToPrint = Nothing
@@ -1175,7 +1175,7 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'Clean up
+    'Libérer la mémoire
     Set wb1 = Nothing
     Set wb2 = Nothing
     Set ws1 = Nothing
@@ -1296,7 +1296,7 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'Clean up
+    'Libérer la mémoire
     Set foundCells = Nothing
     Set rngTarget = Nothing
     Set wb1 = Nothing

@@ -546,7 +546,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     Application.ScreenUpdating = True
 
-    'Clean up
+    'Libérer la mémoire
     Set foundRange = Nothing
     Set lookupRange = Nothing
     Set ws = Nothing
@@ -633,7 +633,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -725,7 +725,7 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     
     Application.EnableEvents = True
 
-    'Clean up memory - 2024-08-21 @ 16:42
+    'Libérer la mémoire
     Set cbx = Nothing
     Set cell = Nothing
     Set chkBoxRange = Nothing
@@ -753,7 +753,7 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    'Clean up memory
+    'Libérer la mémoire
     Set cbx = Nothing
     
     Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", startTime)
@@ -835,7 +835,7 @@ Sub chkBox_Apply_Click()
         Range("K" & linkedCell.Row).value = 0
     End If
 
-    'Clean up - 2024-08-21 @ 20:16
+    'Libérer la mémoire
     Set chkBox = Nothing
     Set linkedCell = Nothing
     

@@ -64,7 +64,7 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         MsgBox "Aucun élément sélectionné."
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set criteriaDate1 = Nothing
     Set criteriaDate2 = Nothing
     
@@ -190,7 +190,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     'On se positionne à la fin de la liste (évite de monter/descendre)
     lstSemaines.TopIndex = lstSemaines.ListCount - 1
 
-    'Clean up
+    'Libérer la mémoire
     Set lstSemaines = Nothing
     
 End Sub

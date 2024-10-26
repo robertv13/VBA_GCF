@@ -98,7 +98,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
         
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     
@@ -154,7 +154,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.StatusBar = ""
 
-    'Clean up
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -206,7 +206,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -258,7 +258,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -310,7 +310,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -362,7 +362,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -414,7 +414,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -465,7 +465,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -517,7 +517,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -569,7 +569,7 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -642,7 +642,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-20 @ 13:30
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -712,7 +712,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -779,7 +779,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
 
     Application.StatusBar = ""
 
-    'Clean up memory - 2024-07-03 @ 15:45
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -839,7 +839,7 @@ Clean_Exit:
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -896,7 +896,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -948,7 +948,7 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     Application.ScreenUpdating = True
     Application.StatusBar = ""
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing

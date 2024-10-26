@@ -41,7 +41,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cellRange = Nothing
     Set intersectRange = Nothing
     Set ws = Nothing

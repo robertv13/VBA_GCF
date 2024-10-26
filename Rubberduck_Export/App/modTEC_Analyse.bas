@@ -290,7 +290,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Obtenir les requêtes de factures existantes", -1)
     
-    'Clean up the summary aera of the worksheet
+    'Clean up the summary area of the worksheet
     Call Clean_Up_Summary_Area(wsDest)
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
     
@@ -327,7 +327,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
 '    Application.StatusBar = ""
 
-    'Clean up
+    'Libérer la mémoire
     Set dictClients = Nothing
     Set progressBarBg = Nothing
     Set progressBarFill = Nothing
@@ -406,7 +406,7 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
         End With
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set totalRange = Nothing
     Set ws = Nothing
@@ -536,7 +536,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Application.EnableEvents = True
 
-    'Clean up
+    'Libérer la mémoire
     Set dictHours = Nothing
     Set prof = Nothing
     Set rngSort = Nothing
@@ -581,7 +581,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
         End If
     Next i
 
-    'Clean up
+    'Libérer la mémoire
     Set rngTotal = Nothing
     Set wsActive = Nothing
     Set wsSource = Nothing
@@ -656,7 +656,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -774,7 +774,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     
     Application.ScreenUpdating = True
     
-    'Clean up memory - 2024-07-01 @ 09:34
+    'Libérer la mémoire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -862,7 +862,7 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
         End With
     End With
     
-    'Clean up
+    'Libérer la mémoire
     Set checkBox = Nothing
     Set summaryRange = Nothing
     Set ws = Nothing
@@ -882,7 +882,7 @@ Sub Delete_CheckBox()
         End If
     Next Sh
     
-    'Clean up
+    'Libérer la mémoire
     Set Sh = Nothing
     Set ws = Nothing
     
@@ -903,7 +903,7 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     r = r - 1
     ws.rows(saveR & ":" & r).EntireRow.Hidden = True
     
-    'Clean up
+    'Libérer la mémoire
     Set ws = Nothing
     
 End Sub
@@ -924,7 +924,7 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
         End If
     Next Sh
 
-    'Clean up
+    'Libérer la mémoire
     Set Sh = Nothing
     Set ws = Nothing
     

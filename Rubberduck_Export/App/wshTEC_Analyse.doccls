@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     ws.Visible = xlSheetVisible
     
-    'Clean up memory - 2024-07-11 @ 10:14
+    'Libérer la mémoire
     Set ws = Nothing
     
     Call Log_Record("wshTEC_Analyse:Worksheet_Activate", startTime)
@@ -110,7 +110,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         End If
     End If
     
-    'Clean up
+    'Libérer la mémoire
     Set cell = Nothing
     Set rowRange = Nothing
     
@@ -266,7 +266,7 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
     
     Application.EnableEvents = True
     
-    'Clean up
+    'Libérer la mémoire
     Set chkBox = Nothing
     Set rngSummary = Nothing
     Set ws = Nothing
@@ -290,7 +290,7 @@ Private Sub Get_CheckBox_Position(cb As OLEObject)
     ' Display the address of the cell
     MsgBox "The CheckBox is located at cell: " & checkBoxCell.Address
     
-    'Clean up
+    'Libérer la mémoire
     Set checkBox = Nothing
     Set checkBoxCell = Nothing
     Set ws = Nothing
@@ -314,7 +314,7 @@ Sub Delete_CheckBox()
         On Error GoTo 0
     Next i
     
-    'Clean up
+    'Libérer la mémoire
     Set checkBox = Nothing
     Set ws = Nothing
     

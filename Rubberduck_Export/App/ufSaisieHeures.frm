@@ -116,7 +116,7 @@ Private Sub UserForm_Terminate()
     
 '    ThisWorkbook.Save
     
-    'Clean up
+    'Libérer la mémoire
     Set oEventHandler = Nothing
     
     ufSaisieHeures.Hide
@@ -631,7 +631,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     rmv_state = rmv_modeModification
     
-    'Clean up memory - 2024-07-31 2 08:34
+    'Libérer la mémoire
     Set lookupRange = Nothing
     
 End Sub
