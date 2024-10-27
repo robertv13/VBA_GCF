@@ -101,7 +101,7 @@ no_change:
 
     End With
     
-    Call CM_Log_Record("modMain:CM_Reset_UserForm", CStr(iRow), startTime)
+    Call CM_Log_Record("modMain:CM_Reset_UserForm", " Row=" & CStr(iRow), startTime)
 
 End Sub
 
@@ -454,7 +454,7 @@ Sub CM_Build_Données_Recherche()
     wshDonnées.AutoFilterMode = False
     Application.ScreenUpdating = True
 
-    Call CM_Log_Record("modMain:CM_Build_Données_Recherche", ufClientMF.cmbSearchColumn.Value & ":" & sValue & " " & searchRowsFound, startTime)
+    Call CM_Log_Record("modMain:CM_Build_Données_Recherche", ufClientMF.cmbSearchColumn.Value & "=" & sValue & " " & searchRowsFound, startTime)
 
 End Sub
 

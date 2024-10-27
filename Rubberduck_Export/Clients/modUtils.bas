@@ -6,7 +6,7 @@ Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (By
 Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
 
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyymmdd_hhmmss")
+    currentTime = Format$(Now, "yyyy-mm-dd_hh:mm:ss")
     
     'Determine the location of the Log file
     Dim rootPath As String
@@ -60,7 +60,7 @@ Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal sta
                         moduleName & "|" & _
                         procName & " (sortie)" & "|" & _
                         "Temps écoulé: " & Format(elapsedTime, "#0.0000") & " secondes" & "|" & _
-                        param1
+                        param1 & vbCrLf
     End If
     
     Close #fileNum
