@@ -24,7 +24,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         'Get the Client_ID
         wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
         
-        Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne (0024) : ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
+        Call Log_Record("     modTEC_Saisie:TEC_Ajoute_Ligne (0024) : ufSaisieHeures.txtDate.Value = '" & ufSaisieHeures.txtDate.value & "' de type " & TypeName(ufSaisieHeures.txtDate.value), -1)
         Dim Y As Integer, m As Integer, D As Integer
         Dim avant As String, apres As String
         On Error Resume Next
@@ -393,7 +393,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
         If TECID = 0 Then 'Add a record
         
-            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = " & CStr(saveLogTEC_ID), -1) '2024-09-13 @ 08:35
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
@@ -415,7 +415,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             Dim nextID As Long
             nextID = lastRow + 1
             
-            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID a été assigné à " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le nouvel enregistrement, TECID a été assigné à " & CStr(nextID), -1) '2024-09-13 @ 08:35
 
             wshAdmin.Range("TEC_Current_ID").value = nextID
             saveLogTEC_ID = nextID
@@ -424,7 +424,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
             
-            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet", -1) '2024-09-13 @ 08:35
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet", -1) '2024-09-13 @ 08:35
 
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
@@ -449,7 +449,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("NoFacture").value = ""
             rs.update
             
-            Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté avec le TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté pour le TECID = " & CStr(nextID), -1) '2024-09-13 @ 08:35
             
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("ADD    " & saveLogTEC_ID, ufSaisieHeures.cmbProfessionnel.value & " | " & _
@@ -467,7 +467,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Open the recordset for the specified ID
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
             If Not rs.EOF Then
-                Call Log_Record("modTEC_Saisie" & "TEC_Record_Add_Or_Update_To_DB" & " - Update an existing record - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
+                Call Log_Record("      modTEC_Saisie" & "TEC_Record_Add_Or_Update_To_DB" & " - Update an existing record - Create a new RecordSet " & CStr(nextID))  '2024-09-13 @ 08:35
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
                 rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
