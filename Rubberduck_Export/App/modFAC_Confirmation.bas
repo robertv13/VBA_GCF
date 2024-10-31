@@ -42,14 +42,8 @@ Sub Get_Invoice_Data(noFact As String)
             Dim FeesSummary() As Variant
             ReDim FeesSummary(1 To 5, 1 To 3)
             Call Get_Fees_Summary_For_That_Invoice(resultArr, FeesSummary)
-            
-            
         End If
-        
-'        Call FAC_Confirmation_Get_GL_Posting(noFact)
-'
         oWorkSheet.Activate
-        
     Else
         MsgBox "La facture n'existe pas"
         GoTo Clean_Exit
@@ -425,6 +419,51 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     
 End Sub
 
+Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    With ws
+        'Setup the destination Range and clear it before applying AdvancedFilter
+        Dim lastUsedRow As Long
+        Dim destinationRng As Range: Set destinationRng = .Range("AY2:BP2")
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
+        If lastUsedRow > 2 Then
+            ws.Range("AY3:BP" & lastUsedRow).ClearContents
+        End If
+        
+        'Setup source data including headers
+        lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+        If lastUsedRow < 3 Then Exit Sub 'No data to filter
+        Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
+        
+        'Define the criteria range including headers
+        Dim criteriaRng As Range: Set criteriaRng = ws.Range("AW2:AW3")
+    
+        ' Apply the advanced filter
+        sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+        
+        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).Row
+        If lastUsedRow < 4 Then Exit Sub
+        With ws.Sort 'Sort - Inv_No
+            .SortFields.Clear
+            .SortFields.Add key:=ws.Range("AY3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Invoice Number
+            .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+     End With
+
+    'Libérer la mémoire
+    Set criteriaRng = Nothing
+    Set destinationRng = Nothing
+    Set sourceRng = Nothing
+    Set ws = Nothing
+
+End Sub
+
 Sub Show_Unconfirmed_Invoice()
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -515,6 +554,60 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     Application.EnableEvents = False
     If dictHours.count <> 0 Then
         For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
+            Dim strProf As String
+            strProf = prof
+            profID = Fn_GetID_From_Initials(strProf)
+            hres = dictHours(prof)
+            Dim tauxHoraire As Currency
+            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
+            wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
+            wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
+                    CDbl(Format$(hres, "0.00"))
+            wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
+                    CDbl(Format$(tauxHoraire, "# ##0.00 $"))
+            rowInWorksheet = rowInWorksheet + 1
+    '        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
+    '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
+    '        rowSelected = rowSelected + 1
+        Next prof
+    End If
+    Application.EnableEvents = True
+    
+    'Libérer la mémoire
+    Set dictHours = Nothing
+    Set prof = Nothing
+    Set wsTEC = Nothing
+    
+End Sub
+
+Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
+
+    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    
+    'Setup a Dictionary to summarize the hours by Professionnal
+    Dim dictHours As Object: Set dictHours = CreateObject("Scripting.Dictionary")
+
+    Dim pro As String
+    Dim hres As Double
+    Dim i As Long
+    For i = 1 To UBound(arr, 1)
+        pro = wsTEC.Cells(arr(i), 3).value
+        hres = wsTEC.Cells(arr(i), 8).value
+        If hres <> 0 Then
+            If dictHours.Exists(pro) Then
+                dictHours(pro) = dictHours(pro) + hres
+            Else
+                dictHours.Add pro, hres
+            End If
+        End If
+    Next i
+    
+    Dim profID As Long
+    Dim rowInWorksheet As Long: rowInWorksheet = 13
+    Dim prof As Variant
+    Application.EnableEvents = False
+    If dictHours.count <> 0 Then
+        For Each prof In dictHours
             Dim strProf As String
             strProf = prof
             profID = Fn_GetID_From_Initials(strProf)

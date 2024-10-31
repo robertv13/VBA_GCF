@@ -141,10 +141,12 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Copy to wshBD_Clients worksheet
     wshBD_Clients.Range("A2").CopyFromRecordset recSet
+    Call Log_Record("     modImport:Client_List_Import_All - Le .CopyFromRecordSet est complétée", -1)
     
     'Setup the format of the worksheet - 2024-07-20 @ 18:31
     Dim rng As Range: Set rng = wshBD_Clients.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshBD_Clients, rng, 1)
+    Call Log_Record("     modImport:Client_List_Import_All - La mise en forme a été appliquée", -1)
     
     'Close resource
     recSet.Close
@@ -509,10 +511,12 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Copy to wshFAC_Entête workbook
     wshFAC_Entête.Range("A3").CopyFromRecordset recSet
+    Call Log_Record("     modImport:FAC_Entête_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshFAC_Entête, rng, 2)
+    Call Log_Record("     modImport:FAC_Entête_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""
@@ -615,21 +619,10 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     'Copy to wshFAC_Projets_Détails workbook all rows
     ws.Range("A2").CopyFromRecordset recSet
-    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La copie à la feuille locale est complétée", -1)
+    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
     lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
-    
-    'Delete the rows that column (isDétruite) is set to TRUE in FAC_Projets_Entête
-'    Dim i As Long - 2024-10-25 @ 13:57
-'    For i = lastRow To 2 Step -1
-'        If UCase(Trim(ws.Cells(i, 9).value)) = "VRAI" Or _
-'            Trim(ws.Cells(i, 9).value) = "" Or _
-'            ws.Cells(i, 9).value = -1 Then
-'            ws.rows(i).Delete
-'        End If
-'    Next i
-'    Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La correction (lecture inversée) est terminée", -1)
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
@@ -689,6 +682,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Copy to wshFAC_Projets_Entête workbook
     ws.Range("A2").CopyFromRecordset recSet
+    Call Log_Record("     modImport:FAC_Projets_Entête_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
     lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
@@ -707,6 +701,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     If lastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(ws, rng, 1)
+        Call Log_Record("     modImport:FAC_Projets_Entête_Import_All - La mise en forme a été appliquée", -1)
     End If
     
     Application.ScreenUpdating = True
@@ -940,10 +935,12 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     'Copy to wshTEC_Local workbook
     wshTEC_Local.Range("A3").CopyFromRecordset recSet
+    Call Log_Record("     modImport:TEC_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshTEC_Local.Range("A1").CurrentRegion
     Call Apply_Worksheet_Format(wshTEC_Local, rng, 2)
+    Call Log_Record("     modImport:TEC_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
     Application.StatusBar = ""

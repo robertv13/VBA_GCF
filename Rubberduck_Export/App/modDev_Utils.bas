@@ -26,7 +26,7 @@ End Sub
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
-    Dim Temp As Variant
+    Dim temp As Variant
     Dim sorted As Boolean
     
     numRows = UBound(arr, 1)
@@ -41,9 +41,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
             If arr(j, 1) > arr(j + 1, 1) Then
                 'Swap rows
                 For c = 1 To numCols
-                    Temp = arr(j, c)
+                    temp = arr(j, c)
                     arr(j, c) = arr(j + 1, c)
-                    arr(j + 1, c) = Temp
+                    arr(j + 1, c) = temp
                 Next c
                 sorted = False
             ElseIf arr(j, 1) = arr(j + 1, 1) Then
@@ -51,9 +51,9 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
                 If arr(j, 2) > arr(j + 1, 2) Then
                     'Swap rows
                     For c = 1 To numCols
-                        Temp = arr(j, c)
+                        temp = arr(j, c)
                         arr(j, c) = arr(j + 1, c)
-                        arr(j + 1, c) = Temp
+                        arr(j + 1, c) = temp
                     Next c
                     sorted = False
                 End If
@@ -96,15 +96,15 @@ End Sub
 
 Sub Bubble_Sort_1D_Array(arr() As String)
     Dim i As Long, j As Long
-    Dim Temp As String
+    Dim temp As String
     
     For i = LBound(arr) To UBound(arr) - 1
         For j = i + 1 To UBound(arr)
             If arr(i) > arr(j) Then
                 'Swap elements if they are in the wrong order
-                Temp = arr(i)
+                temp = arr(i)
                 arr(i) = arr(j)
-                arr(j) = Temp
+                arr(j) = temp
             End If
         Next j
     Next i
@@ -115,13 +115,13 @@ Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
     'HOW TO USE: Call BubbleSort(MyArray())
     
     Dim i As Long, j As Long
-    Dim Temp As Variant
+    Dim temp As Variant
     For i = LBound(MyArray) To UBound(MyArray) - 1
         For j = i + 1 To UBound(MyArray)
             If MyArray(i) > MyArray(j) Then
-                Temp = MyArray(j)
+                temp = MyArray(j)
                 MyArray(j) = MyArray(i)
-                MyArray(i) = Temp
+                MyArray(i) = temp
             End If
         Next j
     Next i
@@ -1710,55 +1710,50 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 
     On Error GoTo Error_Handler
     
-    Dim ms As String
+    'TimeStamp avec centièmes de seconde
+    Dim TimeStamp As String
+    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
     logFile = wshAdmin.Range("F5").value & DATA_PATH & _
-        Application.PathSeparator & "LogMainApp.txt"
+                                    Application.PathSeparator & "LogMainApp.log"
     
     Dim FileNum As Integer
     FileNum = FreeFile
-    
-    'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les centièmes de secondes sous forme de texte
-    
-    'TimeStamp avec centièmes de seconde
-    Dim TimeStamp As String
-    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logFile For Append As #FileNum
     
     'On laisse une ligne blanche dans le fichier Log
     If Trim(procedureName) = "" Then
         Print #FileNum, ""
-        Close #FileNum
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
 '        startTime = Timer 'Start timing
-        Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
+        Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
                         procedureName & " | " & _
+                        " | " & _
                         LOCALE_SSHORTDATE
-        Close #FileNum
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
 '        startTime = Timer 'Start timing
-        Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
+        Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
                         procedureName & " | " & _
+                        " | " & _
                         LOCALE_SSHORTDATE
-        Close #FileNum
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #FileNum, Replace(TimeStamp, " ", "_") & " | " & _
+        Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.name & " | " & _
                         procedureName & " | " & _
-                        "Temps écoulé: " & Format(elapsedTime, "0.0000") & " secondes" & " | " & _
+                        Format(elapsedTime, "0.0000") & " sec." & " | " & _
                         LOCALE_SSHORTDATE & vbCrLf
-        Close #FileNum
     End If
+    
+    Close #FileNum
     
     Exit Sub
     
@@ -1793,6 +1788,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
 
     On Error GoTo Error_Handler
     
+    'Détermine si cette entrée sera ou non sauvegardée dans le log
     If InStr(oper, "ADD") = 0 And _
         InStr(oper, "UPDATE") = 0 And _
         InStr(oper, "DELETE") = 0 Then
@@ -1801,20 +1797,18 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
         End If
     End If
     
+    'TimeStamp avec les centièmes de secondes
     Dim ms As String
+    Dim TimeStamp As String
+    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
     
+    'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
     logSaisieHeuresFile = wshAdmin.Range("F5").value & DATA_PATH & _
-        Application.PathSeparator & "LogSaisieHeures.txt"
+                                Application.PathSeparator & "LogSaisieHeures.log"
     
     Dim FileNum As Integer
     FileNum = FreeFile
-    
-    'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
-    
-    Dim TimeStamp As String
-    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open logSaisieHeuresFile For Append As #FileNum
     
@@ -1824,6 +1818,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     Print #FileNum, TimeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
+                        ThisWorkbook.name & " | " & _
                         oper & " | " & _
                         txt & " | " & _
                         LOCALE_SSHORTDATE
@@ -1902,16 +1897,16 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     'Sort components (simple bubble sort)
     Dim i As Long, j As Long
     Dim intResult As Integer
-    Dim Temp As String
+    Dim temp As String
     For i = LBound(components) To UBound(components) - 1
         For j = i + 1 To UBound(components)
 '            Debug.Print components(i) & " vs. " & components(j)
             intResult = StrComp(components(i), components(j), vbTextCompare)
             If intResult = 1 Then
                 'Swap components
-                Temp = components(i)
+                temp = components(i)
                 components(i) = components(j)
-                components(j) = Temp
+                components(j) = temp
 '            Debug.Print components(i) & " < " & components(j)
             End If
         Next j

@@ -40,7 +40,8 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
     End With
     
     'Ensure all pending events are processed - 2024-07-21 @ 17:16
@@ -48,13 +49,12 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
     
-    wshFAC_Brouillon.Range("E3").value = "" '2024-09-02 @ 23:36
-    wshFAC_Brouillon.Range("O3").value = Now() '2024-09-05 @ 09:29
-    Debug.Print "Worksheet_Activate_55   "; "wshFAC_Brouillon.Range(""O3"").value   "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
-    wshFAC_Brouillon.Range("B27").value = False '2024-09-03 @ 06:33
+    Me.Range("O3").value = Now() '2024-09-05 @ 09:29
+    Me.Range("B27").value = False '2024-09-03 @ 06:33
 
+    Me.Range("E3").value = "" '2024-09-02 @ 23:36
     Me.Range("E3").Select 'The first input is the customer name
     
     Application.ScreenUpdating = True
@@ -77,6 +77,15 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.Color = BASIC_COLOR
     End If
     
+    'Masquer la forme (détail TEC) si elle est présente
+    On Error Resume Next
+    Dim shapeTextBox As Shape
+    Set shapeTextBox = Me.Shapes("shpTECInfo")
+    If Not shapeTextBox Is Nothing Then
+        shapeTextBox.Visible = msoFalse
+    End If
+    On Error GoTo 0
+    
     'Client has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -87,6 +96,32 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
 
+    'WIP description has been selected
+    If Not Intersect(Target, wshFAC_Brouillon.Range("F7:F999")) Is Nothing Then
+        'Ajouter la forme si elle n'existe pas encore -ET- que le texte est assez long...
+        If Len(Target.value) > 58 Then
+            If shapeTextBox Is Nothing Then
+                Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
+                                                        100, 100, 600, 100)
+                shapeTextBox.name = "shpTECInfo"
+            End If
+            
+            'Définir le texte d'information en fonction de la cellule sélectionnée
+            Dim infoText As String
+            infoText = Target.value
+    
+            'Mettre à jour et afficher la forme
+            With shapeTextBox
+                .TextFrame.Characters.Text = infoText
+                .Top = Target.Top + Target.Height
+                .Left = Target.Left
+                .Visible = msoTrue
+                .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
+                .TextFrame.Characters.Font.size = 10
+            End With
+        End If
+    End If
+    
     'Template has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
@@ -138,7 +173,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -147,7 +182,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 

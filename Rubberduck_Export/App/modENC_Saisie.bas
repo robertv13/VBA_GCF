@@ -40,8 +40,6 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
             .Range("U" & r).value = .Range("S" & r).value - .Range("T" & r).value
         Next r
         
-        wshENC_Saisie.Range("B4").value = True 'Set PaymentLoad to True
-
         'Bring the Result data into our List of Oustanding Invoices
         Dim i As Integer
         'Unlock the required area
@@ -71,8 +69,6 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
 '        wshENC_Saisie.Range("E13:I" & lastResultRow + 10).value = .Range("O3:S" & lastResultRow).value
 
     End With
-    
-    wshENC_Saisie.Range("B4").value = False 'Set PaymentLoad to False
     
     Call Log_Record("modFAC_Enc:Encaissement_Load_Open_Invoices", startTime)
 
@@ -163,117 +159,6 @@ Sub Encaissement_Add_New() '2024-08-21 @ 14:58
     
 End Sub
 
-'Sub Encaissement_Previous() '2024-02-14 @ 11:04
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Previous", 0)
-'
-'    Dim MinPayID As Long, PayID As Long
-'    With wshENC_Saisie
-'        On Error Resume Next
-'            MinPayID = Application.WorksheetFunction.Min(wshENC_Entête.Range("Pay_ID"))
-'        On Error GoTo 0
-'        If MinPayID = 0 Then
-'            MsgBox "Vous devez avoir au minimum 1 paiement d'enregistré", vbExclamation
-'            Exit Sub
-'        End If
-'        PayID = .Range("B3").value 'Payment ID
-'        If PayID = 0 Or .Range("B4").value = Empty Then 'Load Last Payment Created
-'            payRow = wshENC_Entête.Range("A99999").End(xlUp).Row 'Last Row
-'        Else
-'            payRow = .Range("B4").value - 1 'Pay Row
-'        End If
-'        If payRow = 3 Or MinPayID = .Range("B3").value Then 'First Payment
-'            MsgBox "Vous êtes au premier paiement", vbExclamation
-'            Exit Sub
-'        End If
-'        .Range("B3").value = wshENC_Entête.Range("A" & payRow).value 'Set Payment ID
-'        Call Encaissement_Load 'Load Payment
-'    End With
-'
-'    Call Log_Record("modFAC_Enc:Encaissement_Previous", startTime)
-'
-'End Sub
-'
-'Sub Encaissement_Next() '2024-02-14 @ 11:04
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Next", 0)
-'
-'    Application.EnableEvents = False
-'
-'    Dim MaxPayID As Long
-'    With wshENC_Saisie
-'        On Error Resume Next
-'            MaxPayID = Application.WorksheetFunction.Max(wshENC_Entête.Range("Pay_ID"))
-'        On Error GoTo 0
-'        If MaxPayID = 0 Then
-'            MsgBox "Vous devez avoir au minimum 1 paiement d'enregistré", vbExclamation
-'            Exit Sub
-'        End If
-'        Dim PayID As Long
-'        PayID = .Range("B3").value 'Payment ID
-'        If PayID = 0 Or .Range("B4").value = Empty Then 'Load Last Payment Created
-'            payRow = 4 'On new Payment, GOTO first one created
-'        Else
-'            payRow = .Range("B4").value + 1 'Pay Row
-'        End If
-'        If MaxPayID = PayID Then 'Last Payment
-'            MsgBox "Vous êtes au dernier paiement", vbExclamation
-'            Exit Sub
-'        End If
-'        .Range("B3").value = wshENC_Entête.Range("A" & payRow).value 'Set PayID
-'        Call Encaissement_Load 'Load Payment for the PayID
-'    End With
-'
-'    Application.EnableEvents = True
-'
-'    Call Log_Record("modFAC_Enc:Encaissement_Next", startTime)
-'
-'End Sub
-'
-'Sub Encaissement_Load() '2024-02-14 @ 11:04
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Enc:Encaissement_Load", 0)
-'
-'    With wshENC_Saisie
-'        If .Range("B4").value = Empty Then
-'            MsgBox "Assurez vous de choisir un paiement valide", vbExclamation
-'            Exit Sub
-'        End If
-'        payRow = .Range("B4").value 'Payment Row
-'        .Range("B4").value = True
-'        .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents
-'        'Update worksheet fields
-'        .Range("J3").value = wshENC_Entête.Cells(payRow, 2).value
-'        .Range("F3").value = wshENC_Entête.Cells(payRow, 3).value
-'        .Range("F5").value = wshENC_Entête.Cells(payRow, 4).value
-'        .Range("J5").value = wshENC_Entête.Cells(payRow, 5).value
-'        .Range("F7").value = wshENC_Entête.Cells(payRow, 6).value
-'
-'        'Load Pay Items
-'        With wshENC_Détails
-'            .Range("M4:T999999").ClearContents
-'            lastRow = .Range("A999999").End(xlUp).Row
-'            If lastRow < 4 Then GoTo NoData
-'            .Range("A3:G" & lastRow).AdvancedFilter _
-'                xlFilterCopy, _
-'                criteriaRange:=.Range("J2:J3"), _
-'                CopyToRange:=.Range("O3:T3"), _
-'                Unique:=True
-'            lastResultRow = .Range("O99999").End(xlUp).Row
-'            If lastResultRow < 4 Then GoTo NoData
-'            'Bring down the formulas into results
-'            .Range("M4:N" & lastResultRow).formula = .Range("M1:N1").formula 'Bring Apply and Invoice Date Formulas
-'            .Range("P4:R" & lastResultRow).formula = .Range("P1:R1").formula 'Inv. Amount, Prev. payments & Balance formulas
-'            wshENC_Saisie.Range("D13:K" & lastResultRow + 9).value = .Range("M4:T" & lastResultRow).value 'Bring over Pay Items
-'NoData:
-'        End With
-'        .Range("B4").value = False 'Payment Load to False
-'    End With
-'
-'    Call Log_Record("modFAC_Enc:Encaissement_Load", startTime)
-'
-'End Sub
-'
 Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete", 0)
@@ -770,7 +655,6 @@ Sub ENC_Clear_Cells()
     
         Application.EnableEvents = False
         
-        .Range("B4").value = False
         .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
         .Range("B12:B36").ClearContents
         
@@ -781,7 +665,6 @@ Sub ENC_Clear_Cells()
             lastUsedRow = 36
         End If
         
-        .Range("B4").value = False
         .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
         .Range("B12:B36").ClearContents
         

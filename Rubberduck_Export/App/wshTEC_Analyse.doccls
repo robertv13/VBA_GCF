@@ -1,6 +1,4 @@
-﻿'@Folder(GC_FISCALITÉ.1TEC)
-
-Option Explicit
+﻿Option Explicit
 
 Public previousCellAddress As Variant
 
@@ -24,6 +22,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
+    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
+    Me.Range("H3").value = Format$(Now(), "dd-mm-yyyy") '2024-10-29 @ 07:34
+    
     Call TEC_Sort_Group_And_Subtotal
     
     Call SetTabOrder(ws)
@@ -50,8 +51,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Désactive les événements pour éviter tout problème lors de la mise à jour
     Application.EnableEvents = False
     
-    ws.Range("H3").value = Now()
-    ws.Range("H3").Select
+'    ws.Range("H3").value = Now()
+'    ws.Range("H3").Select
     
     'Réapplique la position du volet inférieur pour maintenir l'affichage à la ligne 7
     ActiveWindow.Panes(2).ScrollRow = currentScrollRow
@@ -136,7 +137,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -145,7 +146,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -163,6 +164,8 @@ End Sub
 
 Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", 0)
+    
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Reference your checkbox by name
@@ -271,6 +274,8 @@ Private Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Set rngSummary = Nothing
     Set ws = Nothing
     
+    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", startTime)
+
 End Sub
 
 Private Sub Get_CheckBox_Position(cb As OLEObject)
@@ -299,10 +304,10 @@ End Sub
 
 Sub Delete_CheckBox()
 
-    'Set your worksheet (adjust this to match your worksheet name)
+    'Assigner la feuille à ws
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
-    'Check if CheckBox1 exists and then delete it
+    'Si CheckBox* existe, l'effacer
     Dim checkBox As OLEObject
     Dim i As Long
     For i = 1 To 5
@@ -310,6 +315,7 @@ Sub Delete_CheckBox()
         Set checkBox = ws.OLEObjects("CheckBox" & i)
         If Not checkBox Is Nothing Then
             checkBox.Delete
+            
         End If
         On Error GoTo 0
     Next i
@@ -322,11 +328,16 @@ End Sub
 
 Sub Back_To_TEC_Menu()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Back_To_TEC_Menu", 0)
+    
     Call Clear_Fees_Summary_And_CheckBox
+    Call Log_Record("     wshTEC_Analyse:Back_To_TEC_Menu - La zone Sommaire des Honoraires a été nettoyée", -1)
     
     wshTEC_Analyse.Visible = xlSheetHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
+    
+    Call Log_Record("wshTEC_Analyse:Back_To_TEC_Menu", startTime)
 
 End Sub

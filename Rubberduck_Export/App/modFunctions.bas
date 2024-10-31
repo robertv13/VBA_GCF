@@ -476,6 +476,73 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     
 End Function
 
+Function Fn_Get_TEC_Total_For_This_Invoice(invNo As String) As Double
+
+    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    
+    'Utilisation de la fonction Advanced Filter
+    Dim rngSource As Range
+    Set rngSource = ws.Range("A1").CurrentRegion.Offset(1, 0)
+    
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("H2:H3")
+    ws.Range("H3").value = invNo
+    
+    Dim rngResult As Range
+    Set rngResult = ws.Range("J2:M2")
+    
+    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).Row
+    Fn_Get_TEC_Total_For_This_Invoice = 0
+    If lastUsedRow > 2 Then
+        Dim i As Long
+        For i = 3 To lastUsedRow
+            If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
+                Fn_Get_TEC_Total_For_This_Invoice = Fn_Get_TEC_Total_For_This_Invoice + _
+                    ws.Cells(i, 13)
+            End If
+        Next i
+    End If
+    
+End Function
+
+Function Fn_Get_TEC_Hours_For_This_Invoice(invNo As String) As Double
+
+    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    
+    'Utilisation de la fonction Advanced Filter
+    Dim rngSource As Range
+    Set rngSource = ws.Range("A1").CurrentRegion.Offset(1, 0)
+    
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("H2:H3")
+    ws.Range("H3").value = invNo
+    
+    Dim rngResult As Range
+    Set rngResult = ws.Range("J2:M2")
+    
+    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).Row
+    Fn_Get_TEC_Hours_For_This_Invoice = 0
+    If lastUsedRow > 2 Then
+        Dim i As Long
+        For i = 3 To lastUsedRow
+            If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
+                Fn_Get_TEC_Hours_For_This_Invoice = Fn_Get_TEC_Hours_For_This_Invoice + _
+                    ws.Cells(i, 11)
+            End If
+        Next i
+    End If
+    
+    'Force un arrondissement à 2 décimales
+    Fn_Get_TEC_Hours_For_This_Invoice = Round(Fn_Get_TEC_Hours_For_This_Invoice, 2)
+    
+End Function
+
 Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
@@ -551,7 +618,7 @@ Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Long, days2 As Long, days
     
 End Function
 
-Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
+Function Fn_Get_Payments_For_Invoice(ws As Worksheet, invNo As String)
 
     'Define the source data
     Dim lastUsedRow As Long
@@ -559,17 +626,17 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     If lastUsedRow < 2 Then Exit Function
     
     'Define the range for the source data
-    Dim sourceRng As Range: Set sourceRng = ws.Range("A1:F" & lastUsedRow)
+    Dim sourceRng As Range: Set sourceRng = ws.Range("A1:E" & lastUsedRow)
     
     'Define the criteria range
-    Dim criteriaRng As Range: Set criteriaRng = ws.Range("V2:V3")
-    ws.Range("V3").value = invNo
+    Dim criteriaRng As Range: Set criteriaRng = ws.Range("S2:S3")
+    ws.Range("S3").value = invNo
     
     'Define the destination range & clear the old data
-    Dim destinationRng As Range: Set destinationRng = ws.Range("X3:AC3")
-    lastUsedRow = ws.Range("X9999").End(xlUp).Row
+    Dim destinationRng As Range: Set destinationRng = ws.Range("U3:Y3")
+    lastUsedRow = ws.Range("U9999").End(xlUp).Row
     If lastUsedRow > 3 Then
-        ws.Range("X4:AB" & lastUsedRow).ClearContents
+        ws.Range("U4:Y" & lastUsedRow).ClearContents
     End If
     
     'Execute the AdvancedFilter
@@ -578,15 +645,15 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
                              destinationRng, _
                              False
     
-    lastUsedRow = ws.Range("X9999").End(xlUp).Row
+    lastUsedRow = ws.Range("U9999").End(xlUp).Row
     If lastUsedRow < 3 Then
-        Fn_Get_AR_Balance_For_Invoice = 0
+        Fn_Get_Payments_For_Invoice = 0
     Else
-        Dim i As Long, balanceFacture As Currency
+        Dim i As Long, mntPayé As Currency
         For i = 4 To lastUsedRow
-            balanceFacture = balanceFacture + CCur(ws.Range("AB" & i).value)
+            mntPayé = mntPayé + CCur(ws.Range("Y" & i).value)
         Next i
-        Fn_Get_AR_Balance_For_Invoice = balanceFacture
+        Fn_Get_Payments_For_Invoice = mntPayé
     End If
 
     'Libérer la mémoire
@@ -596,6 +663,32 @@ Function Fn_Get_AR_Balance_For_Invoice(ws As Worksheet, invNo As String)
     
 End Function
 
+Function Fn_Get_Invoice_Due_Date(invNo As String)
+
+    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    
+    Dim foundCell As Range
+    
+    'Utilisation de la méthode Find pour rechercher dans la première colonne
+    Set foundCell = ws.columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    If Not foundCell Is Nothing Then
+        Fn_Get_Invoice_Due_Date = ws.Cells(foundCell.Row, 7)
+    Else
+        Fn_Get_Invoice_Due_Date = ""
+    End If
+
+End Function
+
+Sub Temp_Fn_Get_Invoice_Due_Date()
+
+    Dim invNo As String
+    invNo = "24-24522"
+    Dim dueDate As Date
+    dueDate = Fn_Get_Invoice_Due_Date(invNo)
+    Debug.Print "La date due de la facture '" & invNo & "' est = " & dueDate & " ce qui nous donne un âge de " & Format$(Now() - dueDate, "# ##0") & " jours"
+
+End Sub
 'Function IsNumLockActive() As Boolean
 '    ' Utilisation de SendKeys pour vérifier l'état
 '    Dim CurrentState As String
@@ -800,12 +893,6 @@ Function Fn_Complete_Date(dateInput As String) As Variant
             GoTo Invalid_Date
     End Select
     
-'    MsgBox "On décortique la date..." & vbNewLine & vbNewLine & _
-            "     Année = " & yearPart & vbNewLine & _
-            "      Mois = " & monthPart & vbNewLine & _
-            "      Jour = " & dayPart, _
-            vbInformation
-    
     'Fine validation taking into consideration leap year AND 75 years (past or future)
     If Fn_ValidateDaySpecificMonth(dayPart, monthPart, yearPart) = False Then
         GoTo Invalid_Date
@@ -834,7 +921,7 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
     'Sort a dictionary by its keys and return keys in an array
     Dim keys() As Variant
     Dim i As Long, j As Long
-    Dim Temp As Variant
+    Dim temp As Variant
     
     ReDim keys(0 To dict.count - 1)
     
@@ -849,9 +936,9 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
         For j = i + 1 To UBound(keys)
             If (keys(i) < keys(j) And descending) Or (keys(i) > keys(j) And Not descending) Then
                 'Swap keys accordingly
-                Temp = keys(i)
+                temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = Temp
+                keys(j) = temp
             End If
         Next j
     Next i
@@ -869,7 +956,7 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
     Dim keys() As Variant
     Dim values() As Variant
     Dim i As Long, j As Long
-    Dim Temp As Variant
+    Dim temp As Variant
     
     If dict.count = 0 Then
         Exit Function
@@ -890,14 +977,14 @@ Function Fn_Sort_Dictionary_By_Value(dict As Object, Optional descending As Bool
         For j = i + 1 To UBound(values)
             If (values(i) < values(j) And descending) Or (values(i) > values(j) And Not descending) Then
                 'Swap values
-                Temp = values(i)
+                temp = values(i)
                 values(i) = values(j)
-                values(j) = Temp
+                values(j) = temp
                 
                 'Swap keys accordingly
-                Temp = keys(i)
+                temp = keys(i)
                 keys(i) = keys(j)
-                keys(j) = Temp
+                keys(j) = temp
             End If
         Next j
     Next i

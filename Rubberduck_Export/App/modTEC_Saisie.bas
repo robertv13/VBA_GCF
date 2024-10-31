@@ -39,10 +39,10 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
                 Call Log_Saisie_Heures("info     ", "@00038  - ufSaisieHeures.txtDate.value - m <> 10 (Erreur) ---->   y = " & Y & "   m = " & m & "    d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
             If Y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
-                Dim Temp As Integer
-                Temp = m
+                Dim temp As Integer
+                temp = m
                 m = D
-                D = Temp
+                D = temp
                 Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & Y & "   m = " & m & "   d = " & D & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
             End If
             ufSaisieHeures.txtDate.value = Format$(DateSerial(Y, m, D), "yyyy-mm-dd")
@@ -373,8 +373,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                                     ufSaisieHeures.txtActivite.value & " | " & _
                                     Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
                                     ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
-                                    ufSaisieHeures.txtCommNote.value & " | " & _
-                                    Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                                    ufSaisieHeures.txtCommNote.value)
 
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
@@ -459,8 +458,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                         ufSaisieHeures.txtActivite.value & " | " & _
                         Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
                         ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
-                        ufSaisieHeures.txtCommNote.value & " | " & _
-                        Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                        ufSaisieHeures.txtCommNote.value)
         
         Else 'Update an existing record (TECID <> 0)
         
@@ -486,8 +484,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                             ufSaisieHeures.txtActivite.value & " | " & _
                             Format$(ufSaisieHeures.txtHeures.value, "#0.00") & " | " & _
                             ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value) & " | " & _
-                            ufSaisieHeures.txtCommNote.value & " | " & _
-                            Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                            ufSaisieHeures.txtCommNote.value)
             
             Else
             

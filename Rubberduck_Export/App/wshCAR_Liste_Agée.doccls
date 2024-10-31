@@ -61,7 +61,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange" & " - " & Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = BASIC_COLOR
@@ -103,14 +103,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Dim fullDate As Variant
     
-    'Niveau de détail has changed
-    If Not Intersect(Target, Range("B4")) Is Nothing Then
-        If Target.value = "Client" Then
-            Application.EnableEvents = False
-            Target.value = "Nom de client"
-            Application.EnableEvents = True
-        End If
-    End If
+'    'Niveau de détail has changed
+'    If Not Intersect(Target, Range("B4")) Is Nothing Then
+'        If Target.value = "Client" Then
+'            Application.EnableEvents = False
+'            Target.value = "Nom de client"
+'            Application.EnableEvents = True
+'        End If
+'    End If
     
     'Critère de tri has changed
     If Not Intersect(Target, Range("D4")) Is Nothing Then
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -142,7 +142,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
     End If

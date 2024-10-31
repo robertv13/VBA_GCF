@@ -323,30 +323,29 @@ Next_Invoice:
         .Range("C" & derniereLigne & ":J" & derniereLigne).NumberFormat = "##0.00"
         .Range("C" & derniereLigne & ":J" & derniereLigne).HorizontalAlignment = xlRight
         Dim totalListe As Currency
-        Select Case LCase(niveauDetail)
-            Case "client"
-                totalListe = t(0)
-                .Range("C" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                .Range("D" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                .Range("E" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                .Range("F" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                .Range("G" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
-            Case "facture"
-                 totalListe = .Range("E" & derniereLigne - 1).value
-                .Range("E" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                .Range("F" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                .Range("G" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                .Range("H" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                .Range("I" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
-            Case "transaction"
-                 totalListe = .Range("F" & derniereLigne - 1).value
-                .Range("F" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                .Range("G" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                .Range("H" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                .Range("I" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                .Range("J" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
-        End Select
-        
+        totalListe = t(0)
+        If totalListe <> 0 Then
+            Select Case LCase(niveauDetail)
+                Case "client"
+                    .Range("C" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("D" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("E" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("F" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("G" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                Case "facture"
+                    .Range("E" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("F" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("G" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("H" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("I" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                Case "transaction"
+                    .Range("F" & derniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("G" & derniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("H" & derniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("I" & derniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("J" & derniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+            End Select
+        End If
     End With
     
     Application.EnableEvents = True

@@ -30,8 +30,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014", True)
     
-    Call Log_Record("ufSaisieHeures:UserForm_Activate - Starting @00014", -1)
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
     
     Call Client_List_Import_All
@@ -517,9 +515,11 @@ Private Sub cmdClear_Click()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdClear_Click @00469", True)
     
-    Call Log_Record("ufSaisieHeures:cmdClear_Click was clicked", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", -1)
     
     Call TEC_Efface_Formulaire
+
+    Call Log_Record("ufSaisieHeures:cmdClear_Click", startTime)
 
 End Sub
 
@@ -527,9 +527,11 @@ Private Sub cmdAdd_Click()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479", True)
     
-    Call Log_Record("ufSaisieHeures:cmdAdd_Click was clicked", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", -1)
     
     Call TEC_Ajoute_Ligne
+
+    Call Log_Record("ufSaisieHeures:cmdAdd_Click", startTime)
 
 End Sub
 
@@ -537,7 +539,7 @@ Private Sub cmdUpdate_Click()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489", True)
     
-    Call Log_Record("ufSaisieHeures:cmdUpdate_Click was clicked", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", -1)
     
     If wshAdmin.Range("TEC_Current_ID").value <> "" Then
         Call TEC_Modifie_Ligne
@@ -547,13 +549,15 @@ Private Sub cmdUpdate_Click()
                Buttons:=vbCritical
     End If
 
+    Call Log_Record("ufSaisieHeures:cmdUpdate_Click", startTime)
+
 End Sub
 
 Private Sub cmdDelete_Click()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdDelete_Click @00505", True)
     
-    Call Log_Record("ufSaisieHeures:cmdDelete_Click was clicked", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", -1)
     
     If wshAdmin.Range("TEC_Current_ID").value <> "" Then
         Call TEC_Efface_Ligne
@@ -562,6 +566,8 @@ Private Sub cmdDelete_Click()
                Title:="", _
                Buttons:=vbCritical
     End If
+
+    Call Log_Record("ufSaisieHeures:cmdDelete_Click", startTime)
 
 End Sub
 

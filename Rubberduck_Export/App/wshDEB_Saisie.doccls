@@ -67,12 +67,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Type is selected
-    If Not Intersect(Target, Range("F4:H4")) Is Nothing Then
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
     'Beneficiaire is selected
-    If Not Intersect(Target, Range("J4:M4")) Is Nothing Then
+    If Not Intersect(Target, Range("J4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -82,7 +82,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Description is selected
-    If Not Intersect(Target, Range("$F$6:$J$6")) Is Nothing Then
+    If Not Intersect(Target, Range("$F$6")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

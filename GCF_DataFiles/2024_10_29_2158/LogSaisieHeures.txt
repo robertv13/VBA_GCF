@@ -1,0 +1,74 @@
+2024-10-29 05:33:09.33 | Guillaume | ADD    2013 | GC | 29/10/24 | 1744 | Centre Canin Laka Inc. [Nicolas Desflammes] | réception de roulement signé et poste | 0,75 | VRAI |  | 2024-10-29 05:33:09 | 31
+2024-10-29 05:33:24.25 | Guillaume | UPDATE 2013 | GC | 29/10/24 | 1744 | Centre Canin Laka Inc. [Nicolas Desflammes] | réception de roulement signé et poste | 0,75 | VRAI | Frais de poste de 25$ | 2024-10-29 05:33:24 | 31
+2024-10-29 05:41:27.02 | Guillaume | ADD    2014 | GC | 29/10/24 | 1109 | Gestion Niklo Inc. [Stéphane Laframboise] | transmettre formulaires de roulement à signer et céduler rencontre teams | 0,75 | VRAI |  | 2024-10-29 05:41:27 | 31
+2024-10-29 06:19:12.52 | Guillaume | ADD    2015 | GC | 29/10/24 | 1695 | Garage Denis Boisclair Inc. [Denis Boisclair] | analyse des documents juridiques signés et états financiers et finalisation memo | 1,00 | VRAI |  | 2024-10-29 06:19:12 | 31
+2024-10-29 06:26:45.47 | Guillaume | ADD    2016 | GC | 29/10/24 | 1350 | Acier Altitube Inc. [Philippe Robillard] | courriel avec Philippe sur date de memo et déboursé | 0,50 | VRAI |  | 2024-10-29 06:26:45 | 31
+2024-10-29 06:31:14.11 | Guillaume | ADD    2017 | GC | 29/10/24 | 1798 | Mylène Lapierre CPA Inc. | courriel avec l'avocat sur le transfert des biens à la SAAQ | 0,40 | VRAI |  | 2024-10-29 06:31:14 | 31
+2024-10-29 08:58:42.32 | vgervais | ADD    2018 | VG | 2024-10-29 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Discussion avec Julie pour étape | 0,30 | VRAI |  | 2024-10-29 08:58:42 | 31
+2024-10-29 10:07:43.93 | Guillaume | ADD    2019 | GC | 29/10/24 | 1533 | Lostocch Holdings Inc. [Lorenzo Stocchero] | transférer montage de capital-actions de 322 | 0,25 | VRAI |  | 2024-10-29 10:07:43 | 31
+2024-10-29 10:16:28.84 | User | UPDATE 1976 | ML | 2024-10-27 | 1775 | 9513-1926 Québec Inc. [Francis Desgagnés] | Examen du dossier demandé par Vladimir | 0,25 | VRAI |  | 2024-10-29 10:16:28 | 31
+2024-10-29 10:29:34.78 | vgervais | ADD    2020 | VG | 2024-10-29 | 5 | z_Administratif_Autres non chargeables | Suivis de dossier + Planning + Rencontre TEam | 1,80 | VRAI |  | 2024-10-29 10:29:34 | 31
+2024-10-29 10:30:47.48 | vgervais | ADD    2021 | VG | 2024-10-29 | 1348 | Maurice Chiasson, CPA | Répondre question Yvon Corriveau  - Succession | 0,30 | VRAI |  | 2024-10-29 10:30:47 | 31
+2024-10-29 10:31:08.91 | vgervais | ADD    2022 | VG | 2024-10-29 | 1526 | Yola RX Consultants Inc. [Yola Moride] | Suivi + envoi | 0,30 | VRAI |  | 2024-10-29 10:31:08 | 31
+2024-10-29 10:37:42.11 | vgervais | UPDATE 2018 | VG | 2024-10-29 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Discussion avec Julie pour étape | 0,50 | VRAI |  | 2024-10-29 10:37:42 | 31
+2024-10-29 10:42:05.25 | Guillaume | ADD    2023 | GC | 29/10/24 | 1669 | Ventilabec Inc. [Lora Stoycheva] | tel avec Éric Marquette et Guillaume Rioux sur divorce de Guillaume et fournir documents à Éric Marquette | 0,75 | VRAI |  | 2024-10-29 10:42:05 | 31
+2024-10-29 10:42:15.54 | Guillaume | UPDATE 2023 | GC | 29/10/24 | 1669 | Ventilabec Inc. [Lora Stoycheva] | tel avec Éric Marquette et Guillaume Rioux sur divorce de Guillaume et fournir documents à Éric Marquette | 1,00 | VRAI |  | 2024-10-29 10:42:15 | 31
+2024-10-29 10:52:08.88 | Guillaume | UPDATE 2014 | GC | 29/10/24 | 1109 | Gestion Niklo Inc. [Stéphane Laframboise] | transmettre formulaires de roulement à signer et céduler rencontre teams | 1,00 | VRAI |  | 2024-10-29 10:52:08 | 31
+2024-10-29 10:52:26.88 | Guillaume | ADD    2024 | GC | 29/10/24 | 1797 | Silencieux de l'est Inc. [Martin Montpas] | attribuer mandat | 0,50 | VRAI |  | 2024-10-29 10:52:26 | 31
+2024-10-29 10:52:46.96 | Guillaume | ADD    2025 | GC | 29/10/24 | 1739 | Groupe Coalitech Inc. [Techvac Équipement] | suivi du dossier avec tous | 0,20 | VRAI |  | 2024-10-29 10:52:46 | 31
+2024-10-29 10:53:33.25 | Guillaume | ADD    2026 | GC | 29/10/24 | 1763 | Déneigement F.M. Inc. [Michael Beaupré] | suivi de l'état du dossier avec MC | 0,20 | VRAI |  | 2024-10-29 10:53:33 | 31
+2024-10-29 10:53:49.79 | Guillaume | ADD    2027 | GC | 29/10/24 | 1775 | 9513-1926 Québec Inc. [Francis Desgagnés] | suivi du cdc | 0,20 | VRAI |  | 2024-10-29 10:53:49 | 31
+2024-10-29 10:54:05.14 | Guillaume | ADD    2028 | GC | 29/10/24 | 1388 | 9307-2411 Québec Inc. [Capitaine Vap] | suivi de l'avancement | 0,20 | VRAI |  | 2024-10-29 10:54:05 | 31
+2024-10-29 10:54:26.54 | Guillaume | ADD    2029 | GC | 29/10/24 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | tel avec vlad suivi de l'état et questionnements | 0,20 | VRAI |  | 2024-10-29 10:54:26 | 31
+2024-10-29 10:54:46.84 | Guillaume | ADD    2030 | GC | 29/10/24 | 1448 | 9055-4627 Québec Inc. [Guillaume Bruneau-Côté] | tel avec vlad sur questions au dossier | 0,20 | VRAI |  | 2024-10-29 10:54:46 | 31
+2024-10-29 10:58:51.40 | Guillaume | UPDATE 2017 | GC | 29/10/24 | 1798 | Mylène Lapierre CPA Inc. | courriel avec l'avocat sur le transfert des biens à la SAAQ + divers échanges | 0,75 | VRAI |  | 2024-10-29 10:58:51 | 31
+2024-10-29 11:01:52.30 | Guillaume | ADD    2031 | GC | 29/10/24 | 1696 | Photographie Benoit Blain Inc. [Kelly Cochelin] | préparation + déplacement et rencontre pour closing | 3,00 | VRAI |  | 2024-10-29 11:01:52 | 31
+2024-10-29 11:04:55.14 | User | UPDATE 1999 | ML | 2024-10-28 | 1109 | Gestion Niklo Inc. [Stéphane Laframboise] | Roulements des étapes 5, 6 et 10
+ | 3,75 | VRAI |  | 2024-10-29 11:04:55 | 31
+2024-10-29 11:26:06.11 | vgervais | ADD    2032 | VG | 2024-10-29 | 1193 | Solstice CNC Inc. [Alexandre Desmarais] | Suivi de la documentation légale | 0,50 | VRAI |  | 2024-10-29 11:26:06 | 31
+2024-10-29 11:40:00.34 | vgervais | ADD    2033 | VG | 2024-10-29 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Répondre courriel de Guillaume Barrière  | 0,40 | VRAI |  | 2024-10-29 11:40:00 | 31
+2024-10-29 12:07:43.52 | vgervais | UPDATE 2033 | VG | 2024-10-29 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Répondre courriel de Guillaume Barrière + Julien | 0,80 | VRAI |  | 2024-10-29 12:07:43 | 31
+2024-10-29 12:15:10.12 | vgervais | ADD    2034 | VG | 2024-10-29 | 1455 | 8802742 Canada Inc. [Concept Convoyeur Debien Inc.] | Regarder courriel + suivi avec Michel | 0,30 | VRAI |  | 2024-10-29 12:15:10 | 31
+2024-10-29 15:02:55.02 | GuillaumeCharron | ADD    2035 | GC | 29/10/24 | 1491 | Mobilier de bureau Mobilium Inc. [Robert Guindon] | tel avec Robert pour explications des résultats d'évaluation et autres | 0,75 | VRAI |  | 2024-10-29 15:02:55 | 31
+2024-10-29 15:03:37.00 | GuillaumeCharron | ADD    2036 | GC | 29/10/24 | 1615 | 9455-3302 Québec Inc. [Serge Michaud Électricien] | tel avec serge question de marge de crédit avec hypothèque | 0,25 | VRAI |  | 2024-10-29 15:03:37 | 31
+2024-10-29 15:05:25.34 | GuillaumeCharron | ADD    2037 | GC | 29/10/24 | 1802 | Martin Lavoie (compagnie à être créée) | courriel et tel avec fiscaliste du vendeur | 0,40 | VRAI |  | 2024-10-29 15:05:25 | 31
+2024-10-29 15:21:28.23 | vgervais | UPDATE 2033 | VG | 2024-10-29 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Répondre courriel de Guillaume Barrière + Julien | 0,90 | VRAI |  | 2024-10-29 15:21:28 | 31
+2024-10-29 15:21:57.47 | vgervais | ADD    2038 | VG | 2024-10-29 | 1793 | 9063-6580 Québec Inc. [Le Lunettier] | Suivis de dossiers pour informations manquantes (adresse+ NAS) | 0,20 | VRAI |  | 2024-10-29 15:21:57 | 31
+2024-10-29 15:22:42.02 | GuillaumeCharron | ADD    2039 | GC | 29/10/24 | 1361 | 108060 Canada Inc. [Nick Pizzeria] | tel avec Peter pour relancer le dossier + courriel pour questionnaires d'incorporations | 0,75 | VRAI |  | 2024-10-29 15:22:42 | 31
+2024-10-29 15:30:44.08 | vgervais | ADD    2040 | VG | 2024-10-29 | 503 | Succession Jacques Raymond [Daniel Raymond] | VOir pour Bump | 0,50 | VRAI |  | 2024-10-29 15:30:44 | 31
+2024-10-29 15:30:50.71 | vgervais | UPDATE 2020 | VG | 2024-10-29 | 5 | z_Administratif_Autres non chargeables | Suivis de dossier + Planning + Rencontre TEam | 1,80 | FAUX |  | 2024-10-29 15:30:50 | 31
+2024-10-29 15:35:07.38 | GuillaumeCharron | UPDATE 2017 | GC | 29/10/24 | 1798 | Mylène Lapierre CPA Inc. | courriel avec l'avocat sur le transfert des biens à la SAAQ + divers échanges + courriels sur options post transaction | 1,25 | VRAI |  | 2024-10-29 15:35:07 | 31
+2024-10-29 15:38:23.86 | vgervais | UPDATE 2033 | VG | 2024-10-29 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Répondre courriel de Guillaume Barrière + Julien | 1,00 | VRAI |  | 2024-10-29 15:38:23 | 31
+2024-10-29 15:38:42.22 | vgervais | UPDATE 2018 | VG | 2024-10-29 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Discussion avec Julie pour étape | 0,60 | VRAI |  | 2024-10-29 15:38:42 | 31
+2024-10-29 15:39:03.68 | vgervais | ADD    2041 | VG | 2024-10-29 | 1624 | Gestion Proped Inc. [Louis Villeneuve] | Suivi + classement | 0,20 | VRAI |  | 2024-10-29 15:39:03 | 31
+2024-10-29 15:41:14.91 | GuillaumeCharron | ADD    2042 | GC | 29/10/24 | 1430 | Librairie Lu-Lu Inc. [Émilie Arcand-Dubois] | tel avec Céline sur cpg dans la fiducie et pourquoi | 0,40 | VRAI |  | 2024-10-29 15:41:14 | 31
+2024-10-29 15:44:21.26 | GuillaumeCharron | ADD    2043 | GC | 29/10/24 | 1430 | Librairie Lu-Lu Inc. [Émilie Arcand-Dubois] | appel de ARC pour fusion | 0,25 | VRAI |  | 2024-10-29 15:44:21 | 31
+2024-10-29 15:59:36.57 | GuillaumeCharron | ADD    2044 | GC | 29/10/24 | 1506 | Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault] | tel avec Marie-Hélène et analyse de dividendes 2023 vs 2024 | 0,50 | VRAI |  | 2024-10-29 15:59:36 | 31
+2024-10-29 16:00:46.89 | vgervais | ADD    2045 | VG | 2024-10-29 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Suivi avec avocat | 0,30 | VRAI |  | 2024-10-29 16:00:46 | 31
+2024-10-29 16:08:05.68 | GuillaumeCharron | ADD    2046 | GC | 29/10/24 | 1738 | Assurancia Leduc, Decelles, Dubuc & Ass. Inc. [Lucie Decelles] | réponses à mes questions de Lucie + envoie de courriel sur commentaires/modifications | 0,75 | VRAI |  | 2024-10-29 16:08:05 | 31
+2024-10-29 16:14:16.08 | vgervais | ADD    2047 | VG | 2024-10-29 | 1771 | L C Combustion Inc. [Christian Laroche] | Voir courriel et vérifier mémo pour voir s'il a des modifications | 0,30 | VRAI |  | 2024-10-29 16:14:16 | 31
+2024-10-29 16:16:24.86 | GuillaumeCharron | UPDATE 2017 | GC | 29/10/24 | 1798 | Mylène Lapierre CPA Inc. | courriel avec l'avocat sur le transfert des biens à la SAAQ + divers échanges + courriels sur options post transaction + tel Mylène | 1,50 | VRAI |  | 2024-10-29 16:16:24 | 31
+2024-10-29 16:22:46.38 | GuillaumeCharron | UPDATE 2039 | GC | 29/10/24 | 1361 | 108060 Canada Inc. [Nick Pizzeria] | tel avec Peter pour relancer le dossier + courriel pour questionnaires d'incorporations + tel avec Peter à nouveau | 1,25 | VRAI |  | 2024-10-29 16:22:46 | 31
+2024-10-29 16:49:41.74 | vgervais | ADD    2048 | VG | 2024-10-29 | 1289 | Les entreprises P. Marion Inc. [Yanic Belval] | Suivi avec Laurent 9342-5221 Québec Inc. | 0,30 | VRAI |  | 2024-10-29 16:49:41 | 31
+2024-10-29 16:50:41.47 | GuillaumeCharron | UPDATE 2031 | GC | 29/10/24 | 1696 | Photographie Benoit Blain Inc. [Kelly Cochelin] | préparation + déplacement et rencontre pour closing + scan des roulements et retourner à tous + poste | 4,00 | VRAI | Frais de poste de 100$ | 2024-10-29 16:50:41 | 31
+2024-10-29 17:17:29.81 | GuillaumeCharron | ADD    2049 | GC | 29/10/24 | 1085 | MPA Société de comptables Professionnels agréés Inc. [Alain Girard] | question de alain sur acomptes provisionnels de sociétés fusionnées | 0,25 | VRAI |  | 2024-10-29 17:17:29 | 31
+2024-10-29 17:24:24.55 | GuillaumeCharron | ADD    2050 | GC | 29/10/24 | 1514 | R.I. Résidence de Bellechasse Inc. [Sylvie Rocheleau] | réception des roulement signés et poster | 0,50 | VRAI | Frais de poste de 25$ | 2024-10-29 17:24:24 | 31
+2024-10-29 17:31:55.19 | GuillaumeCharron | ADD    2051 | GC | 29/10/24 | 104 | Groupe Millénium Micro Inc. [Carl Paquin] | révision de projets de dividendes | 0,75 | VRAI |  | 2024-10-29 17:31:55 | 31
+2024-10-29 17:46:30.90 | User | ADD    2052 | ML | 2024-10-29 | 5 | z_Administratif_Autres non chargeables | Rencontre d'équipe
+ | 1,00 | FAUX |  | 2024-10-29 17:46:30 | 31
+2024-10-29 17:46:54.44 | User | ADD    2053 | ML | 2024-10-29 | 1793 | 9063-6580 Québec Inc. [Le Lunettier] | Roulement Étape 3
+ | 1,00 | VRAI |  | 2024-10-29 17:46:54 | 31
+2024-10-29 17:47:13.76 | User | ADD    2054 | ML | 2024-10-29 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Montage du dossier du RPDB (Montage des relevés amendés 2018)
+ | 0,75 | VRAI |  | 2024-10-29 17:47:13 | 31
+2024-10-29 17:47:32.38 | User | ADD    2055 | ML | 2024-10-29 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Montage du dossier du RPDB (Montage des relevés originaux 2019)
+ | 2,50 | VRAI |  | 2024-10-29 17:47:32 | 31
+2024-10-29 17:47:48.92 | User | ADD    2056 | ML | 2024-10-29 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Montage du dossier du RPDB (Montage des relevés amendés 2019)
+ | 0,75 | VRAI |  | 2024-10-29 17:47:48 | 31
+2024-10-29 17:48:05.08 | User | ADD    2057 | ML | 2024-10-29 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Discussion avec Geneviève pour les années 2020, 2021 et 2022
+ | 0,50 | VRAI |  | 2024-10-29 17:48:05 | 31
+2024-10-29 17:48:22.43 | User | ADD    2058 | ML | 2024-10-29 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Montage du tableau de concordance des relevés 2020, 2021 et 2022
+ | 0,50 | VRAI |  | 2024-10-29 17:48:22 | 31
+2024-10-29 17:50:56.75 | vgervais | ADD    2059 | VG | 2024-10-29 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | préparer livre des minutes | 0,60 | VRAI |  | 2024-10-29 17:50:56 | 31
+2024-10-29 17:51:14.77 | vgervais | UPDATE 2059 | VG | 2024-10-29 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | préparer le tableau capital-actions | 0,80 | VRAI |  | 2024-10-29 17:51:14 | 31
+2024-10-29 18:01:14.80 | vgervais | UPDATE 2047 | VG | 2024-10-29 | 1771 | L C Combustion Inc. [Christian Laroche] | Voir courriel et vérifier mémo pour voir s'il a des modifications (retourner dans le mémo + legal) | 0,40 | VRAI |  | 2024-10-29 18:01:14 | 31
+2024-10-29 18:03:19.73 | vgervais | UPDATE 2040 | VG | 2024-10-29 | 503 | Succession Jacques Raymond [Daniel Raymond] | VOir pour Bump + révision de société | 1,50 | VRAI |  | 2024-10-29 18:03:19 | 31

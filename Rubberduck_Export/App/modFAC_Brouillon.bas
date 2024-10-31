@@ -11,8 +11,18 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
+    'Masquer la forme (détail TEC) si elle est présente
+    On Error Resume Next
+    Dim shapeTextBox As Shape
+    Set shapeTextBox = wshFAC_Brouillon.Shapes("shpTECInfo")
+    If Not shapeTextBox Is Nothing Then
+        shapeTextBox.Visible = msoFalse
+    End If
+    On Error GoTo 0
+    
     'Are we entering a NEW invoice ?
     If wshFAC_Brouillon.Range("B27").value = False Then
+    
         With wshFAC_Brouillon
             .Range("B24").value = True
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
@@ -436,7 +446,8 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
         .Unprotect
         .Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
     End With
     
     Application.EnableEvents = True
@@ -847,14 +858,18 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     wshFAC_Brouillon.Range("B27").value = False
     Application.EnableEvents = True
     
+    'Masquer la forme (détail TEC) si elle est présente
+    On Error Resume Next
+    Dim shapeTextBox As Shape
+    Set shapeTextBox = wshFAC_Brouillon.Shapes("shpTECInfo")
+    If Not shapeTextBox Is Nothing Then
+        shapeTextBox.Visible = msoFalse
+    End If
+    On Error GoTo 0
+    
     wshFAC_Brouillon.Visible = xlSheetHidden
     
     wshMenuFAC.Activate
-    
-'    Call SlideIn_PrepFact
-'    Call SlideIn_SuiviCC
-'    Call SlideIn_Encaissement
-'    Call SlideIn_FAC_Historique
     
     wshMenuFAC.Range("A1").Select
     
@@ -894,7 +909,9 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
                 .value = True
             Else
                 .value = False
-                newTECapresProjet = True
+                If dateCutOffProjet <> "00:00:00" Then
+                    newTECapresProjet = True
+                End If
             End If
             .linkedCell = cell.Address
             .Display3DShading = True
@@ -906,9 +923,6 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
     'Unlock the checkbox to view Billed charges
     Call UnprotectCells(ws.Range("B16"))
 '    ws.Range("B16").Locked = False
-'
-'    'Protect the worksheet
-'    ws.Protect UserInterfaceOnly:=True
      
     With ws
         .Range("D7:D" & Row).NumberFormat = "dd/mm/yyyy"
@@ -921,7 +935,8 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
         .Range("B19").formula = "=SUMIF(C7:C" & Row + 5 & ",True,G7:G" & Row + 5 & ")"
         
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
     End With
     
     Application.ScreenUpdating = True
@@ -971,7 +986,8 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(Row As Long)
     'Protect the worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
     End With
     
     wshFAC_Brouillon.Range("C7:C" & Row).value = ""  'Remove text left over
@@ -1097,7 +1113,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

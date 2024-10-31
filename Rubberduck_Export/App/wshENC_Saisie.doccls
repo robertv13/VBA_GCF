@@ -92,10 +92,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Dim fullDate As Variant
     
-    'On Customer Change BUT NOT on Payment load and only on new payments
+    'On Customer Change and only on new payments
     If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
         Me.Range("F5").value <> Empty And _
-            Me.Range("B4").value = False And _
             Me.Range("B6").value = "" Then
         Application.EnableEvents = False
         Dim clientCode As String
@@ -116,7 +115,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -125,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
         
