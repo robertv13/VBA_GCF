@@ -4,8 +4,6 @@ Option Explicit
 'Option # 1
 Sub DEB_Saisie_Click()
     
-'    Call SlideIn_Paiement
-    
     Application.ScreenUpdating = False
     
     Call Fournisseur_List_Import_All

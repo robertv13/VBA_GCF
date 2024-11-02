@@ -6,8 +6,6 @@ Sub PreparationFacture_Click()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:PreparationFacture_Click", 0)
 
-'    Call SlideIn_PrepFact
-    
     Application.ScreenUpdating = False
     
     Application.EnableEvents = True
@@ -29,8 +27,6 @@ End Sub
 'Option # 2
 Sub SuiviCC_Click()
 
-'    Call SlideIn_SuiviCC
-    
     Application.ScreenUpdating = False
     
     wshCAR_Liste_Agée.Application.Calculation = xlCalculationAutomatic
@@ -49,8 +45,6 @@ End Sub
 'Option # 3
 Sub Encaissement_Click()
 
-'    Call SlideIn_Encaissement
-    
     Application.ScreenUpdating = False
     
     fromMenu = True '2024-09-03 @ 06:20
@@ -69,8 +63,6 @@ Sub FAC_Historique_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Historique_Click", 0)
 
-'    Call SlideIn_FAC_Historique
-    
     Application.ScreenUpdating = False
     
     Call FAC_Entête_Import_All
@@ -97,8 +89,6 @@ Sub FAC_Confirmation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)
 
-'    Call SlideIn_FAC_Confirmation
-    
     Application.ScreenUpdating = False
     
     'Import data files from MASTER

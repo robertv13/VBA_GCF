@@ -810,35 +810,6 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
 End Sub
 
-'Sub Menu_Adjust_Shape_Properties()
-'
-'    Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
-'
-'    Dim shp As Shape
-'    For Each shp In ws.Shapes
-'        If InStr(shp.name, "Groupe") Then Debug.Print shp.name & " - " & shp.Top
-'        If shp.name = "Groupe 01 - TEC" Then shp.Top = 60
-'        If shp.name = "Groupe 02 - FACTURATION" Then shp.Top = 120
-'        If shp.name = "Groupe 03 - DÉBOURSÉ" Then shp.Top = 180
-'        If shp.name = "Groupe 04 - COMPTABILITÉ" Then shp.Top = 240
-'        If shp.name = "Groupe 05 - PARAMÈTRES" Then shp.Top = 300
-'        If shp.name = "Groupe 06 - SORTIE" Then shp.Top = 360
-'
-'        If shp.name = "TECHover" Then shp.Top = 60: shp.Height = 40
-'        If shp.name = "FACHover" Then shp.Top = 120: shp.Height = 40
-'        If shp.name = "DEBHover" Then shp.Top = 180: shp.Height = 40
-'        If shp.name = "GLHover" Then shp.Top = 240: shp.Height = 40
-'        If shp.name = "PARAMHover" Then shp.Top = 300: shp.Height = 40
-'        If shp.name = "EXITHover" Then shp.Top = 360: shp.Height = 40
-'
-'    Next shp
-'
-'    'Libérer la mémoire
-'    Set shp = Nothing
-'    Set ws = Nothing
-'
-'End Sub
-'
 Sub List_All_Tables()
 
     'Loop through each worksheet

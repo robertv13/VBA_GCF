@@ -6,9 +6,6 @@ Sub EJ_Saisie_Click()
     
     Application.ScreenUpdating = False
     
-'    Call SlideIn_BV
-'    Call SlideIn_EJ
-    
     wshGL_EJ.Application.Calculation = xlCalculationAutomatic
     With wshGL_EJ
         .Visible = xlSheetVisible
@@ -24,10 +21,6 @@ Sub BV_Click()
     
     Application.ScreenUpdating = False
     
-'    Call SlideIn_EJ
-'    Call SlideIn_BV
-'    Call SlideIn_GL_Report
-    
     With wshGL_BV
         .Visible = xlSheetVisible
         .Activate
@@ -42,10 +35,6 @@ Sub Rapport_GL_Click()
 
     Application.ScreenUpdating = False
 
-'    Call SlideIn_BV
-'    Call SlideIn_GL_Report
-'    Call SlideIn_EF
-    
     With wshGL_Rapport
         .Visible = xlSheetVisible
         .Select
@@ -59,9 +48,6 @@ End Sub
 Sub EF_Click()
 
     Application.ScreenUpdating = False
-
-'    Call SlideIn_GL_Report
-'    Call SlideIn_EF
 
     MsgBox "Ajouter la fonction 'États Financiers'"
 
