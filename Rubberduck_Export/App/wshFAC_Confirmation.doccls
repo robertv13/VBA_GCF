@@ -20,8 +20,8 @@ Private Sub Worksheet_Activate()
         ws.Visible = xlSheetVisible
     End If
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
     
     Me.Application.Calculation = xlCalculationAutomatic
 
@@ -84,6 +84,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Invoice Number is selected from Invoices to be confirmed
     If Not Intersect(Target, Me.columns(16)) Is Nothing And Target.Cells.count = 1 Then
+        wshFAC_Confirmation.Range("F5").value = Target.value
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     

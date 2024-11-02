@@ -99,26 +99,28 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'WIP description has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("F7:F999")) Is Nothing Then
         'Ajouter la forme si elle n'existe pas encore -ET- que le texte est assez long...
-        If Len(Target.value) > 58 Then
-            If shapeTextBox Is Nothing Then
-                Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
-                                                        100, 100, 600, 100)
-                shapeTextBox.name = "shpTECInfo"
+        If Target.Cells.count = 1 Then
+            If Len(Target.value) > 58 Then
+                If shapeTextBox Is Nothing Then
+                    Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
+                                                            100, 100, 600, 100)
+                    shapeTextBox.name = "shpTECInfo"
+                End If
+                
+                'Définir le texte d'information en fonction de la cellule sélectionnée
+                Dim infoText As String
+                infoText = Target.value
+        
+                'Mettre à jour et afficher la forme
+                With shapeTextBox
+                    .TextFrame.Characters.Text = infoText
+                    .Top = Target.Top + Target.Height
+                    .Left = Target.Left
+                    .Visible = msoTrue
+                    .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
+                    .TextFrame.Characters.Font.size = 10
+                End With
             End If
-            
-            'Définir le texte d'information en fonction de la cellule sélectionnée
-            Dim infoText As String
-            infoText = Target.value
-    
-            'Mettre à jour et afficher la forme
-            With shapeTextBox
-                .TextFrame.Characters.Text = infoText
-                .Top = Target.Top + Target.Height
-                .Left = Target.Left
-                .Visible = msoTrue
-                .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
-                .TextFrame.Characters.Font.size = 10
-            End With
         End If
     End If
     

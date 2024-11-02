@@ -821,7 +821,7 @@ Sub FAC_Confirmation_Facture(invNo As String)
     'Do the G/L posting
     Call FAC_Confirmation_GL_Posting(invNo)
     
-    MsgBox "Cette facture a été confirmée avec succès", vbInformation
+'    MsgBox "Cette facture a été confirmée avec succès", vbInformation
 
     'Clear the cells on the current Worksheet
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
