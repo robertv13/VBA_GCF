@@ -46,6 +46,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     With ws
+        .Range("K5").value = Format$(Now(), "dd-mm-yyyy")
         .Range("F5").Select
         previousCellAddress = .Range("F5").Address
     End With
@@ -107,35 +108,24 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Date has changed
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text), 30, 0)
         If fullDate <> "Invalid Date" Then
             Target.value = fullDate
         Else
             Call MsgBoxInvalidDate("wshENC_Saisie_115")
-            Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
-       
-        'Future date ?
-        If CDate(Range("K5").value) > Format$(Now(), "dd/mm/yyyy") Then
-            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
-                Application.EnableEvents = False
-                Target.ClearContents
-                Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
-            End If
-        End If
-        
+        Application.EnableEvents = True
     End If
     
     'Force TAB order after a cell has been changed
     On Error Resume Next
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
         Me.Range("K5").Select
-    ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Me.Range("F7").Select
+'    ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
+'        Me.Range("F7").Select
     ElseIf Not Intersect(Target, Me.Range("F7")) Is Nothing Then
         Me.Range("K7").Select
     ElseIf Not Intersect(Target, Me.Range("K7")) Is Nothing Then

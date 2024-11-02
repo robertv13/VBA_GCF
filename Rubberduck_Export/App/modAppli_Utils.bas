@@ -2078,7 +2078,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2090 'What is the last TECID analyzed ?
+    lastTECIDReported = 2117 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2132,7 +2132,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
-    Dim D As Integer, m As Integer, Y As Integer, p As Integer
+    Dim d As Integer, m As Integer, Y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -2849,7 +2849,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Case "wshGL_Trans"
             With wshGL_Trans
                 .Range("A2:J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("C2:C" & lastUsedRow & _
                     ", D2:D" & lastUsedRow & _
                     ", F2:F" & lastUsedRow & _
@@ -2859,14 +2859,15 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                     .HorizontalAlignment = xlRight
                     .NumberFormat = "#,##0.00 $"
                 End With
-                With .Range("A2:A" & lastUsedRow) _
-                    .Range("J2:J" & lastUsedRow).Interior
-                    .Pattern = xlSolid
-                    .PatternColorIndex = xlAutomatic
-                    .ThemeColor = xlThemeColorAccent5
-                    .TintAndShade = 0.799981688894314
-                    .PatternTintAndShade = 0
-                End With
+                .Range("J2:J" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+'                With .Range("A2:A" & lastUsedRow) _
+'                    .Range("J2:J" & lastUsedRow).Interior
+'                    .Pattern = xlSolid
+'                    .PatternColorIndex = xlAutomatic
+'                    .ThemeColor = xlThemeColorAccent5
+'                    .TintAndShade = 0.799981688894314
+'                    .PatternTintAndShade = 0
+'                End With
             End With
         
         Case "wshTEC_Local"

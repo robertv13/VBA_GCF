@@ -103,28 +103,47 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     r = 6
     Application.EnableEvents = False
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - On doit lire " & lastUsedRow & " lignes dans TEC_Local", -1)
-    For i = 3 To lastUsedRow
+    
+    'TEC_Local - AdvancedFilter - 2024-11-01 @ 12:27
+    Dim rngSource As Range
+    Set rngSource = wsSource.Range("A2:P" & lastUsedRow)
+    
+    Dim rngCriteria As Range
+    Set rngCriteria = wsSource.Range("AK2:AO3")
+    With wsSource
+        .Range("AK3").value = ""
+        .Range("AL3").value = "<=" & CLng(wsDest.Range("H3").value)
+        .Range("AM3").value = "VRAI"
+        .Range("AN3").value = "FAUX"
+        .Range("AO3").value = "FAUX"
+    End With
+    
+    Dim rngResult As Range
+    Set rngResult = wsSource.Range("AQ3").CurrentRegion.Offset(2, 0)
+    rngResult.ClearContents
+    Set rngResult = wsSource.Range("AQ2:BE2")
+    
+    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult, True
+    
+    Dim lastUsedResult As Long
+    lastUsedResult = wsSource.Cells(wsSource.rows.count, "AQ").End(xlUp).Row
+    
+    For i = 3 To lastUsedResult
         'Conditions for exclusion (adjust as needed)
-        If Fn_Is_Client_Facturable(wsSource.Cells(i, ftecClient_ID)) = True And _
-            wsSource.Cells(i, 14).value <> "VRAI" And _
-            wsSource.Cells(i, 12).value <> "VRAI" And _
-            wsSource.Cells(i, 10).value = "VRAI" Then
-                If wsSource.Cells(i, ftecDate).value <= wsDest.Range("H3").value Then
-                    'Get clients's name from MasterFile
-                    Dim codeClient As String, nomClientFromMF As String
-                    codeClient = wsSource.Cells(i, ftecClient_ID).value
-                    nomClientFromMF = dictClients(codeClient)
-                    
-                    wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecTEC_ID).value
-                    wsDest.Cells(r, 2).value = wsSource.Cells(i, ftecProf_ID).value
-                    wsDest.Cells(r, 3).value = nomClientFromMF
-                    wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecDate).value
-                    wsDest.Cells(r, 6).value = wsSource.Cells(i, ftecProf).value
-                    wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecDescription).value
-                    wsDest.Cells(r, 8).value = wsSource.Cells(i, ftecHeures).value
-                    wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
-                    r = r + 1
-                End If
+        If Fn_Is_Client_Facturable(wsSource.Cells(i, "AU")) = True Then
+            'Get clients's name from MasterFile
+            Dim codeClient As String, nomClientFromMF As String
+            codeClient = wsSource.Cells(i, "AU").value
+            nomClientFromMF = dictClients(codeClient)
+            wsDest.Cells(r, 1).value = wsSource.Cells(i, "AQ").value
+            wsDest.Cells(r, 2).value = wsSource.Cells(i, "AR").value
+            wsDest.Cells(r, 3).value = nomClientFromMF
+            wsDest.Cells(r, 5).value = wsSource.Cells(i, "AT").value
+            wsDest.Cells(r, 6).value = wsSource.Cells(i, "AS").value
+            wsDest.Cells(r, 7).value = wsSource.Cells(i, "AW").value
+            wsDest.Cells(r, 8).value = wsSource.Cells(i, "AX").value
+            wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
+            r = r + 1
         End If
     Next i
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Toutes les lignes ont été lues de TEC_Local", -1)

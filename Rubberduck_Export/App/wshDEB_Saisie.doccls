@@ -202,7 +202,7 @@ Private Sub Process_Change(ByVal Target As Range)
         Application.EnableEvents = False
         
         'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(CStr(Target.Text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text), 30, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

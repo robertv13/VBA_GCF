@@ -4,18 +4,17 @@ Option Explicit
 Sub TEC_Evaluation_Procedure(cutoffDate As String)
 
     Dim maxDate As Date
-    Dim Y As Integer, m As Integer, D As Integer
+    Dim Y As Integer, m As Integer, d As Integer
     Y = year(cutoffDate)
     m = month(cutoffDate)
-    D = day(cutoffDate)
-    maxDate = DateSerial(Y, m, D)
+    d = day(cutoffDate)
+    maxDate = DateSerial(Y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
     
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(ws.rows.count, "A").End(xlUp).rows
-    Debug.Print lastUsedRow
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
@@ -174,6 +173,26 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         .value = Format$(total(4), "#,##0.00")
     End With
         
+    'Obtenir le solde du compte TEC au Grand Livre
+    Dim solde As Double
+    solde = Fn_Get_GL_Account_Balance("1210", #7/31/2023#, maxDate)
+    
+    'Afficher le solde des TEC au Grand Livre
+    ws.Range("D3").Font.Bold = True
+    ws.Range("D3").Font.size = 12
+    ws.Range("D3").Font.Color = vbRed
+    Dim message As String
+    message = "Le solde au grand livre pour les TEC est de " & Format$(solde, "###,##0.00 $")
+    If totalValeurTEC = solde Then
+        message = message & ", donc aucune écriture"
+    ElseIf totalValeurTEC > solde Then
+        message = message & ", donc un Débit de " & Format$(totalValeurTEC - solde, "###,##0.00 $")
+    Else
+        message = message & ", donc un Crédit de " & Format$(totalValeurTEC - solde, "###,##0.00 $")
+    End If
+    ws.Range("D3").value = message
+    ws.Range("B1").Select
+    
     'Libérer la mémoire
     Set dictHours = Nothing
     Set prof = Nothing

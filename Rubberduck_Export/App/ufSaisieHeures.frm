@@ -66,7 +66,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
             cmbProfessionnel.value = ""
     End Select
     
-    wshAdmin.Range("TEC_Date").value = "" 'On vide la date pour forcer la saisie
+    ufSaisieHeures.txtDate.value = "" 'On vide la date pour forcer la saisie
     
     ufSaisieHeures.cmbProfessionnel.SetFocus
    
@@ -87,7 +87,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
-                wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(Me.txtClient.value)
+                Me.txtClient_ID.value = Fn_GetID_From_Client_Name(Me.txtClient.value)
                 Exit For
             End If
         Next i
@@ -175,21 +175,14 @@ Public Sub cmbProfessionnel_AfterUpdate()
     End Select
 
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
-        wshAdmin.Range("TEC_Initials").value = ufSaisieHeures.cmbProfessionnel.value
-        wshAdmin.Range("TEC_Prof_ID").value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
+        ufSaisieHeures.txtProf_ID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
         
-        If wshAdmin.Range("TEC_Date").value <> "" Then '2024-09-05 @ 20:50
-            Call Log_Saisie_Heures("event    ", "@00145 - wshAdmin.Range('TEC_Date').value = " & wshAdmin.Range("TEC_Date").value & _
-                    "   y = " & year(wshAdmin.Range("TEC_Date").value) & _
-                    "   m = " & month(wshAdmin.Range("TEC_Date").value) & _
-                    "   d = " & day(wshAdmin.Range("TEC_Date").value) & _
-                    "   type = " & TypeName(wshAdmin.Range("TEC_Date")))
-            ufSaisieHeures.txtDate.value = wshAdmin.Range("TEC_Date").value
-            Call Log_Saisie_Heures("event    ", "@00151 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.value & _
+        If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
+            Call Log_Saisie_Heures("event    ", "@00145 - wshAdmin.Range('TEC_Date').value = " & ufSaisieHeures.txtDate.value & _
                     "   y = " & year(ufSaisieHeures.txtDate.value) & _
                     "   m = " & month(ufSaisieHeures.txtDate.value) & _
                     "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                    "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+                    "   type = " & TypeName(ufSaisieHeures.txtDate))
                     
             Call TEC_Get_All_TEC_AF
             
@@ -230,13 +223,15 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
                                 "   m = " & month(ufSaisieHeures.txtDate.value) & _
                                 "   d = " & day(ufSaisieHeures.txtDate.value) & _
                                 "   type = " & TypeName(ufSaisieHeures.txtDate.value))
-    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value)
-    Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
+    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 30, 15)
+    If fullDate <> "Invalid Date" Then
+        Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
                                 "   y = " & year(fullDate) & _
                                 "   m = " & month(fullDate) & _
                                 "   d = " & day(fullDate) & _
                                 "   type = " & TypeName(fullDate))
-        
+    End If
+    
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
         ufSaisieHeures.txtDate.value = fullDate
@@ -299,7 +294,7 @@ Private Sub txtDate_AfterUpdate()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265", True)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate - " & ufSaisieHeures.txtDate.value, 0)
     
     Call Log_Saisie_Heures("event    ", "@00269 - .txtDate.value =  = " & ufSaisieHeures.txtDate.value & _
                                         "   y = " & year(ufSaisieHeures.txtDate.value) & _
@@ -322,12 +317,12 @@ Private Sub txtDate_AfterUpdate()
                                             "   d = " & day(dateFormated) & _
                                             "   type = " & TypeName(dateFormated) & _
                                             "   après assignation")
-        wshAdmin.Range("TEC_Date").value = dateFormated
-        Call Log_Saisie_Heures("info     ", "@00291 - wshAdmin.Range('TEC_Date').value =  = " & wshAdmin.Range("TEC_Date").value & _
-                                            "   y = " & year(wshAdmin.Range("TEC_Date").value) & _
-                                            "   m = " & month(wshAdmin.Range("TEC_Date").value) & _
-                                            "   d = " & day(wshAdmin.Range("TEC_Date").value) & _
-                                            "   type = " & TypeName(wshAdmin.Range("TEC_Date").value) & _
+        ufSaisieHeures.txtDate.value = dateFormated
+        Call Log_Saisie_Heures("info     ", "@00291 - wshAdmin.Range('TEC_Date').value =  = " & ufSaisieHeures.txtDate.value & _
+                                            "   y = " & year(ufSaisieHeures.txtDate.value) & _
+                                            "   m = " & month(ufSaisieHeures.txtDate.value) & _
+                                            "   d = " & day(ufSaisieHeures.txtDate.value) & _
+                                            "   type = " & TypeName(ufSaisieHeures.txtDate.value) & _
                                             "   après assignation")
     Else
         ufSaisieHeures.txtDate.SetFocus
@@ -336,7 +331,7 @@ Private Sub txtDate_AfterUpdate()
         Exit Sub
     End If
 
-    If wshAdmin.Range("TEC_Prof_ID").value <> "" Then
+    If ufSaisieHeures.txtProf_ID.value <> "" Then
         Call TEC_Get_All_TEC_AF
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
@@ -359,7 +354,10 @@ Private Sub txtClient_AfterUpdate()
     
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333", True)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate - " & ufSaisieHeures.txtClient.value, 0)
+    
+    Me.txtClient_ID.value = Fn_GetID_From_Client_Name(Me.txtClient.value)
+    Call Log_Record("   ufSaisieHeures:txtClient_AfterUpdate - " & ufSaisieHeures.txtClient_ID.value, -1)
     
     If Me.txtClient.value <> Me.txtSavedClient.value Then
         If Me.txtTEC_ID = "" Then
@@ -460,12 +458,9 @@ Sub txtHeures_AfterUpdate()
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
-'        Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - is '" & Me.txtHeures.value & "' <> '" & Me.txtSavedHeures.value & "' ?", -1)
         If Me.txtTEC_ID = "" Then 'Création d'une nouvelle charge
-'            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is Empty '" & Me.txtTEC_ID & "', alors True, True, False, False", -1)
             Call Buttons_Enabled_True_Or_False(True, False, False, True)
-        Else 'Modification d'une charge
-'            Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - Me.txtTEC_ID is NOT Empty '" & Me.txtTEC_ID & "' , alors True, False, True, True", -1)
+        Else 'Modification d'une charge existante
             Call Buttons_Enabled_True_Or_False(False, True, False, True)
         End If
     End If
@@ -541,7 +536,7 @@ Private Sub cmdUpdate_Click()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", -1)
     
-    If wshAdmin.Range("TEC_Current_ID").value <> "" Then
+    If ufSaisieHeures.txtTEC_ID.value <> "" Then
         Call TEC_Modifie_Ligne
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
@@ -559,7 +554,7 @@ Private Sub cmdDelete_Click()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", -1)
     
-    If wshAdmin.Range("TEC_Current_ID").value <> "" Then
+    If ufSaisieHeures.txtTEC_ID.value <> "" Then
         Call TEC_Efface_Ligne
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -583,7 +578,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     With ufSaisieHeures
         Dim TECID As Long
         TECID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
-        wshAdmin.Range("TEC_Current_ID").value = TECID
+        ufSaisieHeures.txtTEC_ID.value = TECID
         txtTEC_ID = TECID
         
         'Retrieve the record in wshTEC_Local
@@ -595,7 +590,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Dim isBilled As Boolean
         isBilled = wshTEC_Local.Range("L" & rowTecID).value
 
-        'Has this charge beeing INVOICED ?
+        'Remplir le userForm, si cette charge n'a pas été facturée
         If Not isBilled Then
             Application.EnableEvents = False
             .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
@@ -607,7 +602,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
             savedClient = .txtClient.value
             .txtSavedClient.value = .txtClient.value
-            wshAdmin.Range("TEC_Client_ID").value = wshTEC_Local.Range("E" & rowTecID).value
+            .txtClient_ID.value = wshTEC_Local.Range("E" & rowTecID).value
     
             .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
             savedActivite = .txtActivite.value

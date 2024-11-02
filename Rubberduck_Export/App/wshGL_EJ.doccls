@@ -14,8 +14,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call GL_EJ_Auto_Import_All
     Call wshGL_EJ_Clear_All_Cells
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
 
     Me.Application.Calculation = xlCalculationAutomatic
 
@@ -25,6 +25,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     With ws
         .Unprotect
         .Range("A:B").EntireColumn.Hidden = True
+        .Range("N:Y").EntireColumn.Hidden = True
     End With
     
     Call SetTabOrder(ws)
@@ -68,6 +69,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Compte has been selected
     If Not Intersect(Target, wshGL_EJ.Range("E9:E23")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
+        If Target.Row = 9 And wshGL_EJ.Range("F4").value = "Remise TPS/TVQ" Then
+            Call GL_EJ_Construire_Remise_TPS_TVQ(Target.Row)
+        End If
     End If
     
     'Debit amount has been selected
@@ -114,7 +118,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text))
+        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -124,7 +128,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Format$(Now(), "dd/mm/yyyy") Then
@@ -145,7 +149,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 .Range("L" & Target.Row).value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.Row).value)
             End If
             
-            If Target.Row > 9 And _
+            If Target.Row > 9 And wshGL_EJ.Range("F4").value <> "Remise TPS/TVQ" And _
                 (.Range("H26").value <> 0 Or .Range("I26").value <> 0) And _
                 .Range("H26").value <> .Range("I26").value Then
                     If .Range("H26").value > .Range("I26").value Then

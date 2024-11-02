@@ -29,6 +29,8 @@ End Function
 
 Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomClient, 0)
+    
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
     On Error Resume Next
@@ -52,6 +54,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result
+        ufSaisieHeures.txtClient_ID.value = result
     Else
         MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
     End If
@@ -59,6 +62,8 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
+    
+    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
 
 End Function
 
@@ -220,6 +225,7 @@ Sub test_Fn_Find_Data_In_A_Range()
 '        End If
 
 End Sub
+
 Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     
     Fn_Valider_Courriel = False
@@ -408,7 +414,7 @@ End Function
 
 Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description - " & glDescr, 0)
     
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
     
@@ -428,6 +434,8 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         dynamicRange.columns(1), dynamicRange.columns(2), _
         "Not Found", 0, 1)
     
+    Call Log_Record("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, -1)
+    
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
     Else
@@ -439,6 +447,23 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set ws = Nothing
 
     Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", startTime)
+
+End Function
+
+Function Fn_Get_GL_Account_Balance(glCode As String, dateDepart As Date, dateFin As Date) As Double '2024-11-02 @ 06:11
+
+    'Utilisation de AdvancedFilter dans GL_Trans
+    Call get_GL_Trans_With_AF(glCode, dateDepart, dateFin, "Date")
+    
+    Dim lastUsedRowResult As Long
+    lastUsedRowResult = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).Row
+    Dim soldeCompte As Double
+    Dim i As Long
+    For i = 2 To lastUsedRowResult
+        soldeCompte = soldeCompte + wshGL_Trans.Cells(i, "V").value - wshGL_Trans.Cells(i, "W").value
+    Next i
+
+    Fn_Get_GL_Account_Balance = soldeCompte
 
 End Function
 
@@ -782,7 +807,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, Y As Long) As Boolean
+Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, Y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
@@ -800,7 +825,7 @@ Function Fn_ValidateDaySpecificMonth(D As Long, m As Long, Y As Long) As Boolean
     If isLeapYear Then mdpm(1) = 29 'Adjust February for Leap Year
     
     If m < 1 Or m > 12 Or _
-       D > mdpm(m - 1) Or _
+       d > mdpm(m - 1) Or _
        Abs(year(Now()) - Y) > 75 Then
             Exit Function
     Else
@@ -842,7 +867,7 @@ Function Fn_Is_Server_Available() As Boolean
     
 End Function
 
-Function Fn_Complete_Date(dateInput As String) As Variant
+Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFutur As Integer) As Variant
     
     Dim dayPart As Long
     Dim monthPart As Long
@@ -900,7 +925,23 @@ Function Fn_Complete_Date(dateInput As String) As Variant
     
     'Construct the full date
     parsedDate = DateSerial(yearPart, monthPart, dayPart)
-    
+    Dim joursEcart As Integer
+    joursEcart = parsedDate - Now()
+    If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
+        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+                    "La date minimale est '" & Format$(Now() - joursArriere, "dd-mm-yyyy") & "'", _
+                    vbCritical, "La date saisie est hors-norme - (Du " & _
+                        Format$(Now() - joursArriere, "dd-mm-yyyy") & " au " & Format$(Now() + joursFutur, "dd-mm-yyyy") & ")"
+        GoTo Invalid_Date
+    End If
+    If joursEcart > 0 And joursEcart > joursFutur Then
+        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+                    "La date maximale est '" & Format$(Now() + joursFutur, "dd-mm-yyyy") & "'", _
+                    vbCritical, "La date saisie est hors-norme - (Du " & _
+                    Format$(Now() - joursArriere, "dd-mm-yyyy") & " au " & Format$(Now() + joursFutur, "dd-mm-yyyy") & ")"
+        GoTo Invalid_Date
+    End If
+   
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
@@ -1041,6 +1082,8 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     Fn_TEC_Is_Data_Valid = False
     
     'Validations first (one field at a time)
+    
+    'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.value = "" Then
         MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
@@ -1049,6 +1092,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
         Exit Function
     End If
 
+    'Date de la charge ?
     If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
         MsgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
@@ -1057,14 +1101,16 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
         Exit Function
     End If
 
-    If ufSaisieHeures.txtClient.value = "" Then
-        MsgBox Prompt:="Le client est OBLIGATOIRE !", _
+    'Nom du client & code de client ?
+    If ufSaisieHeures.txtClient.value = "" Or ufSaisieHeures.txtClient_ID = "" Then
+        MsgBox Prompt:="Le client et son code sont OBLIGATOIRES !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtClient.SetFocus
         Exit Function
     End If
     
+    'Heures valides ?
     If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
         MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
@@ -1156,14 +1202,14 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     
 End Function
 
-Public Function Fn_Get_Tax_Rate(D As Date, taxType As String) As Double
+Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
     Dim Row As Long
     Dim rate As Double
     With wshAdmin
         For Row = 18 To 11 Step -1
             If .Range("L" & Row).value = taxType Then
-                If D >= .Range("M" & Row).value Then
+                If d >= .Range("M" & Row).value Then
                     rate = .Range("N" & Row).value
                     Exit For
                 End If
@@ -1186,10 +1232,10 @@ Public Function Fn_Is_Client_Facturable(clientID As String) As Boolean
         
 End Function
 
-Function Fn_Is_Date_Valide(D As String) As Boolean
+Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False
-    If D = "" Or IsDate(D) = False Then
+    If d = "" Or IsDate(d) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
@@ -1346,7 +1392,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
 End Function
 
-Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
+Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
 
     'Using AdvancedFilter in wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
@@ -1364,7 +1410,7 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, D As Date) As Double
 
     ws.Range("AL3").FormulaR1C1 = glNo
     ws.Range("AM3").FormulaR1C1 = ">=7/31/2024"
-    ws.Range("AN3").FormulaR1C1 = "<" & Format$(D, "mm/dd/yyyy")
+    ws.Range("AN3").FormulaR1C1 = "<" & Format$(d, "mm/dd/yyyy")
     
     ws.Range("A1:J529").AdvancedFilter action:=xlFilterCopy, _
                                        criteriaRange:=ws.Range("AL2:AN3"), _
@@ -1618,11 +1664,11 @@ End Function
 
 Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
 
-    Dim D As Date
-    D = #8/11/2024#
+    Dim d As Date
+    d = #8/11/2024#
     Dim s As Integer
-    s = Fn_Numero_Semaine_Selon_AnneeFinancière(D)
-    MsgBox "Pour le " & Format$(D, "yyyy-MM-dd") & ", la semaine est " & s
+    s = Fn_Numero_Semaine_Selon_AnneeFinancière(d)
+    MsgBox "Pour le " & Format$(d, "yyyy-MM-dd") & ", la semaine est " & s
 
 End Sub
 
@@ -1671,3 +1717,23 @@ Function Fn_ConvertElapsedTime_In_HMS(ByRef elapsedTime As Double) As String
     
 End Function
 
+Function Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d As Date) As Date
+
+    'Cette fonction calcule le premier jour du trimestre pour une date de fin de trimestre (TPS/TVQ)
+    Dim dateTroisMoisAvant As Date
+    
+    'Reculer de trois mois à partir de la date saisie
+    dateTroisMoisAvant = DateAdd("m", -2, d)
+    
+    'Fixer le jour au PREMIER du mois obtenu
+    Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière = DateSerial(year(dateTroisMoisAvant), month(dateTroisMoisAvant), 1)
+    
+End Function
+
+Sub test_Fn_Calcul_Date_Trimestre()
+
+    Dim d As Date
+    d = #12/31/2024#
+    Debug.Print Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d)
+
+End Sub

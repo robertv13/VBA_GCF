@@ -102,7 +102,11 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:get_GL_Trans_With_AF", 0)
 
     Dim glNo As String
-    glNo = Left(compte, InStr(compte, " ") - 1)
+    If InStr(compte, " ") <> 0 Then
+        glNo = Left(compte, InStr(compte, " ") - 1)
+    Else
+        glNo = compte
+    End If
     
     'Setup ADVANCED FILTER with 3 ranges
     
@@ -110,21 +114,30 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
     With wshGL_Trans
         Dim rgData As Range: Set rgData = .Range("A1").CurrentRegion
         
-        'Assign Criteria (3)
+        'Assign 3 criteria
         .Range("L3").value = glNo
-        .Range("M3").value = ">=" & Format$(dateDeb, "mm-dd-yyyy")
-        .Range("N3").value = "<=" & Format$(dateFin, "mm-dd-yyyy")
+        .Range("M3").value = ">=" & CLng(dateDeb)
+'        .Range("M3").value = ">=" & Format$(dateDeb, "mm-dd-yyyy")
+        .Range("N3").value = "<=" & CLng(dateFin)
+'        .Range("N3").value = "<=" & Format$(dateFin, "mm-dd-yyyy")
         Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
         
         'Destination to copy (setup & clear previous results)
         Dim rgCopyToRange As Range: Set rgCopyToRange = .Range("P1").CurrentRegion
         rgCopyToRange.Offset(1).ClearContents
+        Set rgCopyToRange = .Range("P1:Y1")
+        
+        .Range("M8").value = "Dernière utilisation"
+        .Range("M9").value = rgData.Address
+        .Range("M10").value = rgCriteria.Address
+        .Range("M11").value = rgCopyToRange.Address
         
         'Do the Advanced Filter
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
         lastResultUsedRow = .Range("P99999").End(xlUp).Row
+        .Range("M12").value = lastResultUsedRow
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear

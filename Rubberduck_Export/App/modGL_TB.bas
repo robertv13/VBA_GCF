@@ -220,15 +220,15 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         End With
     End With
     
-    Dim D As Date, OK As Long
+    Dim d As Date, OK As Long
     
     Application.ScreenUpdating = False
     
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            D = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
-            If D >= minDate And D <= maxDate Then
+            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
+            If d >= minDate And d <= maxDate Then
                 .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
                 .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter

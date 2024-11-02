@@ -110,6 +110,157 @@ Sub wshGL_EJ_Clear_All_Cells()
 
 End Sub
 
+Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
+
+    Dim dateFin As Date
+    dateFin = wshGL_EJ.Range("K4").value
+    
+    'Remplir la description, si elle est vide
+    If wshGL_EJ.Range("F6").value = "" Then
+        wshGL_EJ.Range("F6").value = "Déclaration TPS/TVQ - Du " & _
+            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd") & " au " & _
+            Format$(dateFin, "yyyy-mmdd")
+    End If
+    
+    Dim cases() As Double
+    ReDim cases(101 To 213)
+    
+    'Remplir le formulaire de déclaration
+    wshGL_EJ.Range("T5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd")
+    wshGL_EJ.Range("V5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd")
+    wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, "yyyy-mm-dd")
+    wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, "yyyy-mm-dd")
+    
+    cases(101) = Fn_Get_GL_Account_Balance("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin)
+    With wshGL_EJ.Range("P10")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = -cases(101)
+    End With
+    
+    'TPS percues
+    cases(105) = Fn_Get_GL_Account_Balance("1202", #7/31/2024#, dateFin)
+    wshGL_EJ.Range("E" & r).value = "TPS percues"
+    If cases(105) <= 0 Then
+        wshGL_EJ.Range("H" & r).value = -cases(105)
+    Else
+        wshGL_EJ.Range("I" & r).value = cases(105)
+    End If
+    r = r + 1
+    With wshGL_EJ.Range("T10")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = -cases(105)
+    End With
+    
+    'TVQ percues
+    cases(205) = Fn_Get_GL_Account_Balance("1203", #7/31/2024#, dateFin)
+    wshGL_EJ.Range("E" & r).value = "TVQ percues"
+    If cases(205) <= 0 Then
+        wshGL_EJ.Range("H" & r).value = -cases(205)
+    Else
+        wshGL_EJ.Range("I" & r).value = cases(205)
+    End If
+    r = r + 1
+    With wshGL_EJ.Range("V10")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = -cases(205)
+    End With
+    
+    cases(108) = Fn_Get_GL_Account_Balance("1200", #7/31/2024#, dateFin)
+    wshGL_EJ.Range("E" & r).value = "TPS payées"
+    If cases(108) <= 0 Then
+        wshGL_EJ.Range("H" & r).value = -cases(108)
+    Else
+        wshGL_EJ.Range("I" & r).value = cases(108)
+    End If
+    r = r + 1
+    With wshGL_EJ.Range("T13")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = cases(108)
+    End With
+    
+    cases(208) = Fn_Get_GL_Account_Balance("1201", #7/31/2024#, dateFin)
+    wshGL_EJ.Range("E" & r).value = "TVQ payées"
+    If cases(208) <= 0 Then
+        wshGL_EJ.Range("H" & r).value = -cases(208)
+    Else
+        wshGL_EJ.Range("I" & r).value = cases(208)
+    End If
+    r = r + 1
+    With wshGL_EJ.Range("V13")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = cases(208)
+    End With
+    
+    cases(113) = -cases(105) - cases(108)
+    With wshGL_EJ.Range("T16")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = cases(113)
+    End With
+    
+    cases(213) = -cases(205) - cases(208)
+    With wshGL_EJ.Range("V16")
+        .Font.Bold = True
+        .Font.size = 12
+        .NumberFormat = "###,##0.00 $"
+        .HorizontalAlignment = xlRight
+        .value = cases(213)
+    End With
+    
+    Dim net As Double
+    If cases(113) + cases(213) > 0 Then
+        With wshGL_EJ.Range("X14")
+            .Font.Bold = True
+            .Font.size = 12
+            .NumberFormat = "###,##0.00 $"
+            .HorizontalAlignment = xlRight
+            .value = cases(113) + cases(213)
+        End With
+        net = cases(113) + cases(213)
+    Else
+        With wshGL_EJ.Range("X10")
+            .Font.Bold = True
+            .Font.size = 12
+            .NumberFormat = "###,##0.00 $"
+            .HorizontalAlignment = xlRight
+            .value = -(cases(113) + cases(213))
+        End With
+        net = -(cases(113) + cases(213))
+    End If
+    
+    'Encaisse
+    wshGL_EJ.Range("E" & r).value = "Encaisse"
+    If net <= 0 Then
+        wshGL_EJ.Range("H" & r).value = -net
+    Else
+        wshGL_EJ.Range("I" & r).value = net
+    End If
+    r = r + 1
+    
+    With wshGL_EJ
+        .Unprotect
+        .Range("N:Y").EntireColumn.Hidden = False
+    End With
+
+End Sub
+
 Sub GL_EJ_Auto_Build_Summary()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", 0)

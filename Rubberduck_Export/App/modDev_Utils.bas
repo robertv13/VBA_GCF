@@ -1817,7 +1817,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     End If
     
     Print #FileNum, TimeStamp & " | " & _
-                        Fn_Get_Windows_Username & " | " & _
+                        Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
                         ThisWorkbook.name & " | " & _
                         oper & " | " & _
                         txt & " | " & _
