@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     With ws
-        .Range("K5").value = Format$(Now(), "dd-mm-yyyy")
+        .Range("K5").value = Now()
         .Range("F5").Select
         previousCellAddress = .Range("F5").Address
     End With

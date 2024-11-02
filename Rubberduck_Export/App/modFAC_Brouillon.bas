@@ -231,7 +231,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         .Range("B23").value = wshBD_Clients.Cells(myInfo(2), fClntMFContactFacturation)
         .Range("B24").value = clientNamePurged
         .Range("B25").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_1) 'Adresse1
-        If wshBD_Clients.Cells(myInfo(2), 7) <> "" Then
+        If Trim(wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_2)) <> "" Then
             .Range("B26").value = wshBD_Clients.Cells(myInfo(2), fClntMFAdresse_2) 'Adresse2
             .Range("B27").value = wshBD_Clients.Cells(myInfo(2), fClntMFVille) & ", " & _
                                 wshBD_Clients.Cells(myInfo(2), fClntMFProvince) & ", " & _
@@ -444,7 +444,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     
     With wshFAC_Brouillon
         .Unprotect
-        .Range("L11:N" & 11 + rngSource.rows.count - 1).value = rngSource.value
+        .Range("L11:L" & 11 + rngSource.rows.count - 1).value = rngSource.value
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlNoRestrictions
 '        .EnableSelection = xlUnlockedCells
@@ -565,7 +565,7 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         End If
         Dim filterDate As Date
         filterDate = dateValue(cutoffDate)
-        .Range("AL3").value = "'<=" & Format$(cutoffDate, "dd/mm/yyyy")
+        .Range("AL3").value = "'<=" & CLng(cutoffDate)
 '        .Range("AL3").NumberFormat = "dd/mm/yyyy"
         
         .Range("AM3").value = isBillable
@@ -752,11 +752,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -905,11 +905,17 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(Row As Long, dateCutOffProjet As Date)
         With cbx
             .name = "chkBox - " & cell.Row
             .Text = ""
-            If Cells(cell.Row, 4).value <= dateCutOffProjet Then
-                .value = True
+            If dateCutOffProjet = "00:00:00" Then
+                If Cells(cell.Row, 4).value < wshFAC_Brouillon.Range("O3").value Then
+                    .value = True
+                Else
+                    .value = False
+                End If
             Else
-                .value = False
-                If dateCutOffProjet <> "00:00:00" Then
+                If Cells(cell.Row, 4).value <= dateCutOffProjet Then
+                    .value = True
+                Else
+                    .value = False
                     newTECapresProjet = True
                 End If
             End If
