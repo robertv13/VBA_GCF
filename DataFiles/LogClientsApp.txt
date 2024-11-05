@@ -45,3 +45,22 @@
 2024-11-02 10:45:20.20 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | txtNomClient_Exit (sortie) | Temps écoulé (en secondes) = 0,0039 | Famille Roch [Isabelle Roch]
 
 2024-11-02 10:46:00.72 | Clients_v4.1.xlsm | Robert M. Vigneault | ***** Fin de session - Workbook_BeforeClose ***** |  |  | 
+2024-11-03 16:10:26.28 | Clients_v4.1.xlsm | Robert M. Vigneault | ***** Début de session - Workbook_Open ***** |  |  | 
+2024-11-03 16:10:26.30 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All |  | 
+2024-11-03 16:10:26.49 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format |  | 
+2024-11-03 16:10:26.59 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format (sortie) | Temps écoulé (en secondes) = 0,0938 | 1103
+
+2024-11-03 16:10:26.66 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All (sortie) | Temps écoulé (en secondes) = 0,3555 | 
+
+2024-11-03 16:10:26.71 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize |  | 
+2024-11-03 16:10:26.72 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm |  | 
+2024-11-03 16:10:26.72 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn |  | 
+2024-11-03 16:10:26.72 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change |  | 
+2024-11-03 16:10:26.73 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change (sortie) | Temps écoulé (en secondes) = 0,0039 | Client_ID
+
+2024-11-03 16:10:26.73 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn (sortie) | Temps écoulé (en secondes) = 0,0078 | 
+
+2024-11-03 16:10:26.78 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm (sortie) | Temps écoulé (en secondes) = 0,0586 |  Row=1104
+
+2024-11-03 16:10:26.78 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize (sortie) | Temps écoulé (en secondes) = 0,0703 | 
+

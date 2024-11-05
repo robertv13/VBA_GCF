@@ -43,6 +43,8 @@ Private Sub Workbook_Open()
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
     Call Create_User_Active_File
     
+    Call Setup_UserDateFormat
+    
     Application.ScreenUpdating = False
     
     DoEvents
@@ -203,5 +205,20 @@ Error_Handling:
     MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
             "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
             "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
+
+End Sub
+
+Sub Setup_UserDateFormat()
+
+    Select Case Fn_Get_Windows_Username
+        Case "GuillaumeCharron", "Guillaume"
+            userDateFormat = "dd/mm/yy"
+        Case "Robert M. Vigneault", "robertmv"
+            userDateFormat = "yyyy-mm-dd"
+        Case "vgervais", "user", "Annie"
+            userDateFormat = "dd/mm/yyyy"
+        Case Else
+            userDateFormat = "dd/mm/yyyy"
+    End Select
 
 End Sub

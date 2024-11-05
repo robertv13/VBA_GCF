@@ -3,6 +3,8 @@ Option Explicit
 
 Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_Creer_Liste_Agee", 0)
+   
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = ThisWorkbook.Sheets("FAC_Comptes_Clients")
     Dim wsPaiements As Worksheet: Set wsPaiements = ThisWorkbook.Sheets("ENC_Détails")
@@ -405,6 +407,8 @@ Next_Invoice:
     Set rngToPrint = Nothing
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
+    
+    Call Log_Record("modCAR_Liste_Agée:CAR_Creer_Liste_Agee", startTime)
     
 End Sub
 

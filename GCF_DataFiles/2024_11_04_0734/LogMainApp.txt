@@ -1,0 +1,81 @@
+2024-11-03_10:03:34.12 | User | APP_v5.C.1.xlsb | ***** Début d'une nouvelle session (Workbook_Open) ***** | 31
+2024-11-03_10:03:34.20 | User | APP_v5.C.1.xlsb | ThisWorkbook:Create_User_Active_File | 31
+2024-11-03_10:03:34.28 | User | APP_v5.C.1.xlsb | ThisWorkbook:Create_User_Active_File | Temps écoulé: 0,0859 secondes | 31
+
+2024-11-03_10:03:34.36 | User | APP_v5.C.1.xlsb | ThisWorkbook:BackupMasterFile | 31
+2024-11-03_10:03:35.28 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée | 31
+2024-11-03_10:03:35.53 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - La copie est réussie | 31
+2024-11-03_10:03:35.69 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé | 31
+2024-11-03_10:03:35.77 | User | APP_v5.C.1.xlsb | ThisWorkbook:BackupMasterFile | Temps écoulé: 1,4180 secondes | 31
+
+2024-11-03_10:03:35.80 | User | APP_v5.C.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | 31
+2024-11-03_10:03:35.86 | User | APP_v5.C.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | Temps écoulé: 0,0586 secondes | 31
+
+2024-11-03_10:03:35.97 | User | APP_v5.C.1.xlsb | modAppli:Write_Info_On_Main_Menu | 31
+2024-11-03_10:03:36.11 | User | APP_v5.C.1.xlsb | modAppli:Write_Info_On_Main_Menu | Temps écoulé: 0,1445 secondes | 31
+
+2024-11-03_10:03:36.25 | User | APP_v5.C.1.xlsb | ThisWorkbook:Workbook_Open | Temps écoulé: 2,1367 secondes | 31
+
+2024-11-03_10:03:39.64 | User | APP_v5.C.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 31
+2024-11-03_10:03:39.69 | User | APP_v5.C.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | Temps écoulé: 0,0625 secondes | 31
+
+2024-11-03_10:03:39.74 | User | APP_v5.C.1.xlsb | modMenu:Delete_User_Active_File | 31
+2024-11-03_10:03:39.88 | User | APP_v5.C.1.xlsb | modMenu:Delete_User_Active_File | Temps écoulé: 0,1484 secondes | 31
+
+2024-11-03_10:03:39.96 | User | APP_v5.C.1.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** | 31
+
+2024-11-03_10:17:15.62 | User | APP_v5.C.1.xlsb | ***** Début d'une nouvelle session (Workbook_Open) ***** | 31
+2024-11-03_10:17:15.71 | User | APP_v5.C.1.xlsb | ThisWorkbook:Create_User_Active_File | 31
+2024-11-03_10:17:15.79 | User | APP_v5.C.1.xlsb | ThisWorkbook:Create_User_Active_File | Temps écoulé: 0,0859 secondes | 31
+
+2024-11-03_10:17:15.87 | User | APP_v5.C.1.xlsb | ThisWorkbook:BackupMasterFile | 31
+2024-11-03_10:17:16.89 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée | 31
+2024-11-03_10:17:17.13 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - La copie est réussie | 31
+2024-11-03_10:17:17.26 | User | APP_v5.C.1.xlsb |    ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé | 31
+2024-11-03_10:17:17.31 | User | APP_v5.C.1.xlsb | ThisWorkbook:BackupMasterFile | Temps écoulé: 1,4492 secondes | 31
+
+2024-11-03_10:17:17.36 | User | APP_v5.C.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | 31
+2024-11-03_10:17:17.41 | User | APP_v5.C.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | Temps écoulé: 0,0586 secondes | 31
+
+2024-11-03_10:17:17.67 | User | APP_v5.C.1.xlsb | modAppli:Write_Info_On_Main_Menu | 31
+2024-11-03_10:17:17.84 | User | APP_v5.C.1.xlsb | modAppli:Write_Info_On_Main_Menu | Temps écoulé: 0,1797 secondes | 31
+
+2024-11-03_10:17:17.91 | User | APP_v5.C.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 31
+2024-11-03_10:17:17.96 | User | APP_v5.C.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | Temps écoulé: 0,0625 secondes | 31
+
+2024-11-03_10:17:18.09 | User | APP_v5.C.1.xlsb | ThisWorkbook:Workbook_Open | Temps écoulé: 2,4727 secondes | 31
+
+2024-11-03_10:17:20.13 | User | APP_v5.C.1.xlsb | ufSaisieHeures:UserForm_Activate - Starting @00014 | 31
+2024-11-03_10:17:20.18 | User | APP_v5.C.1.xlsb | ufSaisieHeures:UserForm_Activate | 31
+2024-11-03_10:17:20.22 | User | APP_v5.C.1.xlsb | modImport:Client_List_Import_All | 31
+2024-11-03_10:17:20.74 | User | APP_v5.C.1.xlsb | modImport:Client_List_Import_All | Temps écoulé: 0,5273 secondes | 31
+
+2024-11-03_10:17:20.80 | User | APP_v5.C.1.xlsb | modImport:TEC_Import_All | 31
+2024-11-03_10:17:21.53 | User | APP_v5.C.1.xlsb | modImport:TEC_Import_All | Temps écoulé: 0,7344 secondes | 31
+
+2024-11-03_10:17:21.60 | User | APP_v5.C.1.xlsb | ufSaisieHeures:UserForm_Activate | Temps écoulé: 1,4258 secondes | 31
+
+2024-11-03_10:17:26.18 | User | APP_v5.C.1.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate | 31
+2024-11-03_10:17:29.43 | User | APP_v5.C.1.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate | Temps écoulé: 3,2617 secondes | 31
+
+2024-11-03_10:17:30.47 | User | APP_v5.C.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate | 31
+2024-11-03_10:17:30.52 | User | APP_v5.C.1.xlsb | modFunctions:Fn_Complete_Date @00608   y = 2024   m = 3   d = 11 parsedDate='2024-03-11' | 31
+2024-11-03_10:17:30.56 | User | APP_v5.C.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate | Temps écoulé: 0,0977 secondes | 31
+
+2024-11-03_10:17:30.61 | User | APP_v5.C.1.xlsb | ufSaisieHeures:txtDate_AfterUpdate | 31
+2024-11-03_10:17:30.66 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 31
+2024-11-03_10:17:30.79 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | Temps écoulé: 0,1250 secondes | 31
+
+2024-11-03_10:17:30.82 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 31
+2024-11-03_10:17:30.87 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 31
+2024-11-03_10:17:30.91 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 31
+2024-11-03_10:17:31.27 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | Temps écoulé: 0,3711 secondes | 31
+
+2024-11-03_10:17:31.32 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 31
+2024-11-03_10:17:31.54 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | Temps écoulé: 0,2266 secondes | 31
+
+2024-11-03_10:17:31.58 | User | APP_v5.C.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | Temps écoulé: 0,7227 secondes | 31
+
+2024-11-03_10:17:31.63 | User | APP_v5.C.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 31
+2024-11-03_10:17:31.79 | User | APP_v5.C.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | Temps écoulé: 0,1758 secondes | 31
+

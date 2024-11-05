@@ -470,7 +470,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
-    Dim dict_nom_client_systeme As New Dictionary
+'    Dim dict_nom_client_systeme As New Dictionary
     
     Dim i As Long, code As String, nom As String, nomClientSysteme As String
     Dim eMail As String
@@ -501,16 +501,16 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_code = cas_doublon_code + 1
         End If
         
-        'Doublon sur le nom de client systeme (si utilisé) ?
-        If Trim(nomClientSysteme) <> "" Then
-            If dict_nom_client_systeme.Exists(nomClientSysteme) = False Then
-                dict_nom_client_systeme.Add nomClientSysteme, code
-            Else
-                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom Système '" & nomClientSysteme & "' est un doublon pour le code '" & code & "'")
-                r = r + 1
-                cas_doublon_nom_client_Systeme = cas_doublon_nom_client_Systeme + 1
-            End If
-        End If
+'        'Doublon sur le nom de client systeme (si utilisé) ?
+'        If Trim(nomClientSysteme) <> "" Then
+'            If dict_nom_client_systeme.Exists(nomClientSysteme) = False Then
+'                dict_nom_client_systeme.Add nomClientSysteme, code
+'            Else
+'                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom Système '" & nomClientSysteme & "' est un doublon pour le code '" & code & "'")
+'                r = r + 1
+'                cas_doublon_nom_client_Systeme = cas_doublon_nom_client_Systeme + 1
+'            End If
+'        End If
         
         If Trim(arr(i, 6)) <> "" Then
             If Fn_ValiderCourriel(arr(i, 6)) = False Then
@@ -543,13 +543,13 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     End If
     
-    If cas_doublon_nom_client_Systeme = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de nom de client Système")
-        r = r + 1
-    Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom_client_Systeme & " cas de doublons pour les noms Système")
-        r = r + 1
-    End If
+'    If cas_doublon_nom_client_Systeme = 0 Then
+'        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de nom de client Système")
+'        r = r + 1
+'    Else
+'        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom_client_Systeme & " cas de doublons pour les noms Système")
+'        r = r + 1
+'    End If
     
     If cas_courriel_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Toutes les adresses courriel sont valides")
@@ -565,7 +565,7 @@ Clean_Exit:
     'Libérer la mémoire
     Set dict_code_client = Nothing
     Set dict_nom_client = Nothing
-    Set dict_nom_client_systeme = Nothing
+'    Set dict_nom_client_systeme = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -2078,7 +2078,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2136 'What is the last TECID analyzed ?
+    lastTECIDReported = 2183 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

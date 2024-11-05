@@ -41,7 +41,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B20").value = ""
             .Range("B24").value = False
             .Range("B26").value = False
-            .Range("B27").value = True
+'            .Range("B27").value = True
             .Range("B51, B52, B53, B54").value = "" 'Requests for invoice
             .Range("R44:T48").ClearContents 'Hours & Fees summary from request for invoice
             Application.EnableEvents = True
@@ -105,8 +105,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         If wshFAC_Brouillon.Range("B51").value <> "" Then
             Application.EnableEvents = False
             projetID = CLng(wshFAC_Brouillon.Range("B52").value)
-            'Get the Entête for this projetID
-            lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).Row
+            'Obtenir l'entête pour ce projet de facture
+            lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.rows.count, "A").End(xlUp).Row
             Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
             Dim result As Variant
             result = Application.WorksheetFunction.XLookup(projetID, _
@@ -135,10 +135,19 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                     If arr(ii - 43, 1) <> "" And arr(ii - 43, 2) <> 0 Then
                         wshFAC_Brouillon.Range("R" & r).value = arr(ii - 43, 1)
                         wshFAC_Brouillon.Range("S" & r).value = arr(ii - 43, 2)
+                        If wshFAC_Brouillon.Range("S" & r).value <> 0 Then
+                            With wshFAC_Brouillon.Range("S" & r).Interior
+                                .Pattern = xlNone
+                                .TintAndShade = 0
+                                .PatternTintAndShade = 0
+                            End With
+                        End If
                         wshFAC_Brouillon.Range("S" & r).NumberFormat = "#,##0.00"
                         wshFAC_Brouillon.Range("T" & r).value = arr(ii - 43, 3)
                         wshFAC_Brouillon.Range("T" & r).NumberFormat = "#,##0.00 $"
-                        wshFAC_Brouillon.Range("U" & r).formula = "=S" & r & "*T" & r & ""
+                        Dim s As String
+                        s = "=if(R" & r & "<>"""", S" & r & "*T" & r & ")"
+                        wshFAC_Brouillon.Range("U" & r).formula = "=if(R" & r & "<>"""", S" & r & "*T" & r & ")"
                         r = r + 1
                    End If
                 Next ii
@@ -285,7 +294,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         
     'Adjust hourly rate base on the date
     Dim lastUsedProfInSummary As Long
-    lastUsedProfInSummary = wshFAC_Brouillon.Range("W999").End(xlUp).Row
+    lastUsedProfInSummary = wshFAC_Brouillon.Cells(wshFAC_Brouillon.rows.count, "W").End(xlUp).Row
     
     Dim dateTauxHoraire As Date
     dateTauxHoraire = d
@@ -295,15 +304,6 @@ Sub FAC_Brouillon_Date_Change(d As String)
         profID = wshFAC_Brouillon.Range("W" & i).value
         Dim hRate As Currency
         hRate = Fn_Get_Hourly_Rate(profID, dateTauxHoraire)
-        
-'        Dim j As Integer
-'        For j = 19 To 26
-'            If wshAdmin.Range("D" & j).value = wshFAC_Brouillon.Range("W" & i).value Then
-'                If CDate(d) >= CDate(wshAdmin.Range("E" & j).value) Then
-'                    hRate = wshAdmin.Range("F" & j).value
-'                End If
-'            End If
-'        Next j
         wshFAC_Brouillon.Range("T" & i).value = hRate
     Next i
     
@@ -517,8 +517,8 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c5 = ConvertValueBooleanToText(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
-    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
-'    Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
+'    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
+    Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     Dim cutOffDateProjet As Date
     cutOffDateProjet = wshFAC_Brouillon.Range("B53").value
     Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet)
@@ -528,10 +528,10 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 End Sub
 
 Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
-        cutoffDate As Date, _
-        isBillable As String, _
-        isInvoiced As String, _
-        isDeleted As String)
+                                        cutoffDate As Date, _
+                                        isBillable As String, _
+                                        isInvoiced As String, _
+                                        isDeleted As String)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", 0)
     
@@ -540,34 +540,26 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
     Application.ScreenUpdating = False
 
     With ws
-        'Is there anything to filter ?
+        'Y a-t-il des données à filtrer ?
         Dim lastSourceRow As Long, lastResultRow As Long
-        lastSourceRow = .Range("A99999").End(xlUp).Row 'Last TEC Entry row
+        lastSourceRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Define the source area Range
+        'Define the data source area Range
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastSourceRow)
         .Range("AM10").value = sRng.Address
         
         'Define and Clear the destination area Range
         Dim dRng As Range
-        lastResultRow = .Range("AQ9999").End(xlUp).Row
+        lastResultRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).Row
         If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).ClearContents
         Set dRng = .Range("AQ2:BE2")
         .Range("AM11").value = dRng.Address
         
-        'Define the Criteria Range
+        'Define the five criteria
         Dim cRng As Range
-        If clientID <> "" Then
-            .Range("AK3").value = clientID
-        Else
-            .Range("AK3").value = ""
-        End If
-        Dim filterDate As Date
-        filterDate = dateValue(cutoffDate)
+        .Range("AK3").value = clientID
         .Range("AL3").value = "'<=" & CLng(cutoffDate)
-'        .Range("AL3").NumberFormat = "dd/mm/yyyy"
-        
         .Range("AM3").value = isBillable
         If isInvoiced <> True Then
             .Range("AN3").value = isInvoiced
@@ -656,22 +648,22 @@ Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
                 ws.Cells(i, "J").value = estFacturable And _
                 ws.Cells(i, "L").value = estFacturee And _
                 ws.Cells(i, "N").value = estDetruit Then
-                ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
-                ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
-                ws.Cells(rr, "AS").value = ws.Cells(i, "C").value
-                ws.Cells(rr, "AT").value = ws.Cells(i, "D").value
-                ws.Cells(rr, "AU").value = ws.Cells(i, "E").value
-                ws.Cells(rr, "AV").value = ws.Cells(i, "G").value
-                ws.Cells(rr, "AW").value = ws.Cells(i, "H").value
-                ws.Cells(rr, "AX").value = ws.Cells(i, "I").value
-                ws.Cells(rr, "AY").value = ws.Cells(i, "J").value
-                ws.Cells(rr, "AZ").value = ws.Cells(i, "K").value
-                ws.Cells(rr, "BA").value = ws.Cells(i, "L").value
-                ws.Cells(rr, "BB").value = ws.Cells(i, "M").value
-                ws.Cells(rr, "BC").value = ws.Cells(i, "N").value
-                ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
-                ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
-                rr = rr + 1
+                    ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
+                    ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
+                    ws.Cells(rr, "AS").value = ws.Cells(i, "C").value
+                    ws.Cells(rr, "AT").value = ws.Cells(i, "D").value
+                    ws.Cells(rr, "AU").value = ws.Cells(i, "E").value
+                    ws.Cells(rr, "AV").value = ws.Cells(i, "G").value
+                    ws.Cells(rr, "AW").value = ws.Cells(i, "H").value
+                    ws.Cells(rr, "AX").value = ws.Cells(i, "I").value
+                    ws.Cells(rr, "AY").value = ws.Cells(i, "J").value
+                    ws.Cells(rr, "AZ").value = ws.Cells(i, "K").value
+                    ws.Cells(rr, "BA").value = ws.Cells(i, "L").value
+                    ws.Cells(rr, "BB").value = ws.Cells(i, "M").value
+                    ws.Cells(rr, "BC").value = ws.Cells(i, "N").value
+                    ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
+                    ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
+                    rr = rr + 1
             End If
         Next i
         
@@ -730,14 +722,14 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
         For i = 3 To lastUsedRow
             arr(i - 2, 1) = .Range("AT" & i).value 'Date
             arr(i - 2, 2) = .Range("AS" & i).value 'Prof
-            arr(i - 2, 3) = .Range("AV" & i).value 'Description
-            arr(i - 2, 4) = .Range("AW" & i).value 'Heures
-            totalHres = totalHres + .Range("AW" & i).value
-            arr(i - 2, 5) = .Range("BA" & i).value 'Facturée ou pas
+            arr(i - 2, 3) = .Range("AW" & i).value 'Description
+            arr(i - 2, 4) = .Range("AX" & i).value 'Heures
+            totalHres = totalHres + .Range("AX" & i).value
+            arr(i - 2, 5) = .Range("BB" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("AQ" & i).value 'TEC_ID
             'Commentaires doivent être affichés
-            If Trim(.Range("AX" & i).value) <> "" Then
-                fraisDiversMsg = Trim(.Range("AX" & i).value)
+            If Trim(.Range("AY" & i).value) <> "" Then
+                fraisDiversMsg = Trim(.Range("AY" & i).value)
                 collFraisDivers.Add fraisDiversMsg
             End If
         Next i
@@ -752,19 +744,20 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
     End If
     
-    lastUsedRow = wshFAC_Brouillon.Range("D9999").End(xlUp).Row
+    lastUsedRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.rows.count, "D").End(xlUp).Row
     If lastUsedRow < 7 Then Exit Sub 'No rows
 
+    'Section des TEC pour le client à une date données
     With wshFAC_Brouillon
         .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
@@ -829,6 +822,9 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         End If
     Next i
     
+    'On ne pourra plus demander une nouvelle facture, uen fois rendu ici...
+    wshFAC_Brouillon.Range("B27").value = True
+    
     Call FAC_Finale_Cacher_Heures
     Call FAC_Finale_Montrer_Sommaire_Taux
     
@@ -855,8 +851,8 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     Application.Wait (Now + TimeValue("0:00:02")) '2024-09-06 @ 13:42
     
     Application.EnableEvents = False
+    
     wshFAC_Brouillon.Range("B27").value = False
-    Application.EnableEvents = True
     
     'Masquer la forme (détail TEC) si elle est présente
     On Error Resume Next
@@ -866,6 +862,8 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
         shapeTextBox.Visible = msoFalse
     End If
     On Error GoTo 0
+    
+    Application.EnableEvents = True
     
     wshFAC_Brouillon.Visible = xlSheetHidden
     
@@ -1059,11 +1057,60 @@ Sub Adjust_Formulas_In_The_Summary(lur As Long)
             If InStr(1, f, "999") Then
                 f = Replace(f, "999", lur)
             Else
-                f = "=SUMIFS(G7:G" & lur & ", C7:C" & lur & ", " & "TRUE, E7:E" & lur & ", R" & i & ")"
+                f = "=SUMIFS($G$7:$G$" & lur & ", $C$7:$C$" & lur & ", " & "TRUE, $E$7:$E$" & lur & ", R" & i & ")"
             End If
             wshFAC_Brouillon.Range("S" & i).formula = f
         End If
     Next i
+    Application.EnableEvents = True
+
+    'Une fois le sommaire des TEC à facturer rempli, trier en ordre descendant de la valeur
+    Dim rngTECSummary As Range
+    Set rngTECSummary = wshFAC_Brouillon.Range("R25:U34")
+    Call FAC_Brouillon_Sort_TEC_Summary(rngTECSummary)
+    
+End Sub
+
+Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
+
+    Dim formules As Object
+    Set formules = CreateObject("Scripting.Dictionary")
+    
+    'Enregistrer les formules et copier leurs valeurs dans les cellules
+    Dim cell As Range
+    For Each cell In r
+        If cell.HasFormula Then
+            formules.Add cell.Address, cell.formula 'Utiliser l'adresse comme clé
+            cell.value = cell.value 'Remplacer la formule par sa valeur temporairement
+        End If
+    Next cell
+    
+    'Tri descendant sur la 4ème colonne
+    r.Sort Key1:=r.columns(4), Order1:=xlDescending, Header:=xlNo
+    
+    'Parcourir chaque ligne pour vider les cellules non utilisées
+    Dim i As Long
+    For i = 1 To r.rows.count
+        If r.Cells(i, 2).value = 0 Then
+            'Vider toutes les cellules de la ligne si la valeur de la 2ème colonne est 0
+            r.rows(i).ClearContents
+        End If
+    Next i
+    
+    'Réinsérer les formules dans les cellules concernées uniquement si la colonne 2 n'est pas zéro
+    Dim addr As Variant
+    Dim ligne As Integer
+    Application.EnableEvents = False
+    For Each addr In formules.keys
+        ligne = r.Worksheet.Range(addr).Row 'Obtenir le numéro de la ligne de l'adresse
+        'Vérifier la valeur de la 2ème colonne dans la ligne correspondante
+        If r.Worksheet.Cells(ligne, 19).value <> 0 Then
+            'Vérifier si l'adresse est dans la colonne 2 ou 4
+            If r.Worksheet.Range(addr).Column = 19 Or r.Worksheet.Range(addr).Column = 21 Then
+                r.Worksheet.Range(addr).formula = formules(addr)
+            End If
+        End If
+    Next addr
     Application.EnableEvents = True
 
 End Sub

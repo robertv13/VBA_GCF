@@ -826,7 +826,7 @@ Sub FAC_Confirmation_Facture(invNo As String)
     'Clear the cells on the current Worksheet
     Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Facture", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Facture(" & invNo & ")", startTime)
     
 End Sub
 

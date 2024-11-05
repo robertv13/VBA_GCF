@@ -19,12 +19,12 @@ Option Explicit
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
-Public Const MAXWIDTH As Long = 192
 
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
 
+'Variable utilisée pour éviter l'évènement Activate à chaque fois que l'on revient dans une feuille
 Public fromMenu As Boolean '2024-09-03 @ 06:14
 
 'Niveau de détail pour le log de SaisieHeures
@@ -32,6 +32,9 @@ Public logSaisieHeuresVeryDetailed As Boolean
 
 'Pour assurer un contrôle dans Facture Finale
 Public flagEtapeFacture As Integer
+
+'UserDateFormat
+Public userDateFormat As String
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DB_Clients '2024-10-26 @ 17:41
@@ -171,7 +174,7 @@ Sub Write_Info_On_Main_Menu()
     With wshMenu.Range("$A$30")
         .Font.size = 8
         .Font.Color = vbBlue
-        .value = "'" & CStr("Heure - " & Format$(Now(), "dd-mm-yyyy hh:mm:ss"))
+        .value = "'" & CStr("Heure - " & Format$(Now(), userDateFormat & " hh:mm:ss"))
     End With
     
     With wshMenu.Range("$A$31")
@@ -229,6 +232,8 @@ End Sub
 
 Sub UpdatePivotTables()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:UpdatePivotTables", 0)
+    
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable
     
@@ -244,6 +249,8 @@ Sub UpdatePivotTables()
     'Libérer la mémoire
     Set pt = Nothing
     Set ws = Nothing
+    
+    Call Log_Record("modAppli:UpdatePivotTables", startTime)
     
 End Sub
 

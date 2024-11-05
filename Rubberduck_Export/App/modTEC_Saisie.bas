@@ -155,7 +155,6 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     TECID = -ufSaisieHeures.txtTEC_ID.value
     
     Call TEC_Record_Add_Or_Update_To_DB(TECID)  'Write to external XLSX file - 2023-12-23 @ 07:07
-    
     Call TEC_Record_Add_Or_Update_Locally(TECID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
@@ -317,7 +316,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309", True)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '" & TECID & "'", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(" & TECID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -517,7 +516,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & TECID, startTime)
 
     Exit Sub
     
@@ -532,13 +531,15 @@ ErrorHandler:
     Set conn = Nothing
     Set rs = Nothing
     
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & TECID, startTime)
+    
 End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record to local worksheet
     
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536", True)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(" & TECID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -553,6 +554,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     Call Log_Saisie_Heures("info     ", "@00550 - dateValue = " & dateValue & "   type = " & TypeName(dateValue) & "   après assignation")
     
     If TECID = 0 Then 'Add a new record
+        Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - Add new record", -1) '2024-10-05 @ 07:32
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
         nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).Row + 1
@@ -575,7 +577,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("P" & nextRowNumber).value = ""
         End With
     Else
-        Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - SoftDeleteStart - " & CStr(TECID), -1) '2024-10-05 @ 07:32
+        Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - Update -OR- Delete - " & CStr(TECID), -1)
         'What is the row number for the TEC_ID
         lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
         Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
@@ -589,6 +591,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End If
 
         If TECID > 0 Then 'Modify the record
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - Update - " & CStr(TECID), -1)
             With wshTEC_Local
                 .Range("E" & rowToBeUpdated).value = ufSaisieHeures.txtClient_ID.value
                 .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
@@ -596,7 +599,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("H" & rowToBeUpdated).value = hoursValue
                 .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
                 .Range("J" & rowToBeUpdated).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-                .Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                .Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
                 .Range("L" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
                 .Range("M" & rowToBeUpdated).value = ""
                 .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
@@ -604,9 +607,12 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
-            wshTEC_Local.Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-            wshTEC_Local.Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+            Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - SoftDelete - " & CStr(-TECID), -1)
+            With wshTEC_Local
+                .Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
+                .Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+            End With
         End If
     End If
     
@@ -615,7 +621,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - " & TECID, startTime)
 
 End Sub
 
@@ -783,9 +789,9 @@ End Sub
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739", True)
-    
+
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", 0)
-    
+
     Dim pt As pivotTable
     For Each pt In wshTEC_TDB_PivotTable.PivotTables
         pt.RefreshTable

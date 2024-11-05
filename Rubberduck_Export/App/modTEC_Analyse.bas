@@ -657,12 +657,12 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             rs.Fields("ClientID").value = clientID
             rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
             rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
-            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "dd/mm/yyyy")
+            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "yyyy-mm-dd")
             rs.Fields("Date").value = dateTEC
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
             rs.Fields("estDetruite") = 0 'Faux
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
-            TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             rs.Fields("TimeStamp").value = TimeStamp
         rs.update
     Next l
@@ -702,12 +702,12 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
         wshFAC_Projets_Détails.Range("C" & rn).value = clientID
         wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
         wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
-        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "dd/mm/yyyy")
+        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "yyyy-mm-dd")
         wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
         wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
         wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
         wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
-        TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
         rn = rn + 1
     Next i
@@ -781,7 +781,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
             rs.Fields("Hono" & c).value = arr(c, 4)
         Next c
         rs.Fields("estDétruite").value = 0 'Faux
-        TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.Fields("TimeStamp").value = TimeStamp
     rs.update
     
@@ -826,7 +826,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
         Next j
     Next i
     wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
-    TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+    TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
     
     Call Log_Record("modTEC_Saisie_Analyse:FAC_Projet_Entête_Add_Record_Locally", startTime)

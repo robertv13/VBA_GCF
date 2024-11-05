@@ -86,6 +86,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     wshFAC_Brouillon.Select
     Application.Wait (Now + TimeValue("0:00:02"))
     wshFAC_Brouillon.Range("E3").value = "" 'Reset client to empty
+    
     wshFAC_Brouillon.Range("B27").value = False
     
     Call FAC_Brouillon_New_Invoice '2024-03-12 @ 08:08 - Maybe ??
@@ -1230,11 +1231,17 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     '1. Copier les valeurs uniquement
     plageSource.Copy
     wsCible.Range("A1").PasteSpecial Paste:=xlPasteValues
-
+    
+    DoEvents
+    Application.CutCopyMode = False
+    
     '2. Copier les formats de cellules
     plageSource.Copy
     wsCible.Range("A1").PasteSpecial Paste:=xlPasteFormats
 
+    DoEvents
+    Application.CutCopyMode = False
+    
     '3. Conserver la taille des colonnes
     Dim i As Integer
     For i = 1 To plageSource.columns.count
@@ -1260,6 +1267,9 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
             End With
         End If
     Next forme
+    
+    DoEvents
+    Application.CutCopyMode = False
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
