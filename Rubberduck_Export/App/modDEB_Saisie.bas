@@ -128,9 +128,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                                               - wshDEB_Saisie.Range("L" & l).value _
                                               - wshDEB_Saisie.Range("M" & l).value)
             rs.Fields("AutreRemarque").value = ""
-'            rs.Fields("TimeStamp").value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            Debug.Print "DEB_Trans - " & CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.update
     Next l
     
@@ -506,7 +504,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     With wshDEB_Saisie
         .Range("F4:H4, J4:M4, F6:J6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").value = Now()
+        .Range("O4").value = Format$(Now(), wshAdmin.Range("B1").value)
         .ckbRecurrente = False
     End With
     

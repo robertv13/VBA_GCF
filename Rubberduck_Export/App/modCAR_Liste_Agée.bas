@@ -78,7 +78,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
         End If
         'Est-ce que la facture est à l'intérieur e la date limite ?
         dateFacture = CDate(rngFactures.Cells(i, 2).value)
-        If rngFactures.Cells(i, 2).value > wshCAR_Liste_Agée.Range("H4").value Then
+        If rngFactures.Cells(i, 2).value > CDate(wshCAR_Liste_Agée.Range("H4").value) Then
             Debug.Print "#0081 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
             GoTo Next_Invoice
         End If
@@ -147,7 +147,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
                 r = r + 1
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).value = Format$(dateFacture, "dd/mm/yyyy")
+                wshCAR_Liste_Agée.Cells(r, 4).value = Format$(dateFacture, wshAdmin.Range("B1").value)
                 wshCAR_Liste_Agée.Cells(r, 5).value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -166,7 +166,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
-                wshCAR_Liste_Agée.Cells(r, 5).value = Format$(dateFacture, "dd/mm/yyyy")
+                wshCAR_Liste_Agée.Cells(r, 5).value = Format$(dateFacture, wshAdmin.Range("B1").value)
                 wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"

@@ -112,7 +112,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set rngCriteria = wsSource.Range("AK2:AO3")
     With wsSource
         .Range("AK3").value = ""
-        .Range("AL3").value = "<=" & CLng(wsDest.Range("H3").value)
+        .Range("AL3").value = "<=" & CLng(CDate(wsDest.Range("H3").value))
         .Range("AM3").value = "VRAI"
         .Range("AN3").value = "FAUX"
         .Range("AO3").value = "FAUX"

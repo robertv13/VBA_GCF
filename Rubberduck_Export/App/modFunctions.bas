@@ -929,16 +929,16 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     joursEcart = parsedDate - Now()
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date minimale est '" & Format$(Now() - joursArriere, "dd-mm-yyyy") & "'", _
+                    "La date minimale est '" & Format$(Now() - joursArriere, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                        Format$(Now() - joursArriere, "dd-mm-yyyy") & " au " & Format$(Now() + joursFutur, "dd-mm-yyyy") & ")"
+                        Format$(Now() - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Now() + joursFutur, wshAdmin.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date maximale est '" & Format$(Now() + joursFutur, "dd-mm-yyyy") & "'", _
+                    "La date maximale est '" & Format$(Now() + joursFutur, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                    Format$(Now() - joursArriere, "dd-mm-yyyy") & " au " & Format$(Now() + joursFutur, "dd-mm-yyyy") & ")"
+                    Format$(Now() - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Now() + joursFutur, wshAdmin.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
    
@@ -1401,6 +1401,9 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     
     Application.EnableEvents = False
     
+    'Source (data) range
+    lastUsedRowData = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    
     'Destination Range
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).Row
@@ -1409,10 +1412,10 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     End If
 
     ws.Range("AL3").FormulaR1C1 = glNo
-    ws.Range("AM3").FormulaR1C1 = ">=7/31/2024"
-    ws.Range("AN3").FormulaR1C1 = "<" & Format$(d, "mm/dd/yyyy")
+    ws.Range("AM3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
+    ws.Range("AN3").FormulaR1C1 = "<" & CLng(d)
     
-    ws.Range("A1:J529").AdvancedFilter action:=xlFilterCopy, _
+    ws.Range("A1:J" & lastUsedRowData).AdvancedFilter action:=xlFilterCopy, _
                                        criteriaRange:=ws.Range("AL2:AN3"), _
                                        CopyToRange:=ws.Range("AP1:AY1"), _
                                        Unique:=False

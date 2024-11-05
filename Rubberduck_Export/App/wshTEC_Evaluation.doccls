@@ -93,15 +93,15 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("K3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 99, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshTEC_Evaluation_75")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -110,7 +110,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.value)

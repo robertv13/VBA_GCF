@@ -133,17 +133,17 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(CStr(Target.value), 999, 15)
+        fullDate = Fn_Complete_Date(Target.value, 999, 15)
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshGL_BV_139")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").value = Range("J1").value
@@ -161,8 +161,8 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
                 
         'Force redisplay of GL Transactions details
         Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
-            Format$(Range("B8").value, "dd/mm/yyyy"), _
-            Format$(Range("B9").value, "dd/mm/yyyy"))
+            Format$(Range("B8").value, wshAdmin.Range("B1").value), _
+            Format$(Range("B9").value, wshAdmin.Range("B1").value))
     End If
     
 Clean_Exit:

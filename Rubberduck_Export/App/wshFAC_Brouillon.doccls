@@ -49,9 +49,9 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
     
-    Me.Range("O3").value = Now() '2024-09-05 @ 09:29
+    Me.Range("O3").value = Format$(Now(), wshAdmin.Range("B1").value)
     Me.Range("B27").value = False '2024-09-03 @ 06:33
 
     Me.Range("E3").value = "" '2024-09-02 @ 23:36
@@ -166,30 +166,29 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 30, 15)
+        fullDate = Fn_Complete_Date(Target.Text, 30, 15)
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
-'            Application.GoTo wshFAC_Brouillon.Range("O9")
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshFAC_Brouillon_136")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If Range("O3").value > Now() Then
+        If CDate(Range("O3").value) > Now() Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
         Debug.Print "Worksheet_Change_153   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
-        Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
+        Call FAC_Brouillon_Date_Change(CDate(wshFAC_Brouillon.Range("O3").value))
         
         Set rng = wshFAC_Brouillon.Range("O9")
         GoTo ExitSub

@@ -2875,11 +2875,13 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                 .Range("A2:P" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("F2:F" & lastUsedRow & ", G2:G" & lastUsedRow & ", I2:I" & lastUsedRow & _
                             ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
+                            
                 .Range("H2:H" & lastUsedRow).NumberFormat = "#0.00"
-                .Range("K2:K" & lastUsedRow).NumberFormat = "dd/mm/yyyy hh:mm:ss"
-                .columns("F").ColumnWidth = 45
-                .columns("G").ColumnWidth = 65
-                .columns("I").ColumnWidth = 25
+                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
+                .Range("K2:K" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                .columns("F").ColumnWidth = 40
+                .columns("G").ColumnWidth = 55
+                .columns("I").ColumnWidth = 20
             End With
 
     End Select

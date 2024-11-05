@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call SetTabOrder(ws)
     
     With ws
-        .Range("K4").value = Now()
+        .Range("K4").value = Format$(Now(), wshAdmin.Range("B1").value)
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -118,20 +118,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 15)
+        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshGL_EJ_123")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
-        If CDate(Me.Range("K4").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Me.Range("K4").value) > Now() Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Target.value = ""
                 Target.Activate

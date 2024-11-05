@@ -83,7 +83,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         'Do we have pending requests to invoice ?
         Dim lastUsedRow As Long, liveOne As Long
-        lastUsedRow = wshFAC_Projets_Entête.Range("A9999").End(xlUp).Row
+        lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.rows.count, "A").End(xlUp).Row
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
@@ -284,11 +284,9 @@ Sub FAC_Brouillon_Date_Change(d As String)
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
     
-'    wshFAC_Finale.Range("B21").value = "Le " & Format$(d, "d MMMM yyyy")
-    
     'Must Get GST & PST rates and store them in wshFAC_Brouillon 'B' column at that date
     Dim DateTaxRates As Date
-    DateTaxRates = d
+    DateTaxRates = CDate(d)
     wshFAC_Brouillon.Range("B29").value = Fn_Get_Tax_Rate(DateTaxRates, "TPS")
     wshFAC_Brouillon.Range("B30").value = Fn_Get_Tax_Rate(DateTaxRates, "TVQ")
         
@@ -297,7 +295,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     lastUsedProfInSummary = wshFAC_Brouillon.Cells(wshFAC_Brouillon.rows.count, "W").End(xlUp).Row
     
     Dim dateTauxHoraire As Date
-    dateTauxHoraire = d
+    dateTauxHoraire = CDate(d)
     Dim i As Long
     For i = 25 To lastUsedProfInSummary
         Dim profID As Long
@@ -309,7 +307,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     'Get all TEC for the client at a certain date
     Dim cutoffDate As Date
-    cutoffDate = d
+    cutoffDate = CDate(d)
     Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     
     Dim rng As Range: Set rng = wshFAC_Brouillon.Range("L11")
@@ -330,7 +328,7 @@ Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", 0)
     
     Dim cutoffDate As Date
-    cutoffDate = wshFAC_Brouillon.Range("O3").value
+    cutoffDate = CDate(wshFAC_Brouillon.Range("O3").value)
     
     If wshFAC_Brouillon.Range("B16").value = True Then
         Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, True)
@@ -1166,7 +1164,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

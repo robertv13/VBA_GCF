@@ -212,13 +212,13 @@ Sub Setup_UserDateFormat()
 
     Select Case Fn_Get_Windows_Username
         Case "GuillaumeCharron", "Guillaume"
-            userDateFormat = "dd/mm/yy"
+            wshAdmin.Range("B1").value = "dd/mm/yy"
         Case "Robert M. Vigneault", "robertmv"
-            userDateFormat = "yyyy-mm-dd"
+            wshAdmin.Range("B1").value = "yyyy-mm-dd"
         Case "vgervais", "user", "Annie"
-            userDateFormat = "dd/mm/yyyy"
+            wshAdmin.Range("B1").value = "dd/mm/yyyy"
         Case Else
-            userDateFormat = "dd/mm/yyyy"
+            wshAdmin.Range("B1").value = "dd/mm/yyyy"
     End Select
 
 End Sub

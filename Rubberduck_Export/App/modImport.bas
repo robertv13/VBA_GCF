@@ -618,7 +618,9 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     recSet.Open
     
     'Copy to wshFAC_Projets_Détails workbook all rows
-    ws.Range("A2").CopyFromRecordset recSet
+    If recSet.RecordCount <> -1 Then
+        ws.Range("A2").CopyFromRecordset recSet
+    End If
     Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
@@ -681,7 +683,9 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     recSet.Open
     
     'Copy to wshFAC_Projets_Entête workbook
-    ws.Range("A2").CopyFromRecordset recSet
+    If recSet.RecordCount <> -1 Then
+        ws.Range("A2").CopyFromRecordset recSet
+    End If
     Call Log_Record("     modImport:FAC_Projets_Entête_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
@@ -689,12 +693,14 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    For i = lastRow To 2 Step -1
-        If UCase(ws.Cells(i, 26).value) = "VRAI" Or _
-            ws.Cells(i, 26).value = -1 Then
-            ws.rows(i).Delete
-        End If
-    Next i
+    If lastRow >= 2 Then
+        For i = lastRow To 2 Step -1
+            If UCase(ws.Cells(i, 26).value) = "VRAI" Or _
+                ws.Cells(i, 26).value = -1 Then
+                ws.rows(i).Delete
+            End If
+        Next i
+    End If
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
     lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row

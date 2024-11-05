@@ -99,7 +99,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         Call FAC_Historique_Montrer_Bouton
         Range(Target.Address).Interior.Color = xlNone
-        Application.Goto Range("D6")
+        Application.GoTo Range("D6")
      End If
    
     'Dates Period change
@@ -147,11 +147,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'From date has changed
     If Not Intersect(Target, Range("G6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 999, 0)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Call FAC_Historique_Montrer_Bouton
 '            wshFAC_Historique.Range("C9:P33").ClearContents
 '            Call Remove_All_PDF_Icons
@@ -161,17 +161,17 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
     'To date has changed
     If Not Intersect(Target, Range("I6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 366)
+        fullDate = Fn_Complete_Date(Target.Text, 999, 366)
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Call FAC_Historique_Montrer_Bouton
 '            Call Remove_All_PDF_Icons
             Application.EnableEvents = True
@@ -179,7 +179,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshFAC_Historique_199")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

@@ -23,7 +23,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Me.Application.Calculation = xlCalculationAutomatic
 
     'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").value = Format$(Now(), "mm-dd-yyyy") '2024-10-29 @ 07:34
+    Me.Range("H3").value = Format$(Now(), wshAdmin.Range("B1").value) '2024-10-29 @ 07:34
     
     Call TEC_Sort_Group_And_Subtotal
     
@@ -145,25 +145,25 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("H3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 45, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 45, 0)
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Call TEC_Sort_Group_And_Subtotal
         Else
             Call MsgBoxInvalidDate("wshTEC_Analyse_131")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("H3").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("H3").value) > Now() Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 

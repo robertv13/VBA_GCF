@@ -33,9 +33,6 @@ Public logSaisieHeuresVeryDetailed As Boolean
 'Pour assurer un contrôle dans Facture Finale
 Public flagEtapeFacture As Integer
 
-'UserDateFormat
-Public userDateFormat As String
-
 'Using Enum to specify the column number of worksheets (data)
 Public Enum DB_Clients '2024-10-26 @ 17:41
     fClntMFFirst = 1
@@ -174,7 +171,7 @@ Sub Write_Info_On_Main_Menu()
     With wshMenu.Range("$A$30")
         .Font.size = 8
         .Font.Color = vbBlue
-        .value = "'" & CStr("Heure - " & Format$(Now(), userDateFormat & " hh:mm:ss"))
+        .value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     End With
     
     With wshMenu.Range("$A$31")

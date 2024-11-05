@@ -206,13 +206,12 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     End If
     
     'Set criteria in worksheet for AdvancedFilter
-    wshTEC_Local.Range("R3").value = ufSaisieHeures.txtProf_ID.value
-    Call Log_Saisie_Heures("info     ", "@00203 - wshAdmin.Range('TEC_Date').value = " & _
-                           ufSaisieHeures.txtDate.value & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
-    wshTEC_Local.Range("S3").value = CLng(CDate(ufSaisieHeures.txtDate.value))
-    Call Log_Saisie_Heures("info     ", "@00206 - wshTEC_Local.Range('S3').value = " & _
-                           wshTEC_Local.Range("S3").value & "   type = " & TypeName(wshTEC_Local.Range("S3").value) & " après assignation")
-    wshTEC_Local.Range("T3").value = "FAUX"
+    With wshTEC_Local
+        .Range("R3").value = ufSaisieHeures.txtProf_ID.value
+        .Range("S3").value = CLng(CDate(ufSaisieHeures.txtDate.value))
+        .Range("T3").value = "FAUX"
+        .Range("S11:S15").ClearContents
+    End With
     
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
@@ -221,22 +220,22 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         
         'Data Source
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
-        .Range("S10").value = sRng.Address '2024-09-04 @ 08:47
+        .Range("S11").value = sRng.Address '2024-09-04 @ 08:47
         
          'Criteria
         Dim cRng As Range: Set cRng = .Range("R2:T3")
-        .Range("S11").value = cRng.Address '2024-09-04 @ 08:47
+        .Range("S12").value = cRng.Address '2024-09-04 @ 08:47
         
         'Destination
         Dim dRng As Range: Set dRng = .Range("V2:AI2")
-        .Range("S12").value = dRng.Address '2024-09-04 @ 08:47
+        .Range("S13").value = dRng.Address '2024-09-04 @ 08:47
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
         
         lastResultRow = .Cells(.rows.count, "V").End(xlUp).Row
-        .Range("S13").value = (lastResultRow - 2) & " rows" '2024-09-04 @ 08:47
-        .Range("S14").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2024-09-04 @ 08:47
+        .Range("S14").value = (lastResultRow - 2) & " rows" '2024-09-04 @ 08:47
+        .Range("S15").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2024-09-04 @ 08:47
         
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
@@ -627,9 +626,8 @@ End Sub
 
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621", True)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
+        ufSaisieHeures.txtProf_ID.value & " + " & ufSaisieHeures.txtDate.value, 0)
 
     If ufSaisieHeures.txtProf_ID.value = "" Or ufSaisieHeures.txtDate.value = "" Then
         GoTo EndOfProcedure
@@ -649,7 +647,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Range("V999").End(xlUp).Row
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.rows.count, "V").End(xlUp).Row
     If lastRow < 3 Then GoTo Rien_Aujourdhui
         
     With ufSaisieHeures.lsbHresJour
@@ -662,7 +660,6 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
     Dim rng As Range
     Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
-'    Debug.Print rng.Address
      
     Dim i As Long, j As Long
     Dim totalHeures As Double
@@ -671,13 +668,13 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     For i = 1 To rng.rows.count
         ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, "dd/mm/yyyy")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, wshAdmin.Range("B1").value)
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, "dd/mm/yyyy hh:nn:ss")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, wshAdmin.Range("B1").value & " hh:nn:ss")
         totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
         If Fn_Is_Client_Facturable(rng.Cells(i, 14).value) = True And rng.Cells(i, 8).value = "VRAI" Then
             totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).value)
@@ -720,7 +717,8 @@ EndOfProcedure:
     'Libérer la mémoire
     Set rng = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
+        ufSaisieHeures.txtProf_ID.value & " + " & ufSaisieHeures.txtDate.value, startTime)
     
 End Sub
 
@@ -779,7 +777,6 @@ Sub TEC_TdB_Update_All()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", 0)
     
     Call TEC_TdB_Push_TEC_Local_To_DB_Data
-    
     Call TEC_TdB_Refresh_All_Pivot_Tables
     
     Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", startTime)
@@ -806,77 +803,77 @@ End Sub
 
 Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:41
     
-    Dim ws As Worksheet: Set ws = wshTEC_Local
-    
-    With ws
-        Dim lastUsedRow As Long
-        lastUsedRow = .Range("A99999").End(xlUp).Row
-        Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
-        .Range("AL10").value = sRng.Address & " - " & _
-            .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
-            .Range("A2:P" & lastUsedRow).columns.count & " columns"
-        
-        Dim filterDate As Date
-        filterDate = dateValue("02/09/2024")
-        .Range("AL3").value = "<=" & filterDate
-        .Range("AL3").NumberFormat = "dd/mm/yyyy"
-        
-'        .Range("AL3").value = "<=" & Format(DateSerial(2024, 8, 23), "DD/mm/yyyy")
-        Dim cRng As Range: Set cRng = .Range("AK2:AO3")
-        .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
-        
-        lastUsedRow = .Range("AQ99999").End(xlUp).Row
-        Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
-        dRng.Offset(1, 0).ClearContents
-        .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
-        
-        On Error GoTo ErrorHandler
-        sRng.AdvancedFilter action:=xlFilterCopy, _
-                            criteriaRange:=cRng, _
-                            CopyToRange:=dRng, _
-                            Unique:=False
-        On Error GoTo 0
-        
-        Dim lastResultRow As Long
-        lastResultRow = .Range("AQ99999").End(xlUp).Row
-            If lastResultRow < 4 Then GoTo No_Sort_Required
-            With .Sort
-                .SortFields.Clear
-                .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Sort Based On Date
-                .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Sort Based On Prof_ID
-                .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Sort Based On TEC_ID
-                .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
-                .Apply 'Apply Sort
-             End With
-    
-No_Sort_Required:
-        wshTEC_Local.Range("AL13").value = lastResultRow - 2 & " rows"
-        wshTEC_Local.Range("AL14").value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
-    End With
-    
-Cleaning:
-    'Libérer la mémoire
-    Set cRng = Nothing
-    Set dRng = Nothing
-    Set sRng = Nothing
-    Set ws = Nothing
-    
-    Exit Sub
-
-ErrorHandler:
-    MsgBox "Une erreur s'est produite lors de l'application du filtre avancé.", vbCritical
-    On Error GoTo 0
-    Resume Cleaning
-
+'    Dim ws As Worksheet: Set ws = wshTEC_Local
+'
+'    With ws
+'        Dim lastUsedRow As Long
+'        lastUsedRow = .Range("A99999").End(xlUp).Row
+'        Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
+'        .Range("AL10").value = sRng.Address & " - " & _
+'            .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
+'            .Range("A2:P" & lastUsedRow).columns.count & " columns"
+'
+'        Dim filterDate As Date
+'        filterDate = dateValue("02/09/2024")
+'        .Range("AL3").value = "<=" & filterDate
+'        .Range("AL3").NumberFormat = "dd/mm/yyyy"
+'
+''        .Range("AL3").value = "<=" & Format(DateSerial(2024, 8, 23), "DD/mm/yyyy")
+'        Dim cRng As Range: Set cRng = .Range("AK2:AO3")
+'        .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
+'
+'        lastUsedRow = .Range("AQ99999").End(xlUp).Row
+'        Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
+'        dRng.Offset(1, 0).ClearContents
+'        .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
+'
+'        On Error GoTo ErrorHandler
+'        sRng.AdvancedFilter action:=xlFilterCopy, _
+'                            criteriaRange:=cRng, _
+'                            CopyToRange:=dRng, _
+'                            Unique:=False
+'        On Error GoTo 0
+'
+'        Dim lastResultRow As Long
+'        lastResultRow = .Range("AQ99999").End(xlUp).Row
+'            If lastResultRow < 4 Then GoTo No_Sort_Required
+'            With .Sort
+'                .SortFields.Clear
+'                .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
+'                    SortOn:=xlSortOnValues, _
+'                    Order:=xlAscending, _
+'                    DataOption:=xlSortNormal 'Sort Based On Date
+'                .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
+'                    SortOn:=xlSortOnValues, _
+'                    Order:=xlAscending, _
+'                    DataOption:=xlSortNormal 'Sort Based On Prof_ID
+'                .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
+'                    SortOn:=xlSortOnValues, _
+'                    Order:=xlAscending, _
+'                    DataOption:=xlSortNormal 'Sort Based On TEC_ID
+'                .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
+'                .Apply 'Apply Sort
+'             End With
+'
+'No_Sort_Required:
+'        wshTEC_Local.Range("AL13").value = lastResultRow - 2 & " rows"
+'        wshTEC_Local.Range("AL14").value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+'    End With
+'
+'Cleaning:
+'    'Libérer la mémoire
+'    Set cRng = Nothing
+'    Set dRng = Nothing
+'    Set sRng = Nothing
+'    Set ws = Nothing
+'
+'    Exit Sub
+'
+'ErrorHandler:
+'    MsgBox "Une erreur s'est produite lors de l'application du filtre avancé.", vbCritical
+'    On Error GoTo 0
+'    Resume Cleaning
+'
 End Sub
 
 Sub Buttons_Enabled_True_Or_False(a As Boolean, u As Boolean, _

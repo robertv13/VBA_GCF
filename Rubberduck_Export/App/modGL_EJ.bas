@@ -118,18 +118,18 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     'Remplir la description, si elle est vide
     If wshGL_EJ.Range("F6").value = "" Then
         wshGL_EJ.Range("F6").value = "Déclaration TPS/TVQ - Du " & _
-            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd") & " au " & _
-            Format$(dateFin, "yyyy-mmdd")
+            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value) & " au " & _
+            Format$(dateFin, wshAdmin.Range("B1").value)
     End If
     
     Dim cases() As Double
     ReDim cases(101 To 213)
     
     'Remplir le formulaire de déclaration
-    wshGL_EJ.Range("T5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd")
-    wshGL_EJ.Range("V5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), "yyyy-mm-dd")
-    wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, "yyyy-mm-dd")
-    wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, "yyyy-mm-dd")
+    wshGL_EJ.Range("T5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("V5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
     
     cases(101) = Fn_Get_GL_Account_Balance("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin)
     With wshGL_EJ.Range("P10")

@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     wshCAR_Liste_Agée.Range("B4").value = "Facture"
     wshCAR_Liste_Agée.Range("D4").value = "Numéro de facture"
     wshCAR_Liste_Agée.Range("F4").value = "Non"
-    wshCAR_Liste_Agée.Range("H4").value = Format$(Now(), "yyyy/mm/dd")
+    wshCAR_Liste_Agée.Range("H4").value = Format$(Now(), wshAdmin.Range("B1").value)
     
     Application.EnableEvents = True
     
@@ -80,7 +80,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
-    'Is SOlde à 0,00 $ been selected ?
+    'Is Solde à 0,00 $ been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("F4")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
@@ -103,15 +103,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Dim fullDate As Variant
     
-'    'Niveau de détail has changed
-'    If Not Intersect(Target, Range("B4")) Is Nothing Then
-'        If Target.value = "Client" Then
-'            Application.EnableEvents = False
-'            Target.value = "Nom de client"
-'            Application.EnableEvents = True
-'        End If
-'    End If
-    
     'Critère de tri has changed
     If Not Intersect(Target, Range("D4")) Is Nothing Then
         If Range("B4").value = "Client" Then
@@ -124,16 +115,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("H4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 365, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 365, 0)
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Application.EnableEvents = True
         Else
             Call MsgBoxInvalidDate("wshCAR_Liste_Agée_125")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -142,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
     End If

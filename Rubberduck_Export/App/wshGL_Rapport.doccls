@@ -15,7 +15,7 @@ Private Sub Worksheet_Activate()
     
     'Setup a listBox
     Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
-    lb.Height = 332
+    lb.Height = 328
     lb.width = 275
     
     'Ensure it is a ListBox
@@ -48,9 +48,14 @@ Private Sub Worksheet_Activate()
         .EnableCalculation = True
     End With
     
+    Call SetTabOrder(ws)
+
     Call GL_Rapport_Clear_All_Cells(ws)
     
     Application.EnableEvents = True
+    
+    'Première saisie
+    ws.Range("F4").Select
     
     'Libérer la mémoire
     Set lb = Nothing
@@ -95,35 +100,35 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         Select Case Range("F4").value
             Case "Aujourd'hui"
-                wshGL_Rapport.Range("F6").value = Now()
-                wshGL_Rapport.Range("H6").value = Now()
+                wshGL_Rapport.Range("F6").value = Format$(Now(), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(Now(), wshAdmin.Range("B1").value)
             Case "Mois Courant"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("MoisDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("MoisA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").value)
             Case "Mois Dernier"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("MoisPrecDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("MoisPrecA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("MoisPrecDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("MoisPrecA"), wshAdmin.Range("B1").value)
             Case "Trimestre courant"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("TrimDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("TrimA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("TrimDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("TrimA"), wshAdmin.Range("B1").value)
             Case "Trimestre précédent"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("TrimPrecDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("TrimPrecA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("TrimPrecDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("TrimPrecA"), wshAdmin.Range("B1").value)
             Case "Année courante"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("AnneeDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("AnneeA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("AnneeDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
             Case "Année précédente"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("AnneePrecDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("AnneePrecA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("AnneePrecDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("AnneePrecA"), wshAdmin.Range("B1").value)
             Case "7 derniers jours"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("SeptJoursDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("SeptJoursA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("SeptJoursDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("SeptJoursA"), wshAdmin.Range("B1").value)
             Case "15 derniers jours"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("QuinzeJoursDe")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("QuinzeJoursA")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("QuinzeJoursDe"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("QuinzeJoursA"), wshAdmin.Range("B1").value)
             Case "Semaine"
-                wshGL_Rapport.Range("F6").value = wshAdmin.Range("DateDebutSemaine")
-                wshGL_Rapport.Range("H6").value = wshAdmin.Range("DateFinSemaine")
+                wshGL_Rapport.Range("F6").value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").value)
+                wshGL_Rapport.Range("H6").value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").value)
             Case Else
                 wshGL_Rapport.Range("F6").value = ""
                 wshGL_Rapport.Range("H6").value = ""
@@ -134,33 +139,33 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'From date has changed
     If Not Intersect(Target, Range("F6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 15)
+        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshGL_Rapport_141")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
     'To date has changed
     If Not Intersect(Target, Range("H6")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(CStr(Target.Text), 999, 15)
+        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = fullDate
+            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call MsgBoxInvalidDate("wshGL_Rapport_157")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

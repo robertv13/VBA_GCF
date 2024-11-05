@@ -33,12 +33,11 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
     
     Call Client_List_Import_All
-    
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
     lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.rows.count, "A").End(xlUp).Row
-    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:K" & lastUsedRow)
+    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
@@ -149,6 +148,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
     'Restreindre l'accès au professionnel par défaut du code d'utilisateur
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "robertmv"
+            'Accès à tous les utilisateurs
         Case "vgervais"
             If cmbProfessionnel.value <> "VG" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
@@ -176,18 +176,9 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
         ufSaisieHeures.txtProf_ID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
-        
         If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
-            Call Log_Saisie_Heures("event    ", "@00145 - wshAdmin.Range('TEC_Date').value = " & ufSaisieHeures.txtDate.value & _
-                    "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                    "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                    "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                    "   type = " & TypeName(ufSaisieHeures.txtDate))
-                    
             Call TEC_Get_All_TEC_AF
-            
             Call TEC_Refresh_ListBox_And_Add_Hours
-            
         End If
     End If
 
@@ -200,14 +191,11 @@ Private Sub txtDate_Enter()
     Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172", True)
     
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format$(Now(), "dd/mm/yyyy")
+        ufSaisieHeures.txtDate.value = Format$(Now(), wshAdmin.Range("B1").value)
+    Else
+        ufSaisieHeures.txtDate.value = Format$(ufSaisieHeures.txtDate.value, wshAdmin.Range("B1").value)
     End If
     
-    Call Log_Saisie_Heures("info     ", "@00178 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
-                                "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                                "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                                "   d = " & day(ufSaisieHeures.txtDate.value))
-
 End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
@@ -218,11 +206,6 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    Call Log_Saisie_Heures("info     ", "@00193 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
-                                "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                                "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                                "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                                "   type = " & TypeName(ufSaisieHeures.txtDate.value))
     fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 30, 15)
     If fullDate <> "Invalid Date" Then
         Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
@@ -234,13 +217,8 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
-        ufSaisieHeures.txtDate.value = fullDate
+        ufSaisieHeures.txtDate.value = Format$(fullDate, wshAdmin.Range("B1").value)
     Else
-        Call Log_Saisie_Heures("INVALIDE", "@00209 - .txtDate.value = " & ufSaisieHeures.txtDate.value & _
-                                    "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                                    "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                                    "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                                    "   type = " & TypeName(ufSaisieHeures.txtDate.value))
         Cancel = True
         With ufSaisieHeures.txtDate
             .SetFocus 'Remettre le focus sur la TextBox
@@ -268,7 +246,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
                                             "   d = " & day(fullDate) & _
                                             "   type = " & TypeName(fullDate))
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
-                    "La date saisie est '" & fullDate & "'", vbYesNo + vbQuestion, _
+                    "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
@@ -317,7 +295,7 @@ Private Sub txtDate_AfterUpdate()
                                             "   d = " & day(dateFormated) & _
                                             "   type = " & TypeName(dateFormated) & _
                                             "   après assignation")
-        ufSaisieHeures.txtDate.value = dateFormated
+        ufSaisieHeures.txtDate.value = Format$(dateFormated, wshAdmin.Range("B1").value)
         Call Log_Saisie_Heures("info     ", "@00291 - wshAdmin.Range('TEC_Date').value =  = " & ufSaisieHeures.txtDate.value & _
                                             "   y = " & year(ufSaisieHeures.txtDate.value) & _
                                             "   m = " & month(ufSaisieHeures.txtDate.value) & _
