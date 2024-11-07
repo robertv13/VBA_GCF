@@ -70,9 +70,19 @@ Public Sub GL_Report_For_Selected_Accounts()
         For Each item In selectedItems
             compte = item
             
-            Call get_GL_Trans_With_AF(compte, dateDeb, dateFin, sortType)
+            'Obtenir les transactions AVANT la date de debut (solde ouverture)
+            Dim r As Range
+            Call AF_GL_Trans_Account_From_To(compte, #7/31/2024#, dateDeb - 1, "Date", r)
+            Dim soldeOuverture As Double
+            If r.rows.count > 1 Then
+                soldeOuverture = Fn_Get_GL_Account_Balance(compte, r)
+            End If
             
-            Call Print_results_From_GL_Trans(compte, dateDeb)
+            'Obtenir les transactions pour la période requise
+            Call AF_GL_Trans_Account_From_To(compte, dateDeb, dateFin, "Date", r)
+            
+            'Impression des résultats
+            Call Print_Results_From_GL_Trans(compte, r, soldeOuverture)
         
         Next item
         
@@ -90,6 +100,7 @@ Public Sub GL_Report_For_Selected_Accounts()
     'Libérer la mémoire
     Set item = Nothing
     Set lb = Nothing
+    Set r = Nothing
     Set selectedItems = Nothing
     Set ws = Nothing
     
@@ -97,9 +108,9 @@ Public Sub GL_Report_For_Selected_Accounts()
 
 End Sub
 
-Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sortType As String)
+Public Sub AF_GL_Trans_Account_From_To(compte As String, dateDeb As Date, dateFin As Date, sortType As String, ByRef rResult As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:get_GL_Trans_With_AF", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:AF_GL_Trans_Account_From_To", 0)
 
     Dim glNo As String
     If InStr(compte, " ") <> 0 Then
@@ -117,9 +128,7 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         'Assign 3 criteria
         .Range("L3").value = glNo
         .Range("M3").value = ">=" & CLng(dateDeb)
-'        .Range("M3").value = ">=" & Format$(dateDeb, "mm-dd-yyyy")
         .Range("N3").value = "<=" & CLng(dateFin)
-'        .Range("N3").value = "<=" & Format$(dateFin, "mm-dd-yyyy")
         Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
         
         'Destination to copy (setup & clear previous results)
@@ -127,17 +136,19 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
         rgCopyToRange.Offset(1).ClearContents
         Set rgCopyToRange = .Range("P1:Y1")
         
-        .Range("M8").value = "Dernière utilisation"
+        .Range("M8").value = "Dernière utilisation - " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         .Range("M9").value = rgData.Address
         .Range("M10").value = rgCriteria.Address
         .Range("M11").value = rgCopyToRange.Address
         
         'Do the Advanced Filter
-        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
+        rgData.AdvancedFilter xlFilterCopy, _
+                              rgCriteria, _
+                              rgCopyToRange
         
         Dim lastResultUsedRow
         lastResultUsedRow = .Range("P99999").End(xlUp).Row
-        .Range("M12").value = lastResultUsedRow
+        .Range("M12").value = lastResultUsedRow - 1
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
@@ -158,17 +169,19 @@ Sub get_GL_Trans_With_AF(compte As String, dateDeb As Date, dateFin As Date, sor
     End With
 
 NoSort:
+    'Retourne le Range des résultats
+    Set rResult = wshGL_Trans.Range("P1:Y" & lastResultUsedRow)
     
     'Libérer la mémoire
     Set rgCriteria = Nothing
     Set rgCopyToRange = Nothing
     Set rgData = Nothing
     
-    Call Log_Record("modGL_Rapport:get_GL_Details_For_A_Account", startTime)
+    Call Log_Record("modGL_Rapport:AF_GL_Trans_Account_From_To", startTime)
 
 End Sub
 
-Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
+Public Sub Print_Results_From_GL_Trans(compte As String, r As Range, soldeOuverture As Double)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
@@ -188,10 +201,8 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     ws.Range("A" & lastRowUsed_AB).Font.Bold = True
     
     'Solde d'ouverture pour ce compte
-    Dim soldeOuverture As Double
     Dim glNo As String
     glNo = Left(compte, InStr(compte, " ") - 1)
-    soldeOuverture = Fn_Get_Account_Opening_Balance(glNo, dateDeb)
     solde = soldeOuverture
     ws.Range("D" & lastRowUsed_AB).value = "Solde d'ouverture"
     
@@ -201,7 +212,7 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
     saveFirstRow = lastRowUsed_AB
 
     If wshGL_Trans.Range("P2") = "" Then
-        Exit Sub
+        GoTo No_Transaction
     End If
     
     Dim lastUsedTrans As Long
@@ -226,6 +237,8 @@ Sub Print_results_From_GL_Trans(compte As String, dateDeb As Date)
         Next i
     End If
     
+No_Transaction:
+
     'Ajoute le formatage conditionnel pour les transactions
     With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
         .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"

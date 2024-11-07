@@ -108,7 +108,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields("No_Entrée").value = currDebTransNo
-            rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
+            rs.Fields("Date").value = wshDEB_Saisie.Range("O4").value
             rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
             rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("J4").value
             rs.Fields("FournID").value = wshDEB_Saisie.Range("B5").value
@@ -166,7 +166,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     Dim i As Long
     For i = 9 To r
         wshDEB_Trans.Range("A" & rowToBeUsed).value = currentDebTransNo
-        wshDEB_Trans.Range("B" & rowToBeUsed).value = CDate(wshDEB_Saisie.Range("O4").value)
+        wshDEB_Trans.Range("B" & rowToBeUsed).value = wshDEB_Saisie.Range("O4").value
         wshDEB_Trans.Range("C" & rowToBeUsed).value = wshDEB_Saisie.Range("F4").value
         wshDEB_Trans.Range("D" & rowToBeUsed).value = wshDEB_Saisie.Range("J4").value
         wshDEB_Trans.Range("E" & rowToBeUsed).value = wshDEB_Saisie.Range("B5").value

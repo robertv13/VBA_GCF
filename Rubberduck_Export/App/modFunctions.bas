@@ -43,20 +43,20 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         Exit Function
     End If
     
-    'Using XLOOKUP to find the result directly
+    'Using XLOOKUP to find the result directly, allows partial match (5th parameter) - 2024-11-07 @ 08:12
     Dim result As Variant
     result = Application.WorksheetFunction.XLookup(nomClient, _
                                                    dynamicRange.columns(1), _
                                                    dynamicRange.columns(2), _
                                                    "Not Found", _
-                                                   0, _
+                                                    1, _
                                                    1)
-    
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result
         ufSaisieHeures.txtClient_ID.value = result
     Else
-        MsgBox "Impossible de retrouver la valeur dans la première colonne du client", vbExclamation
+        MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+                    "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
     End If
     
     'Libérer la mémoire
@@ -69,6 +69,8 @@ End Function
 
 Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name - " & nomFournisseur, 0)
+    
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
     
     On Error Resume Next
@@ -84,9 +86,11 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     'Using XLOOKUP to find the result directly
     Dim result As Variant
     result = Application.WorksheetFunction.XLookup(nomFournisseur, _
-        dynamicRange.columns(1), dynamicRange.columns(2), _
-        "Not Found", 0, 1)
-    
+                                                   dynamicRange.columns(1), _
+                                                   dynamicRange.columns(2), _
+                                                   "Not Found", _
+                                                   0, _
+                                                   1)
     If result <> "Not Found" Then
         Fn_GetID_From_Fourn_Name = result
     Else
@@ -96,6 +100,8 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
+
+    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name - " & result, startTime)
 
 End Function
 
@@ -450,17 +456,12 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
 End Function
 
-Function Fn_Get_GL_Account_Balance(glCode As String, dateDepart As Date, dateFin As Date) As Double '2024-11-02 @ 06:11
+Function Fn_Get_GL_Account_Balance(glCode As String, r As Range) As Double '2024-11-06 @ 17:00
 
-    'Utilisation de AdvancedFilter dans GL_Trans
-    Call get_GL_Trans_With_AF(glCode, dateDepart, dateFin, "Date")
-    
-    Dim lastUsedRowResult As Long
-    lastUsedRowResult = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).Row
     Dim soldeCompte As Double
     Dim i As Long
-    For i = 2 To lastUsedRowResult
-        soldeCompte = soldeCompte + wshGL_Trans.Cells(i, "V").value - wshGL_Trans.Cells(i, "W").value
+    For i = 2 To r.rows.count
+        soldeCompte = soldeCompte + r.Cells(i, 7).value - r.Cells(i, 8).value
     Next i
 
     Fn_Get_GL_Account_Balance = soldeCompte
@@ -1402,6 +1403,7 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     Application.EnableEvents = False
     
     'Source (data) range
+    Dim lastUsedRowData As Long
     lastUsedRowData = ws.Cells(ws.rows.count, "A").End(xlUp).Row
     
     'Destination Range

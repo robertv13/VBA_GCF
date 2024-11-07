@@ -93,11 +93,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
         GLAcct = CStr(Range("D" & Target.Row).value)
         GLDescription = Range("E" & Target.Row).value
-        DateLimite = Format$(Range("J1").value, "dd/mm/yyyy")
+        DateLimite = Format$(Range("J1").value, wshAdmin.Range("B1").value)
         wshGL_BV.Range("B10").value = 0
         Range("T2").value = "Toutes les dates"
         'Display all transactions for the selected G/L
-        Call GL_TB_Display_Trans_For_Selected_Account(GLAcct, GLDescription, "07-31-2024", DateLimite)
+        Call GL_TB_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, DateLimite)
         Application.EnableEvents = True
     End If
     

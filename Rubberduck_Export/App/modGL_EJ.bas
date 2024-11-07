@@ -113,7 +113,7 @@ End Sub
 Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
 
     Dim dateFin As Date
-    dateFin = wshGL_EJ.Range("K4").value
+    dateFin = CDate(wshGL_EJ.Range("K4").value)
     
     'Remplir la description, si elle est vide
     If wshGL_EJ.Range("F6").value = "" Then

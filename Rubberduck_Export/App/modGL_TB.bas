@@ -24,7 +24,7 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date, dateCutOff As Date
-    wshGL_BV.Range("C2").value = "Au " & CDate(Format$(wshGL_BV.Range("J1").value, "dd/mm/yyyy"))
+    wshGL_BV.Range("C2").value = "Au " & Format$(wshGL_BV.Range("J1").value, wshAdmin.Range("B1").value)
 
     minDate = CDate("07/31/2024")
     dateCutOff = wshGL_BV.Range("J1").value
@@ -126,8 +126,10 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
 
     Application.EnableEvents = True
     
-    ActiveWindow.ScrollRow = 1
-  
+    ActiveWindow.ScrollRow = 4
+    
+    wshGL_BV.Range("C4").Select
+    
     'Libérer la mémoire
     Set dictSolde = Nothing
     Set rng = Nothing
@@ -161,10 +163,6 @@ Sub GL_TB_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
         .NumberFormat = "#,##0.00 $"
     End With
     
-'        If .Cells(r, c).value <> .Cells(r, c + 1).value Then
-'            Call Erreur_Totaux_DT_CT
-'        End If
-    
     Call Log_Record("modGL_TB:GL_TB_Display_TB_Totals", startTime)
 
 End Sub
@@ -178,7 +176,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     'Clear the display area & display the account number & description
     With ws
         .Range("L4:T99999").Clear '2024-06-08 @ 15:28
-        .Range("L2").value = "Du " & minDate & " au " & maxDate
+        .Range("L2").value = "Du " & Format$(minDate, wshAdmin.Range("B1").value) & " au " & Format$(maxDate, wshAdmin.Range("B1").value)
     
         .Range("L4").Font.Bold = True
         .Range("L4").value = GLAcct & " - " & GLDesc
@@ -227,7 +225,7 @@ Sub GL_TB_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     With ws
         Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, "dd/mm/yyyy")
+            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, wshAdmin.Range("B1").value)
             If d >= minDate And d <= maxDate Then
                 .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value

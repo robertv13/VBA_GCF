@@ -908,7 +908,8 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Master.xlsx"
+    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
@@ -918,7 +919,8 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
     Dim lastUsedRowTECClient As Long
@@ -1003,17 +1005,19 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     
 End Sub
 
-Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
+Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Master.xlsx"
+    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(sourceFilePath)
     
     'Client's Master File - Workbook & Worksheet
     Dim clientMFPath As String
-    clientMFPath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook
     Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet

@@ -245,7 +245,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     rowToBeUsed = lastUsedRow + 1
     
     wshENC_Entête.Range("A" & rowToBeUsed).value = currentPmnNo
-    wshENC_Entête.Range("B" & rowToBeUsed).value = CDate(wshENC_Saisie.Range("K5").value)
+    wshENC_Entête.Range("B" & rowToBeUsed).value = wshENC_Saisie.Range("K5").value
     wshENC_Entête.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
     wshENC_Entête.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("B8").value
     wshENC_Entête.Range("E" & rowToBeUsed).value = wshENC_Saisie.Range("F7").value
@@ -286,7 +286,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
                 rs.Fields("Pay_ID").value = CLng(pmtNo)
                 rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & r).value
                 rs.Fields("Customer").value = wshENC_Saisie.Range("F5").value
-                rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("K5").value)
+                rs.Fields("Pay_Date").value = wshENC_Saisie.Range("K5").value
                 rs.Fields("Pay_Amount").value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00 $"))
             'Update the recordset (create the record)
             rs.update
@@ -323,7 +323,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
             wshENC_Détails.Range("A" & rowToBeUsed).value = pmtNo
             wshENC_Détails.Range("B" & rowToBeUsed).value = wshENC_Saisie.Range("F" & r).value
             wshENC_Détails.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
-            wshENC_Détails.Range("D" & rowToBeUsed).value = CDate(wshENC_Saisie.Range("K5").value)
+            wshENC_Détails.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("K5").value
             wshENC_Détails.Range("E" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00"))
             rowToBeUsed = rowToBeUsed + 1
         End If
