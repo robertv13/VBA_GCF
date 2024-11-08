@@ -131,7 +131,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
     wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
     
-    cases(101) = Fn_Get_GL_Account_Balance("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin)
+    cases(101) = Fn_Get_GL_Account_Balance("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin))
     With wshGL_EJ.Range("P10")
         .Font.Bold = True
         .Font.size = 12
@@ -141,7 +141,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TPS percues
-    cases(105) = Fn_Get_GL_Account_Balance("1202", #7/31/2024#, dateFin)
+    cases(105) = Fn_Get_GL_Account_Balance("1202", dateFin)
     wshGL_EJ.Range("E" & r).value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).value = -cases(105)
@@ -158,7 +158,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = Fn_Get_GL_Account_Balance("1203", #7/31/2024#, dateFin)
+    cases(205) = Fn_Get_GL_Account_Balance("1203", dateFin)
     wshGL_EJ.Range("E" & r).value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).value = -cases(205)
@@ -174,7 +174,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .value = -cases(205)
     End With
     
-    cases(108) = Fn_Get_GL_Account_Balance("1200", #7/31/2024#, dateFin)
+    cases(108) = Fn_Get_GL_Account_Balance("1200", dateFin)
     wshGL_EJ.Range("E" & r).value = "TPS payées"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).value = -cases(108)
@@ -190,7 +190,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .value = cases(108)
     End With
     
-    cases(208) = Fn_Get_GL_Account_Balance("1201", #7/31/2024#, dateFin)
+    cases(208) = Fn_Get_GL_Account_Balance("1201", dateFin)
     wshGL_EJ.Range("E" & r).value = "TVQ payées"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).value = -cases(208)

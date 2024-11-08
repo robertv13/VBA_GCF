@@ -841,13 +841,13 @@ End Sub
 '        'Load Invoice Detail Items
 '        With wshFAC_Détails
 '            Dim lastRow As Long, lastResultRow As Long
-'            lastRow = .Range("A999999").End(xlUp).Row
+'            lastRow = .Range("A999999").End(xlUp).row
 '            If lastRow < 4 Then Exit Sub 'No Item Lines
 '            .Range("I3").value = wshFAC_Brouillon.Range("O6").value
 '            wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
 '            'Advanced Filter to get items specific to ONE invoice
 '            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
-'            lastResultRow = .Range("O999").End(xlUp).Row
+'            lastResultRow = .Range("O999").End(xlUp).row
 '            If lastResultRow < 3 Then GoTo NoItems
 '            For resultRow = 3 To lastResultRow
 '                invitemRow = .Range("O" & resultRow).value
@@ -901,7 +901,7 @@ End Function
 '
 '    With wshFAC_Entête
 '        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-'        lastRow = .Range("A999999").End(xlUp).Row 'Last wshFAC_Entête Row
+'        lastRow = .Range("A999999").End(xlUp).row 'Last wshFAC_Entête Row
 '        If lastRow < 4 Then GoTo Done '3 rows of Header - Nothing to search/filter
 '        On Error Resume Next
 '        .Names("Criterial").Delete
@@ -912,7 +912,7 @@ End Function
 '            criteriaRange:=.Range("V2:V3"), _
 '            CopyToRange:=.Range("X2:AQ2"), _
 '            Unique:=True
-'        lastResultRow = .Range("X999").End(xlUp).Row 'How many rows trans for that invoice
+'        lastResultRow = .Range("X999").End(xlUp).row 'How many rows trans for that invoice
 '        If lastResultRow < 3 Then
 '            GoTo Done
 '        End If

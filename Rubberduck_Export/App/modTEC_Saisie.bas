@@ -193,8 +193,6 @@ End Sub
 
 Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190", True)
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF - " & _
                                         ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, 0)
 
@@ -218,6 +216,7 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         lastRow = .Cells(.rows.count, "A").End(xlUp).row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
+        .Range("S10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         'Data Source
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
         .Range("S11").value = sRng.Address '2024-09-04 @ 08:47
@@ -227,7 +226,10 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         .Range("S12").value = cRng.Address '2024-09-04 @ 08:47
         
         'Destination
-        Dim dRng As Range: Set dRng = .Range("V2:AI2")
+        Dim dRng As Range: Set dRng = .Range("V1").CurrentRegion.Offset(2, 0)
+        dRng.ClearContents
+        Set dRng = .Range("V2:AI2")
+        
         .Range("S13").value = dRng.Address '2024-09-04 @ 08:47
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
@@ -235,7 +237,6 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         
         lastResultRow = .Cells(.rows.count, "V").End(xlUp).row
         .Range("S14").value = (lastResultRow - 2) & " rows" '2024-09-04 @ 08:47
-        .Range("S15").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2024-09-04 @ 08:47
         
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort 'Sort - Date / Prof / TEC_ID
@@ -814,7 +815,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
 '
 '    With ws
 '        Dim lastUsedRow As Long
-'        lastUsedRow = .Range("A99999").End(xlUp).Row
+'        lastUsedRow = .Range("A99999").End(xlUp).row
 '        Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
 '        .Range("AL10").value = sRng.Address & " - " & _
 '            .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
@@ -829,7 +830,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
 '        Dim cRng As Range: Set cRng = .Range("AK2:AO3")
 '        .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
 '
-'        lastUsedRow = .Range("AQ99999").End(xlUp).Row
+'        lastUsedRow = .Range("AQ99999").End(xlUp).row
 '        Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
 '        dRng.Offset(1, 0).ClearContents
 '        .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
@@ -842,7 +843,7 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
 '        On Error GoTo 0
 '
 '        Dim lastResultRow As Long
-'        lastResultRow = .Range("AQ99999").End(xlUp).Row
+'        lastResultRow = .Range("AQ99999").End(xlUp).row
 '            If lastResultRow < 4 Then GoTo No_Sort_Required
 '            With .Sort
 '                .SortFields.Clear

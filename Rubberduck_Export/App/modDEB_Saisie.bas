@@ -185,7 +185,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
                                                       - wshDEB_Saisie.Range("L" & i).value _
                                                       - wshDEB_Saisie.Range("M" & i).value
         wshDEB_Trans.Range("Q" & rowToBeUsed).value = ""
-        wshDEB_Trans.Range("R" & rowToBeUsed).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+        wshDEB_Trans.Range("R" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     

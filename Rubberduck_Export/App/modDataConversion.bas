@@ -404,7 +404,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
             wsDest.Range("H" & rowNum).value = -amount
         End If
         wsDest.Range("I" & rowNum).value = ""
-        wsDest.Range("J" & rowNum).value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+        wsDest.Range("J" & rowNum).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
         rst.MoveNext
         

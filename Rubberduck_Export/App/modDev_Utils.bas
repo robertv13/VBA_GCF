@@ -1026,7 +1026,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                TimeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 arrResult(xr, 7) = TimeStamp
                 arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If

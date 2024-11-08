@@ -496,8 +496,6 @@ End Sub
 
 Private Sub cmdAdd_Click()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479", True)
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", -1)
     
     Call TEC_Ajoute_Ligne
@@ -508,9 +506,7 @@ End Sub
 
 Private Sub cmdUpdate_Click()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489", True)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click - " & ufSaisieHeures.txtTEC_ID.value, -1)
     
     If ufSaisieHeures.txtTEC_ID.value <> "" Then
         Call TEC_Modifie_Ligne
@@ -526,9 +522,7 @@ End Sub
 
 Private Sub cmdDelete_Click()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdDelete_Click @00505", True)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click - " & ufSaisieHeures.txtTEC_ID.value, -1)
     
     If ufSaisieHeures.txtTEC_ID.value <> "" Then
         Call TEC_Efface_Ligne
@@ -545,9 +539,7 @@ End Sub
 'Get a specific row from listBox and display it in the userform
 Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522", True)
-    
-    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick - An entry from the list was double clicked", -1)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick - An entry from the list was double clicked", -1)
     
     rmv_state = rmv_modeAffichage
     
@@ -611,6 +603,8 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
+    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick - " & TECID, startTime)
+
 End Sub
 
 Sub imgLogoGCF_Click()
@@ -638,23 +632,23 @@ End Sub
 
 Sub imgStats_Click()
 
-        Application.EnableEvents = False
-        
-        ufSaisieHeures.Hide
-        
-        Call TEC_TdB_Update_All
-        Call StatsHeures_AdvancedFilters
-        'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
-        Call UpdatePivotTables
-        
-        Application.EnableEvents = True
-        
-        fromMenu = True
-        
-        With wshStatsHeuresPivotTables
-            .Visible = xlSheetVisible
-            .Activate
-        End With
+    Application.EnableEvents = False
+    
+    ufSaisieHeures.Hide
+    
+    Call TEC_TdB_Update_All
+    Call StatsHeures_AdvancedFilters
+    'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+    Call UpdatePivotTables
+    
+    Application.EnableEvents = True
+    
+    fromMenu = True
+    
+    With wshStatsHeuresPivotTables
+        .Visible = xlSheetVisible
+        .Activate
+    End With
 
 End Sub
 

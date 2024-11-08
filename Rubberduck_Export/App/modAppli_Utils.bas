@@ -102,9 +102,9 @@ End Sub
 '    Set wsTgt = ThisWorkbook.Worksheets("TEC_Hres_Jour_Prof")
 '
 '    Dim lastUsedRowSrc As Long
-'    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).Row '2024-08-15 @ 06:17
+'    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).row '2024-08-15 @ 06:17
 '
-'    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).Row).ClearContents
+'    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).row).ClearContents
 '
 '    'Copy columns A to H (from Source to Target), using Copy and Paste Special
 '    wsSrc.Range("A2:I" & lastUsedRowSrc).Copy
@@ -132,7 +132,7 @@ End Sub
 '
 '    'Find the last row of your data
 '    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
 '
 '    'Define the new data range
 '    Dim rngData As Range: Set rngData = ws.Range("A1:I" & lastUsedRow)
