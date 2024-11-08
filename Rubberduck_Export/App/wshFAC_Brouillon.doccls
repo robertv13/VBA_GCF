@@ -49,7 +49,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").value = Format$(Now(), wshAdmin.Range("B1").value)
     Me.Range("B27").value = False '2024-09-03 @ 06:33
@@ -174,7 +174,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -183,7 +183,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -204,24 +204,24 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Services entry
     If Not Intersect(Target, Range("L11:L40")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-        wshFAC_Finale.Range("B" & Target.Row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & Target.Row).value
-        Set rng = wshFAC_Brouillon.Range("M" & Target.Row) 'Hours
+        wshFAC_Finale.Range("B" & Target.row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & Target.row).value
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
 '        rng.Select
         GoTo ExitSub
     End If
   
     'Hours per service
     If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-        wshFAC_Brouillon.Range("N" & Target.Row).value = wshAdmin.Range("TauxHoraireFacturation")
-        wshFAC_Brouillon.Range("O" & Target.Row).value = wshFAC_Brouillon.Range("M" & Target.Row).value * wshFAC_Brouillon.Range("N" & Target.Row).value
-        Set rng = wshFAC_Brouillon.Range("M" & Target.Row)
-        wshFAC_Finale.Range("C" & Target.Row + 23).value = wshFAC_Brouillon.Range("M" & Target.Row).value
-        wshFAC_Finale.Range("D" & Target.Row + 23).value = wshFAC_Brouillon.Range("N" & Target.Row).value
-        wshFAC_Finale.Range("E" & Target.Row + 23).value = wshFAC_Brouillon.Range("O" & Target.Row).value
+        wshFAC_Brouillon.Range("N" & Target.row).value = wshAdmin.Range("TauxHoraireFacturation")
+        wshFAC_Brouillon.Range("O" & Target.row).value = wshFAC_Brouillon.Range("M" & Target.row).value * wshFAC_Brouillon.Range("N" & Target.row).value
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row)
+        wshFAC_Finale.Range("C" & Target.row + 23).value = wshFAC_Brouillon.Range("M" & Target.row).value
+        wshFAC_Finale.Range("D" & Target.row + 23).value = wshFAC_Brouillon.Range("N" & Target.row).value
+        wshFAC_Finale.Range("E" & Target.row + 23).value = wshFAC_Brouillon.Range("O" & Target.row).value
 
         'MAXIMUM of 30 services lines per Invoice
-        If Target.Row < NB_MAX_LIGNE_FAC + 11 Then
-            wshFAC_Brouillon.Range("L" & Target.Row + 1).Select
+        If Target.row < NB_MAX_LIGNE_FAC + 11 Then
+            wshFAC_Brouillon.Range("L" & Target.row + 1).Select
         Else
             Set rng = wshFAC_Brouillon.Range("O47")
             wshFAC_Brouillon.Range("O47").Select
@@ -241,17 +241,17 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             'Final Invoice - Sub-total
 '            wshFAC_Finale.Range("E69").value = wshFAC_Brouillon.Range("O47").value
             'Final Invoice - Misc charges AND move on to next field
-            If Target.Row = 48 Then
+            If Target.row = 48 Then
                 Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
                     targetAddress & " - " & wshFAC_Brouillon.Range("O48").value, -1)
                 wshFAC_Finale.Range("E70").value = wshFAC_Brouillon.Range("O48").value
                 wshFAC_Brouillon.Range("O49").Select
             End If
-            If Target.Row = 49 Then
+            If Target.row = 49 Then
                 wshFAC_Finale.Range("E71").value = wshFAC_Brouillon.Range("O49").value
                 wshFAC_Brouillon.Range("O50").Select
             End If
-            If Target.Row = 50 Then
+            If Target.row = 50 Then
                 wshFAC_Finale.Range("E72").value = wshFAC_Brouillon.Range("O50").value
                 wshFAC_Brouillon.Range("O57").Select
             End If

@@ -12,12 +12,12 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
     With wshFAC_Comptes_Clients
         'Clear previous results
-        lastResultRow = .Cells(.rows.count, "P").End(xlUp).Row
+        lastResultRow = .Cells(.rows.count, "P").End(xlUp).row
         If lastResultRow > 2 Then
             .Range("P3:U" & lastResultRow).ClearContents
         End If
         'Is there anything to work with ?
-        lastResultRow = .Cells(.rows.count, "A").End(xlUp).Row
+        lastResultRow = .Cells(.rows.count, "A").End(xlUp).row
         If lastResultRow < 3 Then
             MsgBox "Il n'y aucune facture pour ce client", vbOK + vbInformation
             Exit Sub
@@ -31,7 +31,7 @@ Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
                                                       CopyToRange:=.Range("P2:U2")
                                             
         'Did the AdvancedFilter return ANYTHING ?
-        lastResultRow = .Cells(.rows.count, "P").End(xlUp).Row
+        lastResultRow = .Cells(.rows.count, "P").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
         
         'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
@@ -108,7 +108,7 @@ Sub ENC_Update() '2024-08-22 @ 09:46
         pmtNo = wshENC_Saisie.Range("B9").value
         
         Dim lastOSRow As Integer
-        lastOSRow = .Cells(.rows.count, "F").End(xlUp).Row 'Last applied Item
+        lastOSRow = .Cells(.rows.count, "F").End(xlUp).row 'Last applied Item
         
         'Create records for ENC_Détails
         If lastOSRow > 11 Then
@@ -241,7 +241,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Entête.Range("A99999").End(xlUp).Row
+    lastUsedRow = wshENC_Entête.Range("A99999").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     wshENC_Entête.Range("A" & rowToBeUsed).value = currentPmnNo
@@ -313,7 +313,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     'What is the last used row in ENC_Détails ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.rows.count, "A").End(xlUp).Row
+    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim r As Integer
@@ -405,7 +405,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim r As Integer
@@ -418,7 +418,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
         Dim rowToBeUpdated As Long
         If Not foundRange Is Nothing Then
-            rowToBeUpdated = foundRange.Row
+            rowToBeUpdated = foundRange.row
             ws.Range("I" & rowToBeUpdated).value = ws.Range("I" & rowToBeUpdated).value + wshENC_Saisie.Range("K" & r).value
             ws.Range("J" & rowToBeUpdated).value = ws.Range("J" & rowToBeUpdated).value - wshENC_Saisie.Range("K" & r).value
             If ws.Range("J" & rowToBeUpdated).value = 0 Then
@@ -534,7 +534,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.rows.count, "A").End(xlUp).Row
+    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim nextJENo As Long
@@ -571,7 +571,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
 
 End Sub
 
-Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
+Sub ENC_Saisie_Add_Check_Boxes(row As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes", 0)
     
@@ -579,22 +579,22 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
     
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
-    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("E12:E" & 11 + Row)
+    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("E12:E" & 11 + row)
     
     Dim cell As Range
     Dim cbx As checkBox
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If cell.Row <= 36 And _
-        Cells(cell.Row, 2).value = "" And _
-        Cells(cell.Row, 6).value <> "" Then 'Applied = False
+    If cell.row <= 36 And _
+        Cells(cell.row, 2).value = "" And _
+        Cells(cell.row, 6).value <> "" Then 'Applied = False
             'Create a checkbox linked to the cell
             Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.width, cell.Height)
             With cbx
-                .name = "chkBox - " & cell.Row
+                .name = "chkBox - " & cell.row
                 .Caption = ""
                 .value = False
-                .linkedCell = "B" & cell.Row
+                .linkedCell = "B" & cell.row
                 .Display3DShading = True
                 .OnAction = "chkBox_Apply_Click"
                 .Locked = False
@@ -620,7 +620,7 @@ Sub ENC_Saisie_Add_Check_Boxes(Row As Long)
 
 End Sub
 
-Sub ENC_Remove_Check_Boxes(Row As Long)
+Sub ENC_Remove_Check_Boxes(row As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", 0)
     
@@ -630,6 +630,7 @@ Sub ENC_Remove_Check_Boxes(Row As Long)
     'Delete all checkboxes whose name are chkBox - ...
     Dim cbx As Shape
     For Each cbx In wshENC_Saisie.Shapes
+        Debug.Print cbx.name
         If InStr(cbx.name, "chkBox -") Then
             cbx.Delete
         End If
@@ -660,7 +661,7 @@ Sub ENC_Clear_Cells()
         
         'Note the lastUsedRow for checkBox deletion
         Dim lastUsedRow As Long
-        lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.rows.count, "F").End(xlUp).Row
+        lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.rows.count, "F").End(xlUp).row
         If lastUsedRow > 36 Then
             lastUsedRow = 36
         End If
@@ -706,16 +707,16 @@ Sub chkBox_Apply_Click()
     
     If linkedCell.value = True Then
         If wshENC_Saisie.Range("K9").value > 0 Then
-            If wshENC_Saisie.Range("K9").value > wshENC_Saisie.Range("J" & linkedCell.Row).value Then
-                wshENC_Saisie.Range("K" & linkedCell.Row).value = wshENC_Saisie.Range("J" & linkedCell.Row).value
+            If wshENC_Saisie.Range("K9").value > wshENC_Saisie.Range("J" & linkedCell.row).value Then
+                wshENC_Saisie.Range("K" & linkedCell.row).value = wshENC_Saisie.Range("J" & linkedCell.row).value
             Else
-                wshENC_Saisie.Range("K" & linkedCell.Row).value = wshENC_Saisie.Range("K9").value
+                wshENC_Saisie.Range("K" & linkedCell.row).value = wshENC_Saisie.Range("K9").value
             End If
         End If
         wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = True
         wshENC_Saisie.Shapes("btnENC_Annule").Visible = True
     Else
-        Range("K" & linkedCell.Row).value = 0
+        Range("K" & linkedCell.row).value = 0
     End If
 
     'Libérer la mémoire

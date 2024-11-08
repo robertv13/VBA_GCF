@@ -13,7 +13,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
     Dim rngResultat As Range
     Set rngResultat = wshCAR_Liste_Agée.Range("B8")
     Dim lastUsedRow As Long
-    lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).Row
+    lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
         wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).Clear
@@ -56,7 +56,7 @@ Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
     
     'Boucle sur les factures
     Dim derniereLigne As Long
-    derniereLigne = wsFactures.Cells(wsFactures.rows.count, "A").End(xlUp).Row
+    derniereLigne = wsFactures.Cells(wsFactures.rows.count, "A").End(xlUp).row
     Dim rngFactures As Range
     Set rngFactures = wsFactures.Range("A3:A" & derniereLigne) '2 lignes d'entête
     
@@ -225,7 +225,7 @@ Next_Invoice:
     End If
     
     'Tri alphabétique par nom de client
-    derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).Row
+    derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).row
     Set rngResultat = wshCAR_Liste_Agée.Range("B8:J" & derniereLigne)
     
     Application.EnableEvents = False

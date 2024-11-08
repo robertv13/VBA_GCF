@@ -31,7 +31,7 @@ Sub StatsHeures_AdvancedFilters()
         Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "W").End(xlUp).Row
+    lastResultRow = ws.Cells(ws.rows.count, "W").End(xlUp).row
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -74,7 +74,7 @@ Sub StatsHeures_AdvancedFilters()
         Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "AJ").End(xlUp).Row
+    lastResultRow = ws.Cells(ws.rows.count, "AJ").End(xlUp).row
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -117,7 +117,7 @@ Sub StatsHeures_AdvancedFilters()
         Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "AW").End(xlUp).Row
+    lastResultRow = ws.Cells(ws.rows.count, "AW").End(xlUp).row
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -160,7 +160,7 @@ Sub StatsHeures_AdvancedFilters()
         Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "BJ").End(xlUp).Row
+    lastResultRow = ws.Cells(ws.rows.count, "BJ").End(xlUp).row
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then

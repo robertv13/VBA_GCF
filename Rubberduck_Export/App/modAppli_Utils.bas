@@ -257,6 +257,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     wsOutput.Range("A1").value = "Feuille"
     wsOutput.Range("B1").value = "Message"
     wsOutput.Range("C1").value = "TimeStamp"
+    wsOutput.columns("C").NumberFormat = wshAdmin.Range("B1").value & " hh:mm:ss"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
     Application.ScreenUpdating = True
@@ -282,8 +283,14 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Dim j As Long, h As Long, m As Long, s As Long
     Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "Date dern. modification")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, Format$(ddm, wshAdmin.Range("B1").value) & _
-            " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes")
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = Format$(ddm, wshAdmin.Range("B1").value & " hh:mm:ss") & _
+            " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
+    rng.Characters(1, 19).Font.Color = vbRed
+    rng.Characters(1, 19).Font.Bold = True
+
     r = r + 2
     
     Dim readRows As Long
@@ -293,7 +300,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     
     Call check_Plan_Comptable(r, readRows)
-    wshMenu.Range("H29").value = ""
     
     'wshBD_Clients --------------------------------------------------------------- Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "BD_Clients")
@@ -368,6 +374,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
+    Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
@@ -378,7 +385,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     
     Call FAC_Projets_Détails_Import_All
-    Call FAC_Projets_Entête_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
@@ -391,7 +397,8 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Call GL_Trans_Import_All
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
-
+    r = r + 1
+    
     Call check_GL_Trans(r, readRows)
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
@@ -399,13 +406,15 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call TEC_Import_All
     Call TEC_TdB_Update_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
+    r = r + 1
     
     Call check_TEC_TdB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "TEC_Local")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
@@ -422,8 +431,14 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = r
-    wsOutput.Range("A" & lastUsedRow).value = "**** " & Format$(readRows, "###,##0") & _
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("A" & r)
+    rng.value = "**** " & Format$(readRows, "###,##0") & _
                                     " lignes analysées dans l'ensemble des tables ***"
+    rng.Characters(6, 6).Font.Color = vbRed
+    rng.Characters(6, 6).Font.Bold = True
+    r = r + 1
     
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
@@ -452,7 +467,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshBD_Clients
+    'Fichier maître des Clients
     Dim ws As Worksheet: Set ws = wshBD_Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(ws.usedRange.rows.count - 1, "###,##0") & _
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
@@ -470,7 +485,6 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
-'    Dim dict_nom_client_systeme As New Dictionary
     
     Dim i As Long, code As String, nom As String, nomClientSysteme As String
     Dim eMail As String
@@ -501,17 +515,6 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_code = cas_doublon_code + 1
         End If
         
-'        'Doublon sur le nom de client systeme (si utilisé) ?
-'        If Trim(nomClientSysteme) <> "" Then
-'            If dict_nom_client_systeme.Exists(nomClientSysteme) = False Then
-'                dict_nom_client_systeme.Add nomClientSysteme, code
-'            Else
-'                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom Système '" & nomClientSysteme & "' est un doublon pour le code '" & code & "'")
-'                r = r + 1
-'                cas_doublon_nom_client_Systeme = cas_doublon_nom_client_Systeme + 1
-'            End If
-'        End If
-        
         If Trim(arr(i, 6)) <> "" Then
             If Fn_ValiderCourriel(arr(i, 6)) = False Then
                 Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
@@ -521,7 +524,13 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         End If
         
     Next i
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!")
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!"
+    rng.Characters(13, 5).Font.Color = vbRed
+    rng.Characters(13, 5).Font.Bold = True
+
     r = r + 1
     
     'Add number of rows processed (read)
@@ -543,14 +552,6 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     End If
     
-'    If cas_doublon_nom_client_Systeme = 0 Then
-'        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de nom de client Système")
-'        r = r + 1
-'    Else
-'        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom_client_Systeme & " cas de doublons pour les noms Système")
-'        r = r + 1
-'    End If
-    
     If cas_courriel_invalide = 0 Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Toutes les adresses courriel sont valides")
         r = r + 1
@@ -565,7 +566,7 @@ Clean_Exit:
     'Libérer la mémoire
     Set dict_code_client = Nothing
     Set dict_nom_client = Nothing
-'    Set dict_nom_client_systeme = Nothing
+    Set rng = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -623,7 +624,13 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_code = cas_doublon_code + 1
         End If
     Next i
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!")
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Un total de " & Format$(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!"
+    rng.Characters(13, 3).Font.Color = vbRed
+    rng.Characters(13, 3).Font.Bold = True
+
     r = r + 1
     
     'Add number of rows processed (read)
@@ -668,7 +675,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshENC_Détails
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRowDetails As Long
-    lastUsedRowDetails = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastUsedRowDetails = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastUsedRowDetails <= 2 - headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -693,25 +700,25 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'ENC_Entête Worksheet
     Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
     Dim lastUsedRowEntete As Long
-    lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).Row
+    lastUsedRowEntete = wsEntete.Cells(wsEntete.rows.count, "A").End(xlUp).row
     Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
     Dim strPmtNo As String
     Dim i As Long
     For i = 2 To lastUsedRowEntete
-        strPmtNo = strPmtNo & wsEntete.Range("A" & i).value & "|"
+        strPmtNo = strPmtNo & CLng(wsEntete.Range("A" & i).value) & "|"
     Next i
     
     'FAC_Entête Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
     Dim lastUsedRowFacEntete As Long
-    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).Row
+    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Détails'")
     r = r + 1
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim pmtNo As Long, oldpmtNo As Long
@@ -753,10 +760,15 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
         totalEncDetails = totalEncDetails + ws.Range("E" & i).value
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totalEncDetails, "#,##0.00 $"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Bold = True
+
     r = r + 2
     
     'Add number of rows processed (read)
@@ -788,14 +800,14 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Clients Master File
     Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
     Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsClients.Cells(wsClients.rows.count, "B").End(xlUp).Row
+    lastUsedRowClient = wsClients.Cells(wsClients.rows.count, "B").End(xlUp).row
     Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
     
     'wshENC_Entête
     Dim ws As Worksheet: Set ws = wshENC_Entête
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).Row
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -827,7 +839,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -856,10 +868,14 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
         totals = totals + arr(i, 6)
     Next i
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Total des encaissements : " & Format$(totals, "#,##0.00 $"))
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
@@ -890,7 +906,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -903,7 +919,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
     Dim lastUsedRowEntete As Long
-    lastUsedRowEntete = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
+    lastUsedRowEntete = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRowEntete)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
@@ -914,7 +930,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = wshFAC_Détails.Range("A1").CurrentRegion.Offset(1, 0).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -985,7 +1001,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).Row
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1016,7 +1032,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1068,58 +1084,78 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
+
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(5, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(6, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total Fact. : " & _
-            Fn_Pad_A_String(Format$(totals(7, 1), "##,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Bold = True
     r = r + 1
+
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 1), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(8, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 2
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "Totaux des factures À CONFIRMER (" & nbFactC & " factures)"
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
+    
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(2, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(3, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(4, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(5, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(6, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total Fact. : " & _
-            Fn_Pad_A_String(Format$(totals(7, 2), "##,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Bold = True
     r = r + 1
+
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 2), "##,##0.00 $"), " ", 14, "L"))
+            Fn_Pad_A_String(Format$(totals(8, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1148,7 +1184,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).Row
+    lastUsedRow = ws.Range("A9999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1180,7 +1216,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - headerRow, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1260,18 +1296,46 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures CONFIRMÉES (" & nbFactC & " factures)")
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "###,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Bold = True
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Bold = True
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Bold = True
     r = r + 2
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Factures À CONFIRMER (" & nbFactAC & " factures)")
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "Total des factures À CONFIRMER (" & nbFactAC & " factures)"
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "###,##0.00 $"), " ", 14, "L"))
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1300,7 +1364,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1326,7 +1390,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows - 1, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1439,7 +1503,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1451,7 +1515,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
-    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).Row
+    lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
@@ -1468,7 +1532,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1542,7 +1606,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshGL_Trans
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1597,7 +1661,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     ReDim sum_arr(1 To 2500, 1 To 3)
     
     'Array pointer
-    Dim Row As Long: Row = 1
+    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1608,9 +1672,9 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
-            dict_GL_Entry.Add GL_Entry_No, Row
-            sum_arr(Row, 1) = GL_Entry_No
-            Row = Row + 1
+            dict_GL_Entry.Add GL_Entry_No, row
+            sum_arr(row, 1) = GL_Entry_No
+            row = row + 1
         End If
         If IsDate(arr(i, 2)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
@@ -1681,7 +1745,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     If cas_hors_balance = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Chacune des écritures balancent au niveau de l'écriture")
+        'Un peu de couleur
+        Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+        rng.value = "       Chacune des écritures balancent au niveau de l'écriture"
+        rng.Characters(InStr(rng.value, "C"), Len(rng.value) - 7).Font.Color = vbRed
+        rng.Characters(InStr(rng.value, "C"), Len(rng.value) - 7).Font.Bold = True
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
@@ -1701,7 +1769,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     End If
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "###,###,##0.00 $"))
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.value = "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
     
 Clean_Exit:
@@ -1730,7 +1802,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     Dim headerRow As Long: headerRow = 1
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -1774,6 +1846,10 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Else
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
+        End If
+        If dateTEC <> Int(dateTEC) Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            r = r + 1
         End If
         clientCode = arr(i, 5)
         hres = arr(i, 8)
@@ -1951,7 +2027,12 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures TEC             : " & formattedHours)
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Heures TEC             : " & formattedHours
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 2
 
 Clean_Exit:
@@ -2078,13 +2159,13 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2251 'What is the last TECID analyzed ?
+    lastTECIDReported = 2288 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     If lastUsedRow <= headerRow Then
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
         r = r + 2
@@ -2122,7 +2203,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Obtenir toutes les factures émises (wshFAC_Entête) et utiliser un dictionary pour les mémoriser
     Dim lastUsedRowFAC As Long
-    lastUsedRowFAC = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).Row
+    lastUsedRowFAC = wshFAC_Entête.Cells(wshFAC_Entête.rows.count, "A").End(xlUp).row
     If lastUsedRowFAC > 2 Then
         For i = 3 To lastUsedRowFAC
             dictFacture.Add CStr(wshFAC_Entête.Cells(i, 1).value), 0
@@ -2216,7 +2297,6 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
         If arr(i, 1) > lastTECIDReported Then
-'            Debug.Print "#2135: "; i; " "; arr(i, 1); " "; arr(i, 4); " ", arr(i, 6); " "; arr(i, 8)
             'Date de la charge
             yy = year(arr(i, 4))
             mm = month(arr(i, 4))
@@ -2443,7 +2523,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures SAISIES         :  " & formattedHours)
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures SAISIES         : " & formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -2485,15 +2565,25 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Heures TEC             : " & formattedHours)
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "       Heures TEC             : " & formattedHours
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 1
-
+    
     Dim keys() As Variant
     
     'Tri & impression de dictDateCharge
     If dictDateCharge.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures par DATE de la charge (" & maxTECID & ")")
+        'Un peu de couleur
+        Set rng = wsOutput.Range("B" & r)
+        rng.value = "Sommaire des heures selon la DATE de la charge (" & maxTECID & ")"
+        rng.Characters(InStr(rng.value, "(") + 1, Len(maxTECID)).Font.Color = vbGreen
+        rng.Characters(InStr(rng.value, "(") + 1, Len(maxTECID)).Font.Bold = True
         r = r + 1
+    
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les heures
@@ -2511,7 +2601,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies par 'TIMESTAMP' (" & maxTECID & ")")
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Sommaire des heures saisies selon le 'TIMESTAMP'")
         r = r + 1
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
@@ -2658,7 +2748,7 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
     Dim i As Long
     For i = 1 To dataRange.rows.count
         'Vérifier la position réelle de la ligne dans la feuille
-        If (dataRange.rows(i).Row + headerRows) Mod 2 = 0 Then
+        If (dataRange.rows(i).row + headerRows) Mod 2 = 0 Then
             dataRange.rows(i).Interior.Color = RGB(173, 216, 230) ' Bleu pâle
         End If
     Next i
@@ -3085,7 +3175,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print wsProd.name, " Prod: ", wsProd.Cells(1, nbColProd).value
         Loop Until wsProd.Cells(1, nbColProd).value = ""
         nbColProd = nbColProd - 1
-        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).Row
+        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
         
         'Determine number of columns and rows in Dev Workbook
         Dim nbColDev As Integer, nbRowDev As Long
@@ -3095,7 +3185,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print wsDev.name, " Dev : ", wsDev.Cells(1, nbColDev).value
         Loop Until wsProd.Cells(1, nbColDev).value = ""
         nbColDev = nbColDev - 1
-        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).Row
+        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
         
         diffRow = diffRow + 2
         wsDiff.Cells(diffRow, 1).value = wsName
@@ -3224,7 +3314,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     'Feuille pour les clients
     Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
     Dim lastUsedRowClientMF As Long
-    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
+    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).row
     Dim rngClientsMF As Range
     Set rngClientsMF = wsMF.Range("A1:A" & lastUsedRowClientMF)
     
@@ -3239,7 +3329,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     Dim lastUsedRowTEC As Long
-    lastUsedRowTEC = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).Row
+    lastUsedRowTEC = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row
     
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
@@ -3300,7 +3390,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
         End If
     Next i
     
-    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).Row
+    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).row
     
     'Améliore le Look (cache la date, le client et l'adresse si deux charges & +)
     Dim base As String
@@ -3324,7 +3414,7 @@ Sub Get_TEC_Pour_Deplacements()  '2024-09-05 @ 10:22
     Next i
     
     'Result print setup - 2024-08-05 @ 05:16
-    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).Row
+    rowOutput = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).row
     
     For i = 3 To rowOutput
         If wsOutput.Cells(i, 1).value > wsOutput.Cells(i - 1, 1).value Then
@@ -3555,7 +3645,7 @@ Sub Search_Unclean_Set()
     Dim ws As Worksheet: ' Set ws = Feuil4
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).row
     
     Dim strSet As String
     Dim strForEach As String

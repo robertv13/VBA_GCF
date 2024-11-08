@@ -30,7 +30,7 @@ Private Sub Worksheet_Activate()
     On Error GoTo 0
     
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "P").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
     Dim r As Range
     Set r = ws.Range("P4:P" & lastRow)
     On Error Resume Next

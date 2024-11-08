@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   10485
+   ClientHeight    =   10470
    ClientLeft      =   135
    ClientTop       =   570
-   ClientWidth     =   15555
+   ClientWidth     =   15495
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -36,7 +36,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.rows.count, "A").End(xlUp).Row
+    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.rows.count, "A").End(xlUp).row
     ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
@@ -363,6 +363,8 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
     
+    Me.txtActivite.value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.value)
+    
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", startTime)
     
 End Sub
@@ -417,15 +419,13 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_Exit", startTime)
     
 End Sub
 
 Sub txtHeures_AfterUpdate()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00427", True)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate - " & Me.txtHeures.value, 0)
     
     'Validation des heures saisies
     Dim strHeures As String
@@ -486,8 +486,6 @@ End Sub
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
-    Call Log_Saisie_Heures("entering ", "E n t e r i n g   ufSaisieHeures:cmdClear_Click @00469", True)
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", -1)
     
     Call TEC_Efface_Formulaire
@@ -561,7 +559,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
         'Retrieve the record in wshTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
-        lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).Row
+        lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
         rowTecID = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
         

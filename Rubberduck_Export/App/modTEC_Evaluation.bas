@@ -173,9 +173,9 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         .value = Format$(total(4), "#,##0.00")
     End With
         
-    'Obtenir le solde du compte TEC au Grand Livre
+    'Obtenir le solde d'ouverture & les transactions pour le compte TEC au Grand Livre
     Dim solde As Double
-    solde = Fn_Get_GL_Account_Balance("1210", #7/31/2023#, maxDate)
+    solde = Fn_Get_GL_Account_Balance("1210", maxDate)
     
     'Afficher le solde des TEC au Grand Livre
     ws.Range("D3").Font.Bold = True
@@ -191,7 +191,6 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         message = message & ", donc un Crédit de " & Format$(totalValeurTEC - solde, "###,##0.00 $")
     End If
     ws.Range("D3").value = message
-    ws.Range("B1").Select
     
     'Libérer la mémoire
     Set dictHours = Nothing

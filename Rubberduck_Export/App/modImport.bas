@@ -586,8 +586,6 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
     
-    Application.StatusBar = "J'importe le détail des Projets de Factures"
-    
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
@@ -599,7 +597,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
-    sourceTab = "FAC_Projets_Détails"
+    sourceTab = "FAC_Projets_Détails$"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -613,21 +611,24 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
+    'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
+    recSet.CursorType = adOpenKeyset
+    
     recSet.ActiveConnection = connStr
-    recSet.source = "SELECT * FROM [" & sourceTab & "$]"
+    recSet.source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
     'Copy to wshFAC_Projets_Détails workbook all rows
-    If recSet.RecordCount <> -1 Then
+    If recSet.RecordCount > 0 Then
         ws.Range("A2").CopyFromRecordset recSet
     End If
     Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).Row
+    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
@@ -635,7 +636,6 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Call Log_Record("     modImport:FAC_Projets_Détails_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -678,18 +678,21 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
+    'Définir le type de curseur pour permettre l'utilisation de .RecordCount
+    recSet.CursorType = adOpenKeyset ' ou adOpenStatic
+    
     recSet.ActiveConnection = connStr
     recSet.source = "SELECT * FROM [" & sourceTab & "$]"
     recSet.Open
     
     'Copy to wshFAC_Projets_Entête workbook
-    If recSet.RecordCount <> -1 Then
+    If recSet.RecordCount > 0 Then
         ws.Range("A2").CopyFromRecordset recSet
     End If
     Call Log_Record("     modImport:FAC_Projets_Entête_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
@@ -703,7 +706,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     End If
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(ws, rng, 1)
@@ -798,7 +801,7 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     Application.ScreenUpdating = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).Row
+    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
     If lastUsedRow > 1 Then
@@ -858,7 +861,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     Dim saveLastRow As Long
-    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).Row
+    saveLastRow = wshGL_Trans.Range("A99999").End(xlUp).row
     
     'Clear all cells, but the headers, in the target worksheet
     If saveLastRow > 1 Then

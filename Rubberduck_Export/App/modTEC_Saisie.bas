@@ -215,7 +215,7 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
     
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Cells(.rows.count, "A").End(xlUp).Row 'Last wshTEC_Local Used Row
+        lastRow = .Cells(.rows.count, "A").End(xlUp).row 'Last wshTEC_Local Used Row
         If lastRow < 3 Then Exit Sub 'Nothing to filter
         
         'Data Source
@@ -233,7 +233,7 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
         
-        lastResultRow = .Cells(.rows.count, "V").End(xlUp).Row
+        lastResultRow = .Cells(.rows.count, "V").End(xlUp).row
         .Range("S14").value = (lastResultRow - 2) & " rows" '2024-09-04 @ 08:47
         .Range("S15").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2024-09-04 @ 08:47
         
@@ -556,7 +556,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - Add new record", -1) '2024-10-05 @ 07:32
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
-        nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).Row + 1
+        nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).row + 1
         With wshTEC_Local
             .Range("A" & nextRowNumber).value = ufSaisieHeures.txtTEC_ID.value
             .Range("B" & nextRowNumber).value = ufSaisieHeures.txtProf_ID.value
@@ -578,7 +578,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     Else
         Call Log_Record("     modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - Update -OR- Delete - " & CStr(TECID), -1)
         'What is the row number for the TEC_ID
-        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
+        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(Abs(TECID), lookupRange)
@@ -627,7 +627,7 @@ End Sub
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
-        ufSaisieHeures.txtProf_ID.value & " + " & ufSaisieHeures.txtDate.value, 0)
+        ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, 0)
 
     If ufSaisieHeures.txtProf_ID.value = "" Or ufSaisieHeures.txtDate.value = "" Then
         GoTo EndOfProcedure
@@ -647,14 +647,19 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Cells(wshTEC_Local.rows.count, "V").End(xlUp).Row
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.rows.count, "V").End(xlUp).row
     If lastRow < 3 Then GoTo Rien_Aujourdhui
         
+    Dim ws As Worksheet
+    Set ws = wshTEC_Local
+    
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
-        .ColumnWidths = "30; 24; 54; 155; 240; 35; 90; 32; 90"
-'        .RowSource = wshTEC_Local.name & "!V3:AI" & lastRow '2024-08-11 @ 12:50
+        .ColumnWidths = "30; 24; 54; 157; 242; 35; 90; 32; 90"
+'        Dim rngResult As Range
+'        Set rngResult = ws.Range("V3:AI" & lastRow)
+'        .RowSource = ws.name & "!" & rngResult.Address
     End With
     
     'Manually add to listBox (.RowSource DOES NOT WORK!!!)
@@ -693,7 +698,7 @@ Rien_Aujourdhui:
     Dim totalHresFactSemaine As Double
     Dim totalHresNonFactSemaine As Double
     
-    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.rows.count, "W").End(xlUp).Row
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.rows.count, "W").End(xlUp).row
     For i = 2 To lastRow
         totalHresFactSemaine = totalHresFactSemaine + wshTEC_TDB_Data.Range("AC" & i).value
         totalHresNonFactSemaine = totalHresNonFactSemaine + wshTEC_TDB_Data.Range("AD" & i).value
@@ -716,6 +721,8 @@ EndOfProcedure:
     
     'Libérer la mémoire
     Set rng = Nothing
+'    Set rngResult = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
         ufSaisieHeures.txtProf_ID.value & " + " & ufSaisieHeures.txtDate.value, startTime)
@@ -731,7 +738,7 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).Row
+    lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
     
     Dim arr() As Variant
     ReDim arr(1 To lastUsedRow - 2, 1 To 11) '2 rows of Heading

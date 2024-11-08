@@ -251,4 +251,69 @@ Sub UpdatePivotTables()
     
 End Sub
 
+Public Sub Get_GL_Trans_With_AF(glCode As String, dateDeb As Date, dateFin As Date) '2024-11-08 @ 09:34
 
+    Dim ws As Worksheet: Set ws = wshGL_Trans
+    
+    'Où allons-nous mettre les résultats ?
+    Dim rngResult As Range
+    Set rngResult = ws.Range("P1").CurrentRegion.Offset(1, 0)
+    rngResult.ClearContents
+    Set rngResult = ws.Range("P1").CurrentRegion
+    
+    'Où sont les données à traiter ?
+    Dim rngSource As Range
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    'Rien à traiter
+    If lastUsedRow < 2 Then
+        Exit Sub
+    End If
+    Set rngSource = ws.Range("A1:J" & lastUsedRow)
+    
+    'Quels sont les critères ?
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("L2:N3")
+    With ws
+        .Range("L3").value = glCode
+        .Range("M3").value = ">=" & CLng(dateDeb)
+        .Range("N3").value = "<=" & CLng(dateFin)
+    End With
+    
+    'On documente le processus
+    ws.Range("M8").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M9").value = rngSource.Address
+    ws.Range("M10").value = rngCriteria.Address
+    ws.Range("M11").value = rngResult.Address
+    
+    'Go, on execute le AdvancedFilter
+    rngSource.AdvancedFilter xlFilterCopy, _
+                             rngCriteria, _
+                             rngResult, _
+                             False
+    
+    'Combien y a-t-il de transactions dans le résultat ?
+    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    ws.Range("M12").value = lastUsedRow
+    Set rngResult = ws.Range("P1:Y" & lastUsedRow)
+
+    If lastUsedRow > 2 Then
+        With ws.Sort
+            .SortFields.Clear
+                .SortFields.Add _
+                    key:=ws.Range("Q2"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Trier par date de transaction
+                .SortFields.Add _
+                    key:=ws.Range("P2"), _
+                    SortOn:=xlSortOnValues, _
+                    Order:=xlAscending, _
+                    DataOption:=xlSortNormal 'Trier par numéro d'écriture
+            .SetRange rngResult
+            .Header = xlYes
+            .Apply
+        End With
+    End If
+
+End Sub

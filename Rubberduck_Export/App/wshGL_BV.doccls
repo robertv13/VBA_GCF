@@ -91,8 +91,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
-        GLAcct = CStr(Range("D" & Target.Row).value)
-        GLDescription = Range("E" & Target.Row).value
+        GLAcct = CStr(Range("D" & Target.row).value)
+        GLDescription = Range("E" & Target.row).value
         DateLimite = Format$(Range("J1").value, wshAdmin.Range("B1").value)
         wshGL_BV.Range("B10").value = 0
         Range("T2").value = "Toutes les dates"
@@ -104,11 +104,11 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Get the entire transaction, from a selected line
     If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing And _
         Target.Cells.count = 1 And _
-        wshGL_BV.Range("M" & Target.Row) <> "" Then
+        wshGL_BV.Range("M" & Target.row) <> "" Then
             Dim noJE As Long
-            noJE = wshGL_BV.Range("N" & Target.Row).value
+            noJE = wshGL_BV.Range("N" & Target.row).value
             Application.EnableEvents = False
-            wshGL_BV.Range("B10").value = Target.Row
+            wshGL_BV.Range("B10").value = Target.row
             Application.EnableEvents = True
             Call wshGL_BV_Get_An_JE_Detail_Trans(noJE)
             Call wshGL_BV_Display_JE_Trans_With_Shape
@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B9").value = Range("J1").value
@@ -190,7 +190,7 @@ Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
-        lastResultUsedRow = .Range("AC999").End(xlUp).Row
+        lastResultUsedRow = .Range("AC999").End(xlUp).row
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
@@ -246,7 +246,7 @@ Sub wshGL_BV_Adjust_The_Shape()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", 0)
     
     Dim lastResultRow As Long
-    lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).Row
+    lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
     If lastResultRow < 2 Then Exit Sub
     
     Dim rowSelected As Long

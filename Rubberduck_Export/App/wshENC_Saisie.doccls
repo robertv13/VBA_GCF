@@ -42,6 +42,8 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
+    Call ENC_Remove_Check_Boxes(36)
+    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
@@ -105,6 +107,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Dim clientCode As String
         clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
         Me.Range("B8").value = clientCode
+        Call ENC_Remove_Check_Boxes(36)
         Call ENC_Load_OS_Invoices(clientCode)
         Application.EnableEvents = True
     End If
@@ -119,7 +122,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

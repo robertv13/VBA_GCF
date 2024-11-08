@@ -94,7 +94,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         
         Dim rowRange As Range
         Dim firstExpandedRow As Long
-        If Target.Cells.count = 1 And Target.Row > 6 Then
+        If Target.Cells.count = 1 And Target.row > 6 Then
             If Target.value <> "" Then
                 Call Delete_CheckBox
                 If wshTEC_Analyse.Range("B2").value <> 0 Then
@@ -109,7 +109,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 For Each cell In Target
                     'Define the range for the entire row
                     Application.EnableEvents = False
-                    wshTEC_Analyse.Range("B2").value = Target.Row
+                    wshTEC_Analyse.Range("B2").value = Target.row
                     Application.EnableEvents = True
                     Set rowRange = cell.EntireRow
                     'Check if the row is part of a group
@@ -117,12 +117,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                         'Expand the group
                         If rowRange.ShowDetail = False Then
                             rowRange.ShowDetail = True
-                            firstExpandedRow = Target.Row
+                            firstExpandedRow = Target.row
                         End If
                     End If
                 Next cell
-                If Me.Cells(Target.Row, 2) = "" Then
-                    Call Build_Hours_Summary(Target.Row)
+                If Me.Cells(Target.row, 2) = "" Then
+                    Call Build_Hours_Summary(Target.row)
                 End If
             End If
         End If
@@ -154,7 +154,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -163,7 +163,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

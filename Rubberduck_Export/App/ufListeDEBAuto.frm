@@ -18,7 +18,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Recurrent.Range("O999").End(xlUp).Row
+    lastUsedRow = wshDEB_Recurrent.Range("O999").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     With lsbDEB_Auto_Desc

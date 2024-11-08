@@ -19,7 +19,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "J").End(xlUp).Row
+    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "J").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     With lsbEJ_Auto_Desc

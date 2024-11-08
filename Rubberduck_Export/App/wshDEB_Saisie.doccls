@@ -117,7 +117,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Dim suggestedAmount As Double
             suggestedAmount = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
             If suggestedAmount > 0 Then
-                Call DEB_Suggest_Amount(Target.Row, suggestedAmount)
+                Call DEB_Suggest_Amount(Target.row, suggestedAmount)
             End If
             Application.EnableEvents = True
         End If
@@ -146,9 +146,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Calculate the NET amount (Expense), but also accept user input
     If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
-        If Range("I" & Target.Row).value <> 0 And _
-            Range("H" & Target.Row).value <> "M" Then
-                Range("N" & Target.Row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
+        If Range("I" & Target.row).value <> 0 And _
+            Range("H" & Target.row).value <> "M" Then
+                Range("N" & Target.row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
         End If
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If
@@ -221,7 +221,7 @@ Private Sub Process_Change(ByVal Target As Range)
     If Not Intersect(Target, GLRange) Is Nothing Then
         If Target.value <> "" Then
             Application.EnableEvents = False
-            wshDEB_Saisie.Range("Q" & Target.Row).value = _
+            wshDEB_Saisie.Range("Q" & Target.row).value = _
                 Fn_GetGL_Code_From_GL_Description(Target.value)
             Application.EnableEvents = True
         End If
@@ -245,13 +245,13 @@ Private Sub Process_Change(ByVal Target As Range)
                 End If
                 cell.Offset(0, 5).Select 'Input NET amount
             Else
-                Debug.Print "DB# 240 - Total amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
+                Debug.Print "DB# 240 - Total amount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.row).value & " " & _
                     Target.value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     netAmount
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
-                If wshDEB_Saisie.Range("H" & Target.Row).value <> "M" Then
+                If wshDEB_Saisie.Range("H" & Target.row).value <> "M" Then
                     Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
-                                                       wshDEB_Saisie.Range("H" & Target.Row).value, _
+                                                       wshDEB_Saisie.Range("H" & Target.row).value, _
                                                        Target.value, _
                                                        gst, pst, gstCredit, pstCredit, _
                                                        netAmount)
@@ -280,13 +280,13 @@ Private Sub Process_Change(ByVal Target As Range)
             Debug.Print cellNet.Address & " = " & cellNet.value
             If cellNet.value <> "" Then
                 amount = 0
-                Debug.Print "DB# 263 - Net amount (Manual Input) netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.Row).value & " " & _
+                Debug.Print "DB# 263 - Net amount (Manual Input) netAmount - " & wshDEB_Saisie.Range("O4").value & " " & wshDEB_Saisie.Range("H" & Target.row).value & " " & _
                     amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
                     Target.value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
-                If wshDEB_Saisie.Range("H" & Target.Row).value <> "M" Then
+                If wshDEB_Saisie.Range("H" & Target.row).value <> "M" Then
                     Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
-                                                       wshDEB_Saisie.Range("H" & Target.Row).value, _
+                                                       wshDEB_Saisie.Range("H" & Target.row).value, _
                                                        amount, _
                                                        gst, pst, gstCredit, pstCredit, _
                                                        Target.value)

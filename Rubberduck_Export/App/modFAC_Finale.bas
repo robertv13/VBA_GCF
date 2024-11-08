@@ -46,7 +46,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
     Dim lastResultRow As Long
-    lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).Row
+    lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
         
     If lastResultRow > 2 Then
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
@@ -181,7 +181,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Entête.Range("A9999").End(xlUp).Row + 1
+    firstFreeRow = wshFAC_Entête.Range("A9999").End(xlUp).row + 1
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
@@ -230,7 +230,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Application.ScreenUpdating = False
     
     Dim rowLastService As Long
-    rowLastService = wshFAC_Finale.Range("B64").End(xlUp).Row
+    rowLastService = wshFAC_Finale.Range("B64").End(xlUp).row
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
@@ -315,12 +315,12 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the last entered service
     Dim lastEnteredService As Long
-    lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).Row
+    lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).row
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Détails.Range("A99999").End(xlUp).Row + 1
+    firstFreeRow = wshFAC_Détails.Range("A99999").End(xlUp).row + 1
    
     Dim i As Long
     For i = 34 To lastEnteredService
@@ -419,7 +419,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Sommaire_Taux.Range("A99999").End(xlUp).Row + 1
+    firstFreeRow = wshFAC_Sommaire_Taux.Range("A99999").End(xlUp).row + 1
    
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
@@ -512,7 +512,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Comptes_Clients.Range("A9999").End(xlUp).Row + 1
+    firstFreeRow = wshFAC_Comptes_Clients.Range("A9999").End(xlUp).row + 1
    
     With wshFAC_Comptes_Clients
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
@@ -608,7 +608,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     
     'Set the range to look for
     Dim lastTECRow As Long
-    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).Row
+    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Long, rowToBeUpdated As Long, TECID As Long
@@ -684,7 +684,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -696,7 +696,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
         firstAddress = cell.Address
         Do
             'Update the isDétruite column for the found projetID
-            ws.Cells(cell.Row, isDétruiteColumn).value = "VRAI"
+            ws.Cells(cell.row, isDétruiteColumn).value = "VRAI"
             'Find the next cell with the projetID
             Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
@@ -769,7 +769,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).Row
+    lastUsedRow = ws.Range("A99999").End(xlUp).row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -781,7 +781,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
         firstAddress = cell.Address
         Do
             'Update the isDétruite column for the found projetID
-            ws.Cells(cell.Row, isDétruiteColumn).value = "VRAI"
+            ws.Cells(cell.row, isDétruiteColumn).value = "VRAI"
             'Find the next cell with the projetID
             Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress

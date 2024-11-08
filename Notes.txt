@@ -1,0 +1,12 @@
+wshAdmin.Range("B1").Value
+
+Pour obtenir le solde à une date donnée:
+	    Dim solde As Double
+		solde = Fn_Get_GL_Account_Balance("1210", maxDate)
+
+Pour obtenir les transactions entre deux dates:
+		Dim solde As Double
+		solde = Fn_Get_GL_Account_Balance("1210", maxDate)
+		
+		'Impression des résultats
+        Call Print_Results_From_GL_Trans(compte, solde, dateDeb, dateFin)

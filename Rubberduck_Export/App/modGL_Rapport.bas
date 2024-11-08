@@ -69,20 +69,12 @@ Public Sub GL_Report_For_Selected_Accounts()
         Dim compte As String
         For Each item In selectedItems
             compte = item
-            
-            'Obtenir les transactions AVANT la date de debut (solde ouverture)
-            Dim r As Range
-            Call AF_GL_Trans_Account_From_To(compte, #7/31/2024#, dateDeb - 1, "Date", r)
+            'Obtenir le solde d'ouverture & les transactions
             Dim soldeOuverture As Double
-            If r.rows.count > 1 Then
-                soldeOuverture = Fn_Get_GL_Account_Balance(compte, r)
-            End If
-            
-            'Obtenir les transactions pour la période requise
-            Call AF_GL_Trans_Account_From_To(compte, dateDeb, dateFin, "Date", r)
+            soldeOuverture = Fn_Get_GL_Account_Balance(compte, dateDeb - 1)
             
             'Impression des résultats
-            Call Print_Results_From_GL_Trans(compte, r, soldeOuverture)
+            Call Print_Results_From_GL_Trans(compte, soldeOuverture, dateDeb, dateFin)
         
         Next item
         
@@ -100,7 +92,6 @@ Public Sub GL_Report_For_Selected_Accounts()
     'Libérer la mémoire
     Set item = Nothing
     Set lb = Nothing
-    Set r = Nothing
     Set selectedItems = Nothing
     Set ws = Nothing
     
@@ -147,7 +138,7 @@ Public Sub AF_GL_Trans_Account_From_To(compte As String, dateDeb As Date, dateFi
                               rgCopyToRange
         
         Dim lastResultUsedRow
-        lastResultUsedRow = .Range("P99999").End(xlUp).Row
+        lastResultUsedRow = .Range("P99999").End(xlUp).row
         .Range("M12").value = lastResultUsedRow - 1
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
@@ -181,15 +172,15 @@ NoSort:
 
 End Sub
 
-Public Sub Print_Results_From_GL_Trans(compte As String, r As Range, soldeOuverture As Double)
+Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Double, dateDebut As Date, dateFin As Date)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
     Dim saveFirstRow As Long
     Dim solde As Currency
-    lastRowUsed_A = ws.Range("A99999").End(xlUp).Row
-    lastRowUsed_B = ws.Range("B99999").End(xlUp).Row
+    lastRowUsed_A = ws.Range("A99999").End(xlUp).row
+    lastRowUsed_B = ws.Range("B99999").End(xlUp).row
     If lastRowUsed_A > lastRowUsed_B Then
         lastRowUsed_AB = lastRowUsed_A
     Else
@@ -202,7 +193,7 @@ Public Sub Print_Results_From_GL_Trans(compte As String, r As Range, soldeOuvert
     
     'Solde d'ouverture pour ce compte
     Dim glNo As String
-    glNo = Left(compte, InStr(compte, " ") - 1)
+    glNo = compte
     solde = soldeOuverture
     ws.Range("D" & lastRowUsed_AB).value = "Solde d'ouverture"
     
@@ -211,12 +202,10 @@ Public Sub Print_Results_From_GL_Trans(compte As String, r As Range, soldeOuvert
     lastRowUsed_AB = lastRowUsed_AB + 1
     saveFirstRow = lastRowUsed_AB
 
-    If wshGL_Trans.Range("P2") = "" Then
-        GoTo No_Transaction
-    End If
+    Call Get_GL_Trans_With_AF(glNo, dateDebut, dateFin)
     
     Dim lastUsedTrans As Long
-    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).Row '2024-08-15 @ 15:46
+    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row '2024-11-08 @ 09:15
     If lastUsedTrans > 1 Then
         Dim i As Long, sumDT As Currency, sumCT As Currency
         'Read thru the rows
@@ -235,6 +224,8 @@ Public Sub Print_Results_From_GL_Trans(compte As String, r As Range, soldeOuvert
             
             lastRowUsed_AB = lastRowUsed_AB + 1
         Next i
+    Else
+        GoTo No_Transaction
     End If
     
 No_Transaction:
@@ -360,7 +351,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ThisWorkbook.Worksheets("X_GL_Rapport_Out").Range("H999999").End(xlUp).Row + 1
+    lastUsedRow = ThisWorkbook.Worksheets("X_GL_Rapport_Out").Range("H999999").End(xlUp).row + 1
     Range("A3:H" & lastUsedRow).Select
     
     With ActiveSheet.PageSetup

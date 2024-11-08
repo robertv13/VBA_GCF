@@ -20,7 +20,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     Dim lastUsedCol As Long
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
     
@@ -66,7 +66,7 @@ Sub Clients_Ajuste_Nom()
     
     'Find the last used row with data in column A
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
     'Loop through each row starting from row 2 (headers are 1 row)
     Dim client As String, client_ID As String, contactFacturation As String
@@ -117,7 +117,7 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     
     'Find the last used row with data in column A
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
     'Loop through each row starting from row 2 (headers are 1 row)
     Dim client As String, client_ID As String, contactFacturation As String
@@ -190,7 +190,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long, rowNum As Long
-    lastUsedRow = wsDest.Range("A999").End(xlUp).Row
+    lastUsedRow = wsDest.Range("A999").End(xlUp).row
     rowNum = lastUsedRow
     
     'Loop through the recordset and write data to the destination sheet
@@ -298,7 +298,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     Dim lastUsedCol As Long
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
     
@@ -368,7 +368,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long
-    lastUsedRow = wsDest.Range("A999").End(xlUp).Row
+    lastUsedRow = wsDest.Range("A999").End(xlUp).row
     Dim rowNum As Long
     rowNum = lastUsedRow
     
@@ -465,7 +465,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     Set wsDest = ThisWorkbook.Sheets("CAR")
     
     'Get the last row in the destination sheet
-    lastUsedRow = wsDest.Range("A999").End(xlUp).Row
+    lastUsedRow = wsDest.Range("A999").End(xlUp).row
     rowNum = lastUsedRow
     
     'Loop through the recordset and write data to the destination sheet
@@ -572,9 +572,9 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
     
     'Détermine la dernière ligne utilisée dans chacune des 2 feuilles
     Dim lastUsedRowWas As Long
-    lastUsedRowWas = wsWas.Cells(wsWas.rows.count, 1).End(xlUp).Row
+    lastUsedRowWas = wsWas.Cells(wsWas.rows.count, 1).End(xlUp).row
     Dim lastUsedRowNOw As Long
-    lastUsedRowNOw = wsNow.Cells(wsNow.rows.count, 1).End(xlUp).Row
+    lastUsedRowNOw = wsNow.Cells(wsNow.rows.count, 1).End(xlUp).row
     
     'Détermine le nombre de colonnes dans l'ancienne feuille
     Dim lastUsedColWas As Long
@@ -617,12 +617,12 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
             For j = 1 To lastUsedColWas
                 readCells = readCells + 1
                 Set cellWas = wsWas.Cells(i, j)
-                Set cellNow = wsNow.Cells(foundRow.Row, j)
+                Set cellNow = wsNow.Cells(foundRow.row, j)
                 If CStr(cellWas.value) <> CStr(cellNow.value) Then
                     wsDiff.Cells(diffRow, 1).value = i
                     wsDiff.Cells(diffRow, 2).value = j
                     wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
-                    wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 1).value
+                    wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.row, 1).value
                     wsDiff.Cells(diffRow, 5).value = cellWas.value
                     wsDiff.Cells(diffRow, 6).value = "'--->"
                     wsDiff.Cells(diffRow, 7).value = cellNow.value
@@ -632,7 +632,7 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
         Else
             wsDiff.Cells(diffRow, 1).value = i
             wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
-            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.Row, 1).value
+            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.row, 1).value
             wsDiff.Cells(diffRow, 5).value = cellWas.value
             wsDiff.Cells(diffRow, 6).value = "XXXX"
             diffRow = diffRow + 1
@@ -695,7 +695,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     Dim lastUsedCol As Long
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
     
@@ -707,7 +707,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     Dim referenceWorkbook As Workbook: Set referenceWorkbook = Workbooks.Open(clientMF)
     Dim referenceSheet As Worksheet: Set referenceSheet = referenceWorkbook.Worksheets("Clients")
     Dim lastUsedRowClient As Long
-    lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).Row
+    lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).row
     
     Dim dictClients As Dictionary 'Code, Nom du Client
     Set dictClients = New Dictionary
@@ -757,7 +757,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     Dim lastUsedCol As Long
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.columns.count).End(xlToLeft).Column
     
@@ -768,7 +768,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     Dim referenceWorkbook As Workbook: Set referenceWorkbook = Workbooks.Open(clientMF)
     Dim referenceSheet As Worksheet: Set referenceSheet = referenceWorkbook.Worksheets("Clients")
     Dim lastUsedRowClient As Long
-    lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).Row
+    lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).row
     
     Dim dictClients As Dictionary 'Code, Nomdu Client
     Set dictClients = New Dictionary
@@ -815,7 +815,7 @@ Sub Check_Client_Name() '2024-08-10 @ 10:13
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     
     Dim codeClient As String, nomClient As String, contactFact As String
     Dim i As Long
@@ -852,7 +852,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).Row
+    lastUsedRow = sourceSheet.Cells(sourceSheet.rows.count, 1).End(xlUp).row
     
     Dim profID As Long
     Dim prof As String, codeClient As String, nomClient As String
@@ -915,7 +915,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     
     'Détermine la dernière rangée et dernière colonne utilisées dans wshTEC_Local
     Dim lastUsedRowTEC As Long
-    lastUsedRowTEC = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).Row
+    lastUsedRowTEC = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).row
     
     'Open the Master File Workbook
     Dim clientMFPath As String
@@ -924,7 +924,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
     Dim lastUsedRowTECClient As Long
-    lastUsedRowTECClient = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
+    lastUsedRowTECClient = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).row
     
     'Setup output file
     Dim strOutput As String
@@ -1023,7 +1023,7 @@ Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
     Dim wsMF As Worksheet
     Set wsMF = wbMF.Worksheets("Clients")
     Dim lastUsedRowClientMF As Long
-    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).Row
+    lastUsedRowClientMF = wsMF.Cells(wsMF.rows.count, "A").End(xlUp).row
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim clientName As String
@@ -1068,7 +1068,7 @@ Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
         Set wsSource = wbSource.Sheets(ws)
         'Détermine la dernière rangée utilisée dans la feuille
         Dim lastUsedRow As Long
-        lastUsedRow = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).Row
+        lastUsedRow = wsSource.Cells(wsSource.rows.count, 1).End(xlUp).row
         Dim codeClientCAR As String, nomClientCAR As String, nomClientFromMF As String
         For i = 3 To lastUsedRow
             codeClientCAR = wsSource.Cells(i, colClientID).value
@@ -1140,10 +1140,10 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
     Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entête")
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws1.Cells(ws1.rows.count, "A").End(xlUp).Row
-    Dim Row As Long, rowFAC_Entete As Long
-    Row = 2
-    rowFAC_Entete = ws2.Cells(ws2.rows.count, "A").End(xlUp).Row + 1
+    lastUsedRow = ws1.Cells(ws1.rows.count, "A").End(xlUp).row
+    Dim row As Long, rowFAC_Entete As Long
+    row = 2
+    rowFAC_Entete = ws2.Cells(ws2.rows.count, "A").End(xlUp).row + 1
     
     Dim i As Integer
     For i = 2 To lastUsedRow
@@ -1204,9 +1204,9 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entête")
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws1.Cells(ws1.rows.count, "A").End(xlUp).Row
+    lastUsedRow = ws1.Cells(ws1.rows.count, "A").End(xlUp).row
     Dim lastUsedRowTarget As Long
-    lastUsedRowTarget = ws2.Cells(ws2.rows.count, "A").End(xlUp).Row
+    lastUsedRowTarget = ws2.Cells(ws2.rows.count, "A").End(xlUp).row
     
     'Define the target Range
     Dim rngTarget As Range: Set rngTarget = ws2.Range("A2:A" & lastUsedRowTarget)
@@ -1245,7 +1245,7 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
         If foundCells Is Nothing Then
             MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
         Else
-            ii = foundCells.Row
+            ii = foundCells.row
         End If
         
         If ws2.Cells(ii, 21).value <> arTotal Then
