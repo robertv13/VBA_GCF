@@ -238,7 +238,7 @@ Sub UpdatePivotTables()
     For Each pt In ws.PivotTables
         On Error Resume Next
         Application.EnableEvents = False
-        pt.pivotCache.Refresh 'Actualise le cache Pivot
+        pt.PivotCache.Refresh 'Actualise le cache Pivot
         Application.EnableEvents = True
         On Error GoTo 0
     Next pt

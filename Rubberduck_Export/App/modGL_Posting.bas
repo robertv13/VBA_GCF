@@ -45,7 +45,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
                 rs.Fields("No_Entrée") = glEntryNo
-                rs.Fields("Date") = df
+                rs.Fields("Date") = CDate(df)
                 rs.Fields("Description") = desc
                 rs.Fields("Source") = source
                 rs.Fields("No_Compte") = arr(i, 1)
@@ -56,9 +56,9 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 rs.Fields("TimeStamp") = TimeStamp
-                Debug.Print "GL_Trans - " & CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                Debug.Print "GL_Trans - " & CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.update
 Nothing_to_Post:
     Next i
@@ -95,7 +95,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
                 .Range("A" & rowToBeUsed).value = glEntryNo
-                .Range("B" & rowToBeUsed).value = df
+                .Range("B" & rowToBeUsed).value = CDate(df)
                 .Range("C" & rowToBeUsed).value = desc
                 .Range("D" & rowToBeUsed).value = source
                 .Range("E" & rowToBeUsed).value = arr(i, 1)

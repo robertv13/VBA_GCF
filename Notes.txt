@@ -10,3 +10,6 @@ Pour obtenir les transactions entre deux dates:
 		
 		'Impression des résultats
         Call Print_Results_From_GL_Trans(compte, solde, dateDeb, dateFin)
+
+
+C:\VBA\GC_FISCALITÉ\Rubberduck_Export\App
