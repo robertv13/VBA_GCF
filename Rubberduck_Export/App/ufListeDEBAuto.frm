@@ -25,7 +25,7 @@ Private Sub UserForm_Initialize()
         .ColumnHeads = False
         .ColumnCount = 3
         .ColumnWidths = "40; 260; 30"
-        .RowSource = wshDEB_Recurrent.name & "!O2:Q" & lastUsedRow
+        .RowSource = wshDEB_Recurrent.Name & "!O2:Q" & lastUsedRow
     End With
    
 End Sub

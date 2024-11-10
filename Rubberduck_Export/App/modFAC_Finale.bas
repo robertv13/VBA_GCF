@@ -569,7 +569,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
             rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
-            rs.Fields("VersionApp").value = ThisWorkbook.name
+            rs.Fields("VersionApp").value = ThisWorkbook.Name
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
         Else
@@ -620,7 +620,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
             wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
     Next r
@@ -953,12 +953,12 @@ Sub FAC_Finale_Setup_All_Cells()
         .Range("B21").formula = "= ""Le "" & DAY(FAC_Brouillon!o3) & "" "" & UPPER(TEXT(FAC_Brouillon!O3, ""mmmm"")) & "" "" & YEAR(FAC_Brouillon!O3)"
 '        .Range("B21").formula = "= ""Le "" & TEXT(FAC_Brouillon!O3, ""j mmmm aaaa"")"
         .Range("B23:B27").value = ""
-        .Range("E28").value = "=" & wshFAC_Brouillon.name & "!O6"    'Invoice number
+        .Range("E28").value = "=" & wshFAC_Brouillon.Name & "!O6"    'Invoice number
         
 '        .Range("C65").value = "Heures"                               'Summary Heading
 '        .Range("D65").value = "Taux"                                 'Summary Heading
-'        .Range("C66").formula = "=" & wshFAC_Brouillon.name & "!M47" 'Hours summary
-'        .Range("D66").formula = "=" & wshFAC_Brouillon.name & "!N47" 'Hourly Rate
+'        .Range("C66").formula = "=" & wshFAC_Brouillon.Name & "!M47" 'Hours summary
+'        .Range("D66").formula = "=" & wshFAC_Brouillon.Name & "!N47" 'Hourly Rate
 '
 '        With .Range("C65:D66")
 '            .Font.ThemeColor = xlThemeColorLight1
@@ -974,26 +974,26 @@ Sub FAC_Finale_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("B81"), "FAC_Label_AmountDue")
 
         'Establish formulas
-        .Range("E69").formula = "=" & wshFAC_Brouillon.name & "!O47" 'Fees Sub-Total
+        .Range("E69").formula = "=" & wshFAC_Brouillon.Name & "!O47" 'Fees Sub-Total
         
-        .Range("B70").formula = "=" & wshFAC_Brouillon.name & "!M48" 'Misc. Amount # 1 - Description
-        .Range("E70").formula = "=" & wshFAC_Brouillon.name & "!O48" 'Misc. Amount # 1
+        .Range("B70").formula = "=" & wshFAC_Brouillon.Name & "!M48" 'Misc. Amount # 1 - Description
+        .Range("E70").formula = "=" & wshFAC_Brouillon.Name & "!O48" 'Misc. Amount # 1
         
-        .Range("B71").formula = "=" & wshFAC_Brouillon.name & "!M49" 'Misc. Amount # 2 - Description
-        .Range("E71").formula = "=" & wshFAC_Brouillon.name & "!O49" 'Misc. Amount # 2
+        .Range("B71").formula = "=" & wshFAC_Brouillon.Name & "!M49" 'Misc. Amount # 2 - Description
+        .Range("E71").formula = "=" & wshFAC_Brouillon.Name & "!O49" 'Misc. Amount # 2
         
-        .Range("B72").formula = "=" & wshFAC_Brouillon.name & "!M50" 'Misc. Amount # 3 - Description
-        .Range("E72").formula = "=" & wshFAC_Brouillon.name & "!O50" 'Misc. Amount # 3
+        .Range("B72").formula = "=" & wshFAC_Brouillon.Name & "!M50" 'Misc. Amount # 3 - Description
+        .Range("E72").formula = "=" & wshFAC_Brouillon.Name & "!O50" 'Misc. Amount # 3
         
         .Range("E73").formula = "=SUM(E69:E72)"                      'Invoice Sub-Total
         
-        .Range("C74").formula = "=" & wshFAC_Brouillon.name & "!N52" 'GST Rate
+        .Range("C74").formula = "=" & wshFAC_Brouillon.Name & "!N52" 'GST Rate
         .Range("E74").formula = "=round(E73*C74,2)"                  'GST Amount"
-        .Range("C75").formula = "=" & wshFAC_Brouillon.name & "!N53" 'PST Rate
+        .Range("C75").formula = "=" & wshFAC_Brouillon.Name & "!N53" 'PST Rate
         .Range("E75").formula = "=round(E73*C75,2)"                  'PST Amount
         
         .Range("E77").formula = "=SUM(E73:E75)"                        'Total including taxes
-        .Range("E79").formula = "=" & wshFAC_Brouillon.name & "!O57" 'Deposit Amount
+        .Range("E79").formula = "=" & wshFAC_Brouillon.Name & "!O57" 'Deposit Amount
         .Range("E81").formula = "=E77-E79"                             'Total due on that invoice
     End With
     
@@ -1200,7 +1200,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 
                 'Créer une nouvelle feuille avec le même nom
                 Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
-                wsCible.name = strNameBase 'Attribuer le nom d'origine
+                wsCible.Name = strNameBase 'Attribuer le nom d'origine
 
             Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
                 suffixe = 1
@@ -1217,16 +1217,16 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 'Créer une nouvelle feuille avec ce nom directement lors de la création
                 Application.DisplayAlerts = False ' Désactiver les alertes pour éviter Feuil1
                 Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
-                wsCible.name = strName ' Attribuer le nouveau nom avec suffixe
+                wsCible.Name = strName ' Attribuer le nouveau nom avec suffixe
                 Application.DisplayAlerts = True ' Réactiver les alertes après la création
         End Select
     Else
         'Si la feuille n'existe pas, on peut directement la créer
         Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
-        wsCible.name = strNameBase
+        wsCible.Name = strNameBase
     End If
     
-'    wsCible.name = strName 'Renommer la nouvelle feuille
+'    wsCible.Name = strName 'Renommer la nouvelle feuille
     
     '1. Copier les valeurs uniquement
     plageSource.Copy
@@ -1256,7 +1256,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     '5. Copier l'entête de la facture
     Dim forme As Shape
     For Each forme In wsSource.Shapes
-        If forme.name = "GCF_Entête" Then
+        If forme.Name = "GCF_Entête" Then
             forme.Copy
             wsCible.Paste
             'Ajuster la position et la taille de la forme
@@ -1510,14 +1510,14 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("C" & i).Font.Bold = False
             wshFAC_Finale.Range("C" & i).Font.Underline = False
-            wshFAC_Finale.Range("C" & i).Font.name = "Verdana"
+            wshFAC_Finale.Range("C" & i).Font.Name = "Verdana"
             wshFAC_Finale.Range("C" & i).Font.size = 11
             wshFAC_Finale.Range("C" & i).value = dictTaux(t)
             wshFAC_Finale.Range("D" & i).Font.Bold = False
             wshFAC_Finale.Range("D" & i).NumberFormat = "#,##0.00 $"
             wshFAC_Finale.Range("D" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("D" & i).Font.Underline = False
-            wshFAC_Finale.Range("D" & i).Font.name = "Verdana"
+            wshFAC_Finale.Range("D" & i).Font.Name = "Verdana"
             wshFAC_Finale.Range("D" & i).Font.size = 11
             wshFAC_Finale.Range("D" & i).value = t
             i = i + 1

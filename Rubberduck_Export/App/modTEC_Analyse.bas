@@ -249,7 +249,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Font
             .ThemeColor = xlThemeColorDark1
             .TintAndShade = 0
-            .name = "Aptos Narrow"
+            .Name = "Aptos Narrow"
             .Bold = True
             .size = 12
         End With
@@ -280,7 +280,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             'Mettre de l'emphase sur les cellules d'heures, si le montant du projet <> 0,00 $
             If wsDest.Range("D" & r).value = 0 Then
                 With wsDest.Range("H" & r).Font
-                    .name = "Aptos Narrow"
+                    .Name = "Aptos Narrow"
                     .size = 12
                     .Bold = True
                 End With
@@ -896,7 +896,7 @@ Sub Delete_CheckBox()
     'Check if any CheckBox exists and then delete it/them
     Dim Sh As Shape
     For Each Sh In ws.Shapes
-        If InStr(Sh.name, "CheckBox") Then
+        If InStr(Sh.Name, "CheckBox") Then
             Sh.Delete
         End If
     Next Sh
@@ -938,7 +938,7 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     'Clear any leftover CheckBox
     Dim Sh As Shape
     For Each Sh In ws.Shapes
-        If InStr(Sh.name, "CheckBox") Then
+        If InStr(Sh.Name, "CheckBox") Then
             Sh.Delete
         End If
     Next Sh

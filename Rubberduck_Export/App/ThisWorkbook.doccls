@@ -135,7 +135,7 @@ Sub BackupMasterFile()
 
     'Create the backup file name
     Dim backupFileName As String
-    backupFileName = Left(masterWorkbook.name, InStrRev(masterWorkbook.name, ".") - 1) & "_" & currentDateAndTime & ".xlsx"
+    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & currentDateAndTime & ".xlsx"
 
     'Define the backup file path (same directory as the master file)
     Dim backupFilePath As String

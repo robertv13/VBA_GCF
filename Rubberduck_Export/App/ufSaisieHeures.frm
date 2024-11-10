@@ -100,7 +100,7 @@ Private Sub UserForm_Terminate()
     ufSaisieHeures.Hide
     Unload ufSaisieHeures
     
-    If ufSaisieHeures.name = "ufSaisieHeures" Then
+    If ufSaisieHeures.Name = "ufSaisieHeures" Then
         On Error GoTo MenuSelect
         wshMenuTEC.Select
         On Error GoTo 0

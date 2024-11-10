@@ -35,7 +35,7 @@ Private Sub Worksheet_Activate()
     
     Dim cbx As Shape
     For Each cbx In wshGL_BV.Shapes
-        If InStr(cbx.name, "GL_Trans") Then
+        If InStr(cbx.Name, "GL_Trans") Then
             cbx.Delete
         End If
     Next cbx
@@ -302,7 +302,7 @@ Sub wshGL_BV_Adjust_The_Shape()
         .Line.ForeColor.RGB = vbBlue
         .TextFrame.Characters.Text = texteFull
         .TextFrame.Characters.Font.Color = vbBlack
-        .TextFrame.Characters.Font.name = "Consolas"
+        .TextFrame.Characters.Font.Name = "Consolas"
         .TextFrame.Characters.Font.size = 11
         .TextFrame.MarginLeft = 4
         .TextFrame.MarginRight = 4

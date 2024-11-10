@@ -22,14 +22,14 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = _
         Workbooks.Open(saveDataPath & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
     
-    Debug.Print "Source     : " & sourceWorkbook.name & " with " & sourceSheetName
-    Debug.Print "Destination: " & targetWorkbook.name & " with " & targetSheetName
+    Debug.Print "Source     : " & sourceWorkbook.Name & " with " & sourceSheetName
+    Debug.Print "Destination: " & targetWorkbook.Name & " with " & targetSheetName
     
     'Copy the source worksheet
     sourceWorkbook.Sheets(sourceSheetName).Copy Before:=targetWorkbook.Sheets(2)
     Debug.Print "The new sheet is created..."
     Dim tempSheet As Worksheet: Set tempSheet = targetWorkbook.Sheets(2)
-    tempSheet.name = "TempSheetName"
+    tempSheet.Name = "TempSheetName"
     Debug.Print "The new sheet is now called 'TempSheetName'"
 
     'Delete the old (target) worksheet
@@ -37,7 +37,7 @@ Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     targetWorkbook.Sheets(targetSheetName).Delete
 
     'Rename the copied worksheet to the target worksheet name
-    tempSheet.name = targetSheetName
+    tempSheet.Name = targetSheetName
 
 '    'Change the code name of the worksheet
 '    Dim vbaProject As Object: Set vbaProject = targetWorkbook.VBProject
@@ -978,7 +978,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.Add name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
     
     'Redefine - dnrPlanComptable_All
     'Delete existing dynamic named range (assuming it could exists)
@@ -990,7 +990,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.Add name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
     Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
 

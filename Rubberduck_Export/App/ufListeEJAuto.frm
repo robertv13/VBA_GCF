@@ -26,7 +26,7 @@ Private Sub UserForm_Initialize()
         .ColumnHeads = True
         .ColumnCount = 2
         .ColumnWidths = "275; 25"
-        .RowSource = wshGL_EJ_Recurrente.name & "!I2:J" & lastUsedRow
+        .RowSource = wshGL_EJ_Recurrente.Name & "!I2:J" & lastUsedRow
     End With
    
 End Sub

@@ -24,7 +24,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Dim lastUsedRow As Long
     For Each ws In wb.Worksheets
         ' Trouver la dernière ligne utilisée
-        If InStr(ws.name, "Admin") <> 1 Then
+        If InStr(ws.Name, "Admin") <> 1 Then
             lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
             'Supprimer toutes les lignes sauf la première (en-tête)
             If lastUsedRow > 1 Then

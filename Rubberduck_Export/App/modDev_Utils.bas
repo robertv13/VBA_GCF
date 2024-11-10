@@ -286,7 +286,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim wb As Workbook: Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
     
     Dim wbName As String
-    wbName = wb.name
+    wbName = wb.Name
     
     'Loop through each worksheet in the workbook and add its name to the immediate window
     Dim arr() As Variant
@@ -297,7 +297,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim f As Long
     For Each ws In wb.Worksheets
         r = r + 1
-        arr(r, 1) = ws.name
+        arr(r, 1) = ws.Name
         arr(r, 2) = ws.CodeName
         TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
         arr(r, 3) = TimeStamp
@@ -386,7 +386,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
             If Trim(vbCodeMod.Lines(lineNum, 1)) <> "" Then
                 X = X + 1
                 allLinesOfCode(X, 1) = oType
-                allLinesOfCode(X, 2) = vbComp.name
+                allLinesOfCode(X, 2) = vbComp.Name
                 allLinesOfCode(X, 3) = lineNum
                 allLinesOfCode(X, 4) = Trim(vbCodeMod.Lines(lineNum, 1))
             End If
@@ -433,13 +433,13 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
         If Not rng Is Nothing Then
             'Loop through each area in the range
             For Each area In rng.Areas
-                Debug.Print ws.name & " - " & area.FormatConditions.count
+                Debug.Print ws.Name & " - " & area.FormatConditions.count
                 ' Loop through each conditional formatting rule in the area
                 For ruleIndex = 1 To area.FormatConditions.count
                     Set cf = area.FormatConditions(ruleIndex)
                     i = i + 1
-                    arr(i, 1) = ws.name & Chr(0) & area.Address
-                    arr(i, 2) = ws.name
+                    arr(i, 1) = ws.Name & Chr(0) & area.Address
+                    arr(i, 2) = ws.Name
                     arr(i, 3) = area.Address
                     arr(i, 4) = cf.Type
                     arr(i, 5) = cf.Formula1
@@ -525,8 +525,8 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             
             If dvType <> "" And dvType <> "0" Then
                 'Write the data validation details to the output sheet
-                arr(X, 1) = ws.name & Chr(0) & cell.Address 'Sort Key
-                arr(X, 2) = ws.name
+                arr(X, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
+                arr(X, 2) = ws.Name
                 arr(X, 3) = cell.Address
                 arr(X, 4) = dvType
                 Select Case dvType
@@ -628,7 +628,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    MsgBox "Data validation list were created in worksheet: " & wsOutput.name
+    MsgBox "Data validation list were created in worksheet: " & wsOutput.Name
     
 End Sub
 
@@ -640,7 +640,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     'Check if the worksheet exists
     wsExists = False
     For Each ws In ThisWorkbook.Worksheets
-        If ws.name = sheetName Then
+        If ws.Name = sheetName Then
             wsExists = True
             Exit For
         End If
@@ -655,7 +655,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
 
     'Create a new worksheet with the specified name
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
-    ws.name = sheetName
+    ws.Name = sheetName
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -677,14 +677,14 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     'Loop through each worksheet
     Dim ws As Worksheet
-    Dim name As String, usedRange As String, cellsCount As String
+    Dim Name As String, usedRange As String, cellsCount As String
     For Each ws In wb.Sheets
         If ws.CodeName = "wshzDocNamedRange" Or _
             ws.CodeName = "wshzDocFormules" Then
                 GoTo nextIteration
         End If
         'Save information for this worksheet
-        name = ws.name
+        Name = ws.Name
         usedRange = ws.usedRange.Address
         cellsCount = ws.usedRange.count
         'Loop through all cells in the used range
@@ -697,7 +697,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
                 i = i + 1
                 outputArray(i, 1) = ws.CodeName & Chr(0) & cell.Address
                 outputArray(i, 2) = ws.CodeName
-                outputArray(i, 3) = name
+                outputArray(i, 3) = Name
                 outputArray(i, 4) = usedRange
                 outputArray(i, 5) = cellsCount
                 outputArray(i, 6) = cell.Address
@@ -793,7 +793,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     r = row + 1
     For Each shp In ws.Shapes
         ws.Cells(r, col).value = shp.Type
-        ws.Cells(r, col + 1).value = shp.name
+        ws.Cells(r, col + 1).value = shp.Name
         ws.Cells(r, col + 2).value = shp.ZOrderPosition
         ws.Cells(r, col + 3).value = shp.Top
         ws.Cells(r, col + 4).value = shp.Left
@@ -818,7 +818,7 @@ Sub List_All_Tables()
         'Loop through each ListObject (table) in the worksheet
         Dim lo As ListObject
         For Each lo In ws.ListObjects
-            Debug.Print "Sheet: " & ws.name; Tab(40); "Table: " & lo.name & vbCrLf
+            Debug.Print "Sheet: " & ws.Name; Tab(40); "Table: " & lo.Name & vbCrLf
         Next lo
     Next ws
     
@@ -840,12 +840,12 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     Dim arr() As Variant
     ReDim arr(1 To 300, 1 To 9)
     Dim i As Long
-    Dim nr As name
+    Dim nr As Name
     Dim TimeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
-        arr(i, 1) = UCase(nr.name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
-        arr(i, 2) = nr.name
+        arr(i, 1) = UCase(nr.Name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
+        arr(i, 2) = nr.Name
         arr(i, 3) = "'" & nr.RefersTo
         If InStr(nr.RefersTo, "#REF!") Then
             arr(i, 4) = "'#REF!"
@@ -858,7 +858,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         On Error GoTo 0
         
         If Not rng Is Nothing Then
-            arr(i, 5) = rng.Worksheet.name
+            arr(i, 5) = rng.Worksheet.Name
             arr(i, 6) = rng.Address
         End If
         Set rng = Nothing
@@ -1160,7 +1160,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
             
             ' Output the information to the report
             With reportSheet
-                .Cells(outputRow, 1).value = ws.name
+                .Cells(outputRow, 1).value = ws.Name
                 .Cells(outputRow, 2).value = i
                 .Cells(outputRow, 3).value = Replace(col.Address(False, False), "1", "")
 '                .Cells(outputRow, 3).value = col.Address(False, False).Replace("1", "")
@@ -1217,16 +1217,16 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
 
     For Each ws In ThisWorkbook.Worksheets
         'Skip the output sheet to avoid listing its own shapes
-        If ws.name <> "Doc_All_Macros_Used_With_Object" Then
+        If ws.Name <> "Doc_All_Macros_Used_With_Object" Then
             'Check for macros assigned to shapes
             For Each shp In ws.Shapes
                 On Error Resume Next
                 macroName = shp.OnAction
                 On Error GoTo 0
                 If macroName <> "" Then
-                    wsOutputSheet.Cells(outputRow, 1).value = ws.name
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.Name
                     wsOutputSheet.Cells(outputRow, 2).value = "Shape"
-                    wsOutputSheet.Cells(outputRow, 3).value = shp.name
+                    wsOutputSheet.Cells(outputRow, 3).value = shp.Name
                     wsOutputSheet.Cells(outputRow, 4).value = macroName
                     outputRow = outputRow + 1
                 End If
@@ -1245,9 +1245,9 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
                 End If
                 On Error GoTo 0
                 If macroName <> "" Then
-                    wsOutputSheet.Cells(outputRow, 1).value = ws.name
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.Name
                     wsOutputSheet.Cells(outputRow, 2).value = "ActiveX Control"
-                    wsOutputSheet.Cells(outputRow, 3).value = obj.name
+                    wsOutputSheet.Cells(outputRow, 3).value = obj.Name
                     wsOutputSheet.Cells(outputRow, 4).value = macroName
                     outputRow = outputRow + 1
                 End If
@@ -1286,7 +1286,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
 '            lineText = Trim(vbMod.Lines(lineNum, 1))
 '            If Left(lineText, 1) <> "'" And Left(lineText, 3) <> "Rem" Then
 '                procName = vbMod.ProcOfLine(lineNum, procType)
-'                wsOutputSheet.Cells(outputRow, 1).value = vbComp.name
+'                wsOutputSheet.Cells(outputRow, 1).value = vbComp.Name
 '                wsOutputSheet.Cells(outputRow, 2).value = "Procedure"
 '                wsOutputSheet.Cells(outputRow, 3).value = procName
 '                wsOutputSheet.Cells(outputRow, 4).value = "Called in code"
@@ -1331,7 +1331,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
-    Dim header2 As String: header2 = ThisWorkbook.name
+    Dim header2 As String: header2 = ThisWorkbook.Name
     Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
@@ -1410,7 +1410,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                 If (posProcedure <> 0 Or posFonction <> 0) And posExitProcedure = 0 And posExitFonction = 0 Then
                     i = i + 1
                     arr(i, 2) = oType
-                    arr(i, 3) = vbComp.name
+                    arr(i, 3) = vbComp.Name
                     arr(i, 4) = lineNum
                     'Goback to savedLineOfCode
                     trimmedLineOfCode = Trim(vbCodeMod.Lines(lineNum, 1))
@@ -1444,7 +1444,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
                     End If
                     arr(i, 6) = sType
                     arr(i, 7) = trimmedLineOfCode
-                    arr(i, 1) = UCase(oType) & Chr(0) & UCase(vbComp.name) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
+                    arr(i, 1) = UCase(oType) & Chr(0) & UCase(vbComp.Name) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
                     If params <> "" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
@@ -1565,7 +1565,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim i As Long
     For Each ws In ThisWorkbook.Sheets
         i = i + 1
-        arr(i, 1) = ws.name
+        arr(i, 1) = ws.Name
         arr(i, 2) = ws.CodeName
         TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
         arr(i, 3) = TimeStamp
@@ -1589,12 +1589,12 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim lastUsedRow As Long
     lastUsedRow = i + 2
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
-                                    " feuilles pour le workbook '" & ThisWorkbook.name & "' ***"
+                                    " feuilles pour le workbook '" & ThisWorkbook.Name & "' ***"
     
     lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
-    Dim header2 As String: header2 = ThisWorkbook.name
+    Dim header2 As String: header2 = ThisWorkbook.Name
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
@@ -1634,7 +1634,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
 '        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
-        Debug.Print ws.name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -1701,7 +1701,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 '        startTime = Timer 'Start timing
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
-                        ThisWorkbook.name & " | " & _
+                        ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         " | " & _
                         LOCALE_SSHORTDATE
@@ -1709,7 +1709,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 '        startTime = Timer 'Start timing
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
-                        ThisWorkbook.name & " | " & _
+                        ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         " | " & _
                         LOCALE_SSHORTDATE
@@ -1718,7 +1718,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
-                        ThisWorkbook.name & " | " & _
+                        ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         Format(elapsedTime, "0.0000") & " sec." & " | " & _
                         LOCALE_SSHORTDATE & vbCrLf
@@ -1789,7 +1789,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     Print #FileNum, TimeStamp & " | " & _
                         Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
-                        ThisWorkbook.name & " | " & _
+                        ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt & " | " & _
                         LOCALE_SSHORTDATE

@@ -899,7 +899,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
         'Create a checkbox linked to the cell
         Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.width, cell.Height)
         With cbx
-            .name = "chkBox - " & cell.row
+            .Name = "chkBox - " & cell.row
             .Text = ""
             If dateCutOffProjet = "00:00:00" Then
                 If Cells(cell.row, 4).value < wshFAC_Brouillon.Range("O3").value Then
@@ -970,7 +970,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     Dim cbx As Shape
     For Each cbx In wshFAC_Brouillon.Shapes
-        If InStr(cbx.name, "chkBox - ") Then
+        If InStr(cbx.Name, "chkBox - ") Then
             cbx.Delete
         End If
     Next cbx

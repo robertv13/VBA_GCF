@@ -1,13 +1,15 @@
 Attribute VB_Name = "Module1"
 Option Explicit
 
-Sub Macro1()
-Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro1 Macro
-'
+Sub test_Input_Box()
 
-'
-    ActiveSheet.Protect DrawingObjects:=False, Contents:=True, Scenarios:= _
-        True
+'    Dim Name As String
+'    Name = InputBox("What is your name ? ", "Name entry")
+    
+    Dim output As Variant
+    output = Application.InputBox("Saisi d'une chaine de caractères", "Exemple de saisi", "String")
+    
+'    Dim r As String
+'    r = InputBox("Prompt", "Title", "Default")
+    
 End Sub

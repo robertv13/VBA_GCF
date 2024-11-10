@@ -338,7 +338,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
-            rs.Fields("VersionApp").value = ThisWorkbook.name
+            rs.Fields("VersionApp").value = ThisWorkbook.Name
             rs.update
             
             Call Log_Saisie_Heures("DELETE" & saveLogTEC_ID, ufSaisieHeures.cmbProfessionnel.value & " | " & _
@@ -411,7 +411,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields("EstFacturee").value = ConvertValueBooleanToText(False)
             rs.Fields("DateFacturee").value = Null
             rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
-            rs.Fields("VersionApp").value = ThisWorkbook.name
+            rs.Fields("VersionApp").value = ThisWorkbook.Name
             rs.Fields("NoFacture").value = ""
             rs.update
             
@@ -438,7 +438,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
                 rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy/mm/dd hh:mm:ss"))
-                rs.Fields("VersionApp").value = ThisWorkbook.name
+                rs.Fields("VersionApp").value = ThisWorkbook.Name
                 'Nouveau log - 2024-09-02 @ 10:40
                 
                 Call Log_Saisie_Heures("UPDATE " & saveLogTEC_ID, ufSaisieHeures.cmbProfessionnel.value & " | " & _
@@ -531,7 +531,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
             .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)
-            .Range("O" & nextRowNumber).value = ThisWorkbook.name
+            .Range("O" & nextRowNumber).value = ThisWorkbook.Name
             .Range("P" & nextRowNumber).value = ""
         End With
     Else
@@ -559,14 +559,14 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
                 .Range("L" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
                 .Range("M" & rowToBeUpdated).value = ""
                 .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
-                .Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+                .Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
             With wshTEC_Local
                 .Range("K" & rowToBeUpdated).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
-                .Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+                .Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
             End With
         End If
     End If

@@ -559,8 +559,8 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
     
     Dim shp As Shape
     For Each shp In ws.Shapes
-        Debug.Print shp.name
-        If InStr(shp.name, "Rounded Rectangle ") Then
+        Debug.Print shp.Name
+        If InStr(shp.Name, "Rounded Rectangle ") Then
             shp.Delete
         End If
     Next shp
@@ -577,7 +577,7 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
     
     Dim shp As Shape
     For Each shp In ws.Shapes
-        Debug.Print shp.name
+        Debug.Print shp.Name
     Next shp
 
     'Libérer la mémoire

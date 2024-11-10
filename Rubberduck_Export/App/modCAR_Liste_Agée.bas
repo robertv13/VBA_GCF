@@ -373,7 +373,7 @@ Next_Invoice:
     
     'Caractères pour le rapport
     With rngToPrint.Font
-        .name = "Aptos Narrow"
+        .Name = "Aptos Narrow"
         .size = 10
     End With
     

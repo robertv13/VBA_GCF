@@ -178,7 +178,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     Dim wsExists As Boolean
     For Each ws In ThisWorkbook.Worksheets
         wsExists = False
-        If ws.name = wsName Then
+        If ws.Name = wsName Then
             wsExists = True
             Exit For
         End If
@@ -193,7 +193,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
     'Add the new worksheet
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
-    ws.name = wsName
+    ws.Name = wsName
 
     'Libérer la mémoire
     Set ws = Nothing
@@ -225,7 +225,7 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
                 On Error GoTo 0
                 
                 If cellCount > 0 Then
-                    circRef = circRef & ws.name & "!" & cell.Address & vbCrLf
+                    circRef = circRef & ws.Name & "!" & cell.Address & vbCrLf
                     circRefCount = circRefCount + 1
                 End If
             Next cell
@@ -422,7 +422,7 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
-        .name = "Courier New"
+        .Name = "Courier New"
         .size = 10
     End With
     
@@ -473,7 +473,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Clients'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshBD_Clients'")
     r = r + 1
     
     Dim arr As Variant
@@ -590,7 +590,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshBD_Fournisseurs'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshBD_Fournisseurs'")
     r = r + 1
     
     Dim arr As Variant
@@ -714,7 +714,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.rows.count, "A").End(xlUp).row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Détails'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
     r = r + 1
     
     'Array pointer
@@ -826,7 +826,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshENC_Entête'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Entête'")
     r = r + 1
     
     If lastUsedRow = headerRow Then
@@ -922,7 +922,7 @@ Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
     lastUsedRowEntete = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + headerRow & ":A" & lastUsedRowEntete)
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Détails'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Détails'")
     r = r + 1
     
     'Transfer FAC_Details data from Worksheet into an Array (arr)
@@ -1019,7 +1019,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Entête'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Entête'")
     r = r + 1
     
     If lastUsedRow = headerRow Then
@@ -1202,7 +1202,7 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Comptes_Clients'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Comptes_Clients'")
     r = r + 1
     
     If lastUsedRow = headerRow Then
@@ -1375,7 +1375,7 @@ Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.usedRange.columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Entête'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Projets_Entête'")
     r = r + 1
     
     'Establish the number of rows before transferring it to an Array
@@ -1518,7 +1518,7 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     lastUsedRow = wsMaster.Cells(wsMaster.rows.count, "A").End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshFAC_Projets_Détails'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Projets_Détails'")
     r = r + 1
     
     'Transfer data from Worksheet into an Array (arr)
@@ -1625,7 +1625,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshGL_Trans'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshGL_Trans'")
     r = r + 1
     
     On Error Resume Next
@@ -1816,7 +1816,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_TdB_Data'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshTEC_TdB_Data'")
     r = r + 1
     
     Dim arr As Variant
@@ -2159,7 +2159,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2314 'What is the last TECID analyzed ?
+    lastTECIDReported = 2317 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2179,7 +2179,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.name & "' ou 'wshTEC_Local'")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshTEC_Local'")
     r = r + 1
     
     Dim rngCR As Range
@@ -2692,7 +2692,7 @@ Sub Make_It_As_Header(r As Range)
     End With
     
     Dim wsName As String
-    wsName = r.Worksheet.name
+    wsName = r.Worksheet.Name
     Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets(wsName)
     ws.columns.AutoFit
     
@@ -3010,7 +3010,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Dim wsName As String
     diffRow = 1
     For Each wso In wb1.Worksheets
-        wsName = wso.name
+        wsName = wso.Name
         Set wsn = wb2.Sheets(wsName)
         
         Dim nbCol As Integer
@@ -3031,11 +3031,11 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
             readColumns = readColumns + 1
             
             'Compare Font Name
-            If col1.Font.name <> col2.Font.name Then
-                diffLog = diffLog & "Column " & i & " Font Name differs: " & col1.Font.name & " vs " & col2.Font.name & vbCrLf
+            If col1.Font.Name <> col2.Font.Name Then
+                diffLog = diffLog & "Column " & i & " Font Name differs: " & col1.Font.Name & " vs " & col2.Font.Name & vbCrLf
                 wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Font.name
-                wsDiff.Cells(diffRow, 5).value = col2.Font.name
+                wsDiff.Cells(diffRow, 4).value = col1.Font.Name
+                wsDiff.Cells(diffRow, 5).value = col2.Font.Name
             End If
             
             'Compare Font Size
@@ -3096,7 +3096,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
-    Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
+    Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = ""
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
@@ -3150,9 +3150,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim diffRow As Long
     diffRow = 1
     diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Prod: " & wb1.name
+    wsDiff.Cells(diffRow, 1).value = "Prod: " & wb1.Name
     diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Dev : " & wb2.name
+    wsDiff.Cells(diffRow, 1).value = "Dev : " & wb2.Name
     
     Dim wsProd As Worksheet
     Dim wsDev As Worksheet
@@ -3162,7 +3162,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim readRows As Long
     Dim wsName As String
     For Each wsProd In wb1.Worksheets
-        wsName = wsProd.name
+        wsName = wsProd.Name
         Set wsDev = wb2.Sheets(wsName)
         
         'Determine number of columns and rows in Prod Workbook
@@ -3172,7 +3172,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         Do
             nbColProd = nbColProd + 1
             arr(nbColProd) = wsProd.Cells(1, nbColProd).value
-            Debug.Print wsProd.name, " Prod: ", wsProd.Cells(1, nbColProd).value
+            Debug.Print wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).value
         Loop Until wsProd.Cells(1, nbColProd).value = ""
         nbColProd = nbColProd - 1
         nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
@@ -3182,7 +3182,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         nbColDev = 0
         Do
             nbColDev = nbColDev + 1
-            Debug.Print wsDev.name, " Dev : ", wsDev.Cells(1, nbColDev).value
+            Debug.Print wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).value
         Loop Until wsProd.Cells(1, nbColDev).value = ""
         nbColDev = nbColDev - 1
         nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
@@ -3246,7 +3246,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
-    Dim header1 As String: header1 = wb1.name & " vs. " & wb2.name
+    Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = "Changements de lignes ou cellules"
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
@@ -3281,7 +3281,7 @@ Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
     'fs is the Font Size
     
     With r.Font
-        .name = ff
+        .Name = ff
         .size = fs
         .Underline = xlUnderlineStyleNone
         .ThemeColor = xlThemeColorLight1

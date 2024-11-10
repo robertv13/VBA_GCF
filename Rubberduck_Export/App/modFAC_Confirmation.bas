@@ -74,7 +74,7 @@ Sub Insert_PDF_WIP_Icons()
             
     Set pic = ws.Pictures.Insert(iconPath & Application.PathSeparator & "AdobeAcrobatReader.png")
     With pic
-        .name = "PDF"
+        .Name = "PDF"
         .Top = cell.Top + 10
         .Left = cell.Left + 10
         .Height = 50 'cell.Height
@@ -90,7 +90,7 @@ Sub Insert_PDF_WIP_Icons()
     
     Set pic = ws.Pictures.Insert(iconPath & Application.PathSeparator & "WIP.png")
     With pic
-        .name = "WIP"
+        .Name = "WIP"
         .Top = cell.Top + 10
         .Left = cell.Left + 10
         .Height = 50 'cell.Height
@@ -220,7 +220,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     'Si la feuille "Rapport TEC facturés" n'existe pas, la créer
     If wsRapport Is Nothing Then
         Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
-        wsRapport.name = strRapport
+        wsRapport.Name = strRapport
     Else
         wsRapport.Cells.Clear 'Vider la feuille si elle existe déjà
     End If
@@ -299,7 +299,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
             .Weight = xlHairline
         End With
         
-        .Range("A4:D" & r).Font.name = "Aptos Narrow"
+        .Range("A4:D" & r).Font.Name = "Aptos Narrow"
         .Range("A4:D" & r).Font.size = 10
         
         .columns("A").ColumnWidth = 10

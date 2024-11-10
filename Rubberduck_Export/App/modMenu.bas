@@ -149,7 +149,7 @@ Sub Hide_Dev_Shapes_Based_On_Username()
     Dim shp As Shape
     For Each shp In ws.Shapes
         'Check the username and hide shapes accordingly
-        Select Case shp.name
+        Select Case shp.Name
             Case "ChangeReferenceSystem"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
                     Fn_Get_Windows_Username = "robertmv" Then
@@ -195,7 +195,7 @@ Sub BackToMainMenu()
 
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets
-        If ws.name <> "Menu" Then ws.Visible = xlSheetHidden
+        If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
     Next ws
     
     With wshMenu

@@ -591,7 +591,7 @@ Sub ENC_Saisie_Add_Check_Boxes(row As Long)
             'Create a checkbox linked to the cell
             Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.width, cell.Height)
             With cbx
-                .name = "chkBox - " & cell.row
+                .Name = "chkBox - " & cell.row
                 .Caption = ""
                 .value = False
                 .linkedCell = "B" & cell.row
@@ -630,8 +630,8 @@ Sub ENC_Remove_Check_Boxes(row As Long)
     'Delete all checkboxes whose name are chkBox - ...
     Dim cbx As Shape
     For Each cbx In wshENC_Saisie.Shapes
-        Debug.Print cbx.name
-        If InStr(cbx.name, "chkBox -") Then
+        Debug.Print cbx.Name
+        If InStr(cbx.Name, "chkBox -") Then
             cbx.Delete
         End If
     Next cbx

@@ -238,7 +238,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
         wsDest.Range("L" & rowNum).value = "FAUX"
         wsDest.Range("M" & rowNum).value = ""
         wsDest.Range("N" & rowNum).value = "FAUX"
-        wsDest.Range("O" & rowNum).value = ThisWorkbook.name
+        wsDest.Range("O" & rowNum).value = ThisWorkbook.Name
         wsDest.Range("P" & rowNum).value = ""
         
         rst.MoveNext
@@ -559,10 +559,10 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
     'Declare and open the 2 workbooks
     Dim wbWas As Workbook
     Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx", ReadOnly:=True)
-    Debug.Print wbWas.name
+    Debug.Print wbWas.Name
     Dim wbNow As Workbook
     Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
-    Debug.Print wbNow.name
+    Debug.Print wbNow.Name
 
     'Declare the 2 worksheets
     Dim wsWas As Worksheet
@@ -1077,7 +1077,7 @@ Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
             If nomClientCAR <> nomClientFromMF Then
                 Debug.Print i & " : " & codeClientCAR & " - " & nomClientCAR & " <---> " & nomClientFromMF
                 wsSource.Cells(i, colClientName).value = nomClientFromMF
-                wsOutput.Cells(rowOutput, 1).value = wsSource.name
+                wsOutput.Cells(rowOutput, 1).value = wsSource.Name
                 wsOutput.Cells(rowOutput, 2).value = wsSource.Cells(i, 1).value
                 wsOutput.Cells(rowOutput, 3).value = nomClientCAR
                 wsOutput.Cells(rowOutput, 4).value = codeClientCAR

@@ -104,7 +104,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 If shapeTextBox Is Nothing Then
                     Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
                                                             100, 100, 600, 100)
-                    shapeTextBox.name = "shpTECInfo"
+                    shapeTextBox.Name = "shpTECInfo"
                 End If
                 
                 'Définir le texte d'information en fonction de la cellule sélectionnée

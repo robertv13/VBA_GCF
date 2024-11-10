@@ -177,7 +177,7 @@ Sub Write_Info_On_Main_Menu()
     With wshMenu.Range("$A$31")
         .Font.size = 8
         .Font.Color = vbBlack
-        .value = "'" & CStr("Version - " & ThisWorkbook.name)
+        .value = "'" & CStr("Version - " & ThisWorkbook.Name)
     End With
     
     With wshMenu.Range("$A$32")
@@ -214,7 +214,7 @@ Sub Handle_Rubberduck_Reference()
     If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
         On Error Resume Next 'In case the reference doesn't exist
         For Each ref In ThisWorkbook.VBProject.References
-            If ref.name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
+            If ref.Name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
                 ThisWorkbook.VBProject.References.Remove ref
                 Exit For
             End If
