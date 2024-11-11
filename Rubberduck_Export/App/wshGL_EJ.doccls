@@ -12,7 +12,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Import transactions from MASTER file
     Call GL_Trans_Import_All
     Call GL_EJ_Auto_Import_All
-    Call wshGL_EJ_Clear_All_Cells
+    
+    Call GL_EJ_Clear_All_Cells
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -30,12 +31,28 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     Call SetTabOrder(ws)
     
+    Call GL_EJ_Clear_All_Cells
+    
+    'Mettre à jour / Renversement button
+    Dim shp As Shape
+    Set shp = ws.Shapes("btnUpdate")
+    
+    shp.Left = 530
+    shp.Width = 115
+    shp.Height = 30
+    shp.Fill.ForeColor.RGB = RGB(166, 166, 166)
+    shp.TextFrame2.TextRange.Text = "Mettre à jour"
+    shp.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
+    
+    Call Sauvegarder_Forme(shp)
+    
     With ws
         .Range("K4").value = Format$(Now(), wshAdmin.Range("B1").value)
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
     
+    Application.ScreenUpdating = True
     Application.EnableEvents = True
     
     'Libérer la mémoire
@@ -102,17 +119,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("F4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
-        If UCase(Trim(Range("F4").value)) = "AUTO" Then
-            wshGL_EJ.Range("B2").value = -1
-            ufListeEJAuto.show
-            If wshGL_EJ.Range("B2").value >= 0 Then
-                wshGL_EJ.Range("K4").Activate
-                wshGL_EJ.Range("K4").Select
-            Else
-                Call wshGL_EJ_Clear_All_Cells
+            If UCase(Trim(Range("F4").value)) = "AUTO" Then
+                wshGL_EJ.Range("B2").value = -1
+                ufListeEJAuto.show
+                If wshGL_EJ.Range("B2").value >= 0 Then
+                    wshGL_EJ.Range("K4").Activate
+                    wshGL_EJ.Range("K4").Select
+                Else
+                    Call GL_EJ_Clear_All_Cells
+                End If
             End If
-        End If
         Application.EnableEvents = True
+        If Target.value = "Renversement" Then
+            Call GL_EJ_Renverser_Ecriture
+        End If
     End If
     
     'Si la cellule de la DATE change, alors on essaie de construire une date

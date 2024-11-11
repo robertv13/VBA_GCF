@@ -1,8 +1,15 @@
 Attribute VB_Name = "modGL_EJ"
 Option Explicit
 
+Dim sauvegardesCaracteristiquesForme As Object
+
 Sub JE_Update()
 
+    If wshGL_EJ.Range("F4").value = "Renversement" Then
+        Call JE_Renversement_Update
+        Exit Sub
+    End If
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Update", 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").value) = False Then Exit Sub
@@ -28,7 +35,7 @@ Sub JE_Update()
     'Increment Next JE number
     wshGL_EJ.Range("B1").value = wshGL_EJ.Range("B1").value + 1
         
-    Call wshGL_EJ_Clear_All_Cells
+    Call GL_EJ_Clear_All_Cells
         
     With wshGL_EJ
         .Activate
@@ -39,6 +46,78 @@ Sub JE_Update()
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès"
     
     Call Log_Record("modGL_EJ:JE_Update", startTime)
+    
+End Sub
+
+Sub JE_Renversement_Update()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", 0)
+    
+    If Fn_Is_Ecriture_Balance = False Then
+        MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
+        Exit Sub
+    End If
+    
+    Dim rowEJLast As Long
+    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).row  'Last Used Row in wshGL_EJ
+    If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
+    
+    'Renverser les montants (DT --> CT & CT ---> DT)
+    Application.ScreenUpdating = False
+    Dim i As Integer
+    For i = 9 To rowEJLast
+        If wshGL_EJ.Cells(i, 8).value <> 0 Then
+            wshGL_EJ.Cells(i, 9).value = wshGL_EJ.Cells(i, 8).value
+            wshGL_EJ.Cells(i, 8).value = ""
+        Else
+            wshGL_EJ.Cells(i, 8).value = wshGL_EJ.Cells(i, 9).value
+            wshGL_EJ.Cells(i, 9).value = ""
+        End If
+    Next i
+    
+    wshGL_EJ.Range("F4").value = "RENVERSEMENT:" & wshGL_Trans.Range("AA3").value
+    Dim saveDescription As String
+    saveDescription = wshGL_EJ.Range("F6").value
+    wshGL_EJ.Range("F6").value = "RENV. - " & wshGL_EJ.Range("F6").value
+    
+    'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
+    Call GL_Trans_Add_Record_To_DB(rowEJLast)
+    Call GL_Trans_Add_Record_Locally(rowEJLast)
+    
+    MsgBox "L'écriture numéro '" & wshGL_Trans.Range("AA3").value & "' a été RENVERSÉ avec succès"
+    
+    Application.ScreenUpdating = True
+    DoEvents
+    
+    'Reorganise wshGL_EJ
+    Application.ScreenUpdating = False
+    Dim shp As Shape
+    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Call Restaurer_Forme(shp)
+    
+    'Renverser les montants (DT --> CT & CT ---> DT)
+    For i = 9 To rowEJLast
+        If wshGL_EJ.Cells(i, 8).value <> 0 Then
+            wshGL_EJ.Cells(i, 9).value = wshGL_EJ.Cells(i, 8).value
+            wshGL_EJ.Cells(i, 8).value = ""
+        Else
+            wshGL_EJ.Cells(i, 8).value = wshGL_EJ.Cells(i, 9).value
+            wshGL_EJ.Cells(i, 9).value = ""
+        End If
+    Next i
+    
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbBlack
+    wshGL_EJ.Range("E9:K23").Font.Color = vbBlack
+
+    'Retour à la source
+    wshGL_EJ.Range("F4").value = ""
+    wshGL_EJ.Range("F6").value = saveDescription
+    wshGL_EJ.Range("F4").Select
+    
+    Application.ScreenUpdating = True
+    DoEvents
+    
+    Call Log_Record("modGL_EJ:JE_Renversement_Update", startTime)
     
 End Sub
 
@@ -64,7 +143,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     Dim rowJEAuto, rowJE As Long
     rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "A").End(xlUp).row  'Last Row used in wshGL_EJRecuurente
     
-    Call wshGL_EJ_Clear_All_Cells
+    Call GL_EJ_Clear_All_Cells
     rowJE = 9
     
     Dim r As Long
@@ -85,16 +164,19 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
 End Sub
 
-Sub wshGL_EJ_Clear_All_Cells()
+Sub GL_EJ_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:wshGL_EJ_Clear_All_Cells", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
     ActiveSheet.Unprotect
     With wshGL_EJ
         .Range("F4,F6:K6").ClearContents
-        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
+        .Range("F4, K4, F6:k6").Font.Color = vbBlack
+        .Range("E9:K23").ClearContents
+        .Range("E9:K23").Font.Color = vbBlack
+'        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
         Application.EnableEvents = True
         wshGL_EJ.Activate
@@ -106,7 +188,7 @@ Sub wshGL_EJ_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modGL_EJ:wshGL_EJ_Clear_All_Cells", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", startTime)
 
 End Sub
 
@@ -261,6 +343,90 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
 
 End Sub
 
+Sub GL_EJ_Renverser_Ecriture()
+
+    Dim ws As Worksheet: Set ws = wshGL_Trans
+    
+    '1. Demande le numéro d'écriture
+    Dim reponse As String, no_Ecriture As Long
+    Do
+        reponse = InputBox("Quel est le numéro de l'écriture à renverser ?", "Renversement d'écriture de journal", , 3000, 6000)
+        If reponse = "" Then
+            Exit Sub
+        End If
+        'La réponse est-elle une valeur numérique ?
+        If IsNumeric(reponse) Then
+            no_Ecriture = CLng(reponse)
+            If no_Ecriture <> 0 Then
+                Exit Do
+            Else
+                MsgBox "Le numéro d'écriture ne peut pas être 0", vbInformation
+            End If
+        Else
+            MsgBox "Veuillez entrer un numéro d'écriture qui soit numérique", vbCritical
+        End If
+    Loop
+    
+    '2. Affiche l'écriture à renverser
+    Call wshGL_Get_A_JE_Detail_Trans(no_Ecriture)
+    Dim lastUsedRowResult As Long
+    lastUsedRowResult = ws.Cells(ws.rows.count, "AC").End(xlUp).row
+    If lastUsedRowResult < 2 Then
+        MsgBox "Je ne retrouve pas l'écriture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
+                "Veuillez vérifier votre numéro et reessayez", vbInformation, "Numéro d'écriture invalide"
+        Exit Sub
+    End If
+    Dim rngResult As Range
+    Set rngResult = ws.Range("AC1").CurrentRegion.Offset(1, 0)
+    If InStr(rngResult.Cells(1, 4).value, "ENCAISSEMENT:") <> 0 Or _
+        InStr(rngResult.Cells(1, 4).value, "DÉBOURSÉ:") <> 0 Or _
+        InStr(rngResult.Cells(1, 4).value, "FACTURE:") <> 0 Or _
+        InStr(rngResult.Cells(1, 4).value, "RENVERSEMENT:") <> 0 Then
+        MsgBox "Je ne peux renverser ce type d'écriture '" & _
+                Left(rngResult.Cells(1, 4).value, InStr(rngResult.Cells(1, 4).value, ":") - 1) & _
+                "'" & vbNewLine & vbNewLine & _
+                "Veuillez vérifier votre numéro et reessayez", _
+                vbInformation, "Type d'écriture impossible à renverser"
+        wshGL_EJ.Range("F4").value = ""
+        wshGL_EJ.Range("F4").Select
+        Exit Sub
+    End If
+    Application.EnableEvents = False
+    wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("F6").value = rngResult.Cells(1, 3).value
+    Dim ligne As Range
+    Dim l As Long: l = 9
+    For Each ligne In rngResult.rows
+        wshGL_EJ.Range("E" & l).value = ligne.Cells(6).value
+        If ligne.Cells(7).value <> 0 Then
+            wshGL_EJ.Range("H" & l).value = ligne.Cells(7).value
+        End If
+        If ligne.Cells(8).value <> 0 Then
+            wshGL_EJ.Range("I" & l).value = ligne.Cells(8).value
+        End If
+        wshGL_EJ.Range("J" & l).value = ligne.Cells(9).value
+        wshGL_EJ.Range("L" & l).value = ligne.Cells(5).value
+        l = l + 1
+    Next ligne
+    Application.EnableEvents = True
+    
+    'On affiche l'écriture à renverser en rouge
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbRed
+    wshGL_EJ.Range("E9:K23").Font.Color = vbRed
+    
+    'Change le libellé du Bouton & caractéristiques
+    Dim shp As Shape
+    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Call Modifier_Forme(shp)
+    
+    '3. Confirme que l'utilisateur accepte le renversement OU annule
+    
+    '4. Effectue le renversement
+    
+    '5. Affiche que le renversement a fonctionné
+
+End Sub
+
 Sub GL_EJ_Auto_Build_Summary()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", 0)
@@ -289,6 +455,54 @@ Sub GL_EJ_Auto_Build_Summary()
     End With
 
     Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", startTime)
+
+End Sub
+
+Sub wshGL_Get_A_JE_Detail_Trans(no As Long)
+
+'    Sub GL_TB_AdvancedFilter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_Get_A_JE_Detail_Trans", 0)
+
+    With wshGL_Trans
+        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
+        Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
+        rgResult.ClearContents
+        Set rgData = .Range("A1").CurrentRegion
+        .Range("AA3").value = no
+        
+        Set rgCriteria = .Range("AA2:AA3")
+        Set rgCopyToRange = .Range("AC1:AK1")
+        
+        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
+        
+        Dim lastResultUsedRow
+        lastResultUsedRow = .Range("AC999").End(xlUp).row
+        If lastResultUsedRow < 3 Then GoTo NoSort
+        With .Sort
+            .SortFields.Clear
+            .SortFields.Add key:=wshGL_Trans.Range("AF1"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On GLNo
+            .SortFields.Add key:=wshGL_Trans.Range("AH1"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlDescending, _
+                DataOption:=xlSortNormal 'Sort Based On Date
+            .SetRange wshGL_Trans.Range("AC2:AK" & lastResultUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+    End With
+
+NoSort:
+
+    'Libérer la mémoire
+    Set rgCriteria = Nothing
+    Set rgCopyToRange = Nothing
+    Set rgData = Nothing
+    Set rgResult = Nothing
+    
+    Call Log_Record("wshGL_BV:wshGL_Get_A_JE_Detail_Trans", startTime)
 
 End Sub
 
@@ -343,7 +557,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields("No_Entrée").value = nextJENo
-            rs.Fields("Date").value = CDate(wshGL_EJ.Range("K4").value)
+            rs.Fields("Date").value = Format$(CDate(wshGL_EJ.Range("K4").value), "yyyy-mm-dd")
             rs.Fields("Description").value = wshGL_EJ.Range("F6").value
             rs.Fields("Source").value = wshGL_EJ.Range("F4").value
             rs.Fields("No_Compte").value = wshGL_EJ.Range("L" & l).value
@@ -351,7 +565,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields("Débit").value = wshGL_EJ.Range("H" & l).value
             rs.Fields("Crédit").value = wshGL_EJ.Range("I" & l).value
             rs.Fields("AutreRemarque").value = wshGL_EJ.Range("J" & l).value
-            rs.Fields("TimeStamp").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.update
     Next l
     
@@ -401,7 +615,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
         wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -520,4 +734,73 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
 End Sub
 
+Sub GL_EJ_Back_To_Menu()
+    
+    Dim shp As Shape
+    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Call Restaurer_Forme(shp)
+    
+    wshGL_EJ.Visible = xlSheetHidden
+    
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
+    
+End Sub
 
+Sub Sauvegarder_Forme(forme As Shape)
+
+    'Initialiser le Dictionary pour sauvegarder les caractéristiques
+    Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+
+    'Définir la feuille et la forme
+    Dim ws As Worksheet: Set ws = wshGL_EJ
+
+    'Sauvegarder les caractéristiques originales de la forme
+    sauvegardesCaracteristiquesForme("Left") = forme.Left
+    Debug.Print "Left ", forme.Left
+    sauvegardesCaracteristiquesForme("Width") = forme.Width
+    Debug.Print "Width ", forme.Width
+    sauvegardesCaracteristiquesForme("Height") = forme.Height
+    Debug.Print "Height ", forme.Height
+    sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
+    sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
+    sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
+    sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    Debug.Print "Text ", forme.TextFrame2.TextRange.Text
+    
+End Sub
+
+Sub Modifier_Forme(forme As Shape)
+
+    'Appliquer des modifications à la forme
+    Application.ScreenUpdating = True
+    forme.Left = 470
+    forme.Width = 175
+    forme.Height = 27
+    forme.Fill.ForeColor.RGB = RGB(255, 0, 0)  ' Rouge
+    forme.Line.ForeColor.RGB = RGB(255, 255, 255) ' Noir
+    forme.TextFrame2.TextRange.Text = "Renversement"
+    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
+    
+    DoEvents
+    Application.ScreenUpdating = False
+    
+End Sub
+
+Sub Restaurer_Forme(forme As Shape)
+
+    'Vérifiez si les caractéristiques originales sont sauvegardées
+    If sauvegardesCaracteristiquesForme Is Nothing Then
+        Exit Sub
+    End If
+
+    'Restaurer les caractéristiques de la forme
+    forme.Left = sauvegardesCaracteristiquesForme("Left")
+    forme.Width = sauvegardesCaracteristiquesForme("Width")
+    forme.Height = sauvegardesCaracteristiquesForme("Height")
+    forme.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("FillColor")
+    forme.Line.ForeColor.RGB = sauvegardesCaracteristiquesForme("LineColor")
+    forme.TextFrame2.TextRange.Text = sauvegardesCaracteristiquesForme("Text")
+    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
+
+End Sub

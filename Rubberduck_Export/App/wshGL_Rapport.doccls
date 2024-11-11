@@ -16,7 +16,7 @@ Private Sub Worksheet_Activate()
     'Setup a listBox
     Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
     lb.Height = 328
-    lb.width = 275
+    lb.Width = 275
     
     'Ensure it is a ListBox
     If TypeName(lb.Object) = "ListBox" Then

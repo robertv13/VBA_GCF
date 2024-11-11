@@ -197,7 +197,7 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
                 .Top = cell.Top + 1
                 .Left = cell.Left + 3
                 .Height = cell.Height - 5
-                .width = cell.width - 5
+                .Width = cell.Width - 5
                 .Placement = xlMoveAndSize
                 .OnAction = "Display_PDF_Invoice"
             End With

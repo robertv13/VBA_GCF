@@ -749,7 +749,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error"
+    MsgBox "An error occurred: " & Err.description, vbCritical, "Error"
     If Not conn Is Nothing Then
         conn.Close
         Set conn = Nothing

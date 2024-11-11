@@ -744,12 +744,12 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
                         0, _
                         1)
         If result = "Not Found" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
             r = r + 1
         End If
         
         If IsDate(ws.Range("D" & i).value) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date '" & ws.Range("D" & i).value & "' du paiment '" & pmtNo & "' est INVALIDE '")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date '" & ws.Range("D" & i).value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
             r = r + 1
         End If
         

@@ -110,7 +110,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = False
             wshGL_BV.Range("B10").value = Target.row
             Application.EnableEvents = True
-            Call wshGL_BV_Get_An_JE_Detail_Trans(noJE)
+            Call wshGL_Get_A_JE_Detail_Trans(noJE)
             Call wshGL_BV_Display_JE_Trans_With_Shape
     Else
         wshGL_BV.Range("B10").value = 0
@@ -168,54 +168,6 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
 Clean_Exit:
 
         Application.EnableEvents = True
-
-End Sub
-
-Sub wshGL_BV_Get_An_JE_Detail_Trans(no As Long)
-
-'    Sub GL_TB_AdvancedFilter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans", 0)
-
-    With wshGL_Trans
-        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-        Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
-        rgResult.ClearContents
-        Set rgData = .Range("A1").CurrentRegion
-        .Range("AA3").value = no
-        
-        Set rgCriteria = .Range("AA2:AA3")
-        Set rgCopyToRange = .Range("AC1:AJ1")
-        
-        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
-        
-        Dim lastResultUsedRow
-        lastResultUsedRow = .Range("AC999").End(xlUp).row
-        If lastResultUsedRow < 3 Then GoTo NoSort
-        With .Sort
-            .SortFields.Clear
-            .SortFields.Add key:=wshGL_Trans.Range("AF1"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On GLNo
-            .SortFields.Add key:=wshGL_Trans.Range("AH1"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlDescending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SetRange wshGL_Trans.Range("AC2:AJ" & lastResultUsedRow) 'Set Range
-            .Apply 'Apply Sort
-         End With
-    End With
-
-NoSort:
-
-    'Libérer la mémoire
-    Set rgCriteria = Nothing
-    Set rgCopyToRange = Nothing
-    Set rgData = Nothing
-    Set rgResult = Nothing
-    
-    Call Log_Record("wshGL_BV:wshGL_BV_Get_An_JE_Detail_Trans", startTime)
 
 End Sub
 
@@ -309,7 +261,7 @@ Sub wshGL_BV_Adjust_The_Shape()
         .TextFrame.MarginTop = 3
         .TextFrame.MarginBottom = 3
         If maxLength < 80 Then maxLength = 80
-        .width = ((maxLength * 6.7))
+        .Width = ((maxLength * 6.7))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
         .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
         .Left = wshGL_BV.Range("N" & rowSelected).Left + 4

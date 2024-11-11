@@ -125,7 +125,7 @@ Sub BackupMasterFile()
     If Err.Number = 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée", -1)
     Else
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
     On Error GoTo 0
     
@@ -147,7 +147,7 @@ Sub BackupMasterFile()
     If Err.Number = 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - La copie est réussie", -1)
     Else
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
 
     'Close the master workbook
@@ -155,7 +155,7 @@ Sub BackupMasterFile()
     If Err.Number = 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé", -1)
     Else
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
     On Error GoTo 0
 
@@ -172,7 +172,7 @@ MASTER_NOT_AVAILABLE:
     MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
             "Le fichier nécessite une réparation manuelle", _
             vbCritical, _
-            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
+            "Situation anormale (" & Err.Number & " " & Err.description & ")"
     Application.Quit
 
 End Sub
@@ -204,7 +204,7 @@ Sub Create_User_Active_File()
 Error_Handling:
     MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
             "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
+            "Erreur # " & Err.Number & " - " & Err.description, vbCritical, "Accès à " & traceFilePath
 
 End Sub
 

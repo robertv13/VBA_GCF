@@ -1486,18 +1486,18 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
         ws.Range("AP2:AY" & lastUsedRow).Clear
     End If
 
-    ws.Range("AL3").FormulaR1C1 = glNo
-    ws.Range("AM3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
-    ws.Range("AN3").FormulaR1C1 = "<" & CLng(d)
+    ws.Range("AM3").FormulaR1C1 = glNo
+    ws.Range("AN3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
+    ws.Range("AO3").FormulaR1C1 = "<" & CLng(d)
     
     ws.Range("A1:J" & lastUsedRowData).AdvancedFilter action:=xlFilterCopy, _
-                                       criteriaRange:=ws.Range("AL2:AN3"), _
-                                       CopyToRange:=ws.Range("AP1:AY1"), _
+                                       criteriaRange:=ws.Range("AM2:AO3"), _
+                                       CopyToRange:=ws.Range("AQ1:AZ1"), _
                                        Unique:=False
 
     Application.EnableEvents = True
     
-    lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 2 Then
         Exit Function
     End If
@@ -1505,7 +1505,7 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     Dim soldeOuverture As Double
     Dim i As Long
     For i = 2 To lastUsedRow
-        soldeOuverture = soldeOuverture + ws.Range("AV" & i).value - ws.Range("AW" & i).value
+        soldeOuverture = soldeOuverture + ws.Range("AW" & i).value - ws.Range("AX" & i).value
     Next i
     
     Fn_Get_Account_Opening_Balance = soldeOuverture

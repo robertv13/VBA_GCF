@@ -797,7 +797,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
         ws.Cells(r, col + 2).value = shp.ZOrderPosition
         ws.Cells(r, col + 3).value = shp.Top
         ws.Cells(r, col + 4).value = shp.Left
-        ws.Cells(r, col + 5).value = shp.width
+        ws.Cells(r, col + 5).value = shp.Width
         ws.Cells(r, col + 6).value = shp.Height
         r = r + 1
     Next shp
@@ -1731,7 +1731,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 Error_Handler:
 
     MsgBox "Une erreur est survenue avec le fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                Err.Description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
+                Err.description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1799,7 +1799,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
+    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Saisie_Heures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1847,7 +1847,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
+    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Settrace"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     

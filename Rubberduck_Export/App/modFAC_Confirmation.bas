@@ -78,7 +78,7 @@ Sub Insert_PDF_WIP_Icons()
         .Top = cell.Top + 10
         .Left = cell.Left + 10
         .Height = 50 'cell.Height
-        .width = 50 'cell.width
+        .Width = 50 'cell.width
         .Placement = xlMoveAndSize
         .OnAction = "FAC_Confirmation_Display_PDF_Invoice"
     End With
@@ -94,7 +94,7 @@ Sub Insert_PDF_WIP_Icons()
         .Top = cell.Top + 10
         .Left = cell.Left + 10
         .Height = 50 'cell.Height
-        .width = 50 'cell.width
+        .Width = 50 'cell.width
         .Placement = xlMoveAndSize
         .OnAction = "FAC_Confirmation_Report_Detailed_TEC"
     End With

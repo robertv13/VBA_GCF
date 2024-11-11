@@ -247,7 +247,7 @@ Private Function SetListboxPosition()
     With MyListBox
         .Left = myTextBox.Left
         .Top = myTextBox.Top + (myTextBox.Height)
-        .width = myTextBox.width
+        .Width = myTextBox.Width
         Call ShowListbox(True)
     End With
     

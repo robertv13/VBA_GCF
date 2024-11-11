@@ -145,6 +145,6 @@ Sub Lire_Fichier_LogMainApp()
     Exit Sub
 
 ErreurOuverture:
-    MsgBox "Erreur lors de l'ouverture du fichier : " & Err.Description
+    MsgBox "Erreur lors de l'ouverture du fichier : " & Err.description
 End Sub
 

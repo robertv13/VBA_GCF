@@ -897,7 +897,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     'Check if the cell is empty and doesn't have a checkbox already
     If Cells(cell.row, 8).value = False Then
         'Create a checkbox linked to the cell
-        Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.width, cell.Height)
+        Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.Width, cell.Height)
         With cbx
             .Name = "chkBox - " & cell.row
             .Text = ""

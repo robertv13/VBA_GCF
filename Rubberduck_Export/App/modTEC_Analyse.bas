@@ -64,7 +64,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     progressBarFill.Line.Visible = msoFalse  'Hide the border of the fill
     
     'Update the progress bar fill
-    progressBarFill.width = 0.15 * barWidth  '15 %
+    progressBarFill.Width = 0.15 * barWidth  '15 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.15, "0%")
     
@@ -89,7 +89,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     lastUsedCol = firstEmptyCol - 1
     
     'Update the progress bar fill
-    progressBarFill.width = 0.2 * barWidth  '20 %
+    progressBarFill.Width = 0.2 * barWidth  '20 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.2, "0%")
     
@@ -151,7 +151,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.EnableEvents = False
    
     'Update the progress bar fill
-    progressBarFill.width = 0.45 * barWidth  '45 %
+    progressBarFill.Width = 0.45 * barWidth  '45 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.45, "0%")
     
@@ -181,7 +181,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les données sont triées", -1)
     
     'Update the progress bar fill
-    progressBarFill.width = 0.6 * barWidth  '60 %
+    progressBarFill.Width = 0.6 * barWidth  '60 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.6, "0%")
     
@@ -210,7 +210,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Range("D6").NumberFormat = "#,##0.00 $"
     
     'Update the progress bar fill
-    progressBarFill.width = 0.75 * barWidth  '75 %
+    progressBarFill.Width = 0.75 * barWidth  '75 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.75, "0%")
     
@@ -290,7 +290,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Les ajustements de format ont été complétés", -1)
     
     'Update the progress bar fill
-    progressBarFill.width = 0.85 * barWidth  '85 %
+    progressBarFill.Width = 0.85 * barWidth  '85 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.85, "0%")
     
@@ -314,7 +314,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
     
     'Update the progress bar fill
-    progressBarFill.width = 0.95 * barWidth   '95 %
+    progressBarFill.Width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.95, "0%")
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 95 %", -1)
@@ -869,7 +869,7 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     With ws
         Set checkBox = .OLEObjects.Add(ClassType:="Forms.CheckBox.1", _
                     Left:=.Cells(lastRow, 14).Left + 5, _
-                    Top:=.Cells(lastRow, 14).Top, width:=80, Height:=16)
+                    Top:=.Cells(lastRow, 14).Top, Width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object
