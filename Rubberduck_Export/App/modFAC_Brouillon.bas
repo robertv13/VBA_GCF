@@ -24,6 +24,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     If wshFAC_Brouillon.Range("B27").value = False Then
     
         With wshFAC_Brouillon
+            .Range("B5").value = "FAUX"
             .Range("B24").value = True
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
             .Range("O6").value = Fn_Get_Next_Invoice_Number
@@ -742,11 +743,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -789,8 +790,77 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
    
     Application.ScreenUpdating = False
     
-    'Copy all services line from FAC_Brouillon to FAC_Finale
+    'Vérification des montants reçus en dépôt pour le client
+    If wshFAC_Brouillon.Range("B5").value = "VRAI" Then
+        GoTo Depot_Checked
+    End If
+    
+    'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
+    Dim soldeDépôt As Double
+    soldeDépôt = Fn_Get_GL_Account_Balance("2400", wshFAC_Brouillon.Range("O3").value)
+    
+    'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
+    Dim lastUsedRowResult As Double
+    lastUsedRowResult = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row
+    Dim soldeDepotClient As Double
     Dim i As Long
+    For i = 2 To lastUsedRowResult
+        If InStr(wshGL_Trans.Cells(i, 18).value, "Client:" & wshFAC_Brouillon.Range("B18").value) <> 0 Then
+            soldeDepotClient = soldeDepotClient - wshGL_Trans.Cells(i, "V").value + wshGL_Trans.Cells(i, "W").value
+        End If
+    Next i
+    
+    If soldeDepotClient > 0 Then
+        MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
+            "Le total de la facture est de " & Format$(wshFAC_Brouillon.Range("O55").value, "###,##0.00 $"), vbInformation
+
+        Application.EnableEvents = False
+        Application.ScreenUpdating = True
+        
+        'Cellule en surbrillance
+        With wshFAC_Brouillon.Range("O57")
+            .value = WorksheetFunction.Min(soldeDepotClient, wshFAC_Brouillon.Range("O55").value)
+            .Interior.Color = RGB(255, 255, 0)
+            .Select
+        End With
+        
+        'Initialise la valeur initiale de la cellule O57 pour la comparaison
+        Dim montantInitial As Variant
+        montantInitial = wshFAC_Brouillon.Range("O57").value
+
+        'Boucle pour demander la validation
+        Dim reponse As VbMsgBoxResult
+        Do
+            DoEvents
+            'Si le montant a changé, demande confirmation
+            If wshFAC_Brouillon.Range("O57").value <> montantInitial Then
+                reponse = MsgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
+                                    "sur cette facture." & vbNewLine & vbNewLine & _
+                                    "Appuyez sur OK pour accepter le montant suggéré," & vbNewLine & _
+                                    "ou Annuler pour modifier le montant du dépôt.", _
+                                    vbOKCancel + vbInformation, "Confirmation de l'imputation du dépôt de client")
+               'Si l'utilisateur sélectionne Annuler, lui permet de modifier le montant
+                If reponse = vbCancel Then
+                    montantInitial = wshFAC_Brouillon.Range("O57").value
+                    wshFAC_Brouillon.Range("O57").Select
+                End If
+            End If
+        Loop Until reponse = vbOK 'Continue uniquement lorsque l'utilisateur clique sur OK
+        
+        wshFAC_Brouillon.Range("O57").Interior.ColorIndex = xlNone
+        
+        Application.EnableEvents = True
+
+    End If
+    
+    'Indique que la vérification a bel et bien étét faite déjà
+    wshFAC_Brouillon.Range("B5").value = "VRAI"
+    
+Depot_Checked:
+    
+    Application.ScreenUpdating = False
+    
+    'Copy all services line from FAC_Brouillon to FAC_Finale
     Dim iFacFinale As Long: iFacFinale = 34
     For i = 11 To 45
         With wshFAC_Finale.Range("B" & iFacFinale)
@@ -1164,7 +1234,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 
@@ -1176,4 +1246,15 @@ Sub test_fn_get_hourly_rate()
 
 End Sub
 
-
+'Sub FAC_Brouillon_Saisir_Depot(soldeDisponible As Double, soldeFacture As Double)
+'
+''    Application.EnableEvents = False
+'
+'    MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDisponible, "###,##0.00 $") & vbNewLine & vbNewLine & _
+'            "Le total de la facture est de " & Format$(soldeFacture, "###,##0.00 $"), vbInformation
+'
+'    wshFAC_Brouillon.Range("O57").value = WorksheetFunction.Min(soldeDisponible, soldeFacture)
+'
+''    Application.EnableEvents = True
+'
+'End Sub

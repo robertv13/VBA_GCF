@@ -9,6 +9,8 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
 
+    Application.EnableEvents = True
+    
     'Libérer la mémoire
     Set ws = Nothing
     

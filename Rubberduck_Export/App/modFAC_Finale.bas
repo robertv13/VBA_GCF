@@ -454,6 +454,9 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
     Application.ScreenUpdating = False
     
+    'Formule pour le solde des Comptes Clients
+    Dim formula As String
+    
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
@@ -472,16 +475,16 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     rs.AddNew
     With wshFAC_Finale
         rs.Fields("Invoice_No") = .Range("E28").value
-        rs.Fields("Invoice_Date") = Format$(CDate(wshFAC_Brouillon.Range("O3").value), "mm-dd-yyyy")
+        rs.Fields("Invoice_Date") = CDate(wshFAC_Brouillon.Range("O3").value)
         rs.Fields("Customer") = .Range("B24").value
         rs.Fields("CodeClient") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Status") = "Unpaid"
         rs.Fields("Terms") = "Net 30"
         rs.Fields("Due_Date") = CDate(wshFAC_Brouillon.Range("O3").value) + 30
-        rs.Fields("Total") = .Range("E81").value
-        'rs.Fields("Total_Paid") = ""
-        'rs.Fields("Balance") = ""
-        'rs.Fields("Days_Overdue") = ""
+        rs.Fields("Total") = .Range("E77").value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
+        rs.Fields("Total_Paid") = 0
+'        rs.Fields("Balance") = ""
+'        rs.Fields("Days_Overdue") = ""
     End With
     
     'Update the recordset (create the record)
@@ -523,9 +526,9 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Range("F" & firstFreeRow).value = "Net 30"
         .Range("G" & firstFreeRow).value = CDate(wshFAC_Brouillon.Range("O3").value) + 30
         .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("E81").value
-        .Range("I" & firstFreeRow).formula = ""
-        .Range("J" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
-        .Range("K" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
+        .Range("I" & firstFreeRow).formula = 0
+'        .Range("J" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
+'        .Range("K" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
     End With
 
 nothing_to_update:

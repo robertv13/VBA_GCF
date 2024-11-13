@@ -281,10 +281,11 @@ Public Sub Get_GL_Trans_With_AF(glCode As String, dateDeb As Date, dateFin As Da
     End With
     
     'On documente le processus
-    ws.Range("M8").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    ws.Range("M9").value = rngSource.Address
-    ws.Range("M10").value = rngCriteria.Address
-    ws.Range("M11").value = rngResult.Address
+    ws.Range("M6:M10").ClearContents
+    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M7").value = rngSource.Address
+    ws.Range("M8").value = rngCriteria.Address
+    ws.Range("M9").value = rngResult.Address
     
     'Go, on execute le AdvancedFilter
     rngSource.AdvancedFilter xlFilterCopy, _
@@ -294,7 +295,7 @@ Public Sub Get_GL_Trans_With_AF(glCode As String, dateDeb As Date, dateFin As Da
     
     'Combien y a-t-il de transactions dans le résultat ?
     lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-    ws.Range("M12").value = lastUsedRow
+    ws.Range("M10").value = lastUsedRow
     Set rngResult = ws.Range("P1:Y" & lastUsedRow)
 
     If lastUsedRow > 2 Then

@@ -192,6 +192,8 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         .Range("T3").value = "FAUX"
     End With
     
+    wshTEC_Local.Range("S10:S14").ClearContents
+    
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
         lastRow = .Cells(.rows.count, "A").End(xlUp).row 'Last wshTEC_Local Used Row

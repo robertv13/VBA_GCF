@@ -2159,7 +2159,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2317 'What is the last TECID analyzed ?
+    lastTECIDReported = 2384 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2210,7 +2210,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Next i
     End If
     
-    Dim TECID As Long, profID As String, prof As String, dateTEC As Date, testDate As Boolean
+    Dim TECID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
     Dim d As Integer, m As Integer, Y As Integer, p As Integer
@@ -2220,7 +2220,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim estFacturee As Boolean, estDetruit As Boolean
     Dim invNo As String
     Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
-    Dim cas_date_future As Long
+    Dim cas_date_fact_invalide As Long, cas_date_facture_future As Long, cas_date_future As Long
     Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
     Dim cas_estDetruit_invalide As Long
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
@@ -2274,6 +2274,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
             r = r + 1
         End If
+        
         'Validate clientCode
         codeClient = Trim(arr(i, 5))
         If Fn_Validate_Client_Number(codeClient) = False Then
@@ -2326,6 +2327,25 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
+        End If
+        
+        If arr(i, 13) <> "" Then
+            dateFact = arr(i, 13)
+            testDate = IsDate(dateFact)
+            If testDate = False Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
+                r = r + 1
+                cas_date_fact_invalide = cas_date_fact_invalide + 1
+            End If
+            If dateFact > Now() Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date de facture FUTURE '" & dateFact & " !!!")
+                r = r + 1
+                cas_date_facture_future = cas_date_facture_future + 1
+            End If
+            If dateFact <> Int(dateFact) Then
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "***** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+                r = r + 1
+            End If
         End If
         
         estDetruit = arr(i, 14)
@@ -2477,6 +2497,14 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
     Else
         Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
+        r = r + 1
+    End If
+    
+    If cas_date_fact_invalide = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucune date de facture INVALIDE")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_date_fact_invalide & " cas de date de facture INVALIDE")
         r = r + 1
     End If
     
@@ -2817,7 +2845,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Case "wshDEB_Recurrent"
             With wshDEB_Recurrent
                 .Range("A2:M" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("C2:C" & lastUsedRow & _
                      ", D2:D" & lastUsedRow & _
                      ", E2:E" & lastUsedRow & _
@@ -2854,7 +2882,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                 .Range("E2:E" & lastUsedRow).HorizontalAlignment = xlRight
                 
                 .Range("A2:A" & lastUsedRow).NumberFormat = "0"
-                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("E2:E" & lastUsedRow).NumberFormat = "#,##0.00"
             End With
         
@@ -2865,7 +2893,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                 .Range("F2:F" & lastUsedRow).HorizontalAlignment = xlRight
                 
                 .Range("A2:A" & lastUsedRow).NumberFormat = "0"
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00 $"
             End With
         
@@ -2873,11 +2901,13 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             With wshFAC_Comptes_Clients
                 .Range("A2:B" & lastUsedRow & ", " & _
                        "D2:G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C2:C" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("H2:J" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
-                .Range("G2:G" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
-                .Range("H2:J" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("C3:C" & lastUsedRow).HorizontalAlignment = xlLeft
+                .Range("H3:J" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("B3:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
+                .Range("G3:G" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
+                .Range("H3:J" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("J3").formula = "=H3-I3"
+                .Range("K3").formula = "=NOW()-G3"
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         
@@ -2895,7 +2925,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
         Case "wshFAC_Entête"
             With wshFAC_Entête
                 .Range("A2:D" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("E2:I" & lastUsedRow & ", K2:K" & lastUsedRow & ", M2:M" & lastUsedRow & ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).HorizontalAlignment = xlRight
                 .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).NumberFormat = "#,##0.00 $"
@@ -2906,7 +2936,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             With wshFAC_Projets_Détails
                 .Range("A2:A" & lastUsedRow & ", C2:G" & lastUsedRow & ", I2:J" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy/mm/dd"
+                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("H2:I" & lastUsedRow).HorizontalAlignment = xlRight
                 .Range("H2:H" & lastUsedRow).NumberFormat = "#,##0.00"
                 .Range("I2:I" & lastUsedRow).HorizontalAlignment = xlCenter
@@ -3568,20 +3598,21 @@ Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
         Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
         
         'Ajouter des feuilles et colonnes spécifiques (exemple)
-        colonnesANettoyer.Add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
-        colonnesANettoyer.Add "DEB_Trans", Array("B") 'Vérifier la colonne B
-        
-        colonnesANettoyer.Add "ENC_Détails", Array("D") 'Vérifier la colonne D
-        colonnesANettoyer.Add "ENC_Entête", Array("B") 'Vérifier la colonne B
-        
-        colonnesANettoyer.Add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
-        colonnesANettoyer.Add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
-        colonnesANettoyer.Add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
-        colonnesANettoyer.Add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
-
-        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
-
-        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
+'        colonnesANettoyer.Add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
+'        colonnesANettoyer.Add "DEB_Trans", Array("B") 'Vérifier la colonne B
+'
+'        colonnesANettoyer.Add "ENC_Détails", Array("D") 'Vérifier la colonne D
+'        colonnesANettoyer.Add "ENC_Entête", Array("B") 'Vérifier la colonne B
+'
+'        colonnesANettoyer.Add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
+'        colonnesANettoyer.Add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
+'        colonnesANettoyer.Add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
+'        colonnesANettoyer.Add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
+'
+'        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
+'
+'        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
+        colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
         
         'Parcourir chaque feuille définie dans le dictionnaire
         Dim ws As Worksheet

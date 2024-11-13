@@ -1468,36 +1468,50 @@ End Function
 
 Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
 
-    'Using AdvancedFilter in wshGL_Trans
+    'Using AdvancedFilter # 3 in wshGL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
     
     Fn_Get_Account_Opening_Balance = 0
     
     Application.EnableEvents = False
     
+    ws.Range("M6:M10").ClearContents
+    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
     'Source (data) range
+    Dim rngData As Range
     Dim lastUsedRowData As Long
     lastUsedRowData = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    Set rngData = ws.Range("A1:J" & lastUsedRowData)
+    ws.Range("M7").value = rngData.Address
+    
+    'Criteria Range
+    Dim rngCriteria As Range
+    ws.Range("L3").FormulaR1C1 = glNo
+    ws.Range("M3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
+    ws.Range("N3").FormulaR1C1 = "<" & CLng(d)
+    Set rngCriteria = ws.Range("L2:N3")
+    ws.Range("M8").value = rngCriteria.Address
     
     'Destination Range
+    Dim rngDest As Range
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "AP").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    Set rngDest = ws.Range("P1:Y" & lastUsedRow)
     If lastUsedRow > 1 Then
-        ws.Range("AP2:AY" & lastUsedRow).Clear
+        rngDest.Offset(1, 0).ClearContents
     End If
-
-    ws.Range("AM3").FormulaR1C1 = glNo
-    ws.Range("AN3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
-    ws.Range("AO3").FormulaR1C1 = "<" & CLng(d)
+    ws.Range("M9").value = rngDest.Address
     
-    ws.Range("A1:J" & lastUsedRowData).AdvancedFilter action:=xlFilterCopy, _
-                                       criteriaRange:=ws.Range("AM2:AO3"), _
-                                       CopyToRange:=ws.Range("AQ1:AZ1"), _
-                                       Unique:=False
+    rngData.AdvancedFilter action:=xlFilterCopy, _
+                           criteriaRange:=rngCriteria, _
+                           CopyToRange:=rngDest, _
+                           Unique:=False
 
     Application.EnableEvents = True
     
-    lastUsedRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    ws.Range("M10").value = lastUsedRow
     If lastUsedRow < 2 Then
         Exit Function
     End If
@@ -1505,7 +1519,7 @@ Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
     Dim soldeOuverture As Double
     Dim i As Long
     For i = 2 To lastUsedRow
-        soldeOuverture = soldeOuverture + ws.Range("AW" & i).value - ws.Range("AX" & i).value
+        soldeOuverture = soldeOuverture + ws.Range("V" & i).value - ws.Range("W" & i).value
     Next i
     
     Fn_Get_Account_Opening_Balance = soldeOuverture

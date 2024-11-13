@@ -363,12 +363,16 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE Invoice_No = '" & Inv_No & "'"
             rs.Open strSQL, conn, 2, 3
             If Not rs.EOF Then
-                'Update Amount_Paid
+                'Mettre à jour Amount_Paid
                 rs.Fields("Total_Paid").value = rs.Fields("Total_Paid").value + wshENC_Saisie.Range("K" & r).value
-                'Update invoice Status
+                'Mettre à jour Status
                 If rs.Fields("Total").value - rs.Fields("Total_Paid").value = 0 Then
                     rs.Fields("Status").value = "Paid"
+                Else
+                    rs.Fields("Status").value = "Unpaid"
                 End If
+                'Mettre à jour le solde de la facture
+'                rs.Fields("Balance").value = rs.Fields("Total").value - rs.Fields("Total_Paid").value
                 rs.update
             Else
                 'Handle the case where the specified ID is not found
@@ -420,9 +424,11 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
         If Not foundRange Is Nothing Then
             rowToBeUpdated = foundRange.row
             ws.Range("I" & rowToBeUpdated).value = ws.Range("I" & rowToBeUpdated).value + wshENC_Saisie.Range("K" & r).value
-            ws.Range("J" & rowToBeUpdated).value = ws.Range("J" & rowToBeUpdated).value - wshENC_Saisie.Range("K" & r).value
+            ws.Range("J" & rowToBeUpdated).value = ws.Range("H" & rowToBeUpdated).value - wshENC_Saisie.Range("I" & r).value
             If ws.Range("J" & rowToBeUpdated).value = 0 Then
                 ws.Range("E" & rowToBeUpdated) = "Paid"
+            Else
+                ws.Range("E" & rowToBeUpdated) = "Unpaid"
             End If
         Else
             MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
@@ -485,9 +491,17 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         'Add fields to the recordset before updating it
         rs.Fields("No_Entrée").value = nextJENo
         rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Description").value = nom
-        rs.Fields("Source").value = "ENCAISSEMENT:" & Format$(no, "00000")
-        rs.Fields("No_Compte").value = "1000" 'Hardcoded
+        If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
+            rs.Fields("Description").value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
+            rs.Fields("Source").value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            rs.Fields("No_Compte").value = "2400" 'Hardcoded
+            rs.Fields("Compte").value = "Produit perçu d'avance" 'Hardcoded
+        Else
+            rs.Fields("Description").value = nom
+            rs.Fields("Source").value = "ENCAISSEMENT:" & Format$(no, "00000")
+            rs.Fields("No_Compte").value = "1000" 'Hardcoded
+            rs.Fields("Compte").value = "Encaisse" 'Hardcoded
+        End If
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
         rs.Fields("AutreRemarque").value = desc
@@ -499,8 +513,13 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         'Add fields to the recordset before updating it
         rs.Fields("No_Entrée").value = nextJENo
         rs.Fields("Date").value = CDate(dt)
-        rs.Fields("Description").value = nom
-        rs.Fields("Source").value = "ENCAISSEMENT:" & Format$(no, "00000")
+        If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
+            rs.Fields("Description").value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
+            rs.Fields("Source").value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+        Else
+            rs.Fields("Description").value = nom
+            rs.Fields("Source").value = "ENCAISSEMENT:" & Format$(no, "00000")
+        End If
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
         rs.Fields("Compte").value = "Comptes clients" 'Hardcoded
         rs.Fields("Crédit").value = montant
@@ -544,10 +563,17 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     'Debit side
         .Range("A" & rowToBeUsed).value = nextJENo
         .Range("B" & rowToBeUsed).value = CDate(dt)
-        .Range("C" & rowToBeUsed).value = nom
-        .Range("D" & rowToBeUsed).value = "ENCAISSEMENT:" & Format$(no, "00000")
-        .Range("E" & rowToBeUsed).value = "1000" 'Hardcoded
-        .Range("F" & rowToBeUsed).value = "Encaisse" 'Hardcoded
+        If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
+            .Range("C" & rowToBeUsed).value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
+            .Range("D" & rowToBeUsed).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            .Range("E" & rowToBeUsed).value = "2400" 'Hardcoded
+            .Range("F" & rowToBeUsed).value = "Produit perçu d'avance" 'Hardcoded
+        Else
+            .Range("C" & rowToBeUsed).value = nom
+            .Range("D" & rowToBeUsed).value = "ENCAISSEMENT:" & Format$(no, "00000")
+            .Range("E" & rowToBeUsed).value = "1000" 'Hardcoded
+            .Range("F" & rowToBeUsed).value = "Encaisse" 'Hardcoded
+        End If
         .Range("G" & rowToBeUsed).value = montant
         .Range("I" & rowToBeUsed).value = desc
         .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
@@ -556,8 +582,13 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     'Credit side
         .Range("A" & rowToBeUsed).value = nextJENo
         .Range("B" & rowToBeUsed).value = CDate(dt)
-        .Range("C" & rowToBeUsed).value = nom
-        .Range("D" & rowToBeUsed).value = "ENCAISSEMENT:" & Format$(no, "00000")
+        If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
+            .Range("C" & rowToBeUsed).value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
+            .Range("D" & rowToBeUsed).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+        Else
+            .Range("C" & rowToBeUsed).value = nom
+            .Range("D" & rowToBeUsed).value = "ENCAISSEMENT:" & Format$(no, "00000")
+        End If
         .Range("E" & rowToBeUsed).value = "1100" 'Hardcoded
         .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
         .Range("H" & rowToBeUsed).value = montant
@@ -630,7 +661,6 @@ Sub ENC_Remove_Check_Boxes(row As Long)
     'Delete all checkboxes whose name are chkBox - ...
     Dim cbx As Shape
     For Each cbx In wshENC_Saisie.Shapes
-        Debug.Print cbx.Name
         If InStr(cbx.Name, "chkBox -") Then
             cbx.Delete
         End If
@@ -737,7 +767,7 @@ Sub ENC_Back_To_FAC_Menu()
     
     Application.EnableEvents = True
     
-    wshENC_Saisie.Visible = xlSheetHidden
+    wshENC_Saisie.Visible = xlSheetVeryHidden
 
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select

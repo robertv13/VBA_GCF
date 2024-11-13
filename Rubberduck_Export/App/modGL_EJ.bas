@@ -3,14 +3,14 @@ Option Explicit
 
 Dim sauvegardesCaracteristiquesForme As Object
 
-Sub JE_Update()
+Sub GL_EJ_Update()
 
     If wshGL_EJ.Range("F4").value = "Renversement" Then
         Call JE_Renversement_Update
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Update", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Update", 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").value) = False Then Exit Sub
     
@@ -45,7 +45,7 @@ Sub JE_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès"
     
-    Call Log_Record("modGL_EJ:JE_Update", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Update", startTime)
     
 End Sub
 
@@ -172,16 +172,23 @@ Sub GL_EJ_Clear_All_Cells()
     Application.EnableEvents = False
     ActiveSheet.Unprotect
     With wshGL_EJ
+        .Range("B6").ClearContents 'Code de client
         .Range("F4,F6:K6").ClearContents
-        .Range("F4, K4, F6:k6").Font.Color = vbBlack
+        .Range("F4, K4, F6:K6").Font.Color = vbBlack
         .Range("E9:K23").ClearContents
         .Range("E9:K23").Font.Color = vbBlack
 '        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
+        .Range("E6").value = "Description:"
         Application.EnableEvents = True
         wshGL_EJ.Activate
         wshGL_EJ.Range("F4").Select
     End With
+    
+    'Envlève la validation sur la cellule description/client
+    Dim cell As Range
+    Set cell = wshGL_EJ.Range("F6:K6")
+    Call AnnulerValidation(cell)
     
     With ActiveSheet
         .Protect UserInterfaceOnly:=True
@@ -350,7 +357,7 @@ Sub GL_EJ_Renverser_Ecriture()
     '1. Demande le numéro d'écriture
     Dim reponse As String, no_Ecriture As Long
     Do
-        reponse = InputBox("Quel est le numéro de l'écriture à renverser ?", "Renversement d'écriture de journal", , 3000, 6000)
+        reponse = InputBox("Quel est le numéro de l'écriture à renverser ?", "Renversement d'écriture de journal", , 5000, 7000)
         If reponse = "" Then
             Exit Sub
         End If
@@ -427,6 +434,88 @@ Sub GL_EJ_Renverser_Ecriture()
 
 End Sub
 
+Sub GL_EJ_Depot_Client()
+
+    Dim ws As Worksheet: Set ws = wshGL_EJ
+    
+    'Ajuster le formulaire
+    ws.Range("E6").value = "Client:"
+    
+    'Ajouter la validation des données
+    Dim cell As Range: Set cell = wshGL_EJ.Range("F6:K6")
+    
+    Dim condition As Boolean
+    condition = (wshGL_EJ.Range("F4").value = "Dépôt de client")
+    
+    Call GérerValidation(cell, "dnrClients_Names_Only", condition)
+    
+    'Force l'écriture
+    wshGL_EJ.Range("E9").value = "Encaisse"
+    wshGL_EJ.Range("E10").value = "Produit perçu d'avance"
+    
+    'Saisie du montant du dépôt
+    wshGL_EJ.Range("K4").Select
+
+    'Libérer les objects
+    Set cell = Nothing
+    Set ws = Nothing
+    
+End Sub
+
+Sub GérerValidation(cell As Range, nomPlage As String, condition As Boolean)
+    
+    If condition Then
+        'Condition remplie, appliquer la validation de liste
+        Call AjouterValidation(cell, nomPlage)
+    Else
+        'Condition non remplie, supprimer la validation
+        Call AnnulerValidation(cell)
+    End If
+    
+End Sub
+
+Sub AjouterValidation(cell As Range, nomPlage As String)
+
+    Dim ws As Worksheet: Set ws = wshGL_EJ
+    
+    Dim feuilleProtégée As Boolean
+    feuilleProtégée = ws.ProtectContents
+    
+    If feuilleProtégée Then ws.Unprotect
+    
+    On Error Resume Next
+    cell.Validation.Delete 'Supprimer toute validation existante
+    On Error GoTo 0
+    
+    'Ajouter la validation de données
+    cell.Validation.Add Type:=xlValidateList, _
+                        AlertStyle:=xlValidAlertStop, _
+                        Operator:=xlBetween, _
+                        Formula1:="=" & ThisWorkbook.Names(nomPlage).Name
+
+    'Configurer les propriétés de la validation de données
+    If Not cell.Validation Is Nothing Then
+        cell.Validation.IgnoreBlank = True
+        cell.Validation.InCellDropdown = True
+        cell.Validation.ShowInput = True
+        cell.Validation.ShowError = True
+    End If
+    
+    If feuilleProtégée Then
+        With ws
+            .Protect UserInterfaceOnly:=True
+            .EnableSelection = xlNoRestrictions
+        End With
+    End If
+    
+End Sub
+
+Sub AnnulerValidation(cell As Range)
+
+    cell.Validation.Delete
+    
+End Sub
+
 Sub GL_EJ_Auto_Build_Summary()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", 0)
@@ -465,27 +554,37 @@ Sub wshGL_Get_A_JE_Detail_Trans(no As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_Get_A_JE_Detail_Trans", 0)
 
     With wshGL_Trans
+        .Range("AA6:AA10").ClearContents
+        .Range("AA6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        
         Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
         Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
         rgResult.ClearContents
         Set rgData = .Range("A1").CurrentRegion
-        .Range("AA3").value = no
+        .Range("AA7").value = rgData.Address
         
+        'Criteria
+        .Range("AA3").value = no
         Set rgCriteria = .Range("AA2:AA3")
+        .Range("AA8").value = rgCriteria.Address
+
         Set rgCopyToRange = .Range("AC1:AK1")
+        .Range("AA9").value = rgCopyToRange.Address
         
         rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
         
         Dim lastResultUsedRow
         lastResultUsedRow = .Range("AC999").End(xlUp).row
+        .Range("AA10").value = lastResultUsedRow
+
         If lastResultUsedRow < 3 Then GoTo NoSort
         With .Sort
             .SortFields.Clear
-            .SortFields.Add key:=wshGL_Trans.Range("AF1"), _
+            .SortFields.Add key:=wshGL_Trans.Range("AG1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On GLNo
-            .SortFields.Add key:=wshGL_Trans.Range("AH1"), _
+            .SortFields.Add key:=wshGL_Trans.Range("AD1"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
@@ -543,10 +642,10 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     nextJENo = lastJE + 1
     wshGL_EJ.Range("B1").value = nextJENo
     
-    'Build formula
-    Dim formula As String
-    formula = "=ROW()"
-
+'    'Build formula
+'    Dim formula As String
+'    formula = "=ROW()"
+'
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
@@ -558,8 +657,13 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             'Add fields to the recordset before updating it
             rs.Fields("No_Entrée").value = nextJENo
             rs.Fields("Date").value = Format$(CDate(wshGL_EJ.Range("K4").value), "yyyy-mm-dd")
-            rs.Fields("Description").value = wshGL_EJ.Range("F6").value
-            rs.Fields("Source").value = wshGL_EJ.Range("F4").value
+            If wshGL_EJ.Range("F4").value <> "Dépôt de client" Then
+                rs.Fields("Description").value = wshGL_EJ.Range("F6").value
+                rs.Fields("Source").value = wshGL_EJ.Range("F4").value
+            Else
+                rs.Fields("Description").value = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
+                rs.Fields("Source").value = UCase(wshGL_EJ.Range("F4").value)
+            End If
             rs.Fields("No_Compte").value = wshGL_EJ.Range("L" & l).value
             rs.Fields("Compte").value = wshGL_EJ.Range("E" & l).value
             rs.Fields("Débit").value = wshGL_EJ.Range("H" & l).value
@@ -604,8 +708,13 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     For i = 9 To r
         wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
         wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
-        wshGL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
-        wshGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
+        If wshGL_EJ.Range("F4").value <> "Dépôt de client" Then
+            wshGL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
+            wshGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
+        Else
+            wshGL_Trans.Range("C" & rowToBeUsed) = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
+            wshGL_Trans.Range("D" & rowToBeUsed).value = UCase(wshGL_EJ.Range("F4").value)
+        End If
         wshGL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
         wshGL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
         If wshGL_EJ.Range("H" & i).value <> "" Then
@@ -739,8 +848,9 @@ Sub GL_EJ_Back_To_Menu()
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
     Call Restaurer_Forme(shp)
-    
-    wshGL_EJ.Visible = xlSheetHidden
+
+    'Nouvelle façon de faire
+    wshGL_EJ.Visible = xlSheetVeryHidden
     
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select

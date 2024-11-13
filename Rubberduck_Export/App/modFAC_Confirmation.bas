@@ -728,9 +728,9 @@ Sub FAC_Confirmation_OK_Button_Click()
     
 End Sub
 
-Sub FAC_Confirmation_Button_Click()
+Sub FAC_Confirmation_Confirm_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Button_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Confirm_Click", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
@@ -765,7 +765,7 @@ Clean_Exit:
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Button_Click", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Confirm_Click", startTime)
 
 End Sub
 
@@ -935,8 +935,6 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
         Dim tps As Currency, tvq As Currency
         tps = ws.Cells(r, 18).value
         tvq = ws.Cells(r, 20).value
-        Dim depot As Currency
-        depot = ws.Cells(r, 22).value
         
         Dim descGL_Trans As String, source As String
         descGL_Trans = ws.Cells(r, 6).value
@@ -999,14 +997,6 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
             MyArray(7, 3) = -tvq
             MyArray(7, 4) = ""
         End If
-        
-    '    'Deposit applied (depot)
-    '    If depot Then
-    '        MyArray(8, 1) = "2400"
-    '        MyArray(8, 2) = "Produit perçu d'avance"
-    '        MyArray(8, 3) = depot
-    '        MyArray(8, 4) = ""
-    '    End If
         
         Dim glEntryNo As Long
         Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, glEntryNo)

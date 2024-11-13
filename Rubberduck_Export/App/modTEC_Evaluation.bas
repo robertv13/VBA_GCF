@@ -3,6 +3,12 @@ Option Explicit
 
 Sub TEC_Evaluation_Procedure(cutoffDate As String)
 
+    If cutoffDate = "" Then
+        Exit Sub
+    End If
+        
+    Call TEC_Import_All
+    
     Dim maxDate As Date
     Dim Y As Integer, m As Integer, d As Integer
     Y = year(cutoffDate)
@@ -14,7 +20,8 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsSource.Cells(ws.rows.count, "A").End(xlUp).rows
+'    lurTEC = wshTEC_Local.Cells(wshTEC_Local.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).row
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
@@ -29,29 +36,42 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
     Dim tableau As Variant
     Dim trancheAge As String
-    Dim ageTEC As Long
-    For i = 1 To UBound(arr, 1) - 1
+    Dim ageTEC As Long, TECID As Long
+    For i = 1 To UBound(arr, 1)
         hresNettes = 0
         hresNFact = 0
         hresFact = 0
         hresTEC = 0
-        If CDate(arr(i, 4)) <= maxDate Then
+        
+        If CDate(arr(i, 4)) <= CDate(maxDate) Then
+            TECID = CLng(arr(i, 1))
+'            If TECID = 1755 Or TECID = 1760 Then Stop
             profInit = Format$(arr(i, 2), "000") & arr(i, 3)
+            
+            'Cette charge a-t-elle été Détruite ?
             If UCase(arr(i, 14)) = "FAUX" Then
                 hresNettes = arr(i, 8)
             Else
                 hresNettes = 0
             End If
+            
+            'Détermine si la charge -OU- le client sont non-facturable ?
             codeClient = CStr(arr(i, 5))
             If UCase(arr(i, 10)) = "FAUX" Or Fn_Is_Client_Facturable(codeClient) = False Then
                 hresNFact = hresNettes
             Else
                 hresFact = hresNettes
             End If
-            If (UCase(arr(i, 12)) = "FAUX" Or CDate(arr(i, 13)) > maxDate) And hresFact > 0 Then
-                hresTEC = hresFact
-            Else
-                hresTEC = 0
+            
+            If hresNettes <> hresNFact + hresFact Then Stop
+            
+            'Cette charge a-t-elle été facturée -OU- Facturée après la date limite ?
+            If UCase(arr(i, 12)) = "FAUX" Or Int(arr(i, 13)) > maxDate Then
+                If hresFact > 0 Then
+                    hresTEC = hresFact
+                Else
+                    hresTEC = 0
+                End If
             End If
             
             'Avons-nous un TEC différent de 0 ?
@@ -92,6 +112,9 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
                     End Select
                 dictHours(profInit) = tableau 'Replacer le tableau dans le dictionnaire
             
+'                Feuil1.Range("A" & TECID).value = TECID
+'                Feuil1.Range("B" & TECID).value = hresTEC
+                
             End If
         End If
     Next i

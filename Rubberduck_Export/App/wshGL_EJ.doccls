@@ -13,8 +13,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call GL_Trans_Import_All
     Call GL_EJ_Auto_Import_All
     
-    Call GL_EJ_Clear_All_Cells
-    
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
 
@@ -29,11 +27,16 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         .Range("N:Y").EntireColumn.Hidden = True
     End With
     
+    'Cette cellule peut aussi contenir "Client:"
+    ws.Range("E6").value = "Description:"
+    
+    Call GL_EJ_Clear_All_Cells
+    
     Call SetTabOrder(ws)
     
     Call GL_EJ_Clear_All_Cells
     
-    'Mettre à jour / Renversement button
+    'Rétablir le bouton "Mettre à jour / Renversement"
     Dim shp As Shape
     Set shp = ws.Shapes("btnUpdate")
     
@@ -113,9 +116,14 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
+    Dim codeClient As Variant
     Dim fullDate As Variant
+    Dim plageClients As Range
     
-    'Si la cellule de la SOURCE change, alors on vérifie si l'on essaie d'appeler des E/J récurrentes
+    'Si la cellule de la SOURCE change, alors on vérifie si l'on essaie...
+    '   E/J récurrente
+    '   Renverser une écriture
+    '   Dépôt de client
     If Not Intersect(Target, Range("F4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
@@ -133,6 +141,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If Target.value = "Renversement" Then
             Call GL_EJ_Renverser_Ecriture
         End If
+        If Target.value = "Dépôt de client" Then
+            Call GL_EJ_Depot_Client
+        End If
+    End If
+    
+    'Description -OU- Nom du client a changé
+    If Not Intersect(Target, Range("F6")) Is Nothing Then
+        If wshGL_EJ.Range("F4").value = "Dépôt de client" Then
+            Application.EnableEvents = False
+            Dim clientCode As String
+            clientCode = Fn_GetID_From_Client_Name(Me.Range("F6").value)
+            Me.Range("B6").value = clientCode
+            Application.EnableEvents = True
+            End If
     End If
     
     'Si la cellule de la DATE change, alors on essaie de construire une date
@@ -148,7 +170,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Now() Then

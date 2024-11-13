@@ -23,16 +23,16 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
     End With
     
     'Add the cut-off date in the header (printing purposes)
-    Dim minDate As Date, dateCutOff As Date
+    Dim minDate As Date, dateCutoff As Date
     wshGL_BV.Range("C2").value = "Au " & Format$(wshGL_BV.Range("J1").value, wshAdmin.Range("B1").value)
 
     minDate = CDate("07/31/2024")
-    dateCutOff = wshGL_BV.Range("J1").value
+    dateCutoff = wshGL_BV.Range("J1").value
     wshGL_BV.Range("B2").value = 3
     wshGL_BV.Range("B10").value = 0
     
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
-    Call GL_TB_AdvancedFilter_By_GL("", minDate, dateCutOff)
+    Call GL_TB_AdvancedFilter_By_GL("", minDate, dateCutoff)
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     
     lastUsedRow = wshGL_Trans.Range("T999999").End(xlUp).row
@@ -60,7 +60,6 @@ Sub GL_TB_Build_Trial_Balance() '2024-03-05 @ 13:34
         If Not dictSolde.Exists(glNo) Then
             dictSolde.Add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
-'            Debug.Print glNo & "   " & newRowID
             newRowID = newRowID + 1
         End If
         currRowID = dictSolde(glNo)
@@ -559,7 +558,6 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
     
     Dim shp As Shape
     For Each shp In ws.Shapes
-        Debug.Print shp.Name
         If InStr(shp.Name, "Rounded Rectangle ") Then
             shp.Delete
         End If
@@ -577,7 +575,6 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
     
     Dim shp As Shape
     For Each shp In ws.Shapes
-        Debug.Print shp.Name
     Next shp
 
     'Libérer la mémoire

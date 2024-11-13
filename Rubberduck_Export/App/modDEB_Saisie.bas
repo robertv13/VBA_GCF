@@ -94,10 +94,10 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     wshDEB_Saisie.Range("B1").value = currDebTransNo
     Application.EnableEvents = True
     
-    'Build formula
-    Dim formula As String
-    formula = "=ROW()"
-
+'    'Build formula
+'    Dim formula As String
+'    formula = "=ROW()"
+'
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
