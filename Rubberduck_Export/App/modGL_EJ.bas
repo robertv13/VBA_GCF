@@ -867,16 +867,12 @@ Sub Sauvegarder_Forme(forme As Shape)
 
     'Sauvegarder les caractéristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
-    Debug.Print "Left ", forme.Left
     sauvegardesCaracteristiquesForme("Width") = forme.Width
-    Debug.Print "Width ", forme.Width
     sauvegardesCaracteristiquesForme("Height") = forme.Height
-    Debug.Print "Height ", forme.Height
     sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
-    Debug.Print "Text ", forme.TextFrame2.TextRange.Text
     
 End Sub
 
@@ -914,3 +910,16 @@ Sub Restaurer_Forme(forme As Shape)
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
+
+Sub ckbRecurrente_Click()
+
+    If wshGL_EJ.ckbRecurrente.value = True Then
+        wshGL_EJ.ckbRecurrente.BackColor = HIGHLIGHT_COLOR
+    Else
+        wshGL_EJ.ckbRecurrente.BackColor = RGB(217, 217, 217)
+    End If
+
+End Sub
+
+
+

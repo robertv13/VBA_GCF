@@ -17,21 +17,21 @@ Sub StatsHeures_AdvancedFilters()
     'AdvancedFilter # 1 - Semaine
     
     'Définir le range des résultats et effacer avant le traitement
-    Set rngResult = ws.Range("W1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
-    Set rngResult = ws.Range("W1").CurrentRegion
+    Set rngResult = ws.Range("V1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
+    Set rngResult = ws.Range("V1").CurrentRegion
     
     'Définir le range des critères
-    Set rngCriteria = ws.Range("S1:U2")
+    Set rngCriteria = ws.Range("R1:T2")
     
     ws.Range("tblTEC_TDB_Data[#All]").AdvancedFilter _
-        action:=xlFilterCopy, _
-        criteriaRange:=rngCriteria, _
-        CopyToRange:=rngResult, _
-        Unique:=False
+                    action:=xlFilterCopy, _
+                    criteriaRange:=rngCriteria, _
+                    CopyToRange:=rngResult, _
+                    Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "W").End(xlUp).row
+    lastResultRow = ws.Cells(ws.rows.count, "V").End(xlUp).row
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then

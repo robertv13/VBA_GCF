@@ -391,6 +391,22 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
 
 End Sub
 
+Sub cbTous_Click()
+
+    Dim lb As OLEObject: Set lb = wshGL_Rapport.OLEObjects("ListBox1")
+    
+    Dim i As Long
+    With lb.Object
+        For i = 0 To .ListCount - 1
+            .Selected(i) = Not (.Selected(i))
+        Next i
+    End With
+
+    'Libérer la mémoire
+    Set lb = Nothing
+    
+End Sub
+
 Sub GL_Rapport_Back_To_Menu()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", 0)

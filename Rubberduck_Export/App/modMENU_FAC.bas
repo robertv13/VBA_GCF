@@ -43,22 +43,6 @@ Sub SuiviCC_Click()
 End Sub
 
 'Option # 3
-Sub Encaissement_Click()
-
-    Application.ScreenUpdating = False
-    
-    fromMenu = True '2024-09-03 @ 06:20
-    
-    With wshENC_Saisie
-        .Visible = xlSheetVisible
-        .Select
-    End With
-    
-    Application.ScreenUpdating = True
-    
-End Sub
-
-'Option # 4
 Sub FAC_Historique_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Historique_Click", 0)
@@ -84,7 +68,7 @@ Sub FAC_Historique_Click()
 
 End Sub
 
-'Option # 5
+'Option # 4
 Sub FAC_Confirmation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)

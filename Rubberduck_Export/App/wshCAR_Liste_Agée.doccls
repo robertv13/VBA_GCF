@@ -143,13 +143,3 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", startTime)
   
 End Sub
-
-Private Sub Back_To_CAR_Menu()
-
-    wshCAR_Liste_Agée.Visible = xlSheetHidden
-    
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A1").Select
-
-End Sub
-

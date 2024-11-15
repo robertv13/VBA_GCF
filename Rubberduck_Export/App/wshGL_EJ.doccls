@@ -233,14 +233,3 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
 End Sub
-
-Private Sub ckbRecurrente_Click()
-
-    If ckbRecurrente.value = True Then
-        ckbRecurrente.BackColor = HIGHLIGHT_COLOR
-    Else
-        ckbRecurrente.BackColor = RGB(217, 217, 217)
-    End If
-
-End Sub
-

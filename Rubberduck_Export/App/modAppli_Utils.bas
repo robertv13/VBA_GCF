@@ -69,90 +69,30 @@ End Sub
 
 Public Sub ProtectCells(rng As Range)
 
-    'Lock the checkbox
+    'Lock the range
     rng.Locked = True
     
-    'Protect the worksheet
+    'Protect the worksheet with no restrictions
     With rng.Parent
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
     End With
 
 End Sub
 
 Public Sub UnprotectCells(rng As Range)
 
-    'Lock the checkbox
+    'Unlcok the range
     rng.Locked = False
     
-    'Protect the worksheet
+    'Protect the worksheet with no restrictions
     With rng.Parent
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
     End With
 
 End Sub
 
-'Sub Update_Hres_Jour_Prof() '2024-08-15 @ 06:30
-'
-'    Dim wsSrc As Worksheet
-'    Set wsSrc = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
-'
-'    Dim wsTgt As Worksheet
-'    Set wsTgt = ThisWorkbook.Worksheets("TEC_Hres_Jour_Prof")
-'
-'    Dim lastUsedRowSrc As Long
-'    lastUsedRowSrc = wsSrc.Cells(wsSrc.rows.count, "A").End(xlUp).row '2024-08-15 @ 06:17
-'
-'    wsTgt.Range("A2:I" & wsTgt.Cells(wsTgt.rows.count, "A").End(xlUp).row).ClearContents
-'
-'    'Copy columns A to H (from Source to Target), using Copy and Paste Special
-'    wsSrc.Range("A2:I" & lastUsedRowSrc).Copy
-'    wsTgt.Cells(2, 1).PasteSpecial Paste:=xlPasteValues
-'
-'    'Clear the clipboard
-'    Application.CutCopyMode = False
-'
-'    Call Update_Pivot_Table
-'
-'    MsgBox "L'importation des Heures par Jour / Professionnel est complétée" & _
-'            vbNewLine & vbNewLine & "Ainsi que la mise à jour du Pivot Table", _
-'            vbExclamation
-'
-'    'Libérer la mémoire
-'    Set wsSrc = Nothing
-'    Set wsTgt = Nothing
-'
-'End Sub
-'
-'Sub Update_Pivot_Table() '2024-08-15 @ 06:34
-'
-'    'Define the worksheet containing the data
-'    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("TEC_Hres_Jour_Prof")
-'
-'    'Find the last row of your data
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-'
-'    'Define the new data range
-'    Dim rngData As Range: Set rngData = ws.Range("A1:I" & lastUsedRow)
-'
-'    'Update the Pivot Table
-'    Dim pt As pivotTable: Set pt = ws.PivotTables("ptHresJourProf")
-'    pt.ChangePivotCache ThisWorkbook.PivotCaches.Create( _
-'                        SourceType:=xlDatabase, _
-'                        SourceData:=rngData)
-'
-'    'Refresh the Pivot Table
-'    pt.RefreshTable
-'
-'    'Let go the Objects
-'    Set pt = Nothing
-'    Set rngData = Nothing
-'    Set ws = Nothing
-'
-'End Sub
-'
 Public Sub ArrayToRange(ByRef data As Variant _
                         , ByVal outRange As Range _
                         , Optional ByVal clearExistingData As Boolean = True _
@@ -200,49 +140,6 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
     Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
 
-End Sub
-
-Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
-    
-    Dim circRef As String
-    circRef = ""
-    Dim circRefCount As Long
-    circRefCount = 0
-    
-    Dim ws As Worksheet
-    For Each ws In ThisWorkbook.Worksheets
-        On Error Resume Next
-        Dim formulaCells As Range
-        Set formulaCells = ws.usedRange.SpecialCells(xlCellTypeFormulas)
-        On Error GoTo 0
-        
-        Dim cell As Range
-        Dim cellCount As Long
-        If Not formulaCells Is Nothing Then
-            For Each cell In formulaCells
-                On Error Resume Next
-                cellCount = Application.CircularReference.count
-                On Error GoTo 0
-                
-                If cellCount > 0 Then
-                    circRef = circRef & ws.Name & "!" & cell.Address & vbCrLf
-                    circRefCount = circRefCount + 1
-                End If
-            Next cell
-        End If
-    Next ws
-    
-    If circRefCount > 0 Then
-        MsgBox "Il existe des références circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
-    Else
-        MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
-    End If
-    
-    'Libérer la mémoire
-    Set cell = Nothing
-    Set formulaCells = Nothing
-    Set ws = Nothing
-    
 End Sub
 
 Public Sub Integrity_Verification() '2024-07-06 @ 12:56
@@ -456,6 +353,109 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     Set wsOutput = Nothing
     
     Call Log_Record("modAppli:Integrity_Verification", startTime)
+
+End Sub
+
+Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Plan_Comptable", 0)
+    
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'dnrPlanComptable_All
+    Dim arr As Variant
+    Dim nbCol As Long
+    nbCol = 4
+    arr = Fn_Get_Plan_Comptable(nbCol) 'Returns array with 4 columns (Code, Description)
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(UBound(arr, 1), "###,##0") & _
+        " comptes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de 'dnr_PlanComptable_All'")
+    r = r + 1
+    
+    If UBound(arr, 1) < 2 Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+    
+    Dim dict_code_GL As New Dictionary
+    Dim dict_descr_GL As New Dictionary
+    
+    Dim i As Long, codeGL As String, descrGL As String
+    Dim GL_ID As Long
+    Dim typeGL As String
+    Dim cas_doublon_descr As Long, cas_doublon_code As Long, cas_type As Long
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        codeGL = arr(i, 1)
+        descrGL = arr(i, 2)
+        If dict_descr_GL.Exists(descrGL) = False Then
+            dict_descr_GL.Add descrGL, codeGL
+        Else
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
+            r = r + 1
+            cas_doublon_descr = cas_doublon_descr + 1
+        End If
+        
+        If dict_code_GL.Exists(codeGL) = False Then
+            dict_code_GL.Add codeGL, descrGL
+        Else
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
+            r = r + 1
+            cas_doublon_code = cas_doublon_code + 1
+        End If
+        
+        GL_ID = arr(i, 3)
+        typeGL = arr(i, 4)
+        If InStr("Actifs^Passifs^Équité^Revenus^Dépenses^", typeGL) = 0 Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
+            r = r + 1
+            cas_type = cas_type + 1
+        End If
+        
+    Next i
+    
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " comptes ont été analysés!")
+    r = r + 1
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
+    If cas_doublon_descr = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de description")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
+        r = r + 1
+    End If
+    
+    If cas_doublon_code = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de code de G/L")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
+        r = r + 1
+    End If
+    
+    If cas_type = 0 Then
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun type de G/L invalide")
+        r = r + 1
+    Else
+        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_type & " cas de types de G/L invalides")
+        r = r + 1
+    End If
+    r = r + 1
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:check_Plan_Comptable", startTime)
 
 End Sub
 
@@ -2046,109 +2046,6 @@ Clean_Exit:
 
 End Sub
 
-Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Plan_Comptable", 0)
-    
-    Application.ScreenUpdating = False
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'dnrPlanComptable_All
-    Dim arr As Variant
-    Dim nbCol As Long
-    nbCol = 4
-    arr = Fn_Get_Plan_Comptable(nbCol) 'Returns array with 4 columns (Code, Description)
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Il y a " & Format$(UBound(arr, 1), "###,##0") & _
-        " comptes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Analyse de 'dnr_PlanComptable_All'")
-    r = r + 1
-    
-    If UBound(arr, 1) < 2 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-    
-    Dim dict_code_GL As New Dictionary
-    Dim dict_descr_GL As New Dictionary
-    
-    Dim i As Long, codeGL As String, descrGL As String
-    Dim GL_ID As Long
-    Dim typeGL As String
-    Dim cas_doublon_descr As Long, cas_doublon_code As Long, cas_type As Long
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        codeGL = arr(i, 1)
-        descrGL = arr(i, 2)
-        If dict_descr_GL.Exists(descrGL) = False Then
-            dict_descr_GL.Add descrGL, codeGL
-        Else
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
-            r = r + 1
-            cas_doublon_descr = cas_doublon_descr + 1
-        End If
-        
-        If dict_code_GL.Exists(codeGL) = False Then
-            dict_code_GL.Add codeGL, descrGL
-        Else
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
-            r = r + 1
-            cas_doublon_code = cas_doublon_code + 1
-        End If
-        
-        GL_ID = arr(i, 3)
-        typeGL = arr(i, 4)
-        If InStr("Actifs^Passifs^Équité^Revenus^Dépenses^", typeGL) = 0 Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
-            r = r + 1
-            cas_type = cas_type + 1
-        End If
-        
-    Next i
-    
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " comptes ont été analysés!")
-    r = r + 1
-    
-    'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1)
-    
-    If cas_doublon_descr = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de description")
-        r = r + 1
-    Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
-        r = r + 1
-    End If
-    
-    If cas_doublon_code = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun doublon de code de G/L")
-        r = r + 1
-    Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
-        r = r + 1
-    End If
-    
-    If cas_type = 0 Then
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "       Aucun type de G/L invalide")
-        r = r + 1
-    Else
-        Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Il y a " & cas_type & " cas de types de G/L invalides")
-        r = r + 1
-    End If
-    r = r + 1
-    
-Clean_Exit:
-    'Libérer la mémoire
-    Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli:check_Plan_Comptable", startTime)
-
-End Sub
-
 Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_TEC", 0)
@@ -2159,7 +2056,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2384 'What is the last TECID analyzed ?
+    lastTECIDReported = 2416 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2665,39 +2562,42 @@ Clean_Exit:
 
 End Sub
 
-Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
+'CommentOut - 2024-11-14
+'Sub ADMIN_DataFiles_Folder_Selection() '2024-03-28 @ 14:10
+'
+'    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
+'
+'    With SharedFolder
+'        .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
+'        .AllowMultiSelect = False
+'        If .show = -1 Then
+'            wshAdmin.Range("F5").value = .selectedItems(1)
+'        End If
+'    End With
+'
+'    'Libérer la mémoire
+'    Set SharedFolder = Nothing
+'
+'End Sub
 
-    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    
-    With SharedFolder
-        .Title = "Choisir le répertoire de données partagées, selon les instructions de l'Administrateur"
-        .AllowMultiSelect = False
-        If .show = -1 Then
-            wshAdmin.Range("F5").value = .selectedItems(1)
-        End If
-    End With
-    
-    'Libérer la mémoire
-    Set SharedFolder = Nothing
-    
-End Sub
-
-Sub ADMIN_Invoices_Excel_Folder_Selection() '2024-08-04 @ 07:30
-
-    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    
-    With SharedFolder
-        .Title = "Choisir le répertoire des factures (Format Excel)"
-        .AllowMultiSelect = False
-        If .show = -1 Then
-            wshAdmin.Range("F7").value = .selectedItems(1)
-        End If
-    End With
-    
-    'Libérer la mémoire
-    Set SharedFolder = Nothing
-    
-End Sub
+'CommentOut - 2024-11-14
+'Sub ADMIN_Invoices_Excel_Folder_Selection() '2024-08-04 @ 07:30
+'
+'    Dim SharedFolder As FileDialog: Set SharedFolder = Application.FileDialog(msoFileDialogFolderPicker)
+'
+'    With SharedFolder
+'        .Title = "Choisir le répertoire des factures (Format Excel)"
+'        .AllowMultiSelect = False
+'        If .show = -1 Then
+'            wshAdmin.Range("F7").value = .selectedItems(1)
+'        End If
+'    End With
+'
+'    'Libérer la mémoire
+'    Set SharedFolder = Nothing
+'
+'End Sub
+'
 
 Sub Make_It_As_Header(r As Range)
 
@@ -2738,23 +2638,25 @@ Sub Add_Message_To_WorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
     End If
 
 End Sub
-Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
 
-    Dim PDFFolder As FileDialog: Set PDFFolder = Application.FileDialog(msoFileDialogFolderPicker)
-    
-    With PDFFolder
-        .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
-        .AllowMultiSelect = False
-        If .show = -1 Then
-            wshAdmin.Range("F6").value = .selectedItems(1)
-        End If
-    End With
-    
-    'Libérer la mémoire
-    Set PDFFolder = Nothing
-
-End Sub
-
+'CommentOut - 2024-11-14
+'Sub ADMIN_PDF_Folder_Selection() '2024-03-28 @ 14:10
+'
+'    Dim PDFFolder As FileDialog: Set PDFFolder = Application.FileDialog(msoFileDialogFolderPicker)
+'
+'    With PDFFolder
+'        .Title = "Choisir le répertoire des copies de facture (PDF), selon les instructions de l'Administrateur"
+'        .AllowMultiSelect = False
+'        If .show = -1 Then
+'            wshAdmin.Range("F6").value = .selectedItems(1)
+'        End If
+'    End With
+'
+'    'Libérer la mémoire
+'    Set PDFFolder = Nothing
+'
+'End Sub
+'
 Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
 
     'Avons-nous un Range valide ?
@@ -2980,6 +2882,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
                     .NumberFormat = "#,##0.00 $"
                 End With
                 .Range("J2:J" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+'CommentOut - 2024-11-14
 '                With .Range("A2:A" & lastUsedRow) _
 '                    .Range("J2:J" & lastUsedRow).Interior
 '                    .Pattern = xlSolid
@@ -3009,299 +2912,6 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     'Libérer la mémoire
     Set usedRange = Nothing
 
-End Sub
-
-Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 16:24
-
-    'Erase and create a new worksheet for differences
-    Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Colonnes")
-    Set wsDiff = ThisWorkbook.Worksheets("Différences_Colonnes")
-    wsDiff.Range("A1").value = "Worksheet"
-    wsDiff.Range("B1").value = "Nb. colonnes"
-    wsDiff.Range("C1").value = "Colonne"
-    wsDiff.Range("D1").value = "Valeur originale"
-    wsDiff.Range("E1").value = "Nouvelle valeur"
-    Call Make_It_As_Header(wsDiff.Range("A1:E1"))
-
-    'Set your workbooks and worksheets here
-    Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
-    Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
-    
-    Dim wso As Worksheet
-    Dim wsn As Worksheet
-    
-    'Loop through each column (assuming both sheets have the same structure)
-    Dim col1 As Range, col2 As Range
-    Dim diffLog As String
-    Dim diffRow As Long, readColumns As Long
-    Dim wsName As String
-    diffRow = 1
-    For Each wso In wb1.Worksheets
-        wsName = wso.Name
-        Set wsn = wb2.Sheets(wsName)
-        
-        Dim nbCol As Integer
-        nbCol = 1
-        Do
-            nbCol = nbCol + 1
-        Loop Until wso.Cells(1, nbCol).value = ""
-        nbCol = nbCol - 1
-        
-        diffRow = diffRow + 1
-        wsDiff.Cells(diffRow, 1).value = wsName
-        wsDiff.Cells(diffRow, 2).value = nbCol
-        
-        Dim i As Integer
-        For i = 1 To nbCol
-            Set col1 = wso.columns(i)
-            Set col2 = wsn.columns(i)
-            readColumns = readColumns + 1
-            
-            'Compare Font Name
-            If col1.Font.Name <> col2.Font.Name Then
-                diffLog = diffLog & "Column " & i & " Font Name differs: " & col1.Font.Name & " vs " & col2.Font.Name & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Font.Name
-                wsDiff.Cells(diffRow, 5).value = col2.Font.Name
-            End If
-            
-            'Compare Font Size
-            If col1.Font.size <> col2.Font.size Then
-                diffLog = diffLog & "Column " & i & " Font Size differs: " & col1.Font.size & " vs " & col2.Font.size & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Font.size
-                wsDiff.Cells(diffRow, 5).value = col2.Font.size
-            End If
-            
-            'Compare Column Width
-            If col1.ColumnWidth <> col2.ColumnWidth Then
-                diffLog = diffLog & "Column " & i & " Width differs: " & col1.ColumnWidth & " vs " & col2.ColumnWidth & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.ColumnWidth
-                wsDiff.Cells(diffRow, 5).value = col2.ColumnWidth
-            End If
-            
-            'Compare Number Format
-            If col1.NumberFormat <> col2.NumberFormat Then
-                diffLog = diffLog & "Column " & i & " Number Format differs: " & col1.NumberFormat & " vs " & col2.NumberFormat & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.NumberFormat
-                wsDiff.Cells(diffRow, 5).value = col2.NumberFormat
-            End If
-            
-            'Compare Horizontal Alignment
-            If col1.HorizontalAlignment <> col2.HorizontalAlignment Then
-                diffLog = diffLog & "Column " & i & " Horizontal Alignment differs: " & col1.HorizontalAlignment & " vs " & col2.HorizontalAlignment & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.HorizontalAlignment
-                wsDiff.Cells(diffRow, 5).value = col2.HorizontalAlignment
-            End If
-    
-            'Compare Background Color
-            If col1.Interior.Color <> col2.Interior.Color Then
-                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.Color & " vs " & col2.Interior.Color & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Interior.Color
-                wsDiff.Cells(diffRow, 5).value = col2.Interior.Color
-            End If
-    
-        Next i
-        
-    Next wso
-    
-    wsDiff.columns.AutoFit
-    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
-    
-    'Result print setup - 2024-08-05 @ 05:16
-    diffRow = diffRow + 2
-    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readColumns, "###,##0") & _
-                                        " colonnes analysées dans l'ensemble du fichier ***"
-                                    
-    'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
-
-    'Setup print parameters
-    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
-    Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
-    Dim header2 As String: header2 = ""
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
-    
-    'Close the 2 workbooks without saving anything
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=False
-    
-    'Output differences
-    If diffLog <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLog
-    Else
-        MsgBox "Aucune différence dans les colonnes."
-    End If
-    
-    'Libérer la mémoire
-    Set col1 = Nothing
-    Set col2 = Nothing
-    Set rngArea = Nothing
-    Set rngToPrint = Nothing
-    Set wb1 = Nothing
-    Set wb2 = Nothing
-    Set wsn = Nothing
-    Set wso = Nothing
-    Set wsDiff = Nothing
-    
-End Sub
-
-Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
-
-    'Erase and create a new worksheet for differences
-    Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Lignes")
-    Set wsDiff = ThisWorkbook.Worksheets("Différences_Lignes")
-    wsDiff.Range("A1").value = "Worksheet"
-    wsDiff.Range("B1").value = "Prod_Cols"
-    wsDiff.Range("C1").value = "Dev_Cols"
-    wsDiff.Range("D1").value = "Prod_Rows"
-    wsDiff.Range("E1").value = "Dev_Rows"
-    wsDiff.Range("F1").value = "Ligne #"
-    wsDiff.Range("G1").value = "Colonne"
-    wsDiff.Range("H1").value = "Prod_Value"
-    wsDiff.Range("I1").value = "Dev_Value"
-    Call Make_It_As_Header(wsDiff.Range("A1:I1"))
-
-    'Set your workbooks and worksheets here
-    Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
-    Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
-    
-    Dim diffRow As Long
-    diffRow = 1
-    diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Prod: " & wb1.Name
-    diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Dev : " & wb2.Name
-    
-    Dim wsProd As Worksheet
-    Dim wsDev As Worksheet
-    
-    'Loop through each column (assuming both sheets have the same structure)
-    Dim diffLogMess As String
-    Dim readRows As Long
-    Dim wsName As String
-    For Each wsProd In wb1.Worksheets
-        wsName = wsProd.Name
-        Set wsDev = wb2.Sheets(wsName)
-        
-        'Determine number of columns and rows in Prod Workbook
-        Dim arr(1 To 30) As String
-        Dim nbColProd As Integer, nbRowProd As Long
-        nbColProd = 0
-        Do
-            nbColProd = nbColProd + 1
-            arr(nbColProd) = wsProd.Cells(1, nbColProd).value
-            Debug.Print wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).value
-        Loop Until wsProd.Cells(1, nbColProd).value = ""
-        nbColProd = nbColProd - 1
-        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
-        
-        'Determine number of columns and rows in Dev Workbook
-        Dim nbColDev As Integer, nbRowDev As Long
-        nbColDev = 0
-        Do
-            nbColDev = nbColDev + 1
-            Debug.Print wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).value
-        Loop Until wsProd.Cells(1, nbColDev).value = ""
-        nbColDev = nbColDev - 1
-        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
-        
-        diffRow = diffRow + 2
-        wsDiff.Cells(diffRow, 1).value = wsName
-        wsDiff.Cells(diffRow, 2).value = nbColProd
-        wsDiff.Cells(diffRow, 3).value = nbColDev
-        wsDiff.Cells(diffRow, 4).value = nbRowProd
-        wsDiff.Cells(diffRow, 5).value = nbRowDev
-        
-        Dim nbRow As Long
-        If nbRowProd > nbRowDev Then
-            wsDiff.Cells(diffRow, 6).value = "Le client a ajouté " & nbRowProd - nbRowDev & " lignes dans la feuille"
-            nbRow = nbRowProd
-        End If
-        If nbRowProd < nbRowDev Then
-            wsDiff.Cells(diffRow, 6).value = "Le dev a ajouté " & nbRowDev - nbRowProd & " lignes dans la feuille"
-            nbRow = nbRowDev
-        End If
-        
-        Dim rowProd As Range, rowDev As Range
-        Dim i As Long, prevI As Long, j As Integer
-        For i = 1 To nbRow
-            Set rowProd = wsProd.rows(i)
-            Set rowDev = wsDev.rows(i)
-            readRows = readRows + 1
-            
-            For j = 1 To nbColProd
-                If wsProd.rows.Cells(i, j).value <> wsDev.rows.Cells(i, j).value Then
-                    diffLogMess = diffLogMess & "Cell(" & i & "," & j & ") was '" & _
-                                  wsProd.rows.Cells(i, j).value & "' is now '" & _
-                                  wsDev.rows.Cells(i, j).value & "'" & vbCrLf
-                    diffRow = diffRow + 1
-                    If i <> prevI Then
-                        wsDiff.Cells(diffRow, 6).value = "Ligne # " & i
-                        prevI = i
-                    End If
-                    wsDiff.Cells(diffRow, 7).value = j & "-" & arr(j)
-                    wsDiff.Cells(diffRow, 8).value = wsProd.rows.Cells(i, j).value
-                    wsDiff.Cells(diffRow, 9).value = wsDev.rows.Cells(i, j).value
-                End If
-            Next j
-            
-        Next i
-        
-    Next wsProd
-    
-    wsDiff.columns.AutoFit
-    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
-    wsDiff.Range("F:I").columns.HorizontalAlignment = xlLeft
-    
-    'Result print setup - 2024-08-20 @ 05:48
-    diffRow = diffRow + 2
-    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readRows, "###,##0") & _
-                                        " lignes analysées dans l'ensemble du Workbook ***"
-                                    
-    'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
-
-    'Setup print parameters
-    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
-    Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
-    Dim header2 As String: header2 = "Changements de lignes ou cellules"
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
-    
-    'Close the 2 workbooks without saving anything
-    wb1.Close SaveChanges:=False
-    wb2.Close SaveChanges:=False
-    
-    'Output differences
-    If diffLogMess <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLogMess
-    Else
-        MsgBox "Aucune différence dans les lignes."
-    End If
-    
-    'Libérer la mémoire
-    Set rngArea = Nothing
-    Set rngToPrint = Nothing
-    Set rowDev = Nothing
-    Set rowProd = Nothing
-    Set wb1 = Nothing
-    Set wb2 = Nothing
-    Set wsDev = Nothing
-    Set wsProd = Nothing
-    Set wsDiff = Nothing
-    
 End Sub
 
 Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
@@ -3507,170 +3117,6 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
 End Sub
 
-Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
-    
-    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
-    Dim fd As FileDialog
-    Set fd = Application.FileDialog(msoFileDialogFilePicker)
-    
-    'Configuration des filtres de fichiers (TXT uniquement)
-    fd.Title = "Sélectionnez un fichier TXT"
-    fd.Filters.Clear
-    fd.Filters.Add "Fichiers Texte", "*.txt"
-    
-    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim filePath As String
-    If fd.show = -1 Then
-        filePath = fd.selectedItems(1)
-    Else
-        MsgBox "Aucun fichier sélectionné.", vbExclamation
-        Exit Sub
-    End If
-    
-    'Ouvre le fichier en mode lecture
-    Dim FileNum As Integer
-    FileNum = FreeFile
-    Open filePath For Input As FileNum
-    
-    'Initialise la ligne de départ pour insérer les données dans Excel
-    Dim ligneNum As Long
-    ligneNum = 1
-    
-    'Lire chaque ligne du fichier
-    Dim ligne As String
-    Dim champs() As String
-    Dim j As Long
-
-    Do While Not EOF(FileNum)
-        Line Input #FileNum, ligne
-        
-        'Séparer les champs par le séparateur " | "
-        champs = Split(ligne, " | ")
-        
-        'Insérer les champs dans les colonnes de la feuille Excel
-        For j = LBound(champs) To UBound(champs)
-            Cells(ligneNum, j + 1).value = champs(j)
-        Next j
-        
-        'Passer à la ligne suivante
-        ligneNum = ligneNum + 1
-    Loop
-    
-    'Fermer le fichier
-    Close FileNum
-    
-    'Libérer la mémoire
-    Set fd = Nothing
-    
-    MsgBox "Le fichier a été importé avec succès.", vbInformation
-    
-End Sub
-
-Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
-    
-    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
-    Dim fd As FileDialog
-    Set fd = Application.FileDialog(msoFileDialogFilePicker)
-    
-    'Configuration des filtres de fichiers (Excel uniquement)
-    fd.Title = "Sélectionnez un fichier Excel"
-    fd.Filters.Clear
-    fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
-    
-    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim filePath As String
-    Dim fileSelected As Boolean
-    If fd.show = -1 Then
-        filePath = fd.selectedItems(1)
-        fileSelected = True
-    Else
-        MsgBox "Aucun fichier sélectionné.", vbExclamation
-        fileSelected = False
-    End If
-    
-    'Ouvrir le fichier sélectionné s'il y en a un
-    Dim wb As Workbook
-    If fileSelected Then
-        Set wb = Workbooks.Open(filePath)
-        
-        'Définir les colonnes spécifiques à nettoyer pour chaque feuille
-        Dim colonnesANettoyer As Dictionary
-        Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
-        
-        'Ajouter des feuilles et colonnes spécifiques (exemple)
-'        colonnesANettoyer.Add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
-'        colonnesANettoyer.Add "DEB_Trans", Array("B") 'Vérifier la colonne B
-'
-'        colonnesANettoyer.Add "ENC_Détails", Array("D") 'Vérifier la colonne D
-'        colonnesANettoyer.Add "ENC_Entête", Array("B") 'Vérifier la colonne B
-'
-'        colonnesANettoyer.Add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
-'        colonnesANettoyer.Add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
-'        colonnesANettoyer.Add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
-'        colonnesANettoyer.Add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
-'
-'        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
-'
-'        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
-        colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
-        
-        'Parcourir chaque feuille définie dans le dictionnaire
-        Dim ws As Worksheet
-        Dim cell As Range
-        Dim dateOnly As Date
-        Dim wsName As Variant
-        Dim cols As Variant
-        Dim col As Variant
-        
-        For Each wsName In colonnesANettoyer.keys
-            'Vérifier si la feuille existe dans le classeur
-            On Error Resume Next
-            Set ws = wb.Sheets(wsName)
-            Debug.Print wsName
-            On Error GoTo 0
-            
-            If Not ws Is Nothing Then
-                'Récupérer les colonnes à traiter pour cette feuille
-                cols = colonnesANettoyer(wsName)
-                
-                'Parcourir chaque colonne spécifiée
-                For Each col In cols
-                    'Parcourir chaque cellule de la colonne spécifiée
-                    For Each cell In ws.columns(col).SpecialCells(xlCellTypeConstants)
-                        'Vérifier si la cellule contient une date avec une heure
-                        If IsDate(cell.value) Then
-                            'Vérifier si la valeur contient des heures (fraction décimale)
-                            If cell.value <> Int(cell.value) Then
-                                'Garde uniquement la partie date (sans heure)
-                                Debug.Print "", wsName & " - " & col & " - " & cell.value
-                                dateOnly = Int(cell.value)
-                                cell.value = dateOnly
-                            End If
-                        End If
-                    Next cell
-                Next col
-            End If
-        Next wsName
-        
-        'Sauvegarder les modifications
-        wb.Save
-        wb.Close
-        
-    End If
-    
-    'Libérer la mémoire
-    Set cell = Nothing
-    Set col = Nothing
-    Set colonnesANettoyer = Nothing
-    Set fd = Nothing
-    Set wb = Nothing
-    Set ws = Nothing
-    Set wsName = Nothing
-    
-    MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
-
-End Sub
-
 Sub Search_Unclean_Set()
 
     Dim ws As Worksheet: ' Set ws = Feuil4
@@ -3713,7 +3159,6 @@ Sub Search_Unclean_Set()
                             wsOutput.Cells(r, 4) = saveLineNo
                             wsOutput.Cells(r, 5) = arrSet(j)
                             wsOutput.Cells(r, 6) = strNothing
-'                            Debug.Print i & " - " & saveModule & ":" & saveProcedure & "." & saveLineNo & " - arrSet(" & j & ") = " & arrSet(j) & " n'existe pas dans '" & strNothing & "'"
                         End If
                     Next j
                 End If
@@ -3729,7 +3174,6 @@ Sub Search_Unclean_Set()
                             wsOutput.Cells(r, 4) = saveLineNo
                             wsOutput.Cells(r, 5) = arrForEach(j)
                             wsOutput.Cells(r, 6) = strNothing
-'                            Debug.Print i & " - " & saveModule & ":" & saveProcedure & "." & saveLineNo & " - arrForEach(" & j & ") = " & arrForEach(j) & " n'existe pas dans '" & strNothing & "'"
                         End If
                     Next j
                 End If
@@ -3761,3 +3205,39 @@ Sub Search_Unclean_Set()
     MsgBox "Traiement terminé " & i
     
 End Sub
+
+Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", 0)
+
+    'Redefine - dnrPlanComptable_Description_Only
+    'Delete existing dynamic named range (assuming it could exists)
+    On Error Resume Next
+    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
+    On Error GoTo 0
+    
+    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
+    Dim newRangeFormula As String
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
+    
+    'Create the new dynamic named range
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    
+    'Redefine - dnrPlanComptable_All
+    'Delete existing dynamic named range (assuming it could exists)
+    On Error Resume Next
+    ThisWorkbook.Names("dnrPlanComptable_All").Delete
+    On Error GoTo 0
+    
+    'Define a new dynamic named range for 'dnrPlanComptable_All'
+    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
+    
+    'Create the new dynamic named range
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+    
+    Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
+
+End Sub
+
+
+

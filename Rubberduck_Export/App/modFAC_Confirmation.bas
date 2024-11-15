@@ -1018,3 +1018,23 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
 
 End Sub
 
+Sub FAC_Confirmation_Back_To_FAC_Menu()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", 0)
+   
+    wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
+    
+    Application.EnableEvents = False
+    wshFAC_Confirmation.Range("F5").ClearContents
+    Application.EnableEvents = True
+    
+    wshFAC_Confirmation.Visible = xlSheetHidden
+
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A1").Select
+    
+    Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", startTime)
+    
+End Sub
+
+

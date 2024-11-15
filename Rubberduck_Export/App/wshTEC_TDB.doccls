@@ -16,12 +16,3 @@ Private Sub Worksheet_Activate()
     Call Log_Record("wshTEC_TDB:Worksheet_Activate", startTime)
 
 End Sub
-
-Sub Back_To_TEC_Menu()
-
-    wshTEC_TDB.Visible = xlSheetHidden
-    
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-
-End Sub

@@ -1842,3 +1842,14 @@ Function Fn_Nettoyer_Fin_Chaine(s As String) '2024-11-07 @ 16:57
     Loop
 
 End Function
+
+'Fonction pour vérifier si un fichier ou un dossier existe
+Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
+
+    On Error Resume Next
+    Fn_Chemin_Existe = (Dir(chemin) <> "")
+    On Error GoTo 0
+    
+End Function
+
+

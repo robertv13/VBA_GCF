@@ -174,19 +174,3 @@ Clean_Exit:
         Application.EnableEvents = True
 
 End Sub
-
-Private Sub cbTous_Click()
-
-    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
-    
-    Dim i As Long
-    With lb.Object
-        For i = 0 To .ListCount - 1
-            .Selected(i) = Not (.Selected(i))
-        Next i
-    End With
-
-    'Libérer la mémoire
-    Set lb = Nothing
-    
-End Sub

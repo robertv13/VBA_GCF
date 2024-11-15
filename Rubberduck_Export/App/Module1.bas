@@ -79,9 +79,11 @@ Sub Debug_TEC()
         If arr(i, 2) <> arr(i, 3) Then
             Debug.Print arr(i, 1), arr(i, 2), arr(i, 3)
         End If
-        Feuil1.Range("C" & i).value = arr(i, 2)
-        Feuil1.Range("D" & i).value = arr(i, 3)
+        wshzTEC_Debug.Range("C" & i).value = arr(i, 2)
+        wshzTEC_Debug.Range("D" & i).value = arr(i, 3)
     Next i
+    
     Debug.Print "Totaux", Round(tTEC, 2), Round(tTDB, 2)
+    
 End Sub
 

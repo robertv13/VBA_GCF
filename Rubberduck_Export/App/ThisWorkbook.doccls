@@ -95,22 +95,36 @@ Private Sub Workbook_Open()
     
 End Sub
 
+Sub Create_User_Active_File()
 
-Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
     
-    Cancel = True
-    ufExitDisable.show
-
-End Sub
-
-'Fonction pour vérifier si un fichier ou un dossier existe
-Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
-
-    On Error Resume Next
-    Fn_Chemin_Existe = (Dir(chemin) <> "")
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    Dim traceFilePath As String
+    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    
+    Dim fileNumber As Integer
+    fileNumber = FreeFile
+    
+    On Error GoTo Error_Handling
+    Open traceFilePath For Output As fileNumber
     On Error GoTo 0
     
-End Function
+    Print #fileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
+    Close fileNumber
+    
+    Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
+    
+    Exit Sub
+
+Error_Handling:
+    MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
+            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
+            "Erreur # " & Err.Number & " - " & Err.description, vbCritical, "Accès à " & traceFilePath
+
+End Sub
 
 Sub BackupMasterFile()
 
@@ -178,37 +192,6 @@ MASTER_NOT_AVAILABLE:
 
 End Sub
 
-Sub Create_User_Active_File()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
-    
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
-    Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
-    
-    Dim fileNumber As Integer
-    fileNumber = FreeFile
-    
-    On Error GoTo Error_Handling
-    Open traceFilePath For Output As fileNumber
-    On Error GoTo 0
-    
-    Print #fileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
-    Close fileNumber
-    
-    Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
-    
-    Exit Sub
-
-Error_Handling:
-    MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
-            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-            "Erreur # " & Err.Number & " - " & Err.description, vbCritical, "Accès à " & traceFilePath
-
-End Sub
-
 Sub Setup_UserDateFormat()
 
     Select Case Fn_Get_Windows_Username
@@ -221,5 +204,12 @@ Sub Setup_UserDateFormat()
         Case Else
             wshAdmin.Range("B1").value = "dd/mm/yyyy"
     End Select
+
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    
+    Cancel = True
+    ufExitDisable.show
 
 End Sub

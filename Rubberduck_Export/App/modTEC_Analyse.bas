@@ -335,17 +335,16 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
-    With ActiveWindow.Panes(2)
-        .ScrollRow = 7
-    End With
+'CommenOut - 2024-11-14
+'    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
+'    With ActiveWindow.Panes(2)
+'        .ScrollRow = 7
+'    End With
     Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - La zone de 'Scroll' commence sur la ligne 7", -1)
     
     'Optionnel : Sélectionne la cellule I7
 '    Range("I7").Select
     
-'    Application.StatusBar = ""
-
     'Libérer la mémoire
     Set dictClients = Nothing
     Set progressBarBg = Nothing
@@ -948,3 +947,188 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     Set ws = Nothing
     
 End Sub
+
+Sub CheckBox1_Click() '2024-07-18 @ 18:53
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", 0)
+    
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    
+    'Reference your checkbox by name
+    Dim chkBox As OLEObject
+    Set chkBox = ws.OLEObjects("CheckBox1")
+    
+    'Get the address of the checkbox
+    Dim chkBoxPosition As String
+    chkBoxPosition = GetCheckBoxPosition(chkBox)
+    
+    'Get the row number of the checkBox
+    Dim chkboxRow As Long
+    chkboxRow = CLng(Replace(chkBoxPosition, "$N$", ""))
+
+    'Getting to the Client's Total Row (which is the line before the start of the summary)
+    Dim i As Long
+    For i = chkboxRow To 7 Step -1
+        If ws.Range("M" & i).value = 0 Then
+            Exit For
+        End If
+    Next i
+    Dim totalRow As Long
+    totalRow = i
+    
+    'Additional code based on the checkbox state
+    If chkBox.Object.value = True Then
+        
+        'Is there a billing project that already exist for this customer ?
+        Dim cell As String
+        cell = Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).value, _
+                                                        ws.Range("D" & totalRow).value)
+        
+        Select Case cell
+            Case "REMPLACER"
+                Application.EnableEvents = False
+                ws.Range("D" & totalRow).value = ws.Range("M" & chkboxRow).value
+                Application.EnableEvents = True
+                
+                Dim firstRow As Long: firstRow = totalRow + 1
+                Dim lastRow As Long, r As Long
+                r = firstRow
+                Do While ws.Range("A" & r).value <> ""
+                    lastRow = r
+                    r = r + 1
+                Loop
+                
+                Dim nomClient As String
+                Dim clientID As String
+                nomClient = ws.Range("C" & firstRow).value
+                clientID = Fn_GetID_From_Client_Name(nomClient)
+                
+                Dim projetID As Long 'ProjetID is establised by the next procedure
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
+                
+                r = firstRow
+                Do While ws.Range("J" & r).value <> ""
+                    r = r + 1
+                Loop
+                r = r - 1 'Last line of summary, excluding totals
+                
+                Dim arr() As Variant
+                ReDim arr(1 To (r - firstRow + 1), 1 To 4)
+                Dim rngSummary As Range: Set rngSummary = ws.Range("J" & firstRow & ":M" & r)
+                arr = rngSummary.value
+                
+                'Set the date
+                Dim dateProjet As String
+                dateProjet = Format$(ws.Range("H3").value, "dd/mm/yyyy")
+                
+                'Determine the summary total
+                Dim hono As Double
+                hono = ws.Range("M" & r + 1).value
+                
+                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
+                
+                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                
+                Application.EnableEvents = True
+                
+            Case "SUPPRIMER"
+                ws.Range("D" & totalRow).value = 0
+                firstRow = totalRow + 1
+                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                
+            Case "RIEN_CHANGER"
+                firstRow = totalRow + 1
+                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+            
+        End Select
+    Else
+        ws.Range("D" & totalRow).value = 0
+        'Perform actions when checkbox is unchecked
+        Application.EnableEvents = True
+        Call Groups_SubTotals_Collapse_A_Client(firstRow)
+
+    End If
+    
+    Call Clear_Fees_Summary_And_CheckBox
+    
+    Application.EnableEvents = True
+    
+    'Libérer la mémoire
+    Set chkBox = Nothing
+    Set rngSummary = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", startTime)
+
+End Sub
+
+Sub Get_CheckBox_Position(cb As OLEObject)
+
+    'Set your worksheet (adjust this to match your worksheet name)
+    Dim ws As Worksheet
+    Set ws = wshTEC_Analyse
+    
+    'Reference your checkbox by name
+    Dim checkBox As OLEObject
+    Set checkBox = ws.OLEObjects(cb)
+    
+    'Get the cell that contains the top-left corner of the CheckBox
+    Dim checkBoxCell As Range
+    Set checkBoxCell = checkBox.TopLeftCell
+    
+    ' Display the address of the cell
+    MsgBox "The CheckBox is located at cell: " & checkBoxCell.Address
+    
+    'Libérer la mémoire
+    Set checkBox = Nothing
+    Set checkBoxCell = Nothing
+    Set ws = Nothing
+
+End Sub
+
+Sub TEC_Analyse_Delete_CheckBox()
+
+    'Assigner la feuille à ws
+    Dim ws As Worksheet: Set ws = wshTEC_Analyse
+    
+    'Si CheckBox* existe, l'effacer
+    Dim checkBox As OLEObject
+    Dim i As Long
+    For i = 1 To 5
+        On Error Resume Next
+        Set checkBox = ws.OLEObjects("CheckBox" & i)
+        If Not checkBox Is Nothing Then
+            checkBox.Delete
+            
+        End If
+        On Error GoTo 0
+    Next i
+    
+    'Libérer la mémoire
+    Set checkBox = Nothing
+    Set ws = Nothing
+    
+End Sub
+
+Sub TEC_Analyse_Back_To_TEC_Menu()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", 0)
+    
+    Call Clear_Fees_Summary_And_CheckBox
+    Call Log_Record("     wshTEC_Analyse:Back_To_TEC_Menu - La zone Sommaire des Honoraires a été nettoyée", -1)
+    
+    Dim usedLastRow As Long
+    usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.rows.count, "C").End(xlUp).row
+    wshTEC_Analyse.Range("C6:O" & usedLastRow).Clear
+    
+    wshTEC_Analyse.Visible = xlSheetVeryHidden
+    
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
+    
+    Call Log_Record("wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", startTime)
+
+End Sub
+

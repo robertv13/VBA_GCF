@@ -100,10 +100,10 @@ End Sub
 Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
 
     Debug.Print wrongFormatDate
-    
+
     Dim arr() As String
     arr = Split(wrongFormatDate, "/")
-    
+
     Dim year As Long, month As Long, day As Long
     year = Format$(arr(2), "0000")
     Select Case arr(1)
@@ -112,9 +112,9 @@ Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
     End Select
     month = Format$(month, "00")
     day = Format$(arr(0), "00")
-    
+
     Fn_Correct_Date_Format = DateSerial(year, month, day)
     Debug.Print DateSerial(year, month, day)
-    
+
 End Function
 

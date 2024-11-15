@@ -207,114 +207,24 @@ Sub Write_Info_On_Main_Menu()
 
 End Sub
 
-Sub Handle_Rubberduck_Reference()
-
-    Dim ref As Object
-
-    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
-        On Error Resume Next 'In case the reference doesn't exist
-        For Each ref In ThisWorkbook.VBProject.References
-            If ref.Name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
-                ThisWorkbook.VBProject.References.Remove ref
-                Exit For
-            End If
-        Next ref
-        On Error GoTo 0
-    End If
-
-    'Libérer la mémoire
-    Set ref = Nothing
-    
-End Sub
-
-Sub UpdatePivotTables()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:UpdatePivotTables", 0)
-    
-    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
-    Dim pt As pivotTable
-    
-    'Parcourt tous les PivotTables dans chaque feuille
-    For Each pt In ws.PivotTables
-        On Error Resume Next
-        Application.EnableEvents = False
-        pt.PivotCache.Refresh 'Actualise le cache Pivot
-        Application.EnableEvents = True
-        On Error GoTo 0
-    Next pt
-
-    'Libérer la mémoire
-    Set pt = Nothing
-    Set ws = Nothing
-    
-    Call Log_Record("modAppli:UpdatePivotTables", startTime)
-    
-End Sub
-
-Public Sub Get_GL_Trans_With_AF(glCode As String, dateDeb As Date, dateFin As Date) '2024-11-08 @ 09:34
-
-    Dim ws As Worksheet: Set ws = wshGL_Trans
-    
-    'Où allons-nous mettre les résultats ?
-    Dim rngResult As Range
-    Set rngResult = ws.Range("P1").CurrentRegion.Offset(1, 0)
-    rngResult.ClearContents
-    Set rngResult = ws.Range("P1").CurrentRegion
-    
-    'Où sont les données à traiter ?
-    Dim rngSource As Range
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-    'Rien à traiter
-    If lastUsedRow < 2 Then
-        Exit Sub
-    End If
-    Set rngSource = ws.Range("A1:J" & lastUsedRow)
-    
-    'Quels sont les critères ?
-    Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("L2:N3")
-    With ws
-        .Range("L3").value = glCode
-        .Range("M3").value = ">=" & CLng(dateDeb)
-        .Range("N3").value = "<=" & CLng(dateFin)
-    End With
-    
-    'On documente le processus
-    ws.Range("M6:M10").ClearContents
-    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    ws.Range("M7").value = rngSource.Address
-    ws.Range("M8").value = rngCriteria.Address
-    ws.Range("M9").value = rngResult.Address
-    
-    'Go, on execute le AdvancedFilter
-    rngSource.AdvancedFilter xlFilterCopy, _
-                             rngCriteria, _
-                             rngResult, _
-                             False
-    
-    'Combien y a-t-il de transactions dans le résultat ?
-    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-    ws.Range("M10").value = lastUsedRow
-    Set rngResult = ws.Range("P1:Y" & lastUsedRow)
-
-    If lastUsedRow > 2 Then
-        With ws.Sort
-            .SortFields.Clear
-                .SortFields.Add _
-                    key:=ws.Range("Q2"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Trier par date de transaction
-                .SortFields.Add _
-                    key:=ws.Range("P2"), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Trier par numéro d'écriture
-            .SetRange rngResult
-            .Header = xlYes
-            .Apply
-        End With
-    End If
-
-End Sub
+'CommentOut - 2024-11-14
+'Sub Handle_Rubberduck_Reference()
+'
+'    Dim ref As Object
+'
+'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
+'        On Error Resume Next 'In case the reference doesn't exist
+'        For Each ref In ThisWorkbook.VBProject.References
+'            If ref.Name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
+'                ThisWorkbook.VBProject.References.Remove ref
+'                Exit For
+'            End If
+'        Next ref
+'        On Error GoTo 0
+'    End If
+'
+'    'Libérer la mémoire
+'    Set ref = Nothing
+'
+'End Sub
+'

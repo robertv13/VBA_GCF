@@ -3,8 +3,6 @@ Option Explicit
 
 Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
     
-    Application.StatusBar = "J'importe la feuille 'Admin'"
-    
     'Save the shared data folder name
     Dim saveDataPath As String
     saveDataPath = wshAdmin.Range("F5").value & DATA_PATH
@@ -60,8 +58,6 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", 0)
     
-    Application.StatusBar = "J'importe le plan comptable"
-    
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.Offset(2, 0).ClearContents
 
@@ -96,8 +92,6 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     
     Call Dynamic_Range_Redefine_Plan_Comptable
         
-    Application.StatusBar = ""
-    
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
@@ -109,8 +103,6 @@ End Sub
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", 0)
-    
-    Application.StatusBar = "J'importe la liste des clients"
     
     Application.ScreenUpdating = False
     
@@ -154,8 +146,6 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Application.ScreenUpdating = True
     
-    Application.StatusBar = ""
-
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
@@ -168,8 +158,6 @@ End Sub
 Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Recurrent_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les transactions récurrentes de déboursés"
     
     Application.ScreenUpdating = False
     
@@ -206,7 +194,6 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Call Apply_Worksheet_Format(wshDEB_Recurrent, rng, 1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -220,8 +207,6 @@ End Sub
 Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Trans_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les transactions de déboursés"
     
     Application.ScreenUpdating = False
     
@@ -258,7 +243,6 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Call Apply_Worksheet_Format(wshDEB_Trans, rng, 1)
 
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -272,8 +256,6 @@ End Sub
 Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", 0)
-    
-    Application.StatusBar = "J'importe le détail des Encaissements"
     
     Application.ScreenUpdating = False
     
@@ -310,7 +292,6 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     Call Apply_Worksheet_Format(wshENC_Détails, rng, 1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -324,8 +305,6 @@ End Sub
 Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Entête_Import_All", 0)
-    
-    Application.StatusBar = "J'importe le détail des Encaissements"
     
     Application.ScreenUpdating = False
     
@@ -362,7 +341,6 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Call Apply_Worksheet_Format(wshENC_Entête, rng, 1)
 
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -376,8 +354,6 @@ End Sub
 Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les transactions de CAR"
     
     Application.ScreenUpdating = False
     
@@ -414,7 +390,6 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Call Apply_Worksheet_Format(wshFAC_Comptes_Clients, rng, 1)
 
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -429,7 +404,6 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Détails_Import_All", 0)
     
-    Application.StatusBar = "J'importe le détail des Factures"
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
@@ -465,7 +439,6 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
 
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -479,8 +452,6 @@ End Sub
 Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Entête_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les entêtes de Facture"
     
     Application.ScreenUpdating = False
     
@@ -519,7 +490,6 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Call Log_Record("     modImport:FAC_Entête_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -533,8 +503,6 @@ End Sub
 Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les sommaires de taux"
     
     Application.ScreenUpdating = False
     
@@ -571,7 +539,6 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     Call Apply_Worksheet_Format(wshFAC_Entête, rng, 1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -585,8 +552,6 @@ End Sub
 Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
-    
-    Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     
@@ -651,8 +616,6 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", 0)
     
-    Application.StatusBar = "J'importe les entêtes de projets de facture"
-    
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
@@ -714,15 +677,12 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     End If
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
     Set ws = Nothing
-    
-    Application.StatusBar = ""
     
     Call Log_Record("modImport:FAC_Projets_Entête_Import_All", startTime)
 
@@ -731,8 +691,6 @@ End Sub
 Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Fournisseur_List_Import_All", 0)
-    
-    Application.StatusBar = "J'importe la liste des fournisseurs"
     
     Application.ScreenUpdating = False
     
@@ -774,15 +732,6 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
     Application.ScreenUpdating = True
     
-'    MsgBox _
-'        Prompt:="J'ai importé un total de " & _
-'            Format(wshBD_Fournisseurs.Range("A1").CurrentRegion.rows.count - 1, _
-'            "##,##0") & " fournisseurs", _
-'        Title:="Vérification du nombre de fournisseurs", _
-'        Buttons:=vbInformation
-
-    Application.StatusBar = ""
-
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
@@ -795,8 +744,6 @@ End Sub
 Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_EJ_Auto_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les écritures de journal récurrentes"
     
     Application.ScreenUpdating = False
     
@@ -841,7 +788,6 @@ Sub GL_EJ_Auto_Import_All() '2024-03-03 @ 11:36
     
 Clean_Exit:
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -855,8 +801,6 @@ End Sub
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_Trans_Import_All", 0)
-    
-    Application.StatusBar = "J'importe les transactions du Grand-Livre"
     
     Application.ScreenUpdating = False
     
@@ -898,7 +842,6 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Call Apply_Worksheet_Format(wshGL_Trans, rng, 1)
 
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
@@ -913,12 +856,12 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:TEC_Import_All", 0)
     
-    Application.StatusBar = "J'importe tous les TEC"
-    
     Application.ScreenUpdating = False
     
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
     'Clear all cells, but the headers, in the destination worksheet
-    wshTEC_Local.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
+    ws.Range("A1").CurrentRegion.Offset(2, 0).ClearContents
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
@@ -943,57 +886,23 @@ Sub TEC_Import_All() '2024-02-14 @ 06:19
     recSet.Open
     
     'Copy to wshTEC_Local workbook
-    wshTEC_Local.Range("A3").CopyFromRecordset recSet
+    ws.Range("A3").CopyFromRecordset recSet
     Call Log_Record("     modImport:TEC_Import_All - Le .CopyFromRecordSet est complétée", -1)
 
    'Setup the format of the worksheet using a Sub
-    Dim rng As Range: Set rng = wshTEC_Local.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshTEC_Local, rng, 2)
+    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
+    Call Apply_Worksheet_Format(ws, rng, 2)
     Call Log_Record("     modImport:TEC_Import_All - La mise en forme a été appliquée", -1)
     
     Application.ScreenUpdating = True
-    Application.StatusBar = ""
     
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modImport:TEC_Import_All", startTime)
 
 End Sub
-
-Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", 0)
-
-    'Redefine - dnrPlanComptable_Description_Only
-    'Delete existing dynamic named range (assuming it could exists)
-    On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
-    On Error GoTo 0
-    
-    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
-    Dim newRangeFormula As String
-    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
-    
-    'Create the new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
-    
-    'Redefine - dnrPlanComptable_All
-    'Delete existing dynamic named range (assuming it could exists)
-    On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_All").Delete
-    On Error GoTo 0
-    
-    'Define a new dynamic named range for 'dnrPlanComptable_All'
-    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
-    
-    'Create the new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
-    
-    Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
-
-End Sub
-
 

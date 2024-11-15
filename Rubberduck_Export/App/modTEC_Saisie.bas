@@ -783,4 +783,28 @@ Sub MsgBoxInvalidDate(location As String) '2024-06-13 @ 12:40
 
 End Sub
 
+Sub UpdatePivotTables()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:UpdatePivotTables", 0)
+    
+    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
+    Dim pt As pivotTable
+    
+    'Parcourt tous les PivotTables dans chaque feuille
+    For Each pt In ws.PivotTables
+        On Error Resume Next
+        Application.EnableEvents = False
+        pt.PivotCache.Refresh 'Actualise le cache Pivot
+        Application.EnableEvents = True
+        On Error GoTo 0
+    Next pt
+
+    'Libérer la mémoire
+    Set pt = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modAppli:UpdatePivotTables", startTime)
+    
+End Sub
+
 

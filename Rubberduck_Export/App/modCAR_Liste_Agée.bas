@@ -1,10 +1,12 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
 Option Explicit
 
-Sub CAR_Creer_Liste_Agee() '2024-09-08 @ 15:55
+Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_Creer_Liste_Agee", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_Liste_Agee_Creation", 0)
    
+    Application.ScreenUpdating = False
+    
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = ThisWorkbook.Sheets("FAC_Comptes_Clients")
     Dim wsPaiements As Worksheet: Set wsPaiements = ThisWorkbook.Sheets("ENC_Détails")
@@ -394,6 +396,8 @@ Next_Invoice:
     
     Call Simple_Print_Setup(wshCAR_Liste_Agée, rngToPrint, header1, header2, "$8:$8", "L")
     
+    Application.ScreenUpdating = True
+    
     MsgBox "La préparation de la liste âgée est terminée", vbInformation
     
     Application.EnableEvents = True
@@ -408,7 +412,18 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("modCAR_Liste_Agée:CAR_Creer_Liste_Agee", startTime)
+    Call Log_Record("modCAR_Liste_Agée:CAR_Liste_Agee_Creation", startTime)
     
 End Sub
+
+Sub CAR_Liste_Agée_Back_To_CAR_Menu()
+
+    wshCAR_Liste_Agée.Visible = xlSheetHidden
+    
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A1").Select
+
+End Sub
+
+
 

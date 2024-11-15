@@ -223,3 +223,16 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     
 End Sub
 
+Sub TEC_Evaluation_Back_To_TEC_Menu()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", 0)
+    
+    wshTEC_Evaluation.Visible = xlSheetVeryHidden
+    
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
+    
+    Call Log_Record("wshTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", startTime)
+
+End Sub
+

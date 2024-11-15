@@ -128,58 +128,6 @@ Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
     
 End Sub
 
-Sub Build_File_Layouts() '2024-03-26 @ 14:35
-
-    Dim arr(1 To 20, 1 To 2) As Variant
-    Dim output(1 To 150, 1 To 5) As Variant
-    Dim r As Long
-    r = 0
-    r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:Q1"
-    r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
-    r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
-    r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
-    r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
-    r = r + 1: arr(r, 1) = "ENC_Entête": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "ENC_Détail": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "FAC_Entête": arr(r, 2) = "A3:T3"
-    r = r + 1: arr(r, 1) = "FAC_Détails": arr(r, 2) = "A3:G3"
-    r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
-    r = r + 1: arr(r, 1) = "GL_EJ_Auto": arr(r, 2) = "C1:J1"
-    r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
-    r = 1
-    Dim i As Long, colNo As Long
-    For i = 1 To UBound(arr, 1)
-        If arr(i, 1) = "" Then Exit For
-        Dim rng As Range: Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
-        colNo = 0
-        Dim cell As Range
-        For Each cell In rng
-            colNo = colNo + 1
-            output(r, 2) = arr(i, 1)
-            output(r, 3) = Chr(64 + colNo)
-            output(r, 4) = colNo
-            output(r, 5) = cell.value
-            r = r + 1
-        Next cell
-    Next i
-    
-    'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
-    Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
-    
-    wsOutput.Range("A2").Resize(r, 5).value = output
-    
-    'Libérer la mémoire
-    Set rng = Nothing
-    Set cell = Nothing
-    Set wsOutput = Nothing
-    
-End Sub
-
 Sub Check_Invoice_Template()
 
     Dim ws As Worksheet: Set ws = wshAdmin
@@ -1347,7 +1295,9 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     
 End Sub
 
-Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
+Sub List_Subs_And_Functions_All() '2024-11-14 @ 15:51
+    
+    Dim ws As Worksheet: Set ws = wshzDocSubsAndFunctions
     
     Dim posProcedure As Long, posExitProcedure As Long
     Dim posFonction As Long, posExitFonction As Long
@@ -1358,7 +1308,7 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     Dim vbComp As Object
     Dim oType As String
     Dim arr() As Variant
-    ReDim arr(1 To 500, 1 To 10)
+    ReDim arr(1 To 750, 1 To 10)
     Dim trimmedLineOfCode As String, savedLineOfCode As String, remarks As String, params As String
     Dim lineNum As Long, lread As Long
     Dim i As Long
@@ -1457,8 +1407,8 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocSubsAndFunctions.Range("A9999").End(xlUp).row 'Last Used Row
-    wshzDocSubsAndFunctions.Range("A2:I" & lastUsedRow).ClearContents
+    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    ws.Range("A2:J" & lastUsedRow).ClearContents
 
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
     
@@ -1466,8 +1416,10 @@ Sub List_Subs_And_Functions_All() '2024-06-22 @ 10:41
     Call Array_2D_Bubble_Sort(arr)
     
     'Transfer the array to the worksheet
-    wshzDocSubsAndFunctions.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
-    wshzDocSubsAndFunctions.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+    ws.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
+    ws.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+    
+    ws.Activate
     
     MsgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
@@ -1633,20 +1585,19 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-'        Dim sortedCells As Range: Set sortedCells = unprotectedCells.SpecialCells(xlCellTypeVisible)
         Debug.Print ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
-        Dim i As Long
-        For i = 1 To sortedCells.count
-            If i = sortedCells.count Then
-                sortedCells.Cells(i).Next.Select
-            Else
-                sortedCells.Cells(i).Next.Select
-                sortedCells.Cells(i + 1).Activate
-            End If
-        Next i
+'        Dim i As Long
+'        For i = 1 To sortedCells.count
+'            If i = sortedCells.count Then
+'                sortedCells.Cells(i).Next.Select
+'            Else
+'                sortedCells.Cells(i).Next.Select
+'                sortedCells.Cells(i + 1).Activate
+'            End If
+'        Next i
     End If
 
     Application.ScreenUpdating = True

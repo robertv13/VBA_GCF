@@ -195,7 +195,7 @@ Sub BackToMainMenu()
 
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets
-        If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
+        If ws.Name <> "Menu" Then ws.Visible = xlSheetVeryHidden
     Next ws
     
     With wshMenu
