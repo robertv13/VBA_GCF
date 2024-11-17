@@ -577,24 +577,44 @@ End Function
 
 Function Fn_Get_TEC_Total_For_This_Invoice(invNo As String) As Double
 
+    Fn_Get_TEC_Total_For_This_Invoice = 0
+    
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     
-    'Utilisation de la fonction Advanced Filter
-    Dim rngSource As Range
-    Set rngSource = ws.Range("A1").CurrentRegion.Offset(1, 0)
+    'Effacer les données de la dernière utilisation
+    ws.Range("H6:H10").ClearContents
+    ws.Range("H6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
+    ws.Range("H7").value = rngData.Address
+    
+    'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("H2:H3")
     ws.Range("H3").value = invNo
+    ws.Range("H8").value = rngCriteria.Address
     
+    'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
+    Set rngResult = ws.Range("J1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
     Set rngResult = ws.Range("J2:M2")
+    ws.Range("H9").value = rngResult.Address
     
-    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult
-    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+                
+    'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).row
-    Fn_Get_TEC_Total_For_This_Invoice = 0
+    ws.Range("H10").value = lastUsedRow - 2 & " lignes"
+    
+    'Pas de tri nécessaire
     If lastUsedRow > 2 Then
         Dim i As Long
         For i = 3 To lastUsedRow
@@ -609,6 +629,8 @@ End Function
 
 Function Fn_Get_TEC_Hours_For_This_Invoice(invNo As String) As Double
 
+    Fn_Get_TEC_Hours_For_This_Invoice = 0
+    
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     
     'Utilisation de la fonction Advanced Filter
@@ -1339,7 +1361,7 @@ Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
 
     'Utilisation de FIND pour trouver la cellule contenant la valeur recherchée dans la colonne A
     Dim foundCell As Range
-    Set foundCell = ws.Range("A:A").Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set foundCell = ws.Range("A:A").Find(What:=CStr(invNo), LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not foundCell Is Nothing Then
         If foundCell.Offset(0, 2).value = "C" Then

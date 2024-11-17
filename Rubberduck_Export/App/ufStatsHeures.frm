@@ -15,6 +15,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub cmdAide_Click()
+
+End Sub
+
 Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim selectedWeek As String
@@ -37,13 +41,13 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         'Envoie les deux dates à wshTEC_TDB_Data pour les AdvancedFilters
         Dim criteriaDate1 As Range
         Dim formule1 As String
-        Set criteriaDate1 = wshTEC_TDB_Data.Range("T6")
+        Set criteriaDate1 = wshTEC_TDB_Data.Range("T7")
         formule1 = criteriaDate1.formula
         criteriaDate1 = dateValue(dateLundi)
         
         Dim criteriaDate2 As Range
         Dim formule2 As String
-        Set criteriaDate2 = wshTEC_TDB_Data.Range("U6")
+        Set criteriaDate2 = wshTEC_TDB_Data.Range("U7")
         formule2 = criteriaDate2.formula
         criteriaDate2 = dateValue(dateDimanche)
         

@@ -558,7 +558,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     'Clear all cells, but the headers, in the target worksheet
     ws.Range("A1").CurrentRegion.Offset(1, 0).ClearContents
 
-    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
@@ -583,7 +583,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     recSet.source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
-    'Copy to wshFAC_Projets_Détails workbook all rows
+    'Copy all rows to wshFAC_Projets_Détails workbook
     If recSet.RecordCount > 0 Then
         ws.Range("A2").CopyFromRecordset recSet
     End If
@@ -592,8 +592,16 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Dim lastRow As Long
     lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     
+    'Enlever les lignes dont la valeur estDétruite est égale à VRAI / -1 - 2024-11-15 @ 07:53
+    Dim i As Long
+    For i = lastRow To 2 Step -1
+        If UCase(ws.Cells(i, "I")) = "VRAI" Or ws.Cells(i, "I") = -1 Then
+            ws.rows(i).Delete
+        End If
+    Next i
+    
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = wshFAC_Projets_Détails.Range("A99999").End(xlUp).row
+    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)

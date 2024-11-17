@@ -473,14 +473,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
         Dim strProf As String
         strProf = prof
         profID = Fn_GetID_From_Initials(strProf)
-        Cells(rowSelected, 11).HorizontalAlignment = xlRight
-        Cells(rowSelected, 11).NumberFormat = "#,##0.00"
-        Cells(rowSelected, 11).value = dictHours(prof)
+        Cells(rowSelected, "K").HorizontalAlignment = xlRight
+        Cells(rowSelected, "K").NumberFormat = "#,##0.00"
+        Cells(rowSelected, "K").value = dictHours(prof)
         tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
-        Cells(rowSelected, 12).value = tauxHoraire
-        Cells(rowSelected, 13).NumberFormat = "#,##0.00 $"
-        Cells(rowSelected, 13).FormulaR1C1 = "=RC[-2]*RC[-1]"
-        Cells(rowSelected, 13).HorizontalAlignment = xlRight
+        Cells(rowSelected, "L").value = tauxHoraire
+        Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
+        Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
+        Cells(rowSelected, "M").HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
     Next prof
     
@@ -494,7 +494,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     'Hours Total
     Dim rTotal As Long
     rTotal = rowSelected
-    With Cells(rTotal, 11)
+    With Cells(rTotal, "K")
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
 '        .value = Format(t, "#,##0.00")
@@ -502,7 +502,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     End With
     
     'Fees Total
-    With Cells(rowSelected, 13)
+    With Cells(rowSelected, "M")
         .HorizontalAlignment = xlRight
 '        .value = Format(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
@@ -863,6 +863,9 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     Dim summaryRange As Range
     Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
     
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
     'Add an ActiveX checkbox next to the summary in column O
     Dim checkBox As OLEObject
     With ws
@@ -879,6 +882,10 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
             .BackColor = RGB(200, 255, 200)  'Set background color (Light Green)
         End With
     End With
+    
+    
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
     
     'Libérer la mémoire
     Set checkBox = Nothing
@@ -946,122 +953,6 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     Set Sh = Nothing
     Set ws = Nothing
     
-End Sub
-
-Sub CheckBox1_Click() '2024-07-18 @ 18:53
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", 0)
-    
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
-    
-    'Reference your checkbox by name
-    Dim chkBox As OLEObject
-    Set chkBox = ws.OLEObjects("CheckBox1")
-    
-    'Get the address of the checkbox
-    Dim chkBoxPosition As String
-    chkBoxPosition = GetCheckBoxPosition(chkBox)
-    
-    'Get the row number of the checkBox
-    Dim chkboxRow As Long
-    chkboxRow = CLng(Replace(chkBoxPosition, "$N$", ""))
-
-    'Getting to the Client's Total Row (which is the line before the start of the summary)
-    Dim i As Long
-    For i = chkboxRow To 7 Step -1
-        If ws.Range("M" & i).value = 0 Then
-            Exit For
-        End If
-    Next i
-    Dim totalRow As Long
-    totalRow = i
-    
-    'Additional code based on the checkbox state
-    If chkBox.Object.value = True Then
-        
-        'Is there a billing project that already exist for this customer ?
-        Dim cell As String
-        cell = Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).value, _
-                                                        ws.Range("D" & totalRow).value)
-        
-        Select Case cell
-            Case "REMPLACER"
-                Application.EnableEvents = False
-                ws.Range("D" & totalRow).value = ws.Range("M" & chkboxRow).value
-                Application.EnableEvents = True
-                
-                Dim firstRow As Long: firstRow = totalRow + 1
-                Dim lastRow As Long, r As Long
-                r = firstRow
-                Do While ws.Range("A" & r).value <> ""
-                    lastRow = r
-                    r = r + 1
-                Loop
-                
-                Dim nomClient As String
-                Dim clientID As String
-                nomClient = ws.Range("C" & firstRow).value
-                clientID = Fn_GetID_From_Client_Name(nomClient)
-                
-                Dim projetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
-                
-                r = firstRow
-                Do While ws.Range("J" & r).value <> ""
-                    r = r + 1
-                Loop
-                r = r - 1 'Last line of summary, excluding totals
-                
-                Dim arr() As Variant
-                ReDim arr(1 To (r - firstRow + 1), 1 To 4)
-                Dim rngSummary As Range: Set rngSummary = ws.Range("J" & firstRow & ":M" & r)
-                arr = rngSummary.value
-                
-                'Set the date
-                Dim dateProjet As String
-                dateProjet = Format$(ws.Range("H3").value, "dd/mm/yyyy")
-                
-                'Determine the summary total
-                Dim hono As Double
-                hono = ws.Range("M" & r + 1).value
-                
-                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
-                
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
-                
-                Application.EnableEvents = True
-                
-            Case "SUPPRIMER"
-                ws.Range("D" & totalRow).value = 0
-                firstRow = totalRow + 1
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
-                
-            Case "RIEN_CHANGER"
-                firstRow = totalRow + 1
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
-            
-        End Select
-    Else
-        ws.Range("D" & totalRow).value = 0
-        'Perform actions when checkbox is unchecked
-        Application.EnableEvents = True
-        Call Groups_SubTotals_Collapse_A_Client(firstRow)
-
-    End If
-    
-    Call Clear_Fees_Summary_And_CheckBox
-    
-    Application.EnableEvents = True
-    
-    'Libérer la mémoire
-    Set chkBox = Nothing
-    Set rngSummary = Nothing
-    Set ws = Nothing
-    
-    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", startTime)
-
 End Sub
 
 Sub Get_CheckBox_Position(cb As OLEObject)

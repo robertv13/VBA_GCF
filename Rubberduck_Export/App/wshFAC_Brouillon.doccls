@@ -31,8 +31,8 @@ Private Sub Worksheet_Activate()
         .Range("A:B").EntireColumn.Hidden = True
     End With
     
-    'Set the zoom factor to 92% when this worksheet is activated
-    ActiveWindow.Zoom = 92
+    'Set the zoom factor to 93% when this worksheet is activated
+    ActiveWindow.Zoom = 93
     
     Application.Calculation = xlCalculationAutomatic
     
@@ -72,6 +72,8 @@ Private Sub Worksheet_Activate()
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange" & ":" & Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = BASIC_COLOR
@@ -140,17 +142,18 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         wshFAC_Brouillon.Unprotect
     End If
 
+    Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", startTime)
+
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & Target.Address, 0)
+    
     Dim targetAddress As String
     On Error Resume Next
     targetAddress = Target.Address
     On Error GoTo 0
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
-        targetAddress & " - " & Me.Range("B3").value, 0)
     
     Application.EnableEvents = False
     

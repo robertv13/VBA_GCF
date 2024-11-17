@@ -4,73 +4,115 @@ Option Explicit
 Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
 
-Sub ENC_Load_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
+Sub ENC_Get_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Load_OS_Invoices", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices", 0)
     
-    wshENC_Saisie.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
+    Dim ws As Worksheet
+    Set ws = wshENC_Saisie
     
+    Application.EnableEvents = False
+    ws.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
+    Application.EnableEvents = True
+    
+    Call ENC_Get_OS_Invoices_With_AF(clientCode)
+    
+    'Bring the Result from AF into our List of Oustanding Invoices
+    Dim lastResultRow As Long
+    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.rows.count, "P").End(xlUp).row
+    
+    Dim i As Integer
+    'Unlock the required area
+    With ws '2024-08-21 @ 16:06
+        .Unprotect
+        .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
+        .Range("E12:J" & 11 + lastResultRow - 2).Locked = False
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    'Copy à partir du résultat de AF, dans la feuille de saisie des encaissements
+    Dim rr As Integer: rr = 12
     With wshFAC_Comptes_Clients
-        'Clear previous results
-        lastResultRow = .Cells(.rows.count, "P").End(xlUp).row
-        If lastResultRow > 2 Then
-            .Range("P3:U" & lastResultRow).ClearContents
-        End If
-        'Is there anything to work with ?
-        lastResultRow = .Cells(.rows.count, "A").End(xlUp).row
-        If lastResultRow < 3 Then
-            MsgBox "Il n'y aucune facture pour ce client", vbOK + vbInformation
-            Exit Sub
-        End If
-        
-        'Setup criteria in wshFAC_Comptes_Clients
-        .Range("M3").value = clientCode
-        
-        .Range("A2:K" & lastResultRow).AdvancedFilter xlFilterCopy, _
-                                                      criteriaRange:=.Range("M2:N3"), _
-                                                      CopyToRange:=.Range("P2:U2")
-                                            
-        'Did the AdvancedFilter return ANYTHING ?
-        lastResultRow = .Cells(.rows.count, "P").End(xlUp).row
-        If lastResultRow < 3 Then Exit Sub
-        
-        'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
-        Dim r As Integer
-        For r = 3 To lastResultRow
-            .Range("U" & r).value = .Range("S" & r).value - .Range("T" & r).value
-        Next r
-        
-        'Bring the Result data into our List of Oustanding Invoices
-        Dim i As Integer
-        'Unlock the required area
-        With wshENC_Saisie '2024-08-21 @ 16:06
-            .Unprotect
-            .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
-            .Range("E12:J" & 11 + lastResultRow - 2).Locked = False
-            .Protect UserInterfaceOnly:=True
-            .EnableSelection = xlUnlockedCells
-        End With
-        
-        Dim rr As Integer: rr = 12
         For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
             If .Range("U" & i).value <> 0 And _
                             Fn_Invoice_Is_Confirmed(.Range("Q" & i).value) = True Then
+                Application.EnableEvents = False
                 wshENC_Saisie.Range("F" & rr).value = .Range("Q" & i).value
-                wshENC_Saisie.Range("G" & rr).value = .Range("R" & i).value
+                wshENC_Saisie.Range("G" & rr).value = Format$(.Range("R" & i).value, wshAdmin.Range("B1").value)
                 wshENC_Saisie.Range("H" & rr).value = .Range("S" & i).value
                 wshENC_Saisie.Range("I" & rr).value = .Range("T" & i).value
                 wshENC_Saisie.Range("J" & rr).value = .Range("U" & i).value
+                Application.EnableEvents = True
                 rr = rr + 1
             End If
         Next i
-        
-        Call ENC_Saisie_Add_Check_Boxes(lastResultRow - 2)
-        
-'        wshENC_Saisie.Range("E13:I" & lastResultRow + 10).value = .Range("O3:S" & lastResultRow).value
-
     End With
     
-    Call Log_Record("modFAC_Enc:Encaissement_Load_Open_Invoices", startTime)
+    Call ENC_Add_Check_Boxes(lastResultRow - 2)
+    
+    Call Log_Record("modFAC_Enc:ENC_Load_OS_Invoices", startTime)
+
+End Sub
+
+Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", 0)
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    
+    'Effacer les données de la dernière utilisation
+    ws.Range("M6:M10").ClearContents
+    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("tblFAC_Comptes_Clients[#All]")
+    ws.Range("M7").value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("M2:N3")
+    ws.Range("M3").value = clientCode
+    ws.Range("M8").value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("P1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
+    Set rngResult = ws.Range("P2:U2")
+    ws.Range("M9").value = rngResult.Address
+    
+    rngData.AdvancedFilter xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+                                        
+    'Est-ce que nous avons des résultats ?
+    lastResultRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    ws.Range("M10").value = lastResultRow - 2 & " lignes"
+    
+    'Est-il nécessaire de trier les résultats ?
+    If lastResultRow > 3 Then
+        With ws.Sort 'Sort - InvNo
+            .SortFields.Clear
+            'First sort On InvNo
+            .SortFields.Add key:=ws.Range("Q3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            .SetRange ws.Range("P3:U" & lastResultRow)
+            .Apply 'Apply Sort
+         End With
+    End If
+    
+    'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
+    Dim r As Integer
+    For r = 3 To lastResultRow
+        ws.Range("U" & r).value = ws.Range("S" & r).value - ws.Range("T" & r).value
+    Next r
+
+    Call Log_Record("modFAC_Enc:ENC_Get_OS_Invoices_With_AF", startTime)
 
 End Sub
 
@@ -490,7 +532,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("No_Entrée").value = nextJENo
-        rs.Fields("Date").value = CDate(dt)
+        rs.Fields("Date").value = Format$(dt, "yyyy-mm-dd")
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             rs.Fields("Description").value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
             rs.Fields("Source").value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
@@ -512,7 +554,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("No_Entrée").value = nextJENo
-        rs.Fields("Date").value = CDate(dt)
+        rs.Fields("Date").value = Format$(dt, "yyyy-mm-dd")
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             rs.Fields("Description").value = "Client:" & wshENC_Saisie.Range("B8").value & " - " & nom
             rs.Fields("Source").value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
@@ -576,7 +618,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         End If
         .Range("G" & rowToBeUsed).value = montant
         .Range("I" & rowToBeUsed).value = desc
-        .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+        .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     
     'Credit side
@@ -593,7 +635,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
         .Range("H" & rowToBeUsed).value = montant
         .Range("I" & rowToBeUsed).value = desc
-        .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+        .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
     
     Application.ScreenUpdating = True
@@ -602,9 +644,9 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
 
 End Sub
 
-Sub ENC_Saisie_Add_Check_Boxes(row As Long)
+Sub ENC_Add_Check_Boxes(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Check_Boxes", 0)
     
     Application.EnableEvents = False
     
@@ -647,7 +689,7 @@ Sub ENC_Saisie_Add_Check_Boxes(row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Saisie_Add_Check_Boxes", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Add_Check_Boxes", startTime)
 
 End Sub
 

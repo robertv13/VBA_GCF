@@ -448,7 +448,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     
 End Sub
 
-Sub CorrigerDatesAvecHeures_ColonnesSpecifiques()
+Sub Fix_Date_Format()
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
     Dim fd As FileDialog

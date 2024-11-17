@@ -1,0 +1,422 @@
+2024-11-16_13:00:09|Clients_v4.1.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+2024-11-16_13:00:09|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+2024-11-16_13:00:09|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+2024-11-16_13:00:09|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0938 secondes|1106
+
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,3594 secondes|
+
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0117 secondes|Client_ID
+
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0430 secondes|
+
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1484 secondes| Row=1107
+
+2024-11-16_13:00:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1758 secondes|
+
+2024-11-16_13:00:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-11-16_13:00:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0273 secondes|ClientNom
+
+2024-11-16_13:00:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:00:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:00:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,3164 secondes|ClientNom=marklin 1
+
+2024-11-16_13:00:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3516 secondes|
+
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0352 secondes|
+
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,1016 secondes|Immeubles Marklin C2 Inc. [Caroline Chaput]
+
+2024-11-16_13:00:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1367 secondes|
+
+2024-11-16_13:00:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:00:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0352 secondes|Immeubles Marklin C2 Inc. [Caroline Chaput]
+
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,3125 secondes|ClientNom=iso énergie 1
+
+2024-11-16_13:01:00|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3516 secondes|
+
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:01:02|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,1055 secondes|Iso Énergie Inc. [Jonathan Forget]
+
+2024-11-16_13:01:03|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1602 secondes|
+
+2024-11-16_13:01:05|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:01:05|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0312 secondes|Iso Énergie Inc. [Jonathan Forget]
+
+2024-11-16_13:02:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-11-16_13:02:16|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-11-16_13:02:16|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:02:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-11-16_13:02:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:02:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-16_13:02:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-11-16_13:02:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0508 secondes|
+
+2024-11-16_13:02:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 2,7617 secondes|UPDATE 1478
+
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0234 secondes|UPDATE 1478
+
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2891 secondes|ClientNom=iso énergie 1
+
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,3242 secondes| Row=1107
+
+2024-11-16_13:02:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 4,5820 secondes|6
+
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0352 secondes|
+
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,3359 secondes|ClientNom=toitures 2
+
+2024-11-16_13:02:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3750 secondes|
+
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0781 secondes|Les Toitures C.B.C. Inc. [Francis Bélanger]
+
+2024-11-16_13:02:31|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1133 secondes|
+
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0781 secondes|Les Toitures C.B.C. Inc. [Francis Bélanger]
+
+2024-11-16_13:02:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1172 secondes|
+
+2024-11-16_13:02:34|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:02:34|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Les Toitures C.B.C. Inc. [Francis Bélanger]
+
+2024-11-16_13:03:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-11-16_13:03:16|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-11-16_13:03:16|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:03:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-11-16_13:03:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:03:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-16_13:03:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-11-16_13:03:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+
+2024-11-16_13:03:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,3672 secondes|UPDATE 1731
+
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0234 secondes|UPDATE 1731
+
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:03:19|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:03:19|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:03:19|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2422 secondes|ClientNom=toitures 2
+
+2024-11-16_13:03:19|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2773 secondes| Row=1107
+
+2024-11-16_13:03:19|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 2,9844 secondes|6
+
+2024-11-16_13:03:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:03:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:03:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1992 secondes|ClientNom=librairie 1
+
+2024-11-16_13:03:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2422 secondes|
+
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0742 secondes|Librairie Lu-Lu Inc. [Émilie Arcand-Dubois]
+
+2024-11-16_13:03:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1055 secondes|
+
+2024-11-16_13:03:53|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:03:54|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:03:54|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:03:54|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:03:54|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2383 secondes|ClientNom=mobilium 1
+
+2024-11-16_13:03:54|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2734 secondes|
+
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0742 secondes|Mobilier de bureau Mobilium Inc. [Robert Guindon]
+
+2024-11-16_13:03:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1094 secondes|
+
+2024-11-16_13:04:12|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:04:12|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Mobilier de bureau Mobilium Inc. [Robert Guindon]
+
+2024-11-16_13:04:15|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-11-16_13:04:15|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-11-16_13:04:15|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:04:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-11-16_13:04:16|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:04:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-16_13:04:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-11-16_13:04:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+
+2024-11-16_13:04:17|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,2617 secondes|UPDATE 1491
+
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0195 secondes|UPDATE 1491
+
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2422 secondes|ClientNom=mobilium 1
+
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2734 secondes| Row=1107
+
+2024-11-16_13:04:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 2,9062 secondes|6
+
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2930 secondes|ClientNom=dsl 1
+
+2024-11-16_13:04:28|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3281 secondes|
+
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0742 secondes|Ébénisterie DSL Inc. [Nadia]
+
+2024-11-16_13:04:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1133 secondes|
+
+2024-11-16_13:04:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:04:33|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Ébénisterie DSL Inc. [Nadia]
+
+2024-11-16_13:04:41|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:04:41|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Ébénisterie DSL Inc. [Nadia Béland]
+
+2024-11-16_13:04:42|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-11-16_13:04:42|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-11-16_13:04:42|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:04:42|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-11-16_13:04:42|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:04:44|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-16_13:04:44|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-11-16_13:04:44|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+
+2024-11-16_13:04:44|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-11-16_13:04:45|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-11-16_13:04:45|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,5156 secondes|UPDATE 1808
+
+2024-11-16_13:04:45|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-16_13:04:45|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0195 secondes|UPDATE 1808
+
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2500 secondes|ClientNom=dsl 1
+
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2734 secondes| Row=1107
+
+2024-11-16_13:04:46|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 3,6562 secondes|6
+
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2734 secondes|ClientNom=marklin 1
+
+2024-11-16_13:04:52|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3086 secondes|
+
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0781 secondes|Immeubles Marklin C2 Inc. [Caroline Chaput]
+
+2024-11-16_13:04:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1133 secondes|
+
+2024-11-16_13:05:01|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:05:01|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|Immeubles Marklin C2 Inc. [Caroline Chaput]
+
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2891 secondes|ClientNom=toitures 2
+
+2024-11-16_13:05:20|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,3203 secondes|
+
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0781 secondes|Les Toitures C.B.C. Inc. [Francis Bélanger]
+
+2024-11-16_13:05:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1133 secondes|
+
+2024-11-16_13:05:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:05:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|Les Toitures C.B.C. Inc. [Katie Pimparé]
+
+2024-11-16_13:05:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-11-16_13:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-11-16_13:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-11-16_13:05:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-16_13:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-11-16_13:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+
+2024-11-16_13:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,5352 secondes|UPDATE 1731
+
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0234 secondes|UPDATE 1731
+
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:05:39|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-11-16_13:05:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,2773 secondes|ClientNom=toitures 2
+
+2024-11-16_13:05:40|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,3086 secondes| Row=1107
+
+2024-11-16_13:05:40|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 3,1758 secondes|6
+
+2024-11-16_13:05:53|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click||
+2024-11-16_13:05:53|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche||
+2024-11-16_13:05:53|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1836 secondes|ClientNom=librairie 1
+
+2024-11-16_13:05:54|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2188 secondes|
+
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0742 secondes|Librairie Lu-Lu Inc. [Émilie Arcand-Dubois]
+
+2024-11-16_13:05:55|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1055 secondes|
+
+2024-11-16_13:06:03|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-11-16_13:06:03|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Librairie Lu-Lu Inc. [Émilie Arcand-Dubois]
+
+2024-11-16_13:06:05|Clients_v4.1.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0781 secondes|1106
+
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2930 secondes|
+
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0117 secondes|Client_ID
+
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0430 secondes|
+
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0938 secondes| Row=1107
+
+2024-11-16_13:46:13|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1250 secondes|
+
+2024-11-16_13:47:57|Clients_v4.1.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||

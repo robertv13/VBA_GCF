@@ -108,7 +108,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
         Me.Range("B8").value = clientCode
         Call ENC_Remove_Check_Boxes(36)
-        Call ENC_Load_OS_Invoices(clientCode)
+        Call ENC_Get_OS_Invoices(clientCode)
         Application.EnableEvents = True
     End If
     

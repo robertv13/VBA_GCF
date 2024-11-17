@@ -167,9 +167,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             
             'Utilisation de la date du projet de facture
-'            Debug.Print "FAC_Brouillon_New_Invoice_140   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
-'            wshFAC_Brouillon.Range("O3").value = wshFAC_Brouillon.Range("B53").value
-            wshFAC_Brouillon.Range("O3").value = Now()
+            wshFAC_Brouillon.Range("O3").value = Format$(Now(), wshAdmin.Range("B1").value)
 '            Debug.Print "FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
             
@@ -516,10 +514,14 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c5 = ConvertValueBooleanToText(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
+    
 '    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
+    
     Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
+    
     Dim cutOffDateProjet As Date
     cutOffDateProjet = wshFAC_Brouillon.Range("B53").value
+    
     Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet)
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", startTime)
@@ -544,19 +546,18 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         lastSourceRow = ws.Cells(ws.rows.count, "A").End(xlUp).row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Define the data source area Range
-        Dim sRng As Range: Set sRng = .Range("A2:P" & lastSourceRow)
-        .Range("AM10").value = sRng.Address
+        'Effacer les données de la dernière utilisation
+        ws.Range("AM10:AM14").ClearContents
+        ws.Range("AM10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
-        'Define and Clear the destination area Range
-        Dim dRng As Range
-        lastResultRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
-        If lastResultRow > 2 Then .Range("AQ3:BE" & lastResultRow).ClearContents
-        Set dRng = .Range("AQ2:BE2")
-        .Range("AM11").value = dRng.Address
+        'Définir le range pour la source des données en utilisant un tableau
+        Dim rngData As Range
+        Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
+        ws.Range("AM11").value = rngData.Address
         
-        'Define the five criteria
-        Dim cRng As Range
+        'Définir le range des critères
+        Dim rngCriteria As Range
+        Set rngCriteria = ws.Range("AK2:AO3")
         .Range("AK3").value = clientID
         .Range("AL3").value = "'<=" & CLng(cutoffDate)
         .Range("AM3").value = isBillable
@@ -566,19 +567,26 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
             .Range("AN3").value = ""
         End If
         .Range("AO3").value = isDeleted
-        Set cRng = .Range("AK2:AO3")
-        .Range("AM12").value = cRng.Address
+        .Range("AM12").value = rngCriteria.Address
+        ws.Range("AM12").value = rngCriteria.Address
         
-        'Do the Advanced Filter
-        sRng.AdvancedFilter action:=xlFilterCopy, _
-                            criteriaRange:=cRng, _
-                            CopyToRange:=dRng, _
-                            Unique:=True
+        'Définir le range des résultats et effacer avant le traitement
+        Dim rngResult As Range
+        Set rngResult = ws.Range("AQ1").CurrentRegion
+        rngResult.Offset(2, 0).Clear
+        Set rngResult = ws.Range("AQ2:BF2")
+        ws.Range("AM13").value = rngResult.Address
         
-        lastResultRow = .Range("AQ9999").End(xlUp).row
-        .Range("AM13").value = lastResultRow - 2 & " rows returned"
-        .Range("AM14").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rngData.AdvancedFilter action:=xlFilterCopy, _
+                    criteriaRange:=rngCriteria, _
+                    CopyToRange:=rngResult, _
+                    Unique:=True
+        
+        'Combien avons-nous de lignes en résultat ?
+        lastResultRow = .Cells(.rows.count, "AQ").End(xlUp).row
+        ws.Range("AM14").value = lastResultRow & " lignes"
 
+        'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -601,110 +609,112 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
             .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
+         
 No_Sort_Required:
     End With
     
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set sRng = Nothing
-    Set dRng = Nothing
-    Set cRng = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
     Set ws = Nothing
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", startTime)
 
 End Sub
 
-Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
-                                        dteCutoff As Date, _
-                                        estFacturable As String, _
-                                        estFacturee As String, _
-                                        estDetruit As String)
-    
-    Dim ws As Worksheet: Set ws = wshTEC_Local
-    
-    'On efface ce qui est déjà là...
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
-    If lastUsedRow > 2 Then
-        ws.Range("AQ3:BE" & lastUsedRow).ClearContents
-    End If
-    
-    'Définir la dernière ligne contenant des données
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-    
-    Dim rr As Long
-    rr = 3
-    
-    Dim i As Long
-    With ws
-    'Boucler sur chaque ligne et masquer celles qui ne correspondent pas à tous les critères
-        For i = 3 To lastRow ' Suppose que les données commencent à la ligne 3
-            If ws.Cells(i, "D").value <= dteCutoff And _
-                ws.Cells(i, "E").value = codeClient And _
-                ws.Cells(i, "J").value = estFacturable And _
-                ws.Cells(i, "L").value = estFacturee And _
-                ws.Cells(i, "N").value = estDetruit Then
-                    ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
-                    ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
-                    ws.Cells(rr, "AS").value = ws.Cells(i, "C").value
-                    ws.Cells(rr, "AT").value = ws.Cells(i, "D").value
-                    ws.Cells(rr, "AU").value = ws.Cells(i, "E").value
-                    ws.Cells(rr, "AV").value = ws.Cells(i, "G").value
-                    ws.Cells(rr, "AW").value = ws.Cells(i, "H").value
-                    ws.Cells(rr, "AX").value = ws.Cells(i, "I").value
-                    ws.Cells(rr, "AY").value = ws.Cells(i, "J").value
-                    ws.Cells(rr, "AZ").value = ws.Cells(i, "K").value
-                    ws.Cells(rr, "BA").value = ws.Cells(i, "L").value
-                    ws.Cells(rr, "BB").value = ws.Cells(i, "M").value
-                    ws.Cells(rr, "BC").value = ws.Cells(i, "N").value
-                    ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
-                    ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
-                    rr = rr + 1
-            End If
-        Next i
-        
-        Dim lastResultRow As Long
-        lastResultRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
-        If lastResultRow < 3 Then
-            Application.ScreenUpdating = True
-            Exit Sub
-        End If
-        If lastResultRow < 4 Then GoTo No_Sort_Required
-        With .Sort
-            .SortFields.Clear
-            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On TEC_ID
-            .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
-            .Apply 'Apply Sort
-        End With
-    End With
-     
-No_Sort_Required:
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
+'CommentOut - 2024-11-16
+'Sub FAC_Brouillon_Filtre_Manuel_TEC(codeClient As String, _
+'                                        dteCutoff As Date, _
+'                                        estFacturable As String, _
+'                                        estFacturee As String, _
+'                                        estDetruit As String)
+'
+'    Dim ws As Worksheet: Set ws = wshTEC_Local
+'
+'    'On efface ce qui est déjà là...
+'    Dim lastUsedRow As Long
+'    lastUsedRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
+'    If lastUsedRow > 2 Then
+'        ws.Range("AQ3:BE" & lastUsedRow).ClearContents
+'    End If
+'
+'    'Définir la dernière ligne contenant des données
+'    Dim lastRow As Long
+'    lastRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+'
+'    Dim rr As Long
+'    rr = 3
+'
+'    Dim i As Long
+'    With ws
+'    'Boucler sur chaque ligne et masquer celles qui ne correspondent pas à tous les critères
+'        For i = 3 To lastRow ' Suppose que les données commencent à la ligne 3
+'            If ws.Cells(i, "D").value <= dteCutoff And _
+'                ws.Cells(i, "E").value = codeClient And _
+'                ws.Cells(i, "J").value = estFacturable And _
+'                ws.Cells(i, "L").value = estFacturee And _
+'                ws.Cells(i, "N").value = estDetruit Then
+'                    ws.Cells(rr, "AQ").value = ws.Cells(i, "A").value
+'                    ws.Cells(rr, "AR").value = ws.Cells(i, "B").value
+'                    ws.Cells(rr, "AS").value = ws.Cells(i, "C").value
+'                    ws.Cells(rr, "AT").value = ws.Cells(i, "D").value
+'                    ws.Cells(rr, "AU").value = ws.Cells(i, "E").value
+'                    ws.Cells(rr, "AV").value = ws.Cells(i, "G").value
+'                    ws.Cells(rr, "AW").value = ws.Cells(i, "H").value
+'                    ws.Cells(rr, "AX").value = ws.Cells(i, "I").value
+'                    ws.Cells(rr, "AY").value = ws.Cells(i, "J").value
+'                    ws.Cells(rr, "AZ").value = ws.Cells(i, "K").value
+'                    ws.Cells(rr, "BA").value = ws.Cells(i, "L").value
+'                    ws.Cells(rr, "BB").value = ws.Cells(i, "M").value
+'                    ws.Cells(rr, "BC").value = ws.Cells(i, "N").value
+'                    ws.Cells(rr, "BD").value = ws.Cells(i, "O").value
+'                    ws.Cells(rr, "BE").value = ws.Cells(i, "P").value
+'                    rr = rr + 1
+'            End If
+'        Next i
+'
+'        Dim lastResultRow As Long
+'        lastResultRow = ws.Cells(ws.rows.count, "AQ").End(xlUp).row
+'        If lastResultRow < 3 Then
+'            Application.ScreenUpdating = True
+'            Exit Sub
+'        End If
+'        If lastResultRow < 4 Then GoTo No_Sort_Required
+'        With .Sort
+'            .SortFields.Clear
+'            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On Date
+'            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On Prof_ID
+'            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+'            .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
+'            .Apply 'Apply Sort
+'        End With
+'    End With
+'
+'No_Sort_Required:
+'
+'    'Libérer la mémoire
+'    Set ws = Nothing
+'
+'End Sub
+'
 Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", 0)
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Range("AQ9999").End(xlUp).row
+    lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False

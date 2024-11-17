@@ -571,7 +571,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
 '            rs.Fields("DateSaisie").value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             rs.Fields("EstFacturee").value = "VRAI"
-            rs.Fields("DateFacturee").value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+            rs.Fields("DateFacturee").value = Format$(Now(), "yyyy-mm-dd")
             rs.Fields("VersionApp").value = ThisWorkbook.Name
             rs.Fields("NoFacture").value = wshFAC_Brouillon.Range("O6").value
             rs.update
@@ -622,7 +622,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
             rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Now(), "yyyy-mm-dd")
             wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
             wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
@@ -1013,9 +1013,15 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
 
 End Sub
 
-Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
+Sub FAC_Finale_Creation_PDF_Click()
+
+    Call FAC_Finale_Creation_PDF
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Bouton_Creation_PDF - '" & wshFAC_Finale.Range("E28").value & "'", 0)
+End Sub
+
+Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF - '" & wshFAC_Finale.Range("E28").value & "'", 0)
     
     flagEtapeFacture = 1
     
@@ -1037,7 +1043,7 @@ Sub FAC_Finale_Bouton_Creation_PDF() '2024-10-13 @ 10:15
     Call FAC_Finale_Enable_Save_Button
     flagEtapeFacture = 5
 
-    Call Log_Record("modFAC_Finale:FAC_Finale_Bouton_Creation_PDF", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", startTime)
 
 End Sub
 

@@ -353,7 +353,7 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Get_Detail_TEC_Invoice_AF", 0)
 
-    'Voir la feuille TEC_Local
+    'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
     Application.ScreenUpdating = False
@@ -361,44 +361,55 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     
     'AdvancedFilter par Numéro de Facture
     
-    'Définir le range des critères (Numéro de Facture)
+    'Effacer les données de la dernière utilisation
+    ws.Range("BG6:BG10").ClearContents
+    ws.Range("BG6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("tblTEC_TDB_data[#All]")
+    ws.Range("BG7").value = rngData.Address
+    
+    'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("BG2:BG3")
     ws.Range("BG3").value = CStr(noFact)
+    ws.Range("BG8").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("BI1").CurrentRegion
     rngResult.Offset(2, 0).Clear
     Set rngResult = ws.Range("BI2:BX2")
+    ws.Range("BG9").value = rngResult.Address
     
-    'AdvanceFilter
-    ws.Range("tblTEC_Local[#All]").AdvancedFilter _
-                                            action:=xlFilterCopy, _
-                                            criteriaRange:=rngCriteria, _
-                                            CopyToRange:=rngResult, _
-                                            Unique:=False
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
         
-    'Tri des informations
+    'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.rows.count, "BI").End(xlUp).row
+    ws.Range("BG10").value = lastResultRow & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - Date, ProfID, TEC_ID
             .SortFields.Clear
             'First sort On Date
-            .SortFields.Add key:=ws.Range("BL2"), _
+            .SortFields.Add key:=ws.Range("BL3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Prof_ID
-            .SortFields.Add key:=ws.Range("BJ2"), _
+            .SortFields.Add key:=ws.Range("BJ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("BI2"), _
+            .SortFields.Add key:=ws.Range("BI3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -411,6 +422,7 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     Application.ScreenUpdating = True
     
     'Free memory
+    Set rngData = Nothing
     Set rngCriteria = Nothing
     Set rngResult = Nothing
     Set ws = Nothing
@@ -419,32 +431,47 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     
 End Sub
 
-Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
+Sub FAC_Entête_AdvancedFilter_AC_C(AC_OR_C As String) '2024-07-19 @ 13:58
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Entête_AdvancedFilter_AC_C", 0)
+    
+    'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
-    With ws
-        'Setup the destination Range and clear it before applying AdvancedFilter
-        Dim lastUsedRow As Long
-        Dim destinationRng As Range: Set destinationRng = .Range("AY2:BP2")
-        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
-        If lastUsedRow > 2 Then
-            ws.Range("AY3:BP" & lastUsedRow).ClearContents
-        End If
-        
-        'Setup source data including headers
-        lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-        If lastUsedRow < 3 Then Exit Sub 'No data to filter
-        Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
-        
-        'Define the criteria range including headers
-        Dim criteriaRng As Range: Set criteriaRng = ws.Range("AW2:AW3")
+    'Effacer les données de la dernière utilisation
+    ws.Range("AW12:AW16").ClearContents
+    ws.Range("AW12").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-        ' Apply the advanced filter
-        sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
+    ws.Range("AW13").value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("AW2:AW3")
+    ws.Range("AW3").value = AC_OR_C
+    ws.Range("AW14").value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("AY1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
+    Set rngResult = ws.Range("AY2:BP2")
+    ws.Range("AW15").value = rngResult.Address
         
-        lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
-        If lastUsedRow < 4 Then Exit Sub
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Qu'avons-nous comme résultat ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+    ws.Range("AW16").value = lastUsedRow & " lignes"
+    
+    If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
             .SortFields.Add key:=ws.Range("AY3"), _
@@ -454,13 +481,15 @@ Sub FAC_Entête_AdvancedFilter_AC_C() '2024-07-19 @ 13:58
             .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
-     End With
+     End If
 
     'Libérer la mémoire
-    Set criteriaRng = Nothing
-    Set destinationRng = Nothing
-    Set sourceRng = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
     Set ws = Nothing
+
+    Call Log_Record("modFAC_Confirmation:FAC_Entête_AdvancedFilter_AC_C", startTime)
 
 End Sub
 
@@ -480,7 +509,7 @@ Sub Show_Unconfirmed_Invoice()
     'Set criteria for AvancedFilter
     ws.Range("AW3").value = "AC"
     
-    Call FAC_Entête_AdvancedFilter_AC_C
+    Call FAC_Entête_AdvancedFilter_AC_C("AC")
     
     Dim lastUsedRowAF As Long
     lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).row
@@ -496,17 +525,17 @@ Sub Show_Unconfirmed_Invoice()
     For i = 3 To lastUsedRowAF
         With wshFAC_Confirmation
             wshFAC_Confirmation.Cells(i + 1, 16).Locked = False
-            .Cells(i + 1, 16).value = ws.Cells(i, 51)
-            .Cells(i + 1, 17).value = ws.Cells(i, 52)
-            .Cells(i + 1, 18).value = ws.Cells(i, 55)
-            .Cells(i + 1, 19).value = ws.Cells(i, 67)
-            .Cells(i + 1, 20).value = ws.Cells(i, 56)
-            .Cells(i + 1, 21).value = ws.Cells(i, 58)
-            .Cells(i + 1, 22).value = ws.Cells(i, 60)
-            .Cells(i + 1, 23).value = ws.Cells(i, 62)
-            .Cells(i + 1, 24).value = ws.Cells(i, 64)
-            .Cells(i + 1, 25).value = ws.Cells(i, 66)
-            .Cells(i + 1, 26).value = ws.Cells(i, 68)
+            .Cells(i + 1, "P").value = ws.Cells(i, 51)
+            .Cells(i + 1, "Q").value = Format$(ws.Cells(i, 52).value, wshAdmin.Range("B1").value)
+            .Cells(i + 1, "R").value = ws.Cells(i, 55)
+            .Cells(i + 1, "S").value = ws.Cells(i, 67)
+            .Cells(i + 1, "T").value = ws.Cells(i, 56)
+            .Cells(i + 1, "U").value = ws.Cells(i, 58)
+            .Cells(i + 1, "V").value = ws.Cells(i, 60)
+            .Cells(i + 1, "W").value = ws.Cells(i, 62)
+            .Cells(i + 1, "X").value = ws.Cells(i, 64)
+            .Cells(i + 1, "Y").value = ws.Cells(i, 66)
+            .Cells(i + 1, "Z").value = ws.Cells(i, 68)
         End With
     Next i
     

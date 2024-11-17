@@ -1123,7 +1123,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.value = "Totaux des factures À CONFIRMER (" & nbFactC & " factures)"
+    rng.value = "Totaux des factures À CONFIRMER (" & nbFactAC & " factures)"
     rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Color = vbRed
     rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
@@ -1528,6 +1528,8 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
         GoTo Clean_Exit
     End If
+    
+    'Charge le contenu de 'wshFAC_Projets_Détails' en mémoire (Array)
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.Offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.columns.count).value
     
@@ -1538,17 +1540,18 @@ Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     Dim projetID As Long, oldProjetID As Long
     Dim codeClient As String
-    Dim lookUpValue As Long, result As Variant
+    Dim result As Variant
+    
+    'À partir de la mémoire (Array)
     For i = LBound(arr, 1) To UBound(arr, 1)
         projetID = CLng(arr(i, 1))
-        lookUpValue = projetID
         If projetID <> oldProjetID Then
-            result = Application.WorksheetFunction.XLookup(lookUpValue, _
-                                                           rngMaster, _
-                                                           rngMaster, _
-                                                           "Not Found", _
-                                                           0, _
-                                                           1)
+            result = Application.WorksheetFunction.XLookup(projetID, _
+                                rngMaster, _
+                                rngMaster, _
+                                "Not Found", _
+                                0, _
+                                1)
             oldProjetID = projetID
         End If
         If result = "Not Found" Then
@@ -2056,7 +2059,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2416 'What is the last TECID analyzed ?
+    lastTECIDReported = 2474 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local

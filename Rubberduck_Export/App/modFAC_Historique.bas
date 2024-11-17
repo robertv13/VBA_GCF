@@ -6,6 +6,7 @@ Sub Affiche_Liste_Factures()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", 0)
     
     wshFAC_Historique.Range("C9:P33").ClearContents
+    
     Call Remove_All_PDF_Icons
     
     Dim ws As Worksheet: Set ws = wshFAC_Historique
@@ -24,9 +25,12 @@ Sub Affiche_Liste_Factures()
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
     End If
-    wshFAC_Entête.Range("X3").value = myInfo(3)
     
-    Call FAC_Entête_AdvancedFilter_Code_Client
+    Dim codeClient As String
+    codeClient = myInfo(3)
+    
+    Call FAC_Get_Invoice_Client_AF(codeClient)
+    
     Call Copy_List_Of_Invoices_to_Worksheet(dateFrom, dateTo)
     
     Application.ScreenUpdating = True
@@ -45,47 +49,62 @@ Clean_Exit:
     
 End Sub
 
-Sub FAC_Entête_AdvancedFilter_Code_Client() '2024-06-27 @ 15:27
+Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     With ws
-        'Setup the destination Range and clear it before applying AdvancedFilter
-        Dim lastUsedRow As Long
-        Dim destinationRng As Range: Set destinationRng = .Range("Z2:AU2")
-        lastUsedRow = .Range("Z99999").End(xlUp).row
-        If lastUsedRow > 2 Then
-            ws.Range("Z3:AU" & lastUsedRow).ClearContents
-        End If
-        
-        'Setup source data including headers
-        lastUsedRow = .Range("A99999").End(xlUp).row
-        If lastUsedRow < 3 Then Exit Sub 'No data to filter
-        Dim sourceRng As Range: Set sourceRng = .Range("A2:V" & lastUsedRow)
-        
-        'Define the criteria range including headers
-        Dim criteriaRng As Range: Set criteriaRng = ws.Range("X2:X3")
     
-        'Apply the advanced filter
-        sourceRng.AdvancedFilter xlFilterCopy, criteriaRng, destinationRng, False
+        'Effacer les données de la dernière utilisation
+        .Range("X14:X19").ClearContents
+        .Range("X14").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+        'Définir le range pour la source des données en utilisant un tableau
+        Dim rngData As Range
+        Set rngData = .Range("l_tbl_FAC_Entête[#All]")
+        .Range("X15").value = rngData.Address
         
-        lastUsedRow = .Range("Z99999").End(xlUp).row
-        If lastUsedRow < 4 Then Exit Sub
-        With ws.Sort 'Sort - Invoice Date
+        'Définir le range des critères
+        Dim rngCriteria As Range
+        Set rngCriteria = .Range("X2:X3")
+        .Range("X3").value = codeClient
+        .Range("X16").value = rngCriteria.Address
+        
+        'Définir le range des résultats et effacer avant le traitement
+        Dim rngResult As Range
+        Set rngResult = .Range("Z1").CurrentRegion
+        rngResult.Offset(2, 0).Clear
+        Set rngResult = .Range("Z2:AU2")
+        .Range("X17").value = rngResult.Address
+        
+        rngData.AdvancedFilter _
+                    action:=xlFilterCopy, _
+                    criteriaRange:=rngCriteria, _
+                    CopyToRange:=rngResult, _
+                    Unique:=False
+          
+        'Quels sont les résultats ?
+        Dim lastResultRow As Long
+        lastResultRow = .Cells(.rows.count, "Z").End(xlUp).row
+        .Range("X18").value = lastResultRow - 2 & " lignes"
+         
+        'Est-il nécessaire de trier les résultats ?
+        If lastResultRow < 4 Then Exit Sub
+        With .Sort 'Sort - Invoice Date
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("AA3"), _
+            .SortFields.Add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Invoice Number
-            .SetRange ws.Range("Z3:AU" & lastUsedRow) 'Set Range
+                DataOption:=xlSortTextAsNumbers 'Sort Based On Invoice Number
+            .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
      End With
 
     'Libérer la mémoire
-    Set criteriaRng = Nothing
-    Set destinationRng = Nothing
-    Set sourceRng = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
     Set ws = Nothing
 
 End Sub
@@ -141,7 +160,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     With wshFAC_Historique
         For i = 1 To UBound(arr, 1)
             .Range("C" & i + 8).value = arr(i, 1)
-            .Range("D" & i + 8).value = arr(i, 2)
+            .Range("D" & i + 8).value = Format$(arr(i, 2), wshAdmin.Range("B1").value)
             .Range("E" & i + 8).value = arr(i, 3)
             .Range("F" & i + 8).value = arr(i, 13)
             .Range("G" & i + 8).value = arr(i, 4)
@@ -258,52 +277,53 @@ Sub Remove_All_PDF_Icons() 'RMV - 2024-07-24 @ 19:58
     
 End Sub
 
-Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
-
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    'Clear previous results
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
-    ws.Range("Z3:AU" & lastUsedRow).ClearContents
-
-    'Define the source range including headers
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
-    Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
-
-    'Define the criteria range including headers
-    Dim criteriaRange As Range: Set criteriaRange = ws.Range("X2:X3")
-
-    'Define the destination range starting from Y3
-    Dim destRange As Range: Set destRange = ws.Range("Z2:AU2")
-
-    'Apply the advanced filter
-    srcRange.AdvancedFilter action:=xlFilterCopy, _
-                            criteriaRange:=criteriaRange, _
-                            CopyToRange:=destRange, _
-                            Unique:=False
-    
-    Dim lastResultRow As Long
-    lastResultRow = ws.Range("Z9999").End(xlUp).row
-    If lastResultRow < 4 Then Exit Sub
-    With ws.Sort 'Sort - Inv_No
-        .SortFields.Clear
-        .SortFields.Add key:=wshTEC_Local.Range("Z3"), _
-            SortOn:=xlSortOnValues, _
-            Order:=xlAscending, _
-            DataOption:=xlSortNormal 'Sort Based On Invoice Number
-        .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
-        .Apply 'Apply Sort
-     End With
-
-    'Libérer la mémoire
-    Set criteriaRange = Nothing
-    Set destRange = Nothing
-    Set srcRange = Nothing
-    Set ws = Nothing
-    
-End Sub
-
+'CommentOut - 2024-11-16
+'Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
+'
+'    Dim ws As Worksheet: Set ws = wshFAC_Entête
+'
+'    'Clear previous results
+'    Dim lastUsedRow As Long
+'    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+'    ws.Range("Z3:AU" & lastUsedRow).ClearContents
+'
+'    'Define the source range including headers
+'    lastUsedRow = ws.Range("A99999").End(xlUp).row
+'    Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
+'
+'    'Define the criteria range including headers
+'    Dim criteriaRange As Range: Set criteriaRange = ws.Range("X2:X3")
+'
+'    'Define the destination range starting from Y3
+'    Dim destRange As Range: Set destRange = ws.Range("Z2:AU2")
+'
+'    'Apply the advanced filter
+'    srcRange.AdvancedFilter action:=xlFilterCopy, _
+'                            criteriaRange:=criteriaRange, _
+'                            CopyToRange:=destRange, _
+'                            Unique:=False
+'
+'    Dim lastResultRow As Long
+'    lastResultRow = ws.Range("Z9999").End(xlUp).row
+'    If lastResultRow < 4 Then Exit Sub
+'    With ws.Sort 'Sort - Inv_No
+'        .SortFields.Clear
+'        .SortFields.Add key:=wshTEC_Local.Range("Z3"), _
+'            SortOn:=xlSortOnValues, _
+'            Order:=xlAscending, _
+'            DataOption:=xlSortNormal 'Sort Based On Invoice Number
+'        .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
+'        .Apply 'Apply Sort
+'     End With
+'
+'    'Libérer la mémoire
+'    Set criteriaRange = Nothing
+'    Set destRange = Nothing
+'    Set srcRange = Nothing
+'    Set ws = Nothing
+'
+'End Sub
+'
 Sub FAC_Historique_Clear_All_Cells()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells", 0)

@@ -181,7 +181,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 30, 15)
+    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 90, 15)
     If fullDate <> "Invalid Date" Then
         Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
                                 "   y = " & year(fullDate) & _
@@ -572,10 +572,12 @@ Sub imgLogoGCF_Click()
     If ufSaisieHeures.cmbProfessionnel.value <> "" Then
             Application.EnableEvents = False
             
-            wshTEC_TDB_Data.Range("S6").value = ufSaisieHeures.cmbProfessionnel.value
+            wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
         
             Call TEC_TdB_Update_All
+            
             Call StatsHeures_AdvancedFilters
+            
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call UpdatePivotTables
             

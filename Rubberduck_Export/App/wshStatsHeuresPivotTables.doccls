@@ -87,15 +87,15 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
         Select Case Target.value
             Case "Guillaume"
-                wshTEC_TDB_Data.Range("S6").value = "GC"
+                wshTEC_TDB_Data.Range("S7").value = "GC"
             Case "Vladimir"
-                wshTEC_TDB_Data.Range("S6").value = "VG"
+                wshTEC_TDB_Data.Range("S7").value = "VG"
             Case "Michel"
-                wshTEC_TDB_Data.Range("S6").value = "ML"
+                wshTEC_TDB_Data.Range("S7").value = "ML"
             Case "Annie"
-                wshTEC_TDB_Data.Range("S6").value = "AR"
+                wshTEC_TDB_Data.Range("S7").value = "AR"
             Case "Tous"
-                wshTEC_TDB_Data.Range("S6").value = ""
+                wshTEC_TDB_Data.Range("S7").value = ""
         End Select
         
         If wshTEC_TDB_Data.Range("BJ2").value <> "" Then
@@ -116,6 +116,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     End If
     
+    'Libérer les objets
     Set ws = Nothing
 
 End Sub
