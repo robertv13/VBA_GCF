@@ -576,7 +576,7 @@ Sub imgLogoGCF_Click()
         
             Call TEC_TdB_Update_All
             
-            Call StatsHeures_AdvancedFilters
+            Call Stats_Heures_AF
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call UpdatePivotTables
@@ -600,7 +600,7 @@ Sub imgStats_Click()
     
     'Ne pas exécuter ces mises à jour, les données sont déjà à jour - 2024-11-09
 '    Call TEC_TdB_Update_All
-'    Call StatsHeures_AdvancedFilters
+'    Call Stats_Heures_AF
 '    'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
 '    Call UpdatePivotTables
     

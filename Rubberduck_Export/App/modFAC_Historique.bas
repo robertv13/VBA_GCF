@@ -112,7 +112,6 @@ End Sub
 Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
-    Dim ws2 As Worksheet: Set ws2 = wshENC_Détails
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Range("Z9999").End(xlUp).row
@@ -139,10 +138,10 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
                 arr(r, 8) = .Range("AS" & i).value 'PST $
                 arr(r, 9) = .Range("AU" & i).value 'Deposit
                 arr(r, 10) = .Range("AT" & i).value 'AR_Total
-                arr(r, 11) = Fn_Get_Payments_For_Invoice(ws2, .Range("Z" & i).value)
+                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).value)
                 arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).value)
                 'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = Fn_Get_TEC_Total_For_This_Invoice(.Range("Z" & i).value)
+                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).value, "Dollars")
             End If
         Next i
     End With
@@ -189,7 +188,6 @@ Clean_Exit:
 
     'Libérer la mémoire
     Set ws = Nothing
-    Set ws2 = Nothing
     
 End Sub
 

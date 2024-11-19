@@ -79,6 +79,8 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change(" & Target.Address & ")", 0)
+    
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     
     If Not Intersect(Target, ws.Range("B4")) Is Nothing Then
@@ -118,6 +120,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Libérer les objets
     Set ws = Nothing
+
+    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change", startTime)
 
 End Sub
 

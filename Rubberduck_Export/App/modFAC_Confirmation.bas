@@ -180,7 +180,7 @@ End Sub
 Sub FAC_Confirmation_Report_Detailed_TEC()
 
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
-    Call Get_Detail_TEC_Invoice_AF(invNo)
+    Call Get_Invoice_Detail_TEC_AF(invNo)
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim lastUsedRow As Long
@@ -349,9 +349,9 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     
 End Sub
 
-Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
+Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Get_Detail_TEC_Invoice_AF", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Get_Invoice_Detail_TEC_AF", 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -392,7 +392,7 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.rows.count, "BI").End(xlUp).row
-    ws.Range("BG10").value = lastResultRow & " lignes"
+    ws.Range("BG10").value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
@@ -427,13 +427,13 @@ Sub Get_Detail_TEC_Invoice_AF(noFact As String) '2024-10-20 @ 11:11
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:Get_Detail_TEC_Invoice_AF", startTime)
+    Call Log_Record("modFAC_Confirmation:Get_Invoice_Detail_TEC_AF", startTime)
     
 End Sub
 
-Sub FAC_Entête_AdvancedFilter_AC_C(AC_OR_C As String) '2024-07-19 @ 13:58
+Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Entête_AdvancedFilter_AC_C", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Entête_AC_C_AF", 0)
     
     'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -469,7 +469,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C(AC_OR_C As String) '2024-07-19 @ 13:58
     'Qu'avons-nous comme résultat ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
-    ws.Range("AW16").value = lastUsedRow & " lignes"
+    ws.Range("AW16").value = lastUsedRow - 2 & " lignes"
     
     If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
@@ -489,7 +489,7 @@ Sub FAC_Entête_AdvancedFilter_AC_C(AC_OR_C As String) '2024-07-19 @ 13:58
     Set rngResult = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFAC_Confirmation:FAC_Entête_AdvancedFilter_AC_C", startTime)
+    Call Log_Record("modFAC_Confirmation:FAC_Entête_AC_C_AF", startTime)
 
 End Sub
 
@@ -509,7 +509,7 @@ Sub Show_Unconfirmed_Invoice()
     'Set criteria for AvancedFilter
     ws.Range("AW3").value = "AC"
     
-    Call FAC_Entête_AdvancedFilter_AC_C("AC")
+    Call FAC_Entête_AC_C_AF("AC")
     
     Dim lastUsedRowAF As Long
     lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).row

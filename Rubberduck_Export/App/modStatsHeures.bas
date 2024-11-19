@@ -1,11 +1,11 @@
 Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
-Sub StatsHeures_AdvancedFilters()
+Sub Stats_Heures_AF()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:StatsHeures_AdvancedFilters", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Stats_Heures_AF", 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -243,7 +243,7 @@ Sub StatsHeures_AdvancedFilters()
     Set rngData = Nothing
     Set rngResult = Nothing
     
-    Call Log_Record("modStatsHeures:StatsHeures_AdvancedFilters", startTime)
+    Call Log_Record("modStatsHeures:Stats_Heures_AF", startTime)
 
 End Sub
 

@@ -83,7 +83,8 @@ Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
     Set rngResult = ws.Range("P2:U2")
     ws.Range("M9").value = rngResult.Address
     
-    rngData.AdvancedFilter xlFilterCopy, _
+    rngData.AdvancedFilter _
+                xlFilterCopy, _
                 criteriaRange:=rngCriteria, _
                 CopyToRange:=rngResult, _
                 Unique:=False

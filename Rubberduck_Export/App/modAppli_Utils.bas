@@ -218,25 +218,15 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call check_Fournisseurs(r, readRows)
     
-    'wshENC_Détails ---------------------------------------------------------- ENC_Détails
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Détails")
+    'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
     
-    Call ENC_Détails_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call FAC_Entête_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
     Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_ENC_Détails(r, readRows)
-    
-    'wshENC_Entête ------------------------------------------------------------ ENC_Entête
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Entête")
-    
-    Call ENC_Entête_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
-    r = r + 1
-    
-    Call check_ENC_Entête(r, readRows)
+    Call check_FAC_Entête(r, readRows)
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Détails")
@@ -248,16 +238,6 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     
     Call check_FAC_Détails(r, readRows)
     
-    'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
-    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Entête")
-    
-    Call FAC_Entête_Import_All
-    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
-    r = r + 1
-    
-    Call check_FAC_Entête(r, readRows)
-    
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
     
@@ -267,6 +247,26 @@ Public Sub Integrity_Verification() '2024-07-06 @ 12:56
     r = r + 1
     
     Call check_FAC_Comptes_Clients(r, readRows)
+    
+    'wshENC_Entête ------------------------------------------------------------ ENC_Entête
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Entête")
+    
+    Call ENC_Entête_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
+    r = r + 1
+    
+    Call check_ENC_Entête(r, readRows)
+    
+    'wshENC_Détails ---------------------------------------------------------- ENC_Détails
+    Call Add_Message_To_WorkSheet(wsOutput, r, 1, "ENC_Détails")
+    
+    Call ENC_Détails_Import_All
+    Call Add_Message_To_WorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call Add_Message_To_WorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
+    r = r + 1
+    
+    Call check_ENC_Détails(r, readRows)
     
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call Add_Message_To_WorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
@@ -723,6 +723,9 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
         
     Dim pmtNo As Long, oldpmtNo As Long
     Dim result As Variant
+    'Dictionary pour accumuler les encaissements par facture
+    Dim dictENC As Scripting.Dictionary
+    Set dictENC = New Scripting.Dictionary
     Dim totalEncDetails As Currency
     For i = 2 To lastUsedRowDetails
         pmtNo = CLng(ws.Range("A" & i).value)
@@ -756,12 +759,35 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
         If IsNumeric(ws.Range("E" & i).value) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le montant '" & ws.Range("E" & i).value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
+        Else
+            If dictENC.Exists(Inv_No) Then
+                dictENC(Inv_No) = dictENC(Inv_No) + ws.Range("E" & i).value
+            Else
+                dictENC.Add Inv_No, ws.Range("E" & i).value
+            End If
+            totalEncDetails = totalEncDetails + ws.Range("E" & i).value
         End If
-        totalEncDetails = totalEncDetails + ws.Range("E" & i).value
     Next i
     
     Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
     r = r + 1
+    
+    'Compare les encaissements accumulés (dictENC) avec wshFAC_Comptes_Clients
+    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
+    Dim lastUsedRow As Long
+    lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.rows.count, "A").End(xlUp).row
+    Dim totalPaid As Currency
+    
+    For i = 3 To lastUsedRow
+        Inv_No = wsComptes_Clients.Cells(i, 1).value
+        totalPaid = wsComptes_Clients.Cells(i, "I").value
+        If totalPaid <> dictENC(Inv_No) Then
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Pour la facture '" & Inv_No & "', le total des enc. " _
+                            & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
+                            & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
+            r = r + 1
+        End If
+    Next i
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
@@ -776,6 +802,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    Set dictENC = Nothing
     Set rngEntete = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
@@ -1228,45 +1255,47 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
         Dim invType As String
         invType = Fn_Get_Invoice_Type(Inv_No)
         If invType <> "C" And invType <> "AC" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsDate(CDate(arr(i, 2))) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
-                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
+                Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
             End If
         End If
         If Fn_Validate_Client_Number(CStr(arr(i, 4))) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
             r = r + 1
         End If
         If arr(i, 5) <> "Paid" And arr(i, 5) <> "Unpaid" Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsDate(CDate(arr(i, 7))) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** La date due '" & arr(i, 7) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la date due '" & arr(i, 7) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le total de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsNumeric(arr(i, 9)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le montant payé à date '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         If IsNumeric(arr(i, 10)) = False Then
-            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
         End If
         'PLUG pour s'assurer que le solde impayé est belt et bien aligner sur le total et $ payé à date
         If arr(i, 10) <> arr(i, 8) - arr(i, 9) Then
             arr(i, 10) = arr(i, 8) - arr(i, 9)
+            Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & ", j'ai ajusté le solde de la facture à " & Format$(arr(i, 8), "###,##0.00 $") & "'")
+            r = r + 1
         End If
         If IsNumeric(arr(i, 11)) = False Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** L'âge (jours) de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
@@ -2059,7 +2088,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2474 'What is the last TECID analyzed ?
+    lastTECIDReported = 2504 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2425,7 +2454,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     Dim cas_Heures_Differentes As Integer
     
     For Each key In dictFacture.keys
-        totalHoursBilled = Fn_Get_TEC_Hours_For_This_Invoice(CStr(key))
+        totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
         If Round(totalHoursBilled, 2) <> Round(dictFacture(key), 2) Then
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _

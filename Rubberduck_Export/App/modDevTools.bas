@@ -553,5 +553,101 @@ Sub Fix_Date_Format()
 
 End Sub
 
+Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
+
+    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    Dim lurTEC As Long
+    lurTEC = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row
+    
+    Dim wsTDB As Worksheet: Set wsTDB = wshTEC_TDB_Data
+    Dim lurTDB As Long
+    lurTDB = wsTDB.Cells(wsTDB.rows.count, "A").End(xlUp).row
+    
+    Dim wsOutput As Worksheet: Set wsOutput = wshzDocAnalyseÉcartTEC
+    Dim lastUsed As Long
+    lastUsed = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).row + 2
+    wsOutput.Range("A2:D" & lastUsed).ClearContents
+    
+    wsOutput.Cells(1, 1).value = "TECID"
+    wsOutput.Cells(1, 2).value = "TEC_Local"
+    wsOutput.Cells(1, 3).value = "TEC_TDB_Data"
+    wsOutput.Cells(1, 4).value = "Vérification"
+    
+    Dim arr() As Variant
+    ReDim arr(1 To 5000, 1 To 3)
+    
+    Dim i As Long
+    Dim TECID As Long
+    Dim dateCutOff As Date
+    dateCutOff = Now()
+    
+    Dim h As Currency, hTEC As Currency
+    'Boucle dans TEC_Local
+    Debug.Print "Mise en mémoire TEC_LOCAL"
+    For i = 3 To lurTEC
+        With wsTEC
+            If .Range("D" & i).value > dateCutOff Then Stop
+            TECID = CLng(.Range("A" & i).value)
+            If arr(TECID, 1) <> "" Then Stop
+            arr(TECID, 1) = TECID
+            h = .Range("H" & i).value
+            If UCase(.Range("N" & i).value) = "VRAI" Then
+                h = 0
+            End If
+            If h <> 0 Then
+                If UCase(.Range("J" & i).value) = "VRAI" And Len(.Range("E" & i).value) > 2 Then
+                    If UCase(.Range("L" & i).value) = "FAUX" Then
+                        If .Range("M" & i).value <= dateCutOff Then
+                            arr(TECID, 2) = h
+                        Else
+                            Stop
+                        End If
+                    End If
+                End If
+            End If
+        End With
+    Next i
+    
+    'Boucle dans TEC_TDB
+    Dim hTDB As Double
+    Debug.Print "Mise en mémoire TEC_TDB"
+    For i = 2 To lurTDB
+        With wsTDB
+            If .Range("D" & i).value > dateCutOff Then Stop
+            TECID = CLng(.Range("A" & i).value)
+            arr(TECID, 1) = TECID
+            arr(TECID, 3) = .Range("Q" & i).value
+        End With
+    Next i
+    
+    Debug.Print "Analyse des écarts"
+    Dim tTEC As Double, tTDB As Double
+    Dim r As Long: r = 2
+    wsOutput.columns(2).EntireColumn.NumberFormat = "##0.00"
+    wsOutput.Range("B:B").HorizontalAlignment = xlRight
+    wsOutput.columns(3).EntireColumn.NumberFormat = "##0.00"
+    wsOutput.Range("C:C").HorizontalAlignment = xlRight
+    
+    For i = 1 To 5000
+        tTEC = tTEC + arr(i, 2)
+        tTDB = tTDB + arr(i, 3)
+        If arr(i, 2) <> 0 Or arr(i, 3) <> 0 Then
+            wsOutput.Cells(r, 1).value = arr(i, 1)
+            wsOutput.Cells(r, 2).value = arr(i, 2)
+            wsOutput.Cells(r, 3).value = arr(i, 3)
+            If arr(i, 2) <> arr(i, 3) Then
+                wsOutput.Cells(r, 4).value = "Valeurs sont différentes"
+            End If
+            r = r + 1
+        End If
+    Next i
+    
+    wsOutput.Cells(r + 1, 2).value = Round(tTEC, 2)
+    wsOutput.Cells(r + 1, 3).value = Round(tTDB, 2)
+    
+    Debug.Print "Totaux", Round(tTEC, 2), Round(tTDB, 2)
+    
+End Sub
+
 
 

@@ -99,79 +99,6 @@ Public Sub GL_Report_For_Selected_Accounts()
 
 End Sub
 
-Public Sub AF_GL_Trans_Account_From_To(compte As String, dateDeb As Date, dateFin As Date, sortType As String, ByRef rResult As Range)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:AF_GL_Trans_Account_From_To", 0)
-
-    Dim glNo As String
-    If InStr(compte, " ") <> 0 Then
-        glNo = Left(compte, InStr(compte, " ") - 1)
-    Else
-        glNo = compte
-    End If
-    
-    'Setup ADVANCED FILTER with 3 ranges
-    
-    'Data source
-    With wshGL_Trans
-        Dim rgData As Range: Set rgData = .Range("A1").CurrentRegion
-        
-        'Assign 3 criteria
-        .Range("L3").value = glNo
-        .Range("M3").value = ">=" & CLng(dateDeb)
-        .Range("N3").value = "<=" & CLng(dateFin)
-        Dim rgCriteria As Range: Set rgCriteria = .Range("L2:N3")
-        
-        'Destination to copy (setup & clear previous results)
-        Dim rgCopyToRange As Range: Set rgCopyToRange = .Range("P1").CurrentRegion
-        rgCopyToRange.Offset(1).ClearContents
-        Set rgCopyToRange = .Range("P1:Y1")
-        
-        .Range("M8").value = "Dernière utilisation - " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        .Range("M9").value = rgData.Address
-        .Range("M10").value = rgCriteria.Address
-        .Range("M11").value = rgCopyToRange.Address
-        
-        'Do the Advanced Filter
-        rgData.AdvancedFilter xlFilterCopy, _
-                              rgCriteria, _
-                              rgCopyToRange
-        
-        Dim lastResultUsedRow
-        lastResultUsedRow = .Range("P99999").End(xlUp).row
-        .Range("M12").value = lastResultUsedRow - 1
-        If lastResultUsedRow < 3 Then GoTo NoSort
-        With .Sort
-            .SortFields.Clear
-            If sortType = "Date" Then
-                .SortFields.Add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortTextAsNumbers 'Sort Based Date
-            Else
-                .SortFields.Add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
-                    SortOn:=xlSortOnValues, _
-                    Order:=xlAscending, _
-                    DataOption:=xlSortTextAsNumbers 'Sort on Transaction #
-            End If
-            .SetRange wshGL_Trans.Range("P2:Y" & lastResultUsedRow) 'Set Range
-            .Apply 'Apply Sort
-         End With
-    End With
-
-NoSort:
-    'Retourne le Range des résultats
-    Set rResult = wshGL_Trans.Range("P1:Y" & lastResultUsedRow)
-    
-    'Libérer la mémoire
-    Set rgCriteria = Nothing
-    Set rgCopyToRange = Nothing
-    Set rgData = Nothing
-    
-    Call Log_Record("modGL_Rapport:AF_GL_Trans_Account_From_To", startTime)
-
-End Sub
-
 Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Double, dateDebut As Date, dateFin As Date)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
@@ -202,7 +129,8 @@ Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Doubl
     lastRowUsed_AB = lastRowUsed_AB + 1
     saveFirstRow = lastRowUsed_AB
 
-    Call Get_GL_Trans_With_AF(glNo, dateDebut, dateFin)
+    Dim rngResult As Range
+    Call GL_Get_Account_Trans_AF(glNo, dateDebut, dateFin, rngResult)
     
     Dim lastUsedTrans As Long
     lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row '2024-11-08 @ 09:15
@@ -256,6 +184,7 @@ No_Transaction:
     ws.Range("G" & lastRowUsed_AB).value = sumCT
     
     'Libérer la mémoire
+    Set rngResult = Nothing
     Set ws = Nothing
     
 End Sub

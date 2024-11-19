@@ -173,11 +173,13 @@ Clean_Exit:
 
 End Sub
 
-Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
+Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF - " & _
                                         ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, 0)
 
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
     Application.ScreenUpdating = False
 
     'ProfID and Date are mandatory to execute this routine
@@ -185,83 +187,83 @@ Sub TEC_Get_All_TEC_AF() '2024-09-04 @ 08:47
         Exit Sub
     End If
     
-    'Set criteria in worksheet for AdvancedFilter
-    With wshTEC_Local
+    'Set criteria directly in TEC_Local for AdvancedFilter
+    With ws
         .Range("R3").value = ufSaisieHeures.txtProf_ID.value
         .Range("S3").value = CLng(CDate(ufSaisieHeures.txtDate.value))
         .Range("T3").value = "FAUX"
     End With
     
-    wshTEC_Local.Range("S10:S14").ClearContents
+    'Effacer les données de la dernière utilisation
+    ws.Range("S10:S14").ClearContents
+    ws.Range("S10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    With wshTEC_Local
-        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
-        lastRow = .Cells(.rows.count, "A").End(xlUp).row 'Last wshTEC_Local Used Row
-        If lastRow < 3 Then Exit Sub 'Nothing to filter
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
+    ws.Range("S11").value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("R2:T3")
+    ws.Range("S12").value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("V1").CurrentRegion
+    rngResult.Offset(2, 0).Clear
+    Set rngResult = ws.Range("V2:AI2")
+    ws.Range("S13").value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+
+    Dim lastResultRow As Long
+    lastResultRow = ws.Cells(ws.rows.count, "V").End(xlUp).row
+    ws.Range("S14").value = (lastResultRow - 2) & " lignes"
         
-        .Range("S10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        
-        'Data Source
-        Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
-        .Range("S11").value = sRng.Address '2024-09-04 @ 08:47
-        
-         'Criteria
-        Dim cRng As Range: Set cRng = .Range("R2:T3")
-        .Range("S12").value = cRng.Address '2024-09-04 @ 08:47
-        
-        'Destination
-        Dim dRng As Range: Set dRng = .Range("V1").CurrentRegion.Offset(2, 0)
-        dRng.ClearContents
-        Set dRng = .Range("V2:AI2")
-        .Range("S13").value = dRng.Address '2024-09-04 @ 08:47
-        
-        'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
-        sRng.AdvancedFilter xlFilterCopy, _
-                            cRng, _
-                            dRng, _
-                            False
-        
-        lastResultRow = .Cells(.rows.count, "V").End(xlUp).row
-        .Range("S14").value = (lastResultRow - 2) & " rows"
-        
-        If lastResultRow < 4 Then GoTo No_Sort_Required
-        With .Sort 'Sort - Date / Prof / TEC_ID
-            .SortFields.Clear
-            .SortFields.Add key:=wshTEC_Local.Range("X3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add key:=wshTEC_Local.Range("W3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Prof
-            .SortFields.Add key:=wshTEC_Local.Range("V3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Tec_ID
-            .SetRange wshTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
-            .Apply 'Apply Sort
-         End With
+    If lastResultRow < 4 Then GoTo No_Sort_Required
+    With ws.Sort 'Sort - Date / Prof / TEC_ID
+        .SortFields.Clear
+        .SortFields.Add key:=wshTEC_Local.Range("X3"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal 'Sort Based On Date
+        .SortFields.Add key:=wshTEC_Local.Range("W3"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal 'Sort Based On Prof
+        .SortFields.Add key:=wshTEC_Local.Range("V3"), _
+            SortOn:=xlSortOnValues, _
+            Order:=xlAscending, _
+            DataOption:=xlSortNormal 'Sort Based On Tec_ID
+        .SetRange wshTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
+        .Apply 'Apply Sort
+     End With
 
 No_Sort_Required:
-    End With
     
     'Suddenly, I have to convert BOOLEAN value to TEXT !!!! - 2024-06-19 @ 14:20
+    Dim r As Range
     If lastResultRow > 2 Then
-        Set dRng = wshTEC_Local.Range("AC3:AC" & lastResultRow)
-        Call ConvertRangeBooleanToText(dRng)
-        Set dRng = wshTEC_Local.Range("AE3:AE" & lastResultRow)
-        Call ConvertRangeBooleanToText(dRng)
-        Set dRng = wshTEC_Local.Range("AG3:AG" & lastResultRow)
-        Call ConvertRangeBooleanToText(dRng)
+        Set r = wshTEC_Local.Range("AC3:AC" & lastResultRow)
+        Call ConvertRangeBooleanToText(r)
+        Set r = wshTEC_Local.Range("AE3:AE" & lastResultRow)
+        Call ConvertRangeBooleanToText(r)
+        Set r = wshTEC_Local.Range("AG3:AG" & lastResultRow)
+        Call ConvertRangeBooleanToText(r)
     End If
     
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set cRng = Nothing
-    Set dRng = Nothing
-    Set sRng = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", startTime)
 

@@ -29,11 +29,11 @@
         
     'Quels sont les résultats ?
 	Dim lastUsedRow as long
-    lastResultRow = ws.Cells(ws.rows.count, "W").End(xlUp).row
-    ws.Range("T20").value = lastResultRow - 1 & " lignes"
+    lastUsedRow = ws.Cells(ws.rows.count, "W").End(xlUp).row
+    ws.Range("T20").value = lastUsedRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
-    If lastResultRow > 2 Then
+    If lastUsedRow > 2 Then
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
@@ -55,3 +55,11 @@
             .Apply 'Apply Sort
          End With
     End If
+	
+	'Libérer les objets
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngReseult = Nothing
+    Set ws = Nothing
+    
+

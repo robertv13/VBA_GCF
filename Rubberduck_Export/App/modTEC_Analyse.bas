@@ -97,36 +97,38 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 20 %", -1)
     
     Dim r As Long
     r = 6
     Application.EnableEvents = False
-    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - On doit lire " & lastUsedRow & " lignes dans TEC_Local", -1)
     
-    'TEC_Local - AdvancedFilter - 2024-11-01 @ 12:27
-    Dim rngSource As Range
-    Set rngSource = wsSource.Range("A2:P" & lastUsedRow)
+    'Appel à AdvancedFilter # 2 dans TEC_Local
+    Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").value)), "VRAI", "FAUX", "FAUX")
     
-    Dim rngCriteria As Range
-    Set rngCriteria = wsSource.Range("AK2:AO3")
-    With wsSource
-        .Range("AK3").value = ""
-        .Range("AL3").value = "<=" & CLng(CDate(wsDest.Range("H3").value))
-        .Range("AM3").value = "VRAI"
-        .Range("AN3").value = "FAUX"
-        .Range("AO3").value = "FAUX"
-    End With
-    
-    Dim rngResult As Range
-    Set rngResult = wsSource.Range("AQ3").CurrentRegion.Offset(2, 0)
-    rngResult.ClearContents
-    Set rngResult = wsSource.Range("AQ2:BE2")
-    
-    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult, True
+'CommentOut - 2024-11-19 @ 10:22
+'    'TEC_Local - AdvancedFilter - 2024-11-01 @ 12:27
+'    Dim rngSource As Range
+'    Set rngSource = wsSource.Range("A2:P" & lastUsedRow)
+'
+'    Dim rngCriteria As Range
+'    Set rngCriteria = wsSource.Range("AK2:AO3")
+'    With wsSource
+'        .Range("AK3").value = ""
+'        .Range("AL3").value = "<=" & CLng(CDate(wsDest.Range("H3").value))
+'        .Range("AM3").value = "VRAI"
+'        .Range("AN3").value = "FAUX"
+'        .Range("AO3").value = "FAUX"
+'    End With
+'
+'    Dim rngResult As Range
+'    Set rngResult = wsSource.Range("AQ3").CurrentRegion.Offset(2, 0)
+'    rngResult.ClearContents
+'    Set rngResult = wsSource.Range("AQ2:BE2")
+'
+'    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult, True
     
     Dim lastUsedResult As Long
-    lastUsedResult = wsSource.Cells(wsSource.rows.count, "AQ").End(xlUp).row
+    lastUsedResult = wshTEC_Local.Cells(wshTEC_Local.rows.count, "AQ").End(xlUp).row
     
     For i = 3 To lastUsedResult
         'Conditions for exclusion (adjust as needed)
@@ -146,7 +148,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             r = r + 1
         End If
     Next i
-    Call Log_Record("     modTEC_Saisie_Analyse:TEC_Sort_Group_And_Subtotal - Toutes les lignes ont été lues de TEC_Local", -1)
     
     Application.EnableEvents = False
    

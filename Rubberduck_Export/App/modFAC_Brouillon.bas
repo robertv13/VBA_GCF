@@ -497,7 +497,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", 0)
     
-    'Set all criteria before calling FAC_Brouillon_Get_TEC_For_Client_AF
+    'Set all criteria before calling Get_TEC_For_Client_AF
     Dim c1 As String
     Dim c2 As Date
     Dim c3 As String, c4 As String, c5 As String
@@ -517,7 +517,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     
 '    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
     
-    Call FAC_Brouillon_Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
+    Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     
     Dim cutOffDateProjet As Date
     cutOffDateProjet = wshFAC_Brouillon.Range("B53").value
@@ -528,13 +528,14 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
 End Sub
 
-Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
-                                        cutoffDate As Date, _
-                                        isBillable As String, _
-                                        isInvoiced As String, _
-                                        isDeleted As String)
+Sub Get_TEC_For_Client_AF(clientID As String, _
+                          cutoffDate As Date, _
+                          isBillable As String, _
+                          isInvoiced As String, _
+                          isDeleted As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:Get_TEC_For_Client_AF(" & "'" & clientID _
+                    & "', " & cutoffDate & ", " & isBillable & ", " & isInvoiced & ", " & isDeleted & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -577,14 +578,15 @@ Sub FAC_Brouillon_Get_TEC_For_Client_AF(clientID As String, _
         Set rngResult = ws.Range("AQ2:BF2")
         ws.Range("AM13").value = rngResult.Address
         
-        rngData.AdvancedFilter action:=xlFilterCopy, _
+        rngData.AdvancedFilter _
+                    action:=xlFilterCopy, _
                     criteriaRange:=rngCriteria, _
                     CopyToRange:=rngResult, _
                     Unique:=True
         
         'Combien avons-nous de lignes en résultat ?
         lastResultRow = .Cells(.rows.count, "AQ").End(xlUp).row
-        ws.Range("AM14").value = lastResultRow & " lignes"
+        ws.Range("AM14").value = lastResultRow - 2 & " lignes"
 
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 3 Then
@@ -621,7 +623,7 @@ No_Sort_Required:
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_TEC_For_Client_AF", startTime)
+    Call Log_Record("modFAC_Brouillon:Get_TEC_For_Client_AF", startTime)
 
 End Sub
 

@@ -152,11 +152,15 @@ End Enum
 
 Sub Set_Root_Path(ByRef rootPath As String)
    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Set_Root_Path", 0)
+    
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else
         rootPath = "P:\Administration\APP\GCF"
     End If
+
+    Call Log_Record("modAppli:Set_Root_Path", startTime)
 
 End Sub
 

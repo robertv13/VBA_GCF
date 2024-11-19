@@ -456,88 +456,17 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
 End Function
 
-Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Double '2024-11-08 @ 08:10
-
+Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Double '2024-11-18 @ 06:41
+    
     Fn_Get_GL_Account_Balance = 0
     
-    If InStr(glCode, " ") <> 0 Then
-        glCode = Left(glCode, InStr(glCode, " ") - 1)
-    End If
-    
-    Call Get_GL_Trans_With_AF(glCode, #7/31/2024#, dateSolde)
-    
-'    '1. Mise en place & exécution du AdvancedFilter
-'    'Où sont les données à traiter ?
-'    Dim ws As Worksheet: Set ws = wshGL_Trans
-'    Dim rngSource As Range
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-'    'Rien à traiter
-'    If lastUsedRow < 2 Then
-'        Exit Function
-'    End If
-'    Set rngSource = ws.Range("A1:J" & lastUsedRow)
-'
-'    'Quels sont les critères ?
-'    Dim rngCriteria As Range
-'    Set rngCriteria = ws.Range("L2:N3")
-'    With ws
-'        .Range("L3").value = glCode
-'        .Range("M3").value = ">=" & CLng(#7/31/2024#)
-'        .Range("N3").value = "<=" & CLng(dateSolde)
-'    End With
-'
-'    'Où allons-nous mettre les résultats ?
-'    Dim rngResult As Range
-'    Set rngResult = ws.Range("P1").CurrentRegion.Offset(1, 0)
-'    rngResult.ClearContents
-'    Set rngResult = ws.Range("P1").CurrentRegion
-'
-'    'On documente le processus
-'    ws.Range("M8").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-'    ws.Range("M9").value = rngSource.Address
-'    ws.Range("M10").value = rngCriteria.Address
-'    ws.Range("M11").value = rngResult.Address
-'
-'    'Go, on execute le AdvancedFilter
-'    rngSource.AdvancedFilter xlFilterCopy, _
-'                             rngCriteria, _
-'                             rngResult, _
-'                             False
-'
-'    'Combien y a-t-il de transactions dans le résultat ?
-'    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-'    ws.Range("M12").value = lastUsedRow
-'    Set rngResult = ws.Range("P1:Y" & lastUsedRow)
-'
-'    If lastUsedRow > 2 Then
-'        With ws.Sort
-'            .SortFields.Clear
-'                .SortFields.Add _
-'                    key:=ws.Range("Q2"), _
-'                    SortOn:=xlSortOnValues, _
-'                    Order:=xlAscending, _
-'                    DataOption:=xlSortNormal 'Trier par date de transaction
-'                .SortFields.Add _
-'                    key:=ws.Range("P2"), _
-'                    SortOn:=xlSortOnValues, _
-'                    Order:=xlAscending, _
-'                    DataOption:=xlSortNormal 'Trier par numéro d'écriture
-'            .SetRange rngResult
-'            .Header = xlYes
-'            .Apply
-'        End With
-'    End If
-    
-    '2. Lire toutes les transactions (résultats) pour calculer le solde à une date
+    'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
     Dim rngResult As Range
-    Set rngResult = wshGL_Trans.Range("P1").CurrentRegion
-    Dim lastUsedRow As Long
-    lastUsedRow = rngResult.rows.count
-    Dim i As Long
-    For i = 2 To lastUsedRow
-        Fn_Get_GL_Account_Balance = Fn_Get_GL_Account_Balance + rngResult.Cells(i, 7).value - rngResult.Cells(i, 8).value
-    Next i
+    Call GL_Get_Account_Trans_AF(glCode, #7/31/2024#, dateSolde, rngResult)
+    
+    'Méthode plus rapide pour obtenir une somme
+    Fn_Get_GL_Account_Balance = Application.WorksheetFunction.Sum(rngResult.columns(7)) _
+                                           - Application.WorksheetFunction.Sum(rngResult.columns(8))
 
 End Function
 
@@ -575,9 +504,64 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     
 End Function
 
-Function Fn_Get_TEC_Total_For_This_Invoice(invNo As String) As Double
+'CommentOut - 2024-11-17 @ 10:44
+'Function Fn_Get_TEC_Total_Invoice_AF(invNo As String) As Double
+'
+'    Fn_Get_TEC_Total_Invoice_AF = 0
+'
+'    Dim ws As Worksheet: Set ws = wshFAC_Détails
+'
+'    'Effacer les données de la dernière utilisation
+'    ws.Range("H6:H10").ClearContents
+'    ws.Range("H6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+'
+'    'Définir le range pour la source des données en utilisant un tableau
+'    Dim rngData As Range
+'    Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
+'    ws.Range("H7").value = rngData.Address
+'
+'    'Définir le range des critères
+'    Dim rngCriteria As Range
+'    Set rngCriteria = ws.Range("H2:H3")
+'    ws.Range("H3").value = invNo
+'    ws.Range("H8").value = rngCriteria.Address
+'
+'    'Définir le range des résultats et effacer avant le traitement
+'    Dim rngResult As Range
+'    Set rngResult = ws.Range("J1").CurrentRegion
+'    rngResult.Offset(2, 0).Clear
+'    Set rngResult = ws.Range("J2:M2")
+'    ws.Range("H9").value = rngResult.Address
+'
+'    rngData.AdvancedFilter _
+'                action:=xlFilterCopy, _
+'                criteriaRange:=rngCriteria, _
+'                CopyToRange:=rngResult, _
+'                Unique:=False
+'
+'    'Quels sont les résultats ?
+'    Dim lastUsedRow As Long
+'    lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).row
+'    ws.Range("H10").value = lastUsedRow - 2 & " lignes"
+'
+'    'Pas de tri nécessaire
+'    If lastUsedRow > 2 Then
+'        Dim i As Long
+'        For i = 3 To lastUsedRow
+'            If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
+'                Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + _
+'                    ws.Cells(i, 13)
+'            End If
+'        Next i
+'    End If
+'
+'End Function
+'
+Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Double
 
-    Fn_Get_TEC_Total_For_This_Invoice = 0
+    'Le type (t) est "Heures" -OU- "Dollars", selon le type le total des Heures ou des Dollars
+    
+    Fn_Get_TEC_Total_Invoice_AF = 0
     
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     
@@ -608,97 +592,68 @@ Function Fn_Get_TEC_Total_For_This_Invoice(invNo As String) As Double
                 criteriaRange:=rngCriteria, _
                 CopyToRange:=rngResult, _
                 Unique:=False
-                
+        
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).row
     ws.Range("H10").value = lastUsedRow - 2 & " lignes"
     
-    'Pas de tri nécessaire
+    'Aucun tri nécessaire (besoins)
     If lastUsedRow > 2 Then
         Dim i As Long
         For i = 3 To lastUsedRow
             If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
-                Fn_Get_TEC_Total_For_This_Invoice = Fn_Get_TEC_Total_For_This_Invoice + _
-                    ws.Cells(i, 13)
-            End If
-        Next i
-    End If
-    
-End Function
-
-Function Fn_Get_TEC_Hours_For_This_Invoice(invNo As String) As Double
-
-    Fn_Get_TEC_Hours_For_This_Invoice = 0
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Détails
-    
-    'Utilisation de la fonction Advanced Filter
-    Dim rngSource As Range
-    Set rngSource = ws.Range("A1").CurrentRegion.Offset(1, 0)
-    
-    Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("H2:H3")
-    ws.Range("H3").value = invNo
-    
-    Dim rngResult As Range
-    Set rngResult = ws.Range("J2:M2")
-    
-    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "J").End(xlUp).row
-    Fn_Get_TEC_Hours_For_This_Invoice = 0
-    If lastUsedRow > 2 Then
-        Dim i As Long
-        For i = 3 To lastUsedRow
-            If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
-                Fn_Get_TEC_Hours_For_This_Invoice = Fn_Get_TEC_Hours_For_This_Invoice + _
-                    ws.Cells(i, 11)
+                If t = "Heures" Then
+                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "K")
+                Else
+                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "M")
+                End If
             End If
         Next i
     End If
     
     'Force un arrondissement à 2 décimales
-    Fn_Get_TEC_Hours_For_This_Invoice = Round(Fn_Get_TEC_Hours_For_This_Invoice, 2)
+    Fn_Get_TEC_Total_Invoice_AF = Round(Fn_Get_TEC_Total_Invoice_AF, 2)
     
 End Function
 
-Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
-
-    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row
-    
-    Dim resultArr() As Variant
-    ReDim resultArr(1 To 1000, 1 To 16)
-    
-    Dim rowCount As Long
-    Dim i As Long
-    Dim tempRow As Variant
-    For i = 3 To lastUsedRow
-        If wsTEC.Cells(i, 16).value = invNo And UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
-            rowCount = rowCount + 1
-            tempRow = wsTEC.Range(wsTEC.Cells(i, 1), wsTEC.Cells(i, 16)).value
-        End If
-    Next i
-    
-    If rowCount > 0 Then
-        ReDim Preserve resultArr(1 To rowCount)
-    End If
-    
-    If rowCount = 0 Then
-        Fn_Get_Detailled_TEC_Invoice = Array()
-    Else
-        Fn_Get_Detailled_TEC_Invoice = resultArr
-    End If
-    
-    'Libérer la mémoire
-    Set wsTEC = Nothing
-    
-End Function
-
+'CommentOut - 2024-11-17 @ 10:48
+'Function Fn_Get_Detailled_TEC_Invoice(invNo As String) As Variant
+'
+'    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+'
+'    Dim lastUsedRow As Long
+'    lastUsedRow = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row
+'
+'    Dim resultArr() As Variant
+'    ReDim resultArr(1 To 1000, 1 To 16)
+'
+'    Dim rowCount As Long
+'    Dim i As Long
+'    Dim tempRow As Variant
+'    For i = 3 To lastUsedRow
+'        'Charge n'est pas Détruite -ET- le numéro de facture est identique à invNo
+'        If UCase(wsTEC.Cells(i, 14).value) <> "VRAI" And wsTEC.Cells(i, 16).value = invNo Then
+'            rowCount = rowCount + 1
+'            tempRow = wsTEC.Range(wsTEC.Cells(i, 1), wsTEC.Cells(i, 16)).value
+'        End If
+'    Next i
+'
+'    If rowCount > 0 Then
+'        ReDim Preserve resultArr(1 To rowCount)
+'    End If
+'
+'    If rowCount = 0 Then
+'        Fn_Get_Detailled_TEC_Invoice = Array()
+'    Else
+'        Fn_Get_Detailled_TEC_Invoice = resultArr
+'    End If
+'
+'    'Libérer la mémoire
+'    Set wsTEC = Nothing
+'
+'End Function
+'
 Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", 0)
@@ -739,48 +694,55 @@ Function Fn_Get_Bucket_For_Aging(age As Long, days1 As Long, days2 As Long, days
     
 End Function
 
-Function Fn_Get_Payments_For_Invoice(ws As Worksheet, invNo As String)
+Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
 
-    'Define the source data
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
-    If lastUsedRow < 2 Then Exit Function
+    Fn_Get_Invoice_Total_Payments_AF = 0
     
-    'Define the range for the source data
-    Dim sourceRng As Range: Set sourceRng = ws.Range("A1:E" & lastUsedRow)
+    Dim ws As Worksheet: Set ws = wshENC_Détails
     
-    'Define the criteria range
-    Dim criteriaRng As Range: Set criteriaRng = ws.Range("S2:S3")
+    'Effacer les données de la dernière utilisation
+    ws.Range("S6:S10").ClearContents
+    ws.Range("S6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_ENC_Détails[#All]")
+    ws.Range("S7").value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("S2:S3")
     ws.Range("S3").value = invNo
+    ws.Range("S8").value = rngCriteria.Address
     
-    'Define the destination range & clear the old data
-    Dim destinationRng As Range: Set destinationRng = ws.Range("U3:Y3")
-    lastUsedRow = ws.Range("U9999").End(xlUp).row
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("U1").CurrentRegion
+    rngResult.Offset(3, 0).Clear
+    Set rngResult = ws.Range("U3:Y3").CurrentRegion
+    ws.Range("S9").value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Quels sont les résultats ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "U").End(xlUp).row
+    ws.Range("S10").value = lastUsedRow - 3 & " lignes"
+    
+    'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
-        ws.Range("U4:Y" & lastUsedRow).ClearContents
-    End If
-    
-    'Execute the AdvancedFilter
-    sourceRng.AdvancedFilter xlFilterCopy, _
-                             criteriaRng, _
-                             destinationRng, _
-                             False
-    
-    lastUsedRow = ws.Range("U9999").End(xlUp).row
-    If lastUsedRow < 3 Then
-        Fn_Get_Payments_For_Invoice = 0
-    Else
-        Dim i As Long, mntPayé As Currency
-        For i = 4 To lastUsedRow
-            mntPayé = mntPayé + CCur(ws.Range("Y" & i).value)
-        Next i
-        Fn_Get_Payments_For_Invoice = mntPayé
+        Set rngResult = ws.Range("U3:Y" & lastUsedRow)
+        Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.columns(5))
     End If
 
     'Libérer la mémoire
-    Set criteriaRng = Nothing
-    Set destinationRng = Nothing
-    Set sourceRng = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
     
 End Function
 
@@ -801,15 +763,6 @@ Function Fn_Get_Invoice_Due_Date(invNo As String)
 
 End Function
 
-Sub Temp_Fn_Get_Invoice_Due_Date()
-
-    Dim invNo As String
-    invNo = "24-24522"
-    Dim dueDate As Date
-    dueDate = Fn_Get_Invoice_Due_Date(invNo)
-    Debug.Print "La date due de la facture '" & invNo & "' est = " & dueDate & " ce qui nous donne un âge de " & Format$(Now() - dueDate, "# ##0") & " jours"
-
-End Sub
 'Function IsNumLockActive() As Boolean
 '    ' Utilisation de SendKeys pour vérifier l'état
 '    Dim CurrentState As String
@@ -1488,63 +1441,62 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
 End Function
 
-Function Fn_Get_Account_Opening_Balance(glNo As String, d As Date) As Double
+Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Double
 
-    'Using AdvancedFilter # 3 in wshGL_Trans
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    'Using AdvancedFilter # 1 in wshGL_Trans
     
-    Fn_Get_Account_Opening_Balance = 0
+    Fn_Get_GL_Account_Opening_Balance_AF = 0
+    
+    Dim ws As Worksheet: Set ws = wshGL_Trans
     
     Application.EnableEvents = False
     
+    'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
     ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Source (data) range
+    'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Dim lastUsedRowData As Long
-    lastUsedRowData = ws.Cells(ws.rows.count, "A").End(xlUp).row
-    Set rngData = ws.Range("A1:J" & lastUsedRowData)
+    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
     ws.Range("M7").value = rngData.Address
     
-    'Criteria Range
+    'Définir le range des critères
     Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("L2:N3")
     ws.Range("L3").FormulaR1C1 = glNo
     ws.Range("M3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
     ws.Range("N3").FormulaR1C1 = "<" & CLng(d)
-    Set rngCriteria = ws.Range("L2:N3")
     ws.Range("M8").value = rngCriteria.Address
     
-    'Destination Range
-    Dim rngDest As Range
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("P1").CurrentRegion
+    rngResult.Offset(1, 0).Clear
+    Set rngResult = ws.Range("P1:Y1")
+    ws.Range("M9").value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-    Set rngDest = ws.Range("P1:Y" & lastUsedRow)
-    If lastUsedRow > 1 Then
-        rngDest.Offset(1, 0).ClearContents
-    End If
-    ws.Range("M9").value = rngDest.Address
+    ws.Range("M10").value = lastUsedRow - 1 & " lignes"
     
-    rngData.AdvancedFilter action:=xlFilterCopy, _
-                           criteriaRange:=rngCriteria, _
-                           CopyToRange:=rngDest, _
-                           Unique:=False
-
     Application.EnableEvents = True
     
-    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-    ws.Range("M10").value = lastUsedRow
+    'Pas de tri nécessaire pour calculer le solde
     If lastUsedRow < 2 Then
         Exit Function
     End If
         
-    Dim soldeOuverture As Double
-    Dim i As Long
-    For i = 2 To lastUsedRow
-        soldeOuverture = soldeOuverture + ws.Range("V" & i).value - ws.Range("W" & i).value
-    Next i
-    
-    Fn_Get_Account_Opening_Balance = soldeOuverture
+    'Méthode plus rapide pour obtenir une somme
+    Set rngResult = ws.Range("P2:Y" & lastUsedRow)
+    Fn_Get_GL_Account_Opening_Balance_AF = Application.WorksheetFunction.Sum(rngResult.columns(7)) _
+                                           - Application.WorksheetFunction.Sum(rngResult.columns(8))
     
     'Libérer la mémoire
     Set ws = Nothing

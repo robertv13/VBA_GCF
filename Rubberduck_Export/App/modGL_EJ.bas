@@ -220,7 +220,11 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
     wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
     
-    cases(101) = Fn_Get_GL_Account_Balance("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin))
+    Dim rngResultAF As Range
+    Call GL_Get_Account_Trans_AF("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
+    cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.columns(7)) _
+                    - Application.WorksheetFunction.Sum(rngResultAF.columns(8))
+
     With wshGL_EJ.Range("P10")
         .Font.Bold = True
         .Font.size = 12
@@ -375,7 +379,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Loop
     
     '2. Affiche l'écriture à renverser
-    Call wshGL_Get_A_JE_Detail_Trans(no_Ecriture)
+    Call GL_Get_JE_Detail_Trans_AF(no_Ecriture)
     Dim lastUsedRowResult As Long
     lastUsedRowResult = ws.Cells(ws.rows.count, "AC").End(xlUp).row
     If lastUsedRowResult < 2 Then
@@ -547,61 +551,71 @@ Sub GL_EJ_Auto_Build_Summary()
 
 End Sub
 
-Sub wshGL_Get_A_JE_Detail_Trans(no As Long)
+Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
-'    Sub GL_TB_AdvancedFilter_By_GL(GLNo As String, minDate As Date, maxDate As Date)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:GL_Get_JE_Detail_Trans_AF", 0)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_Get_A_JE_Detail_Trans", 0)
-
-    With wshGL_Trans
-        .Range("AA6:AA10").ClearContents
-        .Range("AA6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    Dim ws As Worksheet: Set ws = wshGL_Trans
+    
+    'Effacer les données de la dernière utilisation
+    ws.Range("AA6:AA10").ClearContents
+    ws.Range("AA6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
+    ws.Range("AA7").value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("AA2:AA3")
+    ws.Range("AA3").value = noEJ
+    ws.Range("AA8").value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("AC1").CurrentRegion
+    rngResult.Offset(1, 0).Clear
+    Set rngResult = ws.Range("AC1:AK1")
+    ws.Range("AA9").value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
         
-        Dim rgResult As Range, rgData As Range, rgCriteria As Range, rgCopyToRange As Range
-        Set rgResult = .Range("AC1").CurrentRegion.Offset(1, 0)
-        rgResult.ClearContents
-        Set rgData = .Range("A1").CurrentRegion
-        .Range("AA7").value = rgData.Address
-        
-        'Criteria
-        .Range("AA3").value = no
-        Set rgCriteria = .Range("AA2:AA3")
-        .Range("AA8").value = rgCriteria.Address
+    'Quels sont les résultats ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.rows.count, "AC").End(xlUp).row
+    ws.Range("AA10").value = lastUsedRow - 1 & " lignes"
 
-        Set rgCopyToRange = .Range("AC1:AK1")
-        .Range("AA9").value = rgCopyToRange.Address
-        
-        rgData.AdvancedFilter xlFilterCopy, rgCriteria, rgCopyToRange
-        
-        Dim lastResultUsedRow
-        lastResultUsedRow = .Range("AC999").End(xlUp).row
-        .Range("AA10").value = lastResultUsedRow
-
-        If lastResultUsedRow < 3 Then GoTo NoSort
-        With .Sort
+    'On tri les résultats par noGL / par date?
+    If lastUsedRow > 2 Then
+        With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
-            .SortFields.Add key:=wshGL_Trans.Range("AG1"), _
+            'First sort On noGL
+            .SortFields.Add key:=ws.Range("AG2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On GLNo
-            .SortFields.Add key:=wshGL_Trans.Range("AD1"), _
+                DataOption:=xlSortNormal
+            'Second, sort On Date
+            .SortFields.Add key:=ws.Range("AD2"), _
                 SortOn:=xlSortOnValues, _
-                Order:=xlDescending, _
-                DataOption:=xlSortNormal 'Sort Based On Date
-            .SetRange wshGL_Trans.Range("AC2:AK" & lastResultUsedRow) 'Set Range
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            .SetRange wshTEC_Local.Range("AC2:AK" & lastUsedRow)
             .Apply 'Apply Sort
          End With
-    End With
-
-NoSort:
-
-    'Libérer la mémoire
-    Set rgCriteria = Nothing
-    Set rgCopyToRange = Nothing
-    Set rgData = Nothing
-    Set rgResult = Nothing
+    End If
     
-    Call Log_Record("wshGL_BV:wshGL_Get_A_JE_Detail_Trans", startTime)
+    'Libérer les objets
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("wshGL_BV:GL_Get_JE_Detail_Trans_AF", startTime)
 
 End Sub
 

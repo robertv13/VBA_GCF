@@ -1,6 +1,5 @@
 ﻿Option Explicit
 
-Public dynamicShape As Shape
 Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
@@ -27,9 +26,11 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Unprotect
-        .Range("L4:T9999").ClearContents
+        .Range("L4:T9999").Clear
+        
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlNoRestrictions
+        
         .Range("B10").value = 0
     End With
     
@@ -60,35 +61,58 @@ End Sub
 
 Private Sub Worksheet_Deactivate()
 
-    On Error Resume Next
-    If Not dynamicShape Is Nothing Then
-        dynamicShape.Visible = False
-    End If
-    On Error GoTo 0
+'    On Error Resume Next
+'    If Not dynamicShape Is Nothing Then
+'        dynamicShape.Visible = False
+'    End If
+'    On Error GoTo 0
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If Not dynamicShape Is Nothing Then
-        If dynamicShape.Visible = True Then dynamicShape.Visible = False
+        If dynamicShape.Visible = True Then
+            dynamicShape.Visible = False
+        End If
     End If
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = xlNone
     End If
 
+'    'Définir la zone de la BV
+'    Dim rngBV As Range
+'    Dim lastUsedRowBV As Long
+'    lastUsedRowBV = Me.Cells(Me.rows.count, "D").End(xlUp).row
+'    Set rngBV = Me.Range("D4:G" & lastUsedRowBV + 2)
+'
+'    'Définir le Range des transactions détaillées d'un compte
+'    Dim rngDetailTrans As Range
+'    Set rngDetailTrans = Me.Range("L1:T" & Me.Cells(Me.rows.count, "M").End(xlUp).row)
+'
+'    'Zones sensibles
+'    Dim rngZonesSensibles As Range
+'    Set rngZonesSensibles = Union(rngBV, rngDetailTrans, Me.Range("J1"))
+'    Debug.Print rngBV.Address, rngDetailTrans.Address, Me.Range("J1").Address
+    
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
-    ''        If wshGL_BV.Range("J1").value = "" Then
-    ''            Target.value = Format(Now(), "dd/mm/yyyy")
-    ''        End If
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
+    
+'    Dim estZoneSensile As Boolean
+'    estZoneSensile = Not Intersect(Target, rngZonesSensibles) Is Nothing
+    
+'    'Est-que l'utilisateur a cliqué ailleurs que les zones sensibles ?
+'    If Not estZoneSensile Then
+'        Call GL_BV_Effacer_Zone_Et_Shape
+'    End If
     
     'An account has been selected from Trial Balance
     If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").value - 2)) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
+        Call GL_BV_Effacer_Zone_Et_Shape
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, DateLimite As Date
         GLAcct = CStr(Range("D" & Target.row).value)
@@ -97,12 +121,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         wshGL_BV.Range("B10").value = 0
         Range("T2").value = "Toutes les dates"
         'Display all transactions for the selected G/L
-        Call GL_TB_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, DateLimite)
+        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, DateLimite)
         Application.EnableEvents = True
     End If
     
     'Get the entire transaction, from a selected line
-    If Not Intersect(Target, wshGL_BV.Range("M5:T9999")) Is Nothing And _
+    If Not Intersect(Target, wshGL_BV.Range("M4:T9999")) Is Nothing And _
         Target.Cells.count = 1 And _
         wshGL_BV.Range("M" & Target.row) <> "" Then
             Dim noJE As Long
@@ -110,15 +134,48 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = False
             wshGL_BV.Range("B10").value = Target.row
             Application.EnableEvents = True
-            Call wshGL_Get_A_JE_Detail_Trans(noJE)
+            Call GL_Get_JE_Detail_Trans_AF(noJE)
             Call wshGL_BV_Display_JE_Trans_With_Shape
     Else
+        Application.EnableEvents = False
         wshGL_BV.Range("B10").value = 0
-        Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+        Application.EnableEvents = True
+        Dim shp As Shape
+        On Error Resume Next
+            Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+        On Error GoTo 0
+        If shp Is Nothing Then
+            Set shp = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 50, 50, 100, 50)
+            shp.Name = "JE_Detail_Trans"
+        End If
+        Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
         shp.Visible = msoFalse
     End If
     
+'    'Vérifier si le curseur est en dehors de la zone
+'    If Not Intersect(Target, rngDetailTrans) Is Nothing Then
+'        'Si un bouton existe, l'effacer
+'        Dim btn As Shape
+'        On Error Resume Next
+'        Set btn = Me.Shapes("EffacerBouton")
+'        If Not btn Is Nothing Then btn.Delete
+'        On Error GoTo 0
+'
+'        'Effacer la zone des résultats
+'        rngDetailTrans.Clear
+'
+'        'Ramener le focus à C4
+'        Application.EnableEvents = False
+'        Me.Range("C4").Select
+'        Application.EnableEvents = True
+'    End If
+    
     'Libérer la mémoire
+'    Set rngBV = Nothing
+'    Set rngDetailTrans = Nothing
+'    Set rngZonesSensibles = Nothing
+
+    'Libérer l'objet
     Set shp = Nothing
     
 End Sub
@@ -127,6 +184,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
 
     Dim fullDate As Variant
     
+    'Changement de date de BV
     If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
         'Temporarily disable events to prevent infinite loop
         Application.EnableEvents = False
@@ -148,24 +206,26 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Range("B9").value = Range("J1").value
         Range("L2").value = ""
         
-        Call GL_TB_Build_Trial_Balance 'Automatically recalculate Trial Balance
+        Call GL_Trial_Balance_Build(Range("J1").value)
         
         Application.EnableEvents = True
     End If
 
+    'Changement des dates (from/to) pour les transactions détaillées
     If Not Intersect(Target, Range("T2")) Is Nothing Then 'Dates have changed
-        Application.EnableEvents = False
-        
-        Call GL_TB_Determine_From_And_To_Date(Range("T2").value)
-                
-        'Force redisplay of GL Transactions details
-        Call GL_TB_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
-            Format$(Range("B8").value, wshAdmin.Range("B1").value), _
-            Format$(Range("B9").value, wshAdmin.Range("B1").value))
+        If Range("T2").value <> "" Then
+            Application.EnableEvents = False
+            
+            Call GL_BV_Determine_From_And_To_Date(Range("T2").value)
+                    
+            'Force redisplay of GL Transactions details
+            Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
+                Range("B8").value, Range("B9").value)
+        End If
     End If
     
 Clean_Exit:
 
-        Application.EnableEvents = True
+    Application.EnableEvents = True
 
 End Sub

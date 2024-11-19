@@ -4,6 +4,8 @@ Dim isProcessing As Boolean
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change(" & Target.Address & ")", 0)
+    
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
     'Si l'un des 12 cellules suivantes (Prof, DateDe, DateA pour les 4 AdvancedFilters)
@@ -27,7 +29,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call TEC_TdB_Update_All
             
             'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
-            Call StatsHeures_AdvancedFilters
+            Call Stats_Heures_AF
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call UpdatePivotTables
@@ -45,5 +47,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Set cellRange = Nothing
     Set intersectRange = Nothing
     Set ws = Nothing
+
+    Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", startTime)
 
 End Sub
