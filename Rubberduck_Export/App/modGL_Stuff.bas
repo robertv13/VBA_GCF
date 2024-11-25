@@ -93,7 +93,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("P1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("P1:Y1")
     ws.Range("M9").value = rngResult.Address
     
@@ -105,21 +105,21 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
         
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     ws.Range("M10").value = lastUsedRow - 1 & " lignes"
     
     If lastUsedRow > 2 Then
         With ws.Sort
             .SortFields.Clear
-            .SortFields.Add key:=wshGL_Trans.Range("T2"), _
+            .SortFields.add key:=wshGL_Trans.Range("T2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro de compte
-            .SortFields.Add key:=wshGL_Trans.Range("Q2"), _
+            .SortFields.add key:=wshGL_Trans.Range("Q2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par date
-            .SortFields.Add key:=wshGL_Trans.Range("P2"), _
+            .SortFields.add key:=wshGL_Trans.Range("P2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro d'écriture
@@ -148,7 +148,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans"
+    destinationTab = "GL_Trans$"
     
     'Initialize connection, connection string, open the connection and declare rs Object
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -157,7 +157,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the next JE number
     rs.Open strSQL, conn
@@ -176,7 +176,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim TimeStamp As String
     Dim i As Long, j As Long
@@ -198,7 +198,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
                 rs.Fields("AutreRemarque") = arr(i, 4)
                 TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 rs.Fields("TimeStamp") = TimeStamp
-                Debug.Print "GL_Trans - " & CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                Debug.Print "#063 - GL_Trans - " & CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.update
 Nothing_to_Post:
     Next i
@@ -227,7 +227,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     
     'What is the last used row in GL_Trans ?
     Dim rowToBeUsed As Long
-    rowToBeUsed = wshGL_Trans.Range("A99999").End(xlUp).row + 1
+    rowToBeUsed = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row + 1
     
     Dim i As Long, j As Long
     'Loop through the array and post each row
@@ -270,7 +270,7 @@ Sub GL_BV_Ajouter_Shape_Retour()
 
     'Trouver la dernière ligne de la plage L4:T*
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "M").End(xlUp).row
+    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Calculer les positions (Left & Top) du bouton
     leftPosition = ws.Range("T" & lastRow).Left
@@ -291,6 +291,10 @@ Sub GL_BV_Ajouter_Shape_Retour()
         .OnAction = "GL_BV_Effacer_Zone_Et_Shape"
     End With
     
+    'Libérer la mémoire
+    Set btn = Nothing
+    Set ws = Nothing
+    
     Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", startTime)
 
 End Sub
@@ -303,12 +307,12 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     Dim ws As Worksheet: Set ws = ActiveSheet
     
     Application.EnableEvents = False
-    ws.Range("L1:T" & ws.Cells(ws.rows.count, "M").End(xlUp).row).Offset(3, 0).Clear
+    ws.Range("L1:T" & ws.Cells(ws.Rows.count, "M").End(xlUp).row).offset(3, 0).Clear
     Application.EnableEvents = True
 
     'Trouver la dernière ligne de la plage M4:T*
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "M").End(xlUp).row
+    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Supprimer la shape
     On Error Resume Next
@@ -321,6 +325,9 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     Application.EnableEvents = False
     ws.Range("C4").Select
     Application.EnableEvents = True
+    
+    'Libérer la mémoire
+    Set ws = Nothing
     
     Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", startTime)
 

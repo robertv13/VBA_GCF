@@ -149,7 +149,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
@@ -165,7 +165,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 
@@ -173,4 +173,20 @@ Clean_Exit:
 
         Application.EnableEvents = True
 
+End Sub
+
+Private Sub cbTous_Click()
+
+    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
+    
+    Dim i As Long
+    With lb.Object
+        For i = 0 To .ListCount - 1
+            .Selected(i) = Not (.Selected(i))
+        Next i
+    End With
+
+    'Libérer la mémoire
+    Set lb = Nothing
+    
 End Sub

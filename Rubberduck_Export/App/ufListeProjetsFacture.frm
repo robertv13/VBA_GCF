@@ -2,8 +2,8 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Demandes de factures à préparer"
    ClientHeight    =   6435
-   ClientLeft      =   120
-   ClientTop       =   465
+   ClientLeft      =   180
+   ClientTop       =   690
    ClientWidth     =   9405.001
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
@@ -20,7 +20,7 @@ Private Sub UserForm_Initialize()
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     Dim arr() As Variant
@@ -82,7 +82,7 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     rowSelected = lsbProjetsFacture.ListIndex
     nomClient = lsbProjetsFacture.List(rowSelected, 0)
     dte = CDate(lsbProjetsFacture.List(rowSelected, 1))
-'    Debug.Print "lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
+'    Debug.Print "#017 - lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
     projetID = lsbProjetsFacture.List(rowSelected, 3)
     
@@ -90,9 +90,9 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     wshFAC_Brouillon.Range("B51").value = nomClient
     wshFAC_Brouillon.Range("B52").value = projetID
-'    Debug.Print "lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
+'    Debug.Print "#018 - lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
     wshFAC_Brouillon.Range("B53").value = dte
-'    Debug.Print "lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
+'    Debug.Print "#019 - lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
     wshFAC_Brouillon.Range("B54").value = honorairesTotal
     
     Application.EnableEvents = True

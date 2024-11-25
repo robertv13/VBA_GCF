@@ -12,7 +12,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     
     'Clear TB cells - Contents & formats
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_BV.Cells(wshGL_BV.rows.count, "D").End(xlUp).row
+    lastUsedRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row
     wshGL_BV.Unprotect '2024-08-24 @ 16:38
     Application.EnableEvents = False
     wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).Clear
@@ -39,7 +39,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     Call GL_Get_Account_Trans_AF("", #7/31/2024#, dateCutOff, rngResultAF)
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     
-    lastUsedRow = rngResultAF.rows.count
+    lastUsedRow = rngResultAF.Rows.count
     If lastUsedRow < 2 Then Exit Sub
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
@@ -60,7 +60,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
 '        t1 = t1 + rngResultAF.Cells(i, 7).value
 '        t2 = t2 + rngResultAF.Cells(i, 8).value
         If Not dictSolde.Exists(glNo) Then
-            dictSolde.Add glNo, newRowID
+            dictSolde.add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
             newRowID = newRowID + 1
         End If
@@ -69,8 +69,8 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
         arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + rngResultAF.Cells(i, 7).value - rngResultAF.Cells(i, 8).value
     Next i
     
-    t1 = Application.WorksheetFunction.Sum(rngResultAF.columns(7))
-    t2 = Application.WorksheetFunction.Sum(rngResultAF.columns(8))
+    t1 = Application.WorksheetFunction.Sum(rngResultAF.Columns(7))
+    t2 = Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
     
     Dim sumDT As Currency, sumCT As Currency, GLNoPlusDesc As String
     Dim currRow As Long: currRow = 4
@@ -190,11 +190,11 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         .Range("B7").value = GLDesc
     End With
     
-    'Use the Advanced Filter Result already prepared for TB
+    'Use the AdvancedFilter Result already prepared for TB
     Dim row As Range, foundRow As Long, lastResultUsedRow As Long
-    lastResultUsedRow = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row
+    lastResultUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "P").End(xlUp).row
     If lastResultUsedRow <= 2 Then
-        GoTo Exit_sub
+        GoTo Exit_Sub
     End If
     foundRow = 0
     
@@ -234,7 +234,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
             'Traitement des transactions détaillées
             d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, wshAdmin.Range("B1").value)
             If d >= minDate And d <= maxDate Then
-                .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).value
+                .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).Value2
+                .Range("M" & rowGLDetail).NumberFormat = wshAdmin.Range("B1").value
                 .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
                 .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
                 .Range("O" & rowGLDetail).value = wshGL_Trans.Range("R" & foundRow).value
@@ -265,7 +266,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     End With
         
     Dim rng As Range
-    lastResultUsedRow = ws.Range("M9999").End(xlUp).row
+    lastResultUsedRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
     Set rng = ws.Range("M5:T" & lastResultUsedRow)
     
     'Fix font size & Family for the detailled transactions list
@@ -288,7 +289,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     rng.ColumnWidth = 35
 
     Dim visibleRows As Long
-    visibleRows = ActiveWindow.visibleRange.rows.count
+    visibleRows = ActiveWindow.visibleRange.Rows.count
     If lastResultUsedRow > visibleRows Then
         ActiveWindow.ScrollRow = lastResultUsedRow - visibleRows + 5 'Move to the bottom of the worksheet
     Else
@@ -299,7 +300,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     ws.Unprotect
     With ws.Range("M5:T" & lastResultUsedRow)
         On Error Resume Next
-        .FormatConditions.Add _
+        .FormatConditions.add _
             Type:=xlExpression, _
             Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
         .FormatConditions(.FormatConditions.count).SetFirstPriority
@@ -322,7 +323,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
 
     Call GL_BV_Ajouter_Shape_Retour
     
-Exit_sub:
+Exit_Sub:
 
     Application.ScreenUpdating = True
     
@@ -450,12 +451,18 @@ Sub GL_BV_Determine_From_And_To_Date(period As String)
 
 End Sub
 
+Sub shp_GL_BV_Impression_BV_Click()
+
+    Call GL_BV_Setup_And_Print
+
+End Sub
+
 Sub GL_BV_Setup_And_Print()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", 0)
     
     Dim lastRow As Long
-    lastRow = Range("D999").End(xlUp).row + 2
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row + 2
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
@@ -479,12 +486,22 @@ Sub GL_BV_Setup_And_Print()
 
 End Sub
 
+Sub shp_GL_BV_Setup_And_Print_Trans_Click()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", 0)
+    
+    Call GL_BV_Setup_And_Print_Trans
+
+    Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", startTime)
+
+End Sub
+
 Sub GL_BV_Setup_And_Print_Trans()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", 0)
     
     Dim lastRow As Long
-    lastRow = Range("M9999").End(xlUp).row
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).row
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
@@ -512,52 +529,73 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", 0)
     
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.Calculation = xlCalculationManual
+
     With ActiveSheet.PageSetup
-        .PrintTitleRows = ""
-        .PrintTitleColumns = ""
+'        .PrintTitleRows = ""
+'        .PrintTitleColumns = ""
         .PaperSize = xlPaperLetter
         .Orientation = xlPortrait
         .PrintArea = myPrintRange.Address 'Parameter 1
         .FitToPagesWide = 1
         .FitToPagesTall = pagesTall 'Parameter 2
+        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1 is completed", -1)
+        
         'Page Header & Footer
-        .LeftHeader = ""
+'        .LeftHeader = ""
         .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wshAdmin.Range("NomEntreprise").value
-        .RightHeader = ""
+        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
+        
+'        .RightHeader = ""
         .LeftFooter = "&9&D - &T"
-        .CenterFooter = ""
+'        .CenterFooter = ""
         .RightFooter = "&9Page &P de &N"
+        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.B is completed", -1)
+        
         'Page Margins
+        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 is starting", -1)
         .LeftMargin = Application.InchesToPoints(0.16)
         .RightMargin = Application.InchesToPoints(0.16)
+         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Left & Right) margins", -1)
+         
         .TopMargin = Application.InchesToPoints(0.75)
         .BottomMargin = Application.InchesToPoints(0.75)
+         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Top & Bottom) margins", -1)
+         
         .CenterHorizontally = True
         .CenterVertically = False
+         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Center Horizontal & Vertical)", -1)
+         
         'Header and Footer margins
         .HeaderMargin = Application.InchesToPoints(0.16)
         .FooterMargin = Application.InchesToPoints(0.16)
-        .PrintHeadings = False
-        .PrintGridlines = False
-        .PrintComments = xlPrintInPlace
+        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Header & Footer) margins", -1)
+        
+'        .PrintHeadings = False
+'        .PrintGridlines = False
+'        .PrintComments = xlPrintInPlace
 '        .PrintQuality = -3
-        .Draft = False
-        .FirstPageNumber = xlAutomatic
-        .Order = xlDownThenOver
-        .BlackAndWhite = False
-        .Zoom = False
-        .PrintErrors = xlPrintErrorsDisplayed
-        .OddAndEvenPagesHeaderFooter = False
-        .DifferentFirstPageHeaderFooter = False
+'        .Draft = False
+'        .FirstPageNumber = xlAutomatic
+'        .Order = xlDownThenOver
+'        .BlackAndWhite = False
+'        .Zoom = False
+'        .PrintErrors = xlPrintErrorsDisplayed
+'        .OddAndEvenPagesHeaderFooter = False
+'        .DifferentFirstPageHeaderFooter = False
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
     End With
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
 
-'    Application.Dialogs(xlDialogPrint).show
-'    ActiveSheet.PageSetup.PrintArea = ""
+    Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Speed Measure", -1)
     
     wshGL_BV.PrintPreview '2024-08-15 @ 14:53
-'    wshGL_BV.PrintOut , , 1, True, True, , , , False
  
     Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", startTime)
  
@@ -621,7 +659,7 @@ Sub wshGL_BV_Adjust_The_Shape()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:wshGL_BV_Adjust_The_Shape", 0)
     
     Dim lastResultRow As Long
-    lastResultRow = wshGL_Trans.Range("AC999").End(xlUp).row
+    lastResultRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "AC").End(xlUp).row
     If lastResultRow < 2 Then Exit Sub
     
     Dim rowSelected As Long
@@ -716,9 +754,8 @@ Sub GL_BV_Hide_Dynamic_Shape()
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoFalse
 
-'    If Not dynamicShape Is Nothing Then
-'        dynamicShape.Visible = False
-'    End If
+    'Libérer la mémoire
+    Set shp = Nothing
     
 End Sub
 

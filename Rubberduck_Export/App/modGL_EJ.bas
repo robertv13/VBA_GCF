@@ -117,6 +117,9 @@ Sub JE_Renversement_Update()
     Application.ScreenUpdating = True
     DoEvents
     
+    'Libérer la mémoire
+    Set shp = Nothing
+    
     Call Log_Record("modGL_EJ:JE_Renversement_Update", startTime)
     
 End Sub
@@ -126,10 +129,10 @@ Sub Save_EJ_Recurrente(ll As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", 0)
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Range("E99").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).row  'Last Used Row in wshGL_EJ
     
-    Call GL_EJ_Auto_Add_Record_To_DB(ll)
-    Call GL_EJ_Auto_Add_Record_Locally(ll)
+    Call GL_EJ_Recurrente_Add_Record_To_DB(ll)
+    Call GL_EJ_Recurrente_Add_Record_Locally(ll)
     
     Call Log_Record("modGL_EJ:Save_EJ_Recurrente", startTime)
     
@@ -141,7 +144,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
-    rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "A").End(xlUp).row  'Last Row used in wshGL_EJRecuurente
+    rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row  'Last Row used in wshGL_EJRecuurente
     
     Call GL_EJ_Clear_All_Cells
     rowJE = 9
@@ -195,6 +198,9 @@ Sub GL_EJ_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
     
+    'Libérer la mémoire
+    Set cell = Nothing
+    
     Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", startTime)
 
 End Sub
@@ -222,8 +228,8 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     
     Dim rngResultAF As Range
     Call GL_Get_Account_Trans_AF("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
-    cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.columns(7)) _
-                    - Application.WorksheetFunction.Sum(rngResultAF.columns(8))
+    cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
+                    - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
     With wshGL_EJ.Range("P10")
         .Font.Bold = True
@@ -381,14 +387,14 @@ Sub GL_EJ_Renverser_Ecriture()
     '2. Affiche l'écriture à renverser
     Call GL_Get_JE_Detail_Trans_AF(no_Ecriture)
     Dim lastUsedRowResult As Long
-    lastUsedRowResult = ws.Cells(ws.rows.count, "AC").End(xlUp).row
+    lastUsedRowResult = ws.Cells(ws.Rows.count, "AC").End(xlUp).row
     If lastUsedRowResult < 2 Then
         MsgBox "Je ne retrouve pas l'écriture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
                 "Veuillez vérifier votre numéro et reessayez", vbInformation, "Numéro d'écriture invalide"
         Exit Sub
     End If
     Dim rngResult As Range
-    Set rngResult = ws.Range("AC1").CurrentRegion.Offset(1, 0)
+    Set rngResult = ws.Range("AC1").CurrentRegion.offset(1, 0)
     If InStr(rngResult.Cells(1, 4).value, "ENCAISSEMENT:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).value, "DÉBOURSÉ:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).value, "FACTURE:") <> 0 Or _
@@ -405,20 +411,20 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = False
     wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wshAdmin.Range("B1").value)
     wshGL_EJ.Range("F6").value = rngResult.Cells(1, 3).value
-    Dim ligne As Range
+    Dim Ligne As Range
     Dim l As Long: l = 9
-    For Each ligne In rngResult.rows
-        wshGL_EJ.Range("E" & l).value = ligne.Cells(6).value
-        If ligne.Cells(7).value <> 0 Then
-            wshGL_EJ.Range("H" & l).value = ligne.Cells(7).value
+    For Each Ligne In rngResult.Rows
+        wshGL_EJ.Range("E" & l).value = Ligne.Cells(6).value
+        If Ligne.Cells(7).value <> 0 Then
+            wshGL_EJ.Range("H" & l).value = Ligne.Cells(7).value
         End If
-        If ligne.Cells(8).value <> 0 Then
-            wshGL_EJ.Range("I" & l).value = ligne.Cells(8).value
+        If Ligne.Cells(8).value <> 0 Then
+            wshGL_EJ.Range("I" & l).value = Ligne.Cells(8).value
         End If
-        wshGL_EJ.Range("J" & l).value = ligne.Cells(9).value
-        wshGL_EJ.Range("L" & l).value = ligne.Cells(5).value
+        wshGL_EJ.Range("J" & l).value = Ligne.Cells(9).value
+        wshGL_EJ.Range("L" & l).value = Ligne.Cells(5).value
         l = l + 1
-    Next ligne
+    Next Ligne
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
@@ -430,12 +436,12 @@ Sub GL_EJ_Renverser_Ecriture()
     Set shp = wshGL_EJ.Shapes("btnUpdate")
     Call Modifier_Forme(shp)
     
-    '3. Confirme que l'utilisateur accepte le renversement OU annule
+    'Libérer la mémoire
+    Set Ligne = Nothing
+    Set rngResult = Nothing
+    Set shp = Nothing
+    Set ws = Nothing
     
-    '4. Effectue le renversement
-    
-    '5. Affiche que le renversement a fonctionné
-
 End Sub
 
 Sub GL_EJ_Depot_Client()
@@ -492,7 +498,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     On Error GoTo 0
     
     'Ajouter la validation de données
-    cell.Validation.Add Type:=xlValidateList, _
+    cell.Validation.add Type:=xlValidateList, _
                         AlertStyle:=xlValidAlertStop, _
                         Operator:=xlBetween, _
                         Formula1:="=" & ThisWorkbook.Names(nomPlage).Name
@@ -512,6 +518,9 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
         End With
     End If
     
+    'Libérer la mémoire
+    Set ws = Nothing
+    
 End Sub
 
 Sub AnnulerValidation(cell As Range)
@@ -520,16 +529,16 @@ Sub AnnulerValidation(cell As Range)
     
 End Sub
 
-Sub GL_EJ_Auto_Build_Summary()
+Sub GL_EJ_Recurrente_Build_Summary()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "A").End(xlUp).row
+    lastUsedRow1 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.rows.count, "I").End(xlUp).row
+    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "I").End(xlUp).row
     If lastUsedRow2 > 1 Then
         wshGL_EJ_Recurrente.Range("I2:J" & lastUsedRow2).ClearContents
     End If
@@ -547,7 +556,7 @@ Sub GL_EJ_Auto_Build_Summary()
         Next i
     End With
 
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Build_Summary", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", startTime)
 
 End Sub
 
@@ -575,7 +584,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("AC1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("AC1:AK1")
     ws.Range("AA9").value = rngResult.Address
     
@@ -587,7 +596,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
         
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "AC").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "AC").End(xlUp).row
     ws.Range("AA10").value = lastUsedRow - 1 & " lignes"
 
     'On tri les résultats par noGL / par date?
@@ -595,12 +604,12 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On noGL
-            .SortFields.Add key:=ws.Range("AG2"), _
+            .SortFields.add key:=ws.Range("AG2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.Add key:=ws.Range("AD2"), _
+            .SortFields.add key:=ws.Range("AD2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -609,7 +618,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
          End With
     End If
     
-    'Libérer les objets
+    'Libérer la mémoire
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -628,7 +637,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans"
+    destinationTab = "GL_Trans$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -637,7 +646,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -662,7 +671,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
 '
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Read all line from Journal Entry
     Dim l As Long
@@ -715,7 +724,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -748,16 +757,16 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
 
 End Sub
 
-Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", 0)
 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_EJ_Auto"
+    destinationTab = "GL_EJ_Recurrente$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -766,7 +775,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJANo As Long
-    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -786,7 +795,7 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     For l = 9 To r
@@ -814,13 +823,13 @@ Sub GL_EJ_Auto_Add_Record_To_DB(r As Long) 'Write/Update a record to external .x
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_To_DB", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", startTime)
 
 End Sub
 
-Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
+Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -830,7 +839,7 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Range("C999").End(xlUp).row
+    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -849,11 +858,11 @@ Sub GL_EJ_Auto_Add_Record_Locally(r As Long) 'Write records to local file
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call GL_EJ_Auto_Build_Summary '2024-03-14 @ 07:40
+    Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:40
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_EJ:GL_EJ_Auto_Add_Record_Locally", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", startTime)
     
 End Sub
 
@@ -868,6 +877,9 @@ Sub GL_EJ_Back_To_Menu()
     
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
+    
+    'Libérer la mémoire
+    Set shp = Nothing
     
 End Sub
 
@@ -887,6 +899,10 @@ Sub Sauvegarder_Forme(forme As Shape)
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    
+    'Libérer la mémoire
+    Set sauvegardesCaracteristiquesForme = Nothing
+    Set ws = Nothing
     
 End Sub
 

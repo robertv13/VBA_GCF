@@ -1,6 +1,40 @@
 Attribute VB_Name = "modDevTools"
 Option Explicit
 
+Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As Range)
+    
+    On Error Resume Next
+    'Récupérer la formule associée au nom
+    Dim refersToFormula As String
+    refersToFormula = ThisWorkbook.Names(dynamicRangeName).RefersTo
+    On Error GoTo 0
+    
+    If refersToFormula = "" Then
+        MsgBox "La plage nommée '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
+        Exit Sub
+    End If
+    
+    'Tester et évaluer la plage
+    On Error Resume Next
+    Set rng = Application.Evaluate(refersToFormula)
+    On Error GoTo 0
+    
+    If rng Is Nothing Then
+        MsgBox "Impossible de résoudre la plage nommée dynamique '" & dynamicRangeName & "'. Vérifiez la définition.", vbExclamation
+        Exit Sub
+    End If
+    
+    'Afficher les valeurs
+    Dim cell As Range
+    For Each cell In rng
+        Debug.Print "#043 - " & cell.Address & ": " & cell.value
+    Next cell
+    
+    'Libérer la mémoire
+    Set cell = Nothing
+        
+End Sub
+
 Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     
     Dim circRef As String
@@ -61,7 +95,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     r = r + 1: arr(r, 1) = "FAC_Entête": arr(r, 2) = "A3:T3"
     r = r + 1: arr(r, 1) = "FAC_Détails": arr(r, 2) = "A3:G3"
     r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
-    r = r + 1: arr(r, 1) = "GL_EJ_Auto": arr(r, 2) = "C1:J1"
+    r = r + 1: arr(r, 1) = "GL_EJ_Recurrente": arr(r, 2) = "C1:J1"
     r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
     r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
     r = 1
@@ -84,7 +118,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A999").End(xlUp).row 'Last Used Row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row 'Last Used Row
     wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
     
     wsOutput.Range("A2").Resize(r, 5).value = output
@@ -141,8 +175,8 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         
         Dim i As Integer
         For i = 1 To nbCol
-            Set col1 = wso.columns(i)
-            Set col2 = wsn.columns(i)
+            Set col1 = wso.Columns(i)
+            Set col2 = wsn.Columns(i)
             readColumns = readColumns + 1
             
             'Compare Font Name
@@ -197,8 +231,8 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         
     Next wso
     
-    wsDiff.columns.AutoFit
-    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
+    wsDiff.Columns.AutoFit
+    wsDiff.Range("B:E").Columns.HorizontalAlignment = xlCenter
     
     'Result print setup - 2024-08-05 @ 05:16
     diffRow = diffRow + 2
@@ -287,20 +321,20 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         Do
             nbColProd = nbColProd + 1
             arr(nbColProd) = wsProd.Cells(1, nbColProd).value
-            Debug.Print wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).value
+            Debug.Print "#044 - " & wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).value
         Loop Until wsProd.Cells(1, nbColProd).value = ""
         nbColProd = nbColProd - 1
-        nbRowProd = wsProd.Cells(wsProd.rows.count, "A").End(xlUp).row
+        nbRowProd = wsProd.Cells(wsProd.Rows.count, 1).End(xlUp).row
         
         'Determine number of columns and rows in Dev Workbook
         Dim nbColDev As Integer, nbRowDev As Long
         nbColDev = 0
         Do
             nbColDev = nbColDev + 1
-            Debug.Print wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).value
+            Debug.Print "#045 - " & wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).value
         Loop Until wsProd.Cells(1, nbColDev).value = ""
         nbColDev = nbColDev - 1
-        nbRowDev = wsDev.Cells(wsDev.rows.count, "A").End(xlUp).row
+        nbRowDev = wsDev.Cells(wsDev.Rows.count, 1).End(xlUp).row
         
         diffRow = diffRow + 2
         wsDiff.Cells(diffRow, 1).value = wsName
@@ -322,23 +356,23 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         Dim rowProd As Range, rowDev As Range
         Dim i As Long, prevI As Long, j As Integer
         For i = 1 To nbRow
-            Set rowProd = wsProd.rows(i)
-            Set rowDev = wsDev.rows(i)
+            Set rowProd = wsProd.Rows(i)
+            Set rowDev = wsDev.Rows(i)
             readRows = readRows + 1
             
             For j = 1 To nbColProd
-                If wsProd.rows.Cells(i, j).value <> wsDev.rows.Cells(i, j).value Then
+                If wsProd.Rows.Cells(i, j).value <> wsDev.Rows.Cells(i, j).value Then
                     diffLogMess = diffLogMess & "Cell(" & i & "," & j & ") was '" & _
-                                  wsProd.rows.Cells(i, j).value & "' is now '" & _
-                                  wsDev.rows.Cells(i, j).value & "'" & vbCrLf
+                                  wsProd.Rows.Cells(i, j).value & "' is now '" & _
+                                  wsDev.Rows.Cells(i, j).value & "'" & vbCrLf
                     diffRow = diffRow + 1
                     If i <> prevI Then
                         wsDiff.Cells(diffRow, 6).value = "Ligne # " & i
                         prevI = i
                     End If
                     wsDiff.Cells(diffRow, 7).value = j & "-" & arr(j)
-                    wsDiff.Cells(diffRow, 8).value = wsProd.rows.Cells(i, j).value
-                    wsDiff.Cells(diffRow, 9).value = wsDev.rows.Cells(i, j).value
+                    wsDiff.Cells(diffRow, 8).value = wsProd.Rows.Cells(i, j).value
+                    wsDiff.Cells(diffRow, 9).value = wsDev.Rows.Cells(i, j).value
                 End If
             Next j
             
@@ -346,9 +380,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         
     Next wsProd
     
-    wsDiff.columns.AutoFit
-    wsDiff.Range("B:E").columns.HorizontalAlignment = xlCenter
-    wsDiff.Range("F:I").columns.HorizontalAlignment = xlLeft
+    wsDiff.Columns.AutoFit
+    wsDiff.Range("B:E").Columns.HorizontalAlignment = xlCenter
+    wsDiff.Range("F:I").Columns.HorizontalAlignment = xlLeft
     
     'Result print setup - 2024-08-20 @ 05:48
     diffRow = diffRow + 2
@@ -398,12 +432,12 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Configuration des filtres de fichiers (TXT uniquement)
     fd.Title = "Sélectionnez un fichier TXT"
     fd.Filters.Clear
-    fd.Filters.Add "Fichiers Texte", "*.txt"
+    fd.Filters.add "Fichiers Texte", "*.txt"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim filePath As String
+    Dim FilePath As String
     If fd.show = -1 Then
-        filePath = fd.selectedItems(1)
+        FilePath = fd.selectedItems(1)
     Else
         MsgBox "Aucun fichier sélectionné.", vbExclamation
         Exit Sub
@@ -412,22 +446,22 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Ouvre le fichier en mode lecture
     Dim FileNum As Integer
     FileNum = FreeFile
-    Open filePath For Input As FileNum
+    Open FilePath For Input As FileNum
     
     'Initialise la ligne de départ pour insérer les données dans Excel
     Dim ligneNum As Long
     ligneNum = 1
     
     'Lire chaque ligne du fichier
-    Dim ligne As String
+    Dim Ligne As String
     Dim champs() As String
     Dim j As Long
 
     Do While Not EOF(FileNum)
-        Line Input #FileNum, ligne
+        Line Input #FileNum, Ligne
         
         'Séparer les champs par le séparateur " | "
-        champs = Split(ligne, " | ")
+        champs = Split(Ligne, " | ")
         
         'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
@@ -457,13 +491,13 @@ Sub Fix_Date_Format()
     'Configuration des filtres de fichiers (Excel uniquement)
     fd.Title = "Sélectionnez un fichier Excel"
     fd.Filters.Clear
-    fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
+    fd.Filters.add "Fichiers Excel", "*.xlsx; *.xlsm"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim filePath As String
+    Dim FilePath As String
     Dim fileSelected As Boolean
     If fd.show = -1 Then
-        filePath = fd.selectedItems(1)
+        FilePath = fd.selectedItems(1)
         fileSelected = True
     Else
         MsgBox "Aucun fichier sélectionné.", vbExclamation
@@ -473,7 +507,7 @@ Sub Fix_Date_Format()
     'Ouvrir le fichier sélectionné s'il y en a un
     Dim wb As Workbook
     If fileSelected Then
-        Set wb = Workbooks.Open(filePath)
+        Set wb = Workbooks.Open(FilePath)
         
         'Définir les colonnes spécifiques à nettoyer pour chaque feuille
         Dim colonnesANettoyer As Dictionary
@@ -494,7 +528,7 @@ Sub Fix_Date_Format()
 '        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
 '
 '        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
-        colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
+        colonnesANettoyer.add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
         
         'Parcourir chaque feuille définie dans le dictionnaire
         Dim ws As Worksheet
@@ -508,7 +542,7 @@ Sub Fix_Date_Format()
             'Vérifier si la feuille existe dans le classeur
             On Error Resume Next
             Set ws = wb.Sheets(wsName)
-            Debug.Print wsName
+            Debug.Print "#046 - " & wsName
             On Error GoTo 0
             
             If Not ws Is Nothing Then
@@ -518,13 +552,13 @@ Sub Fix_Date_Format()
                 'Parcourir chaque colonne spécifiée
                 For Each col In cols
                     'Parcourir chaque cellule de la colonne spécifiée
-                    For Each cell In ws.columns(col).SpecialCells(xlCellTypeConstants)
+                    For Each cell In ws.Columns(col).SpecialCells(xlCellTypeConstants)
                         'Vérifier si la cellule contient une date avec une heure
                         If IsDate(cell.value) Then
                             'Vérifier si la valeur contient des heures (fraction décimale)
                             If cell.value <> Int(cell.value) Then
                                 'Garde uniquement la partie date (sans heure)
-                                Debug.Print "", wsName & " - " & col & " - " & cell.value
+                                Debug.Print "#047 - ", wsName & " - " & col & " - " & cell.value
                                 dateOnly = Int(cell.value)
                                 cell.value = dateOnly
                             End If
@@ -557,15 +591,15 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     Dim lurTEC As Long
-    lurTEC = wsTEC.Cells(wsTEC.rows.count, "A").End(xlUp).row
+    lurTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
     
     Dim wsTDB As Worksheet: Set wsTDB = wshTEC_TDB_Data
     Dim lurTDB As Long
-    lurTDB = wsTDB.Cells(wsTDB.rows.count, "A").End(xlUp).row
+    lurTDB = wsTDB.Cells(wsTDB.Rows.count, 1).End(xlUp).row
     
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocAnalyseÉcartTEC
     Dim lastUsed As Long
-    lastUsed = wsOutput.Cells(wsOutput.rows.count, "A").End(xlUp).row + 2
+    lastUsed = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row + 2
     wsOutput.Range("A2:D" & lastUsed).ClearContents
     
     wsOutput.Cells(1, 1).value = "TECID"
@@ -583,7 +617,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     
     Dim h As Currency, hTEC As Currency
     'Boucle dans TEC_Local
-    Debug.Print "Mise en mémoire TEC_LOCAL"
+    Debug.Print "#048 - Mise en mémoire TEC_LOCAL"
     For i = 3 To lurTEC
         With wsTEC
             If .Range("D" & i).value > dateCutOff Then Stop
@@ -610,7 +644,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     
     'Boucle dans TEC_TDB
     Dim hTDB As Double
-    Debug.Print "Mise en mémoire TEC_TDB"
+    Debug.Print "#049 - Mise en mémoire TEC_TDB"
     For i = 2 To lurTDB
         With wsTDB
             If .Range("D" & i).value > dateCutOff Then Stop
@@ -620,12 +654,12 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
         End With
     Next i
     
-    Debug.Print "Analyse des écarts"
+    Debug.Print "#050 - Analyse des écarts"
     Dim tTEC As Double, tTDB As Double
     Dim r As Long: r = 2
-    wsOutput.columns(2).EntireColumn.NumberFormat = "##0.00"
+    wsOutput.Columns(2).EntireColumn.NumberFormat = "##0.00"
     wsOutput.Range("B:B").HorizontalAlignment = xlRight
-    wsOutput.columns(3).EntireColumn.NumberFormat = "##0.00"
+    wsOutput.Columns(3).EntireColumn.NumberFormat = "##0.00"
     wsOutput.Range("C:C").HorizontalAlignment = xlRight
     
     For i = 1 To 5000
@@ -645,7 +679,110 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     wsOutput.Cells(r + 1, 2).value = Round(tTEC, 2)
     wsOutput.Cells(r + 1, 3).value = Round(tTDB, 2)
     
-    Debug.Print "Totaux", Round(tTEC, 2), Round(tTDB, 2)
+    'Libérer la mémoire
+    Set wsOutput = Nothing
+    Set wsTEC = Nothing
+    Set wsTDB = Nothing
+    
+    Debug.Print "#051 - Totaux", Round(tTEC, 2), Round(tTDB, 2)
+    
+End Sub
+
+Sub Analyse_Search_For_Memory_Management()
+
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Cas")
+    wsOutput.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+    
+    Dim lastUsedRow As Long, r As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    r = 2
+    
+    Dim ligneCode As String, moduleName As String, procName As String
+    Dim ObjetSet As String, objetForEach As String, objetNothing As String
+    
+    Dim added As String, cleared As String
+    Dim i As Long
+    For i = 2 To lastUsedRow
+        If ws.Cells(i, 5).value = "" Then
+            Call SortDelimitedString(added, "|")
+            Call SortDelimitedString(cleared, "|")
+            If added <> cleared Then
+                wsOutput.Cells(r, 1).value = moduleName
+                wsOutput.Cells(r, 2).value = procName
+                wsOutput.Cells(r, 3).value = "'+ " & added
+                wsOutput.Cells(r + 1, 3).value = "'- " & cleared
+                r = r + 3
+            End If
+            If ws.Cells(i + 1, 5).value <> "" Then
+                moduleName = ws.Cells(i + 1, 3).value
+                procName = ws.Cells(i + 1, 5).value
+            Else
+                procName = ""
+            End If
+            added = ""
+            cleared = ""
+            GoTo Next_For
+        End If
+        ligneCode = Trim(ws.Cells(i, 6))
+'        If InStr(ligneCode, "= Nothing") Then
+'            If InStr(ligneCode, " recSet ") = 0 Then
+'                ligneCode = Replace(ligneCode, "Set", "set")
+'            End If
+'        End If
+        If InStr(ligneCode, "recSet As ") Then
+            ligneCode = Replace(ligneCode, "recSet As ", "resste As ")
+        End If
+        If InStr(ligneCode, ".Recordset") Then
+            ligneCode = Replace(ligneCode, ".Recordset", ".RecordSET")
+        End If
+        If InStr(ligneCode, ".offset") Then
+            ligneCode = Replace(ligneCode, ".offset", ".offSET")
+        End If
+        If InStr(ligneCode, ".Offset") Then
+            ligneCode = Replace(ligneCode, ".Offset", ".OffSET")
+        End If
+        
+        ObjetSet = ""
+        objetForEach = ""
+        objetNothing = ""
+        'Déclaration de l'objet avec Set...
+        If InStr(ligneCode, "Set ") <> 0 Then
+            If Left(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
+                ObjetSet = Mid(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
+                ObjetSet = Left(ObjetSet, InStr(ObjetSet, " ") - 1)
+                If ObjetSet = "As" Then Stop
+                If InStr(added, ObjetSet & "|") = 0 Then
+                    added = added + ObjetSet + "|"
+                End If
+            Else
+                Debug.Print ligneCode
+            End If
+        End If
+        'Déclaration de l'objet avec For Each...
+        If InStr(ligneCode, "For Each ") <> 0 Then
+            objetForEach = Mid(ligneCode, InStr(ligneCode, "For Each ") + 9, Len(ligneCode))
+            objetForEach = Left(objetForEach, InStr(objetForEach, " ") - 1)
+            If objetForEach = "As" Then Stop
+            If InStr(added, objetForEach & "|") = 0 Then
+                added = added + objetForEach + "|"
+            End If
+        End If
+        'Libération de l'objet avec = Nothing
+        If InStr(ligneCode, " = Nothing") <> 0 Then
+            objetNothing = Mid(ligneCode, InStr(ligneCode, "Set") + 4, Len(ligneCode))
+            objetNothing = Left(objetNothing, InStr(objetNothing, " ") - 1)
+            If objetNothing = "" Then Stop
+            cleared = cleared + objetNothing + "|"
+        End If
+        
+Next_For:
+    Next i
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    Set wsOutput = Nothing
     
 End Sub
 

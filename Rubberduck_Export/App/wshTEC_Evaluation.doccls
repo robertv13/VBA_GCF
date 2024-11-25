@@ -7,7 +7,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", 0)
     
     If fromMenu = False Then
-        Debug.Print "wshTEC_Evaluation_Worksheet_Activate - Je ne viens pas du menu"
+        Debug.Print "#014 - wshTEC_Evaluation_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
 
@@ -27,7 +27,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
     'Révéler/masquer automatiquement les colonnes A et B
     Dim colsHidden As Boolean
-    colsHidden = ws.columns("A:B").Hidden
+    colsHidden = ws.Columns("A:B").Hidden
     If colsHidden = True Then
         ws.Unprotect
         ws.Range("A:B").EntireColumn.Hidden = False
@@ -40,20 +40,17 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     With ws
         .Range("A:B").EntireColumn.Hidden = True
         .Range("D3").value = ""
-        .Range("D6:K15").Clear
+        .Range("D6:L28").Clear
+        .Shapes("Impression").Visible = False
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
-        .Range("K3").value = ""
+        .Range("L3").value = ""
         Application.EnableEvents = True
-        previousCellAddress = .Range("K3").Address
-        .Range("K3").Select
+        previousCellAddress = .Range("L3").Address
+        .Range("L3").Select
     End With
 
-    'Désactive les événements pour éviter tout problème lors de la mise à jour
-    Application.EnableEvents = False
-    
-    'Reactive les événements
     Application.EnableEvents = True
     
     ws.Visible = xlSheetVisible
@@ -76,7 +73,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Is date been selected ?
-    If Not Intersect(Target, wshTEC_Evaluation.Range("K3")) Is Nothing Then
+    If Not Intersect(Target, wshTEC_Evaluation.Range("L3")) Is Nothing Then
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
     
@@ -91,7 +88,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim fullDate As Variant
     
     'CutOffDate has changed
-    If Not Intersect(Target, Range("K3")) Is Nothing Then
+    If Not Intersect(Target, Range("L3")) Is Nothing Then
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(Target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
@@ -101,16 +98,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("K3").value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("L3").value) > Format$(Now(), "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.value)

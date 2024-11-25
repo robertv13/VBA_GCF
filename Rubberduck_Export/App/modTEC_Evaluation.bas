@@ -20,12 +20,14 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
     
     Dim lastUsedRow As Long
-'    lurTEC = wshTEC_Local.Cells(wshTEC_Local.rows.count, "A").End(xlUp).row
-    lastUsedRow = wsSource.Cells(wsSource.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
     arr = wsSource.Range("A3:P" & lastUsedRow).value
+    
+    'Grande section
+    Dim offset As Long
     
     'Dictionaire pour accumuler les heures par professionnel
     Dim dictHours As Object: Set dictHours = CreateObject("Scripting.Dictionary")
@@ -92,23 +94,37 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
                 End Select
                 
                 If Not dictHours.Exists(profInit) Then
-                    dictHours.Add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
+                    dictHours.add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
+                                                  CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
+                                                  CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictHours(profInit) 'Obtenir le tableau a partir du dictionary
                 
+                'Détermine la section en fonction du client
+                If codeClient < "2000" Then
+                    offset = 0
+                Else
+                    offset = 5
+                End If
+                    
                 'Heures pour ce TEC
-                tableau(0) = tableau(0) + hresTEC
+                tableau(offset + 0) = tableau(offset + 0) + hresTEC
+                tableau(10 + 0) = tableau(10 + 0) + hresTEC
                 
                 'Accumule heures selon l'âge du TEC
                 Select Case trancheAge
                     Case "- de 30 jours"
-                        tableau(1) = tableau(1) + hresTEC
+                        tableau(offset + 1) = tableau(offset + 1) + hresTEC
+                        tableau(11) = tableau(11) + hresTEC
                     Case "31 @ 60 jours"
-                        tableau(2) = tableau(2) + hresTEC
-                    Case "61 @ 90 jours"
-                        tableau(3) = tableau(3) + hresTEC
+                        tableau(offset + 2) = tableau(offset + 2) + hresTEC
+                        tableau(12) = tableau(12) + hresTEC
+                  Case "61 @ 90 jours"
+                        tableau(offset + 3) = tableau(offset + 3) + hresTEC
+                        tableau(13) = tableau(13) + hresTEC
                     Case "+ de 90 jours"
-                        tableau(4) = tableau(4) + hresTEC
+                        tableau(offset + 4) = tableau(offset + 4) + hresTEC
+                        tableau(14) = tableau(14) + hresTEC
                     End Select
                 dictHours(profInit) = tableau 'Replacer le tableau dans le dictionnaire
             
@@ -128,74 +144,66 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim currentRow As Integer
     currentRow = 6
     
-    For Each prof In Fn_Sort_Dictionary_By_Keys(dictHours) 'Sort dictionary by keys in ascending order
-        strProf = Mid(prof, 4)
-        profID = Fn_GetID_From_Initials(strProf)
-        prenom = Fn_Get_Prenom_From_Initials(strProf)
-        nom = Fn_Get_Nom_From_Initials(strProf)
-        prenom = prenom & " " & Left(nom, 1) & "."
-        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("K3").value)
-        ws.Range("D" & currentRow).value = prenom
-        ws.Range("E" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("E" & currentRow).value = Format$(dictHours(prof)(0), "#,##0.00")
-        ws.Range("F" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("F" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
-        ws.Range("G" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("G" & currentRow).value = Format$(dictHours(prof)(0) * tauxHoraire, "###,##0.00 $")
-        ws.Range("H" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("H" & currentRow).value = Format$(dictHours(prof)(1), "#,##0.00")
-        ws.Range("I" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("I" & currentRow).value = Format$(dictHours(prof)(2), "#,##0.00")
-        ws.Range("J" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("J" & currentRow).value = Format$(dictHours(prof)(3), "#,##0.00")
-        ws.Range("K" & currentRow).HorizontalAlignment = xlRight
-        ws.Range("K" & currentRow).value = Format$(dictHours(prof)(4), "#,##0.00")
-        
-        Dim ii As Integer
-        For ii = 0 To 4
-            total(ii) = total(ii) + dictHours(prof)(ii)
-        Next ii
-        totalValeurTEC = totalValeurTEC + (dictHours(prof)(0) * tauxHoraire)
+    For i = 0 To 10 Step 5
+        If i = 0 Then
+            ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000'"
+        ElseIf i = 5 Then
+            ws.Range("D" & currentRow).value = "SEULEMENT les clients '2000'"
+        Else
+            ws.Range("D" & currentRow).value = "TOUS LES CLIENTS"
+        End If
+        ws.Range("D" & currentRow).Font.Bold = True
+        Erase total
+        totalValeurTEC = 0
         currentRow = currentRow + 1
-    Next prof
-    
-    currentRow = currentRow + 1
-    With ws.Range("d" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlLeft
-        .value = "* Totaux *"
-    End With
-    With ws.Range("E" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(total(0), "#,##0.00")
-    End With
-    With ws.Range("G" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(totalValeurTEC, "###,##0.00 $")
-    End With
-    With ws.Range("H" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(total(1), "#,##0.00")
-    End With
-    With ws.Range("I" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(total(2), "#,##0.00")
-    End With
-    With ws.Range("J" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(total(3), "#,##0.00")
-    End With
-    With ws.Range("K" & currentRow)
-        .Font.Bold = True
-        .HorizontalAlignment = xlRight
-        .value = Format$(total(4), "#,##0.00")
-    End With
         
+        For Each prof In Fn_Sort_Dictionary_By_Keys(dictHours) 'Sort dictionary by keys in ascending order
+            strProf = Mid(prof, 4)
+            profID = Fn_GetID_From_Initials(strProf)
+            prenom = Fn_Get_Prenom_From_Initials(strProf)
+            nom = Fn_Get_Nom_From_Initials(strProf)
+            prenom = prenom & " " & Left(nom, 1) & "."
+            tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
+            ws.Range("E" & currentRow).value = prenom
+            ws.Range("F" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("F" & currentRow).value = Format$(dictHours(prof)(i + 0), "#,##0.00")
+            ws.Range("G" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("G" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
+            ws.Range("H" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("H" & currentRow).value = Format$(dictHours(prof)(i + 0) * tauxHoraire, "###,##0.00 $")
+            ws.Range("I" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("I" & currentRow).value = Format$(dictHours(prof)(i + 1), "#,##0.00")
+            ws.Range("J" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("J" & currentRow).value = Format$(dictHours(prof)(i + 2), "#,##0.00")
+            ws.Range("K" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("K" & currentRow).value = Format$(dictHours(prof)(i + 3), "#,##0.00")
+            ws.Range("L" & currentRow).HorizontalAlignment = xlRight
+            ws.Range("L" & currentRow).value = Format$(dictHours(prof)(i + 4), "#,##0.00")
+            currentRow = currentRow + 1
+            
+            Dim ii As Integer
+            For ii = 0 To 4
+                total(ii) = total(ii) + dictHours(prof)(i + ii)
+            Next ii
+            
+            totalValeurTEC = totalValeurTEC + (dictHours(prof)(i) * tauxHoraire)
+
+        Next prof
+        
+        ws.Range("E" & currentRow).HorizontalAlignment = xlLeft
+        ws.Range("E" & currentRow & ":L" & currentRow).Font.Bold = True
+        ws.Range("F" & currentRow & ":L" & currentRow).HorizontalAlignment = xlRight
+        
+        ws.Range("E" & currentRow).value = "* Totaux *"
+        ws.Range("F" & currentRow).value = Format$(total(0), "#,##0.00")
+        ws.Range("H" & currentRow).value = Format$(totalValeurTEC, "###,##0.00 $")
+        ws.Range("I" & currentRow).value = Format$(total(1), "#,##0.00")
+        ws.Range("J" & currentRow).value = Format$(total(2), "#,##0.00")
+        ws.Range("K" & currentRow).value = Format$(total(3), "#,##0.00")
+        ws.Range("L" & currentRow).value = Format$(total(4), "#,##0.00")
+        currentRow = currentRow + 2
+    Next i
+    
     'Obtenir le solde d'ouverture & les transactions pour le compte TEC au Grand Livre
     Dim solde As Double
     solde = Fn_Get_GL_Account_Balance("1210", maxDate)
@@ -215,11 +223,51 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     End If
     ws.Range("D3").value = message
     
+    ws.Shapes("Impression").Visible = True
+    
     'Libérer la mémoire
     Set dictHours = Nothing
     Set prof = Nothing
     Set ws = Nothing
     Set wsSource = Nothing
+    
+End Sub
+
+Sub shp_Impression_Click()
+
+    Call Evaluation_Apercu_Avant_Impression
+
+End Sub
+
+Sub Evaluation_Apercu_Avant_Impression()
+
+    Dim ws As Worksheet: Set ws = wshTEC_Evaluation
+    
+    Dim rngToPrint As Range
+    Set rngToPrint = ws.Range("C1:M31")
+    
+    Application.EnableEvents = False
+
+    'Caractères pour le rapport
+    With rngToPrint.Font
+        .Name = "Aptos Narrow"
+        .size = 10
+    End With
+    
+    Application.EnableEvents = True
+    
+    DoEvents
+
+    Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").value
+    Dim header2 As String
+    
+    Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
+
+    ws.PrintPreview
+    
+    'Libérer la mémoire
+    Set rngToPrint = Nothing
+    Set ws = Nothing
     
 End Sub
 

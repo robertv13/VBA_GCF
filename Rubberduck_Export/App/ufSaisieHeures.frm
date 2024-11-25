@@ -2,8 +2,8 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
    ClientHeight    =   10470
-   ClientLeft      =   135
-   ClientTop       =   570
+   ClientLeft      =   195
+   ClientTop       =   780
    ClientWidth     =   15495
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
@@ -34,7 +34,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call TEC_Import_All
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.rows.count, "A").End(xlUp).row
+    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.Rows.count, 1).End(xlUp).row
     ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
@@ -108,13 +108,13 @@ Private Sub UserForm_Terminate()
         wshMenu.Select
     End If
     
-    GoTo Exit_sub
+    GoTo Exit_Sub
     
 MenuSelect:
     wshMenu.Activate
     wshMenu.Select
     
-Exit_sub:
+Exit_Sub:
 
     Call Log_Record("ufSaisieHeures:UserForm_Terminate", startTime)
 
@@ -245,36 +245,13 @@ End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate[" & ufSaisieHeures.txtDate.value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
     
-    Call Log_Saisie_Heures("event    ", "@00269 - .txtDate.value =  = " & ufSaisieHeures.txtDate.value & _
-                                        "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                                        "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                                        "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                                        "   type = " & TypeName(ufSaisieHeures.txtDate.value))
     If IsDate(ufSaisieHeures.txtDate.value) Then
         Dim dateStr As String, dateFormated As Date
         dateStr = ufSaisieHeures.txtDate.value
-        Call Log_Saisie_Heures("info     ", "@00277 - dateStr =  = " & dateStr & _
-                                            "   y = " & year(dateStr) & _
-                                            "   m = " & month(dateStr) & _
-                                            "   d = " & day(dateStr) & _
-                                            "   type = " & TypeName(dateStr) & _
-                                            "   après assignation")
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
-        Call Log_Saisie_Heures("info     ", "@00284 - dateFormated =  = " & dateFormated & _
-                                            "   y = " & year(dateFormated) & _
-                                            "   m = " & month(dateFormated) & _
-                                            "   d = " & day(dateFormated) & _
-                                            "   type = " & TypeName(dateFormated) & _
-                                            "   après assignation")
         ufSaisieHeures.txtDate.value = Format$(dateFormated, wshAdmin.Range("B1").value)
-        Call Log_Saisie_Heures("info     ", "@00291 - wshAdmin.Range('TEC_Date').value =  = " & ufSaisieHeures.txtDate.value & _
-                                            "   y = " & year(ufSaisieHeures.txtDate.value) & _
-                                            "   m = " & month(ufSaisieHeures.txtDate.value) & _
-                                            "   d = " & day(ufSaisieHeures.txtDate.value) & _
-                                            "   type = " & TypeName(ufSaisieHeures.txtDate.value) & _
-                                            "   après assignation")
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
@@ -339,10 +316,10 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit[" & Me.txtHeures.value & "]", 0)
     
-    Dim heure As Double
+    Dim heure As Currency
     
     On Error Resume Next
-    heure = CDbl(Me.txtHeures.value)
+    heure = CCur(Me.txtHeures.value)
     On Error GoTo 0
     
     If Not IsNumeric(Me.txtHeures.value) Then

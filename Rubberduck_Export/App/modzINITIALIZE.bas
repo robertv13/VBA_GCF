@@ -25,10 +25,10 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     For Each ws In wb.Worksheets
         ' Trouver la dernière ligne utilisée
         If InStr(ws.Name, "Admin") <> 1 Then
-            lastUsedRow = ws.Cells(ws.rows.count, 1).End(xlUp).row
+            lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
             'Supprimer toutes les lignes sauf la première (en-tête)
             If lastUsedRow > 1 Then
-                ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
+                ws.Range("A2").CurrentRegion.offset(1, 0).ClearContents
             End If
         End If
     Next ws
@@ -38,10 +38,10 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
 
     'Step 2 - Enlève les rangées d'une feuille locale
     Set ws = wshTEC_TDB_Data
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     'Supprimer toutes les lignes sauf la première (en-tête)
     If lastUsedRow > 1 Then
-        ws.Range("A2").CurrentRegion.Offset(1, 0).ClearContents
+        ws.Range("A2").CurrentRegion.offset(1, 0).ClearContents
         
         'Requires a minimum of one line (values)
         ws.Range("A2").value = 0
@@ -81,7 +81,7 @@ Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
     Call FAC_Projets_Détails_Import_All
     Call FAC_Projets_Entête_Import_All
     
-    Call GL_EJ_Auto_Import_All
+    Call GL_EJ_Recurrente_Import_All
     Call GL_Trans_Import_All
     
     Call TEC_Import_All

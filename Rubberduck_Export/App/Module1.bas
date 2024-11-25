@@ -14,3 +14,23 @@ Sub test_Input_Box()
     
 End Sub
 
+Sub Get_Last_Used_Row()
+
+    Dim ws As Worksheet: Set ws = wshTEC_Local
+    
+    'Dernière ligne utilisée
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    '-OU-
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    
+    'Dernière colonne utilisée Attenttion au AdvanvedFilter...
+    Dim lastUsedCol As Long
+    lastUsedCol = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
+
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+End Sub
+
+

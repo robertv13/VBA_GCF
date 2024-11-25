@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     
     'Efface la liste précédente
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "B").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "B").End(xlUp).row
     If lastUsedRow > 7 Then
         ws.Range("B8:J" & lastUsedRow + 2).Clear
     End If
@@ -124,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
     End If

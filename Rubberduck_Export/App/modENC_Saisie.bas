@@ -19,7 +19,7 @@ Sub ENC_Get_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
-    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.rows.count, "P").End(xlUp).row
+    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "P").End(xlUp).row
     
     Dim i As Integer
     'Unlock the required area
@@ -51,6 +51,9 @@ Sub ENC_Get_OS_Invoices(clientCode As String) '2024-08-21 @ 15:18
     
     Call ENC_Add_Check_Boxes(lastResultRow - 2)
     
+    'Libérer la mémoire
+    Set ws = Nothing
+    
     Call Log_Record("modFAC_Enc:ENC_Load_OS_Invoices", startTime)
 
 End Sub
@@ -79,7 +82,7 @@ Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("P1").CurrentRegion
-    rngResult.Offset(2, 0).Clear
+    rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("P2:U2")
     ws.Range("M9").value = rngResult.Address
     
@@ -90,7 +93,7 @@ Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
                 Unique:=False
                                         
     'Est-ce que nous avons des résultats ?
-    lastResultRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     ws.Range("M10").value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -98,7 +101,7 @@ Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
         With ws.Sort 'Sort - InvNo
             .SortFields.Clear
             'First sort On InvNo
-            .SortFields.Add key:=ws.Range("Q3"), _
+            .SortFields.add key:=ws.Range("Q3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -113,6 +116,12 @@ Sub ENC_Get_OS_Invoices_With_AF(clientCode As String)
         ws.Range("U" & r).value = ws.Range("S" & r).value - ws.Range("T" & r).value
     Next r
 
+    'libérer la mémoire
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
+    
     Call Log_Record("modFAC_Enc:ENC_Get_OS_Invoices_With_AF", startTime)
 
 End Sub
@@ -151,7 +160,7 @@ Sub ENC_Update() '2024-08-22 @ 09:46
         pmtNo = wshENC_Saisie.Range("B9").value
         
         Dim lastOSRow As Integer
-        lastOSRow = .Cells(.rows.count, "F").End(xlUp).row 'Last applied Item
+        lastOSRow = .Cells(.Rows.count, "F").End(xlUp).row 'Last applied Item
         
         'Create records for ENC_Détails
         If lastOSRow > 11 Then
@@ -211,7 +220,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Entête"
+    destinationTab = "ENC_Entête$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
@@ -222,7 +231,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxPmtNo As Long
-    strSQL = "SELECT MAX(Pay_ID) AS MaxPmtNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(Pay_ID) AS MaxPmtNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxPmtNo
     rs.Open strSQL, conn
@@ -242,7 +251,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
     rs.AddNew
@@ -284,7 +293,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Entête.Range("A99999").End(xlUp).row
+    lastUsedRow = wshENC_Entête.Cells(wshENC_Entête.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     wshENC_Entête.Range("A" & rowToBeUsed).value = currentPmnNo
@@ -310,7 +319,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Détails"
+    destinationTab = "ENC_Détails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -318,7 +327,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
         
     'Build the recordSet
     Dim r As Integer
@@ -356,7 +365,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     'What is the last used row in ENC_Détails ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.rows.count, "A").End(xlUp).row
+    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim r As Integer
@@ -387,7 +396,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Comptes_Clients"
+    destinationTab = "FAC_Comptes_Clients$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -403,7 +412,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             Dim Inv_No As String
             Inv_No = CStr(Trim(wshENC_Saisie.Range("F" & r).value))
             Dim strSQL As String
-            strSQL = "SELECT * FROM [" & destinationTab & "$] WHERE Invoice_No = '" & Inv_No & "'"
+            strSQL = "SELECT * FROM [" & destinationTab & "] WHERE Invoice_No = '" & Inv_No & "'"
             rs.Open strSQL, conn, 2, 3
             If Not rs.EOF Then
                 'Mettre à jour Amount_Paid
@@ -452,7 +461,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim r As Integer
@@ -498,7 +507,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans"
+    destinationTab = "GL_Trans$"
     
     'Initialize connection, connection string, open the connection & declare rs Object
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -507,7 +516,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -527,7 +536,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Debit side
     rs.AddNew
@@ -596,7 +605,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.rows.count, "A").End(xlUp).row
+    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim nextJENo As Long
@@ -663,7 +672,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
         Cells(cell.row, 2).value = "" And _
         Cells(cell.row, 6).value <> "" Then 'Applied = False
             'Create a checkbox linked to the cell
-            Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
+            Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
             With cbx
                 .Name = "chkBox - " & cell.row
                 .Caption = ""
@@ -734,7 +743,7 @@ Sub ENC_Clear_Cells()
         
         'Note the lastUsedRow for checkBox deletion
         Dim lastUsedRow As Long
-        lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.rows.count, "F").End(xlUp).row
+        lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).row
         If lastUsedRow > 36 Then
             lastUsedRow = 36
         End If

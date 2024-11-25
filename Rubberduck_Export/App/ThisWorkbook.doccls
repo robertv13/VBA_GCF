@@ -36,7 +36,7 @@ Private Sub Workbook_Open()
     DoEvents
     
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (Workbook_Open) *****", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
     
     DoEvents
     
@@ -105,15 +105,15 @@ Sub Create_User_Active_File()
     Dim traceFilePath As String
     traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
-    Dim fileNumber As Integer
-    fileNumber = FreeFile
+    Dim FileNumber As Integer
+    FileNumber = FreeFile
     
     On Error GoTo Error_Handling
-    Open traceFilePath For Output As fileNumber
+    Open traceFilePath For Output As FileNumber
     On Error GoTo 0
     
-    Print #fileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
-    Close fileNumber
+    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
+    Close FileNumber
     
     Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
     
@@ -128,8 +128,6 @@ End Sub
 
 Sub BackupMasterFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
-    
     Application.ScreenUpdating = False
     
     'Open the master file
@@ -137,9 +135,7 @@ Sub BackupMasterFile()
     On Error GoTo MASTER_NOT_AVAILABLE
     Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                             "GCF_BD_MASTER.xlsx")
-    If Err.Number = 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée", -1)
-    Else
+    If Err.Number <> 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
     On Error GoTo 0
@@ -159,17 +155,13 @@ Sub BackupMasterFile()
     'Save a copy of the master workbook with the new name
     On Error Resume Next
     masterWorkbook.SaveCopyAs backupFilePath
-    If Err.Number = 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - La copie est réussie", -1)
-    Else
+    If Err.Number <> 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
 
     'Close the master workbook
     masterWorkbook.Close SaveChanges:=False
-    If Err.Number = 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé", -1)
-    Else
+    If Err.Number <> 0 Then
         Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
     End If
     On Error GoTo 0
@@ -178,8 +170,6 @@ Sub BackupMasterFile()
 
     'Libérer la mémoire
     Set masterWorkbook = Nothing
-    
-    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
     
     Exit Sub
 
@@ -213,3 +203,9 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
     ufExitDisable.show
 
 End Sub
+
+'Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2024-11-22 @ 15:44
+'
+'    MsgBox "Évènement 'Workbook_SheetActivate' " & Sh.Name
+'
+'End Sub

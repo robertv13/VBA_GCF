@@ -4,9 +4,9 @@ Option Explicit
 Sub Main()
 
     'Setup the receiving worksheet and clear the previous results
-    Dim ws As Worksheet: Set ws = wshCSV_File
+    Dim ws As Worksheet: Set ws = wshzCSV_File
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     If lastUsedRow > 1 Then
         ws.Range("A2:P" & lastUsedRow).ClearContents
     End If
@@ -39,11 +39,11 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     End If
     
     Dim lastUsedRow As Long, firstAvailRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     firstAvailRow = lastUsedRow + 1
     
     'Import data from external file into the worksheet
-    With ws.QueryTables.Add(Connection:="TEXT;" & fullFileName, Destination:=ws.Range("A" & firstAvailRow))
+    With ws.QueryTables.add(Connection:="TEXT;" & fullFileName, Destination:=ws.Range("A" & firstAvailRow))
         .TextFileParseType = xlDelimited
         .TextFileCommaDelimiter = True
         .TextFileStartRow = 3
@@ -52,10 +52,10 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     End With
     
     'Correct all formats
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     Call Fix_Columns(ws, firstAvailRow, lastUsedRow)
     
-    Debug.Print fn & " a été importée avec succès, " & lastUsedRow - firstAvailRow & " lignes"
+    Debug.Print "#023 - " & fn & " a été importée avec succès, " & lastUsedRow - firstAvailRow & " lignes"
 
 End Sub
 
@@ -90,16 +90,16 @@ Sub Set_Column_Width(ws As Worksheet)
     ws.Range("N:N").NumberFormat = "#,##0.00"
     
     Dim col As Long, lastUsedColumn As Long
-    lastUsedColumn = ws.Cells(1, ws.columns.count).End(xlToLeft).Column
+    lastUsedColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
     For col = 1 To lastUsedColumn
-        ws.columns(col).AutoFit
+        ws.Columns(col).AutoFit
     Next col
 
 End Sub
 
 Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
 
-    Debug.Print wrongFormatDate
+    Debug.Print "#024 - " & wrongFormatDate
 
     Dim arr() As String
     arr = Split(wrongFormatDate, "/")
@@ -114,7 +114,7 @@ Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
     day = Format$(arr(0), "00")
 
     Fn_Correct_Date_Format = DateSerial(year, month, day)
-    Debug.Print DateSerial(year, month, day)
+    Debug.Print "#025 - " & DateSerial(year, month, day)
 
 End Function
 

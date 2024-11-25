@@ -15,7 +15,7 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
     Dim rngResultat As Range
     Set rngResultat = wshCAR_Liste_Agée.Range("B8")
     Dim lastUsedRow As Long
-    lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).row
+    lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.Rows.count, "B").End(xlUp).row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
         wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).Clear
@@ -58,7 +58,7 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
     
     'Boucle sur les factures
     Dim derniereLigne As Long
-    derniereLigne = wsFactures.Cells(wsFactures.rows.count, "A").End(xlUp).row
+    derniereLigne = wsFactures.Cells(wsFactures.Rows.count, 1).End(xlUp).row
     Dim rngFactures As Range
     Set rngFactures = wsFactures.Range("A3:A" & derniereLigne) '2 lignes d'entête
     
@@ -71,7 +71,7 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
     Application.EnableEvents = False
     
     r = 8
-    For i = 1 To rngFactures.rows.count
+    For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
         numFacture = CStr(rngFactures.Cells(i, 1).value)
         'Do not process non Confirmed invoice
@@ -81,7 +81,7 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
         'Est-ce que la facture est à l'intérieur e la date limite ?
         dateFacture = CDate(rngFactures.Cells(i, 2).value)
         If rngFactures.Cells(i, 2).value > CDate(wshCAR_Liste_Agée.Range("H4").value) Then
-            Debug.Print "#0081 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
+            Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
             GoTo Next_Invoice
         End If
         
@@ -124,7 +124,7 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
         Select Case LCase(niveauDetail)
             Case "client"
                 If Not dictClients.Exists(client) Then
-                    dictClients.Add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
+                    dictClients.add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictClients(client) 'Obtenir le tableau a partir du dictionary
                 
@@ -193,9 +193,9 @@ Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
                         wshCAR_Liste_Agée.Cells(r, 2).value = client
                         wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                         wshCAR_Liste_Agée.Cells(r, 4).value = "Paiement"
-                        wshCAR_Liste_Agée.Cells(r, 5).value = rngPaiementsAssoc.Offset(0, 2).value
-                        wshCAR_Liste_Agée.Cells(r, 6).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
-                        Set rngPaiementsAssoc = wsPaiements.columns("B:B").FindNext(rngPaiementsAssoc)
+                        wshCAR_Liste_Agée.Cells(r, 5).value = rngPaiementsAssoc.offset(0, 2).value
+                        wshCAR_Liste_Agée.Cells(r, 6).value = -rngPaiementsAssoc.offset(0, 3).value ' Montant du paiement
+                        Set rngPaiementsAssoc = wsPaiements.Columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
                 End If
         End Select
@@ -227,7 +227,7 @@ Next_Invoice:
     End If
     
     'Tri alphabétique par nom de client
-    derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.rows.count, "B").End(xlUp).row
+    derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.Rows.count, "B").End(xlUp).row
     Set rngResultat = wshCAR_Liste_Agée.Range("B8:J" & derniereLigne)
     
     Application.EnableEvents = False
@@ -237,19 +237,19 @@ Next_Invoice:
         With wshCAR_Liste_Agée.Sort
             .SortFields.Clear
             If wshCAR_Liste_Agée.Range("D4").value = "Nom de client" Then
-                .SortFields.Add _
+                .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("B8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par nom de client
                 ordreTri = "Ordre de nom de client"
             Else
-                .SortFields.Add _
+                .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("C8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par numéro de facture
-                .SortFields.Add _
+                .SortFields.add _
                     key:=wshCAR_Liste_Agée.Range("D8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
@@ -267,8 +267,8 @@ Next_Invoice:
     Dim t(0 To 4) As Currency
     
     With wshCAR_Liste_Agée
-        .columns("B:B").ColumnWidth = 50
-        .columns("C:J").ColumnWidth = 13
+        .Columns("B:B").ColumnWidth = 50
+        .Columns("C:J").ColumnWidth = 13
         Select Case LCase(niveauDetail)
             Case "client"
                 .Range("C9:G" & derniereLigne).NumberFormat = "#,##0.00 $"
@@ -301,8 +301,8 @@ Next_Invoice:
                 t(4) = .Range("I" & derniereLigne).value
                 .Range("E" & derniereLigne & ":I" & derniereLigne).Font.Bold = True
             Case "transaction"
-                .columns("C:E").HorizontalAlignment = xlCenter
-                .columns("D").HorizontalAlignment = xlLeft
+                .Columns("C:E").HorizontalAlignment = xlCenter
+                .Columns("D").HorizontalAlignment = xlLeft
                 .Range("F9:J" & derniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("F9:J" & derniereLigne).HorizontalAlignment = xlRight
                 .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"

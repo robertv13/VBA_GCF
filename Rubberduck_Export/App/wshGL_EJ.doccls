@@ -11,7 +11,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Import transactions from MASTER file
     Call GL_Trans_Import_All
-    Call GL_EJ_Auto_Import_All
+    Call GL_EJ_Recurrente_Import_All
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -59,6 +59,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Application.EnableEvents = True
     
     'Libérer la mémoire
+    Set shp = Nothing
     Set ws = Nothing
     
     Call Log_Record("wshGL_EJ:Worksheet_Activate", startTime)
@@ -170,7 +171,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Now() Then

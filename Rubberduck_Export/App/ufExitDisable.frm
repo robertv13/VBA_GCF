@@ -2,8 +2,8 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufExitDisable 
    Caption         =   "Sortie non autorisée"
    ClientHeight    =   2265
-   ClientLeft      =   120
-   ClientTop       =   465
+   ClientLeft      =   180
+   ClientTop       =   690
    ClientWidth     =   7530
    OleObjectBlob   =   "ufExitDisable.frx":0000
    StartUpPosition =   1  'CenterOwner

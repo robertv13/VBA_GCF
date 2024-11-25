@@ -5,7 +5,7 @@ Public previousCellAddress As Variant
 Private Sub Worksheet_Activate()
 
     If fromMenu = False Then
-        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
+        Debug.Print "#011 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
     
@@ -99,7 +99,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         Call FAC_Historique_Montrer_Bouton
         Range(Target.Address).Interior.Color = xlNone
-        Application.GoTo Range("D6")
+        Application.Goto Range("D6")
      End If
    
     'Dates Period change
@@ -161,7 +161,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
     
@@ -179,7 +179,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshFAC_Historique_199")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
     End If
 

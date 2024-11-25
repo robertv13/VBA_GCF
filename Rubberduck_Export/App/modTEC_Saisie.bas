@@ -211,7 +211,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("V1").CurrentRegion
-    rngResult.Offset(2, 0).Clear
+    rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("V2:AI2")
     ws.Range("S13").value = rngResult.Address
     
@@ -222,21 +222,21 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
                 Unique:=False
 
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.rows.count, "V").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "V").End(xlUp).row
     ws.Range("S14").value = (lastResultRow - 2) & " lignes"
         
     If lastResultRow < 4 Then GoTo No_Sort_Required
     With ws.Sort 'Sort - Date / Prof / TEC_ID
         .SortFields.Clear
-        .SortFields.Add key:=wshTEC_Local.Range("X3"), _
+        .SortFields.add key:=wshTEC_Local.Range("X3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Date
-        .SortFields.Add key:=wshTEC_Local.Range("W3"), _
+        .SortFields.add key:=wshTEC_Local.Range("W3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Prof
-        .SortFields.Add key:=wshTEC_Local.Range("V3"), _
+        .SortFields.add key:=wshTEC_Local.Range("V3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Tec_ID
@@ -260,6 +260,7 @@ No_Sort_Required:
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
+    Set r = Nothing
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -307,7 +308,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "TEC_Local"
+    destinationTab = "TEC_Local$"
     
     On Error GoTo ErrorHandler
     
@@ -336,7 +337,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
         'Open the recordset for the specified ID
         
-        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & Abs(TECID), conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TEC_ID=" & Abs(TECID), conn, 2, 3
         saveLogTEC_ID = TECID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
@@ -371,7 +372,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
-            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & destinationTab & "$]"
+            strSQL = "SELECT MAX(TEC_ID) AS MaxID FROM [" & destinationTab & "]"
         
             'Open recordset to find out the MaxID
             rs.Open strSQL, conn
@@ -394,7 +395,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         
             'Close the previous recordset, no longer needed and open an empty recordset
             rs.Close
-            rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
             
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
@@ -432,7 +433,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         Else 'Update an existing record (TECID <> 0)
         
             'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
+            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TEC_ID=" & TECID, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
                 rs.Fields("Client_ID").value = ufSaisieHeures.txtClient_ID.value
@@ -441,7 +442,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
                 rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
                 rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
                 rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-                rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy/mm/dd hh:mm:ss"))
+                rs.Fields("DateSaisie").value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
                 rs.Fields("VersionApp").value = ThisWorkbook.Name
                 'Nouveau log - 2024-09-02 @ 10:40
                 
@@ -492,10 +493,16 @@ ErrorHandler:
            "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
            "ou un autre type de problème" & vbNewLine & vbNewLine & _
            "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Problème MAJEUR"
-    If Not rs Is Nothing Then rs.Close
-    If Not conn Is Nothing Then conn.Close
-    Set conn = Nothing
-    Set rs = Nothing
+    If Not rs Is Nothing Then
+        rs.Close
+    End If
+    If Not conn Is Nothing Then
+        conn.Close
+        On Error Resume Next
+        Set conn = Nothing
+        Set rs = Nothing
+        On Error GoTo 0
+    End If
     
     Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & TECID, startTime)
     
@@ -520,7 +527,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
         With wshTEC_Local
-            nextRowNumber = .Cells(.rows.count, "A").End(xlUp).row + 1
+            nextRowNumber = .Cells(.Rows.count, 1).End(xlUp).row + 1
             .Range("A" & nextRowNumber).value = ufSaisieHeures.txtTEC_ID.value
             .Range("B" & nextRowNumber).value = ufSaisieHeures.txtProf_ID.value
             .Range("C" & nextRowNumber).value = ufSaisieHeures.cmbProfessionnel.value
@@ -540,8 +547,8 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TEC_ID
-        lastUsedRow = wshTEC_Local.Range("A99999").End(xlUp).row
-        Dim lookupRange As Range:  Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
+        lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
+        Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(Abs(TECID), lookupRange)
         If rowToBeUpdated < 1 Then
@@ -607,7 +614,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Last Row used in first column of result
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Cells(wshTEC_Local.rows.count, "V").End(xlUp).row
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
     If lastRow < 3 Then GoTo Rien_Aujourdhui
         
     Dim ws As Worksheet
@@ -627,7 +634,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim totalHeures As Double
     Dim totalHresFact As Double, totalHresNonFact As Double
     Application.ScreenUpdating = True
-    For i = 1 To rng.rows.count
+    For i = 1 To rng.Rows.count
         ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, wshAdmin.Range("B1").value)
@@ -655,7 +662,7 @@ Rien_Aujourdhui:
     Dim totalHresFactSemaine As Double
     Dim totalHresNonFactSemaine As Double
     
-    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.rows.count, "W").End(xlUp).row
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
     For i = 2 To lastRow
         totalHresFactSemaine = totalHresFactSemaine + wshTEC_TDB_Data.Range("AC" & i).value
         totalHresNonFactSemaine = totalHresNonFactSemaine + wshTEC_TDB_Data.Range("AD" & i).value
@@ -692,7 +699,7 @@ Sub TEC_Update_TDB_From_TEC_Local()
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsFrom.Cells(wsFrom.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
     
     Dim arr() As Variant
     ReDim arr(1 To lastUsedRow - 2, 1 To 11) '2 rows of Heading

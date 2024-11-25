@@ -102,7 +102,7 @@ Public Enum FAC_Entête_Data_Columns
     ffacEntLast = ffacEntDépôt
 End Enum
 
-Public Enum GL_EJ_Auto_Data_Columns
+Public Enum GL_EJ_Recurrente_Data_Columns
     fglejaFirst = 1
     fglejaNo_EJA = fglejaFirst
     fglejaDescription
@@ -152,15 +152,11 @@ End Enum
 
 Sub Set_Root_Path(ByRef rootPath As String)
    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Set_Root_Path", 0)
-    
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
         rootPath = "C:\VBA\GC_FISCALITÉ"
     Else
         rootPath = "P:\Administration\APP\GCF"
     End If
-
-    Call Log_Record("modAppli:Set_Root_Path", startTime)
 
 End Sub
 

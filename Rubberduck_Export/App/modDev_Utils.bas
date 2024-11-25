@@ -11,12 +11,12 @@ Sub Add_Columns_To_Active_Worksheet()
     
     'Find the last column with data
     Dim lastColumn As Long
-    lastColumn = ws.Cells(1, ws.columns.count).End(xlToLeft).Column
+    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
     
     'Add columns to the right of the last column
-    ws.columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
+    ws.Columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
     
-    Debug.Print colToAdd & " columns added to the worksheet."
+    Debug.Print "#026 - " & colToAdd & " columns added to the worksheet."
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -133,7 +133,7 @@ Sub Check_Invoice_Template()
     Dim ws As Worksheet: Set ws = wshAdmin
     Dim firstUsedRow As Long, lastUsedRow As Long
     firstUsedRow = 12
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).row
     Dim rng As Range
     Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
     
@@ -265,7 +265,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
         f = f + 1
     Next r
     
-    wsOutput.columns.AutoFit
+    wsOutput.Columns.AutoFit
     
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
@@ -273,7 +273,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & wbName & "' ***"
     
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
@@ -307,7 +307,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
     Dim lineNum As Long
-    Dim X As Long
+    Dim x As Long
     
     Dim vbComp As Object
     Dim oType As String
@@ -332,18 +332,18 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
         'Loop through all lines in the code module to save all the lines in memory
         For lineNum = 1 To vbCodeMod.CountOfLines
             If Trim(vbCodeMod.Lines(lineNum, 1)) <> "" Then
-                X = X + 1
-                allLinesOfCode(X, 1) = oType
-                allLinesOfCode(X, 2) = vbComp.Name
-                allLinesOfCode(X, 3) = lineNum
-                allLinesOfCode(X, 4) = Trim(vbCodeMod.Lines(lineNum, 1))
+                x = x + 1
+                allLinesOfCode(x, 1) = oType
+                allLinesOfCode(x, 2) = vbComp.Name
+                allLinesOfCode(x, 3) = lineNum
+                allLinesOfCode(x, 4) = Trim(vbCodeMod.Lines(lineNum, 1))
             End If
         Next lineNum
     Next vbComp
     
     'At this point allLinesOfCode contains all lines of code of the application - 2024-07-10 @ 17:33
     
-    Call Array_2D_Resizer(allLinesOfCode, X, UBound(allLinesOfCode, 2))
+    Call Array_2D_Resizer(allLinesOfCode, x, UBound(allLinesOfCode, 2))
     
     Call Search_Every_Lines_Of_Code(allLinesOfCode, search1, search2, search3)
     
@@ -381,7 +381,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
         If Not rng Is Nothing Then
             'Loop through each area in the range
             For Each area In rng.Areas
-                Debug.Print ws.Name & " - " & area.FormatConditions.count
+                Debug.Print "#027 - " & ws.Name & " - " & area.FormatConditions.count
                 ' Loop through each conditional formatting rule in the area
                 For ruleIndex = 1 To area.FormatConditions.count
                     Set cf = area.FormatConditions(ruleIndex)
@@ -412,7 +412,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
     If lastUsedRow > 1 Then
         wsOutput.Range("A2:F" & lastUsedRow).ClearContents
     End If
@@ -458,7 +458,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Dim ws As Worksheet
     Dim cell As Range
     Dim TimeStamp As String
-    Dim X As Long: X = 1
+    Dim x As Long: x = 1
     Dim xAnalyzed As Long
     For Each ws In ThisWorkbook.Worksheets
         'Loop through each cell in the worksheet
@@ -473,44 +473,44 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             
             If dvType <> "" And dvType <> "0" Then
                 'Write the data validation details to the output sheet
-                arr(X, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
-                arr(X, 2) = ws.Name
-                arr(X, 3) = cell.Address
-                arr(X, 4) = dvType
+                arr(x, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
+                arr(x, 2) = ws.Name
+                arr(x, 3) = cell.Address
+                arr(x, 4) = dvType
                 Select Case dvType
                     Case "2"
-                        arr(X, 4) = "Min/Max"
+                        arr(x, 4) = "Min/Max"
                     Case "3"
-                        arr(X, 4) = "Liste"
+                        arr(x, 4) = "Liste"
                     Case Else
-                        arr(X, 4) = dvType
+                        arr(x, 4) = dvType
                 End Select
                 On Error Resume Next
-                arr(X, 5) = "'" & cell.Validation.Formula1
+                arr(x, 5) = "'" & cell.Validation.Formula1
                 On Error GoTo 0
                 
                 On Error Resume Next
-                arr(X, 6) = "'" & cell.Validation.Formula2
+                arr(x, 6) = "'" & cell.Validation.Formula2
                 On Error GoTo 0
                 
                 On Error Resume Next
-                arr(X, 7) = "'" & cell.Validation.Operator
+                arr(x, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
                 TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-                arr(X, 8) = TimeStamp
+                arr(x, 8) = TimeStamp
 
                 'Increment the output row counter
-                X = X + 1
+                x = x + 1
             End If
         Next cell
     Next ws
 
-    If X > 1 Then
+    If x > 1 Then
     
-        X = X - 1
+        x = x - 1
         
-        Call Array_2D_Resizer(arr, X, UBound(arr, 2))
+        Call Array_2D_Resizer(arr, x, UBound(arr, 2))
         
         Call Array_2D_Bubble_Sort(arr)
         
@@ -518,29 +518,29 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         Dim outputRow As Long: outputRow = 2
         wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
         wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
-        wsOutput.columns(4).HorizontalAlignment = xlCenter
-        wsOutput.columns(7).HorizontalAlignment = xlCenter
-        wsOutput.columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        wsOutput.Columns(4).HorizontalAlignment = xlCenter
+        wsOutput.Columns(7).HorizontalAlignment = xlCenter
+        wsOutput.Columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Range("B99999").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         Dim j As Long, oldWorksheet As String
         oldWorksheet = wsOutput.Range("B" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
             If wsOutput.Range("B" & j).value <> oldWorksheet Then
-                wsOutput.rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+                wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
                 oldWorksheet = wsOutput.Range("B" & j).value
             End If
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Range("B99999").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         With wsOutput.Range("B2:H" & lastUsedRow)
             On Error Resume Next
             Cells.FormatConditions.Delete
             On Error GoTo 0
         
-            .FormatConditions.Add Type:=xlExpression, Formula1:= _
+            .FormatConditions.add Type:=xlExpression, Formula1:= _
                 "=ET($B2<>"""";MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -557,7 +557,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     'Initialize the output row counter
 
     'AutoFit the columns for better readability
-    wsOutput.columns.AutoFit
+    wsOutput.Columns.AutoFit
     
     'Result print setup - 2024-07-15 @ 09:22
     lastUsedRow = lastUsedRow + 2
@@ -602,7 +602,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
+    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
     ws.Name = sheetName
     
     'Libérer la mémoire
@@ -616,7 +616,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocFormulas.Range("A9999").End(xlUp).row 'Last used row
+    lastUsedRow = wshzDocFormulas.Cells(wshzDocFormulas.Rows.count, "A").End(xlUp).row 'Last used row
     If lastUsedRow > 1 Then wshzDocFormulas.Range("A2:G" & lastUsedRow).ClearContents
     
     'Create an Array to receive the formulas informations
@@ -766,7 +766,7 @@ Sub List_All_Tables()
         'Loop through each ListObject (table) in the worksheet
         Dim lo As ListObject
         For Each lo In ws.ListObjects
-            Debug.Print "Sheet: " & ws.Name; Tab(40); "Table: " & lo.Name & vbCrLf
+            Debug.Print "#028 - Sheet: " & ws.Name; Tab(40); "Table: " & lo.Name & vbCrLf
         Next lo
     Next ws
     
@@ -781,7 +781,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     ws.Range("A2:I" & lastUsedRow).ClearContents
     
     'Loop through each named range in the workbook
@@ -789,6 +789,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     ReDim arr(1 To 300, 1 To 9)
     Dim i As Long
     Dim nr As Name
+    Dim rng As Range
     Dim TimeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
@@ -801,7 +802,6 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         
         'Check if the name refers to a range
         On Error Resume Next
-        Dim rng As Range
         Set rng = nr.RefersToRange
         On Error GoTo 0
         
@@ -809,8 +809,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
             arr(i, 5) = rng.Worksheet.Name
             arr(i, 6) = rng.Address
         End If
-        Set rng = Nothing
-        
+         
         arr(i, 7) = nr.Comment
         If nr.Visible = False Then
             arr(i, 8) = nr.Visible
@@ -852,7 +851,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     Dim rng As Range: Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
@@ -897,7 +896,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
         lastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.rows(lastRow + 1)
+        rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(lastRow + 1)
         tbl.ListRows(1).Delete
     Wend
 
@@ -924,9 +923,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
     Dim TimeStamp As String
-    Dim X As Long, xr As Long
-    For X = LBound(arr, 1) To UBound(arr, 1)
-        trimmedLineOfCode = arr(X, 4)
+    Dim x As Long, xr As Long
+    For x = LBound(arr, 1) To UBound(arr, 1)
+        trimmedLineOfCode = arr(x, 4)
         saveLineOfCode = trimmedLineOfCode
         
         'Handle comments (second parameter is either Remove or Uppercase)
@@ -969,17 +968,17 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 (search3 <> "" And InStr(trimmedLineOfCode, search3) <> 0) Then
                 'Found an occurence
                 xr = xr + 1
-                arrResult(xr, 2) = arr(X, 1) 'oType
-                arrResult(xr, 3) = arr(X, 2) 'oName
-                arrResult(xr, 4) = arr(X, 3) 'LineNum
+                arrResult(xr, 2) = arr(x, 1) 'oType
+                arrResult(xr, 3) = arr(x, 2) 'oName
+                arrResult(xr, 4) = arr(x, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
                 TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 arrResult(xr, 7) = TimeStamp
-                arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
+                arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
-    Next X
+    Next x
 
     'Prepare the result worksheet
     Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
@@ -1009,28 +1008,28 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         'Transfer the array to the worksheet
         wsOutput.Range("A2").Resize(UBound(arrResult, 1), UBound(arrResult, 2)).value = arrResult
         wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
-        wsOutput.columns(4).HorizontalAlignment = xlCenter
-        wsOutput.columns(7).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        wsOutput.Columns(4).HorizontalAlignment = xlCenter
+        wsOutput.Columns(7).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Range("B9999").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         Dim j As Long, oldProcedure As String
         oldProcedure = wsOutput.Range("C" & lastUsedRow).value & wsOutput.Range("E" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
             If wsOutput.Range("C" & j).value & wsOutput.Range("E" & j).value <> oldProcedure Then
-                wsOutput.rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+                wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
                 oldProcedure = wsOutput.Range("C" & j).value & wsOutput.Range("E" & j).value
             End If
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Range("B9999").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         With wsOutput.Range("B2:G" & lastUsedRow)
             On Error Resume Next
             Cells.FormatConditions.Delete
             On Error GoTo 0
         
-            .FormatConditions.Add Type:=xlExpression, Formula1:= _
+            .FormatConditions.add Type:=xlExpression, Formula1:= _
                 "=(MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -1046,7 +1045,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Result print setup - 2024-07-14 2 06:24
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(X, "###,##0") & " lignes de code dans l'application ***"
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(x, "###,##0") & " lignes de code dans l'application ***"
     Dim header1 As String: header1 = "Search Utility Results"
     Dim header2 As String
     header2 = "Searched strings '" & search1 & "'"
@@ -1062,11 +1061,11 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     If xr Then
         MsgBox "J'ai trouvé " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format$(X, "#,##0") & " lignes de code"
+                Format$(x, "#,##0") & " lignes de code"
     Else
         MsgBox "Je n'ai trouvé aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format$(X, "#,##0") & " lignes de code"
+                Format$(x, "#,##0") & " lignes de code"
     End If
     
     'Libérer la mémoire
@@ -1101,7 +1100,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     For Each ws In ThisWorkbook.Worksheets
         'Loop through each column in the worksheet
         Dim i As Long
-        For i = 1 To ws.usedRange.columns.count
+        For i = 1 To ws.Range("A1").CurrentRegion.Columns.count
             Set col = ws.Cells(1, i).EntireColumn
             
             colType = GetColumnType(col)
@@ -1124,8 +1123,8 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     'Sort the report by worksheet name and column number
     With reportSheet.Sort
         .SortFields.Clear
-        .SortFields.Add key:=Range("A2"), Order:=xlAscending ' Worksheet name
-        .SortFields.Add key:=Range("B2"), Order:=xlAscending ' Column number
+        .SortFields.add key:=Range("A2"), Order:=xlAscending ' Worksheet name
+        .SortFields.add key:=Range("B2"), Order:=xlAscending ' Column number
         .SetRange Range("A1:F" & outputRow - 1)
         .Header = xlYes
         .Apply
@@ -1244,7 +1243,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
 '    Next vbComp
 
     'Autofit columns for better readability
-    wsOutputSheet.columns("A:D").AutoFit
+    wsOutputSheet.Columns("A:D").AutoFit
     outputRow = outputRow - 1 'Did not use the last line
     
     'Sort the results, based on column 1, 2, 3 & 4
@@ -1252,10 +1251,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
         'Sort the data by columns 1, 2, 3, and 4
         With wsOutputSheet.Sort
             .SortFields.Clear
-            .SortFields.Add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
-            .SortFields.Add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
-            .SortFields.Add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
-            .SortFields.Add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
+            .SortFields.add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
             .SetRange wsOutputSheet.Range("A1:D" & outputRow - 1)
             .Header = xlYes
             .Apply
@@ -1265,18 +1264,18 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
         Dim i As Long
         For i = outputRow To 2 Step -1
             If wsOutputSheet.Cells(i, 1).value <> wsOutputSheet.Cells(i + 1, 1).value Then
-                wsOutputSheet.rows(i + 1).Insert Shift:=xlDown
+                wsOutputSheet.Rows(i + 1).Insert Shift:=xlDown
             End If
         Next i
     End If
     
     'Set conditional formatting for the worksheet (alternate colors)
-    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
-    Debug.Print rngArea.Address
+    Debug.Print "#029 - " & rngArea.Address
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True) 'There are blankrows to account for
     
-    outputRow = wsOutputSheet.Range("A9999").End(xlUp).row
+    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
     Dim header2 As String: header2 = ThisWorkbook.Name
@@ -1407,7 +1406,7 @@ Sub List_Subs_And_Functions_All() '2024-11-14 @ 15:51
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     ws.Range("A2:J" & lastUsedRow).ClearContents
 
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -1428,6 +1427,7 @@ Sub List_Subs_And_Functions_All() '2024-11-14 @ 15:51
     'Libérer la mémoire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
+    Set ws = Nothing
     
 End Sub
 
@@ -1467,24 +1467,24 @@ Sub TestArray_2D_Resizer()
     Next i
     
     ' Output the original array to the immediate window
-    Debug.Print "Original Array:"
+    Debug.Print "#030 - Original Array:"
     For i = 1 To 10
         For j = 1 To 5
-            Debug.Print originalArray(i, j);
+            Debug.Print "#031 - " & originalArray(i, j);
         Next j
-        Debug.Print
+        Debug.Print "#032"
     Next i
     
     ' Trim the array to 6 rows and 3 columns
     Call Array_2D_Resizer(originalArray, 6, 3)
     
     ' Output the trimmed array to the immediate window
-    Debug.Print "Trimmed Array:"
+    Debug.Print "#033 - Trimmed Array:"
     For i = 1 To 6
         For j = 1 To 3
-            Debug.Print originalArray(i, j);
+            Debug.Print "#034 - " & originalArray(i, j);
         Next j
-        Debug.Print
+        Debug.Print "#035"
     Next i
 End Sub
 
@@ -1535,7 +1535,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
         f = f + 1
     Next i
     
-    wsOutput.columns.AutoFit
+    wsOutput.Columns.AutoFit
     
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
@@ -1543,7 +1543,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & ThisWorkbook.Name & "' ***"
     
-    lastUsedRow = wsOutput.Range("A9999").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.Name
@@ -1585,7 +1585,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-        Debug.Print ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print "#036 - " & ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -1618,7 +1618,7 @@ Sub test()
     Dim cell As Range
     For Each cell In ws.usedRange
         If cell.MergeCells Then
-            Debug.Print "Cellule fusionnée à : " & cell.Address
+            Debug.Print "#037 - Cellule fusionnée à : " & cell.Address
         End If
     Next cell
 
@@ -1653,26 +1653,21 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " | " & _
-                        " | " & _
-                        LOCALE_SSHORTDATE
+                        procedureName
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
 '        startTime = Timer 'Start timing
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " | " & _
-                        " | " & _
-                        LOCALE_SSHORTDATE
+                        procedureName
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #FileNum, TimeStamp & " | " & _
                         Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " | " & _
-                        Format(elapsedTime, "0.0000") & " sec." & " | " & _
-                        LOCALE_SSHORTDATE & vbCrLf
+                        procedureName & " = " & _
+                        Format(elapsedTime, "0.0000") & " sec." & vbCrLf
     End If
     
     Close #FileNum
@@ -1822,14 +1817,14 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     Dim temp As String
     For i = LBound(components) To UBound(components) - 1
         For j = i + 1 To UBound(components)
-'            Debug.Print components(i) & " vs. " & components(j)
+'            Debug.Print "#038 - " & components(i) & " vs. " & components(j)
             intResult = StrComp(components(i), components(j), vbTextCompare)
             If intResult = 1 Then
                 'Swap components
                 temp = components(i)
                 components(i) = components(j)
                 components(j) = temp
-'            Debug.Print components(i) & " < " & components(j)
+'            Debug.Print "#039 - " & components(i) & " < " & components(j)
             End If
         Next j
     Next i
@@ -1865,7 +1860,7 @@ Sub Log_Analysis()
         logline = logline & "|"
         Dim arr() As String
         arr = Split(logline, "|")
-'        Debug.Print arr(1), arr(2), arr(3), arr(4)
+'        Debug.Print "#040 - " & arr(1), arr(2), arr(3), arr(4)
         If InStr(strUser, arr(0)) = 0 Then
             strUser = strUser + Fn_Pad_A_String(arr(0), " ", 15, "R") & "|"
         End If
@@ -1905,11 +1900,11 @@ Sub Log_Analysis()
             Else
                 arrTime(10) = arrTime(10) + 1
             End If
-            If e > 1 Then Debug.Print ctr, Format$(e, "0.0000"), arr(2), arr(3)
+            If e > 1 Then Debug.Print "#041 - " & ctr, Format$(e, "0.0000"), arr(2), arr(3)
         End If
     Loop
     
-    Debug.Print arrTime(1), arrTime(2), arrTime(3), arrTime(4), arrTime(5), arrTime(6), arrTime(7), arrTime(8), arrTime(9), arrTime(10)
+    Debug.Print "#042 - " & arrTime(1), arrTime(2), arrTime(3), arrTime(4), arrTime(5), arrTime(6), arrTime(7), arrTime(8), arrTime(9), arrTime(10)
     
     Call SortDelimitedString(strUser, "|")
     Dim arrUser() As String

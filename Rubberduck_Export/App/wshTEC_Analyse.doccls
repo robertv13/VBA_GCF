@@ -78,7 +78,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange - " & Target.Address, 0)
     
-    Debug.Print Target.Address
+    Debug.Print "#013 - " & Target.Address
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = BASIC_COLOR
@@ -90,9 +90,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Check if the selected cell is in column C, D or H
-    If Not Intersect(Target, wshTEC_Analyse.columns("C")) Is Nothing Or _
-        Not Intersect(Target, wshTEC_Analyse.columns("D")) Is Nothing Or _
-        Not Intersect(Target, wshTEC_Analyse.columns("H")) Is Nothing Then
+    If Not Intersect(Target, wshTEC_Analyse.Columns("C")) Is Nothing Or _
+        Not Intersect(Target, wshTEC_Analyse.Columns("D")) Is Nothing Or _
+        Not Intersect(Target, wshTEC_Analyse.Columns("H")) Is Nothing Then
         
         Dim rowRange As Range
         Dim firstExpandedRow As Long
@@ -101,9 +101,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 Call Delete_CheckBox
                 If wshTEC_Analyse.Range("B2").value <> 0 Then
                     firstExpandedRow = wshTEC_Analyse.Range("B2").value
-                    If rows(firstExpandedRow).ShowDetail Then
+                    If Rows(firstExpandedRow).ShowDetail Then
                         'Referme le groupe sous cette ligne
-                        rows(firstExpandedRow).ShowDetail = False
+                        Rows(firstExpandedRow).ShowDetail = False
                     End If
                 End If
                 'Loop through each row in the target selection
@@ -156,7 +156,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -165,7 +165,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

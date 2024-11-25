@@ -65,7 +65,11 @@ Sub TEC_Evaluation_Click()
 
 End Sub
 
+Sub shp_Get_Deplacements_From_TEC_Click()
 
+    Call Get_Deplacements_From_TEC
+    
+End Sub
 
 
 

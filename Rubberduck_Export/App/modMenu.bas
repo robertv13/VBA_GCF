@@ -96,7 +96,7 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         Application.ScreenUpdating = True
         
         On Error Resume Next
-        Call Log_Record("***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' *****", 0)
+        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
         Call Log_Record("", -1)
         
         On Error GoTo 0
@@ -139,17 +139,51 @@ End Sub
 
 Sub Hide_Dev_Shapes_Based_On_Username()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username", 0)
-    
     'Set the worksheet where the shapes are located
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Menu")
+    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Menu")
     
     'Loop through each shape in the worksheet
     Dim shp As Shape
     For Each shp In ws.Shapes
         'Check the username and hide shapes accordingly
         Select Case shp.Name
+            Case "VérificationIntégrité"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                Else
+                    shp.Visible = msoFalse
+                End If
+            
+            Case "RechercheCode"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                Else
+                    shp.Visible = msoFalse
+                End If
+
+            Case "Correction nom (TEC)"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+            
+            Case "Correction nom (CAR)"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+            
+            Case "RéférencesCirculaires"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                Else
+                    shp.Visible = msoFalse
+                End If
+           
             Case "ChangeReferenceSystem"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
                     Fn_Get_Windows_Username = "robertmv" Then
@@ -158,23 +192,10 @@ Sub Hide_Dev_Shapes_Based_On_Username()
                     shp.Visible = msoFalse
                 End If
 
-            Case "VérificationIntégritée"
+            Case "ListeModules&Routines"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
                     Fn_Get_Windows_Username = "robertmv" Then
-                Else
-                    shp.Visible = msoFalse
-                End If
-
-            Case "RechercheCode"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                Else
-                    shp.Visible = msoFalse
-                End If
-
-            Case "RéférencesCirculaires"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
@@ -187,8 +208,6 @@ Sub Hide_Dev_Shapes_Based_On_Username()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modMenu:Hide_Dev_Shapes_Based_On_Username", startTime)
-
 End Sub
 
 Sub BackToMainMenu()
@@ -200,7 +219,7 @@ Sub BackToMainMenu()
     
     With wshMenu
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
         .Activate
         .Range("A1").Select
     End With
@@ -228,4 +247,44 @@ Sub Delete_User_Active_File()
 
 End Sub
 
+Sub shp_Verification_Integrite_Click()
 
+    Call Integrity_Verification
+
+End Sub
+
+Sub shp_Recherche_Dans_Le_Code_Click()
+
+    Call Code_Search_Everywhere
+
+End Sub
+
+Sub shp_Fix_Client_Name_In_TEC_Click() '2024-11-22 @ 13:33
+
+    Call Fix_Client_Name_In_TEC
+    
+End Sub
+
+Sub shp_Fix_Client_Name_In_CAR_Click() '2024-11-22 @ 13:33
+
+    Call Fix_Client_Name_In_CAR
+    
+End Sub
+
+Sub shp_Detect_Circular_References_Click() '2024-11-22 @ 13:33
+
+    Call Detect_Circular_References_In_Workbook
+    
+End Sub
+
+Sub shp_Toggle_A1_R1C1_Reference_Click() '2024-11-22 @ 13:33
+
+    Call Toggle_A1_R1C1_Reference
+    
+End Sub
+
+Sub shp_List_Subs_And_Functions_All_Click() '2024-11-22 @ 13:33
+
+    Call List_Subs_And_Functions_All
+    
+End Sub

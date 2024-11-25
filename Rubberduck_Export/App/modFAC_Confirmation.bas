@@ -12,10 +12,10 @@ Sub Get_Invoice_Data(noFact As String)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     Dim result As Variant
-    Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.Offset(0, 0).Resize(lastUsedRow, 1)
+    Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.offset(0, 0).Resize(lastUsedRow, 1)
     result = Application.WorksheetFunction.XLookup(noFact, _
                                                    rngToSearch, _
                                                    rngToSearch, _
@@ -184,7 +184,7 @@ Sub FAC_Confirmation_Report_Detailed_TEC()
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "BI").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "BI").End(xlUp).row
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
@@ -219,7 +219,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     
     'Si la feuille "Rapport TEC facturés" n'existe pas, la créer
     If wsRapport Is Nothing Then
-        Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
+        Set wsRapport = ThisWorkbook.Sheets.add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
         wsRapport.Name = strRapport
     Else
         wsRapport.Cells.Clear 'Vider la feuille si elle existe déjà
@@ -265,9 +265,9 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
         
         'Copier quelques données de la source
         Dim rngResult As Range
-        Set rngResult = wsSource.Range("BI1").CurrentRegion.Offset(2, 0)
+        Set rngResult = wsSource.Range("BI1").CurrentRegion.offset(2, 0)
         'Redimensionner la plage après l'offset pour ajuster la taille (réduire le nombre de lignes)
-        Set rngResult = rngResult.Resize(rngResult.rows.count - 2)
+        Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
         'Transfert des données vers un tableau
         Dim tableau As Variant
         tableau = rngResult.value
@@ -302,17 +302,17 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
         .Range("A4:D" & r).Font.Name = "Aptos Narrow"
         .Range("A4:D" & r).Font.size = 10
         
-        .columns("A").ColumnWidth = 10
+        .Columns("A").ColumnWidth = 10
         .Range("A4:A" & r).HorizontalAlignment = xlCenter
         
-        .columns("B").ColumnWidth = 6
+        .Columns("B").ColumnWidth = 6
         .Range("B4:B" & r).HorizontalAlignment = xlCenter
         
-        .columns("C").ColumnWidth = 72
-        .columns("C").WrapText = True
+        .Columns("C").ColumnWidth = 72
+        .Columns("C").WrapText = True
         
-        .columns("D").ColumnWidth = 7
-        .columns("D").NumberFormat = "##0.00"
+        .Columns("D").ColumnWidth = 7
+        .Columns("D").NumberFormat = "##0.00"
         
     End With
 
@@ -379,7 +379,7 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("BI1").CurrentRegion
-    rngResult.Offset(2, 0).Clear
+    rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("BI2:BX2")
     ws.Range("BG9").value = rngResult.Address
     
@@ -391,7 +391,7 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
         
     'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.rows.count, "BI").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "BI").End(xlUp).row
     ws.Range("BG10").value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -399,17 +399,17 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
         With ws.Sort 'Sort - Date, ProfID, TEC_ID
             .SortFields.Clear
             'First sort On Date
-            .SortFields.Add key:=ws.Range("BL3"), _
+            .SortFields.add key:=ws.Range("BL3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Prof_ID
-            .SortFields.Add key:=ws.Range("BJ3"), _
+            .SortFields.add key:=ws.Range("BJ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("BI3"), _
+            .SortFields.add key:=ws.Range("BI3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -456,7 +456,7 @@ Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("AY1").CurrentRegion
-    rngResult.Offset(2, 0).Clear
+    rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("AY2:BP2")
     ws.Range("AW15").value = rngResult.Address
         
@@ -468,13 +468,13 @@ Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
         
     'Qu'avons-nous comme résultat ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
     ws.Range("AW16").value = lastUsedRow - 2 & " lignes"
     
     If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("AY3"), _
+            .SortFields.add key:=ws.Range("AY3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
@@ -501,7 +501,7 @@ Sub Show_Unconfirmed_Invoice()
     
     'Clear contents or the area
     Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.rows.count, "P").End(xlUp).row
+    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.Rows.count, "P").End(xlUp).row
     If lastUsedRow > 3 Then
         wshFAC_Confirmation.Range("P4:AA" & lastUsedRow).ClearContents
     End If
@@ -512,7 +512,7 @@ Sub Show_Unconfirmed_Invoice()
     Call FAC_Entête_AC_C_AF("AC")
     
     Dim lastUsedRowAF As Long
-    lastUsedRowAF = ws.Cells(ws.rows.count, "AY").End(xlUp).row
+    lastUsedRowAF = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
     If lastUsedRowAF < 3 Then
         GoTo Clean_Exit
     End If
@@ -572,7 +572,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
             Else
-                dictHours.Add pro, hres
+                dictHours.add pro, hres
             End If
         End If
     Next i
@@ -595,7 +595,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
             wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
                     CDbl(Format$(tauxHoraire, "# ##0.00 $"))
             rowInWorksheet = rowInWorksheet + 1
-    '        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
+    '        Debug.Print "#054 - Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
     '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
     '        rowSelected = rowSelected + 1
         Next prof
@@ -626,7 +626,7 @@ Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
             Else
-                dictHours.Add pro, hres
+                dictHours.add pro, hres
             End If
         End If
     Next i
@@ -649,7 +649,7 @@ Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
             wshFAC_Confirmation.Cells(rowInWorksheet, 8) = _
                     CDbl(Format$(tauxHoraire, "# ##0.00 $"))
             rowInWorksheet = rowInWorksheet + 1
-    '        Debug.Print "Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
+    '        Debug.Print "#055 - Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
     '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
     '        rowSelected = rowSelected + 1
         Next prof
@@ -669,7 +669,7 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     
     'Determine the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = wsFees.Cells(wsFees.rows.count, "A").End(xlUp).row
+    lastUsedRow = wsFees.Cells(wsFees.Rows.count, 1).End(xlUp).row
     
     'Get Invoice number
     Dim invNo As String
@@ -805,7 +805,7 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
     Dim lastUsedRow
-    lastUsedRow = wsGL.Range("A99999").End(xlUp).row
+    lastUsedRow = wsGL.Cells(wsGL.Rows.count, "A").End(xlUp).row
     Dim rngToSearch As Range: Set rngToSearch = wsGL.Range("D1:D" & lastUsedRow)
     
     'Use Range.Find to locate the first cell with the invNo
@@ -868,7 +868,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête"
+    destinationTab = "FAC_Entête$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -878,7 +878,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
 
     Dim SQL As String
     'Open the recordset for the specified invoice
-    SQL = "SELECT * FROM [" & destinationTab & "$] WHERE Inv_No = '" & invoice & "'"
+    SQL = "SELECT * FROM [" & destinationTab & "] WHERE Inv_No = '" & invoice & "'"
     rs.Open SQL, conn, 2, 3
     If Not rs.EOF Then
         'Update AC_ouC with 'C'
@@ -891,9 +891,7 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     
     'Close recordset and connection
     rs.Close
-    Set rs = Nothing
     conn.Close
-    Set conn = Nothing
     
     Application.ScreenUpdating = True
 
@@ -913,7 +911,7 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range
@@ -944,7 +942,7 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim foundRange As Range

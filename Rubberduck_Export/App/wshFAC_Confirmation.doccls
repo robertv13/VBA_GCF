@@ -30,7 +30,7 @@ Private Sub Worksheet_Activate()
     On Error GoTo 0
     
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
+    lastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     Dim r As Range
     Set r = ws.Range("P4:P" & lastRow)
     On Error Resume Next
@@ -83,7 +83,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
-    If Not Intersect(Target, Me.columns(16)) Is Nothing And Target.Cells.count = 1 Then
+    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 Then
         wshFAC_Confirmation.Range("F5").value = Target.value
         Target.Interior.Color = HIGHLIGHT_COLOR
     End If
@@ -95,7 +95,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Debug.Print "Worksheet_Change Event - " & Target.Address & " = " & Target.value
+    Debug.Print "#010 - Worksheet_Change Event - " & Target.Address & " = " & Target.value
     
     'Saisie du numéro de facture
     If Not Intersect(Target, Range("F5")) Is Nothing Then

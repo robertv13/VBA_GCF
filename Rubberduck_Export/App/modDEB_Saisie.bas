@@ -62,7 +62,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "DEB_Trans"
+    destinationTab = "DEB_Trans$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -73,7 +73,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxDebTransNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_Entrée) AS MaxDebTransNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -100,7 +100,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
 '
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Read all line from Journal Entry
     Dim l As Long
@@ -160,7 +160,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Trans.Range("A99999").End(xlUp).row
+    lastUsedRow = wshDEB_Trans.Cells(wshDEB_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -249,7 +249,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Process every lines
     Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Saisie.Range("E99").End(xlUp).row
+    lastUsedRow = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).row
 
     Dim l As Long, arrRow As Long
     arrRow = 2 '1 is already used
@@ -292,7 +292,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto, rowDEB As Long
-    rowDEBAuto = wshDEB_Recurrent.Range("C99999").End(xlUp).row  'Last Row used in wshDEB_Recuurent
+    rowDEBAuto = wshDEB_Recurrent.Cells(wshDEB_Recurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recuurent
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -335,7 +335,7 @@ Sub Save_DEB_Recurrent(ll As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", 0)
     
     Dim rowDEBLast As Long
-    rowDEBLast = wshDEB_Saisie.Range("E99").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).row  'Last Used Row in wshDEB_Saisie
     
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
@@ -353,7 +353,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "DEB_Recurrent"
+    destinationTab = "DEB_Recurrent$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -362,7 +362,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxDebRecNo As Long
-    strSQL = "SELECT MAX(No_Deb_Rec) AS MaxDebRecNo FROM [" & destinationTab & "$]"
+    strSQL = "SELECT MAX(No_Deb_Rec) AS MaxDebRecNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -382,14 +382,14 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields("No_Deb_Rec").value = nextDRNo
-            rs.Fields("Date").value = CDate(wshDEB_Saisie.Range("O4").value)
+            rs.Fields("Date").value = wshDEB_Saisie.Range("O4").value
             rs.Fields("Type").value = wshDEB_Saisie.Range("F4").value
             rs.Fields("Beneficiaire").value = wshDEB_Saisie.Range("F6").value
             rs.Fields("Reference").value = wshDEB_Saisie.Range("M6").value
@@ -433,7 +433,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Recurrent.Range("C999").End(xlUp).row
+    lastUsedRow = wshDEB_Recurrent.Cells(wshDEB_Recurrent.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -469,10 +469,10 @@ Sub DEB_Recurrent_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshDEB_Recurrent.Range("A9999").End(xlUp).row
+    lastUsedRow1 = wshDEB_Recurrent.Cells(wshDEB_Recurrent.Rows.count, "A").End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshDEB_Recurrent.Range("O999").End(xlUp).row
+    lastUsedRow2 = wshDEB_Recurrent.Cells(wshDEB_Recurrent.Rows.count, "O").End(xlUp).row
     If lastUsedRow2 > 1 Then
         wshDEB_Recurrent.Range("O2:Q" & lastUsedRow2).ClearContents
     End If

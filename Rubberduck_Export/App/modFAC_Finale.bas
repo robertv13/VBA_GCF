@@ -46,7 +46,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
     Dim lastResultRow As Long
-    lastResultRow = wshTEC_Local.Range("AT9999").End(xlUp).row
+    lastResultRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AT").End(xlUp).row
         
     If lastResultRow > 2 Then
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
@@ -109,7 +109,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête"
+    destinationTab = "FAC_Entête$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -120,13 +120,13 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     'Can only ADD to the file, no modification is allowed
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
     rs.AddNew
     With wshFAC_Finale
         rs.Fields("Inv_No") = .Range("E28").value
-        rs.Fields("Date_Facture") = Format$(wshFAC_Brouillon.Range("O3").value, "mm-dd-yyyy")
+        rs.Fields("Date_Facture") = Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd")
         rs.Fields("AC_C") = "AC" 'Facture to be confirmed MANUALLY - 2024-08-16 @ 05:46
         rs.Fields("Cust_ID") = wshFAC_Brouillon.Range("B18").value
         rs.Fields("Contact") = .Range("B23").value
@@ -181,7 +181,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Entête.Range("A9999").End(xlUp).row + 1
+    firstFreeRow = wshFAC_Entête.Cells(wshFAC_Entête.Rows.count, "A").End(xlUp).row + 1
     
     With wshFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
@@ -236,7 +236,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Détails"
+    destinationTab = "FAC_Détails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -245,7 +245,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
@@ -320,7 +320,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Détails.Range("A99999").End(xlUp).row + 1
+    firstFreeRow = wshFAC_Détails.Cells(wshFAC_Détails.Rows.count, "A").End(xlUp).row + 1
    
     Dim i As Long
     For i = 34 To lastEnteredService
@@ -357,7 +357,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Sommaire_Taux"
+    destinationTab = "FAC_Sommaire_Taux$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -366,7 +366,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
@@ -419,7 +419,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Sommaire_Taux.Range("A99999").End(xlUp).row + 1
+    firstFreeRow = wshFAC_Sommaire_Taux.Cells(wshFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).row + 1
    
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
@@ -460,7 +460,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Comptes_Clients"
+    destinationTab = "FAC_Comptes_Clients$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -469,7 +469,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
+    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
     rs.AddNew
@@ -515,7 +515,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Comptes_Clients.Range("A9999").End(xlUp).row + 1
+    firstFreeRow = wshFAC_Comptes_Clients.Cells(wshFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
    
     With wshFAC_Comptes_Clients
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
@@ -548,7 +548,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "TEC_Local"
+    destinationTab = "TEC_Local$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -565,7 +565,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
         TEC_ID = wshTEC_Local.Range("AQ" & r).value
         
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TEC_ID
+        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TEC_ID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update DateSaisie, EstFacturee, DateFacturee & NoFacture
@@ -611,7 +611,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     
     'Set the range to look for
     Dim lastTECRow As Long
-    lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+    lastTECRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Long, rowToBeUpdated As Long, TECID As Long
@@ -644,7 +644,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails"
+    destinationTab = "FAC_Projets_Détails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -654,7 +654,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDetruite = -1 WHERE projetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "] SET estDetruite = -1 WHERE projetID = " & projetID
     
     'Execute the SQL query
     conn.Execute strSQL
@@ -687,7 +687,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -722,7 +722,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entête"
+    destinationTab = "FAC_Projets_Entête$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -731,7 +731,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "$] SET estDétruite = True WHERE ProjetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "] SET estDétruite = True WHERE ProjetID = " & projetID
 
     'Execute the SQL query
     On Error GoTo eh
@@ -745,7 +745,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'Libérer la mémoire (Normal)
     Set conn = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", startTime)
@@ -754,10 +754,12 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 eh:
     MsgBox "An error occurred: " & Err.description, vbCritical, "Error"
     If Not conn Is Nothing Then
+        On Error Resume Next
         conn.Close
         Set conn = Nothing
+        On Error GoTo 0
     End If
-
+    
 End Sub
 
 Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
@@ -772,7 +774,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("A99999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -1168,7 +1170,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Dim wbCible As Workbook
     If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
         'Créer un nouveau workbook
-        Set wbCible = Workbooks.Add
+        Set wbCible = Workbooks.add
         strCible = ""
     Else
         'Ouvrir le workbook sélectionné
@@ -1208,7 +1210,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 Application.DisplayAlerts = True
                 
                 'Créer une nouvelle feuille avec le même nom
-                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strNameBase 'Attribuer le nom d'origine
 
             Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
@@ -1225,13 +1227,13 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 
                 'Créer une nouvelle feuille avec ce nom directement lors de la création
                 Application.DisplayAlerts = False ' Désactiver les alertes pour éviter Feuil1
-                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strName ' Attribuer le nouveau nom avec suffixe
                 Application.DisplayAlerts = True ' Réactiver les alertes après la création
         End Select
     Else
         'Si la feuille n'existe pas, on peut directement la créer
-        Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+        Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
         wsCible.Name = strNameBase
     End If
     
@@ -1253,13 +1255,13 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     '3. Conserver la taille des colonnes
     Dim i As Integer
-    For i = 1 To plageSource.columns.count
-        wsCible.columns(i).ColumnWidth = plageSource.columns(i).ColumnWidth
+    For i = 1 To plageSource.Columns.count
+        wsCible.Columns(i).ColumnWidth = plageSource.Columns(i).ColumnWidth
     Next i
 
     '4. Ajuster les hauteurs de lignes (optionnel si nécessaire)
-    For i = 1 To plageSource.rows.count
-        wsCible.rows(i).RowHeight = plageSource.rows(i).RowHeight
+    For i = 1 To plageSource.Rows.count
+        wsCible.Rows(i).RowHeight = plageSource.Rows(i).RowHeight
     Next i
 
     '5. Copier l'entête de la facture
@@ -1349,7 +1351,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     If Not fileExists Then
         MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
                     "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
-        GoTo Exit_sub
+        GoTo Exit_Sub
     End If
     
     '2a. Chemin du template (.oft) de courriel
@@ -1362,7 +1364,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
         MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
                     vbCritical
-        GoTo Exit_sub
+        GoTo Exit_Sub
     End If
     
     '3. Initialisation de l'application Outlook
@@ -1379,7 +1381,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     Set MailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
 
     '5. Ajout de la pièce jointe
-    MailItem.Attachments.Add attachmentFullPathName
+    MailItem.Attachments.add attachmentFullPathName
 
 '    'Obtenir la signature par défaut
 '    Dim signaturePath As String
@@ -1411,7 +1413,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     MailItem.Display
     'MailItem.Send 'Pour envoyer directement l'email
 
-Exit_sub:
+Exit_Sub:
 
     'Libérer la mémoire
     Set MailItem = Nothing
@@ -1489,7 +1491,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
             If dictTaux.Exists(taux) Then
                 dictTaux(taux) = dictTaux(taux) + hres
             Else
-                dictTaux.Add taux, hres
+                dictTaux.add taux, hres
                 If hres <> 0 Then
                     nbTaux = nbTaux + 1
                 End If

@@ -35,7 +35,7 @@ Sub Stats_Heures_AF()
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("W1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("W1").CurrentRegion
     ws.Range("T19").value = rngResult.Address
     
@@ -46,7 +46,7 @@ Sub Stats_Heures_AF()
                 Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "W").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "W").End(xlUp).row
     ws.Range("T20").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -54,17 +54,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.Add key:=ws.Range("W2"), _
+            .SortFields.add key:=ws.Range("W2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.Add key:=ws.Range("Y2"), _
+            .SortFields.add key:=ws.Range("Y2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("Z2"), _
+            .SortFields.add key:=ws.Range("Z2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -89,7 +89,7 @@ Sub Stats_Heures_AF()
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("AJ1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("AJ1").CurrentRegion
     ws.Range("AG19").value = rngResult.Address
     
@@ -100,7 +100,7 @@ Sub Stats_Heures_AF()
                 Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "AJ").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "AJ").End(xlUp).row
     ws.Range("AG20").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -108,17 +108,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.Add key:=ws.Range("AJ2"), _
+            .SortFields.add key:=ws.Range("AJ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.Add key:=ws.Range("AL2"), _
+            .SortFields.add key:=ws.Range("AL2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("AM2"), _
+            .SortFields.add key:=ws.Range("AM2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -143,7 +143,7 @@ Sub Stats_Heures_AF()
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("AW1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("AW1").CurrentRegion
     ws.Range("AT19").value = rngResult.Address
     
@@ -154,7 +154,7 @@ Sub Stats_Heures_AF()
                 Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "AW").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "AW").End(xlUp).row
     ws.Range("AT20").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -162,17 +162,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.Add key:=ws.Range("AW2"), _
+            .SortFields.add key:=ws.Range("AW2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.Add key:=ws.Range("AY2"), _
+            .SortFields.add key:=ws.Range("AY2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("AZ2"), _
+            .SortFields.add key:=ws.Range("AZ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -197,7 +197,7 @@ Sub Stats_Heures_AF()
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("BJ1").CurrentRegion
-    rngResult.Offset(1, 0).Clear
+    rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("BJ1").CurrentRegion
     ws.Range("BG19").value = rngResult.Address
     
@@ -208,7 +208,7 @@ Sub Stats_Heures_AF()
                 Unique:=False
         
     'Tri des informations
-    lastResultRow = ws.Cells(ws.rows.count, "BJ").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
     ws.Range("BG20").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
@@ -216,17 +216,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.Add key:=ws.Range("BJ2"), _
+            .SortFields.add key:=ws.Range("BJ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.Add key:=ws.Range("BL2"), _
+            .SortFields.add key:=ws.Range("BL2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("BM2"), _
+            .SortFields.add key:=ws.Range("BM2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -242,6 +242,7 @@ Sub Stats_Heures_AF()
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modStatsHeures:Stats_Heures_AF", startTime)
 

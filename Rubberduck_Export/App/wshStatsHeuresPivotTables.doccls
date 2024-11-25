@@ -5,7 +5,7 @@ Private Sub Worksheet_Activate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", 0)
 
     If fromMenu = False Then
-        Debug.Print "wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
+        Debug.Print "#012 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
 
@@ -56,7 +56,7 @@ Private Sub Worksheet_Activate()
     plageValide.Validation.Delete
     
     'Ajouter la nouvelle validation avec la liste spécifiée
-    plageValide.Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
+    plageValide.Validation.add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
                                Operator:=xlBetween, Formula1:=listeChoixValides
 
     'Activer la flèche déroulante pour la sélection
@@ -118,7 +118,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     End If
     
-    'Libérer les objets
+    'Libérer la mémoire
     Set ws = Nothing
 
     Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change", startTime)

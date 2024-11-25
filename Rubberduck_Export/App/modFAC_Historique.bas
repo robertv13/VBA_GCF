@@ -73,7 +73,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
         'Définir le range des résultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = .Range("Z1").CurrentRegion
-        rngResult.Offset(2, 0).Clear
+        rngResult.offset(2, 0).Clear
         Set rngResult = .Range("Z2:AU2")
         .Range("X17").value = rngResult.Address
         
@@ -85,14 +85,14 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
           
         'Quels sont les résultats ?
         Dim lastResultRow As Long
-        lastResultRow = .Cells(.rows.count, "Z").End(xlUp).row
+        lastResultRow = .Cells(.Rows.count, "Z").End(xlUp).row
         .Range("X18").value = lastResultRow - 2 & " lignes"
          
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 4 Then Exit Sub
         With .Sort 'Sort - Invoice Date
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("Z3"), _
+            .SortFields.add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On Invoice Number
@@ -114,7 +114,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Range("Z9999").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
     
     Dim arr() As Variant
@@ -209,7 +209,7 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
             
             'Insert the icon
             Set pic = ws.Pictures.Insert(iconPath)
-'            Debug.Print pic.width, pic.Height
+'            Debug.Print "#056 - " & pic.width, pic.Height
             With pic
                 .Top = cell.Top + 1
                 .Left = cell.Left + 3
@@ -286,7 +286,7 @@ End Sub
 '    ws.Range("Z3:AU" & lastUsedRow).ClearContents
 '
 '    'Define the source range including headers
-'    lastUsedRow = ws.Range("A99999").End(xlUp).row
+'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
 '    Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
 '
 '    'Define the criteria range including headers
@@ -377,4 +377,7 @@ Sub FAC_Historique_Montrer_Bouton()
     
     Application.EnableEvents = True
 
+    'Libérer la mémoire
+    Set shp = Nothing
+    
 End Sub

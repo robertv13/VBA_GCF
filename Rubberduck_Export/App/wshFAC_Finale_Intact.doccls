@@ -1,0 +1,30 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Finale:Worksheet_Activate", 0)
+    
+    Application.ScreenUpdating = False
+    
+    'Set the zoom factor to 75% when this worksheet is activated
+    ActiveWindow.Zoom = 75
+    
+    Me.Application.Calculation = xlCalculationAutomatic
+    
+    Application.ScreenUpdating = True
+    
+    'Corps de la facture
+    With Me.Range("A21:F88").Font
+        .Color = -11511710
+        .TintAndShade = 0
+    End With
+    
+    'Message au bas de la facture (Somme due)
+    With Me.Range("B81:E81").Font
+        .Color = vbWhite
+        .TintAndShade = 0
+    End With
+
+    Call Log_Record("wshFAC_Finale:Worksheet_Activate", startTime)
+    
+End Sub

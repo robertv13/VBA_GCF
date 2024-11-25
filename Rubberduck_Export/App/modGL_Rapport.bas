@@ -6,7 +6,7 @@ Public Sub GL_Report_For_Selected_Accounts()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", 0)
    
     'Reference the worksheet
-    Dim ws As Worksheet:  Set ws = wshGL_Rapport
+    Dim ws As Worksheet: Set ws = wshGL_Rapport
 
     If ws.Range("F6").value = "" Or ws.Range("H6").value = "" Then
         MsgBox "Vous devez saisir une date de début et une date de fin pour ce rapport!"
@@ -32,7 +32,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         With lb.Object
             For i = 0 To .ListCount - 1
                 If .Selected(i) And Trim(.List(i)) <> "" Then
-                    selectedItems.Add .List(i)
+                    selectedItems.add .List(i)
                 End If
             Next i
         End With
@@ -67,14 +67,16 @@ Public Sub GL_Report_For_Selected_Accounts()
         'Process one account at the time...
         Dim item As Variant
         Dim compte As String
+        Dim GL As String
         For Each item In selectedItems
             compte = item
+            GL = Left(compte, InStr(compte, " ") - 1)
             'Obtenir le solde d'ouverture & les transactions
             Dim soldeOuverture As Double
-            soldeOuverture = Fn_Get_GL_Account_Balance(compte, dateDeb - 1)
+            soldeOuverture = Fn_Get_GL_Account_Balance(GL, dateDeb - 1)
             
             'Impression des résultats
-            Call Print_Results_From_GL_Trans(compte, soldeOuverture, dateDeb, dateFin)
+            Call Print_Results_From_GL_Trans(GL, soldeOuverture, dateDeb, dateFin)
         
         Next item
         
@@ -106,8 +108,8 @@ Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Doubl
     Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
     Dim saveFirstRow As Long
     Dim solde As Currency
-    lastRowUsed_A = ws.Range("A99999").End(xlUp).row
-    lastRowUsed_B = ws.Range("B99999").End(xlUp).row
+    lastRowUsed_A = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastRowUsed_B = ws.Cells(ws.Rows.count, "B").End(xlUp).row
     If lastRowUsed_A > lastRowUsed_B Then
         lastRowUsed_AB = lastRowUsed_A
     Else
@@ -133,12 +135,13 @@ Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Doubl
     Call GL_Get_Account_Trans_AF(glNo, dateDebut, dateFin, rngResult)
     
     Dim lastUsedTrans As Long
-    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.rows.count, "P").End(xlUp).row '2024-11-08 @ 09:15
+    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "P").End(xlUp).row '2024-11-08 @ 09:15
     If lastUsedTrans > 1 Then
         Dim i As Long, sumDT As Currency, sumCT As Currency
         'Read thru the rows
         For i = 2 To lastUsedTrans
             ws.Cells(lastRowUsed_AB, 2).value = wshGL_Trans.Range("Q" & i).value
+            ws.Cells(lastRowUsed_AB, 2).NumberFormat = wshAdmin.Range("B1").value
             ws.Cells(lastRowUsed_AB, 3).value = wshGL_Trans.Range("R" & i).value
             ws.Cells(lastRowUsed_AB, 4).value = wshGL_Trans.Range("S" & i).value
             ws.Cells(lastRowUsed_AB, 5).value = wshGL_Trans.Range("P" & i).value
@@ -160,7 +163,7 @@ No_Transaction:
 
     'Ajoute le formatage conditionnel pour les transactions
     With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
-        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
+        .FormatConditions.add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
         .FormatConditions(Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1).FormatConditions.count).SetFirstPriority
         With .FormatConditions(1).Interior
             .PatternColorIndex = xlAutomatic
@@ -232,37 +235,37 @@ Sub Set_Up_Report_Headers_And_Columns()
             End With
         End With
     
-        With .columns("A")
+        With .Columns("A")
             .ColumnWidth = 5
         End With
         
-        With .columns("B")
+        With .Columns("B")
             .ColumnWidth = 11
             .HorizontalAlignment = xlCenter
         End With
         
-        With .columns("C")
+        With .Columns("C")
             .ColumnWidth = 50
         End With
         
-        With .columns("D")
+        With .Columns("D")
             .ColumnWidth = 20
         End With
         
-        With .columns("E")
+        With .Columns("E")
             .ColumnWidth = 9
             .HorizontalAlignment = xlCenter
         End With
         
-        With .columns("F")
+        With .Columns("F")
             .ColumnWidth = 15
         End With
         
-        With .columns("G")
+        With .Columns("G")
             .ColumnWidth = 15
         End With
         
-        With .columns("H")
+        With .Columns("H")
             .ColumnWidth = 15
         End With
     End With
@@ -280,7 +283,7 @@ Sub GL_Rapport_Wrap_Up(h1 As String, h2 As String, h3 As String)
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ThisWorkbook.Worksheets("X_GL_Rapport_Out").Range("H999999").End(xlUp).row + 1
+    lastUsedRow = ThisWorkbook.Worksheets("X_GL_Rapport_Out").Cells(ThisWorkbook.Worksheets("X_GL_Rapport_Out").Rows.count, "H").End(xlUp).row + 1
     Range("A3:H" & lastUsedRow).Select
     
     With ActiveSheet.PageSetup
