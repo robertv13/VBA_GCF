@@ -752,7 +752,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.description, vbCritical, "Error"
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -1005,6 +1005,12 @@ Sub FAC_Finale_Setup_All_Cells()
     Application.EnableEvents = True
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", startTime)
+
+End Sub
+
+Sub shp_FAC_Finale_Preview_PDF_Click()
+
+    Call FAC_Finale_Preview_PDF
 
 End Sub
 
@@ -1430,6 +1436,12 @@ Sub Test_FAC_Finale_Creation_Courriel()
 
 End Sub
 
+Sub shp_FAC_Finale_Cacher_Heures_Click()
+
+    Call FAC_Finale_Cacher_Heures
+    
+End Sub
+
 Sub FAC_Finale_Cacher_Heures()
 
     With wshFAC_Finale.Range("C34:E63")
@@ -1439,12 +1451,24 @@ Sub FAC_Finale_Cacher_Heures()
     
 End Sub
 
+Sub shp_FAC_Finale_Montrer_Heures_Click()
+
+    Call FAC_Finale_Montrer_Heures
+    
+End Sub
+
 Sub FAC_Finale_Montrer_Heures()
 
     With wshFAC_Finale.Range("C34:E63")
         .Font.ThemeColor = xlThemeColorLight1
         .Font.TintAndShade = 0
     End With
+    
+End Sub
+
+Sub shp_FAC_Finale_Cacher_Sommaire_Taux_Click()
+
+    Call FAC_Finale_Cacher_Sommaire_Taux
     
 End Sub
 
@@ -1468,6 +1492,12 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
     'Libérer la mémoire
     Set rngFeesSummary = Nothing
     
+End Sub
+
+Sub shp_FAC_Finale_Montrer_Sommaire_Taux_Click()
+
+    Call FAC_Finale_Montrer_Sommaire_Taux
+
 End Sub
 
 Sub FAC_Finale_Montrer_Sommaire_Taux()
@@ -1541,6 +1571,12 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
     Set rngFeesSummary = Nothing
     Set t = Nothing
     
+End Sub
+
+Sub shp_FAC_Finale_Goto_Onglet_Brouillon_CLick()
+
+    Call FAC_Finale_Goto_Onglet_FAC_Brouillon
+
 End Sub
 
 Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()

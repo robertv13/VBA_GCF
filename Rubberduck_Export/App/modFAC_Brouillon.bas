@@ -4,6 +4,12 @@ Option Explicit
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
+Sub shp_FAC_Nouvelle_Facture_Click()
+
+    Call FAC_Brouillon_New_Invoice
+    
+End Sub
+
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice", 0)
@@ -405,66 +411,70 @@ Sub FAC_Brouillon_Setup_All_Cells()
 
 End Sub
 
-'CommentOut - 2024-11-25 @ 07:10
-'Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
-'
-'    'Step 1 - Open the Excel file
-'    Dim FilePath As String
-'    FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-'    If FilePath = "False" Then Exit Sub 'User canceled
-'
-'    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(FilePath)
-'    Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
-'
-'    'Step 2 - Let the user selects the cells to be copied
-'    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
-'         & "et par la suite, pesez sur <Enter>.", vbInformation
-'    On Error Resume Next
-'    Dim rngSource As Range
-'    Set rngSource = Application.InputBox("Sélectionnez les cellules à copier", Type:=8)
-'    On Error GoTo 0
-'
-'    If rngSource Is Nothing Then
-'        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
-'        wbSource.Close SaveChanges:=False
-'        GoTo Exit_Sub
-'    End If
-'
-'    'Step 3 - Copy the selected cells
-'    rngSource.Copy
-'    If rngSource.MergeCells Then
-'        'Unmerged cells
-'        rngSource.UnMerge
-'    End If
-'
-'    'Step 4 - Paste the copied cells at a predefined location
-'    Application.EnableEvents = False
-'
-'    With wshFAC_Brouillon
-'        .Unprotect
-'        .Range("L11:L" & 11 + rngSource.rows.count - 1).value = rngSource.value
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlNoRestrictions
-''        .EnableSelection = xlUnlockedCells
-'    End With
-'
-'    Application.EnableEvents = True
-'    Application.CutCopyMode = False
-'
-'    'Step 5 - Close and release the Excel file
-'    wbSource.Close SaveChanges:=False
-'
-'Exit_Sub:
-'
-'    'Libérer la mémoire
-'    On Error Resume Next
-'    Set rngSource = Nothing
-'    Set wbSource = Nothing
-'    Set wsSource = Nothing
-'    On Error GoTo 0
-'
-'End Sub
-'
+Sub shp_FAC_Open_Copy_Paste_Click()
+
+    Call FAC_Brouillon_Open_Copy_Paste
+    
+End Sub
+Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
+
+    'Step 1 - Open the Excel file
+    Dim FilePath As String
+    FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If FilePath = "False" Then Exit Sub 'User canceled
+
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(FilePath)
+    Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
+
+    'Step 2 - Let the user selects the cells to be copied
+    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
+         & "et par la suite, pesez sur <Enter>.", vbInformation
+    On Error Resume Next
+    Dim rngSource As Range
+    Set rngSource = Application.InputBox("Sélectionnez les cellules à copier", Type:=8)
+    On Error GoTo 0
+
+    If rngSource Is Nothing Then
+        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
+        wbSource.Close SaveChanges:=False
+        GoTo Exit_Sub
+    End If
+
+    'Step 3 - Copy the selected cells
+    rngSource.Copy
+    If rngSource.MergeCells Then
+        'Unmerged cells
+        rngSource.UnMerge
+    End If
+
+    'Step 4 - Paste the copied cells at a predefined location
+    Application.EnableEvents = False
+
+    With wshFAC_Brouillon
+        .Unprotect
+        .Range("L11:L" & 11 + rngSource.Rows.count - 1).value = rngSource.value
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
+    End With
+
+    Application.EnableEvents = True
+    Application.CutCopyMode = False
+
+    'Step 5 - Close and release the Excel file
+    wbSource.Close SaveChanges:=False
+
+Exit_Sub:
+
+    'Libérer la mémoire
+    On Error Resume Next
+    Set rngSource = Nothing
+    Set wbSource = Nothing
+    Set wsSource = Nothing
+    On Error GoTo 0
+
+End Sub
+
 Sub FAC_Brouillon_Set_Labels(r As Range, l As String)
 
     r.value = wshAdmin.Range(l).value
@@ -758,11 +768,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -799,6 +809,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
 End Sub
  
+Sub shp_Goto_Onglet_FAC_Finale_Click()
+
+    Call FAC_Brouillon_Goto_Onglet_FAC_Finale
+    
+End Sub
 Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", 0)
@@ -922,6 +937,12 @@ Depot_Checked:
     Application.ScreenUpdating = True
 
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", startTime)
+
+End Sub
+
+Sub shp_FAC_Exit_Click()
+
+    Call FAC_Brouillon_Back_To_FAC_Menu
 
 End Sub
 
@@ -1188,12 +1209,12 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     
     'Réinsérer les formules dans les cellules concernées uniquement si la colonne 2 n'est pas zéro
     Dim addr As Variant
-    Dim Ligne As Integer
+    Dim ligne As Integer
     Application.EnableEvents = False
     For Each addr In formules.keys
-        Ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
+        ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
         'Vérifier la valeur de la 2ème colonne dans la ligne correspondante
-        If r.Worksheet.Cells(Ligne, 19).value <> 0 Then
+        If r.Worksheet.Cells(ligne, 19).value <> 0 Then
             'Vérifier si l'adresse est dans la colonne 2 ou 4
             If r.Worksheet.Range(addr).Column = 19 Or r.Worksheet.Range(addr).Column = 21 Then
                 r.Worksheet.Range(addr).formula = formules(addr)
@@ -1260,7 +1281,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

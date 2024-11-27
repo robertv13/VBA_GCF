@@ -1,6 +1,12 @@
 Attribute VB_Name = "modGL_Rapport"
 Option Explicit
 
+Sub shp_GL_Rapport_GO_Click()
+
+    Call GL_Report_For_Selected_Accounts
+
+End Sub
+
 Public Sub GL_Report_For_Selected_Accounts()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", 0)
@@ -67,16 +73,18 @@ Public Sub GL_Report_For_Selected_Accounts()
         'Process one account at the time...
         Dim item As Variant
         Dim compte As String
+        Dim descGL As String
         Dim GL As String
         For Each item In selectedItems
             compte = item
             GL = Left(compte, InStr(compte, " ") - 1)
+            descGL = Right(compte, Len(compte) - InStr(compte, " "))
             'Obtenir le solde d'ouverture & les transactions
             Dim soldeOuverture As Double
             soldeOuverture = Fn_Get_GL_Account_Balance(GL, dateDeb - 1)
             
             'Impression des résultats
-            Call Print_Results_From_GL_Trans(GL, soldeOuverture, dateDeb, dateFin)
+            Call Print_Results_From_GL_Trans(GL, descGL, soldeOuverture, dateDeb, dateFin)
         
         Next item
         
@@ -101,7 +109,7 @@ Public Sub GL_Report_For_Selected_Accounts()
 
 End Sub
 
-Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Double, dateDebut As Date, dateFin As Date)
+Public Sub Print_Results_From_GL_Trans(compte As String, descGL As String, soldeOuverture As Double, dateDebut As Date, dateFin As Date)
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_GL_Rapport_Out")
     
@@ -117,7 +125,7 @@ Public Sub Print_Results_From_GL_Trans(compte As String, soldeOuverture As Doubl
     End If
     
     lastRowUsed_AB = lastRowUsed_AB + 2
-    ws.Range("A" & lastRowUsed_AB).value = compte
+    ws.Range("A" & lastRowUsed_AB).value = compte & " - " & descGL
     ws.Range("A" & lastRowUsed_AB).Font.Bold = True
     
     'Solde d'ouverture pour ce compte
@@ -186,6 +194,12 @@ No_Transaction:
     ws.Range("F" & lastRowUsed_AB).value = sumDT
     ws.Range("G" & lastRowUsed_AB).value = sumCT
     
+    With ws.Range("A" & saveFirstRow & ":H" & lastRowUsed_AB).Font
+        .Name = "Aptos Narrow"
+        .size = 10
+    End With
+    
+    
     'Libérer la mémoire
     Set rngResult = Nothing
     Set ws = Nothing
@@ -224,7 +238,8 @@ Sub Set_Up_Report_Headers_And_Columns()
         With .Range("A1:H1")
             .Font.Italic = True
             .Font.Bold = True
-            .Font.size = 10
+            .Font.Name = "Aptos Narrow"
+            .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
                 .Pattern = xlSolid
@@ -336,6 +351,12 @@ Sub cbTous_Click()
 
     'Libérer la mémoire
     Set lb = Nothing
+    
+End Sub
+
+Sub shp_GL_Rapport_Exit_Click()
+
+    Call GL_Rapport_Back_To_Menu
     
 End Sub
 

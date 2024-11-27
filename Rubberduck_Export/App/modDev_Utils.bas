@@ -1139,7 +1139,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     
 End Sub
 
-Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
+Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     
     'Prepare the result worksheet
     Call Erase_And_Create_Worksheet("Doc_All_Macros_Used_With_Object")
@@ -1260,19 +1260,18 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
             .Apply
         End With
         
-        'Automatically insert a empty line between worksheet
-        Dim i As Long
-        For i = outputRow To 2 Step -1
-            If wsOutputSheet.Cells(i, 1).value <> wsOutputSheet.Cells(i + 1, 1).value Then
-                wsOutputSheet.Rows(i + 1).Insert Shift:=xlDown
-            End If
-        Next i
+'        'Automatically insert a empty line between worksheet
+'        Dim i As Long
+'        For i = outputRow To 2 Step -1
+'            If wsOutputSheet.Cells(i, 1).value <> wsOutputSheet.Cells(i + 1, 1).value Then
+'                wsOutputSheet.Rows(i + 1).Insert Shift:=xlDown
+'            End If
+'        Next i
     End If
     
     'Set conditional formatting for the worksheet (alternate colors)
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
-    Debug.Print "#029 - " & rngArea.Address
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True) 'There are blankrows to account for
     
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
@@ -1294,7 +1293,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-07-25 @ 11:17
     
 End Sub
 
-Sub List_Subs_And_Functions_All() '2024-11-14 @ 15:51
+Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
     Dim ws As Worksheet: Set ws = wshzDocSubsAndFunctions
     
@@ -1677,7 +1676,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
 Error_Handler:
 
     MsgBox "Une erreur est survenue avec le fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                Err.description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
+                Err.Description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1745,7 +1744,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Saisie_Heures"
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1793,7 +1792,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Settrace"
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     

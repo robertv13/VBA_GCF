@@ -1,6 +1,4 @@
 Attribute VB_Name = "modAppli"
-'@Folder(GC_FISCALITÉ.Main)
-
 Option Explicit
 
 #If VBA7 Then

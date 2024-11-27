@@ -172,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
 ErrorHandler:
     Application.EnableEvents = True 'Ensure events are re-enabled if an error occurs
-    MsgBox "Erreur " & Err.Number & ": " & Err.description, vbCritical, "Erreur"
+    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur"
 
 End Sub
 
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

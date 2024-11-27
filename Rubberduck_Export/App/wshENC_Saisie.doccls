@@ -1,6 +1,9 @@
 ﻿Option Explicit
 
 Public previousCellAddress As Variant
+Public clientCode As String
+Public pmtNo As Long
+Public GLEntryNo As Long
 
 Private Sub Worksheet_Activate()
 
@@ -34,10 +37,23 @@ Private Sub Worksheet_Activate()
     Me.Columns("A:B").Hidden = True
     On Error GoTo 0
     
+    'S'assurer que les cellules qui auraient été déverouillées le soient pour commencer
+    ws.Range("B12:B36").Locked = True
+    ws.Range("E12:E36").Locked = True
+    
+    'Certaines cellules perdent la couleur du background
+    With ws.Range("I5,F6").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+
     'Protect the Worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlNoRestrictions
     End With
     
     Call SetTabOrder(ws)
@@ -104,9 +120,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Me.Range("F5").value <> Empty And _
             Me.Range("B6").value = "" Then
         Application.EnableEvents = False
-        Dim clientCode As String
         clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
-        Me.Range("B8").value = clientCode
         Call ENC_Remove_Check_Boxes(36)
         Call ENC_Get_OS_Invoices(clientCode)
         Application.EnableEvents = True
@@ -122,7 +136,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

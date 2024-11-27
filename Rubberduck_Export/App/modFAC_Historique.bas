@@ -1,6 +1,12 @@
 Attribute VB_Name = "modFAC_Historique"
 Option Explicit
 
+Sub shp_Affiche_Factures_Click()
+
+    Call Affiche_Liste_Factures
+
+End Sub
+
 Sub Affiche_Liste_Factures()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", 0)
@@ -345,6 +351,12 @@ Sub FAC_Historique_Clear_All_Cells()
     End With
 
     Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells", startTime)
+
+End Sub
+
+Sub shp_FAC_Historique_Exit_Click()
+
+    Call FAC_Historique_Back_To_FAC_Menu
 
 End Sub
 

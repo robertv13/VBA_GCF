@@ -1,7 +1,13 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
 Option Explicit
 
-Sub CAR_Liste_Agee_Creation() '2024-09-08 @ 15:55
+Sub shp_Liste_Agee_Creation_Click()
+
+    Call Liste_Agee_Creation
+
+End Sub
+
+Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_Liste_Agee_Creation", 0)
    
@@ -401,7 +407,7 @@ Next_Invoice:
     MsgBox "La préparation de la liste âgée est terminée", vbInformation
     
     Application.EnableEvents = True
-
+    
     'Libérer la mémoire
     Set cle = Nothing
     Set dictClients = Nothing
@@ -416,7 +422,13 @@ Next_Invoice:
     
 End Sub
 
-Sub CAR_Liste_Agée_Back_To_CAR_Menu()
+Sub shp_CAR_Liste_Agée_Back_To_CAR_Menu_Click()
+
+    Call Liste_Agée_Back_To_CAR_Menu
+
+End Sub
+
+Sub Liste_Agée_Back_To_CAR_Menu()
 
     wshCAR_Liste_Agée.Visible = xlSheetHidden
     

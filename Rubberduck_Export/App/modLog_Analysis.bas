@@ -5,9 +5,9 @@ Sub Lire_Fichier_LogMainApp()
 
     ' Initialiser la feuille où les données seront insérées
     Dim ws As Worksheet: Set ws = wshzDocLogMainAppAnalysis
-    Dim Ligne As Long
-    Ligne = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    ws.Range("A1:D" & Ligne).Clear
+    Dim ligne As Long
+    ligne = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    ws.Range("A1:D" & ligne).Clear
     ws.Cells(1, 1).value = "Date"
     ws.Cells(1, 2).value = "Heure"
     ws.Cells(1, 3).value = "Utilisateur"
@@ -16,7 +16,7 @@ Sub Lire_Fichier_LogMainApp()
     ws.Cells(1, 6).value = "Secondes"
     ws.Range("A:E").NumberFormat = "@"
     ws.Range("F:F").NumberFormat = "##0.0000"
-    Ligne = 2
+    ligne = 2
 
     'Créer une boîte de dialogue Fichier
     Dim FileDialogBox As FileDialog
@@ -56,17 +56,17 @@ Sub Lire_Fichier_LogMainApp()
         If InStr(LineContent, "|") <> 0 Then
             Fields = Split(LineContent, "|") ' Diviser la ligne en champs avec le délimiteur "|"
             'Insérer les données dans la feuille
-            ws.Cells(Ligne, 1) = Left(Fields(0), 10)
-            ws.Cells(Ligne, 2) = Right(Fields(0), 12)
-            ws.Cells(Ligne, 3) = Trim(Fields(1))
-            ws.Cells(Ligne, 4) = Trim(Fields(2))
-            ws.Cells(Ligne, 5) = Trim(Fields(3))
+            ws.Cells(ligne, 1) = Left(Fields(0), 10)
+            ws.Cells(ligne, 2) = Right(Fields(0), 12)
+            ws.Cells(ligne, 3) = Trim(Fields(1))
+            ws.Cells(ligne, 4) = Trim(Fields(2))
+            ws.Cells(ligne, 5) = Trim(Fields(3))
             If InStr(Fields(3), " = ") <> 0 Then
                 duree = Mid(Fields(3), InStr(Fields(3), " = ") + 3, Len(Fields(3)) - InStr(Fields(3), " = "))
-                ws.Cells(Ligne, 6).value = CDbl(Left(duree, InStr(duree, " ") - 1))
-                ws.Cells(Ligne, 5).value = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1))
+                ws.Cells(ligne, 6).value = CDbl(Left(duree, InStr(duree, " ") - 1))
+                ws.Cells(ligne, 5).value = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1))
             End If
-            Ligne = Ligne + 1
+            ligne = ligne + 1
         End If
     Loop
 

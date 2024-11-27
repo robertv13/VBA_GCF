@@ -122,7 +122,7 @@ Sub Create_User_Active_File()
 Error_Handling:
     MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
             "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-            "Erreur # " & Err.Number & " - " & Err.description, vbCritical, "Accès à " & traceFilePath
+            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
 
 End Sub
 
@@ -136,7 +136,7 @@ Sub BackupMasterFile()
     Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                             "GCF_BD_MASTER.xlsx")
     If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
     End If
     On Error GoTo 0
     
@@ -156,13 +156,13 @@ Sub BackupMasterFile()
     On Error Resume Next
     masterWorkbook.SaveCopyAs backupFilePath
     If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
     End If
 
     'Close the master workbook
     masterWorkbook.Close SaveChanges:=False
     If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.description, -1)
+        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
     End If
     On Error GoTo 0
 
@@ -177,7 +177,7 @@ MASTER_NOT_AVAILABLE:
     MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
             "Le fichier nécessite une réparation manuelle", _
             vbCritical, _
-            "Situation anormale (" & Err.Number & " " & Err.description & ")"
+            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
     Application.Quit
 
 End Sub

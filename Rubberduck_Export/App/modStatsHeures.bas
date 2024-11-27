@@ -248,7 +248,13 @@ Sub Stats_Heures_AF()
 
 End Sub
 
-Sub Stats_Back_To_ufSaisieHeures()
+Sub shp_Back_To_ufSaisieHeures_Click()
+
+    Call Back_To_ufSaisieHeures
+    
+End Sub
+
+Sub Back_To_ufSaisieHeures()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Stats_Back_To_ufSaisieHeures", 0)
    

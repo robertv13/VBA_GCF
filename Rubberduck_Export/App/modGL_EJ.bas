@@ -3,6 +3,12 @@ Option Explicit
 
 Dim sauvegardesCaracteristiquesForme As Object
 
+Sub shp_GL_EJ_Update_Click()
+
+    Call GL_EJ_Update
+    
+End Sub
+
 Sub GL_EJ_Update()
 
     If wshGL_EJ.Range("F4").value = "Renversement" Then
@@ -411,20 +417,20 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = False
     wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wshAdmin.Range("B1").value)
     wshGL_EJ.Range("F6").value = rngResult.Cells(1, 3).value
-    Dim Ligne As Range
+    Dim ligne As Range
     Dim l As Long: l = 9
-    For Each Ligne In rngResult.Rows
-        wshGL_EJ.Range("E" & l).value = Ligne.Cells(6).value
-        If Ligne.Cells(7).value <> 0 Then
-            wshGL_EJ.Range("H" & l).value = Ligne.Cells(7).value
+    For Each ligne In rngResult.Rows
+        wshGL_EJ.Range("E" & l).value = ligne.Cells(6).value
+        If ligne.Cells(7).value <> 0 Then
+            wshGL_EJ.Range("H" & l).value = ligne.Cells(7).value
         End If
-        If Ligne.Cells(8).value <> 0 Then
-            wshGL_EJ.Range("I" & l).value = Ligne.Cells(8).value
+        If ligne.Cells(8).value <> 0 Then
+            wshGL_EJ.Range("I" & l).value = ligne.Cells(8).value
         End If
-        wshGL_EJ.Range("J" & l).value = Ligne.Cells(9).value
-        wshGL_EJ.Range("L" & l).value = Ligne.Cells(5).value
+        wshGL_EJ.Range("J" & l).value = ligne.Cells(9).value
+        wshGL_EJ.Range("L" & l).value = ligne.Cells(5).value
         l = l + 1
-    Next Ligne
+    Next ligne
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
@@ -437,7 +443,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Call Modifier_Forme(shp)
     
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set rngResult = Nothing
     Set shp = Nothing
     Set ws = Nothing
@@ -864,6 +870,12 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", startTime)
     
+End Sub
+
+Sub shp_EJ_Exit_Click()
+
+    Call GL_EJ_Back_To_Menu
+
 End Sub
 
 Sub GL_EJ_Back_To_Menu()

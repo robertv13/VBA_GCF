@@ -80,7 +80,7 @@ Sub Insert_PDF_WIP_Icons()
         .Height = 50 'cell.Height
         .Width = 50 'cell.width
         .Placement = xlMoveAndSize
-        .OnAction = "FAC_Confirmation_Display_PDF_Invoice"
+        .OnAction = "shp_FAC_Confirmation_Display_PDF_Invoice_Click"
     End With
     
     '2. Insert the WIP icon
@@ -103,6 +103,12 @@ Sub Insert_PDF_WIP_Icons()
     Set cell = Nothing
     Set pic = Nothing
     Set ws = Nothing
+    
+End Sub
+
+Sub shp_FAC_Confirmation_Display_PDF_Invoice_Click()
+
+    Call FAC_Confirmation_Display_PDF_Invoice
     
 End Sub
 
@@ -175,6 +181,12 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     
     Application.EnableEvents = True
 
+End Sub
+
+Sub shp_FAC_Confirmation_Get_Detailed_TEC_Click()
+
+    Call FAC_Confirmation_Report_Detailed_TEC
+    
 End Sub
 
 Sub FAC_Confirmation_Report_Detailed_TEC()
@@ -362,26 +374,26 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
     'AdvancedFilter par Numéro de Facture
     
     'Effacer les données de la dernière utilisation
-    ws.Range("BG6:BG10").ClearContents
-    ws.Range("BG6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BH6:BH10").ClearContents
+    ws.Range("BH6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range("BG7").value = rngData.Address
+    Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
+    ws.Range("BH7").value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("BG2:BG3")
-    ws.Range("BG3").value = CStr(noFact)
-    ws.Range("BG8").value = rngCriteria.Address
+    ws.Range("BH3").value = CStr(noFact)
+    ws.Range("BH8").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-    Set rngResult = ws.Range("BI1").CurrentRegion
+    Set rngResult = ws.Range("BJ1").CurrentRegion
     rngResult.offset(2, 0).Clear
-    Set rngResult = ws.Range("BI2:BX2")
-    ws.Range("BG9").value = rngResult.Address
+    Set rngResult = ws.Range("BJ2:BY2")
+    ws.Range("BH9").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -744,7 +756,13 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
 
 End Sub
 
-Sub FAC_Confirmation_OK_Button_Click()
+Sub shp_FAC_Confirmation_OK_Click()
+
+    Call FAC_Confirmation_OK
+    
+End Sub
+
+Sub FAC_Confirmation_OK()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
@@ -757,7 +775,13 @@ Sub FAC_Confirmation_OK_Button_Click()
     
 End Sub
 
-Sub FAC_Confirmation_Confirm_Click()
+Sub shp_FAC_Confirmation_Confirm_Click()
+
+    Call FAC_Confirmation_Do_It
+    
+End Sub
+
+Sub FAC_Confirmation_Do_It()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Confirm_Click", 0)
     
@@ -1025,10 +1049,10 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
             MyArray(7, 4) = ""
         End If
         
-        Dim glEntryNo As Long
-        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, glEntryNo)
+        Dim GLEntryNo As Long
+        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
         
-        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, glEntryNo)
+        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
         
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
@@ -1043,6 +1067,12 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     
     Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting", startTime)
 
+End Sub
+
+Sub shp_FAC_Confirmation_Exit_Click()
+
+    Call FAC_Confirmation_Back_To_FAC_Menu
+    
 End Sub
 
 Sub FAC_Confirmation_Back_To_FAC_Menu()

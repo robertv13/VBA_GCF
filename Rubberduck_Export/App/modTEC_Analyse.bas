@@ -1004,6 +1004,12 @@ Sub TEC_Analyse_Delete_CheckBox()
     
 End Sub
 
+Sub shp_TEC_Analyse_Back_To_TEC_Menu_Click()
+
+    Call TEC_Analyse_Back_To_TEC_Menu
+
+End Sub
+
 Sub TEC_Analyse_Back_To_TEC_Menu()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", 0)

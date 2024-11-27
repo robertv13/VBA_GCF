@@ -141,7 +141,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
 
 End Sub
 
-Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic routine 2024-06-06 @ 07:00
+Sub GL_Posting_To_DB(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
 
@@ -172,7 +172,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     End If
     
     'Calculate the new JE number
-    glEntryNo = lastJE + 1
+    GLEntryNo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -184,9 +184,9 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     For i = LBound(arr, 1) To UBound(arr, 1)
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
-                rs.Fields("No_Entrée") = glEntryNo
+                rs.Fields("No_Entrée") = GLEntryNo
                 rs.Fields("Date") = CDate(df)
-                rs.Fields("Description") = desc
+                rs.Fields("Description") = DESC
                 rs.Fields("Source") = source
                 rs.Fields("No_Compte") = arr(i, 1)
                 rs.Fields("Compte") = arr(i, 2)
@@ -219,7 +219,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write records locally
+Sub GL_Posting_Locally(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_Locally", 0)
     
@@ -234,9 +234,9 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = glEntryNo
+                .Range("A" & rowToBeUsed).value = GLEntryNo
                 .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = desc
+                .Range("C" & rowToBeUsed).value = DESC
                 .Range("D" & rowToBeUsed).value = source
                 .Range("E" & rowToBeUsed).value = arr(i, 1)
                 .Range("F" & rowToBeUsed).value = arr(i, 2)

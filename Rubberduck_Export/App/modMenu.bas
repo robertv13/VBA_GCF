@@ -27,23 +27,24 @@ Sub menuFacturation_Click()
 
 End Sub
 
-Sub MenuDEB_Click()
-    
-    If Fn_Get_Windows_Username = "Guillaume" Or _
-            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "robertmv" Then
-        wshMenuDEB.Visible = xlSheetVisible
-        wshMenuDEB.Activate
-        wshMenuDEB.Range("A1").Select
-    Else
-        Application.EnableEvents = False
-        wshMenu.Activate
-        Application.EnableEvents = True
-    End If
-
-End Sub
-
+'CommentOut - 2024-11-25
+'Sub MenuDEB_Click()
+'
+'    If Fn_Get_Windows_Username = "Guillaume" Or _
+'            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
+'            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'            Fn_Get_Windows_Username = "robertmv" Then
+'        wshMenuDEB.Visible = xlSheetVisible
+'        wshMenuDEB.Activate
+'        wshMenuDEB.Range("A1").Select
+'    Else
+'        Application.EnableEvents = False
+'        wshMenu.Activate
+'        Application.EnableEvents = True
+'    End If
+'
+'End Sub
+'
 Sub menuComptabilite_Click()
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
@@ -208,6 +209,12 @@ Sub Hide_Dev_Shapes_Based_On_Username()
     Set shp = Nothing
     Set ws = Nothing
     
+End Sub
+
+Sub shp_BackToMainMenu_Click()
+
+    Call BackToMainMenu
+
 End Sub
 
 Sub BackToMainMenu()

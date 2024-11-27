@@ -233,7 +233,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     
 End Sub
 
-Sub shp_Impression_Click()
+Sub shp_TEC_Evaluation_Impression_Click()
 
     Call Evaluation_Apercu_Avant_Impression
 
@@ -268,6 +268,12 @@ Sub Evaluation_Apercu_Avant_Impression()
     'Libérer la mémoire
     Set rngToPrint = Nothing
     Set ws = Nothing
+    
+End Sub
+
+Sub shp_TEC_Evaluation_Back_To_TEC_Menu_Click()
+
+    Call TEC_Evaluation_Back_To_TEC_Menu
     
 End Sub
 

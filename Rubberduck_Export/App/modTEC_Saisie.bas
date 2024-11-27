@@ -740,6 +740,12 @@ Sub TEC_Update_TDB_From_TEC_Local()
 
 End Sub
 
+Sub shp_TEC_TdB_Update_All_Click()
+
+    Call TEC_TdB_Update_All
+
+End Sub
+
 Sub TEC_TdB_Update_All()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", 0)

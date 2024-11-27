@@ -24,14 +24,15 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
         Exit Sub
     End If
     
-    'Afficher les valeurs
-    Dim cell As Range
-    For Each cell In rng
-        Debug.Print "#043 - " & cell.Address & ": " & cell.value
-    Next cell
-    
-    'Libérer la mémoire
-    Set cell = Nothing
+'CommentOut - 2024-11-25 @ 07:18
+'    'Afficher les valeurs
+'    Dim cell As Range
+'    For Each cell In rng
+'        Debug.Print "#043 - " & cell.Address & ": " & cell.value
+'    Next cell
+'
+'    'Libérer la mémoire
+'    Set cell = Nothing
         
 End Sub
 
@@ -453,15 +454,15 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     ligneNum = 1
     
     'Lire chaque ligne du fichier
-    Dim Ligne As String
+    Dim ligne As String
     Dim champs() As String
     Dim j As Long
 
     Do While Not EOF(FileNum)
-        Line Input #FileNum, Ligne
+        Line Input #FileNum, ligne
         
         'Séparer les champs par le séparateur " | "
-        champs = Split(Ligne, " | ")
+        champs = Split(ligne, " | ")
         
         'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
@@ -786,5 +787,99 @@ Next_For:
     
 End Sub
 
+Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
 
+    'Utiliser la feuille 'UserForm_Params' ou la créer pour sauvegarder les paramètres
+    On Error Resume Next
+    Dim ws As Worksheet
+    Set ws = wshUserFormParams
+    If ws Is Nothing Then
+        Set ws = ThisWorkbook.Sheets.add
+        ws.Name = "UserForm_Params"
+    End If
+    On Error GoTo 0
+    
+    'En-têtes de colonnes
+    ws.Cells.Clear
+    ws.Range("A1:D1").value = Array("Nom_UserForm", "Largeur", "Hauteur", "Position_Left", "Position_Top")
+    
+    Dim i As Integer
+    i = 2
+    'Parcourir tous les composants VBA pour trouver les UserForms
+    Dim vbComp As Object
+    Dim userFormName As String
+    Dim uf As Object
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        If vbComp.Type = vbext_ct_MSForm Then
+            userFormName = vbComp.Name
+            On Error Resume Next
+            ' Charger dynamiquement le UserForm
+            Set uf = VBA.UserForms.add(userFormName)
+            On Error GoTo 0
+
+            If Not uf Is Nothing Then
+                ws.Cells(i, 1).value = userFormName
+                ws.Cells(i, 2).value = uf.Width
+                ws.Cells(i, 3).value = uf.Height
+                ws.Cells(i, 4).value = uf.Left
+                ws.Cells(i, 5).value = uf.Top
+                i = i + 1
+                ' Décharger le UserForm pour libérer la mémoire
+                Unload uf
+                Set uf = Nothing
+            End If
+        End If
+    Next vbComp
+    
+    'Libérer la mémoire
+    Set uf = Nothing
+    
+    MsgBox "Paramètres des UserForms sauvegardés avec succès.", vbInformation
+
+End Sub
+
+Sub Restaurer_UserForms_Parameters()
+
+    Dim ws As Worksheet
+    Dim i As Integer
+    Dim uf As Object
+    Dim nomUF As String
+
+    'Vérifier si la feuille existe
+    On Error Resume Next
+    Set ws = wshUserFormParams
+    If ws Is Nothing Then
+        MsgBox "La feuille 'UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
+        Exit Sub
+    End If
+    On Error GoTo 0
+
+    'Parcourir la liste des paramètres sauvegardés
+    i = 2
+    Do While ws.Cells(i, 1).value <> ""
+        nomUF = ws.Cells(i, 1).value
+        On Error Resume Next
+        ' Charger dynamiquement le UserForm
+        Set uf = VBA.UserForms.add(nomUF)
+        On Error GoTo 0
+
+        If Not uf Is Nothing Then
+            uf.Width = ws.Cells(i, 2).value
+            uf.Height = ws.Cells(i, 3).value
+            uf.Left = ws.Cells(i, 4).value
+            uf.Top = ws.Cells(i, 5).value
+            'Optionnel : afficher le UserForm pour vérifier
+            'uf.Show
+        End If
+
+        i = i + 1
+    Loop
+
+    'Libérer la mémoire
+    Set uf = Nothing
+    Set ws = Nothing
+    
+    MsgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
+
+End Sub
 

@@ -799,7 +799,7 @@ Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
-    sourceTab = "GL_EJ_Recurrente$"
+    sourceTab = "GL_EJ_Auto$"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection

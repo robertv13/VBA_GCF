@@ -1,6 +1,12 @@
 Attribute VB_Name = "modDEB_Saisie"
 Option Explicit
 
+Sub shp_DEB_Saisie_Update_Click()
+
+    Call DEB_Saisie_Update
+
+End Sub
+
 Sub DEB_Saisie_Update()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", 0)
@@ -277,10 +283,10 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         End If
     Next l
     
-    Dim glEntryNo As Long
-    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray, glEntryNo)
+    Dim GLEntryNo As Long
+    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray, GLEntryNo)
     
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, MyArray, glEntryNo)
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, MyArray, GLEntryNo)
     
     Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", startTime)
 
@@ -528,14 +534,20 @@ Public Sub DEB_Saisie_Clear_All_Cells()
 
 End Sub
 
+Sub shp_DEB_Back_To_Menu_Click()
+
+    Call DEBOURS_Back_To_Menu
+
+End Sub
+
 Sub DEBOURS_Back_To_Menu()
     
     wshDEB_Saisie.Visible = xlSheetHidden
     
     Application.ScreenUpdating = False
     
-    wshMenuDEB.Activate
-    wshMenuDEB.Range("A1").Select
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
     
     Application.ScreenUpdating = True
     

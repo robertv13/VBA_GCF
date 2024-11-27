@@ -785,10 +785,10 @@ Private Sub check_DEB_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
     Dim strGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(Ligne.Cells(1, 2).value) & "^D:" & Trim(Ligne.Cells(1, 1).value) & " | "
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).value) & "^D:" & Trim(ligne.Cells(1, 1).value) & " | "
+    Next ligne
     
     'Copie les données vers un tableau
     Dim rng As Range
@@ -864,7 +864,7 @@ Private Sub check_DEB_Trans(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -1961,11 +1961,11 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
     Dim strCodeGL As String, strDescGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strCodeGL = strCodeGL & Ligne.Cells(1, 2).value & "|:|"
-        strDescGL = strDescGL & Ligne.Cells(1, 1).value & "|:|"
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strCodeGL = strCodeGL & ligne.Cells(1, 2).value & "|:|"
+        strDescGL = strDescGL & ligne.Cells(1, 1).value & "|:|"
+    Next ligne
     
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.Rows.count - 1 'Remove the header row
@@ -2101,7 +2101,7 @@ Clean_Exit:
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set v = Nothing
@@ -2153,10 +2153,10 @@ Private Sub check_GL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     
     'Bâtir une chaine avec code & description
     Dim strGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strGL = strGL & Trim(Ligne.Cells(1, 2).value) & "-" & Trim(Ligne.Cells(1, 1).value) & " | "
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & Trim(ligne.Cells(1, 2).value) & "-" & Trim(ligne.Cells(1, 1).value) & " | "
+    Next ligne
 
     'Copier les données vers un tableau
     Dim rng As Range
@@ -2208,7 +2208,7 @@ Private Sub check_GL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -2496,7 +2496,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2564 'What is the last TECID analyzed ?
+    lastTECIDReported = 2598 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2540,8 +2540,9 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     lastUsedRowFAC = wshFAC_Entête.Cells(wshFAC_Entête.Rows.count, 1).End(xlUp).row
     If lastUsedRowFAC > 2 Then
         For i = 3 To lastUsedRowFAC
-            If wshFAC_Entête.Cells(i, 1).value = "" Then Stop
-            dictFacture.add CStr(wshFAC_Entête.Cells(i, 1).value), 0
+            If wshFAC_Entête.Cells(i, 1).value <> "" Then
+                dictFacture.add CStr(wshFAC_Entête.Cells(i, 1).value), 0
+            End If
         Next i
     End If
     
@@ -3374,6 +3375,11 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", 0)
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
     'Mise en place de la feuille de sortie (output)
     Dim strOutput As String
     strOutput = "X_TEC_Déplacements"
@@ -3411,20 +3417,25 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     
     Dim lastUsedRowTEC As Long
     lastUsedRowTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
+    Dim arr() As Variant
+    
+    Call Tx_Range_2_2D_Array(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
     
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
     Dim clientData As Variant
     Dim i As Long
-    For i = 3 To lastUsedRowTEC
-        If wsTEC.Cells(i, 3).value = "GC" And _
-            wsTEC.Cells(i, 4).value >= dateFrom And _
-            wsTEC.Cells(i, 4).value <= dateTo And _
-            UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
-                wsOutput.Cells(rowOutput, 1).value = CDate(wsTEC.Cells(i, 4).value)
-                wsOutput.Cells(rowOutput, 2).value = CDate(wsTEC.Cells(i, 4).value)
-                wsOutput.Cells(rowOutput, 4).value = wsTEC.Cells(i, 8).value
-                clientData = Fn_Rechercher_Client_Par_ID(Trim(wsTEC.Cells(i, 5).value), wsMF)
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        If arr(i, 3) = "GC" And _
+            arr(i, 4) >= dateFrom And _
+            arr(i, 4) <= dateTo And _
+            UCase(arr(i, 14)) <> "VRAI" Then
+                wsOutput.Cells(rowOutput, 1).value = arr(i, 4)
+                wsOutput.Cells(rowOutput, 1).NumberFormat = wshAdmin.Range("B1").value
+                wsOutput.Cells(rowOutput, 2).value = arr(i, 4)
+                wsOutput.Cells(rowOutput, 2).NumberFormat = wshAdmin.Range("B1").value
+                wsOutput.Cells(rowOutput, 4).value = arr(i, 8)
+                clientData = Fn_Rechercher_Client_Par_ID(Trim(arr(i, 5)), wsMF)
                 If IsArray(clientData) Then
                     wsOutput.Cells(rowOutput, 3).value = clientData(1, fClntMFClientNom)
                     wsOutput.Cells(rowOutput, 5).value = clientData(1, fClntMFAdresse_1)
@@ -3514,6 +3525,9 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
     Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
 
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
     'Setup print parameters
 '    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
     Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
@@ -3527,6 +3541,8 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
+    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", startTime)
+
 End Sub
 
 Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
@@ -3650,7 +3666,7 @@ End Sub
 '
 Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)

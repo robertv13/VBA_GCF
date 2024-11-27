@@ -3,6 +3,12 @@ Option Explicit
 
 Public dynamicShape As Shape
 
+Sub shp_GL_BV_Actualiser_Click()
+
+    Call GL_Trial_Balance_Build(wshGL_BV.Range("J1").value)
+
+End Sub
+
 Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_Trial_Balance_Build(" & dateCutOff & ")", 0)
@@ -757,6 +763,12 @@ Sub GL_BV_Hide_Dynamic_Shape()
     'Libérer la mémoire
     Set shp = Nothing
     
+End Sub
+
+Sub shp_GL_BV_Exit_Click()
+
+    Call GL_BV_Back_To_Menu
+
 End Sub
 
 Sub GL_BV_Back_To_Menu()
