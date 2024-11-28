@@ -94,7 +94,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 '    'Zones sensibles
 '    Dim rngZonesSensibles As Range
 '    Set rngZonesSensibles = Union(rngBV, rngDetailTrans, Me.Range("J1"))
-'    Debug.Print rngBV.Address, rngDetailTrans.Address, Me.Range("J1").Address
+'    Debug.Print rngBV.address, rngDetailTrans.address, Me.Range("J1").address
     
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then

@@ -428,7 +428,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     End If
     
     'Add the new worksheet
-    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
+    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.Name = wsName
 
     'Libérer la mémoire
@@ -474,7 +474,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
         codeGL = arr(i, 1)
         descrGL = arr(i, 2)
         If dict_descr_GL.Exists(descrGL) = False Then
-            dict_descr_GL.add descrGL, codeGL
+            dict_descr_GL.Add descrGL, codeGL
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
             r = r + 1
@@ -482,7 +482,7 @@ Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
         End If
         
         If dict_code_GL.Exists(codeGL) = False Then
-            dict_code_GL.add codeGL, descrGL
+            dict_code_GL.Add codeGL, descrGL
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
             r = r + 1
@@ -580,7 +580,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         
         'Doublon sur le nom ?
         If dict_nom_client.Exists(nom) = False Then
-            dict_nom_client.add nom, code
+            dict_nom_client.Add nom, code
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
             r = r + 1
@@ -589,7 +589,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
         
         'Doublon sur le code de client ?
         If dict_code_client.Exists(code) = False Then
-            dict_code_client.add code, nom
+            dict_code_client.Add code, nom
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
             r = r + 1
@@ -691,14 +691,14 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
         nom = arr(i, 1)
         code = arr(i, 2)
         If dict_nom_fournisseur.Exists(nom) = False Then
-            dict_nom_fournisseur.add nom, code
+            dict_nom_fournisseur.Add nom, code
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le nom '" & nom & "' est un doublon pour le code '" & code & "'")
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
         End If
         If dict_code_fournisseur.Exists(code) = False Then
-            dict_code_fournisseur.add code, nom
+            dict_code_fournisseur.Add code, nom
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "Le code '" & code & "' est un doublon pour le nom '" & nom & "'")
             r = r + 1
@@ -965,7 +965,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
             If dictENC.Exists(Inv_No) Then
                 dictENC(Inv_No) = dictENC(Inv_No) + ws.Range("E" & i).value
             Else
-                dictENC.add Inv_No, ws.Range("E" & i).value
+                dictENC.Add Inv_No, ws.Range("E" & i).value
             End If
             totalEncDetails = totalEncDetails + ws.Range("E" & i).value
         End If
@@ -1993,7 +1993,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
-            dict_GL_Entry.add GL_Entry_No, row
+            dict_GL_Entry.Add GL_Entry_No, row
             sum_arr(row, 1) = GL_Entry_No
             row = row + 1
         End If
@@ -2349,7 +2349,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         
         'Dictionary
         If dict_TEC_ID.Exists(TECID) = False Then
-            dict_TEC_ID.add TECID, 0
+            dict_TEC_ID.Add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
@@ -2496,7 +2496,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2598 'What is the last TECID analyzed ?
+    lastTECIDReported = 2640 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2541,7 +2541,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     If lastUsedRowFAC > 2 Then
         For i = 3 To lastUsedRowFAC
             If wshFAC_Entête.Cells(i, 1).value <> "" Then
-                dictFacture.add CStr(wshFAC_Entête.Cells(i, 1).value), 0
+                dictFacture.Add CStr(wshFAC_Entête.Cells(i, 1).value), 0
             End If
         Next i
     End If
@@ -2643,7 +2643,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             If dictDateCharge.Exists(strDict) Then
                 dictDateCharge(strDict) = dictDateCharge(strDict) + arr(i, 8)
             Else
-                dictDateCharge.add strDict, arr(i, 8)
+                dictDateCharge.Add strDict, arr(i, 8)
             End If
             'TimeStamp
             yy = year(arr(i, 11))
@@ -2654,7 +2654,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             If dictTimeStamp.Exists(strDict) Then
                 dictTimeStamp(strDict) = dictTimeStamp(strDict) + 1
             Else
-                dictTimeStamp.add strDict, 1
+                dictTimeStamp.Add strDict, 1
             End If
         End If
 
@@ -2766,14 +2766,14 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         
         'Dictionaries
         If dict_TEC_ID.Exists(TECID) = False Then
-            dict_TEC_ID.add TECID, 0
+            dict_TEC_ID.Add TECID, 0
         Else
             Call Add_Message_To_WorkSheet(wsOutput, r, 2, "****** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
         If dict_prof.Exists(prof & "-" & profID) = False Then
-            dict_prof.add prof & "-" & profID, 0
+            dict_prof.Add prof & "-" & profID, 0
         End If
     Next i
     
@@ -3153,7 +3153,7 @@ Sub Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 '    '3) Add the standard conditional formatting
 '        If Not usedRange Is Nothing Then
 '            With usedRange
-'                .FormatConditions.Add Type:=xlExpression, _
+'                .FormatConditions.add Type:=xlExpression, _
 '                    Formula1:="=MOD(LIGNE();2)=1"
 '                .FormatConditions(.FormatConditions.count).SetFirstPriority
 '                With .FormatConditions(1).Font
@@ -3454,15 +3454,15 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     'Tri des données
     With wsOutput.Sort
         .SortFields.Clear
-        .SortFields.add key:=wsOutput.Range("B2"), _
+        .SortFields.Add key:=wsOutput.Range("B2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortTextAsNumbers 'Sort Date
-        .SortFields.add key:=wshTEC_Local.Range("C2"), _
+        .SortFields.Add key:=wshTEC_Local.Range("C2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort on Client's name
-        .SortFields.add key:=wshTEC_Local.Range("D2"), _
+        .SortFields.Add key:=wshTEC_Local.Range("D2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlDescending, _
             DataOption:=xlSortNormal 'Sort on Hours
@@ -3679,7 +3679,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
     
     'Redefine - dnrPlanComptable_All
     'Delete existing dynamic named range (assuming it could exists)
@@ -3691,7 +3691,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
     
     'Create the new dynamic named range
-    ThisWorkbook.Names.add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
     Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
 

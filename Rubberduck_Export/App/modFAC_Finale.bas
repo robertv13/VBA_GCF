@@ -4,6 +4,12 @@ Option Explicit
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
+Sub shp_FAC_Finale_Save_Click()
+
+    Call FAC_Finale_Save
+
+End Sub
+
 Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Save (" & _
@@ -923,11 +929,11 @@ End Function
 '        End If
 ''        With .Sort
 ''            .SortFields.Clear
-''            .SortFields.Add Key:=wshFAC_Entête.Range("X2"), _
+''            .SortFields.add Key:=wshFAC_Entête.Range("X2"), _
 ''                SortOn:=xlSortOnValues, _
 ''                Order:=xlAscending, _
 ''                DataOption:=xlSortNormal 'Sort Based Invoice Number
-''            .SortFields.Add Key:=wshGL_Trans.Range("Y3"), _
+''            .SortFields.add Key:=wshGL_Trans.Range("Y3"), _
 ''                SortOn:=xlSortOnValues, _
 ''                Order:=xlAscending, _
 ''                DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -1176,14 +1182,14 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Dim wbCible As Workbook
     If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
         'Créer un nouveau workbook
-        Set wbCible = Workbooks.add
+        Set wbCible = Workbooks.Add
         strCible = ""
     Else
         'Ouvrir le workbook sélectionné
         Set wbCible = Workbooks.Open(strCible)
     End If
     
-'    Set wsCible = wbCible.Sheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
+'    Set wsCible = wbCible.Sheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
     Dim strName As String
     Dim strNameBase As String
     strNameBase = invDate & " - " & invNo
@@ -1216,7 +1222,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 Application.DisplayAlerts = True
                 
                 'Créer une nouvelle feuille avec le même nom
-                Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strNameBase 'Attribuer le nom d'origine
 
             Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
@@ -1233,13 +1239,13 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                 
                 'Créer une nouvelle feuille avec ce nom directement lors de la création
                 Application.DisplayAlerts = False ' Désactiver les alertes pour éviter Feuil1
-                Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
+                Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strName ' Attribuer le nouveau nom avec suffixe
                 Application.DisplayAlerts = True ' Réactiver les alertes après la création
         End Select
     Else
         'Si la feuille n'existe pas, on peut directement la créer
-        Set wsCible = wbCible.Worksheets.add(After:=wbCible.Sheets(wbCible.Sheets.count))
+        Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
         wsCible.Name = strNameBase
     End If
     
@@ -1387,7 +1393,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     Set MailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
 
     '5. Ajout de la pièce jointe
-    MailItem.Attachments.add attachmentFullPathName
+    MailItem.Attachments.Add attachmentFullPathName
 
 '    'Obtenir la signature par défaut
 '    Dim signaturePath As String
@@ -1521,7 +1527,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
             If dictTaux.Exists(taux) Then
                 dictTaux(taux) = dictTaux(taux) + hres
             Else
-                dictTaux.add taux, hres
+                dictTaux.Add taux, hres
                 If hres <> 0 Then
                     nbTaux = nbTaux + 1
                 End If

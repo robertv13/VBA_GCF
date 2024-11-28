@@ -27,9 +27,9 @@ Sub Lire_Fichier_LogMainApp()
     With FileDialogBox
         .Title = "Sélectionnez le fichier LogMainApp"
         .Filters.Clear 'Supprimer les filtres existants
-'        .Filters.Add "Fichiers texte", "*.txt"
-        .Filters.add "Fichiers log", "*.log"
-        .Filters.add "Tous les fichiers", "*.*"
+'        .Filters.add "Fichiers texte", "*.txt"
+        .Filters.Add "Fichiers log", "*.log"
+        .Filters.Add "Tous les fichiers", "*.*"
 
         'Afficher la boîte de dialogue
         If .show = -1 Then
@@ -98,9 +98,9 @@ End Sub
 '        .Title = "Sélectionnez l'emplacement du fichier LogMainApp.log"
 '        .AllowMultiSelect = False
 '        .Filters.Clear
-'        .Filters.Add "Fichiers TXT", "*.txt"
-'        .Filters.Add "Fichiers LOG", "*.log"
-'        .Filters.Add "Tous les fichiers", "*.*"
+'        .Filters.add "Fichiers TXT", "*.txt"
+'        .Filters.add "Fichiers LOG", "*.log"
+'        .Filters.add "Tous les fichiers", "*.*"
 '
 '        If .show = -1 Then
 '            cheminFichier = .selectedItems(1)
@@ -162,13 +162,13 @@ End Sub
 '
 '            moment = Left(data(i, 1), 13)
 '            If Not dicMoment.Exists(moment) Then
-'                dicMoment.Add moment, 0
+'                dicMoment.add moment, 0
 '            End If
 '            dicMoment.item(moment) = dicMoment.item(moment) + 1
 '
 '            user = Trim(data(i, 2))
 '            If Not dicUser.Exists(user) Then
-'                dicUser.Add user, 0
+'                dicUser.add user, 0
 '            End If
 '            dicUser.item(user) = dicUser.item(user) + 1
 '

@@ -56,7 +56,7 @@ Private Sub Worksheet_Activate()
     plageValide.Validation.Delete
     
     'Ajouter la nouvelle validation avec la liste spécifiée
-    plageValide.Validation.add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
+    plageValide.Validation.Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
                                Operator:=xlBetween, Formula1:=listeChoixValides
 
     'Activer la flèche déroulante pour la sélection

@@ -98,7 +98,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
         If lastResultRow < 4 Then Exit Sub
         With .Sort 'Sort - Invoice Date
             .SortFields.Clear
-            .SortFields.add key:=ws.Range("Z3"), _
+            .SortFields.Add key:=ws.Range("Z3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On Invoice Number
@@ -312,7 +312,7 @@ End Sub
 '    If lastResultRow < 4 Then Exit Sub
 '    With ws.Sort 'Sort - Inv_No
 '        .SortFields.Clear
-'        .SortFields.Add key:=wshTEC_Local.Range("Z3"), _
+'        .SortFields.add key:=wshTEC_Local.Range("Z3"), _
 '            SortOn:=xlSortOnValues, _
 '            Order:=xlAscending, _
 '            DataOption:=xlSortNormal 'Sort Based On Invoice Number

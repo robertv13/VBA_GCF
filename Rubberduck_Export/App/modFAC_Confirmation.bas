@@ -231,7 +231,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     
     'Si la feuille "Rapport TEC facturés" n'existe pas, la créer
     If wsRapport Is Nothing Then
-        Set wsRapport = ThisWorkbook.Sheets.add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
+        Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
         wsRapport.Name = strRapport
     Else
         wsRapport.Cells.Clear 'Vider la feuille si elle existe déjà
@@ -411,17 +411,17 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
         With ws.Sort 'Sort - Date, ProfID, TEC_ID
             .SortFields.Clear
             'First sort On Date
-            .SortFields.add key:=ws.Range("BL3"), _
+            .SortFields.Add key:=ws.Range("BL3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Prof_ID
-            .SortFields.add key:=ws.Range("BJ3"), _
+            .SortFields.Add key:=ws.Range("BJ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.add key:=ws.Range("BI3"), _
+            .SortFields.Add key:=ws.Range("BI3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -486,7 +486,7 @@ Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
     If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
-            .SortFields.add key:=ws.Range("AY3"), _
+            .SortFields.Add key:=ws.Range("AY3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
@@ -584,7 +584,7 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
             Else
-                dictHours.add pro, hres
+                dictHours.Add pro, hres
             End If
         End If
     Next i
@@ -638,7 +638,7 @@ Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
             Else
-                dictHours.add pro, hres
+                dictHours.Add pro, hres
             End If
         End If
     Next i

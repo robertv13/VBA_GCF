@@ -54,17 +54,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.add key:=ws.Range("W2"), _
+            .SortFields.Add key:=ws.Range("W2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.add key:=ws.Range("Y2"), _
+            .SortFields.Add key:=ws.Range("Y2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.add key:=ws.Range("Z2"), _
+            .SortFields.Add key:=ws.Range("Z2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -108,17 +108,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.add key:=ws.Range("AJ2"), _
+            .SortFields.Add key:=ws.Range("AJ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.add key:=ws.Range("AL2"), _
+            .SortFields.Add key:=ws.Range("AL2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.add key:=ws.Range("AM2"), _
+            .SortFields.Add key:=ws.Range("AM2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -162,17 +162,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.add key:=ws.Range("AW2"), _
+            .SortFields.Add key:=ws.Range("AW2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.add key:=ws.Range("AY2"), _
+            .SortFields.Add key:=ws.Range("AY2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.add key:=ws.Range("AZ2"), _
+            .SortFields.Add key:=ws.Range("AZ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -216,17 +216,17 @@ Sub Stats_Heures_AF()
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On ProfID
-            .SortFields.add key:=ws.Range("BJ2"), _
+            .SortFields.Add key:=ws.Range("BJ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.add key:=ws.Range("BL2"), _
+            .SortFields.Add key:=ws.Range("BL2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.add key:=ws.Range("BM2"), _
+            .SortFields.Add key:=ws.Range("BM2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal

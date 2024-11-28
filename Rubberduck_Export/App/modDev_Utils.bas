@@ -353,7 +353,122 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     
 End Sub
 
-'@EntryPoint
+'CommentOut - 2024-11-28 @ 10:16
+'Sub AnalyserUtilisationProcédures() '2024-11-28 @ 09:30
+'
+'    Dim vbp As VBProject
+'    Dim vbc As VBComponent
+'    Dim codeLignes() As String
+'    Dim procedures() As String
+'    Dim resultats() As String
+'    Dim ligne As String
+'    Dim i As Long, j As Long, index As Long
+'    Dim trouvée As Boolean
+'
+'    'Activer les outils VBA (références nécessaires)
+'    On Error Resume Next
+'    Set vbp = ThisWorkbook.VBProject
+'    If vbp Is Nothing Then
+'        MsgBox "Veuillez activer la référence Microsoft VBA Extensibility dans les Outils.", vbExclamation
+'        Exit Sub
+'    End If
+'    On Error GoTo 0
+'
+'    '1. Charger toutes les lignes de code en mémoire (tableau)
+'    Dim ligneTotal As Long
+'    ligneTotal = 0
+'    For Each vbc In vbp.VBComponents
+'        ligneTotal = ligneTotal + vbc.CodeModule.CountOfLines
+'    Next vbc
+'    ReDim codeLignes(1 To ligneTotal)
+'
+'    index = 1
+'    For Each vbc In vbp.VBComponents
+'        For i = 1 To vbc.CodeModule.CountOfLines
+'            codeLignes(index) = vbc.CodeModule.Lines(i, 1)
+'            index = index + 1
+'        Next i
+'    Next vbc
+'
+'    '2. Obtenir la liste des procédures à vérifier
+'    Dim nomFeuille As String
+'    nomFeuille = "Doc_Subs&Functions"
+'    Dim procList As Variant
+'    procList = Get_Procedures_Listing(nomFeuille)
+'    ReDim resultats(1 To 10000, 1 To 3)
+'
+'    '3. Vérifier chaque procédure dans le tableau de lignes
+'    Dim modName As String, procName As String
+'    Dim ir As Long
+'    For i = LBound(procList) To UBound(procList)
+'        modName = Left(procList(i), InStr(procList(i), ":") - 1)
+'        procName = Mid(procList(i), InStr(procList(i), ":") + 1, Len(procList(i)) - 1)
+'        trouvée = False
+'        Debug.Print "#888 - " & procList(i)
+'        For j = LBound(codeLignes) To UBound(codeLignes)
+'            ligne = codeLignes(j)
+'            If InStr(1, ligne, procName, vbTextCompare) > 0 Then
+'                trouvée = True
+'                ir = ir + 1
+'                resultats(ir, 1) = modName
+'                resultats(ir, 2) = procName
+'                resultats(ir, 3) = "'" & Trim(ligne)
+'            End If
+'        Next j
+'        If trouvée = False Then
+'            ir = ir + 1
+'            resultats(ir, 1) = modName
+'            resultats(ir, 2) = procName
+'            resultats(ir, 3) = "**** Inutilisée ****"
+'        End If
+'    Next i
+'
+'    ' 4. Générer un rapport
+'    With ThisWorkbook.Sheets.add
+'        .Name = "Rapport Procédures"
+'        .Range("A1").value = "Module"
+'        .Range("B1").value = "Procédure"
+'        .Range("C1").value = "Ligne de code"
+'        For i = LBound(resultats) To UBound(resultats)
+'            .Cells(i + 1, 1).value = resultats(i, 1)
+'            .Cells(i + 1, 2).value = resultats(i, 2)
+'            .Cells(i + 1, 3).value = resultats(i, 3)
+'        Next i
+'    End With
+'
+'    MsgBox "Analyse terminée. Consultez la feuille 'Rapport Procédures'."
+'
+'End Sub
+'
+'Function Get_Procedures_Listing(nomFeuille As String) As Variant
+'
+'    'Vérifier que la feuille existe
+'    Dim ws As Worksheet
+'    On Error Resume Next
+'    Set ws = ThisWorkbook.Worksheets(nomFeuille)
+'    On Error GoTo 0
+'    If ws Is Nothing Then
+'        MsgBox "La feuille " & nomFeuille & " n'existe pas.", vbExclamation
+'        Exit Function
+'    End If
+'
+'    'Trouver la dernière ligne utilisée dans la colonne A
+'    Dim derniereligne As Long
+'    derniereligne = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+'
+'    'Charger les noms de procédures dans un tableau
+'    Dim tableauProcedures() As String
+'    ReDim tableauProcedures(1 To derniereligne - 1)
+'    Dim i As Long
+'    For i = 2 To derniereligne
+'        tableauProcedures(i - 1) = ws.Cells(i, 3).value & ":" & ws.Cells(i, 7).value
+'    Next i
+'
+'    'Retourner le tableau
+'    Get_Procedures_Listing = tableauProcedures
+'
+'End Function
+
 Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
 
     'Work in memory
@@ -540,7 +655,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             Cells.FormatConditions.Delete
             On Error GoTo 0
         
-            .FormatConditions.add Type:=xlExpression, Formula1:= _
+            .FormatConditions.Add Type:=xlExpression, Formula1:= _
                 "=ET($B2<>"""";MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -602,7 +717,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     End If
 
     'Create a new worksheet with the specified name
-    Set ws = ThisWorkbook.Worksheets.add(Before:=wshMenu)
+    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.Name = sheetName
     
     'Libérer la mémoire
@@ -845,6 +960,12 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     
 End Sub
 
+Sub shp_Reorganize_Tests_And_Todos_Click()
+
+    Call Reorganize_Tests_And_Todos_Worksheet
+
+End Sub
+
 Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
 
     Application.ScreenUpdating = False
@@ -1029,7 +1150,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
             Cells.FormatConditions.Delete
             On Error GoTo 0
         
-            .FormatConditions.add Type:=xlExpression, Formula1:= _
+            .FormatConditions.Add Type:=xlExpression, Formula1:= _
                 "=(MOD(LIGNE();2)=1)"
             .FormatConditions(.FormatConditions.count).SetFirstPriority
             With .FormatConditions(1).Interior
@@ -1110,7 +1231,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
                 .Cells(outputRow, 1).value = ws.Name
                 .Cells(outputRow, 2).value = i
                 .Cells(outputRow, 3).value = Replace(col.Address(False, False), "1", "")
-'                .Cells(outputRow, 3).value = col.Address(False, False).Replace("1", "")
+'                .Cells(outputRow, 3).value = col.address(False, False).Replace("1", "")
                 .Cells(outputRow, 4).value = ws.Cells(1, i).value
                 .Cells(outputRow, 5).value = colType
                 .Cells(outputRow, 6).value = col.ColumnWidth
@@ -1123,8 +1244,8 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     'Sort the report by worksheet name and column number
     With reportSheet.Sort
         .SortFields.Clear
-        .SortFields.add key:=Range("A2"), Order:=xlAscending ' Worksheet name
-        .SortFields.add key:=Range("B2"), Order:=xlAscending ' Column number
+        .SortFields.Add key:=Range("A2"), Order:=xlAscending ' Worksheet name
+        .SortFields.Add key:=Range("B2"), Order:=xlAscending ' Column number
         .SetRange Range("A1:F" & outputRow - 1)
         .Header = xlYes
         .Apply
@@ -1251,10 +1372,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
         'Sort the data by columns 1, 2, 3, and 4
         With wsOutputSheet.Sort
             .SortFields.Clear
-            .SortFields.add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
-            .SortFields.add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
+            .SortFields.Add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
             .SetRange wsOutputSheet.Range("A1:D" & outputRow - 1)
             .Header = xlYes
             .Apply
@@ -1393,7 +1514,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     arr(i, 6) = sType
                     arr(i, 7) = trimmedLineOfCode
                     arr(i, 1) = UCase(oType) & Chr(0) & UCase(vbComp.Name) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
-                    If params <> "" Then arr(i, 8) = params
+                    If params <> "()" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
                     params = ""
@@ -1611,7 +1732,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
-Sub test()
+Sub Test()
 
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim cell As Range

@@ -232,7 +232,7 @@ Private Sub Process_Change(ByVal Target As Range)
         'If the user changes the Amount cell
         Dim cell As Range
         For Each cell In Target
-            Debug.Print "#001 - cell.Address = " & cell.Address & "   cell.Value = " & cell.value
+            Debug.Print "#001 - cell.address = " & cell.Address & "   cell.Value = " & cell.value
             If cell.value = 0 Then
                 cell.offset(0, 1).value = "" 'Clear GST
                 cell.offset(0, 2).value = "" 'Clear PST

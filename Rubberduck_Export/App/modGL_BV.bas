@@ -66,7 +66,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
 '        t1 = t1 + rngResultAF.Cells(i, 7).value
 '        t2 = t2 + rngResultAF.Cells(i, 8).value
         If Not dictSolde.Exists(glNo) Then
-            dictSolde.add glNo, newRowID
+            dictSolde.Add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
             newRowID = newRowID + 1
         End If
@@ -306,7 +306,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     ws.Unprotect
     With ws.Range("M5:T" & lastResultUsedRow)
         On Error Resume Next
-        .FormatConditions.add _
+        .FormatConditions.Add _
             Type:=xlExpression, _
             Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
         .FormatConditions(.FormatConditions.count).SetFirstPriority
@@ -371,15 +371,15 @@ End Sub
 '        'Sort GL_Trans AdvancedFilter results (Range("P2:Y??"))
 '        With .Sort
 '                .SortFields.Clear
-'                .SortFields.Add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
+'                .SortFields.add key:=wshGL_Trans.Range("T2:T" & lastResultUsedRow), _
 '                    SortOn:=xlSortOnValues, _
 '                    Order:=xlAscending, _
 '                    DataOption:=xlSortTextAsNumbers 'Returns Numeric only (first), then numeric and letters
-'                .SortFields.Add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
+'                .SortFields.add key:=wshGL_Trans.Range("Q2:Q" & lastResultUsedRow), _
 '                    SortOn:=xlSortOnValues, _
 '                    Order:=xlAscending, _
 '                    DataOption:=xlSortNormal 'Sort Based On Date
-'                .SortFields.Add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
+'                .SortFields.add key:=wshGL_Trans.Range("P2:P" & lastResultUsedRow), _
 '                    SortOn:=xlSortOnValues, _
 '                    Order:=xlAscending, _
 '                    DataOption:=xlSortNormal 'Sort Based On JE Number

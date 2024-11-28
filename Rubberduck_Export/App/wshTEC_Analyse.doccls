@@ -67,6 +67,12 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     ws.Visible = xlSheetVisible
     
+'CommentOut - 2024-11-28 @ 05:51
+'    With ws
+'        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlNoRestrictions
+'    End With
+    
     'Libérer la mémoire
     Set ws = Nothing
     

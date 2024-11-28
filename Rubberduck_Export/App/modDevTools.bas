@@ -28,7 +28,7 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
 '    'Afficher les valeurs
 '    Dim cell As Range
 '    For Each cell In rng
-'        Debug.Print "#043 - " & cell.Address & ": " & cell.value
+'        Debug.Print "#043 - " & cell.address & ": " & cell.value
 '    Next cell
 '
 '    'Libérer la mémoire
@@ -433,7 +433,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Configuration des filtres de fichiers (TXT uniquement)
     fd.Title = "Sélectionnez un fichier TXT"
     fd.Filters.Clear
-    fd.Filters.add "Fichiers Texte", "*.txt"
+    fd.Filters.Add "Fichiers Texte", "*.txt"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
     Dim FilePath As String
@@ -492,7 +492,7 @@ Sub Fix_Date_Format()
     'Configuration des filtres de fichiers (Excel uniquement)
     fd.Title = "Sélectionnez un fichier Excel"
     fd.Filters.Clear
-    fd.Filters.add "Fichiers Excel", "*.xlsx; *.xlsm"
+    fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
     Dim FilePath As String
@@ -515,21 +515,21 @@ Sub Fix_Date_Format()
         Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
         
         'Ajouter des feuilles et colonnes spécifiques (exemple)
-'        colonnesANettoyer.Add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
-'        colonnesANettoyer.Add "DEB_Trans", Array("B") 'Vérifier la colonne B
+'        colonnesANettoyer.add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
+'        colonnesANettoyer.add "DEB_Trans", Array("B") 'Vérifier la colonne B
 '
-'        colonnesANettoyer.Add "ENC_Détails", Array("D") 'Vérifier la colonne D
-'        colonnesANettoyer.Add "ENC_Entête", Array("B") 'Vérifier la colonne B
+'        colonnesANettoyer.add "ENC_Détails", Array("D") 'Vérifier la colonne D
+'        colonnesANettoyer.add "ENC_Entête", Array("B") 'Vérifier la colonne B
 '
-'        colonnesANettoyer.Add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
-'        colonnesANettoyer.Add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
-'        colonnesANettoyer.Add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
-'        colonnesANettoyer.Add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
+'        colonnesANettoyer.add "FAC_Comptes_Clients", Array("B", "G") 'Vérifier et corriger les colonnes B & G
+'        colonnesANettoyer.add "FAC_Entête", Array("B") 'Vérifier et corriger la colonne B
+'        colonnesANettoyer.add "FAC_Projets_Détails", Array("F") 'Vérifier et corriger la colonne F
+'        colonnesANettoyer.add "FAC_Projets_Entête", Array("D") 'Vérifier et corriger la colonne D
 '
-'        colonnesANettoyer.Add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
+'        colonnesANettoyer.add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
 '
-'        colonnesANettoyer.Add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
-        colonnesANettoyer.add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
+'        colonnesANettoyer.add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
+        colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
         
         'Parcourir chaque feuille définie dans le dictionnaire
         Dim ws As Worksheet
@@ -794,7 +794,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     Dim ws As Worksheet
     Set ws = wshUserFormParams
     If ws Is Nothing Then
-        Set ws = ThisWorkbook.Sheets.add
+        Set ws = ThisWorkbook.Sheets.Add
         ws.Name = "UserForm_Params"
     End If
     On Error GoTo 0
@@ -814,7 +814,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
             userFormName = vbComp.Name
             On Error Resume Next
             ' Charger dynamiquement le UserForm
-            Set uf = VBA.UserForms.add(userFormName)
+            Set uf = VBA.UserForms.Add(userFormName)
             On Error GoTo 0
 
             If Not uf Is Nothing Then
@@ -860,7 +860,7 @@ Sub Restaurer_UserForms_Parameters()
         nomUF = ws.Cells(i, 1).value
         On Error Resume Next
         ' Charger dynamiquement le UserForm
-        Set uf = VBA.UserForms.add(nomUF)
+        Set uf = VBA.UserForms.Add(nomUF)
         On Error GoTo 0
 
         If Not uf Is Nothing Then

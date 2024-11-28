@@ -130,7 +130,7 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
         Select Case LCase(niveauDetail)
             Case "client"
                 If Not dictClients.Exists(client) Then
-                    dictClients.add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
+                    dictClients.Add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictClients(client) 'Obtenir le tableau a partir du dictionary
                 
@@ -243,19 +243,19 @@ Next_Invoice:
         With wshCAR_Liste_Agée.Sort
             .SortFields.Clear
             If wshCAR_Liste_Agée.Range("D4").value = "Nom de client" Then
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("B8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par nom de client
                 ordreTri = "Ordre de nom de client"
             Else
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("C8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier par numéro de facture
-                .SortFields.add _
+                .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("D8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _

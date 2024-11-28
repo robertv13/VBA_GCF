@@ -504,7 +504,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     On Error GoTo 0
     
     'Ajouter la validation de données
-    cell.Validation.add Type:=xlValidateList, _
+    cell.Validation.Add Type:=xlValidateList, _
                         AlertStyle:=xlValidAlertStop, _
                         Operator:=xlBetween, _
                         Formula1:="=" & ThisWorkbook.Names(nomPlage).Name
@@ -610,12 +610,12 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
         With ws.Sort 'Sort - ID, Date, TecID
             .SortFields.Clear
             'First sort On noGL
-            .SortFields.add key:=ws.Range("AG2"), _
+            .SortFields.Add key:=ws.Range("AG2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Date
-            .SortFields.add key:=ws.Range("AD2"), _
+            .SortFields.Add key:=ws.Range("AD2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal

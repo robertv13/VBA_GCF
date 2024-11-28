@@ -103,7 +103,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
         With ws.Sort 'Sort - InvNo
             .SortFields.Clear
             'First sort On InvNo
-            .SortFields.add key:=ws.Range("Q3"), _
+            .SortFields.Add key:=ws.Range("Q3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
@@ -682,7 +682,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
         Cells(cell.row, 2).value = "" And _
         Cells(cell.row, 6).value <> "" Then 'Applied = False
             'Create a checkbox linked to the cell
-            Set cbx = wshENC_Saisie.CheckBoxes.add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
+            Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
             With cbx
                 .Name = "chkBox - " & cell.row
                 .Caption = ""

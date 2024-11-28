@@ -609,15 +609,15 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
-            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Prof_ID
-            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
+            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -700,15 +700,15 @@ End Sub
 '        If lastResultRow < 4 Then GoTo No_Sort_Required
 '        With .Sort
 '            .SortFields.Clear
-'            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
+'            .SortFields.add key:=wshTEC_Local.Range("AT3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On Date
-'            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
+'            .SortFields.add key:=wshTEC_Local.Range("AR3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On Prof_ID
-'            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
+'            .SortFields.add key:=wshTEC_Local.Range("AQ3"), _
 '                SortOn:=xlSortOnValues, _
 '                Order:=xlAscending, _
 '                DataOption:=xlSortNormal 'Sort Based On TEC_ID
@@ -754,7 +754,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
             'Commentaires doivent être affichés
             If Trim(.Range("AY" & i).value) <> "" Then
                 fraisDiversMsg = Trim(.Range("AY" & i).value)
-                collFraisDivers.add fraisDiversMsg
+                collFraisDivers.Add fraisDiversMsg
             End If
         Next i
         'Copy array to worksheet
@@ -766,13 +766,13 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
-        Set ufFraisDivers = UserForms.add("ufFraisDivers")
+        Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1006,7 +1006,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     'Check if the cell is empty and doesn't have a checkbox already
     If Cells(cell.row, 8).value = False Then
         'Create a checkbox linked to the cell
-        Set cbx = wshFAC_Brouillon.CheckBoxes.add(cell.Left + 5, cell.Top, cell.Width, cell.Height)
+        Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.Width, cell.Height)
         With cbx
             .Name = "chkBox - " & cell.row
             .Text = ""
@@ -1190,7 +1190,7 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     Dim cell As Range
     For Each cell In r
         If cell.HasFormula Then
-            formules.add cell.Address, cell.formula 'Utiliser l'adresse comme clé
+            formules.Add cell.Address, cell.formula 'Utiliser l'adresse comme clé
             cell.value = cell.value 'Remplacer la formule par sa valeur temporairement
         End If
     Next cell

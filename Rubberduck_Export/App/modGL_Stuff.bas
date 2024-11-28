@@ -13,7 +13,7 @@ Option Explicit
 '    'Définir le range pour la source des données en utilisant un tableau
 '    Dim rngData As Range
 '    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-'    ws.Range("M7").value = rngData.Address
+'    ws.Range("M7").value = rngData.address
 '
 '    'Définir le range des critères
 '    Dim rngCriteria As Range
@@ -23,14 +23,14 @@ Option Explicit
 '        .Range("M3").value = ">=" & CLng(dateDeb)
 '        .Range("N3").value = "<=" & CLng(dateFin)
 '    End With
-'    ws.Range("M8").value = rngCriteria.Address
+'    ws.Range("M8").value = rngCriteria.address
 '
 '    'Définir le range des résultats et effacer avant le traitement
 '    Dim rngResult As Range
 '    Set rngResult = ws.Range("P1").CurrentRegion
 '    rngResult.Offset(1, 0).Clear
 '    Set rngResult = ws.Range("P1:Y1")
-'    ws.Range("M9").value = rngResult.Address
+'    ws.Range("M9").value = rngResult.address
 '
 '    rngData.AdvancedFilter _
 '                action:=xlFilterCopy, _
@@ -48,12 +48,12 @@ Option Explicit
 '    If lastUsedRow > 2 Then
 '        With ws.Sort
 '            .SortFields.Clear
-'                .SortFields.Add _
+'                .SortFields.add _
 '                    key:=ws.Range("Q2"), _
 '                    SortOn:=xlSortOnValues, _
 '                    Order:=xlAscending, _
 '                    DataOption:=xlSortNormal 'Trier par date de transaction
-'                .SortFields.Add _
+'                .SortFields.add _
 '                    key:=ws.Range("P2"), _
 '                    SortOn:=xlSortOnValues, _
 '                    Order:=xlAscending, _
@@ -111,15 +111,15 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     If lastUsedRow > 2 Then
         With ws.Sort
             .SortFields.Clear
-            .SortFields.add key:=wshGL_Trans.Range("T2"), _
+            .SortFields.Add key:=wshGL_Trans.Range("T2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro de compte
-            .SortFields.add key:=wshGL_Trans.Range("Q2"), _
+            .SortFields.Add key:=wshGL_Trans.Range("Q2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par date
-            .SortFields.add key:=wshGL_Trans.Range("P2"), _
+            .SortFields.Add key:=wshGL_Trans.Range("P2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro d'écriture

@@ -228,15 +228,15 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     If lastResultRow < 4 Then GoTo No_Sort_Required
     With ws.Sort 'Sort - Date / Prof / TEC_ID
         .SortFields.Clear
-        .SortFields.add key:=wshTEC_Local.Range("X3"), _
+        .SortFields.Add key:=wshTEC_Local.Range("X3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Date
-        .SortFields.add key:=wshTEC_Local.Range("W3"), _
+        .SortFields.Add key:=wshTEC_Local.Range("W3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Prof
-        .SortFields.add key:=wshTEC_Local.Range("V3"), _
+        .SortFields.Add key:=wshTEC_Local.Range("V3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Tec_ID

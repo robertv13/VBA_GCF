@@ -245,7 +245,7 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     regex.Global = False
     
     'Last chance to accept a invalid email address...
-    If regex.test(courriel) = False Then
+    If regex.Test(courriel) = False Then
         Dim msgValue As VbMsgBoxResult
         msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
                             "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
@@ -289,7 +289,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         
         'Loop to collect all rows with the value
         Do
-            rowsToDelete.add cell.row
+            rowsToDelete.Add cell.row
             Set cell = searchRange.FindNext(cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
         
@@ -519,20 +519,20 @@ End Function
 '    'Définir le range pour la source des données en utilisant un tableau
 '    Dim rngData As Range
 '    Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
-'    ws.Range("H7").value = rngData.Address
+'    ws.Range("H7").value = rngData.address
 '
 '    'Définir le range des critères
 '    Dim rngCriteria As Range
 '    Set rngCriteria = ws.Range("H2:H3")
 '    ws.Range("H3").value = invNo
-'    ws.Range("H8").value = rngCriteria.Address
+'    ws.Range("H8").value = rngCriteria.address
 '
 '    'Définir le range des résultats et effacer avant le traitement
 '    Dim rngResult As Range
 '    Set rngResult = ws.Range("J1").CurrentRegion
 '    rngResult.Offset(2, 0).Clear
 '    Set rngResult = ws.Range("J2:M2")
-'    ws.Range("H9").value = rngResult.Address
+'    ws.Range("H9").value = rngResult.address
 '
 '    rngData.AdvancedFilter _
 '                action:=xlFilterCopy, _
@@ -882,7 +882,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
-            If Not regex.test(adresse) Then
+            If Not regex.Test(adresse) Then
                 Fn_ValiderCourriel = False
                 Exit Function
             End If
@@ -1159,7 +1159,7 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     
 End Function
 
-Sub test()
+Sub Test()
 
     Dim s As String
     s = "Les logiciels INFORMAT inc.[Robert][Luc][Daniel]"

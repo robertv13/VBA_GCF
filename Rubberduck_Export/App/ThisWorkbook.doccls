@@ -1,5 +1,6 @@
 ﻿Option Explicit
 
+'Ces variables sont disponibles partout dans l'application
 Public startTime As Double
 Public previousCellAddress As Variant
 

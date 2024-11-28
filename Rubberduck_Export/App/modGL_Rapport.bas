@@ -38,7 +38,7 @@ Public Sub GL_Report_For_Selected_Accounts()
         With lb.Object
             For i = 0 To .ListCount - 1
                 If .Selected(i) And Trim(.List(i)) <> "" Then
-                    selectedItems.add .List(i)
+                    selectedItems.Add .List(i)
                 End If
             Next i
         End With
@@ -171,7 +171,7 @@ No_Transaction:
 
     'Ajoute le formatage conditionnel pour les transactions
     With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
-        .FormatConditions.add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
+        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
         .FormatConditions(Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1).FormatConditions.count).SetFirstPriority
         With .FormatConditions(1).Interior
             .PatternColorIndex = xlAutomatic
