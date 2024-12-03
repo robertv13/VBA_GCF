@@ -21,7 +21,7 @@ Private Sub Worksheet_Activate()
     
     Call FAC_Historique_Clear_All_Cells
     
-    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("shpAfficheFactures")
     shp.Visible = False
     
     'Set the zoom factor to 100% when this worksheet is activated

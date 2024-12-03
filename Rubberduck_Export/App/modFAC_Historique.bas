@@ -375,7 +375,7 @@ End Sub
 
 Sub FAC_Historique_Montrer_Bouton()
 
-    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("shpAfficheFactures")
     
     Application.EnableEvents = False
     

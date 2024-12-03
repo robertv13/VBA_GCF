@@ -14,8 +14,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-'Private MyListBoxClass2 As CListBoxAlign
-
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
@@ -44,8 +42,8 @@ Private Sub lsbEJ_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 End Sub
 
 Private Sub UserForm_Terminate()
+    
     Unload Me
-    'Clear the class declaration
-'    Set MyListBoxClass2 = Nothing
+
 End Sub
 

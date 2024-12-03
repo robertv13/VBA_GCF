@@ -50,6 +50,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call Sauvegarder_Forme(shp)
     
     With ws
+        .Range("B2").value = -1
+        .Range("B3").value = -1
         .Range("K4").value = Format$(Now(), wshAdmin.Range("B1").value)
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address

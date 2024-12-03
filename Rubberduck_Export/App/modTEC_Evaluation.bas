@@ -135,7 +135,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         End If
     Next i
     
-    Dim prof As Variant
+    Dim Prof As Variant
     Dim strProf As String
     Dim prenom As String, nom As String
     Dim profID As Long
@@ -144,6 +144,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim currentRow As Integer
     currentRow = 6
     
+    Dim valeurTEC As Currency
     For i = 0 To 10 Step 5
         If i = 0 Then
             ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000'"
@@ -157,8 +158,8 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         totalValeurTEC = 0
         currentRow = currentRow + 1
         
-        For Each prof In Fn_Sort_Dictionary_By_Keys(dictHours) 'Sort dictionary by keys in ascending order
-            strProf = Mid(prof, 4)
+        For Each Prof In Fn_Sort_Dictionary_By_Keys(dictHours) 'Sort dictionary by keys in ascending order
+            strProf = Mid(Prof, 4)
             profID = Fn_GetID_From_Initials(strProf)
             prenom = Fn_Get_Prenom_From_Initials(strProf)
             nom = Fn_Get_Nom_From_Initials(strProf)
@@ -166,29 +167,32 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
             tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
             ws.Range("E" & currentRow).value = prenom
             ws.Range("F" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("F" & currentRow).value = Format$(dictHours(prof)(i + 0), "#,##0.00")
+            ws.Range("F" & currentRow).value = Format$(dictHours(Prof)(i + 0), "#,##0.00")
             ws.Range("G" & currentRow).HorizontalAlignment = xlRight
             ws.Range("G" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
             ws.Range("H" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("H" & currentRow).value = Format$(dictHours(prof)(i + 0) * tauxHoraire, "###,##0.00 $")
+            ws.Range("H" & currentRow).value = Format$(dictHours(Prof)(i + 0) * tauxHoraire, "###,##0.00 $")
             ws.Range("I" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("I" & currentRow).value = Format$(dictHours(prof)(i + 1), "#,##0.00")
+            ws.Range("I" & currentRow).value = Format$(dictHours(Prof)(i + 1), "#,##0.00")
             ws.Range("J" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("J" & currentRow).value = Format$(dictHours(prof)(i + 2), "#,##0.00")
+            ws.Range("J" & currentRow).value = Format$(dictHours(Prof)(i + 2), "#,##0.00")
             ws.Range("K" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("K" & currentRow).value = Format$(dictHours(prof)(i + 3), "#,##0.00")
+            ws.Range("K" & currentRow).value = Format$(dictHours(Prof)(i + 3), "#,##0.00")
             ws.Range("L" & currentRow).HorizontalAlignment = xlRight
-            ws.Range("L" & currentRow).value = Format$(dictHours(prof)(i + 4), "#,##0.00")
+            ws.Range("L" & currentRow).value = Format$(dictHours(Prof)(i + 4), "#,##0.00")
             currentRow = currentRow + 1
             
             Dim ii As Integer
             For ii = 0 To 4
-                total(ii) = total(ii) + dictHours(prof)(i + ii)
+                total(ii) = total(ii) + dictHours(Prof)(i + ii)
             Next ii
             
-            totalValeurTEC = totalValeurTEC + (dictHours(prof)(i) * tauxHoraire)
+            totalValeurTEC = totalValeurTEC + (dictHours(Prof)(i) * tauxHoraire)
+            If i = 0 Then
+                valeurTEC = valeurTEC + (dictHours(Prof)(i) * tauxHoraire)
+            End If
 
-        Next prof
+        Next Prof
         
         ws.Range("E" & currentRow).HorizontalAlignment = xlLeft
         ws.Range("E" & currentRow & ":L" & currentRow).Font.Bold = True
@@ -197,6 +201,15 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         ws.Range("E" & currentRow).value = "* Totaux *"
         ws.Range("F" & currentRow).value = Format$(total(0), "#,##0.00")
         ws.Range("H" & currentRow).value = Format$(totalValeurTEC, "###,##0.00 $")
+        If i = 0 Then
+            With ws.Range("H" & currentRow).Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .Color = 65535
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+             End With
+        End If
         ws.Range("I" & currentRow).value = Format$(total(1), "#,##0.00")
         ws.Range("J" & currentRow).value = Format$(total(2), "#,##0.00")
         ws.Range("K" & currentRow).value = Format$(total(3), "#,##0.00")
@@ -214,12 +227,12 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     ws.Range("D3").Font.Color = vbRed
     Dim message As String
     message = "Le solde au grand livre pour les TEC est de " & Format$(solde, "###,##0.00 $")
-    If totalValeurTEC = solde Then
+    If valeurTEC = solde Then
         message = message & ", donc aucune écriture"
-    ElseIf totalValeurTEC > solde Then
-        message = message & ", donc un Débit de " & Format$(totalValeurTEC - solde, "###,##0.00 $")
+    ElseIf valeurTEC > solde Then
+        message = message & ", donc un Débit de " & Format$(valeurTEC - solde, "###,##0.00 $")
     Else
-        message = message & ", donc un Crédit de " & Format$(totalValeurTEC - solde, "###,##0.00 $")
+        message = message & ", donc un Crédit de " & Format$(valeurTEC - solde, "###,##0.00 $")
     End If
     ws.Range("D3").value = message
     
@@ -227,7 +240,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     
     'Libérer la mémoire
     Set dictHours = Nothing
-    Set prof = Nothing
+    Set Prof = Nothing
     Set ws = Nothing
     Set wsSource = Nothing
     

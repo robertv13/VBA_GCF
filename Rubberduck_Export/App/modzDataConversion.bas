@@ -194,7 +194,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
     rowNum = lastUsedRow
     
     'Loop through the recordset and write data to the destination sheet
-    Dim prof As String
+    Dim Prof As String
     Dim client As String
     Dim clientCode As String
     Dim clientCodeFromDB As String
@@ -203,7 +203,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
-        prof = Trim(rst.Fields(0).value)
+        Prof = Trim(rst.Fields(0).value)
         clientCode = Trim(rst.Fields(2).value)
 '        clientCode = Left(client, 10)
 '            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
@@ -225,8 +225,8 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
         
         TEC_ID = TEC_ID + 1
         wsDest.Range("A" & rowNum).value = TEC_ID
-        wsDest.Range("B" & rowNum).value = Get_ID_From_Initials(prof)
-        wsDest.Range("C" & rowNum).value = prof
+        wsDest.Range("B" & rowNum).value = Get_ID_From_Initials(Prof)
+        wsDest.Range("C" & rowNum).value = Prof
         wsDest.Range("D" & rowNum).value = rst.Fields(1).value
         wsDest.Range("E" & rowNum).value = clientCode
         wsDest.Range("F" & rowNum).value = client
@@ -855,7 +855,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).row
     
     Dim profID As Long
-    Dim prof As String, codeClient As String, nomClient As String
+    Dim Prof As String, codeClient As String, nomClient As String
     Dim estFacturable As String, estFacturee As String, estDetruit As String
     Dim dateServ As Date
     Dim hresSaisies As Double, hresDetruites As Double, hresFacturees As Double
@@ -863,7 +863,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     Dim i As Long
     For i = 2 To lastUsedRow
         profID = sourceSheet.Cells(i, 2).value
-        prof = sourceSheet.Cells(i, 3).value
+        Prof = sourceSheet.Cells(i, 3).value
         dateServ = sourceSheet.Cells(i, 4).value
         codeClient = sourceSheet.Cells(i, 5).value
         nomClient = Trim(sourceSheet.Cells(i, 6).value)

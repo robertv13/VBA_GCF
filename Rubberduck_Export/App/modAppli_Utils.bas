@@ -272,13 +272,6 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
     
     On Error GoTo CleanUp
     
-    Debug.Print ws.Name
-    Debug.Print rng.Address
-    Debug.Print header1
-    Debug.Print header2
-    Debug.Print titleRows
-    Debug.Print Orient
-    
     Application.PrintCommunication = False
     
     With ws.PageSetup
@@ -2261,7 +2254,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 '    arr = ws.Range("A1").CurrentRegion.Offset(1)
     Dim dict_TEC_ID As New Dictionary
     
-    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
+    Dim i As Long, TECID As Long, profID As String, Prof As String, dateTEC As Date, clientCode As String
     Dim minDate As Date, maxDate As Date
     Dim hres As Double, hres_non_detruites As Double
     Dim estDetruit As Boolean, estFacturable As Boolean, estFacturee As Boolean
@@ -2496,7 +2489,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2640 'What is the last TECID analyzed ?
+    lastTECIDReported = 2753 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2546,7 +2539,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         Next i
     End If
     
-    Dim TECID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
+    Dim TECID As Long, profID As String, Prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
     Dim d As Integer, m As Integer, Y As Integer, p As Integer
@@ -2589,7 +2582,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         'ProfessionnelID
         profID = arr(i, 2)
         'Professionnel
-        prof = arr(i, 3)
+        Prof = arr(i, 3)
         'Date
         dateTEC = arr(i, 4)
         testDate = IsDate(dateTEC)
@@ -2760,7 +2753,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         If h(1) - h(2) <> h(3) + h(4) Then
-            Debug.Print "#020 - " & i & " Écart - " & TECID & " " & prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
+            Debug.Print "#020 - " & i & " Écart - " & TECID & " " & Prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
             Stop
         End If
         
@@ -2772,8 +2765,8 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
-        If dict_prof.Exists(prof & "-" & profID) = False Then
-            dict_prof.Add prof & "-" & profID, 0
+        If dict_prof.Exists(Prof & "-" & profID) = False Then
+            dict_prof.Add Prof & "-" & profID, 0
         End If
     Next i
     

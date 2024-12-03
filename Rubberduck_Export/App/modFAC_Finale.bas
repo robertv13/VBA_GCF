@@ -1022,8 +1022,32 @@ End Sub
 
 Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
 
+    Dim imprimanteParDefaut As String
+    'Tous les utilisateurs utilisent 'Adobe PDF'
+    imprimanteParDefaut = "Adobe PDF"
+    'Exception pour développeur
+    If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        imprimanteParDefaut = "Microsoft Print to PDF"
+    End If
+    
+    'Vérifiez si l'imprimante existe
+    Dim imprimanteActuelle As String
+    On Error Resume Next
+    If Len(Application.ActivePrinter) > 0 Then
+        'Mémoriser l'imprimante actuelle pour la réinitialiser après
+        imprimanteActuelle = Application.ActivePrinter
+    End If
+    On Error GoTo 0
+
+    'Définir l'imprimante par défaut sur Adobe PDF
+    Application.ActivePrinter = imprimanteParDefaut
+
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
-'    wshFAC_Finale.PrintOut , , , True, True, , , , False
+   
+    'Restaurer l'imprimante précédente après l'impression
+    If imprimanteActuelle <> "" Then
+        Application.ActivePrinter = imprimanteActuelle
+    End If
 
 End Sub
 

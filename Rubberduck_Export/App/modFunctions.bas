@@ -27,6 +27,22 @@ Function Fn_GetID_From_Initials(i As String)
     
 End Function
 
+Function Fn_Get_Prof_From_ProfID(i As Long)
+
+    Dim cell As Range
+    
+    For Each cell In wshAdmin.Range("dnrProf_All")
+        If cell.Value2 = i Then
+            Fn_Get_Prof_From_ProfID = cell.offset(0, -1).value
+            Exit Function
+        End If
+    Next cell
+
+    'Libérer la mémoire
+    Set cell = Nothing
+    
+End Function
+
 Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomClient, 0)
@@ -245,7 +261,7 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     regex.Global = False
     
     'Last chance to accept a invalid email address...
-    If regex.Test(courriel) = False Then
+    If regex.test(courriel) = False Then
         Dim msgValue As VbMsgBoxResult
         msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
                             "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
@@ -882,7 +898,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
-            If Not regex.Test(adresse) Then
+            If Not regex.test(adresse) Then
                 Fn_ValiderCourriel = False
                 Exit Function
             End If
@@ -1159,7 +1175,7 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     
 End Function
 
-Sub Test()
+Sub test()
 
     Dim s As String
     s = "Les logiciels INFORMAT inc.[Robert][Luc][Daniel]"
@@ -1880,5 +1896,3 @@ Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
     On Error GoTo 0
     
 End Function
-
-

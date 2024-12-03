@@ -463,28 +463,28 @@ Sub Build_Hours_Summary(rowSelected As Long)
         i = i + 1
     Loop
 
-    Dim prof As Variant
+    Dim Prof As Variant
     Dim profID As Long
     Dim tauxHoraire As Currency
     
     Application.EnableEvents = False
     
     ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
-    For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 10).value = prof
+    For Each Prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
+        Cells(rowSelected, 10).value = Prof
         Dim strProf As String
-        strProf = prof
+        strProf = Prof
         profID = Fn_GetID_From_Initials(strProf)
         Cells(rowSelected, "K").HorizontalAlignment = xlRight
         Cells(rowSelected, "K").NumberFormat = "#,##0.00"
-        Cells(rowSelected, "K").value = dictHours(prof)
+        Cells(rowSelected, "K").value = dictHours(Prof)
         tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
         Cells(rowSelected, "L").value = tauxHoraire
         Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
         Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, "M").HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
-    Next prof
+    Next Prof
     
     'Sort the summary by rate (descending value) if required
     If rowSelected - 1 > saveR Then
@@ -558,7 +558,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
 
     'Libérer la mémoire
     Set dictHours = Nothing
-    Set prof = Nothing
+    Set Prof = Nothing
     Set rngSort = Nothing
     Set ws = Nothing
     

@@ -1732,7 +1732,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
-Sub Test()
+Sub test()
 
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim cell As Range

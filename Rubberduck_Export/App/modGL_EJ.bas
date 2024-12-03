@@ -370,25 +370,38 @@ Sub GL_EJ_Renverser_Ecriture()
 
     Dim ws As Worksheet: Set ws = wshGL_Trans
     
-    '1. Demande le numéro d'écriture
-    Dim reponse As String, no_Ecriture As Long
-    Do
-        reponse = InputBox("Quel est le numéro de l'écriture à renverser ?", "Renversement d'écriture de journal", , 5000, 7000)
-        If reponse = "" Then
-            Exit Sub
-        End If
-        'La réponse est-elle une valeur numérique ?
-        If IsNumeric(reponse) Then
-            no_Ecriture = CLng(reponse)
-            If no_Ecriture <> 0 Then
-                Exit Do
-            Else
-                MsgBox "Le numéro d'écriture ne peut pas être 0", vbInformation
-            End If
-        Else
-            MsgBox "Veuillez entrer un numéro d'écriture qui soit numérique", vbCritical
-        End If
-    Loop
+    '1. Demande le numéro d'écriture à partir d'un ListBox
+    Call Prepare_Affiche_Liste_Ecriture
+    Dim no_Ecriture As Long
+    If Range("B3").value <> -1 Then
+        no_Ecriture = Range("B3").value
+    Else
+        MsgBox "Vous n'avez sélectionné aucune écriture à renverser", vbInformation, "Sélection d'une écriture à renverser"
+        wshGL_EJ.Range("F4").value = ""
+        wshGL_EJ.Range("F4").Select
+        Exit Sub
+    End If
+    
+'CommentOut - 2024-12-03 @ 11:50
+'    MsgBox "Le numéro d'entrée à renverser est '" & Range("B3").value & "'"
+'
+'    Do
+'        reponse = InputBox("Quel est le numéro de l'écriture à renverser ?", "Renversement d'écriture de journal", , 5000, 7000)
+'        If reponse = "" Then
+'            Exit Sub
+'        End If
+'        'La réponse est-elle une valeur numérique ?
+'        If IsNumeric(reponse) Then
+'            no_Ecriture = CLng(reponse)
+'            If no_Ecriture <> 0 Then
+'                Exit Do
+'            Else
+'                MsgBox "Le numéro d'écriture ne peut pas être 0", vbInformation
+'            End If
+'        Else
+'            MsgBox "Veuillez entrer un numéro d'écriture qui soit numérique", vbCritical
+'        End If
+'    Loop
     
     '2. Affiche l'écriture à renverser
     Call GL_Get_JE_Detail_Trans_AF(no_Ecriture)
@@ -414,6 +427,19 @@ Sub GL_EJ_Renverser_Ecriture()
         wshGL_EJ.Range("F4").Select
         Exit Sub
     End If
+    
+    'Cette écriture a-t-elle déjà été RENVERSÉE ?
+    Dim rng As Range
+    Set rng = ws.Columns("D")
+    Dim trouve As Range
+    Set trouve = rng.Find(What:="RENVERSEMENT:" & no_Ecriture, LookIn:=xlValues, LookAt:=xlWhole)
+    If Not trouve Is Nothing Then
+        MsgBox "Cette écriture a déjà été RENVERSÉE..." & vbNewLine & vbNewLine & _
+               "Avec le numéro d'écriture '" & ws.Cells(trouve.row, 1).value & "'" & vbNewLine & vbNewLine & _
+               "En date du " & Format$(ws.Cells(trouve.row, 2).value, wshAdmin.Range("B1").value) & ".", vbInformation
+        Exit Sub
+    End If
+    
     Application.EnableEvents = False
     wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wshAdmin.Range("B1").value)
     wshGL_EJ.Range("F6").value = rngResult.Cells(1, 3).value
@@ -913,7 +939,7 @@ Sub Sauvegarder_Forme(forme As Shape)
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
     'Libérer la mémoire
-    Set sauvegardesCaracteristiquesForme = Nothing
+'    Set sauvegardesCaracteristiquesForme = Nothing
     Set ws = Nothing
     
 End Sub
@@ -953,6 +979,67 @@ Sub Restaurer_Forme(forme As Shape)
 
 End Sub
 
+Sub Prepare_Affiche_Liste_Ecriture()
+
+    'Prepare la liste des écritures au G/L
+    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    
+    'Initialiser le tableau des résultats
+    Dim resultats() As String
+    Dim compteur As Long
+    ReDim resultats(1 To lastUsedRow, 1 To 4)
+    
+    Dim strDejaVu As String
+    
+    Dim cell As Range
+    For Each cell In ws.Range("D2:D" & lastUsedRow)
+        If cell.value = "" And InStr(strDejaVu, ws.Cells(cell.row, 1).value) = 0 Then
+            compteur = compteur + 1
+            resultats(compteur, 1) = ws.Cells(cell.row, 1).value
+            resultats(compteur, 2) = Format$(ws.Cells(cell.row, 2).value, wshAdmin.Range("B1").value)
+            resultats(compteur, 3) = ws.Cells(cell.row, 3).value
+            resultats(compteur, 4) = Format$(ws.Cells(cell.row, 10).value, wshAdmin.Range("B1").value & " hh:mm:ss")
+            strDejaVu = strDejaVu & ws.Cells(cell.row, 1).value
+        End If
+    Next cell
+    
+    'Est-ce que nous avons des résultats
+    If compteur = 0 Then
+        MsgBox "Aucune écriture à renverser.", vbInformation
+        Exit Sub
+    End If
+   
+    'Charger les résultats dans la ListBox
+    With ufListeÉcritureGL.lbListeÉcritureGL
+        .Clear
+        .ColumnCount = 4
+        .ColumnWidths = "35;55;280;90"
+        .List = resultats
+    End With
+    
+    Dim i As Long
+    i = 1
+    Do While i <= compteur
+        'Ajouter chaque ligne au ListBox
+        ufListeÉcritureGL.lbListeÉcritureGL.AddItem resultats(i, 1)
+        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 1) = resultats(i, 2)
+        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 2) = resultats(i, 3)
+        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 3) = resultats(i, 4)
+        i = i + 1
+    Loop
+
+    'Déplacer le focus sur la dernière ligne
+    If ufListeÉcritureGL.lbListeÉcritureGL.ListCount > 0 Then
+        ufListeÉcritureGL.lbListeÉcritureGL.ListIndex = ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1
+    End If
+    
+    'Afficher le UserForm
+    ufListeÉcritureGL.show
+    
+End Sub
+
 Sub ckbRecurrente_Click()
 
     If wshGL_EJ.ckbRecurrente.value = True Then
@@ -962,6 +1049,3 @@ Sub ckbRecurrente_Click()
     End If
 
 End Sub
-
-
-

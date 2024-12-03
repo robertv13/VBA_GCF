@@ -46,6 +46,11 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
         .Range("L3").value = ""
+        With .Range("H6:H28").Interior
+            .Pattern = xlNone
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
         Application.EnableEvents = True
         previousCellAddress = .Range("L3").Address
         .Range("L3").Select

@@ -38,8 +38,10 @@ Private Sub Worksheet_Activate()
     On Error GoTo 0
     
     'S'assurer que les cellules qui auraient été déverouillées le soient pour commencer
+    On Error Resume Next
     ws.Range("B12:B36").Locked = True
     ws.Range("E12:E36").Locked = True
+    On Error GoTo 0
     
     'Certaines cellules perdent la couleur du background
     With ws.Range("I5,F6").Interior
