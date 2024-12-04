@@ -22,22 +22,22 @@ Sub Stats_Heures_AF()
     'AdvancedFilter # 1 - Semaine
     
     'Effacer les données de la dernière utilisation
-    ws.Range("T16:T20").ClearContents
-    ws.Range("T16").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("T10:T14").ClearContents
+    ws.Range("T10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range("T17").value = rngData.Address
+    ws.Range("T11").value = rngData.Address
     
     'Définir le range des critères
     Set rngCriteria = ws.Range("S2:U3")
-    ws.Range("T18").value = rngCriteria.Address
+    ws.Range("T12").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("W1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("W1").CurrentRegion
-    ws.Range("T19").value = rngResult.Address
+    ws.Range("T13").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -47,7 +47,7 @@ Sub Stats_Heures_AF()
         
     'Tri des informations
     lastResultRow = ws.Cells(ws.Rows.count, "W").End(xlUp).row
-    ws.Range("T20").value = lastResultRow - 1 & " lignes"
+    ws.Range("T14").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -76,22 +76,22 @@ Sub Stats_Heures_AF()
     'AdvancedFilter # 2 - Mois
     
     'Effacer les données de la dernière utilisation
-    ws.Range("AG16:AG20").ClearContents
-    ws.Range("AG16").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AG10:AG14").ClearContents
+    ws.Range("AG10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range("AG17").value = rngData.Address
+    ws.Range("AG11").value = rngData.Address
     
     'Définir le range des critères
     Set rngCriteria = ws.Range("AF2:AH3")
-    ws.Range("AG18").value = rngCriteria.Address
+    ws.Range("AG12").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("AJ1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("AJ1").CurrentRegion
-    ws.Range("AG19").value = rngResult.Address
+    ws.Range("AG13").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -101,7 +101,7 @@ Sub Stats_Heures_AF()
         
     'Tri des informations
     lastResultRow = ws.Cells(ws.Rows.count, "AJ").End(xlUp).row
-    ws.Range("AG20").value = lastResultRow - 1 & " lignes"
+    ws.Range("AG14").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -130,22 +130,22 @@ Sub Stats_Heures_AF()
     'AdvancedFilter # 3 - Trimestre
     
     'Effacer les données de la dernière utilisation
-    ws.Range("AT16:AT20").ClearContents
-    ws.Range("AT16").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AT10:AT16").ClearContents
+    ws.Range("AT10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range("AT17").value = rngData.Address
+    ws.Range("AT11").value = rngData.Address
     
     'Définir le range des critères
     Set rngCriteria = ws.Range("AS2:AU3")
-    ws.Range("AT18").value = rngCriteria.Address
+    ws.Range("AT12").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("AW1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("AW1").CurrentRegion
-    ws.Range("AT19").value = rngResult.Address
+    ws.Range("AT13").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -155,7 +155,7 @@ Sub Stats_Heures_AF()
         
     'Tri des informations
     lastResultRow = ws.Cells(ws.Rows.count, "AW").End(xlUp).row
-    ws.Range("AT20").value = lastResultRow - 1 & " lignes"
+    ws.Range("AT14").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then
@@ -184,22 +184,22 @@ Sub Stats_Heures_AF()
     'AdvancedFilter # 4 - Année financière
     
     'Effacer les données de la dernière utilisation
-    ws.Range("BG16:BG20").ClearContents
-    ws.Range("BG16").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BG10:BG14").ClearContents
+    ws.Range("BG10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range("BG17").value = rngData.Address
+    ws.Range("BG11").value = rngData.Address
     
     'Définir le range des critères
     Set rngCriteria = ws.Range("BF2:BH3")
-    ws.Range("BG18").value = rngCriteria.Address
+    ws.Range("BG12").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Set rngResult = ws.Range("BJ1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("BJ1").CurrentRegion
-    ws.Range("BG19").value = rngResult.Address
+    ws.Range("BG13").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -209,7 +209,7 @@ Sub Stats_Heures_AF()
         
     'Tri des informations
     lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
-    ws.Range("BG20").value = lastResultRow - 1 & " lignes"
+    ws.Range("BG14").value = lastResultRow - 1 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 2 Then

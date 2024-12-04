@@ -307,7 +307,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
     Dim lineNum As Long
-    Dim x As Long
+    Dim X As Long
     
     Dim vbComp As Object
     Dim oType As String
@@ -332,18 +332,18 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
         'Loop through all lines in the code module to save all the lines in memory
         For lineNum = 1 To vbCodeMod.CountOfLines
             If Trim(vbCodeMod.Lines(lineNum, 1)) <> "" Then
-                x = x + 1
-                allLinesOfCode(x, 1) = oType
-                allLinesOfCode(x, 2) = vbComp.Name
-                allLinesOfCode(x, 3) = lineNum
-                allLinesOfCode(x, 4) = Trim(vbCodeMod.Lines(lineNum, 1))
+                X = X + 1
+                allLinesOfCode(X, 1) = oType
+                allLinesOfCode(X, 2) = vbComp.Name
+                allLinesOfCode(X, 3) = lineNum
+                allLinesOfCode(X, 4) = Trim(vbCodeMod.Lines(lineNum, 1))
             End If
         Next lineNum
     Next vbComp
     
     'At this point allLinesOfCode contains all lines of code of the application - 2024-07-10 @ 17:33
     
-    Call Array_2D_Resizer(allLinesOfCode, x, UBound(allLinesOfCode, 2))
+    Call Array_2D_Resizer(allLinesOfCode, X, UBound(allLinesOfCode, 2))
     
     Call Search_Every_Lines_Of_Code(allLinesOfCode, search1, search2, search3)
     
@@ -573,7 +573,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Dim ws As Worksheet
     Dim cell As Range
     Dim TimeStamp As String
-    Dim x As Long: x = 1
+    Dim X As Long: X = 1
     Dim xAnalyzed As Long
     For Each ws In ThisWorkbook.Worksheets
         'Loop through each cell in the worksheet
@@ -588,44 +588,44 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             
             If dvType <> "" And dvType <> "0" Then
                 'Write the data validation details to the output sheet
-                arr(x, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
-                arr(x, 2) = ws.Name
-                arr(x, 3) = cell.Address
-                arr(x, 4) = dvType
+                arr(X, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
+                arr(X, 2) = ws.Name
+                arr(X, 3) = cell.Address
+                arr(X, 4) = dvType
                 Select Case dvType
                     Case "2"
-                        arr(x, 4) = "Min/Max"
+                        arr(X, 4) = "Min/Max"
                     Case "3"
-                        arr(x, 4) = "Liste"
+                        arr(X, 4) = "Liste"
                     Case Else
-                        arr(x, 4) = dvType
+                        arr(X, 4) = dvType
                 End Select
                 On Error Resume Next
-                arr(x, 5) = "'" & cell.Validation.Formula1
+                arr(X, 5) = "'" & cell.Validation.Formula1
                 On Error GoTo 0
                 
                 On Error Resume Next
-                arr(x, 6) = "'" & cell.Validation.Formula2
+                arr(X, 6) = "'" & cell.Validation.Formula2
                 On Error GoTo 0
                 
                 On Error Resume Next
-                arr(x, 7) = "'" & cell.Validation.Operator
+                arr(X, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
                 TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-                arr(x, 8) = TimeStamp
+                arr(X, 8) = TimeStamp
 
                 'Increment the output row counter
-                x = x + 1
+                X = X + 1
             End If
         Next cell
     Next ws
 
-    If x > 1 Then
+    If X > 1 Then
     
-        x = x - 1
+        X = X - 1
         
-        Call Array_2D_Resizer(arr, x, UBound(arr, 2))
+        Call Array_2D_Resizer(arr, X, UBound(arr, 2))
         
         Call Array_2D_Bubble_Sort(arr)
         
@@ -1044,9 +1044,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
     Dim TimeStamp As String
-    Dim x As Long, xr As Long
-    For x = LBound(arr, 1) To UBound(arr, 1)
-        trimmedLineOfCode = arr(x, 4)
+    Dim X As Long, xr As Long
+    For X = LBound(arr, 1) To UBound(arr, 1)
+        trimmedLineOfCode = arr(X, 4)
         saveLineOfCode = trimmedLineOfCode
         
         'Handle comments (second parameter is either Remove or Uppercase)
@@ -1089,17 +1089,17 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 (search3 <> "" And InStr(trimmedLineOfCode, search3) <> 0) Then
                 'Found an occurence
                 xr = xr + 1
-                arrResult(xr, 2) = arr(x, 1) 'oType
-                arrResult(xr, 3) = arr(x, 2) 'oName
-                arrResult(xr, 4) = arr(x, 3) 'LineNum
+                arrResult(xr, 2) = arr(X, 1) 'oType
+                arrResult(xr, 3) = arr(X, 2) 'oName
+                arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
                 TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 arrResult(xr, 7) = TimeStamp
-                arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
+                arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
-    Next x
+    Next X
 
     'Prepare the result worksheet
     Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
@@ -1166,7 +1166,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Result print setup - 2024-07-14 2 06:24
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(x, "###,##0") & " lignes de code dans l'application ***"
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(X, "###,##0") & " lignes de code dans l'application ***"
     Dim header1 As String: header1 = "Search Utility Results"
     Dim header2 As String
     header2 = "Searched strings '" & search1 & "'"
@@ -1182,11 +1182,11 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     If xr Then
         MsgBox "J'ai trouvé " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format$(x, "#,##0") & " lignes de code"
+                Format$(X, "#,##0") & " lignes de code"
     Else
         MsgBox "Je n'ai trouvé aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
-                Format$(x, "#,##0") & " lignes de code"
+                Format$(X, "#,##0") & " lignes de code"
     End If
     
     'Libérer la mémoire

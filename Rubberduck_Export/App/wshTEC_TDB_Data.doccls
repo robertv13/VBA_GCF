@@ -4,7 +4,7 @@ Dim isProcessing As Boolean
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change(" & Target.Address & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change(" & Target.Address & " - " & Target.value & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     

@@ -15,11 +15,44 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub cmdAide_Click()
+Private Sub UserForm_Initialize()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:UserForm_Initialize", 0)
+
+    Call ChargerListBoxAvec52DernieresSemaines
+    
+    Call AddColonnesSemaine
+    Call AddColonnesMois
+    Call AddColonnesTrimestre
+    Call AddColonnesAnneeFinanciere
+    
+    Call Log_Record("ufStatsHeures:UserForm_Initialize", startTime)
+    
+End Sub
+
+Private Sub lbxDatesSemaines_Click() '2024-12-04 @ 07:36
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click(" & lbxDatesSemaines.value & ")", 0)
+    
+    Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.value)
+    
+    Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click", startTime)
 
 End Sub
 
 Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_DblClick(" & lbxDatesSemaines.value & ")", 0)
+    
+    Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.value)
+
+    Call Log_Record("ufStatsHeures:lbxDatesSemaines_DblClick", startTime)
+
+End Sub
+
+Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12-04 @ 07:36
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick(" & lbxDatesSemaines.value & ")", 0)
     
     Dim selectedWeek As String
     
@@ -43,7 +76,10 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Dim formule1 As String
         Set criteriaDate1 = wshTEC_TDB_Data.Range("T7")
         formule1 = criteriaDate1.formula
+        'Pour le premier changement de date, on ne veut pas passer par WorkSheet_Change
+        Application.EnableEvents = False
         criteriaDate1 = dateValue(dateLundi)
+        Application.EnableEvents = True
         
         Dim criteriaDate2 As Range
         Dim formule2 As String
@@ -55,10 +91,13 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
             'Force une mise à jour du listBox en changeant le RowSource
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = "StatsHeuresSemaine_uf"
             DoEvents
-            ufStatsHeures.lblTotaux = "Totaux de la semaine (" & dateLundi & " au " & dateDimanche & ")"
-            Call AddColonnesSemaine
         End If
         
+        ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
+                    Format$(dateLundi, wshAdmin.Range("B1").value) & " au " & _
+                    Format$(dateDimanche, wshAdmin.Range("B1").value) & ")"
+        Call AddColonnesSemaine
+       
         'Rétablir les formules d'origine
         Application.EnableEvents = False
         criteriaDate1.formula = "=DateDebutSemaine"
@@ -72,19 +111,14 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Set criteriaDate1 = Nothing
     Set criteriaDate2 = Nothing
     
-End Sub
+    Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", startTime)
 
-Private Sub UserForm_Initialize()
-
-    Call AddColonnesSemaine
-    Call AddColonnesMois
-    Call AddColonnesTrimestre
-    Call AddColonnesAnneeFinanciere
-    
 End Sub
 
 Sub AddColonnesSemaine()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesSemaine", 0)
+    
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim i As Long
@@ -94,17 +128,37 @@ Sub AddColonnesSemaine()
         t3 = t3 + CCur(ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.List(i, 6))
     Next i
 
+'    Dim selectedWeek As String
+'    selectedWeek = ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.ListCount - 1
+'    Dim dateLundi As Date, dateDimanche As Date
+'    dateLundi = Left(selectedWeek, 10)
+'    dateDimanche = Right(selectedWeek, 10)
+'
+'    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
+'        Format$(dateLundi, wshAdmin.Range("B1").value) & " au " & _
+'        Format$(dateDimanche, wshAdmin.Range("B1").value) & ")"
+
     'Affiche le total dans la TextBox
+'    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & dernSemaine & ")"
+
+    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
+        Format$(wshTEC_TDB_Data.Range("T7").value, wshAdmin.Range("B1").value) & " au " & _
+        Format$(wshTEC_TDB_Data.Range("U7").value, wshAdmin.Range("B1").value) & ")"
+    
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
 
-    Call ChargerListBoxAvec52DernieresSemaines
+'    Call ChargerListBoxAvec52DernieresSemaines
     
+    Call Log_Record("ufStatsHeures:AddColonnesSemaine", startTime)
+
 End Sub
 
 Sub AddColonnesMois()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesMois", 0)
+    
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim i As Long
@@ -119,10 +173,14 @@ Sub AddColonnesMois()
     ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
 
+    Call Log_Record("ufStatsHeures:AddColonnesMois", startTime)
+
 End Sub
 
 Sub AddColonnesTrimestre()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesTrimestre", 0)
+    
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim i As Long
@@ -137,10 +195,14 @@ Sub AddColonnesTrimestre()
     ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
 
+    Call Log_Record("ufStatsHeures:AddColonnesTrimestre", startTime)
+
 End Sub
 
 Sub AddColonnesAnneeFinanciere()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", 0)
+    
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim i As Long
@@ -155,9 +217,13 @@ Sub AddColonnesAnneeFinanciere()
     ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
 
+    Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", startTime)
+
 End Sub
 
 Sub ChargerListBoxAvec52DernieresSemaines()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", 0)
     
     Dim i As Integer
     Dim dtLundi As Date
@@ -180,7 +246,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
         dtDimanche = dtLundi + 6
         
         'Ajouter l'intervalle dans la ListBox
-        semaines(i) = Format(dtLundi, "dd/mm/yyyy") & " au " & Format(dtDimanche, "dd/mm/yyyy")
+        semaines(i) = Format$(dtLundi, wshAdmin.Range("B1").value) & " au " & Format$(dtDimanche, wshAdmin.Range("B1").value)
         
         'Passer à la semaine précédente
         dtLundi = dtLundi - 7
@@ -193,9 +259,12 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     
     'On se positionne à la fin de la liste (évite de monter/descendre)
     lstSemaines.TopIndex = lstSemaines.ListCount - 1
+    lstSemaines.ListIndex = lstSemaines.ListCount - 1 '2024-12-04 @ 07:49
 
     'Libérer la mémoire
-    Set lstSemaines = Nothing
+'    Set lstSemaines = Nothing
+    
+    Call Log_Record("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", startTime)
     
 End Sub
 
