@@ -44,17 +44,21 @@ Private Sub Worksheet_Activate()
     On Error GoTo 0
     
     'Certaines cellules perdent la couleur du background
-    Dim cell As Range
-    For Each cell In ws.Range("I5,F6")
-        With cell.Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorAccent6
-            .TintAndShade = 0.599993896298105
-            .PatternTintAndShade = 0
-        End With
-    Next cell
-
+    With ws.Range("I5").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+    With ws.Range("F6").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+    
     'Protect the Worksheet
     With ws
         .Protect UserInterfaceOnly:=True
@@ -75,7 +79,6 @@ Private Sub Worksheet_Activate()
     End With
 
     'Libérer la mémoire
-    Set cell = Nothing
     Set ws = Nothing
     
     Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)
@@ -142,7 +145,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

@@ -139,7 +139,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     ActiveWindow.ScrollRow = 4
     
     Application.EnableEvents = False
-    wshGL_BV.Range("C4").Activate
+    wshGL_BV.Range("C4").Select
     Application.EnableEvents = True
     
     'Libérer la mémoire

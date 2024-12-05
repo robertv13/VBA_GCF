@@ -518,13 +518,13 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim filterDate As Date
     filterDate = dateValue(d)
     c2 = filterDate
-    c3 = ConvertValueBooleanToText(True)
+    c3 = Fn_Convert_Value_Boolean_To_Text(True)
     If includeBilledTEC Then
-        c4 = ConvertValueBooleanToText(True)
+        c4 = Fn_Convert_Value_Boolean_To_Text(True)
     Else
-        c4 = ConvertValueBooleanToText(False)
+        c4 = Fn_Convert_Value_Boolean_To_Text(False)
     End If
-    c5 = ConvertValueBooleanToText(False)
+    c5 = Fn_Convert_Value_Boolean_To_Text(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
@@ -1281,7 +1281,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

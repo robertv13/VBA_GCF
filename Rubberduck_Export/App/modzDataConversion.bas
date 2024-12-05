@@ -82,8 +82,8 @@ Sub Clients_Ajuste_Nom()
         'Process the data and make adjustments if necessary
         posOpenParenthesis = InStr(client, "(")
         posCloseParenthesis = InStr(client, ")")
-        numberOpenParenthesis = CountCharOccurrences(client, "(")
-        numberCloseParenthesis = CountCharOccurrences(client, ")")
+        numberOpenParenthesis = Fn_Count_Char_Occurrences(client, "(")
+        numberCloseParenthesis = Fn_Count_Char_Occurrences(client, ")")
         
         If numberOpenParenthesis = 1 And numberCloseParenthesis = 1 Then
             If posCloseParenthesis > posOpenParenthesis + 5 Then

@@ -5,11 +5,11 @@ Option Explicit
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
 'API pour récupérer le format de date par défaut - 2024-09-06 @ 08:07
-Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" _
-    (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
+'Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" _
+'    (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
     
-Public Const LOCALE_USER_DEFAULT As Long = &H400
-Public Const LOCALE_SSHORTDATE As Long = &H1F
+'Public Const LOCALE_USER_DEFAULT As Long = &H400
+'Public Const LOCALE_SSHORTDATE As Long = &H1F
 
 Function Fn_GetID_From_Initials(i As String)
 
@@ -182,24 +182,25 @@ Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColu
     
 End Function
 
-Sub test_Fn_Get_Value_From_UniqueID() '2024-10-26 @ 18:29
-
-    Dim ws As Worksheet: Set ws = wshBD_Clients
-    Dim uniqueID As String: uniqueID = "193r"
-    
-    Dim eMail As String
-    eMail = Fn_Get_Value_From_UniqueID(ws, uniqueID, 2, fClntMFCourrielFacturation)
-    If eMail <> "uniqueID introuvable" Then
-        MsgBox "Le courriel du client '" & uniqueID & "' est '" & eMail & "'"
-    Else
-        MsgBox "Je n'ai pas trouvé le client dont le code est '" & uniqueID & "'", vbCritical
-    End If
-
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
+'CommentOut - 2024-12-05 @ 14:54
+'Sub test_Fn_Get_Value_From_UniqueID() '2024-10-26 @ 18:29
+'
+'    Dim ws As Worksheet: Set ws = wshBD_Clients
+'    Dim uniqueID As String: uniqueID = "193r"
+'
+'    Dim eMail As String
+'    eMail = Fn_Get_Value_From_UniqueID(ws, uniqueID, 2, fClntMFCourrielFacturation)
+'    If eMail <> "uniqueID introuvable" Then
+'        MsgBox "Le courriel du client '" & uniqueID & "' est '" & eMail & "'"
+'    Else
+'        MsgBox "Je n'ai pas trouvé le client dont le code est '" & uniqueID & "'", vbCritical
+'    End If
+'
+'    'Libérer la mémoire
+'    Set ws = Nothing
+'
+'End Sub
+'
 Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
     
     'This function is used to retrieve information from in a range(r) at column (cs) the value of (ss)
@@ -232,8 +233,9 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-Sub test_Fn_Find_Data_In_A_Range()
-
+'CommentOut - 2024-12-05 @ 14:53
+'Sub test_Fn_Find_Data_In_A_Range()
+'
 '        Dim myInfo() As Variant
 '        Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
 '        Dim clientCode As String
@@ -245,8 +247,8 @@ Sub test_Fn_Find_Data_In_A_Range()
 '        Else
 '            client = myInfo(3)
 '        End If
-
-End Sub
+'
+'End Sub
 
 Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     
@@ -281,7 +283,7 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     
 End Function
 
-Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
+Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
     
     'Define the worksheet
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
@@ -301,7 +303,7 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
 
     If Not cell Is Nothing Then
         firstAddress = cell.Address
-        Verify_And_Delete_Rows_If_Value_Is_Found = firstAddress
+        Fn_Verify_And_Delete_Rows_If_Value_Is_Found = firstAddress
         
         'Loop to collect all rows with the value
         Do
@@ -320,10 +322,10 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
         Select Case reponse
             Case vbYes, vbCancel
                 If reponse = vbYes Then
-                    Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
+                    Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
                 End If
                 If reponse = vbCancel Then
-                    Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
+                    Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
                 End If
                 
                 'Delete all collected rows from wshFAC_Projets_Détails (locally)
@@ -368,10 +370,10 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
                 'Set cn = Nothing
             
             Case vbNo
-                Verify_And_Delete_Rows_If_Value_Is_Found = "RIEN_CHANGER"
+                Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "RIEN_CHANGER"
         End Select
     Else
-        Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
+        Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "REMPLACER"
     End If
     
     'Libérer la mémoire
@@ -382,14 +384,14 @@ Function Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono A
     
 End Function
 
-Function GetCheckBoxPosition(chkBox As OLEObject) As String
+Function Fn_GetCheckBoxPosition(chkBox As OLEObject) As String
 
     'Get the cell that contains the top-left corner of the CheckBox
-    GetCheckBoxPosition = chkBox.TopLeftCell.Address
+    Fn_GetCheckBoxPosition = chkBox.TopLeftCell.Address
     
 End Function
 
-Function GetColumnType(col As Range) As String
+Function Fn_Get_Column_Type(col As Range) As String
 
     Dim cell As Range
     Dim dataType As String
@@ -428,7 +430,7 @@ Function GetColumnType(col As Range) As String
         End If
     Next cell
     
-    GetColumnType = dataType
+    Fn_Get_Column_Type = dataType
     
     'Libérer la mémoire
     Set cell = Nothing
@@ -809,43 +811,20 @@ Function Fn_Validate_And_Get_A_Cell(ws As Worksheet, search As String, searchCol
 
 End Function
 
-Sub test_Fn_Validate_And_Get_A_Cell()
+'CommentOut - 2024-12-05 @ 14:55
+'Sub test_Fn_Validate_And_Get_A_Cell()
+'
+'    Dim ws As Worksheet: Set ws = wshBD_Clients
+'
+'    Dim cell As String
+'    cell = Fn_Validate_And_Get_A_Cell(ws, "193r", 2, 6)
+'    Stop
+'
+'    'Libérer la mémoire
+'    Set ws = Nothing
+'
+'End Sub
 
-    Dim ws As Worksheet: Set ws = wshBD_Clients
-    
-    Dim cell As String
-    cell = Fn_Validate_And_Get_A_Cell(ws, "193r", 2, 6)
-    Stop
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-
-End Sub
-'Function IsNumLockActive() As Boolean
-'    ' Utilisation de SendKeys pour vérifier l'état
-'    Dim CurrentState As String
-'    Dim Temp As String
-'
-'    ' Sauvegarde de l'état actuel du NumLock
-'    Application.SendKeys "{NUMLOCK}", True
-'    Application.SendKeys "{NUMLOCK}", True
-'
-'    ' Capturer l'état actuel
-'    Temp = Application.ActiveWindow.Caption
-'    Application.SendKeys "{NUMLOCK}", True
-'    Application.SendKeys "{NUMLOCK}", True
-'
-'    ' Vérification simple pour voir si l'état a changé
-'    CurrentState = Application.ActiveWindow.Caption
-'
-'    ' NumLock est activé si l'état a changé
-'    If Temp <> CurrentState Then
-'        IsNumLockActive = True
-'    Else
-'        IsNumLockActive = False
-'    End If
-'End Function
-'
 Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-10-26 @ 18:30
 
     '2024-08-14 @ 10:17 - Verify that a client exists, based on clientCode
@@ -1175,16 +1154,17 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     
 End Function
 
-Sub test()
-
-    Dim s As String
-    s = "Les logiciels INFORMAT inc.[Robert][Luc][Daniel]"
-    Do While InStr(s, "[") > 0 And InStr(s, "]") > 0
-        s = Fn_Strip_Contact_From_Client_Name(s)
-    Loop
-    Debug.Print "#058 - " & s
-    
-End Sub
+'CommentOut - 2024-12-05 2 14:52
+'Sub test()
+'
+'    Dim s As String
+'    s = "Les logiciels INFORMAT inc.[Robert][Luc][Daniel]"
+'    Do While InStr(s, "[") > 0 And InStr(s, "]") > 0
+'        s = Fn_Strip_Contact_From_Client_Name(s)
+'    Loop
+'    Debug.Print "#058 - " & s
+'
+'End Sub
 
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
@@ -1232,25 +1212,26 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
 End Function
 
-Function Fn_Get_Date_Format() As String
-
-    Dim buffer As String
-    Dim length As Long
-    
-    ' Préparer une chaîne tampon
-    buffer = String$(100, 0)
-    
-    ' Obtenir le format de date courte de l'utilisateur
-    length = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SSHORTDATE, buffer, Len(buffer))
-    
-    ' Retourner le format de date
-    If length > 0 Then
-        Fn_Get_Date_Format = Left$(buffer, length - 1) 'Retirer le caractère nul à la fin
-    Else
-        Fn_Get_Date_Format = "Format de date non disponible"
-    End If
-    
-End Function
+'CommentOut - 2024-12-05 @ 14:50
+'Function Fn_Get_Date_Format() As String
+'
+'    Dim buffer As String
+'    Dim length As Long
+'
+'    ' Préparer une chaîne tampon
+'    buffer = String$(100, 0)
+'
+'    ' Obtenir le format de date courte de l'utilisateur
+'    length = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SSHORTDATE, buffer, Len(buffer))
+'
+'    ' Retourner le format de date
+'    If length > 0 Then
+'        Fn_Get_Date_Format = Left$(buffer, length - 1) 'Retirer le caractère nul à la fin
+'    Else
+'        Fn_Get_Date_Format = "Format de date non disponible"
+'    End If
+'
+'End Function
 
 Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
 
@@ -1702,13 +1683,13 @@ Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional HeaderS
     
 End Function
 
-Public Function ConvertValueBooleanToText(val As Boolean) As String
+Public Function Fn_Convert_Value_Boolean_To_Text(val As Boolean) As String
 
     Select Case val
         Case 0, "False", "Faux" 'False
-            ConvertValueBooleanToText = "FAUX"
+            Fn_Convert_Value_Boolean_To_Text = "FAUX"
         Case -1, "True", "Vrai" 'True"
-            ConvertValueBooleanToText = "VRAI"
+            Fn_Convert_Value_Boolean_To_Text = "VRAI"
         Case "VRAI", "FAUX"
             
         Case Else
@@ -1725,11 +1706,11 @@ Function Fn_Is_String_Valid(searchString As String, rng As Range) As Boolean
     
 End Function
 
-Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As String) As Long
+Function Fn_Count_Char_Occurrences(ByVal inputString As String, ByVal charToCount As String) As Long
     
     'Ensure charToCount is a single character
     If Len(charToCount) <> 1 Or Len(inputString) = 0 Then
-        CountCharOccurrences = -1 ' Return -1 for invalid input
+        Fn_Count_Char_Occurrences = -1 ' Return -1 for invalid input
         Exit Function
     End If
     
@@ -1741,7 +1722,7 @@ Function CountCharOccurrences(ByVal inputString As String, ByVal charToCount As 
         End If
     Next i
     
-    CountCharOccurrences = count
+    Fn_Count_Char_Occurrences = count
     
 End Function
 
@@ -1799,16 +1780,17 @@ Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
     
 End Function
 
-Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
-
-    Dim d As Date
-    d = #8/11/2024#
-    Dim s As Integer
-    s = Fn_Numero_Semaine_Selon_AnneeFinancière(d)
-    MsgBox "Pour le " & Format$(d, "yyyy-MM-dd") & ", la semaine est " & s
-
-End Sub
-
+'CommentOut - 2024-12-05 @ 14:55
+'Sub test_Fn_Numero_Semaine_Selon_AnneeFinancière()
+'
+'    Dim d As Date
+'    d = #8/11/2024#
+'    Dim s As Integer
+'    s = Fn_Numero_Semaine_Selon_AnneeFinancière(d)
+'    MsgBox "Pour le " & Format$(d, "yyyy-MM-dd") & ", la semaine est " & s
+'
+'End Sub
+'
 Function Fn_Valider_Portion_Heures(Valeur As Currency) As Boolean
 
     'Tableau des valeurs permises : dixièmes d'heures et quarts d'heure
@@ -1831,28 +1813,29 @@ Function Fn_Valider_Portion_Heures(Valeur As Currency) As Boolean
     
 End Function
 
-Function Fn_ConvertElapsedTime_In_HMS(ByRef elapsedTime As Double) As String
-    
-    Debug.Print "#061 - " & elapsedTime
-    
-    Dim hours As Long
-    Dim minutes As Long
-    Dim seconds As Double
-
-    'Conversion en heures, minutes et secondes
-    hours = Int(elapsedTime / 3600)
-    minutes = Int((elapsedTime Mod 3600) / 60)
-    seconds = elapsedTime - (hours * 3600) - (minutes * 60)
-
-    'Si le temps écoulé est inférieur à 1 seconde, on affiche uniquement les secondes avec des millisecondes
-    If elapsedTime < 1 Then
-        Fn_ConvertElapsedTime_In_HMS = "00:00:" & Format$(seconds, "00.0000")
-    Else
-        'Sinon, on affiche normalement heures:minutes:secondes
-        Fn_ConvertElapsedTime_In_HMS = Format$(hours, "00") & ":" & Format$(minutes, "00") & ":" & Format$(seconds, "00.00")
-    End If
-    
-End Function
+'CommenOut - 2024-12-05 @ 14:47
+'Function Fn_ConvertElapsedTime_In_HMS(ByRef elapsedTime As Double) As String
+'
+'    Debug.Print "#061 - " & elapsedTime
+'
+'    Dim hours As Long
+'    Dim minutes As Long
+'    Dim seconds As Double
+'
+'    'Conversion en heures, minutes et secondes
+'    hours = Int(elapsedTime / 3600)
+'    minutes = Int((elapsedTime Mod 3600) / 60)
+'    seconds = elapsedTime - (hours * 3600) - (minutes * 60)
+'
+'    'Si le temps écoulé est inférieur à 1 seconde, on affiche uniquement les secondes avec des millisecondes
+'    If elapsedTime < 1 Then
+'        Fn_ConvertElapsedTime_In_HMS = "00:00:" & Format$(seconds, "00.0000")
+'    Else
+'        'Sinon, on affiche normalement heures:minutes:secondes
+'        Fn_ConvertElapsedTime_In_HMS = Format$(hours, "00") & ":" & Format$(minutes, "00") & ":" & Format$(seconds, "00.00")
+'    End If
+'
+'End Function
 
 Function Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d As Date) As Date
 
@@ -1867,13 +1850,14 @@ Function Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d As Date) As Date
     
 End Function
 
-Sub test_Fn_Calcul_Date_Trimestre()
-
-    Dim d As Date
-    d = #12/31/2024#
-    Debug.Print "#062 - " & Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d)
-
-End Sub
+'CommentOut - 2024-12-05 @ 14:53
+'Sub test_Fn_Calcul_Date_Trimestre()
+'
+'    Dim d As Date
+'    d = #12/31/2024#
+'    Debug.Print "#062 - " & Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d)
+'
+'End Sub
 
 Function Fn_Nettoyer_Fin_Chaine(s As String) '2024-11-07 @ 16:57
 

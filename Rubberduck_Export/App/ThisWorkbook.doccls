@@ -13,7 +13,7 @@ Private Sub Workbook_Open()
         Application.Quit
     End If
     
-    DoEvents
+'    DoEvents
     
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
@@ -25,7 +25,7 @@ Private Sub Workbook_Open()
     Dim isServerUp As Boolean
     isServerUp = Fn_Check_Server_Access(rootPath)
 
-    DoEvents
+'    DoEvents
     
     'Vérification si le chemin est accessible
     If isServerUp = False Then
@@ -39,7 +39,7 @@ Private Sub Workbook_Open()
     'Log initial activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
     
-    DoEvents
+'    DoEvents
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
     Call Create_User_Active_File
@@ -57,7 +57,7 @@ Private Sub Workbook_Open()
     
 '    Application.ScreenUpdating = True
     
-    DoEvents
+'    DoEvents
     
     Call Write_Info_On_Main_Menu
     
@@ -189,7 +189,8 @@ Sub Setup_UserDateFormat()
         Case "GuillaumeCharron", "Guillaume"
             wshAdmin.Range("B1").value = "dd/mm/yy"
         Case "Robert M. Vigneault", "robertmv"
-            wshAdmin.Range("B1").value = "yyyy-mm-dd"
+            wshAdmin.Range("B1").value = "dd/mm/yyyy"
+'            wshAdmin.Range("B1").value = "yyyy-mm-dd"
         Case "vgervais", "user", "Annie"
             wshAdmin.Range("B1").value = "dd/mm/yyyy"
         Case Else

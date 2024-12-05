@@ -1224,7 +1224,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
         For i = 1 To ws.Range("A1").CurrentRegion.Columns.count
             Set col = ws.Cells(1, i).EntireColumn
             
-            colType = GetColumnType(col)
+            colType = Fn_Get_Column_Type(col)
             
             ' Output the information to the report
             With reportSheet
@@ -1857,8 +1857,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
                         Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
-                        txt & " | " & _
-                        LOCALE_SSHORTDATE
+                        txt
     Close #FileNum
     
     Exit Sub
@@ -1904,8 +1903,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
                     module & " | " & _
                     procedure & " | " & _
                     variable & " | " & _
-                    vType & " | " & _
-                    LOCALE_SSHORTDATE
+                    vType
 
     Close #FileNum
     

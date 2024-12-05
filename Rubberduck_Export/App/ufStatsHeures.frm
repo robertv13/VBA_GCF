@@ -34,6 +34,32 @@ Private Sub lbxDatesSemaines_Click() '2024-12-04 @ 07:36
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click(" & lbxDatesSemaines.value & ")", 0)
     
+'CommentOut - 2024-12-05 @ 12:32
+'    'Pour éviter que deux éléments soient sélectionnés en même temps
+'    If lastSelectedItem <> 0 Then
+'        ufStatsHeures.lbxDatesSemaines.Selected(lastSelectedItem) = False
+'        Debug.Print "Deselect " & lastSelectedItem
+'    End If
+'
+'    'Sauvegarde l'élément sélectionné
+'    Dim selectedIndex As Integer
+'    selectedIndex = lbxDatesSemaines.ListIndex
+'
+'    Application.EnableEvents = False
+'
+'    'Désélectionner tous les éléments
+'    Dim i As Integer
+'    For i = 0 To lbxDatesSemaines.ListCount - 1
+'        lbxDatesSemaines.Selected(i) = False
+'    Next i
+'
+'    'Réactiver la sélection pour l'élément actuel
+'    If selectedIndex >= 0 Then
+'        lbxDatesSemaines.Selected(selectedIndex) = True
+'    End If
+'
+'    Application.EnableEvents = True
+    
     Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.value)
     
     Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click", startTime)
@@ -62,7 +88,14 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12
         selectedWeek = lbxDatesSemaines.List(lbxDatesSemaines.ListIndex)
         Dim dateLundi As Date, dateDimanche As Date
         dateLundi = Left(selectedWeek, 10)
+        Debug.Print vbNewLine & "#777 " & dateLundi, IsDate(dateLundi), " ---> ", day(dateLundi), month(dateLundi), year(dateLundi)
         dateDimanche = Right(selectedWeek, 10)
+        Debug.Print "#778 " & dateDimanche, IsDate(dateDimanche), " ---> ", day(dateDimanche), month(dateDimanche), year(dateDimanche)
+        
+        'Il doit y avoir un écart de 6 entre les deux dates (semaine)
+        If dateDimanche - dateLundi <> 6 Then
+            MsgBox "Il semble y avoir un problème de format de date", vbCritical, "Dates de semaine NON VALIDES"
+        End If
         
         'Initialisation du listBox et des totaux
         ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
@@ -72,48 +105,53 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12
         ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format(0, "##0.00") 'Formatage du total en deux décimales
 
         'Envoie les deux dates à wshTEC_TDB_Data pour les AdvancedFilters
-        Dim criteriaDate1 As Range
+        Dim rngCriteriaDate1 As Range
         Dim formule1 As String
-        Set criteriaDate1 = wshTEC_TDB_Data.Range("T7")
-        formule1 = criteriaDate1.formula
+        Set rngCriteriaDate1 = wshTEC_TDB_Data.Range("T7")
+        formule1 = rngCriteriaDate1.formula
         'Pour le premier changement de date, on ne veut pas passer par WorkSheet_Change
         Application.EnableEvents = False
-        criteriaDate1 = dateValue(dateLundi)
+        rngCriteriaDate1.value = dateValue(dateLundi)
         Application.EnableEvents = True
         
-        Dim criteriaDate2 As Range
+        Dim rngCriteriaDate2 As Range
         Dim formule2 As String
-        Set criteriaDate2 = wshTEC_TDB_Data.Range("U7")
-        formule2 = criteriaDate2.formula
-        criteriaDate2 = dateValue(dateDimanche)
+        Set rngCriteriaDate2 = wshTEC_TDB_Data.Range("U7")
+        formule2 = rngCriteriaDate2.formula
+        rngCriteriaDate2.value = dateValue(dateDimanche)
         
         If wshTEC_TDB_Data.Range("W2").value <> "" Then
             'Force une mise à jour du listBox en changeant le RowSource
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = "StatsHeuresSemaine_uf"
             DoEvents
+        Else
+            MsgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation
         End If
         
-        ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
-                    Format$(dateLundi, wshAdmin.Range("B1").value) & " au " & _
-                    Format$(dateDimanche, wshAdmin.Range("B1").value) & ")"
+'CommentOut - 2024-12-05 @ 11:42
+'        ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
+'                    Format$(dateLundi, wshAdmin.Range("B1").value) & " au " & _
+'                    Format$(dateDimanche, wshAdmin.Range("B1").value) & ")"
+                    
         Call AddColonnesSemaine
        
         'Rétablir les formules d'origine
         Application.EnableEvents = False
-        criteriaDate1.formula = "=DateDebutSemaine"
-        criteriaDate2.formula = "=DateFinSemaine"
+        rngCriteriaDate1.formula = "=DateDebutSemaine"
+        rngCriteriaDate2.formula = "=DateFinSemaine"
         Application.EnableEvents = True
     Else
         MsgBox "Aucun élément sélectionné."
     End If
     
     'Libérer la mémoire
-    Set criteriaDate1 = Nothing
-    Set criteriaDate2 = Nothing
+    Set rngCriteriaDate1 = Nothing
+    Set rngCriteriaDate2 = Nothing
     
     Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", startTime)
 
 End Sub
+
 
 Sub AddColonnesSemaine()
 
@@ -128,22 +166,9 @@ Sub AddColonnesSemaine()
         t3 = t3 + CCur(ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.List(i, 6))
     Next i
 
-'    Dim selectedWeek As String
-'    selectedWeek = ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.ListCount - 1
-'    Dim dateLundi As Date, dateDimanche As Date
-'    dateLundi = Left(selectedWeek, 10)
-'    dateDimanche = Right(selectedWeek, 10)
-'
-'    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
-'        Format$(dateLundi, wshAdmin.Range("B1").value) & " au " & _
-'        Format$(dateDimanche, wshAdmin.Range("B1").value) & ")"
-
-    'Affiche le total dans la TextBox
-'    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & dernSemaine & ")"
-
-    ufStatsHeures.lblTotaux = "Totaux de la semaine (" & _
+    ufStatsHeures.lblTotaux = "* Totaux de la semaine (" & _
         Format$(wshTEC_TDB_Data.Range("T7").value, wshAdmin.Range("B1").value) & " au " & _
-        Format$(wshTEC_TDB_Data.Range("U7").value, wshAdmin.Range("B1").value) & ")"
+        Format$(wshTEC_TDB_Data.Range("U7").value, wshAdmin.Range("B1").value) & ") *"
     
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
@@ -246,7 +271,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
         dtDimanche = dtLundi + 6
         
         'Ajouter l'intervalle dans la ListBox
-        semaines(i) = Format$(dtLundi, wshAdmin.Range("B1").value) & " au " & Format$(dtDimanche, wshAdmin.Range("B1").value)
+        semaines(i) = Format$(CLng(dtLundi), wshAdmin.Range("B1").value) & " au " & Format$(CLng(dtDimanche), wshAdmin.Range("B1").value)
         
         'Passer à la semaine précédente
         dtLundi = dtLundi - 7

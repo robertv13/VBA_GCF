@@ -3,7 +3,7 @@ Option Explicit
 
 #If VBA7 Then
     'Déclaration pour les environnements 64 bits
-    Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+'    Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 '    Private Declare PtrSafe Function GetKeyboardState Lib "user32" (pbKeyState As Byte) As Long
 '    Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #Else
@@ -55,97 +55,97 @@ Public Enum DB_Clients '2024-10-26 @ 17:41
 End Enum
 
 Public Enum DEB_Trans_data_Columns
-    fdebtFirst = 1
-    fdebtNo_Entrée = fdebtFirst
-    fdebtDate
-    fdebtType
-    fdebtBeneficiaire
-    fdebtReference
-    fdebtNo_Compte
-    fdebtCodeTaxe
-    fdebtTOTAL
-    fdebtTPS
-    fdebtTVQ
-    fdebtCrédit_TPS
-    fdebtCrédit_TVQ
-    fdebtAutreRemarque
-    fdebtTimeStamp
-    fdebtLast = fdebtTimeStamp
+    fDebTFirst = 1
+    fDebTNo_Entrée = fDebTFirst
+    fDebTDate
+    fDebTType
+    fDebTBeneficiaire
+    fDebTReference
+    fDebTNo_Compte
+    fDebTCodeTaxe
+    fDebTTOTAL
+    fDebTTPS
+    fDebTTVQ
+    fDebTCrédit_TPS
+    fDebTCrédit_TVQ
+    fDebTAutreRemarque
+    fDebTTimeStamp
+    fDebTLast = fDebTTimeStamp
 End Enum
 
 Public Enum FAC_Entête_Data_Columns
-    ffacEntFirst = 1
-    ffacEntInv_No = ffacEntFirst
-    ffacEntDate_Facture
-    ffacEntFouP
-    ffacEntCust_ID
-    ffacEntContact
-    ffacEntNom_Client
-    ffacEntAdresse1
-    ffacEntAdresse2
-    ffacEntAdresse3
-    ffacEntHonoraires
-    ffacEntAF1_Desc
-    ffacEntAutresFrais_1
-    ffacEntAF2_Desc
-    ffacEntAutresFrais_2
-    ffacEntAF3_Desc
-    ffacEntAutresFrais_3
-    ffacEntTaux_TPS
-    ffacEntMnt_TPS
-    ffacEntTaux_TVQ
-    ffacEntMntTVQ
-    ffacEntAR_Total
-    ffacEntDépôt
-    ffacEntLast = ffacEntDépôt
+    fFacEntFirst = 1
+    fFacEntInv_No = fFacEntFirst
+    fFacEntDate_Facture
+    fFacEntFouP
+    fFacEntCust_ID
+    fFacEntContact
+    fFacEntNom_Client
+    fFacEntAdresse1
+    fFacEntAdresse2
+    fFacEntAdresse3
+    fFacEntHonoraires
+    fFacEntAF1_Desc
+    fFacEntAutresFrais_1
+    fFacEntAF2_Desc
+    fFacEntAutresFrais_2
+    fFacEntAF3_Desc
+    fFacEntAutresFrais_3
+    fFacEntTaux_TPS
+    fFacEntMnt_TPS
+    fFacEntTaux_TVQ
+    fFacEntMntTVQ
+    fFacEntAR_Total
+    fFacEntDépôt
+    fFacEntLast = fFacEntDépôt
 End Enum
 
 Public Enum GL_EJ_Recurrente_Data_Columns
-    fglejaFirst = 1
-    fglejaNo_EJA = fglejaFirst
-    fglejaDescription
-    fglejaNo_Compte
-    fglejaCompte
-    fglejaDébit
-    fglejaCrédit
-    fglejaAutreRemarque
-    fglejaLast = fglejaAutreRemarque
+    fGLEJrFirst = 1
+    fGLEJrNo_EJA = fGLEJrFirst
+    fGLEJrDescription
+    fGLEJrNo_Compte
+    fGLEJrCompte
+    fGLEJrDébit
+    fGLEJrCrédit
+    fGLEJrAutreRemarque
+    fGLEJrLast = fGLEJrAutreRemarque
 End Enum
 
 Public Enum GL_Trans_Data_Columns
-    fgltFirst = 1
-    fgltEntryNo = fgltFirst
-    fgltDate
-    fgltDescr
-    fgltSource
-    fgltGLNo
-    fgltCompte
-    fgltdt
-    fgltct
-    fgltRem
-    fgltTStamp
-    fgltLast = fgltTStamp
+    fGLtFirst = 1
+    fGLtEntryNo = fGLtFirst
+    fGLtDate
+    fGLtDescr
+    fGLtSource
+    fGLtGLNo
+    fGLtCompte
+    fGLtdt
+    fGLtct
+    fGLtRem
+    fGLtTStamp
+    fGLtLast = fGLtTStamp
 End Enum
 
 Public Enum TEC_Data_Columns
-    ftecFirst = 1
-    ftecTEC_ID = ftecFirst
-    ftecProf_ID
-    ftecProf
-    ftecDate
-    ftecClient_ID
-    ftecClientNom
-    ftecDescription
-    ftecHeures
-    ftecCommentaireNote
-    ftecEstFacturable
-    ftecDateSaisie
-    ftecEstFacturee
-    ftecDateFacturee
-    ftecEstDetruit
-    ftecVersionApp
-    ftecNoFacture
-    ftecLast = ftecNoFacture
+    fTEClFirst = 1
+    fTEClTEC_ID = fTEClFirst
+    fTEClProf_ID
+    fTEClProf
+    fTEClDate
+    fTEClClient_ID
+    fTEClClientNom
+    fTEClDescription
+    fTEClHeures
+    fTEClCommentaireNote
+    fTEClEstFacturable
+    fTEClDateSaisie
+    fTEClEstFacturee
+    fTEClDateFacturee
+    fTEClEstDetruit
+    fTEClVersionApp
+    fTEClNoFacture
+    fTEClLast = fTEClNoFacture
 End Enum
 
 Sub Set_Root_Path(ByRef rootPath As String)
@@ -184,7 +184,7 @@ Sub Write_Info_On_Main_Menu()
         .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
     
-    Dim env As String: env = wshAdmin.Range("F5").value
+'    Dim env As String: env = wshAdmin.Range("F5").value
     With wshMenu.Range("$A$33")
         .Font.size = 8
         .Font.Color = vbRed
