@@ -63,7 +63,9 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     
     ufSaisieHeures.txtDate.value = "" 'On vide la date pour forcer la saisie
     
+    On Error Resume Next
     ufSaisieHeures.cmbProfessionnel.SetFocus
+    On Error GoTo 0
    
     rmv_state = rmv_modeInitial
     

@@ -1964,7 +1964,7 @@ Sub Log_Analysis()
     FileNum = FreeFile
     
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
     
     Open logFile For Input As #FileNum
 

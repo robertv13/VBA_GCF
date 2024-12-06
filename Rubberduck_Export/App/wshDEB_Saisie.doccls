@@ -11,7 +11,7 @@ Private Sub Worksheet_Activate()
         Exit Sub
     End If
     
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -178,7 +178,7 @@ End Sub
 
 Private Sub Process_Change(ByVal Target As Range)
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
     Dim startCell As Range: Set startCell = ws.Range("E9")
     
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If
@@ -357,7 +357,7 @@ End Sub
 
 Sub DEB_Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("DEB_Saisie")
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
     Application.EnableEvents = False
     

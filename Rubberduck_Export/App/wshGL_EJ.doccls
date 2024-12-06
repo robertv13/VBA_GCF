@@ -18,7 +18,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_EJ")
+    Dim ws As Worksheet: Set ws = wshGL_EJ
     
    'Hide column A & B
     With ws
@@ -173,7 +173,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Now() Then

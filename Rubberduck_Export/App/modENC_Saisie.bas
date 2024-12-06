@@ -567,7 +567,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
         rs.Fields("AutreRemarque").value = DESC
-        rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
+        rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     rs.update
     
     'Credit side
@@ -586,7 +586,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields("Compte").value = "Comptes clients" 'Hardcoded
         rs.Fields("Crédit").value = montant
         rs.Fields("AutreRemarque").value = DESC
-        rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
+        rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     rs.update
 
 '    wshENC_Saisie.Range("B10").value = nextJENo

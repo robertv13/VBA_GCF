@@ -10,7 +10,7 @@ Private Sub Worksheet_Activate()
     
     Call GL_Trans_Import_All
     
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_Rapport")
+    Dim ws As Worksheet: Set ws = wshGL_Rapport
     ws.Unprotect
     
     'Setup a listBox
@@ -149,7 +149,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -165,7 +165,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

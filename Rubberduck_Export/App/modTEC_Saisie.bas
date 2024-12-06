@@ -600,9 +600,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         GoTo EndOfProcedure
     End If
     
-    'Modifie le critère pour forcer une execution du AdvancedFilter
-    wshTEC_TDB_Data.Range("S6").value = ufSaisieHeures.cmbProfessionnel.value
-    
+'    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+'    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+'
     ufSaisieHeures.txtTotalHeures.value = ""
     ufSaisieHeures.txtHresFact.value = ""
     ufSaisieHeures.txtHresNF.value = ""
@@ -617,23 +617,20 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
     If lastRow < 3 Then GoTo Rien_Aujourdhui
         
-    Dim ws As Worksheet
-    Set ws = wshTEC_Local
-    
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
         .ColumnWidths = "30; 24; 54; 157; 242; 35; 90; 32; 90"
     End With
     
-    'Manually add to listBox (.RowSource DOES NOT WORK!!!)
+    'Manually add to listBox (because some tests have to be made)
     Dim rng As Range
     Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
      
     Dim i As Long, j As Long
-    Dim totalHeures As Double
-    Dim totalHresFact As Double, totalHresNonFact As Double
-    Application.ScreenUpdating = True
+    Dim totalHeures As Currency
+    Dim totalHresFact As Currency, totalHresNonFact As Currency
+    Application.ScreenUpdating = False
     For i = 1 To rng.Rows.count
         ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
@@ -643,7 +640,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
         ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, wshAdmin.Range("B1").value & " hh:nn:ss")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, wshAdmin.Range("B1").value & " hh:mm:ss")
         totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
         If Fn_Is_Client_Facturable(rng.Cells(i, 14).value) = True And rng.Cells(i, 8).value = "VRAI" Then
             totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).value)
@@ -651,23 +648,37 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
             totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).value)
         End If
     Next i
-         
+    Application.ScreenUpdating = True
+    
 Rien_Aujourdhui:
 
     ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
     ufSaisieHeures.txtHresFact.value = Format$(totalHresFact, "#0.00")
     ufSaisieHeures.txtHresNF.value = Format$(totalHresNonFact, "#0.00")
     
-    'Additionner les charges de la semaine
-    Dim totalHresFactSemaine As Double
-    Dim totalHresNonFactSemaine As Double
+    'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
+    Dim totalHresFactSemaine As Currency
+    Dim totalHresNonFactSemaine As Currency
+    
+    'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+    Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
+    dateCharge = ufSaisieHeures.txtDate.value
+    dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
+    dateDimanche = dateLundi + 6
+    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+    wshTEC_TDB_Data.Range("T7").value = dateLundi
+    wshTEC_TDB_Data.Range("U7").value = dateDimanche
+    
+    DoEvents
     
     lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
-    For i = 2 To lastRow
-        totalHresFactSemaine = totalHresFactSemaine + wshTEC_TDB_Data.Range("AC" & i).value
-        totalHresNonFactSemaine = totalHresNonFactSemaine + wshTEC_TDB_Data.Range("AD" & i).value
-    Next i
-    
+    If lastRow > 1 Then
+        Dim rngResult As Range
+        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
+        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
+    End If
+
     ufSaisieHeures.txtHresFactSemaine.value = Format$(totalHresFactSemaine, "#0.00")
     ufSaisieHeures.txtHresNFSemaine.value = Format$(totalHresNonFactSemaine, "#0.00")
     
@@ -685,7 +696,6 @@ EndOfProcedure:
     
     'Libérer la mémoire
     Set rng = Nothing
-    Set ws = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
         ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, startTime)

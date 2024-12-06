@@ -441,7 +441,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description - " & glDescr, 0)
     
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Admin")
+    Dim ws As Worksheet: Set ws = wshAdmin
     
     On Error Resume Next
     Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrPlanComptable_All")
@@ -1848,6 +1848,12 @@ Function Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d As Date) As Date
     'Fixer le jour au PREMIER du mois obtenu
     Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière = DateSerial(year(dateTroisMoisAvant), month(dateTroisMoisAvant), 1)
     
+End Function
+
+Function Fn_Obtenir_Date_Lundi(d As Date)
+
+    Fn_Obtenir_Date_Lundi = d - (Weekday(d, vbMonday) - 1)
+
 End Function
 
 'CommentOut - 2024-12-05 @ 14:53

@@ -14,8 +14,8 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
     Application.ScreenUpdating = False
     
     'Initialiser les feuilles nécessaires
-    Dim wsFactures As Worksheet: Set wsFactures = ThisWorkbook.Sheets("FAC_Comptes_Clients")
-    Dim wsPaiements As Worksheet: Set wsPaiements = ThisWorkbook.Sheets("ENC_Détails")
+    Dim wsFactures As Worksheet: Set wsFactures = wshFAC_Comptes_Clients
+    Dim wsPaiements As Worksheet: Set wsPaiements = wshENC_Détails
     
     'Utilisation de la même feuille
     Dim rngResultat As Range

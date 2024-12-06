@@ -167,14 +167,14 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     'Take care of invoice type (to be confirmed OR already confirmed)
     If wsF.Cells(r, 3).value = "AC" Then
         ws.Range("H5").value = "À CONFIRMER"
-        ws.Shapes("btnFAC_Confirmation").Visible = True
+        ws.Shapes("shpFAC_Confirmation_OK").Visible = True
     Else
         ws.Range("H5").value = ""
-        ws.Shapes("btnFAC_Confirmation").Visible = False
+        ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
     End If
     
     'Make OK button visible
-    ws.Shapes("btnFAC_Confirmation_OK").Visible = True
+    ws.Shapes("shpFAC_Confirmation_OK").Visible = True
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -739,8 +739,8 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     Application.ScreenUpdating = True
     
     'Hide both buttons
-    ws.Shapes("btnFAC_Confirmation").Visible = False
-    ws.Shapes("btnFAC_Confirmation_OK").Visible = False
+    ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
+    ws.Shapes("shpFAC_Confirmation_OK").Visible = False
     
     Call Show_Unconfirmed_Invoice
     
@@ -790,7 +790,7 @@ Sub FAC_Confirmation_Do_It()
     Dim invNo As String
     invNo = ws.Range("F5").value
     
-    ws.Shapes("btnFAC_Confirmation").Visible = False
+    ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
     
     Dim answerYesNo As Long
     answerYesNo = MsgBox("Êtes-vous certain de vouloir CONFIRMER cette facture ? ", _

@@ -17,7 +17,7 @@ Private Sub Worksheet_Activate()
 
     Me.Application.Calculation = xlCalculationAutomatic
     
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
+    Dim ws As Worksheet: Set ws = wshGL_BV
 
 '    Call SetTabOrder(ws)
     
@@ -26,7 +26,7 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Unprotect
-        .Range("L4:T9999").Clear
+        .Range("L4").CurrentRegion.offset(3, 0).Clear
         
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlNoRestrictions
@@ -56,16 +56,6 @@ Private Sub Worksheet_Activate()
     Set ws = Nothing
     
     Call Log_Record("wshGL_BV:Worksheet_Activate", startTime)
-
-End Sub
-
-Private Sub Worksheet_Deactivate()
-
-'    On Error Resume Next
-'    If Not dynamicShape Is Nothing Then
-'        dynamicShape.Visible = False
-'    End If
-'    On Error GoTo 0
 
 End Sub
 
@@ -200,11 +190,11 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").value = Range("J1").value
-        Range("L2").value = ""
+'        Range("L2").value = ""
         
         Call GL_Trial_Balance_Build(Range("J1").value)
         

@@ -117,7 +117,7 @@ Sub Build_File_Layouts() '2024-03-26 @ 14:35
     Next i
     
     'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Sheets("Doc_TableLayouts")
+    Dim wsOutput As Worksheet: Set wsOutput = wshzDocTableLayouts
     Dim lastUsedRow As Long
     lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row 'Last Used Row
     wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
@@ -881,5 +881,52 @@ Sub Restaurer_UserForms_Parameters()
     
     MsgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
 
+End Sub
+
+Sub Get_UsedRange_In_Active_Workbook()
+
+    Dim output As String
+    
+    'Feuille pour les résultats
+    Dim feuilleNom As String
+    feuilleNom = "X_Cellules_Utilisées"
+    Call Erase_And_Create_Worksheet(feuilleNom)
+    Dim wsOutput As Worksheet
+    Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
+    Dim r As Long: r = 1
+    wsOutput.Cells(r, 1).value = "Feuille"
+    wsOutput.Cells(r, 2).value = "Plage utilisée"
+    wsOutput.Cells(r, 3).value = "Lignes utilisée"
+    wsOutput.Cells(r, 4).value = "Colonnes utilisée"
+    wsOutput.Cells(r, 5).value = "Nb. Cellules"
+    r = r + 1
+    
+    'Parcourir chaque feuille du classeur
+    Dim ws As Worksheet
+    Dim cellCount As Long
+    For Each ws In ThisWorkbook.Worksheets
+        'Vérifier si UsedRange n'est pas vide
+        On Error Resume Next
+        Dim usedRange As Range
+        Set usedRange = ws.usedRange
+        On Error GoTo 0
+        
+        If Not usedRange Is Nothing Then
+            ' Ajouter les informations à la sortie
+            wsOutput.Cells(r, 1).value = ws.Name
+            wsOutput.Cells(r, 2).value = usedRange.Address
+            wsOutput.Cells(r, 3).value = usedRange.Rows.count
+            wsOutput.Cells(r, 4).value = usedRange.Columns.count
+            wsOutput.Cells(r, 5).value = usedRange.Cells.count
+        Else
+            ' Si aucune cellule utilisée
+            wsOutput.Cells(r, 1).value = ws.Name
+            wsOutput.Cells(r, 2).value = "Aucune"
+        End If
+        r = r + 1
+    Next ws
+    
+    MsgBox "Le traitement est complété. Voir la feuille '" & feuilleNom & "'", vbInformation
+    
 End Sub
 

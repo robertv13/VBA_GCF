@@ -141,7 +141,7 @@ End Sub
 Sub Hide_Dev_Shapes_Based_On_Username()
     
     'Set the worksheet where the shapes are located
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("Menu")
+    Dim ws As Worksheet: Set ws = wshMenu
     
     'Loop through each shape in the worksheet
     Dim shp As Shape

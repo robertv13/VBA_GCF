@@ -186,7 +186,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
     
     'Define the destination worksheet
     Dim wsDest As Worksheet
-    Set wsDest = ThisWorkbook.Sheets("TEC_Local")
+    Set wsDest = wshTEC_Local
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long, rowNum As Long
@@ -234,7 +234,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
         wsDest.Range("H" & rowNum).value = rst.Fields(5).value
         wsDest.Range("I" & rowNum).value = ""
         wsDest.Range("J" & rowNum).value = "VRAI"
-        wsDest.Range("K" & rowNum).value = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
+        wsDest.Range("K" & rowNum).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         wsDest.Range("L" & rowNum).value = "FAUX"
         wsDest.Range("M" & rowNum).value = ""
         wsDest.Range("N" & rowNum).value = "FAUX"
@@ -364,7 +364,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
     
     'Define the destination worksheet
-    Dim wsDest As Worksheet: Set wsDest = ThisWorkbook.Sheets("GL_Trans")
+    Dim wsDest As Worksheet: Set wsDest = wshGL_Trans
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long
@@ -462,7 +462,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
     
     'Define the destination worksheet
-    Set wsDest = ThisWorkbook.Sheets("CAR")
+    Set wsDest = wshFAC_Comptes_Clients
     
     'Get the last row in the destination sheet
     lastUsedRow = wsDest.Cells(wsDest.Rows.count, "A").End(xlUp).row

@@ -25,7 +25,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     Application.EnableEvents = True
 
     'Clear Detail transaction section
-    wshGL_BV.Range("L4:T99999").Clear
+    wshGL_BV.Range("L4").CurrentRegion.offset(3, 0).Clear
 '   CommenOut - 2024-11-18 @ 07:05
 '    With wshGL_BV.Range("S4:S9999").Interior
 '        .Pattern = xlNone
@@ -609,7 +609,7 @@ End Sub
 
 Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
+    Dim ws As Worksheet: Set ws = wshGL_BV
     
     Dim shp As Shape
     For Each shp In ws.Shapes
@@ -626,7 +626,7 @@ End Sub
 
 Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
 
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets("GL_BV")
+    Dim ws As Worksheet: Set ws = wshGL_BV
     
     Dim shp As Shape
     For Each shp In ws.Shapes

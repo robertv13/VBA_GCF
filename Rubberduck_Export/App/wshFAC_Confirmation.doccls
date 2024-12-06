@@ -48,7 +48,7 @@ Private Sub Worksheet_Activate()
 '    Application.EnableEvents = False
     
     'Hide the OK and CANCEL buttons
-    ws.Shapes("btnFAC_Confirmation_OK").Visible = False
+    ws.Shapes("shpFAC_Confirmation_OK").Visible = False
     
     ws.Activate
     
