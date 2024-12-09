@@ -1040,13 +1040,17 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     On Error GoTo 0
 
     'Définir l'imprimante par défaut sur Adobe PDF
+    On Error Resume Next
     Application.ActivePrinter = imprimanteParDefaut
+    On Error GoTo 0
 
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
     'Restaurer l'imprimante précédente après l'impression
     If imprimanteActuelle <> "" Then
+        On Error Resume Next
         Application.ActivePrinter = imprimanteActuelle
+        On Error GoTo 0
     End If
 
 End Sub
@@ -1576,7 +1580,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         Dim t As Variant
         i = rowFAC_Finale + 1
         For Each t In dictTaux.keys
-            wshFAC_Finale.Range("C" & i & ":D" & i).Font.Color = RGB(0, 0, 0)
+            wshFAC_Finale.Range("C" & i & ":D" & i).Font.color = RGB(0, 0, 0)
             wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("C" & i).Font.Bold = False

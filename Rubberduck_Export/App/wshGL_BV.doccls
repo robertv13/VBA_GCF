@@ -68,7 +68,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+        Range(previousCellAddress).Interior.color = xlNone
     End If
 
 '    'Définir la zone de la BV
@@ -88,7 +88,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
 '    Dim estZoneSensile As Boolean
@@ -190,7 +190,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B9").value = Range("J1").value

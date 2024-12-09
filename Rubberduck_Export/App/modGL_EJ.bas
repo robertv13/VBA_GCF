@@ -112,8 +112,8 @@ Sub JE_Renversement_Update()
         End If
     Next i
     
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbBlack
-    wshGL_EJ.Range("E9:K23").Font.Color = vbBlack
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.color = vbBlack
+    wshGL_EJ.Range("E9:K23").Font.color = vbBlack
 
     'Retour à la source
     wshGL_EJ.Range("F4").value = ""
@@ -183,9 +183,9 @@ Sub GL_EJ_Clear_All_Cells()
     With wshGL_EJ
         .Range("B6").ClearContents 'Code de client
         .Range("F4,F6:K6").ClearContents
-        .Range("F4, K4, F6:K6").Font.Color = vbBlack
+        .Range("F4, K4, F6:K6").Font.color = vbBlack
         .Range("E9:K23").ClearContents
-        .Range("E9:K23").Font.Color = vbBlack
+        .Range("E9:K23").Font.color = vbBlack
 '        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
         .Range("E6").value = "Description:"
@@ -460,8 +460,8 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbRed
-    wshGL_EJ.Range("E9:K23").Font.Color = vbRed
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.color = vbRed
+    wshGL_EJ.Range("E9:K23").Font.color = vbRed
     
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape

@@ -29,9 +29,9 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
     
-    Me.Application.Calculation = xlCalculationAutomatic
-
     Dim ws As Worksheet: Set ws = wshENC_Saisie
+    
+    Me.Application.Calculation = xlCalculationAutomatic
     
     On Error Resume Next
     Me.Columns("A:B").Hidden = True
@@ -44,20 +44,26 @@ Private Sub Worksheet_Activate()
     On Error GoTo 0
     
     'Certaines cellules perdent la couleur du background
-    With ws.Range("I5").Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorAccent6
-        .TintAndShade = 0.599993896298105
-        .PatternTintAndShade = 0
-    End With
-    With ws.Range("F6").Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorAccent6
-        .TintAndShade = 0.599993896298105
-        .PatternTintAndShade = 0
-    End With
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("I5"), ws.Range("F6"))
+    Dim color As Long
+    color = RGB(217, 217, 217)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, color)
+    
+'    With ws.Range("I5").Interior
+'        .Pattern = xlSolid
+'        .PatternColorIndex = xlAutomatic
+'        .ThemeColor = xlThemeColorAccent6
+'        .TintAndShade = 0.599993896298105
+'        .PatternTintAndShade = 0
+'    End With
+'    With ws.Range("F6").Interior
+'        .Pattern = xlSolid
+'        .PatternColorIndex = xlAutomatic
+'        .ThemeColor = xlThemeColorAccent6
+'        .TintAndShade = 0.599993896298105
+'        .PatternTintAndShade = 0
+'    End With
     
     'Protect the Worksheet
     With ws
@@ -88,32 +94,32 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+        Range(previousCellAddress).Interior.color = xlNone
     End If
     
     'Client has been selected
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Date has been selected
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Payment Type has been selected
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Total deposit has been selected
     If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
 
     'Comments has been selected
     If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     previousCellAddress = Target.Address
@@ -145,7 +151,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call MsgBoxInvalidDate("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

@@ -74,18 +74,18 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+        Range(previousCellAddress).Interior.color = xlNone
     End If
     
     'Invoice Number is selected
     If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
     If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 Then
         wshFAC_Confirmation.Range("F5").value = Target.value
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Save the current cell Address

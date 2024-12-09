@@ -349,7 +349,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                                                                      
                 'Update row from MASTER file (entête)
                 destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-                                      "GCF_BD_MASTER.xlsx$"
+                                      "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
                 Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
                                                                     destinationTab, _
@@ -576,7 +576,7 @@ End Function
 '
 'End Function
 '
-Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Double
+Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
 
     'Le type (t) est "Heures" -OU- "Dollars", selon le type le total des Heures ou des Dollars
     

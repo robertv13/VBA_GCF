@@ -183,7 +183,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 90, 15)
+    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 600, 15)
     If fullDate <> "Invalid Date" Then
         Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
                                 "   y = " & year(fullDate) & _

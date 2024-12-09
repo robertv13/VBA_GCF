@@ -783,7 +783,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
 
     'Section des TEC pour le client à une date données
     With wshFAC_Brouillon
-        .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
+        .Range("D7:H" & lastUsedRow + 2).Font.color = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
         
         Application.EnableEvents = False
@@ -850,7 +850,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         'Cellule en surbrillance
         With wshFAC_Brouillon.Range("O57")
             .value = WorksheetFunction.Min(soldeDepotClient, wshFAC_Brouillon.Range("O55").value)
-            .Interior.Color = RGB(255, 255, 0)
+            .Interior.color = RGB(255, 255, 0)
             .Select
         End With
         
@@ -1281,7 +1281,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

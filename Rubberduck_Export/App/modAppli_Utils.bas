@@ -65,7 +65,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = Format$(ddm, wshAdmin.Range("B1").value & " hh:mm:ss") & _
             " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
-    rng.Characters(1, 19).Font.Color = vbRed
+    rng.Characters(1, 19).Font.color = vbRed
     rng.Characters(1, 19).Font.Bold = True
 
     r = r + 2
@@ -243,7 +243,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Set rng = wsOutput.Range("A" & r)
     rng.value = "**** " & Format$(readRows, "###,##0") & _
                                     " lignes analysées dans l'ensemble des tables ***"
-    rng.Characters(6, 6).Font.Color = vbRed
+    rng.Characters(6, 6).Font.color = vbRed
     rng.Characters(6, 6).Font.Bold = True
     r = r + 1
     
@@ -602,7 +602,7 @@ Private Sub check_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!"
-    rng.Characters(13, 5).Font.Color = vbRed
+    rng.Characters(13, 5).Font.color = vbRed
     rng.Characters(13, 5).Font.Bold = True
 
     r = r + 1
@@ -702,7 +702,7 @@ Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Un total de " & Format$(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!"
-    rng.Characters(13, 3).Font.Color = vbRed
+    rng.Characters(13, 3).Font.color = vbRed
     rng.Characters(13, 3).Font.Bold = True
 
     r = r + 1
@@ -987,7 +987,7 @@ Private Sub check_ENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Bold = True
 
     r = r + 2
@@ -1090,7 +1090,7 @@ Private Sub check_ENC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Bold = True
     r = r + 2
     
@@ -1302,7 +1302,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
-    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.color = vbRed
     rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
 
@@ -1328,7 +1328,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Bold = True
     r = r + 1
 
@@ -1339,7 +1339,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "Totaux des factures À CONFIRMER (" & nbFactAC & " factures)"
-    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.color = vbRed
     rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
     
@@ -1365,7 +1365,7 @@ Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Bold = True
     r = r + 1
 
@@ -1512,42 +1512,42 @@ Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
-    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.color = vbRed
     rng.Characters(InStr(rng.value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Bold = True
     r = r + 2
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des factures À CONFIRMER (" & nbFactAC & " factures)"
-    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.color = vbRed
     rng.Characters(InStr(rng.value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Bold = True
     r = r + 2
     
@@ -2062,7 +2062,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
         'Un peu de couleur
         Dim rng As Range: Set rng = wsOutput.Range("B" & r)
         rng.value = "       Chacune des écritures balancent au niveau de l'écriture"
-        rng.Characters(InStr(rng.value, "C"), Len(rng.value) - 7).Font.Color = vbRed
+        rng.Characters(InStr(rng.value, "C"), Len(rng.value) - 7).Font.color = vbRed
         rng.Characters(InStr(rng.value, "C"), Len(rng.value) - 7).Font.Bold = True
         r = r + 1
     Else
@@ -2086,7 +2086,7 @@ Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
     
@@ -2462,7 +2462,7 @@ Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "       Heures TEC             : " & formattedHours
-    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.color = vbRed
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 2
 
@@ -2489,7 +2489,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2851 'What is the last TECID analyzed ?
+    lastTECIDReported = 2897 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2926,7 +2926,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "       Heures TEC             : " & formattedHours
-    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.color = vbRed
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 1
     
@@ -2937,7 +2937,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
         'Un peu de couleur
         Set rng = wsOutput.Range("B" & r)
         rng.value = "Sommaire des heures selon la DATE de la charge (" & maxTECID & ")"
-        rng.Characters(InStr(rng.value, "(") + 1, Len(maxTECID)).Font.Color = vbGreen
+        rng.Characters(InStr(rng.value, "(") + 1, Len(maxTECID)).Font.color = vbGreen
         rng.Characters(InStr(rng.value, "(") + 1, Len(maxTECID)).Font.Bold = True
         r = r + 1
     
@@ -3040,7 +3040,7 @@ Sub Make_It_As_Header(r As Range)
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 12611584
+            .color = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -3114,7 +3114,7 @@ Sub Apply_Conditional_Formatting_Alternate(rng As Range, headerRows As Long, Opt
     For i = 1 To dataRange.Rows.count
         'Vérifier la position réelle de la ligne dans la feuille
         If (dataRange.Rows(i).row + headerRows) Mod 2 = 0 Then
-            dataRange.Rows(i).Interior.Color = RGB(173, 216, 230) ' Bleu pâle
+            dataRange.Rows(i).Interior.color = RGB(173, 216, 230) ' Bleu pâle
         End If
     Next i
     
@@ -3690,5 +3690,33 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
 
 End Sub
 
+Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
 
+    If Not plage Is Nothing Then
+        Dim cellule As Range
+        'Parcourt toutes les cellules de la plage (contiguës ou non)
+        For Each cellule In plage
+            On Error Resume Next
+            cellule.Interior.color = couleurRVB
+            Debug.Print "#666 - " & cellule.Address
+            On Error GoTo 0
+        Next cellule
+    Else
+        MsgBox "La plage spécifiée est invalide.", vbExclamation, "Procédure 'Remplir_Plage_Avec_Couleur'"
+    End If
+    
+End Sub
+
+Sub Paint_A_Range(rng As Range, colorRGB As String)
+   
+    Dim cell As Variant
+    With rng.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
+    End With
+
+End Sub
 

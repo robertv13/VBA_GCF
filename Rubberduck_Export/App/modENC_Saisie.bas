@@ -672,7 +672,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
     
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
-    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("E12:E" & 11 + row)
+    Dim chkBoxRange As Range: Set chkBoxRange = ws.Range("E12:E" & 12 + row)
     
     Dim cell As Range
     Dim cbx As checkBox

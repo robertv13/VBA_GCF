@@ -53,7 +53,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
     progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
     progressBarBg.TextFrame.Characters.Font.size = 14
-    progressBarBg.TextFrame.Characters.Font.Color = RGB(0, 0, 0) 'Black font
+    progressBarBg.TextFrame.Characters.Font.color = RGB(0, 0, 0) 'Black font
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à 0 %"
     
     'Create the fill shape of the progress bar
@@ -227,12 +227,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 65535
+            .color = 65535
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
         With .Font
-            .Color = -16776961
+            .color = -16776961
             .TintAndShade = 0
             .Bold = True
             .size = 12
@@ -244,7 +244,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 255
+            .color = 255
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -403,25 +403,25 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
             'Rule for values > 50 (Highest priority)
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
             With .item(.count)
-                .Interior.Color = RGB(255, 0, 0) 'Red color
+                .Interior.color = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
             With .item(.count)
-                .Interior.Color = RGB(255, 165, 0) 'Orange color
+                .Interior.color = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
             With .item(.count)
-                .Interior.Color = RGB(255, 255, 0) 'Yellow color
+                .Interior.color = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
             With .item(.count)
-                .Interior.Color = RGB(144, 238, 144) 'Light green color
+                .Interior.color = RGB(144, 238, 144) 'Light green color
             End With
         End With
     End If
@@ -458,7 +458,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
             Else
                 dictHours.Add Cells(i, 6).value, Cells(i, 8).value
             End If
-            Cells(i, 8).Font.Color = RGB(166, 166, 166) 'RMV_15
+            Cells(i, 8).Font.color = RGB(166, 166, 166) 'RMV_15
         End If
         i = i + 1
     Loop

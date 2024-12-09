@@ -64,12 +64,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange" & " - " & Target.Address, 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = BASIC_COLOR
+        Range(previousCellAddress).Interior.color = BASIC_COLOR
     End If
     
     'Is Niveau de Détail been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("B4")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Is Ordre de tri been selected ?
@@ -77,17 +77,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If wshCAR_Liste_Agée.Range("B4").value = "Client" Then
             wshCAR_Liste_Agée.Range("D4").value = "Nom de client"
         End If
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Is Solde à 0,00 $ been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("F4")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Is Date Limite been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("H4")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Save the current cell Address
@@ -124,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
     End If

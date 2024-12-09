@@ -257,7 +257,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
         With .Range("A4:D4")
             .Font.Bold = True
             .Font.Italic = True
-            .Font.Color = vbWhite
+            .Font.color = vbWhite
             .HorizontalAlignment = xlCenter
         End With
         
@@ -266,7 +266,7 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
         With .Range("A4:D4").Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 12611584
+            .color = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With

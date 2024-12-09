@@ -168,26 +168,26 @@ Sub Write_Info_On_Main_Menu()
     
     With wshMenu.Range("$A$30")
         .Font.size = 8
-        .Font.Color = vbBlue
+        .Font.color = vbBlue
         .value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     End With
     
     With wshMenu.Range("$A$31")
         .Font.size = 8
-        .Font.Color = vbBlack
+        .Font.color = vbBlack
         .value = "'" & CStr("Version - " & ThisWorkbook.Name)
     End With
     
     With wshMenu.Range("$A$32")
         .Font.size = 8
-        .Font.Color = vbBlack
+        .Font.color = vbBlack
         .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
     
 '    Dim env As String: env = wshAdmin.Range("F5").value
     With wshMenu.Range("$A$33")
         .Font.size = 8
-        .Font.Color = vbRed
+        .Font.color = vbRed
         .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 

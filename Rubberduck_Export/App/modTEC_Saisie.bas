@@ -195,25 +195,25 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     End With
     
     'Effacer les données de la dernière utilisation
-    ws.Range("S10:S14").ClearContents
-    ws.Range("S10").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("S6:S10").ClearContents
+    ws.Range("S6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
-    ws.Range("S11").value = rngData.Address
+    ws.Range("S7").value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("R2:T3")
-    ws.Range("S12").value = rngCriteria.Address
+    ws.Range("S8").value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("V1").CurrentRegion
     rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("V2:AI2")
-    ws.Range("S13").value = rngResult.Address
+    ws.Range("S9").value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -223,7 +223,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
 
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.Rows.count, "V").End(xlUp).row
-    ws.Range("S14").value = (lastResultRow - 2) & " lignes"
+    ws.Range("S10").value = (lastResultRow - 2) & " lignes"
         
     If lastResultRow < 4 Then GoTo No_Sort_Required
     With ws.Sort 'Sort - Date / Prof / TEC_ID

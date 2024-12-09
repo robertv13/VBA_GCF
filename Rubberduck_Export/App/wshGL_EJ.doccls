@@ -71,27 +71,27 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+        Range(previousCellAddress).Interior.color = xlNone
     End If
 
     'Source has been selected
     If Not Intersect(Target, wshGL_EJ.Range("F4")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
 
     'Date has been selected
     If Not Intersect(Target, wshGL_EJ.Range("K4")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
 
     'Description has been selected
     If Not Intersect(Target, wshGL_EJ.Range("F6")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
 
     'Compte has been selected
     If Not Intersect(Target, wshGL_EJ.Range("E9:E23")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
         If Target.row = 9 And wshGL_EJ.Range("F4").value = "Remise TPS/TVQ" Then
             Call GL_EJ_Construire_Remise_TPS_TVQ(Target.row)
         End If
@@ -99,17 +99,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Debit amount has been selected
     If Not Intersect(Target, wshGL_EJ.Range("H9:H23")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Credit amount has been selected
     If Not Intersect(Target, wshGL_EJ.Range("I9:I23")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Extra description has been selected
     If Not Intersect(Target, wshGL_EJ.Range("J9:J23")) Is Nothing Then
-        Target.Interior.Color = HIGHLIGHT_COLOR
+        Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
     'Save the current cell Address
@@ -173,7 +173,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Now() Then
@@ -223,7 +223,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             With Range("H26:I26").Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
-                .Color = 65535
+                .color = 65535
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
             End With

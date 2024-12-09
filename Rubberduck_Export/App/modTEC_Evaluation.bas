@@ -205,7 +205,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
             With ws.Range("H" & currentRow).Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
-                .Color = 65535
+                .color = 65535
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
              End With
@@ -224,7 +224,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     'Afficher le solde des TEC au Grand Livre
     ws.Range("D3").Font.Bold = True
     ws.Range("D3").Font.size = 12
-    ws.Range("D3").Font.Color = vbRed
+    ws.Range("D3").Font.color = vbRed
     Dim message As String
     message = "Le solde au grand livre pour les TEC est de " & Format$(solde, "###,##0.00 $")
     If valeurTEC = solde Then
