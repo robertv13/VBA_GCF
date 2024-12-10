@@ -648,7 +648,7 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
@@ -978,7 +978,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
@@ -1097,7 +1097,7 @@ Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
@@ -1311,3 +1311,4 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     MsgBox "Le traitement est complété", vbInformation
            
 End Sub
+

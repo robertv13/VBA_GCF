@@ -242,7 +242,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
@@ -392,7 +392,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
@@ -930,13 +930,110 @@ Sub Get_UsedRange_In_Active_Workbook()
     
 End Sub
 
-Sub shp_Ajuster_Tableaux_Dans_Master_Click() '2024-12-07 @ 06:40
+Sub shpImporterEtAjusterMASTER_Click() '2024-12-10 @ 07:28
 
-    Call Ajuster_Tableaux_Dans_Master
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        Exit Sub
+    End If
+    
+    'Crée un répertoire local et importe les fichiers à analyser
+    Call CreerRepertoireEtImporterFichiers
+    
+    'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
+    Call AjusterTableauxDansMaster
 
 End Sub
 
-Sub Ajuster_Tableaux_Dans_Master() '2024-12-07 @ 06:47
+Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
+
+    'Chemin du dossier contenant les fichiers PROD
+    Dim cheminSourcePROD As String
+    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\" ' Ajustez ce chemin
+    
+    'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
+    Dim actifFile As String
+    Dim actifExists As Boolean
+    actifFile = Dir(cheminSourcePROD & "Actif_*.txt")
+    actifExists = (actifFile <> "")
+    
+    If actifExists Then
+        MsgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
+               "La copie est annulée.", vbExclamation
+        Exit Sub
+    End If
+    
+    'Définir le chemin racine (local) pour la création du nouveau dossier
+    Dim cheminRacineDestination As String
+    cheminRacineDestination = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
+    
+    'Construire le nom du répertoire basé sur la date et l'heure actuelle
+    Dim dateHeure As String
+    Dim nouveauDossier As String
+    dateHeure = Format(Now, "yyyy_mm_dd_hhnn")
+    nouveauDossier = cheminRacineDestination & dateHeure & "\"
+    
+    'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.folderExists(nouveauDossier) Then
+        fso.CreateFolder nouveauDossier
+    End If
+    
+    'Noms des deux fichiers à copier (fixe)
+    Dim nomFichier1 As String, nomFichier2 As String
+    nomFichier1 = "GCF_BD_MASTER.xlsx"
+    nomFichier2 = "GCF_BD_Entrée.xlsx"
+    
+    'Copier le premier fichier
+    If fso.fileExists(cheminSourcePROD & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+    Else
+        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
+    End If
+    
+    'Copier le deuxième fichier
+    If fso.fileExists(cheminSourcePROD & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+    Else
+        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
+    End If
+
+    'Copier les fichiers .log (variable)
+    Dim fichier As String
+    fichier = Dir(cheminSourcePROD & "*.log")
+    Do While fichier <> ""
+        'Copie du fichier PROD ---> Local
+        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        'Efface le fichier PROD (initialiation)
+        Kill cheminSourcePROD & fichier
+        'Fichier suivant à copier
+        fichier = Dir
+    Loop
+    
+    'Copie des deux fichiers du dossier temporaire vers le dossier DEV (but ultime)
+    
+    Dim dossierDEV As String
+    dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
+    
+    'Copier le premier fichier
+    If fso.fileExists(nouveauDossier & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+    Else
+        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
+    End If
+    
+    'Copier le deuxième fichier
+    If fso.fileExists(nouveauDossier & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+    Else
+        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
+    End If
+
+    MsgBox "Fichiers copiés dans le dossier : " & nouveauDossier, vbInformation, "Terminé"
+
+End Sub
+
+Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
 
     'Chemin du classeur à ajuster
     Dim cheminClasseur As String

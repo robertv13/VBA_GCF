@@ -925,18 +925,18 @@ Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = FSO.folderExists(serverPath)
+    folderExists = fso.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer la mémoire
-    Set FSO = Nothing
+    Set fso = Nothing
     
 End Function
 

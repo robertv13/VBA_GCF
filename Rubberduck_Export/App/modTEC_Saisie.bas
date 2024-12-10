@@ -665,8 +665,10 @@ Rien_Aujourdhui:
     dateCharge = ufSaisieHeures.txtDate.value
     dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
     dateDimanche = dateLundi + 6
+    Application.EnableEvents = False
     wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
     wshTEC_TDB_Data.Range("T7").value = dateLundi
+    Application.EnableEvents = True
     wshTEC_TDB_Data.Range("U7").value = dateDimanche
     
     DoEvents
@@ -698,7 +700,7 @@ EndOfProcedure:
     Set rng = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
-        ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, startTime)
+                        ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, startTime)
     
 End Sub
 

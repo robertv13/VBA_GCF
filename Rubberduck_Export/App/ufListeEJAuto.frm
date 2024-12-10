@@ -20,7 +20,7 @@ Private Sub UserForm_Initialize()
     lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
-    With lsbEJ_Auto_Desc
+    With lsbEJ_AutoDesc
         .ColumnHeads = True
         .ColumnCount = 2
         .ColumnWidths = "275; 25"
@@ -29,12 +29,12 @@ Private Sub UserForm_Initialize()
    
 End Sub
 
-Private Sub lsbEJ_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lsbEJ_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim rowSelected As Long, DescEJAuto As String, NoEJAuto As Long
-    rowSelected = lsbEJ_Auto_Desc.ListIndex
-    DescEJAuto = lsbEJ_Auto_Desc.List(rowSelected, 0)
-    NoEJAuto = lsbEJ_Auto_Desc.List(rowSelected, 1)
+    rowSelected = lsbEJ_AutoDesc.ListIndex
+    DescEJAuto = lsbEJ_AutoDesc.List(rowSelected, 0)
+    NoEJAuto = lsbEJ_AutoDesc.List(rowSelected, 1)
     wshGL_EJ.Range("B2").value = rowSelected '2024-01-08 @ 13:58
     Unload ufListeEJAuto
     Call Load_JEAuto_Into_JE(DescEJAuto, NoEJAuto)

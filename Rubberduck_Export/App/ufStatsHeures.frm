@@ -68,7 +68,8 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12
         
         'Il doit y avoir un écart de 6 entre les deux dates (semaine)
         If dateDimanche - dateLundi <> 6 Then
-            MsgBox "Il semble y avoir un problème de format de date", vbCritical, "Dates de semaine NON VALIDES"
+            MsgBox "Il semble y avoir un problème de format de date", vbCritical, _
+                   "Dates de semaine NON VALIDES (" & dateLundi & " au " & dateDimanche & ")"
         End If
         
         'Initialisation du listBox et des totaux

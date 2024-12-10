@@ -21,7 +21,7 @@ Private Sub UserForm_Initialize()
     lastUsedRow = wshDEB_Recurrent.Range("O999").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
-    With lsbDEB_Auto_Desc
+    With lsbDEB_AutoDesc
         .ColumnHeads = False
         .ColumnCount = 3
         .ColumnWidths = "40; 260; 30"
@@ -30,12 +30,12 @@ Private Sub UserForm_Initialize()
    
 End Sub
 
-Private Sub lsbDEB_Auto_Desc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lsbDEB_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim rowSelected As Long, DescDEBAuto As String, NoDEBAuto As Long
-    rowSelected = lsbDEB_Auto_Desc.ListIndex
-    NoDEBAuto = lsbDEB_Auto_Desc.List(rowSelected, 0)
-    DescDEBAuto = lsbDEB_Auto_Desc.List(rowSelected, 1)
+    rowSelected = lsbDEB_AutoDesc.ListIndex
+    NoDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 0)
+    DescDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 1)
     wshDEB_Saisie.Range("B3").value = rowSelected '2024-06-14 @ 07:23
     Unload ufListeDEBAuto
     Call Load_DEB_Auto_Into_JE(DescDEBAuto, NoDEBAuto)

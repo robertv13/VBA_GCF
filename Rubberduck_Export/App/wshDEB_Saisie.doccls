@@ -117,7 +117,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Dim suggestedAmount As Double
             suggestedAmount = wshDEB_Saisie.Range("O6").value - wshDEB_Saisie.Range("I26").value
             If suggestedAmount > 0 Then
-                Call DEB_Suggest_Amount(Target.row, suggestedAmount)
+                Call DEBSuggestedAmount(Target.row, suggestedAmount)
             End If
             Application.EnableEvents = True
         End If
@@ -355,7 +355,7 @@ Private Sub Process_Change(ByVal Target As Range)
     
 End Sub
 
-Sub DEB_Suggest_Amount(rowNumber As Long, suggestedAmount As Double)
+Sub DEBSuggestedAmount(rowNumber As Long, suggestedAmount As Double)
 
     Dim ws As Worksheet: Set ws = wshDEB_Saisie
     

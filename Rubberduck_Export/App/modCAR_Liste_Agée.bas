@@ -377,7 +377,7 @@ Next_Invoice:
     
     Application.EnableEvents = False
 
-    Call Apply_Conditional_Formatting_Alternate(rngToPrint, 0, False)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngToPrint, 0, False)
     
     'Caractères pour le rapport
     With rngToPrint.Font
@@ -436,6 +436,5 @@ Sub Liste_Agée_Back_To_CAR_Menu()
     wshMenuFAC.Range("A1").Select
 
 End Sub
-
 
 

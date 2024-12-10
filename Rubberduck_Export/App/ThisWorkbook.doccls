@@ -25,8 +25,6 @@ Private Sub Workbook_Open()
     Dim isServerUp As Boolean
     isServerUp = Fn_Check_Server_Access(rootPath)
 
-'    DoEvents
-    
     'Vérification si le chemin est accessible
     If isServerUp = False Then
         MsgBox "Le répertoire principal n'est pas accessible." & vbNewLine & vbNewLine & _
@@ -39,12 +37,10 @@ Private Sub Workbook_Open()
     'Log initial activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
     
-'    DoEvents
-    
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
-    Call Create_User_Active_File
+    Call CreateUserActiveFile
     
-    Call Setup_UserDateFormat
+    Call SetupUserDateFormat
     
     Application.ScreenUpdating = False
     
@@ -96,7 +92,7 @@ Private Sub Workbook_Open()
     
 End Sub
 
-Sub Create_User_Active_File()
+Sub CreateUserActiveFile()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
     
@@ -129,6 +125,8 @@ End Sub
 
 Sub BackupMasterFile()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
+    
     Application.ScreenUpdating = False
     
     'Open the master file
@@ -172,6 +170,8 @@ Sub BackupMasterFile()
     'Libérer la mémoire
     Set masterWorkbook = Nothing
     
+    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
+
     Exit Sub
 
 MASTER_NOT_AVAILABLE:
@@ -183,20 +183,27 @@ MASTER_NOT_AVAILABLE:
 
 End Sub
 
-Sub Setup_UserDateFormat()
+Sub SetupUserDateFormat()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
+
+    Dim userDateFormat As String
+    
     Select Case Fn_Get_Windows_Username
         Case "GuillaumeCharron", "Guillaume"
-            wshAdmin.Range("B1").value = "dd/mm/yy"
-        Case "Robert M. Vigneault", "robertmv"
-            wshAdmin.Range("B1").value = "dd/mm/yyyy"
-'            wshAdmin.Range("B1").value = "yyyy-mm-dd"
+            userDateFormat = "dd/mm/yy"
         Case "vgervais", "user", "Annie"
-            wshAdmin.Range("B1").value = "dd/mm/yyyy"
+            userDateFormat = "dd/mm/yyyy"
+        Case "Robert M. Vigneault", "robertmv"
+            userDateFormat = "dd/mm/yyyy"
         Case Else
-            wshAdmin.Range("B1").value = "dd/mm/yyyy"
+            userDateFormat = "dd/mm/yyyy"
     End Select
 
+    wshAdmin.Range("B1").value = userDateFormat
+    
+    Call Log_Record("ThisWorkbook:Setup_UserDateFormat", startTime)
+    
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
@@ -211,3 +218,4 @@ End Sub
 '    MsgBox "Évènement 'Workbook_SheetActivate' " & Sh.Name
 '
 'End Sub
+

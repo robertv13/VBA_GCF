@@ -1393,7 +1393,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     'Set conditional formatting for the worksheet (alternate colors)
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
-    Call Apply_Conditional_Formatting_Alternate(rngArea, 1, True) 'There are blankrows to account for
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True) 'There are blankrows to account for
     
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
@@ -2049,3 +2049,4 @@ Sub Log_Analysis()
     Close #FileNum
     
 End Sub
+

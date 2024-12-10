@@ -163,7 +163,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Setup the format of the worksheet - 2024-07-20 @ 18:31
     Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wsLocal, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wsLocal, rng, 1)
     
     'Close resource
     recSet.Close
@@ -220,7 +220,7 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
 
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Recurrent.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshDEB_Recurrent, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshDEB_Recurrent, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -270,7 +270,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshDEB_Trans, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshDEB_Trans, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -320,7 +320,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshENC_Détails, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshENC_Détails, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -370,7 +370,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
     Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshENC_Entête, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshENC_Entête, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -420,7 +420,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Comptes_Clients, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Comptes_Clients, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -470,7 +470,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
    'Setup the format of the worksheet - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshFAC_Détails.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Détails, rng, 2)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Détails, rng, 2)
 
     Application.ScreenUpdating = True
     
@@ -520,7 +520,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Entête, rng, 2)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Entête, rng, 2)
     
     Application.ScreenUpdating = True
     
@@ -570,7 +570,7 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Sommaire_Taux.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshFAC_Entête, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Entête, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -638,7 +638,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
-        Call Apply_Worksheet_Format(wshFAC_Projets_Détails, rng, 1)
+        Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Projets_Détails, rng, 1)
     End If
     
     Application.ScreenUpdating = True
@@ -712,7 +712,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-        Call Apply_Worksheet_Format(ws, rng, 1)
+        Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 1)
     End If
     
     Application.ScreenUpdating = True
@@ -764,7 +764,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
     Dim rng As Range: Set rng = wshBD_Fournisseurs.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshBD_Fournisseurs, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshBD_Fournisseurs, rng, 1)
     
     'Close resource
     recSet.Close
@@ -823,7 +823,7 @@ Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wshGL_EJ_Recurrente, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wshGL_EJ_Recurrente, rng, 1)
     
     Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
     
@@ -883,7 +883,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-    Call Apply_Worksheet_Format(wsLocal, rng, 1)
+    Call modAppli_Utils.ApplyWorksheetFormat(wsLocal, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -940,7 +940,7 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
     
     'Setup the format of the worksheet using a Sub
-    Call Apply_Worksheet_Format(ws, rng, 2)
+    Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 2)
     
     Application.ScreenUpdating = True
     
@@ -954,6 +954,5 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     Call Log_Record("modImport:TEC_Import_All", startTime)
 
 End Sub
-
 
 

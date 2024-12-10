@@ -10,6 +10,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Si l'un des 12 cellules suivantes (Prof, DateDe, DateA pour les 4 AdvancedFilters)
     Dim cellRange As Range
+'    Set cellRange = ws.Range("U7, AH7, AU7, DH7")
     Set cellRange = ws.Range("S7, T7, U7, AF7, AG7, AH7, AS7, AT7, AU7, BF7, DG7, DH7")
     
     'On change le professionnel et/ou les dates pour un des quatre (4) Advanced Filter
