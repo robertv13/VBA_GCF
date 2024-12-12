@@ -3,10 +3,15 @@ Option Explicit
 
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
-Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
+Sub CM_Log_Activities(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
 
+    Dim ms As String
+    
+    'Ajoute les centièmes de secondes à la chaîne de temps
+    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les centièmes de secondes sous forme de texte
+    
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd_hh:mm:ss")
+    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     'Determine the location of the Log file
     Dim rootPath As String
@@ -17,7 +22,7 @@ Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal sta
     End If
 
     Dim logFile As String
-    logFile = rootPath & DATA_PATH & Application.PathSeparator & "LogClientsApp.txt"
+    logFile = rootPath & DATA_PATH & Application.PathSeparator & "LogClientsApp.log"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -35,31 +40,31 @@ Sub CM_Log_Record(moduleProcName As String, param1 As String, Optional ByVal sta
     
     If startTime = 0 Then
         startTime = Timer 'Start timing
-        Print #fileNum, currentTime & "|" & _
-                        ThisWorkbook.Name & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        moduleName & "|" & _
-                        procName & "|" & _
-                        "" & "|" & _
+        Print #fileNum, currentTime & " | " & _
+                        ThisWorkbook.Name & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
+                        moduleName & " | " & _
+                        procName & " | " & _
+                        "" & " | " & _
                         param1
                         
     ElseIf startTime <= 0 Then 'Log intermédiaire
-        Print #fileNum, currentTime & "|" & _
-                        ThisWorkbook.Name & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        moduleName & "|" & _
-                        procName & "|" & _
-                        "checkPoint" & "|" & _
+        Print #fileNum, currentTime & " | " & _
+                        ThisWorkbook.Name & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
+                        moduleName & " | " & _
+                        procName & " | " & _
+                        "checkPoint" & " | " & _
                         param1
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #fileNum, currentTime & "|" & _
-                        ThisWorkbook.Name & "|" & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & "|" & _
-                        moduleName & "|" & _
-                        procName & " (sortie)" & "|" & _
-                        "Temps écoulé: " & Format(elapsedTime, "#0.0000") & " secondes" & "|" & _
+        Print #fileNum, currentTime & " | " & _
+                        ThisWorkbook.Name & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
+                        moduleName & " | " & _
+                        procName & " (sortie)" & " | " & _
+                        Format(elapsedTime, "#0.0000") & " secondes | " & _
                         param1 & vbCrLf
     End If
     
@@ -103,7 +108,7 @@ Sub CM_Verify_DDM(fullFileName As String)
     Call CM_Get_Date_Derniere_Modification(fullFileName, ddm, jours, heures, minutes, secondes)
     
     'Record to the log the difference between NOW and the date of last modifcation
-    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
     If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 3 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _

@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 2.5)"
+   Caption         =   "Gestion du fichier Clients (version 4.3)"
    ClientHeight    =   12030
    ClientLeft      =   6615
    ClientTop       =   2460
@@ -20,7 +20,7 @@ Public isActiveSearch As Boolean
 
 Private Sub cmbSearchColumn_Change()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmbSearchColumn_Change", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmbSearchColumn_Change", "", 0)
     
     If Me.EnableEvents = False Then GoTo Clean_Exit
     
@@ -36,13 +36,13 @@ Clean_Exit:
 
     Me.lblResultCount = ""
     
-    Call CM_Log_Record("ufClientMF:cmbSearchColumn_Change", Me.cmbSearchColumn.Value, startTime)
+    Call CM_Log_Activities("ufClientMF:cmbSearchColumn_Change", Me.cmbSearchColumn.Value, startTime)
 
 End Sub
 
 Private Sub cmdAddClient_Click()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdAddClient_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdAddClient_Click", "", 0)
     
     Call CM_Reset_UserForm
     
@@ -57,13 +57,13 @@ Private Sub cmdAddClient_Click()
            "Code à utiliser pour les entreprises  = '" & maxLargeCode & "'", vbInformation, _
                                         "Codes à utiliser pour la création d'un nouveau client"
 
-    Call CM_Log_Record("ufClientMF:cmdAddClient_Click", "", startTime)
+    Call CM_Log_Activities("ufClientMF:cmdAddClient_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdDelete_Click()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdDelete_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdDelete_Click", "", 0)
     
     Dim clientUtilise As Boolean
     Call Valider_Client_Avant_Effacement(Me.txtCodeClient.Value, clientUtilise)
@@ -84,13 +84,13 @@ Clean_Exit:
     
     ufClientMF.cmdDelete = False
     
-    Call CM_Log_Record("ufClientMF:cmdDelete_Click", "", startTime)
+    Call CM_Log_Activities("ufClientMF:cmdDelete_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdCancel_Click()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdCancel_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdCancel_Click", "", 0)
     
     Dim msgValue As VbMsgBoxResult
     msgValue = MsgBox("Désirez-vous vraiment ANNULER la présente modification ?", vbYesNo + vbInformation, "Annuler les modifications courantes")
@@ -104,13 +104,13 @@ Private Sub cmdCancel_Click()
 
 CleanExit:
 
-    Call CM_Log_Record("ufClientMF:cmdCancel_Click", CStr(msgValue), startTime)
+    Call CM_Log_Activities("ufClientMF:cmdCancel_Click", CStr(msgValue), startTime)
 
 End Sub
 
 Private Sub cmdEdit_Click()
     
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdEdit_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdEdit_Click", "", 0)
     
     If Fn_Selected_List = 0 Then
         MsgBox "Aucun enregistrement n'a été choisi.", vbOKOnly + vbInformation, "Modification"
@@ -148,13 +148,13 @@ Private Sub cmdEdit_Click()
     
 Clean_Exit:
 
-    Call CM_Log_Record("ufClientMF:cmdEdit_Click", Me.txtNomClient.Value, startTime)
+    Call CM_Log_Activities("ufClientMF:cmdEdit_Click", Me.txtNomClient.Value, startTime)
 
 End Sub
 
 Private Sub cmdSave_Click()
     
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdSave_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdSave_Click", "", 0)
     
     If Fn_ValidateEntries() = False Then
         GoTo Clean_Exit
@@ -198,13 +198,13 @@ Private Sub cmdSave_Click()
 
 Clean_Exit:
 
-    Call CM_Log_Record("ufClientMF:cmdSave_Click", msgValueLog, startTime)
+    Call CM_Log_Activities("ufClientMF:cmdSave_Click", msgValueLog, startTime)
 
 End Sub
 
 Private Sub Delete_Client(clientID)
     
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:Delete_Client", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:Delete_Client", "", 0)
     
     'Définir le nom du fichier en fonction de l'utilisateur
     Dim targetFileName As String
@@ -277,13 +277,13 @@ Private Sub Delete_Client(clientID)
 
 Clean_Exit:
 
-    Call CM_Log_Record("ufClientMF:Delete_Client", "", startTime)
+    Call CM_Log_Activities("ufClientMF:Delete_Client", "", startTime)
 
 End Sub
 
 Private Sub cmdSearch_Click()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:cmdSearch_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdSearch_Click", "", 0)
     
     If Me.txtSearch.Value <> "" Then
         Call CM_Build_Données_Recherche
@@ -291,13 +291,13 @@ Private Sub cmdSearch_Click()
         MsgBox "SVP, saisir la valeur à rechercher.", vbOKOnly + vbInformation, "Recherche"
     End If
 
-    Call CM_Log_Record("ufClientMF:cmdSearch_Click", "", startTime)
+    Call CM_Log_Activities("ufClientMF:cmdSearch_Click", "", startTime)
 
 End Sub
 
 Private Sub Fix_Some_Fields()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:Fix_Some_Fields", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:Fix_Some_Fields", "", 0)
     
     'Add the contact name to the client's name within square brackets
     If InStr(ufClientMF.txtNomClient.Value, "[") = 0 And _
@@ -306,30 +306,26 @@ Private Sub Fix_Some_Fields()
                 ufClientMF.txtNomClient.Value = Trim(ufClientMF.txtNomClient.Value) & " [" & Trim(ufClientMF.txtContactFact.Value) & "]"
     End If
     
-    Call CM_Log_Record("ufClientMF:Fix_Some_Fields", "", startTime)
-
-End Sub
-
-Private Sub CommandButton1_Click()
+    Call CM_Log_Activities("ufClientMF:Fix_Some_Fields", "", startTime)
 
 End Sub
 
 Private Sub lstDonnées_Click()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:lstDonnées_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:lstDonnées_Click", "", 0)
     
     ufClientMF.cmdAddClient.Enabled = True
     ufClientMF.cmdEdit.Enabled = True
 
     wshMENU.Range("B4").Value = Me.lstDonnées.ListIndex
     
-    Call CM_Log_Record("ufClientMF:lstDonnées_Click", "", startTime)
+    Call CM_Log_Activities("ufClientMF:lstDonnées_Click", "", startTime)
 
 End Sub
 
 Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:lstDonnées_DblClick", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:lstDonnées_DblClick", "", 0)
     
     Me.cmdDelete.Enabled = True
     Me.cmdEdit.Enabled = False
@@ -341,13 +337,13 @@ Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Call cmdEdit_Click
 
-    Call CM_Log_Record("ufClientMF:lstDonnées_DblClick", "", startTime)
+    Call CM_Log_Activities("ufClientMF:lstDonnées_DblClick", "", startTime)
 
 End Sub
 
 Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:txtCodeClient_Exit", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:txtCodeClient_Exit", "", 0)
     
     Dim clientExists As Boolean
     clientExists = Fn_Is_Client_Code_Already_Used
@@ -361,13 +357,13 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         ufClientMF.txtCodeClient.SetFocus
     End If
     
-    Call CM_Log_Record("ufClientMF:txtCodeClient_Exit", ufClientMF.txtCodeClient.Value, startTime)
+    Call CM_Log_Activities("ufClientMF:txtCodeClient_Exit", ufClientMF.txtCodeClient.Value, startTime)
 
 End Sub
 
 Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:txtNomClient_Exit", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:txtNomClient_Exit", "", 0)
     
     If Trim(ufClientMF.txtNomClient.Value) <> "" Then
         ufClientMF.cmdSave.Enabled = True
@@ -375,7 +371,7 @@ Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     
     ufClientMF.cmdCancel.Enabled = True
 
-    Call CM_Log_Record("ufClientMF:txtNomClient_Exit", ufClientMF.txtNomClient.Value, startTime)
+    Call CM_Log_Activities("ufClientMF:txtNomClient_Exit", ufClientMF.txtNomClient.Value, startTime)
 
 End Sub
 
@@ -393,7 +389,7 @@ End Sub
 
 Private Sub UserForm_Initialize()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("ufClientMF:UserForm_Initialize", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:UserForm_Initialize", "", 0)
     
     Call CM_Reset_UserForm
     
@@ -416,6 +412,7 @@ Private Sub UserForm_Initialize()
     ufClientMF.cmdSave.Enabled = False
     ufClientMF.cmdCancel.Enabled = False
 
-    Call CM_Log_Record("ufClientMF:UserForm_Initialize", "", startTime)
+    Call CM_Log_Activities("ufClientMF:UserForm_Initialize", "", startTime)
 
 End Sub
+

@@ -13,7 +13,7 @@ End Sub
 
 Sub CM_Reset_UserForm()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Reset_UserForm", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Reset_UserForm", "", 0)
     
     Dim iRow As Long, lastUsedRow As Long
     iRow = [Counta(Données!A:A)] 'Identifying the number of rows
@@ -101,13 +101,13 @@ no_change:
 
     End With
     
-    Call CM_Log_Record("modMain:CM_Reset_UserForm", " Row=" & CStr(iRow), startTime)
+    Call CM_Log_Activities("modMain:CM_Reset_UserForm", " Row=" & CStr(iRow), startTime)
 
 End Sub
 
 Sub CM_Update_External_GCF_BD_Entrée(action As String)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", action, 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", action, 0)
     
     Application.ScreenUpdating = False
     Application.Visible = False
@@ -193,14 +193,14 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
     Application.Visible = True
     Application.ScreenUpdating = True
     
-    Call CM_Log_Record("modMain:CM_Update_External_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+    Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
     
 End Sub
 
 'Procédure remplacée par CM_Update_External_GCF_BD_Entrée - 2024-08-23 - Problème avec ADO...
 'Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record to Clients' Master File
 '
-'    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", action, 0)
+'    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action, 0)
 '
 '    Application.ScreenUpdating = False
 '
@@ -244,7 +244,7 @@ End Sub
 '            MsgBox "Erreur lors de la mise à jour: " & Err.Description
 '        End If
 '        DoEvents
-'        Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
+'        Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
 '    Else 'Update an existing record
 '        'Open the recordset for the existing client
 '        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE Client_ID='" & ufClientMF.txtCodeClient & "'", conn, 2, 3
@@ -270,7 +270,7 @@ End Sub
 '                MsgBox "Erreur lors de la mise à jour: " & Err.Description
 '            End If
 '           DoEvents
-'            Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
+'            Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
 '       Else
 '            'Handle the case where the specified ID is not found
 '            MsgBox "Le client '" & ufClientMF.txtCodeClient & "' n'a pas été ajouté au fichier!" & _
@@ -306,7 +306,7 @@ End Sub
 '    Call CM_Get_Date_Derniere_Modification(destinationFileName, _
 '                                                ddm, jours, heures, minutes, secondes)
 '    'Record to the log the difference between NOW and the date of last modifcation
-'    Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+'    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
 '    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 5 Then
 '        MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
 '               "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
@@ -317,13 +317,13 @@ End Sub
 '
 '    Application.ScreenUpdating = True
 '
-'    Call CM_Log_Record("modMain:Update_External_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+'    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
 '
 'End Sub
 '
 Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Update_Locally_GCF_BD_Entrée", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", "", 0)
     
     Dim sh As Worksheet
     Set sh = ThisWorkbook.Sheets("Données")
@@ -355,20 +355,20 @@ Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
         .Cells(iRow, 17) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
 
-    Call CM_Log_Record("modMain:CM_Update_Locally_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+    Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
 
 End Sub
 
 Sub CM_Add_SearchColumn()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Add_SearchColumn", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Add_SearchColumn", "", 0)
     
     ufClientMF.EnableEvents = False
 
     With ufClientMF.cmbSearchColumn
         .Clear
-        .AddItem "ClientNom"
         .AddItem "Client_ID"
+        .AddItem "ClientNom"
         .AddItem "NomCLientSystème"
         .AddItem "ContactFacturation"
         .AddItem "TitreContactFacturation"
@@ -394,13 +394,13 @@ Sub CM_Add_SearchColumn()
 '    ufClientMF.txtSearch.Enabled = False
     ufClientMF.cmdSearch.Enabled = False
 
-    Call CM_Log_Record("modMain:CM_Add_SearchColumn", "", startTime)
+    Call CM_Log_Activities("modMain:CM_Add_SearchColumn", "", startTime)
 
 End Sub
 
 Sub CM_Build_Données_Recherche()
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Build_Données_Recherche", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Build_Données_Recherche", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -454,13 +454,13 @@ Sub CM_Build_Données_Recherche()
     wshDonnées.AutoFilterMode = False
     Application.ScreenUpdating = True
 
-    Call CM_Log_Record("modMain:CM_Build_Données_Recherche", ufClientMF.cmbSearchColumn.Value & "=" & sValue & " " & searchRowsFound, startTime)
+    Call CM_Log_Activities("modMain:CM_Build_Données_Recherche", ufClientMF.cmbSearchColumn.Value & "=" & sValue & " " & searchRowsFound, startTime)
 
 End Sub
 
 Sub CM_Client_List_Import_All() 'Using ADODB - 2024-10-26 @ 12:05
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Client_List_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Client_List_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -510,13 +510,13 @@ Sub CM_Client_List_Import_All() 'Using ADODB - 2024-10-26 @ 12:05
     Set connStr = Nothing
     Set recSet = Nothing
     
-    Call CM_Log_Record("modMain:CM_Client_List_Import_All", "", startTime)
+    Call CM_Log_Activities("modMain:CM_Client_List_Import_All", "", startTime)
 
 End Sub
 
 Sub CM_Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:CM_Apply_Worksheet_Format", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Apply_Worksheet_Format", "", 0)
     
     'Common stuff to all worksheets
     rng.EntireColumn.AutoFit 'Autofit all columns
@@ -552,7 +552,7 @@ Sub CM_Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
             usedRange.FormatConditions(1).StopIfTrue = False
         End If
     
-    Call CM_Log_Record("modMain:CM_Apply_Worksheet_Format", CStr(numRows), startTime)
+    Call CM_Log_Activities("modMain:CM_Apply_Worksheet_Format", CStr(numRows), startTime)
 
 End Sub
 

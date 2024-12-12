@@ -3,7 +3,7 @@ Option Explicit
 
 Function Fn_Is_Client_Code_Already_Used() As Boolean
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Fn_Is_Client_Code_Already_Used", "", 0)
     
     Fn_Is_Client_Code_Already_Used = False
     
@@ -16,15 +16,15 @@ Function Fn_Is_Client_Code_Already_Used() As Boolean
     
     'Validating Duplicate Entries
     If Not ws.Range("B:B").Find(What:=iCodeClient, LookAt:=xlWhole) Is Nothing Then
-        Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "VRAI", -1)
+        Call CM_Log_Activities("modMain:Fn_Is_Client_Code_Already_Used", "VRAI", -1)
         Fn_Is_Client_Code_Already_Used = True
     Else
-        Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "FAUX", -1)
+        Call CM_Log_Activities("modMain:Fn_Is_Client_Code_Already_Used", "FAUX", -1)
     End If
 
 Clean_Exit:
 
-    Call CM_Log_Record("modMain:Fn_Is_Client_Code_Already_Used", "", startTime)
+    Call CM_Log_Activities("modMain:Fn_Is_Client_Code_Already_Used", "", startTime)
     
     Exit Function
 
@@ -32,7 +32,7 @@ End Function
 
 Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Fn_Fix_Txt_Fin_Annee", "", 0)
     
     'Add the last day of the month to Fiscal Year end month
     Dim fiscalYearEndString As String
@@ -67,7 +67,7 @@ Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
         
     Fn_Fix_Txt_Fin_Annee = fiscalYearEndString
 
-    Call CM_Log_Record("modMain:Fn_Fix_Txt_Fin_Annee", "", startTime)
+    Call CM_Log_Activities("modMain:Fn_Fix_Txt_Fin_Annee", "", startTime)
 
 End Function
 
@@ -116,7 +116,7 @@ End Function
 
 Function Fn_Selected_List() As Long
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_Selected_List", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Fn_Selected_List", "", 0)
     
     Fn_Selected_List = 0
     
@@ -130,13 +130,13 @@ Function Fn_Selected_List() As Long
         ufClientMF.cmdEdit.Enabled = False
     Next i
 
-    Call CM_Log_Record("modMain:Fn_Selected_List", "", startTime)
+    Call CM_Log_Activities("modMain:Fn_Selected_List", "", startTime)
 
 End Function
 
 Function Fn_ValidateEntries() As Boolean
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Record("modMain:Fn_ValidateEntries", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Fn_ValidateEntries", "", 0)
     
     Fn_ValidateEntries = True
     
@@ -198,7 +198,7 @@ Function Fn_ValidateEntries() As Boolean
 
 Clean_Exit:
 
-    Call CM_Log_Record("modMain:Fn_ValidateEntries", "", startTime)
+    Call CM_Log_Activities("modMain:Fn_ValidateEntries", "", startTime)
 
     Exit Function
     
