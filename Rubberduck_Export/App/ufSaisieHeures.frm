@@ -45,7 +45,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
         .CompareMethod = vbTextCompare
     End With
 
-    Call Buttons_Enabled_True_Or_False(False, False, False, False)
+    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, False)
 
     'Default Professionnal - 2024-08-19 @ 07:59
     Select Case Fn_Get_Windows_Username
@@ -286,9 +286,9 @@ Private Sub txtClient_AfterUpdate()
     
     If Me.txtClient.value <> Me.txtSavedClient.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(False, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
-            Call Buttons_Enabled_True_Or_False(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
     End If
     
@@ -302,9 +302,9 @@ Private Sub txtActivite_AfterUpdate()
     
     If Me.txtActivite.value <> Me.txtSavedActivite.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(False, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
-            Call Buttons_Enabled_True_Or_False(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
     End If
     
@@ -380,9 +380,9 @@ Sub txtHeures_AfterUpdate()
     
     If Me.txtHeures.value <> Me.txtSavedHeures.value Then
         If Me.txtTEC_ID = "" Then 'Création d'une nouvelle charge
-            Call Buttons_Enabled_True_Or_False(True, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else 'Modification d'une charge existante
-            Call Buttons_Enabled_True_Or_False(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
     End If
     
@@ -396,9 +396,9 @@ Private Sub chbFacturable_AfterUpdate()
     
     If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call Buttons_Enabled_True_Or_False(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
     End If
 
@@ -412,9 +412,9 @@ Private Sub txtCommNote_AfterUpdate()
     
     If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
         If Me.txtTEC_ID = "" Then
-            Call Buttons_Enabled_True_Or_False(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call Buttons_Enabled_True_Or_False(False, True, True, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
         End If
     End If
 
@@ -535,7 +535,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
     End With
 
-    Call Buttons_Enabled_True_Or_False(False, False, True, True)
+    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)
     
     rmv_state = rmv_modeModification
     
@@ -553,7 +553,7 @@ Sub imgLogoGCF_Click()
             
             wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
         
-            Call TEC_TdB_Update_All
+            Call modTEC_TDB.ActualiserTEC_TDB
             
             Call Stats_Heures_AF
             
@@ -593,4 +593,5 @@ Sub imgStats_Click()
     End With
 
 End Sub
+
 

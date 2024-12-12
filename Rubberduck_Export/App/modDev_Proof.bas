@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDev_Proof"
 Option Explicit
 
-Sub Get_Hours_Billed_By_Invoice()
+Sub ObtenirHeuresFacturéesParFacture()
 
     '1. Obtenir toutes les charges facturées
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -43,7 +43,7 @@ Sub Get_Hours_Billed_By_Invoice()
             profID = Mid(key, 10, Len(key) - 2)
             Prof = Fn_Get_Prof_From_ProfID(profID)
             If Left(key, 8) <> saveInvNo Then
-                Call Sub_Total_Hours(wsOutput, saveInvNo, r, st)
+                Call SoustotalHeures(wsOutput, saveInvNo, r, st)
             End If
             t = t + dict(key)
             st = st + dict(key)
@@ -54,7 +54,7 @@ Sub Get_Hours_Billed_By_Invoice()
             wsOutput.Cells(r, 3).value = dict(key)
             wsOutput.Cells(r, 3).NumberFormat = "##0.00"
         Next key
-        Call Sub_Total_Hours(wsOutput, saveInvNo, r, st)
+        Call SoustotalHeures(wsOutput, saveInvNo, r, st)
         
         r = r + 2
         wsOutput.Cells(r, 1).value = "* TOTAL *"
@@ -66,7 +66,7 @@ Sub Get_Hours_Billed_By_Invoice()
     
 End Sub
 
-Sub Sub_Total_Hours(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef st As Currency)
+Sub SoustotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef st As Currency)
 
     If saveInv <> "" Then
         With ws.Cells(r, 3).Borders(xlEdgeBottom)
@@ -82,3 +82,113 @@ Sub Sub_Total_Hours(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef s
     End If
 
 End Sub
+
+Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
+
+    'Initialisation
+    Dim wsEntete As Worksheet
+    Set wsEntete = wshFAC_Entête
+    Dim wsComptesClients As Worksheet
+    Set wsComptesClients = wshFAC_Comptes_Clients
+    Dim wsRapport As Worksheet
+    
+    On Error Resume Next
+    Set wsRapport = ThisWorkbook.Worksheets("RapportÉcartsFactures")
+    On Error GoTo 0
+    If wsRapport Is Nothing Then
+        Set wsRapport = ThisWorkbook.Worksheets.Add
+        wsRapport.Name = "RapportÉcartsFactures"
+    End If
+    
+    'Effacer le contenu du rapport
+    wsRapport.Cells.Clear
+    wsRapport.Cells(1, 1).value = "Numéro de facture"
+    wsRapport.Cells(1, 2).value = "$ FAC_Entête"
+    wsRapport.Cells(1, 3).value = "$ FAC_Comptes_Clients"
+    wsRapport.Cells(1, 4).value = "Différence"
+    
+    'Charger les données dans des dictionnaires
+    Dim dictEntete As Object
+    Set dictEntete = CreateObject("Scripting.Dictionary")
+    Dim dictComptesClients As Object
+    Set dictComptesClients = CreateObject("Scripting.Dictionary")
+    
+    'Lire wshFAC_Entête
+    Dim facture As String
+    Dim lastRowEntete As Long, lastRowComptes As Long
+    lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
+    Dim montantEntete As Currency, totalEntêteCC As Currency
+    Dim i As Long
+    For i = 3 To lastRowEntete
+        facture = wsEntete.Cells(i, 1).value
+        montantEntete = wsEntete.Cells(i, "U").value
+        totalEntêteCC = totalEntêteCC + montantEntete
+        If Len(facture) > 0 Then dictEntete(facture) = montantEntete
+    Next i
+    
+    'Lire wshFAC_Comptes_Clients
+    Dim montantCompte As Currency, totalComptesClients As Currency, montantPayé As Currency
+    Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
+    lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).row
+    For i = 3 To lastRowComptes
+        facture = wsComptesClients.Cells(i, 1).value
+        montantCompte = wsComptesClients.Cells(i, 8).value
+        totalComptesClients = totalComptesClients + montantCompte
+        montantPayé = wsComptesClients.Cells(i, 9).value
+        solde = wsComptesClients.Cells(i, 10).value
+        If solde <> montantCompte - montantPayé Then Stop
+        soldeCC1 = soldeCC1 + solde
+        soldeCC2 = soldeCC2 + montantCompte - montantPayé
+        If soldeCC1 <> soldeCC2 Then Stop
+        If Len(facture) > 0 Then dictComptesClients(facture) = montantCompte
+    Next i
+    
+    'Comparer et générer le rapport
+    Dim fact As Variant
+    Dim rowRapport As Long
+    rowRapport = 2
+    For Each fact In dictEntete.keys
+        If dictComptesClients.Exists(fact) Then
+            montantEntete = dictEntete(fact)
+            montantCompte = dictComptesClients(fact)
+            If montantEntete <> montantCompte Then
+                wsRapport.Cells(rowRapport, 1).value = fact
+                wsRapport.Cells(rowRapport, 2).value = montantEntete
+                wsRapport.Cells(rowRapport, 3).value = montantCompte
+                wsRapport.Cells(rowRapport, 4).value = montantEntete - montantCompte
+                rowRapport = rowRapport + 1
+            End If
+        Else
+            ' Facture manquante dans wshFAC_Comptes_Clients
+            wsRapport.Cells(rowRapport, 1).value = fact
+            wsRapport.Cells(rowRapport, 2).value = dictEntete(fact)
+            wsRapport.Cells(rowRapport, 3).value = "Manquant"
+            wsRapport.Cells(rowRapport, 4).value = "N/A"
+            rowRapport = rowRapport + 1
+        End If
+    Next fact
+    
+    ' Vérifier les factures manquantes dans wshFAC_Entête
+    For Each fact In dictComptesClients.keys
+        If Not dictEntete.Exists(fact) Then
+            wsRapport.Cells(rowRapport, 1).value = fact
+            wsRapport.Cells(rowRapport, 2).value = "Manquant"
+            wsRapport.Cells(rowRapport, 3).value = dictComptesClients(fact)
+            wsRapport.Cells(rowRapport, 4).value = "N/A"
+            rowRapport = rowRapport + 1
+        End If
+    Next fact
+    
+    wsRapport.Cells(rowRapport, 1).value = "Total des factures (selon FAC_Entête) est de " & Format$(totalEntêteCC, "###,##0.00$")
+    rowRapport = rowRapport + 1
+    wsRapport.Cells(rowRapport, 1).value = "Total des factures (selon FAC_Comptes_Clients) est de " & Format$(totalComptesClients, "###,##0.00$")
+    rowRapport = rowRapport + 1
+    wsRapport.Cells(rowRapport, 1).value = "Solde des Comptes Clients (selon FAC_Comptes_Clients) est de " & Format$(soldeCC1, "###,##0.00$")
+    
+    ' Ajuster la mise en forme
+    wsRapport.Columns.AutoFit
+    
+    MsgBox "La comparaison est terminée. Vérifiez l'onglet 'RapportÉcartsFactures'.", vbInformation
+    
+End Sub
+

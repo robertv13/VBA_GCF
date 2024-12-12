@@ -22,7 +22,7 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
     
 End Sub
 
-Public Sub Integrity_Verification() '2024-11-20 @ 06:55
+Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Integrity_Verification", 0)
 
@@ -76,7 +76,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Plan Comptable")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     
-    Call check_Plan_Comptable(r, readRows)
+    Call checkPlanComptable(r, readRows)
     
     'wshBD_Clients --------------------------------------------------------------- Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Clients")
@@ -96,7 +96,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_Fournisseurs(r, readRows)
+    Call checkFournisseurs(r, readRows)
     
     'wshDEB_Trans -------------------------------------------------------------- DEB_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Trans")
@@ -116,7 +116,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Entête(r, readRows)
+    Call checkFAC_Entête(r, readRows)
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Détails")
@@ -126,7 +126,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Détails(r, readRows)
+    Call checkFAC_Détails(r, readRows)
     
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
@@ -136,7 +136,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Comptes_Clients(r, readRows)
+    Call checkFAC_Comptes_Clients(r, readRows)
     
     'wshFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Sommaire_Taux")
@@ -146,7 +146,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Sommaire_Taux(r, readRows)
+    Call checkFAC_Sommaire_Taux(r, readRows)
     
     'wshENC_Entête ------------------------------------------------------------ ENC_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Entête")
@@ -176,7 +176,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Projets_Entête(r, readRows)
+    Call checkFAC_Projets_Entête(r, readRows)
     
     'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
@@ -186,7 +186,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_FAC_Projets_Détails(r, readRows)
+    Call checkFAC_Projets_Détails(r, readRows)
     
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_Trans")
@@ -196,7 +196,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_GL_Trans(r, readRows)
+    Call checkGL_Trans(r, readRows)
     
     'wshGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_EJ_Recurrente")
@@ -206,18 +206,18 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_GL_EJ_Recurrente(r, readRows)
+    Call checkGL_EJ_Recurrente(r, readRows)
     
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
     
     Call TEC_Import_All
-    Call TEC_TdB_Update_All
+    Call modTEC_TDB.ActualiserTEC_TDB
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_TEC_TdB_Data(r, readRows)
+    Call checkTEC_TdB_Data(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_Local")
@@ -225,7 +225,7 @@ Public Sub Integrity_Verification() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
     
-    Call check_TEC(r, readRows)
+    Call checkTEC(r, readRows)
     
     'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
@@ -430,9 +430,9 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
 
 End Sub
-Private Sub check_Plan_Comptable(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Plan_Comptable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkPlanComptable", 0)
     
     Application.ScreenUpdating = False
     
@@ -529,13 +529,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_Plan_Comptable", startTime)
+    Call Log_Record("modAppli:checkPlanComptable", startTime)
 
 End Sub
 
 Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Clients", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkClients", 0)
     
     Application.ScreenUpdating = False
     
@@ -646,13 +646,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_Clients", startTime)
+    Call Log_Record("modAppli:checkClients", startTime)
 
 End Sub
 
-Private Sub check_Fournisseurs(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_Fournisseurs", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFournisseurs", 0)
 
     Application.ScreenUpdating = False
 
@@ -734,13 +734,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_Fournisseurs", startTime)
+    Call Log_Record("modAppli:checkFournisseurs", startTime)
 
 End Sub
 
 Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_DEB_Trans", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkDEB_Trans", 0)
 
     Application.ScreenUpdating = False
     
@@ -865,13 +865,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:check_DEB_Trans", startTime)
+    Call Log_Record("modAppli:checkDEB_Trans", startTime)
 
 End Sub
 
 Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_ENC_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkENC_Détails", 0)
 
     Application.ScreenUpdating = False
     
@@ -1009,13 +1009,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_ENC_Détails", startTime)
+    Call Log_Record("modAppli:checkENC_Détails", startTime)
 
 End Sub
 
 Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_ENC_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkENC_Entête", 0)
 
     Application.ScreenUpdating = False
     
@@ -1107,13 +1107,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_ENC_Entête", startTime)
+    Call Log_Record("modAppli:checkENC_Entête", startTime)
 
 End Sub
 
-Private Sub check_FAC_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Détails", 0)
 
     Application.ScreenUpdating = False
     
@@ -1202,13 +1202,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_FAC_Détails", startTime)
+    Call Log_Record("modAppli:checkFAC_Détails", startTime)
 
 End Sub
 
-Private Sub check_FAC_Entête(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Entête", 0)
 
     Application.ScreenUpdating = False
     
@@ -1385,13 +1385,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_FAC_Entête", startTime)
+    Call Log_Record("modAppli:checkFAC_Entête", startTime)
 
 End Sub
 
-Private Sub check_FAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Comptes_Clients", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Comptes_Clients", 0)
 
     Application.ScreenUpdating = False
     
@@ -1562,13 +1562,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_FAC_Comptes_Clients", startTime)
+    Call Log_Record("modAppli:checkFAC_Comptes_Clients", startTime)
 
 End Sub
 
-Private Sub check_FAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Sommaire_Taux", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Sommaire_Taux", 0)
 
     Application.ScreenUpdating = False
     
@@ -1659,13 +1659,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:check_FAC_Sommaire_Taux", startTime)
+    Call Log_Record("modAppli:checkFAC_Sommaire_Taux", startTime)
 
 End Sub
 
-Private Sub check_FAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Projets_Entête", 0)
 
     Application.ScreenUpdating = False
     
@@ -1798,13 +1798,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_FAC_Projets_Entête", startTime)
+    Call Log_Record("modAppli:checkFAC_Projets_Entête", startTime)
 
 End Sub
 
-Private Sub check_FAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_FAC_Projets_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Projets_Détails", 0)
 
     Application.ScreenUpdating = False
     
@@ -1904,13 +1904,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_FAC_Projets_Détails", startTime)
+    Call Log_Record("modAppli:checkFAC_Projets_Détails", startTime)
 
 End Sub
 
-Private Sub check_GL_Trans(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_GL_Trans", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkGL_Trans", 0)
 
     Application.ScreenUpdating = False
     
@@ -2101,13 +2101,13 @@ Clean_Exit:
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli:check_GL_Trans", startTime)
+    Call Log_Record("modAppli:checkGL_Trans", startTime)
 
 End Sub
 
-Private Sub check_GL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_GL_EJ_Recurrente", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkGL_EJ_Recurrente", 0)
 
     Application.ScreenUpdating = False
     
@@ -2138,7 +2138,7 @@ Private Sub check_GL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0
 
     If planComptable Is Nothing Then
-        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:check_GL_EJ_Recurrente"
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:checkGL_EJ_Recurrente"
         Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         Exit Sub
@@ -2209,13 +2209,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:check_GL_EJ_Recurrente", startTime)
+    Call Log_Record("modAppli:checkGL_EJ_Recurrente", startTime)
 
 End Sub
 
-Private Sub check_TEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_TEC_TdB_Data", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkTEC_TdB_Data", 0)
     
     Application.ScreenUpdating = False
     
@@ -2475,13 +2475,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_TEC_TdB_Data", startTime)
+    Call Log_Record("modAppli:checkTEC_TdB_Data", startTime)
 
 End Sub
 
-Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:check_TEC", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkTEC", 0)
     
     Application.ScreenUpdating = False
     
@@ -2489,7 +2489,7 @@ Private Sub check_TEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 2926 'What is the last TECID analyzed ?
+    lastTECIDReported = 3003 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2993,7 +2993,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:check_TEC", startTime)
+    Call Log_Record("modAppli:checkTEC", startTime)
 
 End Sub
 

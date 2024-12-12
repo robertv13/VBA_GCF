@@ -12,6 +12,7 @@ Private Sub Worksheet_Activate()
     Call FAC_Entête_Import_All
     Call FAC_Détails_Import_All
     Call FAC_Sommaire_Taux_Import_All
+    Call GL_Trans_Import_All
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
@@ -45,20 +46,16 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-'    Application.EnableEvents = False
-    
-    'Hide the OK and CANCEL buttons
-    ws.Shapes("shpFAC_Confirmation_OK").Visible = False
+    'Hide the CONFIRM and OK buttons
+    ws.Shapes("shpConfirmerFacture").Visible = False
+    ws.Shapes("shpOK").Visible = False
     
     ws.Activate
     
-    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
-'    Call Show_Unconfirmed_Invoice
-    
     previousCellAddress = ws.Range("F5").Address
-    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
-    ws.Range("F5").value = ""
+    Call NettoyerCellulesEtIconesPDF
     
+    ws.Range("F5").value = ""
     ws.Range("F5").Select
     
     Application.EnableEvents = True
@@ -84,6 +81,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Invoice Number is selected from Invoices to be confirmed
     If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 Then
+        Call NettoyerCellulesEtIconesPDF
+        Call TraiterToutesLesFacturesAC(Target.value)
         wshFAC_Confirmation.Range("F5").value = Target.value
         Target.Interior.color = HIGHLIGHT_COLOR
     End If
@@ -101,7 +100,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("F5")) Is Nothing Then
         invNo = Trim(Target.value)
         If invNo <> "" Then
-            Call Get_Invoice_Data(invNo)
+            Call ObtenirFactureInfos(invNo)
         Else
             On Error Resume Next
             Target.Select
@@ -113,7 +112,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("P4:P999")) Is Nothing Then
         invNo = Trim(Target.value)
         If invNo <> "" Then
-            Call Get_Invoice_Data(invNo)
+            Call ObtenirFactureInfos(invNo)
         Else
             Exit Sub
         End If

@@ -145,7 +145,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
-            Call MsgBoxInvalidDate("wshGL_Rapport_141")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_Rapport_141")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -161,7 +161,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
-            Call MsgBoxInvalidDate("wshGL_Rapport_157")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_Rapport_157")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

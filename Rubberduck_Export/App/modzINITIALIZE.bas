@@ -1,7 +1,7 @@
 Attribute VB_Name = "modzINITIALIZE"
 Option Explicit
 
-Sub Delete_All_Rows_But_Keep_Headers() '2024-07-30 @ 12:21
+Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     
     '*************************************************************************************
     'This procedure delete all rows from all the tables

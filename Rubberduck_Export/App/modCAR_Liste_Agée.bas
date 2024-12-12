@@ -1,15 +1,15 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
 Option Explicit
 
-Sub shp_Liste_Agee_Creation_Click()
+Sub shpPréparationListeÂgée_Click()
 
-    Call Liste_Agee_Creation
+    Call CréerListeÂgée
 
 End Sub
 
-Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
+Sub CréerListeÂgée() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_Liste_Agee_Creation", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_CréerListeÂgée", 0)
    
     Application.ScreenUpdating = False
     
@@ -85,7 +85,7 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
             GoTo Next_Invoice
         End If
         'Est-ce que la facture est à l'intérieur e la date limite ?
-        dateFacture = CDate(rngFactures.Cells(i, 2).value)
+        dateFacture = rngFactures.Cells(i, 2).value
         If rngFactures.Cells(i, 2).value > CDate(wshCAR_Liste_Agée.Range("H4").value) Then
             Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
             GoTo Next_Invoice
@@ -94,7 +94,7 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
         client = rngFactures.Cells(i, 4).value
         'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        dateDue = CDate(rngFactures.Cells(i, 7).value)
+        dateDue = rngFactures.Cells(i, 7).value
         montantFacture = CCur(rngFactures.Cells(i, 8).value)
         
         'Obtenir les paiemnets pour cette facture
@@ -155,7 +155,9 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
                 r = r + 1
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).value = Format$(dateFacture, wshAdmin.Range("B1").value)
+                wshCAR_Liste_Agée.Cells(r, 4).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wshAdmin.Range("B1").value
+'               If Len(numFacture) = 8 And numFacture >= "24-24650" Then Stop
                 wshCAR_Liste_Agée.Cells(r, 5).value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -174,7 +176,8 @@ Sub Liste_Agee_Creation() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
-                wshCAR_Liste_Agée.Cells(r, 5).value = Format$(dateFacture, wshAdmin.Range("B1").value)
+                wshCAR_Liste_Agée.Cells(r, 5).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 5).NumberFormat = wshAdmin.Range("B1").value
                 wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -418,17 +421,17 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("modCAR_Liste_Agée:CAR_Liste_Agee_Creation", startTime)
+    Call Log_Record("modCAR_Liste_Agée:CAR_CréerListeÂgée", startTime)
     
 End Sub
 
-Sub shp_CAR_Liste_Agée_Back_To_CAR_Menu_Click()
+Sub shpRetourMenuFacturation_Click()
 
-    Call Liste_Agée_Back_To_CAR_Menu
+    Call RetourMenuFacturation
 
 End Sub
 
-Sub Liste_Agée_Back_To_CAR_Menu()
+Sub RetourMenuFacturation()
 
     wshCAR_Liste_Agée.Visible = xlSheetHidden
     

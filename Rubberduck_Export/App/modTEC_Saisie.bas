@@ -41,8 +41,9 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             End If
         On Error GoTo 0
         
-        Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
-        Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
+        Call TEC_Record_Add_Or_Update_To_DB(0)
+        
+        Call TEC_Record_Add_Or_Update_Locally(0)
         
         'Clear the userForm fields after saving
         With ufSaisieHeures
@@ -57,12 +58,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         End With
         
         Call TEC_Get_All_TEC_AF
+        
         Call TEC_Refresh_ListBox_And_Add_Hours
         
 '        Call TEC_TdB_Update_All
         
         'Reset command buttons
-        Call Buttons_Enabled_True_Or_False(False, False, False, False)
+        Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
@@ -291,7 +293,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     
     Call TEC_Refresh_ListBox_And_Add_Hours
     
-    Call Buttons_Enabled_True_Or_False(False, False, False, False)
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
@@ -692,7 +694,7 @@ Rien_Aujourdhui:
 
 EndOfProcedure:
 
-    Call Buttons_Enabled_True_Or_False(False, False, False, False)
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
 
     ufSaisieHeures.txtClient.SetFocus
     
@@ -752,23 +754,6 @@ Sub TEC_Update_TDB_From_TEC_Local()
 
 End Sub
 
-Sub shp_TEC_TdB_Update_All_Click()
-
-    Call TEC_TdB_Update_All
-
-End Sub
-
-Sub TEC_TdB_Update_All()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", 0)
-    
-    Call TEC_Update_TDB_From_TEC_Local
-    Call TEC_TdB_Refresh_All_Pivot_Tables
-    
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Update_All", startTime)
-
-End Sub
-
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", 0)
@@ -785,7 +770,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     
 End Sub
 
-Sub Buttons_Enabled_True_Or_False(a As Boolean, u As Boolean, _
+Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, _
                                   d As Boolean, c As Boolean)
                                   
     With ufSaisieHeures
@@ -797,7 +782,7 @@ Sub Buttons_Enabled_True_Or_False(a As Boolean, u As Boolean, _
 
 End Sub
 
-Sub MsgBoxInvalidDate(location As String) '2024-06-13 @ 12:40
+Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
 
     MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
            "Elle doit être obligatoirement de format:" & vbNewLine & _

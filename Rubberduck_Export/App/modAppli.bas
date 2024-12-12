@@ -158,9 +158,9 @@ Sub Set_Root_Path(ByRef rootPath As String)
 
 End Sub
 
-Sub Write_Info_On_Main_Menu()
+Sub WriteInfoOnMainMenu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Write_Info_On_Main_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", 0)
     
     Application.EnableEvents = False
     wshMenu.Unprotect
@@ -184,45 +184,17 @@ Sub Write_Info_On_Main_Menu()
         .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
     
-'    Dim env As String: env = wshAdmin.Range("F5").value
     With wshMenu.Range("$A$33")
         .Font.size = 8
         .Font.color = vbRed
         .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
     End With
 
-    With wshMenu
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
-    
     Application.EnableEvents = True
     Application.ScreenUpdating = False
     
     DoEvents '2024-08-23 @ 06:21
 
-    Call Log_Record("modAppli:Write_Info_On_Main_Menu", startTime)
+    Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
 
 End Sub
-
-'CommentOut - 2024-11-14
-'Sub Handle_Rubberduck_Reference()
-'
-'    Dim ref As Object
-'
-'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
-'        On Error Resume Next 'In case the reference doesn't exist
-'        For Each ref In ThisWorkbook.VBProject.References
-'            If ref.Name = "Rubberduck Addin" Then 'Rubberduck is the name of the reference to remove
-'                ThisWorkbook.VBProject.References.Remove ref
-'                Exit For
-'            End If
-'        Next ref
-'        On Error GoTo 0
-'    End If
-'
-'    'Libérer la mémoire
-'    Set ref = Nothing
-'
-'End Sub
-'

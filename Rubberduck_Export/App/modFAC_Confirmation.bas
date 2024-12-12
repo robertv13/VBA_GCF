@@ -3,8 +3,10 @@ Option Explicit
 
 Public invNo As String
 
-Sub Get_Invoice_Data(noFact As String)
+Sub ObtenirFactureInfos(noFact As String)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureInfos", 0)
+    
     'Save original worksheet
     Dim oWorkSheet As Worksheet: Set oWorkSheet = ActiveSheet
     
@@ -27,37 +29,41 @@ Sub Get_Invoice_Data(noFact As String)
         Dim matchedRow As Long
         matchedRow = Application.Match(noFact, rngToSearch, 0)
         
-        Call Display_Invoice_info(ws, matchedRow)
+        Call AfficherInformationsFacture(ws, matchedRow)
         
-        Call Insert_PDF_WIP_Icons
+        Call AfficherPDFetWIPicones
         
         Dim resultArr As Variant
-        resultArr = Fn_Get_TEC_Invoiced_By_This_Invoice(noFact)
+        resultArr = Fn_ObtenirTECFacturésPourFacture(noFact)
         
         If Not IsEmpty(resultArr) Then
             Dim TECSummary() As Variant
             ReDim TECSummary(1 To 10, 1 To 3)
-            Call Get_TEC_Summary_For_That_Invoice(resultArr, TECSummary)
+            Call ObtenirSommaireTEC(resultArr, TECSummary)
             
             Dim FeesSummary() As Variant
             ReDim FeesSummary(1 To 5, 1 To 3)
-            Call Get_Fees_Summary_For_That_Invoice(resultArr, FeesSummary)
+            Call ObtenirSommaireDesTaux(resultArr, FeesSummary)
         End If
         oWorkSheet.Activate
     Else
         MsgBox "La facture n'existe pas"
-        GoTo Clean_Exit
+        GoTo CleanExit
     End If
     
-Clean_Exit:
+CleanExit:
     Set oWorkSheet = Nothing
     Set rngToSearch = Nothing
     Set ws = Nothing
 
+    Call Log_Record("modFAC_Confirmation:ObtenirFactureInfos", startTime)
+
 End Sub
 
-Sub Insert_PDF_WIP_Icons()
+Sub AfficherPDFetWIPicones()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", 0)
+    
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim i As Long
@@ -80,7 +86,7 @@ Sub Insert_PDF_WIP_Icons()
         .Height = 50 'cell.Height
         .Width = 50 'cell.width
         .Placement = xlMoveAndSize
-        .OnAction = "shp_FAC_Confirmation_Display_PDF_Invoice_Click"
+        .OnAction = "shpPDF_Click"
     End With
     
     '2. Insert the WIP icon
@@ -96,7 +102,7 @@ Sub Insert_PDF_WIP_Icons()
         .Height = 50 'cell.Height
         .Width = 50 'cell.width
         .Placement = xlMoveAndSize
-        .OnAction = "FAC_Confirmation_Report_Detailed_TEC"
+        .OnAction = "shpWIP_Click"
     End With
     
     'Libérer la mémoire
@@ -104,16 +110,20 @@ Sub Insert_PDF_WIP_Icons()
     Set pic = Nothing
     Set ws = Nothing
     
-End Sub
-
-Sub shp_FAC_Confirmation_Display_PDF_Invoice_Click()
-
-    Call FAC_Confirmation_Display_PDF_Invoice
+    Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", startTime)
     
 End Sub
 
-Sub FAC_Confirmation_Display_PDF_Invoice()
+Sub shpPDF_Click()
 
+    Call AfficherFactureFormatPDF
+    
+End Sub
+
+Sub AfficherFactureFormatPDF()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherFactureFormatPDF", 0)
+    
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     'Assuming the invoice number is at 'F5'
@@ -131,10 +141,14 @@ Sub FAC_Confirmation_Display_PDF_Invoice()
     'Libérer la mémoire
     Set ws = Nothing
     
+    Call Log_Record("modFAC_Confirmation:AfficherFactureFormatPDF", startTime)
+
 End Sub
 
-Sub Display_Invoice_info(wsF As Worksheet, r As Long)
+Sub AfficherInformationsFacture(wsF As Worksheet, r As Long)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherInformationsFacture", 0)
+    
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
@@ -167,32 +181,36 @@ Sub Display_Invoice_info(wsF As Worksheet, r As Long)
     'Take care of invoice type (to be confirmed OR already confirmed)
     If wsF.Cells(r, 3).value = "AC" Then
         ws.Range("H5").value = "À CONFIRMER"
-        ws.Shapes("shpFAC_Confirmation_OK").Visible = True
+        ws.Shapes("shpConfirmerFacture").Visible = True
     Else
         ws.Range("H5").value = ""
-        ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
+        ws.Shapes("shpConfirmerFacture").Visible = False
     End If
     
     'Make OK button visible
-    ws.Shapes("shpFAC_Confirmation_OK").Visible = True
+    ws.Shapes("shpOK").Visible = True
     
     'Libérer la mémoire
     Set ws = Nothing
     
     Application.EnableEvents = True
 
+    Call Log_Record("modFAC_Confirmation:AfficherFactureFormatPDF", startTime)
+
 End Sub
 
-Sub shp_FAC_Confirmation_Get_Detailed_TEC_Click()
+Sub shpWIP_Click()
 
-    Call FAC_Confirmation_Report_Detailed_TEC
+    Call ObtenirListeTECFacturés
     
 End Sub
 
-Sub FAC_Confirmation_Report_Detailed_TEC()
+Sub ObtenirListeTECFacturés()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturés", 0)
+    
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
-    Call Get_Invoice_Detail_TEC_AF(invNo)
+    Call ObtenirListeTECFacturésFiltreAvancé(invNo)
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim lastUsedRow As Long
@@ -200,24 +218,21 @@ Sub FAC_Confirmation_Report_Detailed_TEC()
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
-        GoTo Nothing_to_Print
+        MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
+    Else
+        Call PreparerRapportTECFacturés
     End If
     
-    Call FAC_Confirmation_Creer_Rapport_TEC_Factures
-
-    Exit Sub
-    
-Nothing_to_Print:
-    MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
-
     'Libérer la mémoire
     Set ws = Nothing
     
+    Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturés", startTime)
+    
 End Sub
 
-Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
+Sub PreparerRapportTECFacturés()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Creer_Rapport_TEC_Factures", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", 0)
     
     Dim cheminFichier As String
     
@@ -357,13 +372,13 @@ Sub FAC_Confirmation_Creer_Rapport_TEC_Factures()
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Creer_Rapport_TEC_Factures", startTime)
+    Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", startTime)
     
 End Sub
 
-Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
+Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Get_Invoice_Detail_TEC_AF", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé", 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -439,13 +454,13 @@ Sub Get_Invoice_Detail_TEC_AF(noFact As String) '2024-10-20 @ 11:11
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:Get_Invoice_Detail_TEC_AF", startTime)
+    Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé", startTime)
     
 End Sub
 
-Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
+Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2024-11-19 @ 10:09
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Entête_AC_C_AF", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", 0)
     
     'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -501,12 +516,14 @@ Sub FAC_Entête_AC_C_AF(AC_OR_C As String) '2024-11-19 @ 10:09
     Set rngResult = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFAC_Confirmation:FAC_Entête_AC_C_AF", startTime)
+    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", startTime)
 
 End Sub
 
-Sub Show_Unconfirmed_Invoice()
+Sub MontrerFacturesAConfirmer()
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MontrerFacturesAConfirmer", 0)
+    
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
     Application.ScreenUpdating = False
@@ -521,7 +538,7 @@ Sub Show_Unconfirmed_Invoice()
     'Set criteria for AvancedFilter
     ws.Range("AW3").value = "AC"
     
-    Call FAC_Entête_AC_C_AF("AC")
+    Call ObtenirFactureAConfirmer("AC")
     
     Dim lastUsedRowAF As Long
     lastUsedRowAF = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
@@ -565,10 +582,14 @@ Sub Show_Unconfirmed_Invoice()
 Clean_Exit:
     Set ws = Nothing
 
+    Call Log_Record("modFAC_Confirmation:MontrerFacturesAConfirmer", startTime)
+
 End Sub
 
-Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant)
+Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireTEC", 0)
+    
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     'Setup a Dictionary to summarize the hours by Professionnal
@@ -619,10 +640,14 @@ Sub Get_TEC_Summary_For_That_Invoice(arr As Variant, ByRef TECSummary As Variant
     Set Prof = Nothing
     Set wsTEC = Nothing
     
+    Call Log_Record("modFAC_Confirmation:ObtenirSommaireTEC", startTime)
+
 End Sub
 
-Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
+Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirTotalTEC", 0)
+    
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
     'Setup a Dictionary to summarize the hours by Professionnal
@@ -673,10 +698,14 @@ Sub Get_TEC_Total_For_That_Invoice(arr As Variant, ByRef TECTotal As Double)
     Set Prof = Nothing
     Set wsTEC = Nothing
     
+    Call Log_Record("modFAC_Confirmation:ObtenirTotalTEC", startTime)
+
 End Sub
 
-Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Variant)
+Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireDesTaux", 0)
+    
     Dim wsFees As Worksheet: Set wsFees = wshFAC_Sommaire_Taux
     
     'Determine the last used row
@@ -699,12 +728,14 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
         Application.EnableEvents = False
         Do
             'Display values in the worksheet
-            wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
-            wshFAC_Confirmation.Range("G" & rowFeesSummary).value = _
-                        CDbl(Format$(wsFees.Cells(cell.row, 4).value, "##0.00"))
-            wshFAC_Confirmation.Range("H" & rowFeesSummary).value = _
-                        CDbl(Format$(wsFees.Cells(cell.row, 5).value, "##,##0.00 $"))
-            rowFeesSummary = rowFeesSummary + 1
+            If wsFees.Cells(cell.row, 4).value <> 0 Then
+                wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
+                wshFAC_Confirmation.Range("G" & rowFeesSummary).value = _
+                            CCur(Format$(wsFees.Cells(cell.row, 4).value, "##0.00"))
+                wshFAC_Confirmation.Range("H" & rowFeesSummary).value = _
+                            CCur(Format$(wsFees.Cells(cell.row, 5).value, "##,##0.00 $"))
+                rowFeesSummary = rowFeesSummary + 1
+            End If
             'Find the next cell with the invNo
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
@@ -715,11 +746,13 @@ Sub Get_Fees_Summary_For_That_Invoice(arr As Variant, ByRef FeesSummary As Varia
     Set cell = Nothing
     Set wsFees = Nothing
     
+    Call Log_Record("modFAC_Confirmation:ObtenirSommaireDesTaux", startTime)
+
 End Sub
 
-Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
+Sub NettoyerCellulesEtIconesPDF()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:NettoyerCellulesEtIconesPDF", 0)
     
     Application.EnableEvents = False
     
@@ -739,10 +772,10 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     Application.ScreenUpdating = True
     
     'Hide both buttons
-    ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
-    ws.Shapes("shpFAC_Confirmation_OK").Visible = False
+    ws.Shapes("shpConfirmerFacture").Visible = False
+    ws.Shapes("shpOK").Visible = False
     
-    Call Show_Unconfirmed_Invoice
+    Call MontrerFacturesAConfirmer
     
     'Libérer la mémoire
     Set pic = Nothing
@@ -752,21 +785,84 @@ Sub FAC_Confirmation_Clear_Cells_And_PDF_Icon()
     
     wshFAC_Confirmation.Range("F5").Select
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon", startTime)
+    Call Log_Record("modFAC_Confirmation:NettoyerCellulesEtIconesPDF", startTime)
 
 End Sub
 
-Sub shp_FAC_Confirmation_OK_Click()
+Sub TraiterToutesLesFacturesAC(selectedInvoice As String)
 
-    Call FAC_Confirmation_OK
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterToutesLesFacturesAC", 0)
+    
+    'Définir la feuille active et la plage des factures
+    Dim ws As Worksheet
+    Set ws = wshFAC_Confirmation
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    Dim rngFactures As Range
+    Set rngFactures = ws.Range("P4:P" & lastUsedRow)
+    'Copier les valeurs dans un tableau
+    Dim arrFactures() As Variant
+    arrFactures = rngFactures.value
+
+    'Demander à l'utilisateur s'il veut traiter toutes les factures
+    Dim traiterToutes As VbMsgBoxResult
+    traiterToutes = MsgBox("Voulez-vous confirmer TOUTES les factures à confirmer ?", vbYesNo + vbQuestion, "Choix d'un traitement complet ou à la pièce")
+    
+    If traiterToutes = vbYes Then
+        'Traiter toutes les factures du tableau
+        Dim i As Long
+        For i = LBound(arrFactures, 1) To UBound(arrFactures, 1)
+            If Not IsEmpty(arrFactures(i, 1)) Then
+                Debug.Print "Facture : " & arrFactures(i, 1)
+                Call TraiterConfirmationFacture(CStr(arrFactures(i, 1)))
+                Application.StatusBar = "Facture # " & arrFactures(i, 1) & " a été confirmée avec succès"
+            End If
+        Next i
+        Application.StatusBar = ""
+'        For Each cellule In rngFactures
+'            If Not IsEmpty(cellule.value) Then
+'                Debug.Print cellule.value
+'                Call TraiterConfirmationFacture(cellule.value)
+'            End If
+'        Next cellule
+        MsgBox "Toutes les factures ont été confirmées.", vbInformation
+    Else
+        'Vérifier si une cellule est sélectionnée dans la plage
+        If Not Intersect(ActiveCell, rngFactures) Is Nothing Then
+            Call TraiterUneFacture(ActiveCell.value)
+            MsgBox "La facture " & ActiveCell.value & " a été traitée.", vbInformation
+        Else
+            MsgBox "Veuillez sélectionner une facture valide dans la plage " & rngFactures.Address, vbExclamation
+        End If
+    End If
+    
+    Call Log_Record("modFAC_Confirmation:TraiterToutesLesFacturesAC", startTime)
+
+End Sub
+
+Sub TraiterUneFacture(facture As Variant)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterUneFacture(" & facture & ")", 0)
+    
+    ' Placez ici votre logique pour traiter une facture
+    ' Exemple : Logique de traitement
+    Debug.Print "Traitement de la facture : " & facture
+    
+    Call Log_Record("modFAC_Confirmation:TraiterUneFacture", startTime)
+
+End Sub
+
+Sub shpOK_Click()
+
+    Call BoutonOK
     
 End Sub
 
-Sub FAC_Confirmation_OK()
+Sub BoutonOK()
 
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
-    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    Call NettoyerCellulesEtIconesPDF
     
     ws.Range("F5").Select
     
@@ -775,22 +871,27 @@ Sub FAC_Confirmation_OK()
     
 End Sub
 
-Sub shp_FAC_Confirmation_Confirm_Click()
+Sub shpConfirmerFacture_Click()
 
-    Call FAC_Confirmation_Do_It
+    Call ConfirmerConfirmationFacture
     
 End Sub
 
-Sub FAC_Confirmation_Do_It()
+Sub ConfirmerConfirmationFacture()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Confirm_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:ConfirmerConfirmationFacture", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim invNo As String
     invNo = ws.Range("F5").value
     
-    ws.Shapes("shpFAC_Confirmation_Do_It").Visible = False
+    If invNo = "" Then
+        MsgBox "Il n'y a pas de facture à confirmer!", vbCritical
+        Exit Sub
+    End If
+    
+    ws.Shapes("shpConfirmerFacture").Visible = False
     
     Dim answerYesNo As Long
     answerYesNo = MsgBox("Êtes-vous certain de vouloir CONFIRMER cette facture ? ", _
@@ -805,26 +906,26 @@ Sub FAC_Confirmation_Do_It()
     
     If answerYesNo = vbYes Then
     
-        Call FAC_Confirmation_Facture(invNo)
+        Call TraiterConfirmationFacture(invNo)
         
     End If
     
 Clean_Exit:
 
-    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    Call NettoyerCellulesEtIconesPDF
 
     wshFAC_Confirmation.Range("F5").Select
     
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Confirm_Click", startTime)
+    Call Log_Record("modFAC_Confirmation:ConfirmerConfirmationFacture", startTime)
 
 End Sub
 
-Sub FAC_Confirmation_Get_GL_Posting(invNo)
+Sub ObtenirPostingExistantGL(invNo)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Get_GL_Posting", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:ObtenirPostingExistantGL", 0)
     
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
@@ -857,35 +958,35 @@ Sub FAC_Confirmation_Get_GL_Posting(invNo)
     Set rngToSearch = Nothing
     Set wsGL = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Get_GL_Posting", startTime)
+    Call Log_Record("modFAC_Confirmation:ObtenirPostingExistantGL", startTime)
 
 End Sub
 
-Sub FAC_Confirmation_Facture(invNo As String)
+Sub TraiterConfirmationFacture(invNo As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:FAC_Confirmation_Facture(" & invNo & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterConfirmationFacture(" & invNo & ")", 0)
     
     'Update the type of invoice (Master)
-    Call FAC_Confirmation_Update_BD_MASTER(invNo)
+    Call MAJStatutFactureBD_MASTER(invNo)
     
     'Update the type of invoice (Locally)
-    Call FAC_Confirmation_Update_Locally(invNo)
+    Call MAJStatutFactureLocalement(invNo)
     
     'Do the G/L posting
-    Call FAC_Confirmation_GL_Posting(invNo)
+    Call ConstruirePostingGL(invNo)
     
 '    MsgBox "Cette facture a été confirmée avec succès", vbInformation
 
     'Clear the cells on the current Worksheet
-    Call FAC_Confirmation_Clear_Cells_And_PDF_Icon
+    Call NettoyerCellulesEtIconesPDF
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Facture(" & invNo & ")", startTime)
+    Call Log_Record("modFAC_Confirmation:TraiterConfirmationFacture", startTime)
     
 End Sub
 
-Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
+Sub MAJStatutFactureBD_MASTER(invoice As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(" & invoice & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJStatutFactureBD_MASTER(" & invoice & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -923,13 +1024,13 @@ Sub FAC_Confirmation_Update_BD_MASTER(invoice As String)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER", startTime)
+    Call Log_Record("modFAC_Confirmation:MAJStatutFactureBD_MASTER", startTime)
 
 End Sub
 
-Sub FAC_Confirmation_Update_Locally(invoice As String)
+Sub MAJStatutFactureLocalement(invoice As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally(" & invoice & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJStatutFactureLocalement(" & invoice & ")", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -954,13 +1055,13 @@ Sub FAC_Confirmation_Update_Locally(invoice As String)
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Update_Locally", startTime)
+    Call Log_Record("modFAC_Confirmation:MAJStatutFactureLocalement", startTime)
 
 End Sub
 
-Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
+Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting(" & invoice & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ConstruirePostingGL(" & invoice & ")", 0)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -1065,19 +1166,19 @@ Sub FAC_Confirmation_GL_Posting(invoice As String) '2024-08-18 @17:15
     Set ws = Nothing
     On Error GoTo 0
     
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_GL_Posting", startTime)
+    Call Log_Record("modFAC_Confirmation:ConstruirePostingGL", startTime)
 
 End Sub
 
-Sub shp_FAC_Confirmation_Exit_Click()
+Sub shpExit_Click()
 
-    Call FAC_Confirmation_Back_To_FAC_Menu
+    Call RetournerMenuFAC
     
 End Sub
 
-Sub FAC_Confirmation_Back_To_FAC_Menu()
+Sub RetournerMenuFAC()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:RetournerMenuFAC", 0)
    
     wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
     
@@ -1090,7 +1191,7 @@ Sub FAC_Confirmation_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modFAC_Confirmation:Back_To_FAC_Menu", startTime)
+    Call Log_Record("modFAC_Confirmation:RetournerMenuFAC", startTime)
     
 End Sub
 

@@ -97,7 +97,13 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12
         
         If wshTEC_TDB_Data.Range("W2").value <> "" Then
             'Force une mise à jour du listBox en changeant le RowSource
-            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = "StatsHeuresSemaine_uf"
+            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
+            Dim lastUsedRow As Long
+            lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
+'            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Range("W2:AD" & lastUsedRow).Address(external:=True)
+'            Debug.Print wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
+            
             DoEvents
         Else
             MsgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation

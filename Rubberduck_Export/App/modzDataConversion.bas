@@ -2,7 +2,7 @@ Attribute VB_Name = "modzDataConversion"
 Option Explicit
 
 'Importation des clients à partir de ... \DataConversion\Clients.xlsx
-Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
+Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
 
     Stop 'One shot deal !!!
     
@@ -56,7 +56,7 @@ Sub Copy_Data_Between_Closed_Workbooks_Clients() '2024-08-03 @ 09:40
 End Sub
 
 'Ajustements à la feuille DB_Clients (*) ---> [*]
-Sub Clients_Ajuste_Nom()
+Sub AjusteNomClient()
 
     'Declare and open the closed workbook
     Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
@@ -107,7 +107,7 @@ Sub Clients_Ajuste_Nom()
 End Sub
 
 'Ajustements à la feuille DB_Clients (Ajout du contactdans le nom du client)
-Sub Clients_Ajout_Contact_Dans_Nom()
+Sub AjouteContactDansNomClient()
 
     'Declare and open the closed workbook
     Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
@@ -154,7 +154,7 @@ Sub Clients_Ajout_Contact_Dans_Nom()
     
 End Sub
 
-Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
+Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
 
     Stop 'One shot deal !!!
     
@@ -225,7 +225,7 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
         
         TEC_ID = TEC_ID + 1
         wsDest.Range("A" & rowNum).value = TEC_ID
-        wsDest.Range("B" & rowNum).value = Get_ID_From_Initials(Prof)
+        wsDest.Range("B" & rowNum).value = ObtenirProfIDAvecInitiales(Prof)
         wsDest.Range("C" & rowNum).value = Prof
         wsDest.Range("D" & rowNum).value = rst.Fields(1).value
         wsDest.Range("E" & rowNum).value = clientCode
@@ -262,27 +262,27 @@ Sub Import_Data_From_Closed_Workbooks_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 1
 End Sub
 
 'Only valid for this conversion process
-Function Get_ID_From_Initials(p As String) As Long
+Function ObtenirProfIDAvecInitiales(p As String) As Long
 
     Stop 'One shot deal
     
     Select Case p
         Case "GC"
-            Get_ID_From_Initials = 1
+            ObtenirProfIDAvecInitiales = 1
         Case "VG"
-            Get_ID_From_Initials = 2
+            ObtenirProfIDAvecInitiales = 2
         Case "AR"
-            Get_ID_From_Initials = 3
+            ObtenirProfIDAvecInitiales = 3
         Case "ML"
-            Get_ID_From_Initials = 4
+            ObtenirProfIDAvecInitiales = 4
         Case Else
-            Get_ID_From_Initials = 0
+            ObtenirProfIDAvecInitiales = 0
     End Select
 
 End Function
 
 'Importation des fournisseurs à partir de ... \DataConversion\Fournisseurs.xlsx
-Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
+Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
 
     Stop 'One shot deal
     
@@ -335,7 +335,7 @@ Sub Import_Data_From_Closed_Workbooks_Fournisseurs() '2024-08-03 @ 18:10
     
 End Sub
 
-Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
+Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
 
     Stop 'One shot deal
     
@@ -426,7 +426,7 @@ Sub Import_Data_From_Closed_Workbooks_GL_BV() '2024-08-03 @ 18:20
     
 End Sub
 
-Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
+Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
 
     Stop 'One shot deal
     
@@ -552,7 +552,7 @@ Sub Import_Data_From_Closed_Workbooks_CC() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-02 @ 06:24
+Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 @ 06:24
     
     Application.ScreenUpdating = False
     
@@ -681,7 +681,7 @@ Sub Compare_2_Excel_Files() '------------------------------------------ 2024-09-
            
 End Sub
 
-Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
+Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -741,7 +741,7 @@ Sub Adjust_Client_Name_In_TEC()  '2024-08-03 @ 09:40
     
 End Sub
 
-Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
+Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
 
     Dim sourceRange As Range
     
@@ -803,7 +803,7 @@ Sub Adjust_Client_Name_In_CAR()  '2024-08-07 @ 17:11
     
 End Sub
 
-Sub Check_Client_Name() '2024-08-10 @ 10:13
+Sub CheckClientName() '2024-08-10 @ 10:13
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -840,7 +840,7 @@ Sub Check_Client_Name() '2024-08-10 @ 10:13
     
 End Sub
 
-Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
+Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -904,7 +904,7 @@ Sub Temp_Build_Hours_Summary() '2024-08-12 @ 21:09
     
 End Sub
 
-Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
+Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
@@ -1005,7 +1005,7 @@ Sub Fix_Client_Name_In_TEC()  '2024-08-23 @ 06:32
     
 End Sub
 
-Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
+Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
@@ -1125,7 +1125,7 @@ Public Sub Fix_Client_Name_In_CAR()  '2024-08-31 @ 06:52
 '
 End Sub
 
-Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
+Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
 
     Application.ScreenUpdating = False
     
@@ -1189,7 +1189,7 @@ Sub Import_Missing_AR_Records() '2024-08-24 @ 15:58
            
 End Sub
 
-Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
+Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
 
     Application.ScreenUpdating = False
     
@@ -1311,4 +1311,5 @@ Sub Merge_Missing_AR_Records() '2024-08-29 @ 07:29
     MsgBox "Le traitement est complété", vbInformation
            
 End Sub
+
 

@@ -208,7 +208,7 @@ Private Sub Process_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
-            Call MsgBoxInvalidDate("wshDEB_Saisie_190")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshDEB_Saisie_190")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -374,3 +374,4 @@ Sub DEBSuggestedAmount(rowNumber As Long, suggestedAmount As Double)
     Set ws = Nothing
     
 End Sub
+

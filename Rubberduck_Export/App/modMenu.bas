@@ -120,7 +120,7 @@ End Sub
 
 Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
@@ -138,7 +138,9 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub Hide_Dev_Shapes_Based_On_Username()
+Sub HideDevShapesBasedOnUsername()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", 0)
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet: Set ws = wshMenu
@@ -148,9 +150,18 @@ Sub Hide_Dev_Shapes_Based_On_Username()
     For Each shp In ws.Shapes
         'Check the username and hide shapes accordingly
         Select Case shp.Name
+            Case "Import & Reorganisation de MASTER des Tableaux (MASTER)"
+                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+                    Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
+                Else
+                    shp.Visible = msoFalse
+                End If
+                
             Case "VérificationIntégrité"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
                     Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
@@ -158,6 +169,7 @@ Sub Hide_Dev_Shapes_Based_On_Username()
             Case "RechercheCode"
                 If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
                     Fn_Get_Windows_Username = "robertmv" Then
+                    shp.Visible = msoTrue
                 Else
                     shp.Visible = msoFalse
                 End If
@@ -209,31 +221,8 @@ Sub Hide_Dev_Shapes_Based_On_Username()
     Set shp = Nothing
     Set ws = Nothing
     
-End Sub
+    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", startTime)
 
-Sub shp_BackToMainMenu_Click()
-
-    Call BackToMainMenu
-
-End Sub
-
-Sub BackToMainMenu()
-
-    Dim ws As Worksheet
-    For Each ws In ActiveWorkbook.Worksheets
-        If ws.Name <> "Menu" Then ws.Visible = xlSheetVeryHidden
-    Next ws
-    
-    With wshMenu
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
-        .Activate
-        .Range("A1").Select
-    End With
-
-    'Libérer la mémoire
-    Set ws = Nothing
-    
 End Sub
 
 Sub Delete_User_Active_File()
@@ -254,44 +243,92 @@ Sub Delete_User_Active_File()
 
 End Sub
 
-Sub shp_Verification_Integrite_Click()
+Sub shpImporterCorrigerMASTER_Click()
 
-    Call Integrity_Verification
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        Exit Sub
+    End If
+    
+    'Crée un répertoire local et importe les fichiers à analyser
+    Call CreerRepertoireEtImporterFichiers
+    
+    'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
+    Call AjusterTableauxDansMaster
 
 End Sub
 
-Sub shp_Recherche_Dans_Le_Code_Click()
+Sub shpVérificationIntégrité_Click()
+
+    Call VérifierIntégrité
+
+End Sub
+
+Sub shpRechercherCode_Click()
 
     Call Code_Search_Everywhere
 
 End Sub
 
-Sub shp_Fix_Client_Name_In_TEC_Click() '2024-11-22 @ 13:33
+Sub shpCorrigerNomClientTEC_Click()
 
-    Call Fix_Client_Name_In_TEC
+    Call modzDataConversion.CorrigeNomClientInTEC
     
 End Sub
 
-Sub shp_Fix_Client_Name_In_CAR_Click() '2024-11-22 @ 13:33
+Sub shpCorrigerNomClientCAR_Click()
 
-    Call Fix_Client_Name_In_CAR
+    Call modzDataConversion.CorrigeNomClientInCAR
     
 End Sub
 
-Sub shp_Detect_Circular_References_Click() '2024-11-22 @ 13:33
+Sub shpChercherRéférencesCirculaires_Click() '2024-11-22 @ 13:33
 
     Call Detect_Circular_References_In_Workbook
     
 End Sub
 
-Sub shp_Toggle_A1_R1C1_Reference_Click() '2024-11-22 @ 13:33
+Sub shpChangerReferenceSystem_Click() '2024-11-22 @ 13:33
 
     Call Toggle_A1_R1C1_Reference
     
 End Sub
 
-Sub shp_List_Subs_And_Functions_All_Click() '2024-11-22 @ 13:33
+Sub shpListerModulesEtRoutines_Click() '2024-11-22 @ 13:33
 
     Call List_Subs_And_Functions_All
     
 End Sub
+
+Sub shpVérificationMacrosContrôles_Click()
+
+    Call VerifierControlesAssociesToutesFeuilles
+
+End Sub
+
+Sub shpRetourMenuPrincipal_Click()
+
+    Call RetourMenuPrincipal
+
+End Sub
+
+Sub RetourMenuPrincipal()
+
+    Dim ws As Worksheet
+    For Each ws In ActiveWorkbook.Worksheets
+        If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
+    Next ws
+    
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions
+        .Activate
+        .Range("A1").Select
+    End With
+
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+End Sub
+
+
+

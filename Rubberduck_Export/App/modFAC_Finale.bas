@@ -78,7 +78,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 '    Call FAC_Finale_GL_Posting_Preparation
     
     'Update TEC_DashBoard
-    Call TEC_TdB_Update_All '2024-03-21 @ 12:32
+    Call modTEC_TDB.ActualiserTEC_TDB '2024-03-21 @ 12:32
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
@@ -489,8 +489,8 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields("Due_Date") = CDate(wshFAC_Brouillon.Range("O3").value) + 30
         rs.Fields("Total") = .Range("E77").value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
         rs.Fields("Total_Paid") = 0
-'        rs.Fields("Balance") = ""
-'        rs.Fields("Days_Overdue") = ""
+        rs.Fields("Balance") = .Range("E77").value
+        rs.Fields("Days_Overdue") = -30
     End With
     
     'Update the recordset (create the record)
@@ -1650,3 +1650,4 @@ Sub FAC_Finale_Disable_Save_Button()
     Set shp = Nothing
     
 End Sub
+

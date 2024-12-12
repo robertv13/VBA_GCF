@@ -13,8 +13,6 @@ Private Sub Workbook_Open()
         Application.Quit
     End If
     
-'    DoEvents
-    
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
     wshAdmin.Range("F5").value = rootPath
@@ -49,15 +47,9 @@ Private Sub Workbook_Open()
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
-    Call Hide_Dev_Shapes_Based_On_Username
+    Call HideDevShapesBasedOnUsername
     
-'    Application.ScreenUpdating = True
-    
-'    DoEvents
-    
-    Call Write_Info_On_Main_Menu
-    
-'    Application.ScreenUpdating = False
+    Call WriteInfoOnMainMenu
     
     wshMenu.Activate
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
@@ -65,11 +57,9 @@ Private Sub Workbook_Open()
     'Protection de la feuille wshMenu
     With wshMenu
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells '2024-08-21 @06:33
+        .EnableSelection = xlNoRestrictions '2024-10-14 @ 11:28
     End With
     
-'    Call Slide_In_All_Menu_Options
-
     Dim wb As Workbook: Set wb = ActiveWorkbook
     wb.Application.Calculation = xlCalculationAutomatic
    
@@ -80,7 +70,7 @@ Private Sub Workbook_Open()
             ws.Delete
         End If
     Next ws
-    Application.DisplayAlerts = True  ' Désactive les messages de confirmation
+    Application.DisplayAlerts = True  ' Réactive les messages de confirmation
     
     Application.ScreenUpdating = True
 
@@ -192,8 +182,10 @@ Sub SetupUserDateFormat()
     Select Case Fn_Get_Windows_Username
         Case "GuillaumeCharron", "Guillaume"
             userDateFormat = "dd/mm/yy"
-        Case "vgervais", "user", "Annie"
+        Case "vgervais", "user"
             userDateFormat = "dd/mm/yyyy"
+        Case "Annie"
+            userDateFormat = "yyyy/mm/dd"
         Case "Robert M. Vigneault", "robertmv"
             userDateFormat = "dd/mm/yyyy"
         Case Else

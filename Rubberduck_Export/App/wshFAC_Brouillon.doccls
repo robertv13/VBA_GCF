@@ -174,7 +174,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
-            Call MsgBoxInvalidDate("wshFAC_Brouillon_136")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Brouillon_136")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -283,3 +283,4 @@ ExitSub:
     Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, startTime)
   
 End Sub
+

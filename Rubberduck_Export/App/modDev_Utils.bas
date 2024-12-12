@@ -327,7 +327,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
         End Select
         
         'Get the code module for the component
-        Dim vbCodeMod As Object: Set vbCodeMod = vbComp.CodeModule
+        Dim vbCodeMod As Object: Set vbCodeMod = vbComp.codeModule
         
         'Loop through all lines in the code module to save all the lines in memory
         For lineNum = 1 To vbCodeMod.CountOfLines
@@ -1448,7 +1448,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     oType = vbComp.Type & "_?????"
             End Select
             'Get the code module for the component
-            Dim vbCodeMod As Object: Set vbCodeMod = vbComp.CodeModule
+            Dim vbCodeMod As Object: Set vbCodeMod = vbComp.codeModule
             'Loop through all lines in the code module
             For lineNum = 1 To vbCodeMod.CountOfLines
                 lread = lread + 1

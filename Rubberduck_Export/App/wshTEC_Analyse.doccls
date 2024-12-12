@@ -158,7 +158,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Call TEC_Sort_Group_And_Subtotal
         Else
-            Call MsgBoxInvalidDate("wshTEC_Analyse_131")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Analyse_131")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -302,5 +302,4 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Call Log_Record("wshTEC_Analyse:CheckBox1_Click", startTime)
 
 End Sub
-
 

@@ -120,7 +120,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Application.EnableEvents = True
         Else
-            Call MsgBoxInvalidDate("wshCAR_Liste_Agée_125")
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshCAR_Liste_Agée_125")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

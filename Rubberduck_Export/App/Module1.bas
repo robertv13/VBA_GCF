@@ -1,7 +1,7 @@
 Attribute VB_Name = "Module1"
 Option Explicit
 
-Sub test_Input_Box()
+Sub TesterInputBox()
 
 '    Dim Name As String
 '    Name = InputBox("What is your name ? ", "Name entry")
@@ -14,7 +14,7 @@ Sub test_Input_Box()
     
 End Sub
 
-Sub Get_Last_Used_Row()
+Sub ObtenirDernièreRangéeUtilisée()
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -32,5 +32,4 @@ Sub Get_Last_Used_Row()
     Set ws = Nothing
     
 End Sub
-
 

@@ -930,20 +930,6 @@ Sub Get_UsedRange_In_Active_Workbook()
     
 End Sub
 
-Sub shpImporterEtAjusterMASTER_Click() '2024-12-10 @ 07:28
-
-    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        Exit Sub
-    End If
-    
-    'Crée un répertoire local et importe les fichiers à analyser
-    Call CreerRepertoireEtImporterFichiers
-    
-    'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
-    Call AjusterTableauxDansMaster
-
-End Sub
-
 Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
 
     'Chemin du dossier contenant les fichiers PROD
@@ -1086,4 +1072,125 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     
 End Sub
 
+Sub VerifierControlesAssociesToutesFeuilles()
+
+    Dim wsOut As Worksheet
+    Set wsOut = ThisWorkbook.Sheets("Feuil2")
+    wsOut.Range("A1").CurrentRegion.offset(1).Clear
+    Dim r As Long
+    
+    Dim ws As Worksheet
+    Dim shp As Shape
+    Dim btn As Object
+    Dim macroNameRaw As String
+    Dim macroName As String
+    Dim vbComp As Object
+    Dim codeModule As Object
+    Dim ligne As Long
+    Dim found As Boolean
+    Dim oleObj As OLEObject
+    
+    ' Parcourir toutes les feuilles du classeur
+    For Each ws In ThisWorkbook.Worksheets
+        Debug.Print "Vérification des contrôles sur la feuille : " & ws.Name
+        
+        ' Vérification des Shapes (Formulaires ou Boutons assignés)
+        For Each shp In ws.Shapes
+            On Error Resume Next
+            macroNameRaw = shp.OnAction
+            On Error GoTo 0
+            
+            If macroNameRaw <> "" Then
+                ' Extraire uniquement le nom de la macro après le "!"
+                If InStr(1, macroNameRaw, "!") > 0 Then
+                    macroName = Split(macroNameRaw, "!")(1)
+                Else
+                    macroName = macroNameRaw
+                End If
+                
+                ' Vérifier si la macro existe
+                found = VerifierMacroExiste(macroName)
+                
+                ' Résultat de la vérification
+                r = r + 1
+                wsOut.Cells(r, 1).value = ws.Name
+                wsOut.Cells(r, 2).value = shp.Name
+                wsOut.Cells(r, 3).value = macroName
+                wsOut.Cells(r, 4).value = "shape"
+                If found Then
+                    wsOut.Cells(r, 5).value = "Valide"
+                Else
+                    wsOut.Cells(r, 5).value = "Manquante"
+                End If
+            End If
+        Next shp
+        
+        ' Vérification des contrôles ActiveX
+        For Each oleObj In ws.OLEObjects
+            If TypeOf oleObj.Object Is MSForms.CommandButton Then
+                ' Construire le nom de la macro à partir du nom du contrôle
+                macroName = oleObj.Name & "_Click"
+                
+                ' Vérifier si la macro existe
+                found = VerifierMacroExiste(macroName, ws.CodeName)
+                
+                ' Résultat de la vérification
+                r = r + 1
+                wsOut.Cells(r, 1).value = ws.Name
+                wsOut.Cells(r, 2).value = oleObj.Name
+                wsOut.Cells(r, 3).value = macroName
+                wsOut.Cells(r, 4).value = "CommandButton"
+                If found Then
+                    wsOut.Cells(r, 5).value = "Valide"
+                Else
+                    wsOut.Cells(r, 5).value = "Manquante"
+                End If
+            End If
+        Next oleObj
+    Next ws
+
+    wsOut.Activate
+    
+    MsgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
+    
+End Sub
+
+Function VerifierMacroExiste(macroName As String, Optional moduleName As String = "") As Boolean
+
+    'Par defaut...
+    VerifierMacroExiste = False
+    
+    'Si un module spécifique est fourni, vérifier uniquement dans ce module
+    Dim vbComp As Object
+    Dim codeModule As Object
+    Dim ligne As Long
+    
+    If moduleName <> "" Then
+        On Error Resume Next
+        Set vbComp = ThisWorkbook.VBProject.VBComponents(moduleName)
+        On Error GoTo 0
+        If Not vbComp Is Nothing Then
+            Set codeModule = vbComp.codeModule
+            For ligne = 1 To codeModule.CountOfLines
+                If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
+                    VerifierMacroExiste = True
+                    Exit Function
+                End If
+            Next ligne
+        End If
+        Exit Function
+    End If
+    
+    'Parcourir tous les modules si aucun module spécifique n'est fourni
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        Set codeModule = vbComp.codeModule
+        For ligne = 1 To codeModule.CountOfLines
+            If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
+                VerifierMacroExiste = True
+                Exit Function
+            End If
+        Next ligne
+    Next vbComp
+    
+End Function
 

@@ -489,7 +489,7 @@ Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Doubl
 
 End Function
 
-Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
+Function Fn_ObtenirTECFacturésPourFacture(invNo As String) As Variant
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
@@ -513,9 +513,9 @@ Function Fn_Get_TEC_Invoiced_By_This_Invoice(invNo As String) As Variant
     End If
     
     If rowCount = 0 Then
-        Fn_Get_TEC_Invoiced_By_This_Invoice = Array()
+        Fn_ObtenirTECFacturésPourFacture = Array()
     Else
-        Fn_Get_TEC_Invoiced_By_This_Invoice = resultArr
+        Fn_ObtenirTECFacturésPourFacture = resultArr
     End If
     
     'Libérer la mémoire
