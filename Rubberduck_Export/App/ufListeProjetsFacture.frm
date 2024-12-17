@@ -75,12 +75,12 @@ End Sub
 Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
 
     Dim rowSelected As Long
-    Dim nomClient As String, dte As Date
+    Dim nomCLient As String, dte As Date
     Dim honorairesTotal As Double
     Dim projetID As Long
     
     rowSelected = lsbProjetsFacture.ListIndex
-    nomClient = lsbProjetsFacture.List(rowSelected, 0)
+    nomCLient = lsbProjetsFacture.List(rowSelected, 0)
     dte = CDate(lsbProjetsFacture.List(rowSelected, 1))
 '    Debug.Print "#017 - lsbProjetsFacture_DblClick_70   dte = "; dte; "   "; TypeName(dte)
     honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
@@ -88,7 +88,7 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     Application.EnableEvents = False
     
-    wshFAC_Brouillon.Range("B51").value = nomClient
+    wshFAC_Brouillon.Range("B51").value = nomCLient
     wshFAC_Brouillon.Range("B52").value = projetID
 '    Debug.Print "#018 - lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
     wshFAC_Brouillon.Range("B53").value = dte

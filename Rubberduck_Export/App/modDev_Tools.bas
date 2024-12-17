@@ -959,10 +959,10 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
-    Dim fso As Object
-    Set fso = CreateObject("Scripting.FileSystemObject")
-    If Not fso.folderExists(nouveauDossier) Then
-        fso.CreateFolder nouveauDossier
+    Dim FSO As Object
+    Set FSO = CreateObject("Scripting.FileSystemObject")
+    If Not FSO.folderExists(nouveauDossier) Then
+        FSO.CreateFolder nouveauDossier
     End If
     
     'Noms des deux fichiers à copier (fixe)
@@ -971,15 +971,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nomFichier2 = "GCF_BD_Entrée.xlsx"
     
     'Copier le premier fichier
-    If fso.fileExists(cheminSourcePROD & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+    If FSO.fileExists(cheminSourcePROD & nomFichier1) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If fso.fileExists(cheminSourcePROD & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+    If FSO.fileExists(cheminSourcePROD & nomFichier2) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -989,7 +989,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
-        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        FSO.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -1002,15 +1002,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
     
     'Copier le premier fichier
-    If fso.fileExists(nouveauDossier & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+    If FSO.fileExists(nouveauDossier & nomFichier1) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If fso.fileExists(nouveauDossier & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+    If FSO.fileExists(nouveauDossier & nomFichier2) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If

@@ -612,14 +612,14 @@ Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
     
     Dim profID As Long
     Dim rowInWorksheet As Long: rowInWorksheet = 13
-    Dim Prof As Variant
+    Dim prof As Variant
     Application.EnableEvents = False
     If dictHours.count <> 0 Then
-        For Each Prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
+        For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) 'Sort dictionary by hours in descending order
             Dim strProf As String
-            strProf = Prof
+            strProf = prof
             profID = Fn_GetID_From_Initials(strProf)
-            hres = dictHours(Prof)
+            hres = dictHours(prof)
             Dim tauxHoraire As Currency
             tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
             wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
@@ -631,13 +631,13 @@ Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
     '        Debug.Print "#054 - Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
     '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
     '        rowSelected = rowSelected + 1
-        Next Prof
+        Next prof
     End If
     Application.EnableEvents = True
     
     'Libérer la mémoire
     Set dictHours = Nothing
-    Set Prof = Nothing
+    Set prof = Nothing
     Set wsTEC = Nothing
     
     Call Log_Record("modFAC_Confirmation:ObtenirSommaireTEC", startTime)
@@ -670,14 +670,14 @@ Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
     
     Dim profID As Long
     Dim rowInWorksheet As Long: rowInWorksheet = 13
-    Dim Prof As Variant
+    Dim prof As Variant
     Application.EnableEvents = False
     If dictHours.count <> 0 Then
-        For Each Prof In dictHours
+        For Each prof In dictHours
             Dim strProf As String
-            strProf = Prof
+            strProf = prof
             profID = Fn_GetID_From_Initials(strProf)
-            hres = dictHours(Prof)
+            hres = dictHours(prof)
             Dim tauxHoraire As Currency
             tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
             wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
@@ -689,13 +689,13 @@ Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
     '        Debug.Print "#055 - Summary : " & strProf & " = " & hres & " @ " & tauxHoraire
     '        Cells(rowSelected, 14).FormulaR1C1 = "=RC[-2]*RC[-1]"
     '        rowSelected = rowSelected + 1
-        Next Prof
+        Next prof
     End If
     Application.EnableEvents = True
     
     'Libérer la mémoire
     Set dictHours = Nothing
-    Set Prof = Nothing
+    Set prof = Nothing
     Set wsTEC = Nothing
     
     Call Log_Record("modFAC_Confirmation:ObtenirTotalTEC", startTime)
@@ -816,6 +816,7 @@ Sub TraiterToutesLesFacturesAC(selectedInvoice As String)
                 Debug.Print "Facture : " & arrFactures(i, 1)
                 Call TraiterConfirmationFacture(CStr(arrFactures(i, 1)))
                 Application.StatusBar = "Facture # " & arrFactures(i, 1) & " a été confirmée avec succès"
+                DoEvents
             End If
         Next i
         Application.StatusBar = ""

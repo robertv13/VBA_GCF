@@ -6,6 +6,8 @@ Public previousCellAddress As Variant
 
 Private Sub Workbook_Open()
 
+    DoEvents
+    
     'Le serveur est-il disponible ?
     If Fn_Is_Server_Available() = False Then
         MsgBox "Le serveur (P:\) ne semble pas accessible" & vbNewLine & vbNewLine & _
@@ -16,8 +18,6 @@ Private Sub Workbook_Open()
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
     wshAdmin.Range("F5").value = rootPath
-    
-    DoEvents
     
     'Test pour valider que le serveur est accessible - 2024-09-24 @ 17:42
     Dim isServerUp As Boolean
@@ -40,9 +40,7 @@ Private Sub Workbook_Open()
     
     Call SetupUserDateFormat
     
-    Application.ScreenUpdating = False
-    
-    DoEvents
+'    Application.ScreenUpdating = False
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
@@ -63,16 +61,17 @@ Private Sub Workbook_Open()
     Dim wb As Workbook: Set wb = ActiveWorkbook
     wb.Application.Calculation = xlCalculationAutomatic
    
+    'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
     Dim ws As Worksheet
-    Application.DisplayAlerts = False  'Désactive les messages de confirmation
+    Application.DisplayAlerts = False
     For Each ws In wb.Worksheets
         If InStr(ws.CodeName, "wsh") <> 1 And InStr(ws.CodeName, "Feuil") = 1 Then
             ws.Delete
         End If
     Next ws
-    Application.DisplayAlerts = True  ' Réactive les messages de confirmation
+    Application.DisplayAlerts = True
     
-    Application.ScreenUpdating = True
+'    Application.ScreenUpdating = True
 
     'Libérer la mémoire
     Set wb = Nothing
@@ -84,6 +83,8 @@ End Sub
 
 Sub CreateUserActiveFile()
 
+    DoEvents
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
     
     Dim userName As String
@@ -115,6 +116,87 @@ End Sub
 
 Sub BackupMasterFile()
 
+    DoEvents
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
+    
+    On Error GoTo MASTER_NOT_AVAILABLE
+    
+'    Application.ScreenUpdating = False
+    
+    'Chemin source (fichier principal) et destination (sauvegarde)
+    Dim masterFilePath As String
+    masterFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    
+    Dim backupFilePath As String
+    backupFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
+    
+    'Créer directement une copie du fichier sans ouvrir Excel
+    FileCopy masterFilePath, backupFilePath
+
+    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
+    
+    Exit Sub
+    
+'    'Open the master file
+'    Dim masterWorkbook As Workbook
+'    On Error GoTo MASTER_NOT_AVAILABLE
+'    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+'                            "GCF_BD_MASTER.xlsx")
+'    If Err.Number <> 0 Then
+'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+'    End If
+'    On Error GoTo 0
+'
+'    'Get the current date and time in the format YYYYMMDD_HHMMSS
+'    Dim currentDateAndTime As String
+'    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
+
+'    'Create the backup file name
+'    Dim backupFileName As String
+'    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
+'
+'    'Define the backup file path (same directory as the master file)
+'    Dim backupFilePath As String
+'    backupFilePath = masterWorkbook.path & "\" & backupFileName
+'
+'    'Save a copy of the master workbook with the new name
+'    On Error Resume Next
+'    masterWorkbook.SaveCopyAs backupFilePath
+'    If Err.Number <> 0 Then
+'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+'    End If
+'
+'    'Close the master workbook
+'    masterWorkbook.Close SaveChanges:=False
+'    If Err.Number <> 0 Then
+'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
+'    End If
+'    On Error GoTo 0
+
+'    Application.ScreenUpdating = True
+
+'    'Libérer la mémoire
+'    Set masterWorkbook = Nothing
+    
+    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
+
+    Exit Sub
+
+MASTER_NOT_AVAILABLE:
+    MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
+            "Le fichier nécessite une réparation manuelle", _
+            vbCritical, _
+            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
+    Application.Quit
+
+End Sub
+
+Sub BackupMasterFile_OK()
+
+    DoEvents
+
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
     
     Application.ScreenUpdating = False
@@ -129,13 +211,13 @@ Sub BackupMasterFile()
     End If
     On Error GoTo 0
     
-    'Get the current date and time in the format YYYYMMDD_HHMMSS
-    Dim currentDateAndTime As String
-    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
+'    'Get the current date and time in the format YYYYMMDD_HHMMSS
+'    Dim currentDateAndTime As String
+'    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
 
     'Create the backup file name
     Dim backupFileName As String
-    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & currentDateAndTime & ".xlsx"
+    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
 
     'Define the backup file path (same directory as the master file)
     Dim backupFilePath As String
@@ -175,6 +257,8 @@ End Sub
 
 Sub SetupUserDateFormat()
 
+    DoEvents
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
 
     Dim userDateFormat As String

@@ -1078,6 +1078,7 @@ Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
     flagEtapeFacture = 3
     
     'Étape 3 - Envoi du courriel
+    DoEvents
     Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
     flagEtapeFacture = 4
     
@@ -1305,16 +1306,25 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Next i
 
     '5. Copier l'entête de la facture
-    Dim forme As Shape
+    Dim forme As Shape, newForme As Shape
     For Each forme In wsSource.Shapes
         If forme.Name = "GCF_Entête" Then
+            'Copier & coller l'entête de la facture (logo)
+'            DoEvents
             forme.Copy
-            wsCible.Paste
+'            DoEvents
+'            wsCible.Activate
+'            DoEvents
+            wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
+'            wsCible.Paste
+            'Récupérer la nouvelle forme
+'            DoEvents
+            Set newForme = wsCible.Shapes(wsCible.Shapes.count)
             'Ajuster la position et la taille de la forme
-            With wsCible.Shapes(wsCible.Shapes.count)
+            With newForme
                 .Top = forme.Top
                 .Left = forme.Left
-                .Height = 255.15
+                .Height = 250
             End With
         End If
     Next forme
@@ -1365,6 +1375,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     'Libérer la mémoire
     Set forme = Nothing
     Set plageSource = Nothing
+    Set newForme = Nothing
     Set wbCible = Nothing
     Set wbSource = Nothing
     Set wsCible = Nothing

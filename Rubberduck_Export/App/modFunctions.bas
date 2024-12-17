@@ -43,9 +43,9 @@ Function Fn_Get_Prof_From_ProfID(i As Long)
     
 End Function
 
-Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
+Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomClient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -61,7 +61,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     
     'Using XLOOKUP to find the result directly, allows partial match (5th parameter) - 2024-11-07 @ 08:12
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(nomClient, _
+    result = Application.WorksheetFunction.XLookup(nomCLient, _
                                                    dynamicRange.Columns(1), _
                                                    dynamicRange.Columns(2), _
                                                    "Not Found", _
@@ -922,26 +922,30 @@ End Function
 
 Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
 
+    DoEvents
+    
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = fso.folderExists(serverPath)
+    folderExists = FSO.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer la mémoire
-    Set fso = Nothing
+    Set FSO = Nothing
     
 End Function
 
 Function Fn_Is_Server_Available() As Boolean
 
+    DoEvents
+    
     On Error Resume Next
     'Tester l'existence d'un fichier ou d'un répertoire sur le lecteur P:
     If Dir("P:\", vbDirectory) <> "" Then
@@ -1311,7 +1315,7 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     
 End Function
 
-Public Function Fn_Is_Client_Facturable(clientID As String) As Boolean
+Public Function Fn_Is_Client_Facturable(ByVal clientID As String) As Boolean
 
     Fn_Is_Client_Facturable = False
     
@@ -1856,25 +1860,18 @@ Function Fn_Obtenir_Date_Lundi(d As Date)
 
 End Function
 
-'CommentOut - 2024-12-05 @ 14:53
-'Sub test_Fn_Calcul_Date_Trimestre()
-'
-'    Dim d As Date
-'    d = #12/31/2024#
-'    Debug.Print "#062 - " & Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d)
-'
-'End Sub
-
 Function Fn_Nettoyer_Fin_Chaine(s As String) '2024-11-07 @ 16:57
 
     Fn_Nettoyer_Fin_Chaine = s
     
-    'Supprime les vbCr, vbLf, ou vbCrLf à la fin de la chaîne
-    Do While Right(Fn_Nettoyer_Fin_Chaine, 1) = vbCr Or _
-             Right(Fn_Nettoyer_Fin_Chaine, 1) = vbLf Or _
-             Right(Fn_Nettoyer_Fin_Chaine, 1) = vbCrLf
-        Fn_Nettoyer_Fin_Chaine = Left(Fn_Nettoyer_Fin_Chaine, Len(Fn_Nettoyer_Fin_Chaine) - 1)
-    Loop
+    'Supprimer les retours à la ligne, les sauts de ligne et les espaces inutiles
+    Fn_Nettoyer_Fin_Chaine = Trim(Replace(Replace(Replace(s, vbCrLf, ""), vbCr, ""), vbLf, ""))
+
+'    Do While Right(Fn_Nettoyer_Fin_Chaine, 1) = vbCr Or _
+'             Right(Fn_Nettoyer_Fin_Chaine, 1) = vbLf Or _
+'             Right(Fn_Nettoyer_Fin_Chaine, 1) = vbCrLf
+'        Fn_Nettoyer_Fin_Chaine = Left(Fn_Nettoyer_Fin_Chaine, Len(Fn_Nettoyer_Fin_Chaine) - 1)
+'    Loop
 
 End Function
 

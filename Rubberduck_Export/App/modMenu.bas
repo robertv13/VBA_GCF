@@ -4,13 +4,19 @@ Option Explicit
 'Execute the next menu (next level)
 Sub menuTEC_Click()
     
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", 0)
+    
     wshMenuTEC.Visible = xlSheetVisible
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
+    Call Log_Record("modMenu:menuTEC_Click", startTime)
+
 End Sub
 
 Sub menuFacturation_Click()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", 0)
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
@@ -24,28 +30,14 @@ Sub menuFacturation_Click()
         wshMenu.Activate
         Application.EnableEvents = True
     End If
+    
+    Call Log_Record("modMenu:menuFacturation_Click", startTime)
 
 End Sub
 
-'CommentOut - 2024-11-25
-'Sub MenuDEB_Click()
-'
-'    If Fn_Get_Windows_Username = "Guillaume" Or _
-'            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-'            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'            Fn_Get_Windows_Username = "robertmv" Then
-'        wshMenuDEB.Visible = xlSheetVisible
-'        wshMenuDEB.Activate
-'        wshMenuDEB.Range("A1").Select
-'    Else
-'        Application.EnableEvents = False
-'        wshMenu.Activate
-'        Application.EnableEvents = True
-'    End If
-'
-'End Sub
-'
 Sub menuComptabilite_Click()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilite_Click", 0)
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
@@ -60,9 +52,13 @@ Sub menuComptabilite_Click()
         Application.EnableEvents = True
     End If
 
+    Call Log_Record("modMenu:menuComptabilite_Click", startTime)
+
 End Sub
 
 Sub menuParametres_Click()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuParametres_Click", 0)
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
@@ -76,6 +72,8 @@ Sub menuParametres_Click()
         Application.EnableEvents = True
     End If
     
+    Call Log_Record("modMenu:menuParametres_Click", startTime)
+
 End Sub
 
 Sub Exit_After_Saving() '2024-08-30 @ 07:37
@@ -88,10 +86,9 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
+    
         Call Hide_All_Worksheets_Except_Menu
     
-        DoEvents
-        
         Call Delete_User_Active_File
 
         Application.ScreenUpdating = True
@@ -99,10 +96,7 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
         On Error Resume Next
         Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
         Call Log_Record("", -1)
-        
         On Error GoTo 0
-        
-        DoEvents
         
         'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
@@ -119,6 +113,8 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
 End Sub
 
 Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
+    
+    DoEvents
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", 0)
     
@@ -140,6 +136,8 @@ End Sub
 
 Sub HideDevShapesBasedOnUsername()
     
+    DoEvents
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", 0)
     
     'Set the worksheet where the shapes are located
@@ -147,75 +145,99 @@ Sub HideDevShapesBasedOnUsername()
     
     'Loop through each shape in the worksheet
     Dim shp As Shape
-    For Each shp In ws.Shapes
-        'Check the username and hide shapes accordingly
-        Select Case shp.Name
-            Case "Import & Reorganisation de MASTER des Tableaux (MASTER)"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-                
-            Case "VérificationIntégrité"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-            
-            Case "RechercheCode"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-
-            Case "Correction nom (TEC)"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-            
-            Case "Correction nom (CAR)"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-            
-            Case "RéférencesCirculaires"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                Else
-                    shp.Visible = msoFalse
-                End If
-           
-            Case "ChangeReferenceSystem"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-
-            Case "ListeModules&Routines"
-                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-                    Fn_Get_Windows_Username = "robertmv" Then
-                    shp.Visible = msoTrue
-                Else
-                    shp.Visible = msoFalse
-                End If
-
-            Case Else
-        End Select
-    Next shp
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
+        ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
+        ws.Shapes("shpRechercherCode").Visible = msoTrue
+        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
+        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
+        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoTrue
+        ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
+        ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
+        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
+    Else
+        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
+        ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
+        ws.Shapes("shpRechercherCode").Visible = msoFalse
+        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
+        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse
+        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoFalse
+        ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
+        ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
+        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
+    End If
+        
+'    For Each shp In ws.Shapes
+'        'Check the username and hide shapes accordingly
+'        Select Case shp.Name
+'            Case "Import & Reorganisation de MASTER des Tableaux (MASTER)"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "VérificationIntégrité"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "RechercheCode"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "Correction nom (TEC)"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "Correction nom (CAR)"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "RéférencesCirculaires"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "ChangeReferenceSystem"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case "ListeModules&Routines"
+'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
+'                    Fn_Get_Windows_Username = "robertmv" Then
+'                    shp.Visible = msoTrue
+'                Else
+'                    shp.Visible = msoFalse
+'                End If
+'
+'            Case Else
+'        End Select
+'    Next shp
 
     'Libérer la mémoire
     Set shp = Nothing
@@ -227,6 +249,8 @@ End Sub
 
 Sub Delete_User_Active_File()
 
+    DoEvents
+    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", 0)
     
     Dim userName As String

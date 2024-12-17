@@ -240,15 +240,15 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim arr() As Variant
     ReDim arr(1 To 100, 1 To 3)
     Dim ws As Worksheet
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim r As Long
     Dim f As Long
     For Each ws In wb.Worksheets
         r = r + 1
         arr(r, 1) = ws.Name
         arr(r, 2) = ws.CodeName
-        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
-        arr(r, 3) = TimeStamp
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(r, 3) = timeStamp
     Next ws
     
     'Close the workbook without saving changes
@@ -572,7 +572,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Dim dvType As String
     Dim ws As Worksheet
     Dim cell As Range
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim X As Long: X = 1
     Dim xAnalyzed As Long
     For Each ws In ThisWorkbook.Worksheets
@@ -612,8 +612,8 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                 arr(X, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
-                TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-                arr(X, 8) = TimeStamp
+                timeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                arr(X, 8) = timeStamp
 
                 'Increment the output row counter
                 X = X + 1
@@ -905,7 +905,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     Dim i As Long
     Dim nr As Name
     Dim rng As Range
-    Dim TimeStamp As String
+    Dim timeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
         arr(i, 1) = UCase(nr.Name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
@@ -929,8 +929,8 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         If nr.Visible = False Then
             arr(i, 8) = nr.Visible
         End If
-        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
-        arr(i, 9) = TimeStamp
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(i, 9) = timeStamp
     Next nr
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -1043,7 +1043,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim X As Long, xr As Long
     For X = LBound(arr, 1) To UBound(arr, 1)
         trimmedLineOfCode = arr(X, 4)
@@ -1094,8 +1094,8 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-                arrResult(xr, 7) = TimeStamp
+                timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                arrResult(xr, 7) = timeStamp
                 arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
@@ -1633,14 +1633,14 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     ReDim arr(1 To 100, 1 To 3)
     
     Dim ws As Worksheet
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim i As Long
     For Each ws In ThisWorkbook.Sheets
         i = i + 1
         arr(i, 1) = ws.Name
         arr(i, 2) = ws.CodeName
-        TimeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
-        arr(i, 3) = TimeStamp
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        arr(i, 3) = timeStamp
     Next ws
     
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -1748,13 +1748,13 @@ Sub test()
     
 End Sub
 
-Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-10-16 @ 06:29
+Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-12-14 @ 08:25
 
-    On Error GoTo Error_Handler
+    On Error GoTo ErrorHandler
     
     'TimeStamp avec centièmes de seconde
-    Dim TimeStamp As String
-    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
+    Dim timeStamp As String
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
     logFile = wshAdmin.Range("F5").value & DATA_PATH & _
@@ -1770,31 +1770,31 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #FileNum, ""
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
 '        startTime = Timer 'Start timing
-        Print #FileNum, TimeStamp & " | " & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+        Print #FileNum, timeStamp & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
 '        startTime = Timer 'Start timing
-        Print #FileNum, TimeStamp & " | " & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+        Print #FileNum, timeStamp & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #FileNum, TimeStamp & " | " & _
-                        Replace(Fn_Get_Windows_Username, " ", "_") & " | " & _
+        Print #FileNum, timeStamp & " | " & _
+                        Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " = " & _
-                        Format(elapsedTime, "0.0000") & " sec." & vbCrLf
+                        procedureName & " = '" & _
+                        Format(elapsedTime, "0.0000") & " secondes" & "'"
     End If
     
     Close #FileNum
     
     Exit Sub
     
-Error_Handler:
+ErrorHandler:
 
     MsgBox "Une erreur est survenue avec le fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
                 Err.Description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
@@ -1836,8 +1836,8 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     'TimeStamp avec les centièmes de secondes
     Dim ms As String
-    Dim TimeStamp As String
-    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
+    Dim timeStamp As String
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
@@ -1853,7 +1853,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
         Print #FileNum, ""
     End If
     
-    Print #FileNum, TimeStamp & " | " & _
+    Print #FileNum, timeStamp & " | " & _
                         Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
@@ -1892,12 +1892,12 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     'Ajoute les millisecondes à la chaîne de temps
     ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
     
-    Dim TimeStamp As String
-    TimeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
+    Dim timeStamp As String
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
     Open settraceFile For Append As #FileNum
     
-    Print #FileNum, TimeStamp & " | " & _
+    Print #FileNum, timeStamp & " | " & _
                     Fn_Get_Windows_Username & " | " & _
                     source & " | " & _
                     module & " | " & _

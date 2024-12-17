@@ -463,28 +463,28 @@ Sub Build_Hours_Summary(rowSelected As Long)
         i = i + 1
     Loop
 
-    Dim Prof As Variant
+    Dim prof As Variant
     Dim profID As Long
     Dim tauxHoraire As Currency
     
     Application.EnableEvents = False
     
     ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
-    For Each Prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 10).value = Prof
+    For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
+        Cells(rowSelected, 10).value = prof
         Dim strProf As String
-        strProf = Prof
+        strProf = prof
         profID = Fn_GetID_From_Initials(strProf)
         Cells(rowSelected, "K").HorizontalAlignment = xlRight
         Cells(rowSelected, "K").NumberFormat = "#,##0.00"
-        Cells(rowSelected, "K").value = dictHours(Prof)
+        Cells(rowSelected, "K").value = dictHours(prof)
         tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
         Cells(rowSelected, "L").value = tauxHoraire
         Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
         Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, "M").HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
-    Next Prof
+    Next prof
     
     'Sort the summary by rate (descending value) if required
     If rowSelected - 1 > saveR Then
@@ -558,7 +558,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
 
     'Libérer la mémoire
     Set dictHours = Nothing
-    Set Prof = Nothing
+    Set prof = Nothing
     Set rngSort = Nothing
     Set ws = Nothing
     
@@ -648,7 +648,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     rs.Open strSQL, conn, 2, 3
     
     'Read all line from TEC_Analyse
-    Dim dateTEC As String, TimeStamp As String
+    Dim dateTEC As String, timeStamp As String
     Dim l As Long
     For l = fr To lr
         rs.AddNew
@@ -663,8 +663,8 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
             rs.Fields("estDetruite") = 0 'Faux
             rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
-            TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields("TimeStamp").value = TimeStamp
+            timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields("TimeStamp").value = timeStamp
         rs.update
     Next l
     
@@ -695,7 +695,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     lastUsedRow = wshFAC_Projets_Détails.Cells(wshFAC_Projets_Détails.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
-    Dim dateTEC As String, TimeStamp As String
+    Dim dateTEC As String, timeStamp As String
     Dim i As Long
     For i = fr To lr
         wshFAC_Projets_Détails.Range("A" & rn).value = projetID
@@ -708,8 +708,8 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
         wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
         wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
         wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
-        TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
+        timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        wshFAC_Projets_Détails.Range("J" & rn).value = timeStamp
         rn = rn + 1
     Next i
     
@@ -740,7 +740,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
-                                        nomClient As String, _
+                                        nomCLient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
@@ -765,13 +765,13 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
     rs.Open strSQL, conn, 2, 3
     
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim c As Long
     Dim l As Long
     rs.AddNew
         'Add fields to the recordset before updating it
         rs.Fields("ProjetID").value = projetID
-        rs.Fields("NomClient").value = nomClient
+        rs.Fields("NomClient").value = nomCLient
         rs.Fields("ClientID").value = clientID
         rs.Fields("Date").value = dte
         rs.Fields("HonoTotal").value = hono
@@ -782,8 +782,8 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
             rs.Fields("Hono" & c).value = arr(c, 4)
         Next c
         rs.Fields("estDétruite").value = 0 'Faux
-        TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.Fields("TimeStamp").value = TimeStamp
+        timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields("TimeStamp").value = timeStamp
     rs.update
     
     'Close recordset and connection
@@ -802,7 +802,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally", 0)
     
@@ -813,9 +813,9 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
-    Dim dateTEC As String, TimeStamp As String
+    Dim dateTEC As String, timeStamp As String
     wshFAC_Projets_Entête.Range("A" & rn).value = projetID
-    wshFAC_Projets_Entête.Range("B" & rn).value = nomClient
+    wshFAC_Projets_Entête.Range("B" & rn).value = nomCLient
     wshFAC_Projets_Entête.Range("C" & rn).value = clientID
     wshFAC_Projets_Entête.Range("D" & rn).value = dte
     wshFAC_Projets_Entête.Range("E" & rn).value = hono
@@ -827,8 +827,8 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
         Next j
     Next i
     wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
-    TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
+    timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    wshFAC_Projets_Entête.Range("AA" & rn).value = timeStamp
     
     Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally", startTime)
 

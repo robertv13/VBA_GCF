@@ -141,7 +141,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
 
 End Sub
 
-Sub GL_Posting_To_DB(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
+Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
 
@@ -178,7 +178,7 @@ Sub GL_Posting_To_DB(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Generic
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim i As Long, j As Long
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
@@ -186,7 +186,7 @@ Sub GL_Posting_To_DB(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Generic
             rs.AddNew
                 rs.Fields("No_Entrée") = GLEntryNo
                 rs.Fields("Date") = CDate(df)
-                rs.Fields("Description") = DESC
+                rs.Fields("Description") = desc
                 rs.Fields("Source") = source
                 rs.Fields("No_Compte") = arr(i, 1)
                 rs.Fields("Compte") = arr(i, 2)
@@ -196,8 +196,8 @@ Sub GL_Posting_To_DB(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Generic
                     rs.Fields("Crédit") = -arr(i, 3)
                 End If
                 rs.Fields("AutreRemarque") = arr(i, 4)
-                TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-                rs.Fields("TimeStamp") = TimeStamp
+                timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                rs.Fields("TimeStamp") = timeStamp
                 Debug.Print "#063 - GL_Trans - " & CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.update
 Nothing_to_Post:
@@ -219,7 +219,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
+Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_Locally", 0)
     
@@ -236,7 +236,7 @@ Sub GL_Posting_Locally(df, DESC, source, arr As Variant, ByRef GLEntryNo) 'Write
             If arr(i, 1) <> "" Then
                 .Range("A" & rowToBeUsed).value = GLEntryNo
                 .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = DESC
+                .Range("C" & rowToBeUsed).value = desc
                 .Range("D" & rowToBeUsed).value = source
                 .Range("E" & rowToBeUsed).value = arr(i, 1)
                 .Range("F" & rowToBeUsed).value = arr(i, 2)

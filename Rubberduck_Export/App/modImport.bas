@@ -106,7 +106,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", 0)
     
-    Application.ScreenUpdating = False
+'    Application.ScreenUpdating = False
     
     'Worksheet recevant les données importées
     Dim wsLocal As Worksheet: Set wsLocal = wshBD_Clients
@@ -140,43 +140,43 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     'Copier le recSet vers wsLocal
     wsLocal.Range("A2").CopyFromRecordset recSet
     
-    'Redimensionner le tableau local
-    Dim tblLocal As ListObject
-    Dim dataRange As Range
-    Dim lastRow As Long, lastCol As Long
-    If wsLocal.ListObjects.count > 0 Then
-        Set tblLocal = wsLocal.ListObjects(1) 'Supposons qu'il y a un seul tableau par feuille
-        'Rechercher la dernière ligne avec des données
-        Dim i As Long
-        For i = tblLocal.ListRows.count To 1 Step -1
-            If tblLocal.DataBodyRange.Cells(i, 2).value <> "" Then
-                lastRow = i
-                Exit For
-            End If
-        Next i
-'        lastRow = tblLocal.ListRows.count
-        lastCol = wsLocal.Cells(1, wsLocal.Columns.count).End(xlToLeft).Column
-        Set dataRange = wsLocal.Range("A1", wsLocal.Cells(lastRow + 1, lastCol))
-        'Redimensionner le tableau pour s’adapter à la nouvelle plage
-        tblLocal.Resize dataRange
-    End If
-    
-    'Setup the format of the worksheet - 2024-07-20 @ 18:31
-    Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-    Call modAppli_Utils.ApplyWorksheetFormat(wsLocal, rng, 1)
+'    'Redimensionner le tableau local
+'    Dim tblLocal As ListObject
+'    Dim dataRange As Range
+'    Dim lastRow As Long, lastCol As Long
+'    If wsLocal.ListObjects.count > 0 Then
+'        Set tblLocal = wsLocal.ListObjects(1) 'Supposons qu'il y a un seul tableau par feuille
+'        'Rechercher la dernière ligne avec des données
+'        Dim i As Long
+'        For i = tblLocal.ListRows.count To 1 Step -1
+'            If tblLocal.DataBodyRange.Cells(i, 2).value <> "" Then
+'                lastRow = i
+'                Exit For
+'            End If
+'        Next i
+''        lastRow = tblLocal.ListRows.count
+'        lastCol = wsLocal.Cells(1, wsLocal.Columns.count).End(xlToLeft).Column
+'        Set dataRange = wsLocal.Range("A1", wsLocal.Cells(lastRow + 1, lastCol))
+'        'Redimensionner le tableau pour s’adapter à la nouvelle plage
+'        tblLocal.Resize dataRange
+'    End If
+'
+'    'Setup the format of the worksheet - 2024-07-20 @ 18:31
+'    Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
+'    Call modAppli_Utils.ApplyWorksheetFormat(wsLocal, rng, 1)
     
     'Close resource
     recSet.Close
     connStr.Close
     
-    Application.ScreenUpdating = True
+'    Application.ScreenUpdating = True
     
     'Libérer la mémoire
     Set connStr = Nothing
-    Set dataRange = Nothing
+'    Set dataRange = Nothing
     Set recSet = Nothing
-    Set rng = Nothing
-    Set tblLocal = Nothing
+'    Set rng = Nothing
+'    Set tblLocal = Nothing
     Set wsLocal = Nothing
     
     Call Log_Record("modImport:Client_List_Import_All", startTime)
@@ -901,7 +901,7 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:TEC_Import_All", 0)
     
-    Application.ScreenUpdating = False
+'    Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -934,21 +934,21 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     'Copy to wshTEC_Local workbook
     ws.Range("A3").CopyFromRecordset recSet
 
-    'Redimensionner le tableau
-    Dim tbl As ListObject
-    Set tbl = ws.ListObjects("l_tbl_TEC_Local")
-    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-    
-    'Setup the format of the worksheet using a Sub
-    Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 2)
-    
-    Application.ScreenUpdating = True
-    
+'    'Redimensionner le tableau
+'    Dim tbl As ListObject
+'    Set tbl = ws.ListObjects("l_tbl_TEC_Local")
+'    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
+'
+'    'Setup the format of the worksheet using a Sub
+'    Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 2)
+'
+'    Application.ScreenUpdating = True
+'
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
-    Set rng = Nothing
-    Set tbl = Nothing
+'    Set rng = Nothing
+'    Set tbl = Nothing
     Set ws = Nothing
     
     Call Log_Record("modImport:TEC_Import_All", startTime)

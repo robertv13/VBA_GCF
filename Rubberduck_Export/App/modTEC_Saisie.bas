@@ -598,6 +598,153 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
         ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, 0)
 
+    On Error GoTo ErrorHandler
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.Calculation = xlCalculationManual
+
+   If ufSaisieHeures.txtProf_ID.value = "" Or Not IsDate(ufSaisieHeures.txtDate.value) Then
+        MsgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
+        GoTo EndOfProcedure
+    End If
+    
+'    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+'    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+'
+    ufSaisieHeures.txtTotalHeures.value = ""
+    ufSaisieHeures.txtHresFact.value = ""
+    ufSaisieHeures.txtHresNF.value = ""
+    ufSaisieHeures.txtHresFactSemaine.value = ""
+    ufSaisieHeures.txtHresNFSemaine.value = ""
+
+    ufSaisieHeures.lsbHresJour.RowSource = ""
+    ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
+    
+    With ufSaisieHeures.lsbHresJour
+        .ColumnHeads = False
+        .ColumnCount = 9
+        .ColumnWidths = "30; 24; 54; 157; 242; 35; 90; 32; 90"
+    End With
+    
+    'Manually add to listBox (because some tests have to be made)
+    Dim lastRow As Long
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
+    Dim rng As Range
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+     
+    'Variables initiales
+    Dim totalHeures As Currency: totalHeures = 0
+    Dim totalHresFact As Currency: totalHresFact = 0
+    Dim totalHresNonFact As Currency: totalHresNonFact = 0
+    Dim rngResult As Range
+    Dim i As Long, colIndex As Long
+    
+    'Remplissage du listBox
+    If lastRow >= 3 Then
+        Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+        For i = 1 To rng.Rows.count
+            With ufSaisieHeures.lsbHresJour
+                .AddItem rng.Cells(i, 1).value
+                For colIndex = 2 To 9
+                    .List(.ListCount - 1, colIndex - 1) = rng.Cells(i, colIndex).value
+                Next colIndex
+            End With
+            totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
+            ' Calcul des heures facturables
+            If Fn_Is_Client_Facturable(rng.Cells(i, 14).value) Then
+                totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).value)
+            Else
+                totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).value)
+            End If
+        Next i
+    End If
+
+'    For i = 1 To rng.Rows.count
+'        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, wshAdmin.Range("B1").value)
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, wshAdmin.Range("B1").value & " hh:mm:ss")
+'        totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
+'        If Fn_Is_Client_Facturable(rng.Cells(i, 14).value) = True And rng.Cells(i, 8).value = "VRAI" Then
+'            totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).value)
+'        Else
+'            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).value)
+'        End If
+'    Next i
+    Application.ScreenUpdating = True
+
+    'Mise à jour des totaux
+    ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
+    ufSaisieHeures.txtHresFact.value = Format$(totalHresFact, "#0.00")
+    ufSaisieHeures.txtHresNF.value = Format$(totalHresNonFact, "#0.00")
+    
+    'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
+    Dim totalHresFactSemaine As Currency
+    Dim totalHresNonFactSemaine As Currency
+    
+    'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+    Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
+    dateCharge = ufSaisieHeures.txtDate.value
+    dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
+    dateDimanche = dateLundi + 6
+    Application.EnableEvents = False
+    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+    wshTEC_TDB_Data.Range("T7").value = dateLundi
+    Application.EnableEvents = True
+    wshTEC_TDB_Data.Range("U7").value = dateDimanche
+    
+    DoEvents
+    
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+    If lastRow > 1 Then
+        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
+        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
+    End If
+
+    ufSaisieHeures.txtHresFactSemaine.value = Format$(totalHresFactSemaine, "#0.00")
+    ufSaisieHeures.txtHresNFSemaine.value = Format$(totalHresNonFactSemaine, "#0.00")
+    
+    ufSaisieHeures.Repaint
+    
+    DoEvents '2024-08-12 @ 10:31
+    
+    Application.ScreenUpdating = True
+
+EndOfProcedure:
+
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+
+    ufSaisieHeures.txtClient.SetFocus
+    
+    'Libération et fin
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Set rng = Nothing
+    Set rngResult = Nothing
+    
+    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
+                        ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, startTime)
+    Exit Sub
+    
+ErrorHandler:
+
+    MsgBox "Erreur : " & Err.Description, vbCritical
+    Resume EndOfProcedure
+    
+End Sub
+
+Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriate records
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
+        ufSaisieHeures.txtProf_ID.value & "/" & ufSaisieHeures.txtDate.value, 0)
+
     If ufSaisieHeures.txtProf_ID.value = "" Or ufSaisieHeures.txtDate.value = "" Then
         GoTo EndOfProcedure
     End If
@@ -707,6 +854,51 @@ EndOfProcedure:
 End Sub
 
 Sub TEC_Update_TDB_From_TEC_Local()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", 0)
+
+    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
+    Dim lastUsedRow As Long
+    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
+    
+    'Charger en mémoire toutes les données source
+    Dim rawData As Variant
+    rawData = wsFrom.Range("A3:N" & lastUsedRow).value
+    
+    'Préparer le tableau des données à la sortie
+    Dim arr() As Variant
+    Dim numRows As Long: numRows = UBound(rawData, 1)
+    ReDim arr(1 To numRows, 1 To 11)
+    
+    Dim i As Long
+    For i = 1 To numRows
+        arr(i, 1) = rawData(i, 1) 'TEC_ID
+        arr(i, 2) = Format$(rawData(i, 2), "000") 'ProfID
+        arr(i, 3) = rawData(i, 3) 'Prof
+        arr(i, 4) = rawData(i, 4) 'Date
+        arr(i, 5) = rawData(i, 5) 'Client's ID
+        arr(i, 6) = rawData(i, 6) 'Client's Name
+        arr(i, 7) = IIf(Fn_Is_Client_Facturable(rawData(i, 6)), "VRAI", "FAUX") 'Facturable
+        arr(i, 8) = rawData(i, 8) 'Hours
+        arr(i, 9) = rawData(i, 10) 'isBillable
+        arr(i, 10) = rawData(i, 12) 'isInvoiced
+        arr(i, 11) = rawData(i, 14) 'isDeleted
+    Next i
+    
+    ' Mettre à jour la feuille TEC_TDB_Data
+    Dim rngTo As Range
+    Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
+    rngTo.value = arr
+    
+    'Libérer la mémoire
+    Set rngTo = Nothing
+    Set wsFrom = Nothing
+    
+    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", startTime)
+
+End Sub
+
+Sub TEC_Update_TDB_From_TEC_Local_OK()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", 0)
 

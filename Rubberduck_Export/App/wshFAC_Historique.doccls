@@ -99,7 +99,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         Call FAC_Historique_Montrer_Bouton
         Range(Target.Address).Interior.color = xlNone
-        Application.Goto Range("D6")
+        Application.GoTo Range("D6")
      End If
    
     'Dates Period change
@@ -161,7 +161,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -179,7 +179,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Historique_199")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

@@ -1,0 +1,45 @@
+2024-09-27 05:31:44|GuillaumeCharron|Add|1296|GC|27/09/24|1696|Photographie Benoit Blain Inc. [Kelly Cochelin]|modifier memo pour financement et poser questions à Kelly sur modalités|1,00|VRAI||2024-09-27 05:31:44
+2024-09-27 08:27:39|vgervais|Add|1297|VG|2024-09-27|5|z_Adiministratif_Autres non chargeables|Suivis de dossiers|0,50|VRAI||2024-09-27 08:27:39
+2024-09-27 08:28:41|vgervais|Add|1298|VG|2024-09-27|1348|Maurice Chiasson, CPA|Les immeubles Markl: courriel |0,20|VRAI||2024-09-27 08:28:41
+2024-09-27 08:28:49|vgervais|UPDATE|1297|VG|2024-09-27|5|z_Adiministratif_Autres non chargeables|Suivis de dossiers|0,50|FAUX||2024-09-27 08:28:49
+2024-09-27 08:30:20|GuillaumeCharron|Add|1299|GC|27/09/24|1611|Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine]|courriel sur consultation de Alexandre|0,25|VRAI||2024-09-27 08:30:20
+2024-09-27 08:57:54|GuillaumeCharron|Add|1300|GC|27/09/24|544|Patrick Bertrand|analyse des contrats et préparation des formulaires de divulgation de prête-nom + courriel|1,00|VRAI||2024-09-27 08:57:54
+2024-09-27 08:59:06|GuillaumeCharron|UPDATE|1300|GC|27/09/24|544|Patrick Bertrand|analyse des contrats et préparation des formulaires de divulgation de prête-nom + courriel|1,25|VRAI||2024-09-27 08:59:06
+2024-09-27 09:45:47|vgervais|Add|1301|VG|2024-09-27|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Répondre question de Laurent sur étast financiers + crédit livre|0,20|VRAI||2024-09-27 09:45:47
+2024-09-27 09:46:21|vgervais|Add|1302|VG|2024-09-27|1785|9172-2264 Québec Inc. [Technologies MFG]|Suivi avec Virginie pour les contrats |0,20|VRAI||2024-09-27 09:46:21
+2024-09-27 10:54:56|GuillaumeCharron|Add|1303|GC|27/09/24|1798|Mylène Lapierre CPA Inc.|révision du contrat de contrat de roulement et commentaires, préparation de tableaux de roulement et voir les modifications à apporter|2,00|VRAI||2024-09-27 10:54:56
+2024-09-27 10:59:28|GuillaumeCharron|UPDATE|1300|GC|27/09/24|544|Patrick Bertrand|analyse des contrats et préparation des formulaires de divulgation de prête-nom + courriel + finaliser et transmettre pour signature|1,75|VRAI||2024-09-27 10:59:28
+2024-09-27 11:09:46|GuillaumeCharron|Add|1304|GC|27/09/24|1142|Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient]|analyse de la lettre de CDC excédentaire reçu et voir prochaines étapes et analyse des courriels et courriel|0,50|VRAI||2024-09-27 11:09:46
+2024-09-27 11:28:16|vgervais|Add|1305|VG|2024-09-27|1193|Solstice CNC Inc. [Alexandre Desmarais]|Discussion Michel pour suivi JVM|0,20|VRAI||2024-09-27 11:28:16
+2024-09-27 11:28:54|GuillaumeCharron|Add|1306|GC|27/09/24|1561|9382-1890 Québec Inc. [Diane Doutre]|tel avec Diane sur mes commentaires sur EF|0,50|VRAI||2024-09-27 11:28:54
+2024-09-27 11:28:57|vgervais|UPDATE|1297|VG|2024-09-27|5|z_Adiministratif_Autres non chargeables|Suivis de dossiers + discussion Michel divers (Calcul de JVM) et suivis des dossiers poiur la JVM|0,80|FAUX||2024-09-27 11:28:57
+2024-09-27 11:46:12|GuillaumeCharron|Add|1307|GC|27/09/24|1566|9310-7761 Québec Inc. [Pretech]|tel avec MRQ sur demande pour les factures d'honoraires et problématiques|0,50|VRAI||2024-09-27 11:46:12
+2024-09-27 11:55:35|vgervais|Add|1308|VG|2024-09-27|1739|Groupe Coalitech Inc. [Techvac Équipement]|DIfférentes analyse + Suivi JVM calcul avec Michel + préparer étapte du mémo|2,30|VRAI||2024-09-27 11:55:35
+2024-09-27 12:19:21|GuillaumeCharron|Add|1309|GC|27/09/24|1760|9516-0966 Québec Inc. [Anthony Bergeron]|courriel sur infos en attente|0,40|VRAI||2024-09-27 12:19:21
+2024-09-27 12:25:38|GuillaumeCharron|Add|1310|GC|27/09/24|1731|Les Toitures C.B.C. Inc. [Francis Bélanger]|textos avec Katie sur le fait de faire des chèques par compte conjoint|0,40|VRAI||2024-09-27 12:25:38
+2024-09-27 12:29:06|GuillaumeCharron|Add|1311|GC|27/09/24|1780|9112-9031 Québec Inc. [Guy Béland]|courriels avec les avocats des acheteurs|0,50|VRAI||2024-09-27 12:29:06
+2024-09-27 13:07:45|GuillaumeCharron|Add|1312|GC|27/09/24|1793|9063-6580 Québec Inc. [Le Lunettier]|révision et modification de l'évaluation de la société|0,75|VRAI||2024-09-27 13:07:45
+2024-09-27 13:08:51|GuillaumeCharron|UPDATE|1312|GC|27/09/24|1793|9063-6580 Québec Inc. [Le Lunettier]|révision et modification de l'évaluation de la société|1,00|VRAI||2024-09-27 13:08:51
+2024-09-27 13:27:42|GuillaumeCharron|Add|1313|GC|27/09/24|1611|Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine]|révision de la lettre d'intention et commentaires|1,00|VRAI||2024-09-27 13:27:42
+2024-09-27 14:19:22|vgervais|Add|1314|VG|2024-09-27|1793|9063-6580 Québec Inc. [Le Lunettier]|Finaliser le mémoradum avec la nouvelle JVM|0,80|VRAI||2024-09-27 14:19:22
+2024-09-27 14:25:47|GuillaumeCharron|Add|1315|GC|27/09/24|1739|Groupe Coalitech Inc. [Techvac Équipement]|analyse de JVM avec Michel|1,00|VRAI||2024-09-27 14:25:47
+2024-09-27 14:43:01|GuillaumeCharron|Add|1316|GC|27/09/24|1506|Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault]|tel sur facturation|0,75|VRAI||2024-09-27 14:43:01
+2024-09-27 14:43:25|GuillaumeCharron|UPDATE|1316|GC|27/09/24|1506|Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault]|tel sur facturation et sur liquidités vs qualification à exo|0,75|VRAI||2024-09-27 14:43:25
+2024-09-27 14:55:26|vgervais|UPDATE|1297|VG|2024-09-27|5|z_Adiministratif_Autres non chargeables|Suivis de dossiers + discussion Michel divers (Calcul de JVM) et suivis des dossiers poiur la JVM|1,00|FAUX||2024-09-27 14:55:26
+2024-09-27 14:55:58|vgervais|UPDATE|1301|VG|2024-09-27|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Répondre question de Laurent sur étast financiers + crédit livre + suivi Laurent Co-17 envoyé par erreur|0,30|VRAI||2024-09-27 14:55:58
+2024-09-27 14:56:24|vgervais|UPDATE|1308|VG|2024-09-27|1739|Groupe Coalitech Inc. [Techvac Équipement]|DIfférentes analyse + Suivi JVM calcul avec Michel + préparer étapte du mémo + Discussion avec Michel pour JVM|2,50|VRAI||2024-09-27 14:56:24
+2024-09-27 15:40:42|GuillaumeCharron|Add|1317|GC|27/09/24|1740|Les Équipements Cofa Inc. [Olivier Bertrand]|révision de la documentation juridique|2,00|VRAI||2024-09-27 15:40:42
+2024-09-27 15:44:18|vgervais|Add|1318|VG|2024-09-27|1780|9112-9031 Québec Inc. [Guy Béland]|Voir les clauses du contrat + discussion avec Daniel Grondin |0,70|VRAI||2024-09-27 15:44:18
+2024-09-27 15:46:37|GuillaumeCharron|Add|1319|GC|27/09/24|1779|9098-2885 Québec Inc. [Denis Bisson]|fait suivi de ce qu'il manque en date d'aujourd'hui et courriel à tous|0,50|VRAI||2024-09-27 15:46:37
+2024-09-27 15:56:12|GuillaumeCharron|Add|1320|GC|27/09/24|1533|Lostocch Holdings Inc. [Lorenzo Stocchero]|révision des CDC modifiés et courriel de directives à Yves et juristes pour la date de mise en place|0,75|VRAI||2024-09-27 15:56:12
+2024-09-27 16:38:47|vgervais|Add|1321|VG|2024-09-27|1624|Gestion Proped Inc. [Louis Villeneuve]|Suivi contrat + modif mémo|0,50|VRAI||2024-09-27 16:38:47
+2024-09-27 16:51:27|GuillaumeCharron|UPDATE|1313|GC|27/09/24|1611|Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine]|révision de la lettre d'intention et commentaires + tel avec Daniel et Annie pour explications|1,50|VRAI||2024-09-27 16:51:27
+2024-09-27 16:51:53|GuillaumeCharron|Add|1322|GC|27/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|révision des évaluations et courriels|2,00|VRAI||2024-09-27 16:51:53
+2024-09-27 16:58:19|User|Add|1323|ML|2024-09-27|1193|Solstice CNC Inc. [Alexandre Desmarais]|Correction des évaluations de Solstice, Sogesco et Usinage Universel|3,75|VRAI||2024-09-27 16:58:19
+2024-09-27 16:58:38|User|Add|1324|ML|2024-09-27|1793|9063-6580 Québec Inc. [Le Lunettier]|Prise de connaissance des corrections de l'évaluation|0,50|VRAI||2024-09-27 16:58:38
+2024-09-27 16:59:29|vgervais|UPDATE|1321|VG|2024-09-27|1624|Gestion Proped Inc. [Louis Villeneuve]|Suivi contrat + modif mémo + suivi CDC + roulement|0,70|VRAI||2024-09-27 16:59:29
+2024-09-27 17:01:16|GuillaumeCharron|UPDATE|1322|GC|27/09/24|1193|Solstice CNC Inc. [Alexandre Desmarais]|révision des évaluations et courriels|2,25|VRAI||2024-09-27 17:01:16
+2024-09-27 17:01:52|User|Add|1325|ML|2024-09-27|1739|Groupe Coalitech Inc. [Techvac Équipement]|Évaluation première ébauche et demande de documents aux clients|2,00|VRAI||2024-09-27 17:01:52
+2024-09-27 17:02:33|User|Add|1326|ML|2024-09-27|1624|Gestion Proped Inc. [Louis Villeneuve]|Montage du CDC d'Alexandre Villeneuve (Analyse et formation de Vlad)|1,75|VRAI||2024-09-27 17:02:33
+2024-09-27 17:26:10|vgervais|UPDATE|1301|VG|2024-09-27|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Répondre question de Laurent sur étast financiers + crédit livre + suivi Laurent Co-17 envoyé par erreur + révision 2 e version projet|1,30|VRAI||2024-09-27 17:26:10
+2024-09-27 17:26:45|vgervais|Add|1327|VG|2024-09-27|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|Mettre mémorandum à jour|1,20|VRAI||2024-09-27 17:26:45

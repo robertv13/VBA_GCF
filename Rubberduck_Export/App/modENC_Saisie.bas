@@ -183,18 +183,18 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         End If
                 
         'Prepare G/L posting
-        Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
+        Dim noEnc As String, nomCLient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
         noEnc = wshENC_Saisie.pmtNo
         dateEnc = wshENC_Saisie.Range("K5").value
-        nomClient = wshENC_Saisie.Range("F5").value
+        nomCLient = wshENC_Saisie.Range("F5").value
         typeEnc = wshENC_Saisie.Range("F7").value
         montantEnc = wshENC_Saisie.Range("K7").value
         descEnc = wshENC_Saisie.Range("F9").value
 
-        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
-        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
         MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
@@ -508,7 +508,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
 
 End Sub
 
-Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, DESC As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", 0)
     
@@ -566,7 +566,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         End If
         rs.Fields("Compte").value = "Encaisse" 'Hardcoded
         rs.Fields("Débit").value = montant
-        rs.Fields("AutreRemarque").value = DESC
+        rs.Fields("AutreRemarque").value = desc
         rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     rs.update
     
@@ -585,7 +585,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields("No_Compte").value = "1100" 'Hardcoded
         rs.Fields("Compte").value = "Comptes clients" 'Hardcoded
         rs.Fields("Crédit").value = montant
-        rs.Fields("AutreRemarque").value = DESC
+        rs.Fields("AutreRemarque").value = desc
         rs.Fields("TimeStamp").value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     rs.update
 
@@ -607,7 +607,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
 End Sub
 
-Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, DESC As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", 0)
     
@@ -637,7 +637,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
             .Range("F" & rowToBeUsed).value = "Encaisse" 'Hardcoded
         End If
         .Range("G" & rowToBeUsed).value = montant
-        .Range("I" & rowToBeUsed).value = DESC
+        .Range("I" & rowToBeUsed).value = desc
         .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     
@@ -654,7 +654,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         .Range("E" & rowToBeUsed).value = "1100" 'Hardcoded
         .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
         .Range("H" & rowToBeUsed).value = montant
-        .Range("I" & rowToBeUsed).value = DESC
+        .Range("I" & rowToBeUsed).value = desc
         .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
     

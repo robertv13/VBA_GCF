@@ -141,7 +141,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Sommaire_Taux")
     
-    Call FAC_Entête_Import_All
+    Call FAC_Sommaire_Taux_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
     r = r + 1
@@ -2254,7 +2254,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 '    arr = ws.Range("A1").CurrentRegion.Offset(1)
     Dim dict_TEC_ID As New Dictionary
     
-    Dim i As Long, TECID As Long, profID As String, Prof As String, dateTEC As Date, clientCode As String
+    Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
     Dim minDate As Date, maxDate As Date
     Dim hres As Double, hres_non_detruites As Double
     Dim estDetruit As Boolean, estFacturable As Boolean, estFacturee As Boolean
@@ -2489,7 +2489,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 '    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3003 'What is the last TECID analyzed ?
+    lastTECIDReported = 3106 'What is the last TECID analyzed ?
 
     'wshTEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -2539,11 +2539,11 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Next i
     End If
     
-    Dim TECID As Long, profID As String, Prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
+    Dim TECID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
     Dim d As Integer, m As Integer, Y As Integer, p As Integer
-    Dim codeClient As String, nomClient As String
+    Dim codeClient As String, nomCLient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
@@ -2582,7 +2582,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         'ProfessionnelID
         profID = arr(i, 2)
         'Professionnel
-        Prof = arr(i, 3)
+        prof = arr(i, 3)
         'Date
         dateTEC = arr(i, 4)
         testDate = IsDate(dateTEC)
@@ -2610,7 +2610,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le code de client '" & codeClient & "' est INVALIDE !!!")
             r = r + 1
         End If
-        nomClient = arr(i, 6)
+        nomCLient = arr(i, 6)
         hres = arr(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
@@ -2753,7 +2753,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         If h(1) - h(2) <> h(3) + h(4) Then
-            Debug.Print "#020 - " & i & " Écart - " & TECID & " " & Prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
+            Debug.Print "#020 - " & i & " Écart - " & TECID & " " & prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
             Stop
         End If
         
@@ -2765,8 +2765,8 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
-        If dict_prof.Exists(Prof & "-" & profID) = False Then
-            dict_prof.Add Prof & "-" & profID, 0
+        If dict_prof.Exists(prof & "-" & profID) = False Then
+            dict_prof.Add prof & "-" & profID, 0
         End If
     Next i
     
@@ -3543,10 +3543,10 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef minutes As Long, ByRef secondes As Long)
     
     'Créer une instance de FileSystemObject
-    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
     
     'Obtenir le fichier
-    Dim fichier As Object: Set fichier = fso.GetFile(fileName)
+    Dim fichier As Object: Set fichier = FSO.GetFile(fileName)
     
     'Récupérer la date et l'heure de la dernière modification
     ddm = fichier.DateLastModified
@@ -3563,7 +3563,7 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
     ' Libérer les objets
     Set fichier = Nothing
-    Set fso = Nothing
+    Set FSO = Nothing
     
 End Sub
 

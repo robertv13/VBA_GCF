@@ -1,0 +1,13 @@
+User|2024-09-12 11:54:56|Add|970|ML|2024-10-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|2,75||FAUX
+User|2024-09-12 11:55:42|Add|971|ML|2024-11-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|4,75||FAUX
+User|2024-09-12 11:56:12|Add|972|ML|2024-11-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Mise-à-jour de l'évaluation au 30 juin 2024 et discussion avec Vladimir sur le dossier|2,75||VRAI
+User|2024-09-12 16:15:50|Add|970|ML|2024-12-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|1,50||FAUX
+User|2024-09-12 16:16:20|Add|971|ML|2024-12-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Révision du dossier et appel au comptable|0,50||VRAI
+User|2024-09-12 16:16:50|Add|972|ML|2024-12-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|1,00||FAUX
+User|2024-09-12 16:17:20|Add|973|ML|2024-12-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Discussion avec Joannie et Yvan. Examen du dossier de P. Morin et appel à Marinoel Jetté pour obtenir des informations et des documents.|0,75||VRAI
+User|2024-09-12 16:17:53|Add|974|ML|2024-12-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Recherche des actions E dans le livre des minutes|0,50||VRAI
+User|2024-09-12 16:18:31|Add|975|ML|2024-12-09|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|Discussion avec Laurent Harvey le CPA de la société|0,50||VRAI
+User|2024-09-12 16:19:15|Add|976|ML|2024-12-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Correction du ficher Taxprep et montage du roulement étape 10 + écriture d'une procédure pour le futur|1,75||VRAI
+User|2024-09-12 16:44:51|Add|977|ML|2024-12-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Correction du ficher Taxprep et montage du roulement étape 11|0,50||VRAI
+User|2024-09-12 16:45:42|Add|978|ML|2024-12-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|1,00||FAUX
+Annie|2024-09-12 17:05:43|Add|970|AR|2024-12-09|2018|Constructions Gilles Garry Inc.|Fichier Excellence|4.75||VRAI
