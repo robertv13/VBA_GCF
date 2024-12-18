@@ -53,7 +53,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     End If
 
     Application.EnableEvents = True
-    
+
     'Initialiser le dictionnaire pour les résultats (Nom du client, Solde)
     Dim dictClients As Object ' Utilisez un dictionnaire pour stocker les résultats
     Set dictClients = CreateObject("Scripting.Dictionary")
@@ -75,7 +75,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     Dim ageFacture As Long, i As Long, r As Long
     
     Application.EnableEvents = False
-    
+
     r = 8
     For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
@@ -84,7 +84,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
         End If
-        'Est-ce que la facture est à l'intérieur e la date limite ?
+        'Est-ce que la facture est à l'intérieur de la date limite ?
         dateFacture = rngFactures.Cells(i, 2).value
         If rngFactures.Cells(i, 2).value > CDate(wshCAR_Liste_Agée.Range("H4").value) Then
             Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, 2).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value

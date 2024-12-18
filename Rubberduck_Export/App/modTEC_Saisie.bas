@@ -601,7 +601,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     On Error GoTo ErrorHandler
     Application.ScreenUpdating = False
     Application.EnableEvents = False
-    Application.Calculation = xlCalculationManual
+'    Application.Calculation = xlCalculationManual
 
    If ufSaisieHeures.txtProf_ID.value = "" Or Not IsDate(ufSaisieHeures.txtDate.value) Then
         MsgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
@@ -676,7 +676,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 '            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).value)
 '        End If
 '    Next i
-    Application.ScreenUpdating = True
+'    Application.ScreenUpdating = True
 
     'Mise à jour des totaux
     ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
@@ -725,7 +725,7 @@ EndOfProcedure:
     'Libération et fin
     Application.ScreenUpdating = True
     Application.EnableEvents = True
-    Application.Calculation = xlCalculationAutomatic
+'    Application.Calculation = xlCalculationAutomatic
     Set rng = Nothing
     Set rngResult = Nothing
     
@@ -878,7 +878,7 @@ Sub TEC_Update_TDB_From_TEC_Local()
         arr(i, 4) = rawData(i, 4) 'Date
         arr(i, 5) = rawData(i, 5) 'Client's ID
         arr(i, 6) = rawData(i, 6) 'Client's Name
-        arr(i, 7) = IIf(Fn_Is_Client_Facturable(rawData(i, 6)), "VRAI", "FAUX") 'Facturable
+        arr(i, 7) = IIf(Fn_Is_Client_Facturable(rawData(i, 5)), "VRAI", "FAUX") 'Facturable
         arr(i, 8) = rawData(i, 8) 'Hours
         arr(i, 9) = rawData(i, 10) 'isBillable
         arr(i, 10) = rawData(i, 12) 'isInvoiced

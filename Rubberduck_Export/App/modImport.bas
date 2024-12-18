@@ -1,60 +1,6 @@
 Attribute VB_Name = "modImport"
 Option Explicit
 
-'CommentOut - 2024-11-20 @ 07:11
-'Sub Admin_Import_Worksheet() '2024-07-02 @ 10:14
-'
-'    'Save the shared data folder name
-'    Dim saveDataPath As String
-'    saveDataPath = wshAdmin.Range("F5").value & DATA_PATH
-'
-'    'Define the target workbook and sheet names
-'    Dim targetWorkbook As Workbook: Set targetWorkbook = ThisWorkbook
-'    Dim targetSheetName As String
-'    targetSheetName = "Admin"
-'    Dim sourceSheetName As String
-'    sourceSheetName = "Admin_Master"
-'
-'    'Open the source workbook
-'    Application.ScreenUpdating = False
-'    Application.DisplayAlerts = False
-'    Dim sourceWorkbook As Workbook: Set sourceWorkbook = _
-'        Workbooks.Open(saveDataPath & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
-'
-'    Debug.Print "#066 - Source     : " & sourceWorkbook.Name & " with " & sourceSheetName
-'    Debug.Print "#067 - Destination: " & targetWorkbook.Name & " with " & targetSheetName
-'
-'    'Copy the source worksheet
-'    sourceWorkbook.Sheets(sourceSheetName).Copy Before:=targetWorkbook.Sheets(2)
-'    Debug.Print "#068 - The new sheet is created..."
-'    Dim tempSheet As Worksheet: Set tempSheet = targetWorkbook.Sheets(2)
-'    tempSheet.Name = "TempSheetName"
-'    Debug.Print "#069 - The new sheet is now called 'TempSheetName'"
-'
-'    'Delete the old (target) worksheet
-'    Debug.Print "#070 - About to delete '" & targetSheetName & "'"
-'    targetWorkbook.Sheets(targetSheetName).Delete
-'
-'    'Rename the copied worksheet to the target worksheet name
-'    tempSheet.Name = targetSheetName
-'
-''    'Change the code name of the worksheet
-''    Dim vbaProject As Object: Set vbaProject = targetWorkbook.VBProject
-''    Dim vbaComponent As Object: Set vbaComponent = vbaProject.VBComponents("Feuil2")
-''    vbaComponent.Properties("_CodeName").value = "wshADMIN"
-'
-'    'Close the source workbook
-'    sourceWorkbook.Close SaveChanges:=False
-'    Application.DisplayAlerts = True
-'    Application.ScreenUpdating = True
-'
-'    'Cleaning - 2024-07-02 @ 14:27
-'    Set sourceWorkbook = Nothing
-'    Set targetWorkbook = Nothing
-'    Set tempSheet = Nothing
-'
-'End Sub
-'
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", 0)
@@ -139,6 +85,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Copier le recSet vers wsLocal
     wsLocal.Range("A2").CopyFromRecordset recSet
+    
+    'Redimensionner le tableau & appliquer le format
+    Dim tableName As String
+    tableName = "l_tbl_BD_Clients"
+    
+    Call ResizeTable(wsLocal, tableName)
+    Call ApplyFormatting(wsLocal, tableName)
     
 '    'Redimensionner le tableau local
 '    Dim tblLocal As ListObject
@@ -587,6 +540,90 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
     
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+
+    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    
+    'Clear all cells, but the headers, in the target worksheet
+    ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+
+    'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER.xlsx"
+    sourceTab = "FAC_Projets_Détails$"
+                     
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
+    'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
+    recSet.ActiveConnection = connStr
+    recSet.CursorType = adOpenStatic
+    recSet.LockType = adLockReadOnly
+    recSet.source = "SELECT * FROM [" & sourceTab & "]"
+    recSet.Open
+    
+    'Copy all rows to wshFAC_Projets_Détails workbook
+    If recSet.RecordCount > 0 Then
+        ws.Range("A2").CopyFromRecordset recSet
+    End If
+
+    Dim dataRange As Range
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
+        Set dataRange = ws.Range("A2:A" & lastRow)
+    End If
+    
+    'Enlever les lignes qui doivent être enlevées
+    With ws
+        .Range("A1").AutoFilter Field:=9, Criteria1:="=VRAI", Operator:=xlOr, Criteria2:=-1
+        On Error Resume Next
+        .Rows("2:" & lastRow).SpecialCells(xlCellTypeVisible).Delete
+        On Error GoTo 0
+        .AutoFilterMode = False
+    End With
+    
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
+        Set dataRange = ws.Range("A1").CurrentRegion
+        Call ApplyWorksheetFormat(wshFAC_Projets_Détails, dataRange, 1)
+    End If
+    
+    'Libérer la mémoire
+    If Not connStr Is Nothing Then
+        If connStr.state = adStateOpen Then connStr.Close
+        Set connStr = Nothing
+    End If
+    If Not recSet Is Nothing Then
+        If recSet.state = adStateOpen Then recSet.Close
+        Set recSet = Nothing
+    End If
+    Set dataRange = Nothing
+    Set ws = Nothing
+    
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modImport:FAC_Projets_Détails_Import_All", startTime)
+
+End Sub
+
+Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
+    
     Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
     
     'Clear all cells, but the headers, in the target worksheet
@@ -955,4 +992,67 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
 
 End Sub
 
+Sub ResizeTable(targetSheet As Worksheet, tableName As String)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", 0)
+
+    Dim tbl As ListObject
+    Dim lastRow As Long
+    Dim lastCol As Long
+    
+    ' Trouver le tableau
+    Set tbl = targetSheet.ListObjects(tableName)
+    
+    ' Déterminer la dernière ligne et colonne des nouvelles données
+    With targetSheet
+        lastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
+        lastCol = .Cells(tbl.Range.row, .Columns.count).End(xlToLeft).Column
+    End With
+    
+    ' Redimensionner la plage du tableau
+    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
+    
+    Call Log_Record("modImport:ResizeTable", startTime)
+
+End Sub
+
+Sub ApplyFormatting(targetSheet As Worksheet, tableName As String)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ApplyFormatting", 0)
+    
+    Dim tbl As ListObject
+    
+    ' Identifier le tableau
+    Set tbl = targetSheet.ListObjects(tableName)
+    
+    ' Appliquer un style existant au tableau
+    tbl.tableStyle = "TableStyleMedium2" ' Modifier selon le style souhaité
+    
+    ' Appliquer des formats additionnels si nécessaire
+'    With tbl.DataBodyRange
+'        .Font.Bold = False
+'        .HorizontalAlignment = xlCenter
+'    End With
+
+    Call Log_Record("modImport:ApplyFormatting", startTime)
+    
+End Sub
+
+Sub GetTableStyleName()
+
+    Dim ws As Worksheet
+    Dim tbl As ListObject
+    Dim tableStyle As String
+    
+    ' Spécifiez la feuille et le tableau
+    Set ws = wshBD_Clients ' Remplacez par le nom de votre feuille
+    Set tbl = ws.ListObjects("l_tbl_BD_Clients") ' Remplacez par le nom de votre tableau
+    
+    ' Récupérer le style du tableau
+    tableStyle = tbl.tableStyle
+    
+    ' Afficher le style dans une MsgBox
+    MsgBox "Le style du tableau '" & tbl.Name & "' est : " & tableStyle, vbInformation
+    
+End Sub
 

@@ -11,29 +11,41 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
     
     'Clear the worksheet from row 5 until the last row used
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, "B").End(xlUp).row
-    If destLastUsedRow < 5 Then destLastUsedRow = 5
-    wsDest.Range("A5:I" & destLastUsedRow).Clear
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La zone A5:I" & destLastUsedRow & " a été effacée", -1)
+    If destLastUsedRow < 6 Then destLastUsedRow = 6
+    wsDest.Range("A6:I" & destLastUsedRow).Clear
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La zone A5:I" & destLastUsedRow & " a été effacée", -1)
     
-    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    'Créer un dict pour tous les clients FACTURABLES
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
     Dim lastUsedRowClient
     lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.Rows.count, "B").End(xlUp).row
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
+    Dim clientData As Variant
+    'Charger toutes les données des clients dans un tableau
+    clientData = wsClientsMF.Range(wsClientsMF.Cells(2, fClntMFClient_ID), _
+                               wsClientsMF.Cells(lastUsedRowClient, fClntMFClientNom)).value
+
+    ' Parcourir le tableau pour ajouter les clients facturables au dictionnaire
     Dim i As Long
-    For i = 2 To lastUsedRowClient
-        'On ne considère que les clients FACTURABLES
-        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, fClntMFClient_ID).value) = True Then
-            dictClients.Add CStr(wsClientsMF.Cells(i, fClntMFClient_ID).value), wsClientsMF.Cells(i, fClntMFClientNom).value
+    For i = 1 To UBound(clientData, 1)
+        If Fn_Is_Client_Facturable(clientData(i, 2)) = True Then
+            dictClients.Add CStr(clientData(i, 2)), clientData(i, 1)
         End If
     Next i
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le dictClients a été créé", -1)
+
+'    For i = 2 To lastUsedRowClient
+'        'On ne considère que les clients FACTURABLES
+'        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, fClntMFClient_ID).value) = True Then
+'            dictClients.Add CStr(wsClientsMF.Cells(i, fClntMFClient_ID).value), wsClientsMF.Cells(i, fClntMFClientNom).value
+'        End If
+'    Next i
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le dictClients a été créé", -1)
 
     'Calculate the center of the used range
     Dim centerX As Double, centerY As Double
@@ -72,7 +84,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 15 %", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 15 %", -1)
     
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
@@ -98,57 +110,51 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
     
-    Dim r As Long
-    r = 6
     Application.EnableEvents = False
     
     'Appel à AdvancedFilter # 2 dans TEC_Local
     Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").value)), "VRAI", "FAUX", "FAUX")
     
-'CommentOut - 2024-11-19 @ 10:22
-'    'TEC_Local - AdvancedFilter - 2024-11-01 @ 12:27
-'    Dim rngSource As Range
-'    Set rngSource = wsSource.Range("A2:P" & lastUsedRow)
-'
-'    Dim rngCriteria As Range
-'    Set rngCriteria = wsSource.Range("AK2:AO3")
-'    With wsSource
-'        .Range("AK3").value = ""
-'        .Range("AL3").value = "<=" & CLng(CDate(wsDest.Range("H3").value))
-'        .Range("AM3").value = "VRAI"
-'        .Range("AN3").value = "FAUX"
-'        .Range("AO3").value = "FAUX"
-'    End With
-'
-'    Dim rngResult As Range
-'    Set rngResult = wsSource.Range("AQ3").CurrentRegion.Offset(2, 0)
-'    rngResult.ClearContents
-'    Set rngResult = wsSource.Range("AQ2:BE2")
-'
-'    rngSource.AdvancedFilter xlFilterCopy, rngCriteria, rngResult, True
-    
     Dim lastUsedResult As Long
     lastUsedResult = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
     
-    For i = 3 To lastUsedResult
-        'Conditions for exclusion (adjust as needed)
-        If Fn_Is_Client_Facturable(wsSource.Cells(i, "AU")) = True Then
-            'Get clients's name from MasterFile
-            Dim codeClient As String, nomClientFromMF As String
-            codeClient = wsSource.Cells(i, "AU").value
+    'Charger les données sources dans un tableau (beaucoup plus rapide)
+    Dim sourceData As Variant
+    Dim rowCount As Long
+    sourceData = wsSource.Range("AQ3:AX" & lastUsedResult).value
+    rowCount = UBound(sourceData, 1)
+
+    'Initialiser un tableau pour les données de sortie (beaucoup plus rapide)
+    Dim outputData() As Variant
+    ReDim outputData(1 To rowCount, 1 To 8)
+    
+    Dim r As Long: r = 1
+    Dim codeClient As String, nomClientFromMF As String
+    
+    For i = 1 To rowCount
+        'Vérifier la condition d'exclusion
+        If dictClients.Exists(sourceData(i, 5)) Then
+            codeClient = sourceData(i, 5)
             nomClientFromMF = dictClients(codeClient)
-            wsDest.Cells(r, 1).value = wsSource.Cells(i, "AQ").value
-            wsDest.Cells(r, 2).value = wsSource.Cells(i, "AR").value
-            wsDest.Cells(r, 3).value = nomClientFromMF
-            wsDest.Cells(r, 5).value = wsSource.Cells(i, "AT").value
-            wsDest.Cells(r, 5).NumberFormat = wshAdmin.Range("B1").value
-            wsDest.Cells(r, 6).value = wsSource.Cells(i, "AS").value
-            wsDest.Cells(r, 7).value = wsSource.Cells(i, "AW").value
-            wsDest.Cells(r, 8).value = wsSource.Cells(i, "AX").value
-            wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
+            'Ajouter les données au tableau de sortie
+            outputData(r, 1) = sourceData(i, 1)
+            outputData(r, 2) = sourceData(i, 2)
+            outputData(r, 3) = nomClientFromMF
+            outputData(r, 5) = sourceData(i, 4)
+            outputData(r, 6) = sourceData(i, 3)
+            outputData(r, 7) = sourceData(i, 7)
+            outputData(r, 8) = sourceData(i, 8)
             r = r + 1
         End If
     Next i
+    
+    'Écrire les données de sortie dans la feuille & formater quelques colonnes
+    If r > 1 Then
+        wsDest.Range("A7:H" & r - 1 + 6).value = outputData
+        'Formats
+        wsDest.Range("E7:F" & r - 1 + 6).HorizontalAlignment = xlCenter
+        wsDest.Range("H7:H" & r - 1 + 6).NumberFormat = "#,##0.00"
+    End If
     
     Application.EnableEvents = False
    
@@ -161,26 +167,26 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 45 %", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 45 %", -1)
    
     'Find the last row in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
 
     'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.Clear
-    wsDest.Sort.SortFields.Add key:=wsDest.Range("C6:C" & destLastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.Add key:=wsDest.Range("E6:E" & destLastUsedRow), Order:=xlAscending
-    wsDest.Sort.SortFields.Add key:=wsDest.Range("B6:B" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("C7:C" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("E7:E" & destLastUsedRow), Order:=xlAscending
+    wsDest.Sort.SortFields.Add key:=wsDest.Range("B7:B" & destLastUsedRow), Order:=xlAscending
     
     With wsDest.Sort
-        .SetRange wsDest.Range("A6:I" & destLastUsedRow)
+        .SetRange wsDest.Range("A7:I" & destLastUsedRow)
         .Header = xlNo
         .MatchCase = False
         .Orientation = xlTopToBottom
         .SortMethod = xlPinYin
         .Apply
     End With
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les données sont triées", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les données sont triées", -1)
     
     'Update the progress bar fill
     progressBarFill.Width = 0.6 * barWidth  '60 %
@@ -191,25 +197,25 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 60 % (dernière étape avant le GroupBy...", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 60 % (dernière étape avant le GroupBy...", -1)
     
     'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
     Application.DisplayAlerts = False
-    wsDest.Range("A5:H" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
+    wsDest.Range("A6:H" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
             TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
     Application.DisplayAlerts = True
     wsDest.Range("A:B").EntireColumn.Hidden = True
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le GroupBy est complété", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le GroupBy est complété", -1)
 
     'Group the data to show subtotals in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
     wsDest.Outline.ShowLevels RowLevels:=2
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le 'ShowLevels est ajusté à 2", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le 'ShowLevels est ajusté à 2", -1)
     
     'Add a formula to sum the billed amounts at the top row
-    wsDest.Range("D6").formula = "=SUM(D7:D" & destLastUsedRow & ")"
-    wsDest.Range("D6").NumberFormat = "#,##0.00 $"
+    wsDest.Range("D7").formula = "=SUM(D8:D" & destLastUsedRow & ")"
+    wsDest.Range("D7").NumberFormat = "#,##0.00 $"
     
     'Update the progress bar fill
     progressBarFill.Width = 0.75 * barWidth  '75 %
@@ -220,10 +226,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 75 %", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 75 %", -1)
     
     'Change the format of the top row (Total General)
-    With wsDest.Range("C6:D6")
+    With wsDest.Range("C7:D7")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -240,7 +246,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     End With
     
     'Change the format of the top row (Hours)
-    With wsDest.Range("H6")
+    With wsDest.Range("H7")
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -258,7 +264,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     End With
     
     'Change the format of all Client's Total rows
-    For r = 6 To destLastUsedRow
+    For r = 7 To destLastUsedRow
         If wsDest.Range("A" & r).value = "" Then
             With wsDest.Range("C" & r).Interior
                 .Pattern = xlSolid
@@ -289,7 +295,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             End If
         End If
     Next r
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les ajustements de format ont été complétés", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les ajustements de format ont été complétés", -1)
     
     'Update the progress bar fill
     progressBarFill.Width = 0.85 * barWidth  '85 %
@@ -300,30 +306,28 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     DoEvents  'Allow Excel to process other events
     Application.ScreenUpdating = False
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 85 %", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 85 %", -1)
     
     'Set conditional formats for total hours (Client's total)
-    Dim rngTotals As Range: Set rngTotals = wsDest.Range("C7:C" & destLastUsedRow)
+    Dim rngTotals As Range: Set rngTotals = wsDest.Range("C8:C" & destLastUsedRow)
     Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La mise en forme conditionnelle est en place", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La mise en forme conditionnelle est en place", -1)
     
     'Bring in all the invoice requests
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Obtenir les requêtes de factures existantes", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Obtenir les requêtes de factures existantes", -1)
     
     'Clean up the summary area of the worksheet
     Call Clean_Up_Summary_Area(wsDest)
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
     
     'Update the progress bar fill
     progressBarFill.Width = 0.95 * barWidth   '95 %
     'Update the caption on the background shape
     progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.95, "0%")
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 95 %", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 95 %", -1)
     
-    'Introduce a small delay to ensure the worksheet is fully updated
     DoEvents
-    Application.Wait (Now + TimeValue("0:00:01")) '2024-07-23 @ 16:13 - Slowdown the application
         
     'Temporarily enable screen updating to show the progress bar
     Application.ScreenUpdating = True
@@ -332,20 +336,9 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     progressBarBg.Delete
     progressBarFill.Delete
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les ProgressBar sont éliminées", -1)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
-    
-'CommenOut - 2024-11-14
-'    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
-'    With ActiveWindow.Panes(2)
-'        .ScrollRow = 7
-'    End With
-    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La zone de 'Scroll' commence sur la ligne 7", -1)
-    
-    'Optionnel : Sélectionne la cellule I7
-'    Range("I7").Select
     
     'Libérer la mémoire
     Set dictClients = Nothing
@@ -435,7 +428,7 @@ End Sub
 
 Sub Build_Hours_Summary(rowSelected As Long)
 
-    If rowSelected < 7 Then Exit Sub
+    If rowSelected < 8 Then Exit Sub
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -937,6 +930,8 @@ End Sub
 
 Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", 0)
+    
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     Application.EnableEvents = False
@@ -954,6 +949,8 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     'Libérer la mémoire
     Set Sh = Nothing
     Set ws = Nothing
+    
+    Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", startTime)
     
 End Sub
 
@@ -1016,7 +1013,6 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", 0)
     
     Call Clear_Fees_Summary_And_CheckBox
-    Call Log_Record("     wshTEC_Analyse:Back_To_TEC_Menu - La zone Sommaire des Honoraires a été nettoyée", -1)
     
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).row

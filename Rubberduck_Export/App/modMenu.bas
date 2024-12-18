@@ -1,8 +1,13 @@
 Attribute VB_Name = "modMenu"
 Option Explicit
 
-'Execute the next menu (next level)
-Sub menuTEC_Click()
+Sub shpMenuTEC_Click()
+
+    Call menuTEC
+    
+End Sub
+
+Sub menuTEC()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", 0)
     
@@ -14,7 +19,13 @@ Sub menuTEC_Click()
 
 End Sub
 
-Sub menuFacturation_Click()
+Sub shpMenuFacturation_Click()
+
+    Call menuFacturation
+
+End Sub
+
+Sub menuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", 0)
     
@@ -35,7 +46,13 @@ Sub menuFacturation_Click()
 
 End Sub
 
-Sub menuComptabilite_Click()
+Sub shpMenuComptabilité_Click()
+
+    Call menuComptabilité
+    
+End Sub
+
+Sub menuComptabilité()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilite_Click", 0)
     
@@ -56,9 +73,15 @@ Sub menuComptabilite_Click()
 
 End Sub
 
-Sub menuParametres_Click()
+Sub shpParamètres_Click()
+
+    Call Parametres
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuParametres_Click", 0)
+End Sub
+
+Sub Parametres()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", 0)
     
     If Fn_Get_Windows_Username = "Guillaume" Or _
             Fn_Get_Windows_Username = "GuillaumeCharron" Or _
@@ -72,11 +95,19 @@ Sub menuParametres_Click()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modMenu:menuParametres_Click", startTime)
+    Call Log_Record("modMenu:Parametres", startTime)
 
 End Sub
 
-Sub Exit_After_Saving() '2024-08-30 @ 07:37
+Sub shpExitApp_Click()
+
+    Call SortirApplicationAprèsSauvegarde
+
+End Sub
+
+Sub SortirApplicationAprèsSauvegarde() '2024-08-30 @ 07:37
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SortirApplicationAprèsSauvegarde", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -87,14 +118,14 @@ Sub Exit_After_Saving() '2024-08-30 @ 07:37
     
     If confirmation = vbYes Then
     
-        Call Hide_All_Worksheets_Except_Menu
-    
         Call Delete_User_Active_File
 
         Application.ScreenUpdating = True
         
+        Call Log_Record("modMenu:SortirApplicationAprèsSauvegarde", startTime)
+        
         On Error Resume Next
-        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****", 0)
+        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:SortirApplicationAprèsSauvegarde) *****", 0)
         Call Log_Record("", -1)
         On Error GoTo 0
         
@@ -130,7 +161,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modAppli:Hide_All_Worksheets_Except_Menu", startTime)
+    Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", startTime)
     
 End Sub
 

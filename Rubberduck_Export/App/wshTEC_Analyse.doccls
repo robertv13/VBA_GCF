@@ -24,10 +24,10 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Me.Application.Calculation = xlCalculationAutomatic
 
-    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").value = Format$(Now(), wshAdmin.Range("B1").value) '2024-10-29 @ 07:34
+   'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
+    Me.Range("H3").value = Format$(Date, wshAdmin.Range("B1").value) '2024-10-29 @ 07:34
     
-    Call TEC_Sort_Group_And_Subtotal
+'    Call TEC_Sort_Group_And_Subtotal
     
     Call SetTabOrder(ws)
     
@@ -45,7 +45,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
     With ActiveWindow.Panes(2)
-        .ScrollRow = 7
+        .ScrollRow = 8
     End With
 
     Dim currentScrollRow As Long
@@ -162,16 +162,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("H3").value) > Now() Then
+        If CDate(Range("H3").value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

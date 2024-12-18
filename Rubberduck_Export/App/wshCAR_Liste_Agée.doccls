@@ -14,11 +14,11 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Import transactions from MASTER file
     Call Client_List_Import_All
     Call FAC_Entête_Import_All
-    Call FAC_Détails_Import_All
+'    Call FAC_Détails_Import_All '2024-12-18 @ 06:38
     Call FAC_Comptes_Clients_Import_All
     
-    'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
 
     Me.Application.Calculation = xlCalculationAutomatic
 
@@ -31,9 +31,9 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     wshCAR_Liste_Agée.Range("F4").value = "Non"
     wshCAR_Liste_Agée.Range("H4").value = Format$(Now(), wshAdmin.Range("B1").value)
     
-    Application.EnableEvents = True
-    
     Call SetTabOrder(ws)
+    
+    Application.ScreenUpdating = True
     
     'Efface la liste précédente
     Dim lastUsedRow As Long
@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     If lastUsedRow > 7 Then
         ws.Range("B8:J" & lastUsedRow + 2).Clear
     End If
-
+    
     With ws
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
@@ -124,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
     End If

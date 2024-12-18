@@ -62,9 +62,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12
         selectedWeek = lbxDatesSemaines.List(lbxDatesSemaines.ListIndex)
         Dim dateLundi As Date, dateDimanche As Date
         dateLundi = Left(selectedWeek, InStr(selectedWeek, " au ") - 1)
-        Debug.Print vbNewLine & "#777 " & dateLundi, IsDate(dateLundi), " ---> ", day(dateLundi), month(dateLundi), year(dateLundi)
         dateDimanche = Right(selectedWeek, InStr(selectedWeek, " au ") - 1)
-        Debug.Print "#778 " & dateDimanche, IsDate(dateDimanche), " ---> ", day(dateDimanche), month(dateDimanche), year(dateDimanche)
         
         'Il doit y avoir un écart de 6 entre les deux dates (semaine)
         If dateDimanche - dateLundi <> 6 Then

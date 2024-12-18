@@ -952,7 +952,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
    
     DoEvents
     
-    Application.Wait (Now + TimeValue("0:00:02")) '2024-09-06 @ 13:42
+    Application.Wait (Now + TimeValue("0:00:01")) '2024-09-06 @ 13:42
     
     Application.EnableEvents = False
     
@@ -1281,7 +1281,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

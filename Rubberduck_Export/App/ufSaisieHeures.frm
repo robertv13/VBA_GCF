@@ -170,7 +170,7 @@ End Sub
 Private Sub txtDate_Enter()
 
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format$(Now(), wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.value = Format$(Date, wshAdmin.Range("B1").value)
     Else
         ufSaisieHeures.txtDate.value = Format$(ufSaisieHeures.txtDate.value, wshAdmin.Range("B1").value)
     End If
