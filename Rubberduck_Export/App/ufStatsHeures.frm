@@ -50,7 +50,7 @@ Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
 End Sub
 
-Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal Valeur As Variant) '2024-12-04 @ 07:36
+Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick(" & lbxDatesSemaines.value & ")", 0)
     

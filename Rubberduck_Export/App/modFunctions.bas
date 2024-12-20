@@ -1795,7 +1795,7 @@ End Function
 '
 'End Sub
 '
-Function Fn_Valider_Portion_Heures(Valeur As Currency) As Boolean
+Function Fn_Valider_Portion_Heures(valeur As Currency) As Boolean
 
     'Tableau des valeurs permises : dixièmes d'heures et quarts d'heure
     Dim valeursPermises As Variant
@@ -1806,7 +1806,7 @@ Function Fn_Valider_Portion_Heures(Valeur As Currency) As Boolean
     
     'Parcourir les valeurs permises
     Dim fraction As Double
-    fraction = Valeur - Int(Valeur)
+    fraction = valeur - Int(valeur)
     
     For i = LBound(valeursPermises) To UBound(valeursPermises)
         If Round(fraction, 2) = valeursPermises(i) Then

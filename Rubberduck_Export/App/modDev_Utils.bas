@@ -1041,7 +1041,6 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Dim arrResult() As Variant
     ReDim arrResult(1 To 2000, 1 To 7)
 
-    Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
     Dim timeStamp As String
     Dim X As Long, xr As Long

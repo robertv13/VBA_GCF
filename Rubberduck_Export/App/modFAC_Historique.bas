@@ -41,7 +41,7 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = True
     
-    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("cmdAfficheFactures")
+    Dim shp As Shape: Set shp = wshFAC_Historique.Shapes("shpAfficheFactures")
     shp.Visible = False
     
     Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", startTime)

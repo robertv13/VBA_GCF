@@ -6,6 +6,12 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", 0)
     
+    If fromMenu = False Then
+        Exit Sub
+    End If
+    
+    fromMenu = False
+    
     Application.EnableEvents = False
     
     Call TEC_Import_All
@@ -80,7 +86,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
-    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 Then
+    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 And Target.value <> "" Then
         Call NettoyerCellulesEtIconesPDF
         Call TraiterToutesLesFacturesAC(Target.value)
         wshFAC_Confirmation.Range("F5").value = Target.value

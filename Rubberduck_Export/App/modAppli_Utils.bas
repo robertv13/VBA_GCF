@@ -1,6 +1,8 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
+'@Folder("")
+
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
@@ -245,7 +247,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
                                     " lignes analysées dans l'ensemble des tables ***"
     rng.Characters(6, 6).Font.color = vbRed
     rng.Characters(6, 6).Font.Bold = True
-    r = r + 1
+'    r = r + 1
     
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
@@ -369,8 +371,8 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     End If
     
     'Calculer la taille de la plage des données pour ensuite ignorer les en-têtes
-    Dim startRow As Long, numRows As Long, numCols As Long
-    startRow = rng.row + headerRows
+    Dim numRows As Long, numCols As Long
+'    startRow = rng.row + headerRows
     numRows = rng.Rows.count - headerRows
     numCols = rng.Columns.count
     
@@ -460,7 +462,7 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
     Dim dict_descr_GL As New Dictionary
     
     Dim i As Long, codeGL As String, descrGL As String
-    Dim GL_ID As Long
+'    Dim GL_ID As Long
     Dim typeGL As String
     Dim cas_doublon_descr As Long, cas_doublon_code As Long, cas_type As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
@@ -482,7 +484,7 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_code = cas_doublon_code + 1
         End If
         
-        GL_ID = arr(i, 3)
+'        GL_ID = arr(i, 3)
         typeGL = arr(i, 4)
         If InStr("Actifs^Passifs^Équité^Revenus^Dépenses^", typeGL) = 0 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
@@ -561,7 +563,6 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
     Dim dict_nom_client As New Dictionary
     
     Dim i As Long, code As String, nom As String, nomClientSysteme As String
-    Dim eMail As String
     Dim cas_doublon_nom As Long
     Dim cas_doublon_code As Long
     Dim cas_doublon_nom_client_Systeme As Long
@@ -2485,14 +2486,13 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
+    Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-'    Dim wsSommaire As Worksheet: Set wsSommaire = ThisWorkbook.Worksheets("X_Heures_Jour_Prof")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3140 'What is the last TECID analyzed ?
+    lastTECIDReported = 3231 'What is the last TECID analyzed ?
 
-    'wshTEC_Local
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    'Feuille contenant les données à analyser
     Dim headerRow As Long: headerRow = 2
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -2509,35 +2509,65 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshTEC_Local'")
     r = r + 1
     
-    Dim rngCR As Range
-    Set rngCR = ws.Range("A1").CurrentRegion
-    Dim lastRow As Long, lastCol As Long
-    lastRow = rngCR.Rows.count
-    lastCol = rngCR.Columns.count
+    'Identifier la plage de données dans wshTEC_Local (exclus les entêtes)
+    Dim rngTEC_LocalData As Range
+    Set rngTEC_LocalData = ws.Range("A1").CurrentRegion.offset(2, 0)
+    Set rngTEC_LocalData = rngTEC_LocalData.Resize(rngTEC_LocalData.Rows.count - 2, rngTEC_LocalData.Columns.count)
+    
+    'Charger les données dans un tableau (arrTEC_LocalData)
+    Dim arrTEC_Local_Data As Variant
+    arrTEC_Local_Data = rngTEC_LocalData.Resize(rngTEC_LocalData.Rows.count, rngTEC_LocalData.Columns.count).value
+    
+    'Créer un dictionary pour tous les clients
+    Dim dictClient As New Dictionary
+    'Définir la feuille de calcul et la plage de données
+    Dim rngClient As Range
+    Set rngClient = wshBD_Clients.Range("A1").CurrentRegion
+    Set rngClient = rngClient.offset(1, 0).Resize(rngClient.Rows.count - 1, 2)
+
+    ' Charger les données dans un tableau (deux premières colonnes seulement)
     Dim arr As Variant
-    If lastRow > 2 Then
-        'Décaler de 2 lignes (pour exclure les en-têtes) et redimensionner la plage
-        arr = rngCR.offset(2, 0).Resize(lastRow - 2, lastCol).value
-'        arr = ws.Range("A1").CurrentRegion.Offset(2)
-    Else
-        MsgBox "Il n'y a aucune ligne de détail", vbInformation
-        Exit Sub
-    End If
-    Dim dict_TEC_ID As New Dictionary
-    Dim dict_prof As New Dictionary
-    Dim dictFacture As New Dictionary
+    arr = rngClient.value 'Charger les colonnes 1 et 2
+
+    ' Créer un dictionnaire
+    Set dictClient = CreateObject("Scripting.Dictionary")
+
+    ' Remplir le dictionnaire avec les données (clé = colonne 1, valeur = colonne 2)
     Dim i As Long
+    For i = 1 To UBound(arr, 1)
+        dictClient(arr(i, 2)) = arr(i, 1) ' Utilise la colonne 1 comme clé et la colonne 2 comme valeur
+    Next i
     
     'Obtenir toutes les factures émises (wshFAC_Entête) et utiliser un dictionary pour les mémoriser
-    Dim lastUsedRowFAC As Long
-    lastUsedRowFAC = wshFAC_Entête.Cells(wshFAC_Entête.Rows.count, 1).End(xlUp).row
-    If lastUsedRowFAC > 2 Then
-        For i = 3 To lastUsedRowFAC
-            If wshFAC_Entête.Cells(i, 1).value <> "" Then
-                dictFacture.Add CStr(wshFAC_Entête.Cells(i, 1).value), 0
-            End If
-        Next i
-    End If
+    Dim rngFAC_EntêteData As Range
+    Set rngFAC_EntêteData = wshFAC_Entête.Range("A1").CurrentRegion
+    Set rngFAC_EntêteData = rngFAC_EntêteData.offset(2, 0).Resize(rngFAC_EntêteData.Rows.count - 2)
+    
+    'Calculer le nombre de lignes dans la plage
+    Dim lastRow As Long
+    lastRow = rngFAC_EntêteData.Rows.count
+
+    ' Redimensionner le tableau pour contenir les données de 2 colonnes
+'    Dim arr() As Variant
+    ReDim arr(1 To lastRow, 1 To 2)
+
+    ' Remplir le tableau avec les valeurs des colonnes 1 et 3
+    For i = 1 To lastRow
+        arr(i, 1) = rngFAC_EntêteData.Cells(i, 1).value
+        arr(i, 2) = rngFAC_EntêteData.Cells(i, 3).value
+    Next i
+
+    'Charger dans le dictionnaire dictFacture
+    Dim dictFacture As New Dictionary
+    On Error Resume Next 'Empêcher les erreurs si doublons
+    For i = 1 To UBound(arr, 1)
+        dictFacture.Add key:=arr(i, 1), item:=arr(i, 2)
+    Next i
+    On Error GoTo 0 'Réactiver la gestion normale des erreurs
+    
+    Dim dictFactureHres As New Dictionary
+    Dim dict_TEC_ID As New Dictionary
+    Dim dict_prof As New Dictionary
     
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
@@ -2558,7 +2588,6 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     
     minDate = "12/31/2999"
     
-'    Dim bigStrDateProf As String
     Dim arrHres(1 To 10000, 1 To 6) As Variant
     Dim arrRow As Integer, pArr As Integer, rArr As Integer
     
@@ -2574,17 +2603,17 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim strDict As String
 
     'Lecture et analyse des TEC (TEC_Local)
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        TECID = arr(i, 1)
+    For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
+        TECID = arrTEC_Local_Data(i, 1)
         If TECID > maxTECID Then
             maxTECID = TECID
         End If
         'ProfessionnelID
-        profID = arr(i, 2)
+        profID = arrTEC_Local_Data(i, 2)
         'Professionnel
-        prof = arr(i, 3)
+        prof = arrTEC_Local_Data(i, 3)
         'Date
-        dateTEC = arr(i, 4)
+        dateTEC = arrTEC_Local_Data(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
@@ -2594,7 +2623,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
-        If dateTEC > Now() Then
+        If dateTEC > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
             r = r + 1
             cas_date_future = cas_date_future + 1
@@ -2605,20 +2634,20 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Validate clientCode
-        codeClient = Trim(arr(i, 5))
-        If Fn_Validate_Client_Number(codeClient) = False Then
+        codeClient = Trim(arrTEC_Local_Data(i, 5))
+        If dictClient.Exists(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le code de client '" & codeClient & "' est INVALIDE !!!")
             r = r + 1
         End If
-        nomCLient = arr(i, 6)
-        hres = arr(i, 8)
+        nomCLient = arrTEC_Local_Data(i, 6)
+        hres = arrTEC_Local_Data(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
             cas_hres_invalide = cas_hres_invalide + 1
         End If
-        estFacturable = arr(i, 10)
+        estFacturable = arrTEC_Local_Data(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
@@ -2626,24 +2655,24 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
 
         'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If arr(i, 1) > lastTECIDReported Then
+        If arrTEC_Local_Data(i, 1) > lastTECIDReported Then
             'Date de la charge
-            yy = year(arr(i, 4))
-            mm = month(arr(i, 4))
-            dd = day(arr(i, 4))
+            yy = year(arrTEC_Local_Data(i, 4))
+            mm = month(arrTEC_Local_Data(i, 4))
+            dd = day(arrTEC_Local_Data(i, 4))
             strDict = Format$(DateSerial(yy, mm, dd), "yyyy-mm-dd") & " - " & _
-                                Fn_Pad_A_String(CStr(arr(i, 3)), " ", 5, "R")
+                                Fn_Pad_A_String(CStr(arrTEC_Local_Data(i, 3)), " ", 5, "R")
             If dictDateCharge.Exists(strDict) Then
-                dictDateCharge(strDict) = dictDateCharge(strDict) + arr(i, 8)
+                dictDateCharge(strDict) = dictDateCharge(strDict) + arrTEC_Local_Data(i, 8)
             Else
-                dictDateCharge.Add strDict, arr(i, 8)
+                dictDateCharge.Add strDict, arrTEC_Local_Data(i, 8)
             End If
             'TimeStamp
-            yy = year(arr(i, 11))
-            mm = month(arr(i, 11))
-            dd = day(arr(i, 11))
+            yy = year(arrTEC_Local_Data(i, 11))
+            mm = month(arrTEC_Local_Data(i, 11))
+            dd = day(arrTEC_Local_Data(i, 11))
             strDict = Format$(DateSerial(yy, mm, dd), "yyyy-mm-dd") & " - " & _
-                                Fn_Pad_A_String(CStr(arr(i, 3)), " ", 5, "R")
+                                Fn_Pad_A_String(CStr(arrTEC_Local_Data(i, 3)), " ", 5, "R")
             If dictTimeStamp.Exists(strDict) Then
                 dictTimeStamp(strDict) = dictTimeStamp(strDict) + 1
             Else
@@ -2651,15 +2680,15 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             End If
         End If
 
-        estFacturee = UCase(arr(i, 12))
+        estFacturee = UCase(arrTEC_Local_Data(i, 12))
         If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         
-        If arr(i, 13) <> "" Then
-            dateFact = arr(i, 13)
+        If arrTEC_Local_Data(i, 13) <> "" Then
+            dateFact = arrTEC_Local_Data(i, 13)
             testDate = IsDate(dateFact)
             If testDate = False Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
@@ -2677,14 +2706,14 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             End If
         End If
         
-        estDetruit = arr(i, 14)
+        estDetruit = arrTEC_Local_Data(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
-        invNo = CStr(arr(i, 16))
+        invNo = CStr(arrTEC_Local_Data(i, 16))
         If Len(invNo) > 0 Then
             If estFacturee <> "VRAI" Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
@@ -2698,7 +2727,11 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
                     "n'existe pas dans le fichier FAC_Entête")
                 r = r + 1
             Else 'Accumule les heures pour cette facture
-                dictFacture(invNo) = dictFacture(invNo) + arr(i, 8)
+                If dictFactureHres.Exists(invNo) = True Then
+                    dictFactureHres(invNo) = dictFactureHres(invNo) + arrTEC_Local_Data(i, 8)
+                Else
+                    dictFactureHres.Add invNo, arrTEC_Local_Data(i, 8)
+                End If
             End If
         Else
             If estFacturee = "Vrai" Or estFacturee = "VRAI" Then
@@ -2770,11 +2803,11 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
     Next i
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arrTEC_Local_Data, 1) - headerRow, "##,##0") & " charges de temps ont été analysées!")
     r = r + 1
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - headerRow
+    readRows = readRows + UBound(arrTEC_Local_Data, 1) - headerRow
     
     If cas_doublon_TECID = 0 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TEC_ID")
@@ -2855,7 +2888,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     
     For Each key In dictFacture.keys
         totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
-        If Round(totalHoursBilled, 2) <> Round(dictFacture(key), 2) Then
+        If Round(totalHoursBilled, 2) <> Round(dictFactureHres(key), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
                         Round(dictFacture(key), 2) & " vs. " & Round(totalHoursBilled, 2))
@@ -2969,7 +3002,6 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             formattedHours = String(6 - Len(formattedHours), " ") & formattedHours
             Call AddMessageToWorkSheet(wsOutput, r, 2, "       " & key & ":" & formattedHours & " entrée(s)")
             r = r + 1
-'            Debug.Print "#021 - Clé: " & key & " - Valeur: " & dictTimeStamp(key)
         Next i
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
@@ -2987,7 +3019,7 @@ Clean_Exit:
     Set dict_TEC_ID = Nothing
     Set key = Nothing
     Set rng = Nothing
-    Set rngCR = Nothing
+    Set rngTEC_LocalData = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -3720,4 +3752,51 @@ Sub Paint_A_Range(rng As Range, colorRGB As String)
 
 End Sub
 
+Sub ChargerRangeDansDictionnaire(ByRef dict As Object, ByVal rng As Range, Optional colValeurOffset As Long = 0)
+
+    'Créer un dictionnaire si non initialisé
+    If dict Is Nothing Then
+        Set dict = CreateObject("Scripting.Dictionary")
+    End If
+
+    'Parcourir chaque cellule de la plage et ajouter au dictionnaire
+    Dim cell As Range
+    Dim clé As Variant
+    Dim valeur As Variant
+    For Each cell In rng
+        clé = cell.value
+        valeur = cell.offset(0, colValeurOffset).value 'Colonne adjacente ou selon décalage
+
+        'Ajouter au dictionnaire si la clé n'existe pas déjà
+        If Not dict.Exists(clé) Then
+            dict.Add clé, valeur
+        End If
+    Next cell
+    
+End Sub
+
+Sub ExempleUtilisation()
+
+    Dim dict As Object
+    
+    'Définir la feuille de calcul et la plage
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion.offset(2, 0)
+    'Redimensionner la plage pour inclure uniquement les lignes restantes
+    Set rng = rng.Resize(rng.Rows.count - 2, rng.Columns.count)
+
+    'Charger les données dans un dictionnaire
+    Call ChargerRangeDansDictionnaire(dict, rng, 2) ' 2 = Décalage de colonne pour les valeurs (colonne C)
+
+'    'Afficher le contenu du dictionnaire
+'    Dim clé As Variant
+'    For Each clé In dict.keys
+'        Debug.Print "Clé: " & clé & ", Valeur: " & dict(clé)
+'    Next clé
+'
+    'Nettoyer la mémoire
+    Set rng = Nothing
+    Set ws = Nothing
+    
+End Sub
 

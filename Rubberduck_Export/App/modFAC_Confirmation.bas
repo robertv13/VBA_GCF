@@ -214,7 +214,7 @@ Sub ObtenirListeTECFacturés()
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "BI").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
@@ -232,25 +232,18 @@ End Sub
 
 Sub PreparerRapportTECFacturés()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", 0)
     
-    Dim cheminFichier As String
-    
-    'Tenter d'assigner la feuille qui existe peut-être
+    'Assigner la feuille du rapport
     Dim strRapport As String
     strRapport = "Rapport TEC facturés"
-    Dim wsRapport As Worksheet
-    On Error Resume Next ' Eviter erreur si la feuille existe déjà
-    Set wsRapport = ThisWorkbook.Sheets(strRapport)
-    On Error GoTo 0
+    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacturé
+    wsRapport.Cells.Clear
     
-    'Si la feuille "Rapport TEC facturés" n'existe pas, la créer
-    If wsRapport Is Nothing Then
-        Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count))
-        wsRapport.Name = strRapport
-    Else
-        wsRapport.Cells.Clear 'Vider la feuille si elle existe déjà
-    End If
+    'Désactiver les mises à jour de l'écran et autres alertes
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.DisplayAlerts = False
     
     'Mettre en forme la feuille de rapport
     With wsRapport
@@ -270,14 +263,47 @@ Sub PreparerRapportTECFacturés()
         .Range("C4").value = "Description"
         .Range("D4").value = "Heures"
         With .Range("A4:D4")
+            .Font.size = 9
             .Font.Bold = True
             .Font.Italic = True
             .Font.color = vbWhite
             .HorizontalAlignment = xlCenter
         End With
         
+        'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
+        Dim wsSource As Worksheet
+        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        
+        'Copier quelques données de la source
+        Dim rngResult As Range
+        Set rngResult = wsSource.Range("BJ1").CurrentRegion.offset(2, 0)
+        'Redimensionner la plage après l'offset pour avoir que les données (pas d'entête)
+        Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
+        'Transfert des données vers un tableau
+        Dim tableau As Variant
+        tableau = rngResult.value
+        
+        'Créer un tableau pour les résultats
+        Dim output() As Variant
+        ReDim output(1 To UBound(tableau, 1), 1 To 4)
+        Dim r As Long
+        
+        Dim i As Long
+        For i = LBound(tableau, 1) To UBound(tableau, 1)
+            r = r + 1
+            output(r, 1) = tableau(i, 4)
+            output(r, 2) = tableau(i, 3)
+            output(r, 3) = tableau(i, 7)
+            output(r, 4) = tableau(i, 8)
+        Next i
+
+        'Copier le tableau dans la feuille du rapport  partir de la ligne 5, colonne 1
+        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).value = output
+        'Ligne dans la feuille du rapport
+        r = 5 + UBound(output, 1) - 1
+        
         'Corps du rapport
-        .Range("A5:D999").VerticalAlignment = xlTop
+        .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
@@ -286,31 +312,6 @@ Sub PreparerRapportTECFacturés()
             .PatternTintAndShade = 0
         End With
         
-        'Supposons que nous résumons des données d'une autre feuille
-        Dim wsSource As Worksheet
-        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BI:BX)
-        
-        'Copier quelques données de la source
-        Dim rngResult As Range
-        Set rngResult = wsSource.Range("BI1").CurrentRegion.offset(2, 0)
-        'Redimensionner la plage après l'offset pour ajuster la taille (réduire le nombre de lignes)
-        Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
-        'Transfert des données vers un tableau
-        Dim tableau As Variant
-        tableau = rngResult.value
-        
-        Dim r As Long
-        r = 4 'Nombre de lignes d'entête
-        
-        Dim i As Long
-        For i = LBound(tableau, 1) To UBound(tableau, 1)
-            r = r + 1
-            wsRapport.Cells(r, 1) = tableau(i, 4)
-            wsRapport.Cells(r, 2) = tableau(i, 3)
-            wsRapport.Cells(r, 3) = tableau(i, 7)
-            wsRapport.Cells(r, 4) = tableau(i, 8)
-        Next i
-
         'Ajouter une bordure aux données
         .Range("A4:D" & r).Borders.LineStyle = xlContinuous
         With .Range("A5:D" & r).Borders(xlInsideVertical)
@@ -362,17 +363,18 @@ Sub PreparerRapportTECFacturés()
         .CenterVertically = False ' Centrer verticalement
     End With
     
-    MsgBox "Le rapport a été généré sur la feuille " & strRapport
-    
     'On se déplace à la feuille contenant le rapport
+    wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
+    
+    MsgBox "Le rapport a été généré sur la feuille " & strRapport
     
     'Libérer la mémoire
     Set rngResult = Nothing
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", startTime)
+'    Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", startTime)
     
 End Sub
 
@@ -399,7 +401,7 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
     'Définir le range des critères
     Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("BG2:BG3")
+    Set rngCriteria = ws.Range("BH2:BH3")
     ws.Range("BH3").value = CStr(noFact)
     ws.Range("BH8").value = rngCriteria.Address
     
@@ -418,29 +420,29 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
         
     'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.Rows.count, "BI").End(xlUp).row
-    ws.Range("BG10").value = lastResultRow - 2 & " lignes"
+    lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
+    ws.Range("BH10").value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - Date, ProfID, TEC_ID
             .SortFields.Clear
             'First sort On Date
-            .SortFields.Add key:=ws.Range("BL3"), _
+            .SortFields.Add key:=ws.Range("BM3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Second, sort On Prof_ID
-            .SortFields.Add key:=ws.Range("BJ3"), _
+            .SortFields.Add key:=ws.Range("BK3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
             'Third, sort On TecID
-            .SortFields.Add key:=ws.Range("BI3"), _
+            .SortFields.Add key:=ws.Range("BJ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            .SetRange ws.Range("BI3:BW" & lastResultRow)
+            .SetRange ws.Range("BJ3:BY" & lastResultRow)
             .Apply 'Apply Sort
          End With
     End If
@@ -798,17 +800,18 @@ Sub TraiterToutesLesFacturesAC(selectedInvoice As String)
     Set ws = wshFAC_Confirmation
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    Dim rngFactures As Range
-    Set rngFactures = ws.Range("P4:P" & lastUsedRow)
-    'Copier les valeurs dans un tableau
-    Dim arrFactures() As Variant
-    arrFactures = rngFactures.value
-
-    'Demander à l'utilisateur s'il veut traiter toutes les factures
-    Dim traiterToutes As VbMsgBoxResult
-    traiterToutes = MsgBox("Voulez-vous confirmer TOUTES les factures à confirmer ?", vbYesNo + vbQuestion, "Choix d'un traitement complet ou à la pièce")
+    If lastUsedRow > 4 Then
+        Dim rngFactures As Range
+        Set rngFactures = ws.Range("P4:P" & lastUsedRow)
+        'Copier les valeurs dans un tableau
+        Dim arrFactures() As Variant
+        arrFactures = rngFactures.value
+        Dim traiterToutes As VbMsgBoxResult
+        traiterToutes = MsgBox("Voulez-vous confirmer TOUTES les factures à confirmer ?", vbYesNo + vbQuestion, "Choix d'un traitement complet ou à la pièce")
+    End If
     
-    If traiterToutes = vbYes Then
+    'Demander à l'utilisateur s'il veut traiter toutes les factures
+    If traiterToutes = vbYes And lastUsedRow > 4 Then
         'Traiter toutes les factures du tableau
         Dim i As Long
         For i = LBound(arrFactures, 1) To UBound(arrFactures, 1)
@@ -828,13 +831,11 @@ Sub TraiterToutesLesFacturesAC(selectedInvoice As String)
 '        Next cellule
         MsgBox "Toutes les factures ont été confirmées.", vbInformation
     Else
-        'Vérifier si une cellule est sélectionnée dans la plage
-        If Not Intersect(ActiveCell, rngFactures) Is Nothing Then
-            Call TraiterUneFacture(ActiveCell.value)
-            MsgBox "La facture " & ActiveCell.value & " a été traitée.", vbInformation
-        Else
-            MsgBox "Veuillez sélectionner une facture valide dans la plage " & rngFactures.Address, vbExclamation
-        End If
+        'On traite une seule facture
+        Call TraiterConfirmationFacture(selectedInvoice)
+        
+        MsgBox "La facture " & ActiveCell.value & " a été traitée.", vbInformation
+        
     End If
     
     Call Log_Record("modFAC_Confirmation:TraiterToutesLesFacturesAC", startTime)
@@ -1196,4 +1197,10 @@ Sub RetournerMenuFAC()
     
 End Sub
 
+Sub shpExitDetailTEC_Click()
 
+    ActiveSheet.Visible = xlSheetHidden
+    wshFAC_Confirmation.Activate
+    Call NettoyerCellulesEtIconesPDF
+
+End Sub
