@@ -887,17 +887,10 @@ End Sub
 'End Sub
 
 'Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
-Function NomFeuilleExiste(nom As String, wb As Workbook) As Boolean
+Function NomFeuilleExiste(nom As String) As Boolean
     
-    Dim ws As Worksheet
     On Error Resume Next
-    Set ws = wb.Sheets(nom)
-    NomFeuilleExiste = Not ws Is Nothing
-    On Error GoTo 0
-    
-    'Libérer la mémoire
-    On Error Resume Next
-    Set ws = Nothing
+    NomFeuilleExiste = Not Worksheets(nom) Is Nothing
     On Error GoTo 0
     
 End Function
