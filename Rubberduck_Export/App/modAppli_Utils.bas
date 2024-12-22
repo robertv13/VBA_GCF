@@ -2484,7 +2484,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3248 'What is the last TECID analyzed ?
+    lastTECIDReported = 3256 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim headerRow As Long: headerRow = 2
@@ -2885,7 +2885,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         If Round(totalHoursBilled, 2) <> Round(dictFactureHres(key), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
-                        Round(dictFacture(key), 2) & " vs. " & Round(totalHoursBilled, 2))
+                        Round(dictFactureHres(key), 2) & " vs. " & Round(totalHoursBilled, 2))
             r = r + 1
             cas_Heures_Differentes = cas_Heures_Differentes + 1
         End If

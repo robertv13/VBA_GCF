@@ -620,6 +620,7 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     'Aucun tri nécessaire (besoins)
     If lastUsedRow > 2 Then
         Dim i As Long
+'        If invNo > "24-24695" Then Stop
         For i = 3 To lastUsedRow
             If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
                 If t = "Heures" Then

@@ -24,7 +24,9 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     lastUsedRow = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.Rows.count, "B").End(xlUp).row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
+        wshCAR_Liste_Agée.Unprotect
         wshCAR_Liste_Agée.Range("B8:J" & lastUsedRow + 5).Clear
+        wshCAR_Liste_Agée.Protect UserInterfaceOnly:=True
         Application.EnableEvents = True
     End If
     

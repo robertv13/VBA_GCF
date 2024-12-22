@@ -173,12 +173,13 @@ Sub WriteInfoOnMainMenu()
     Dim arrInfo() As String
     ReDim arrInfo(1 To 4)
     
-    arrInfo(1) = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
-    arrInfo(2) = "Version - " & ThisWorkbook.Name
-    arrInfo(3) = "Utilisateur - " & Fn_Get_Windows_Username
-    arrInfo(4) = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
+    With wshMenu
+        .Range("A30").value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
+        .Range("A31").value = "Version - " & ThisWorkbook.Name
+        .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
+        .Range("A33").value = "Environnement - " & wshAdmin.Range("F5").value
+    End With
     
-    wshMenu.Range("A30").value = arrInfo
     
 '    With wshMenu.Range("$A$30")
 '        .Font.size = 8
