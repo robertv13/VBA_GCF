@@ -36,10 +36,10 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     Dim r As Range
-    Set r = ws.Range("P4:P" & lastRow)
+    Set r = ws.Range("P4:P" & LastRow)
     On Error Resume Next
     r.Locked = True
     On Error GoTo 0
@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate()
     previousCellAddress = ws.Range("F5").Address
     Call NettoyerCellulesEtIconesPDF
     
-    ws.Range("F5").value = ""
+    ws.Range("F5").Value = ""
     ws.Range("F5").Select
     
     Application.EnableEvents = True
@@ -86,10 +86,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
-    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 And Target.value <> "" Then
+    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 And Target.Value <> "" Then
         Call NettoyerCellulesEtIconesPDF
-        Call TraiterToutesLesFacturesAC(Target.value)
-        wshFAC_Confirmation.Range("F5").value = Target.value
+        Call TraiterToutesLesFacturesAC(Target.Value)
+        wshFAC_Confirmation.Range("F5").Value = Target.Value
         Target.Interior.color = HIGHLIGHT_COLOR
     End If
     
@@ -100,11 +100,11 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Debug.Print "#010 - Worksheet_Change Event - " & Target.Address & " = " & Target.value
+    Debug.Print "#010 - Worksheet_Change Event - " & Target.Address & " = " & Target.Value
     
     'Saisie du numéro de facture
     If Not Intersect(Target, Range("F5")) Is Nothing Then
-        invNo = Trim(Target.value)
+        invNo = Trim(Target.Value)
         If invNo <> "" Then
             Call ObtenirFactureInfos(invNo)
         Else
@@ -116,7 +116,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     'Sélection d'une facture à confirmer
     If Not Intersect(Target, Range("P4:P999")) Is Nothing Then
-        invNo = Trim(Target.value)
+        invNo = Trim(Target.Value)
         If invNo <> "" Then
             Call ObtenirFactureInfos(invNo)
         Else

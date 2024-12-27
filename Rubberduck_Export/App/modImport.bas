@@ -10,7 +10,7 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     sourceWorksheet = "PlanComptable$"
 
@@ -62,7 +62,7 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
@@ -143,13 +143,13 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshDEB_Recurrent.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+    wshDEB_Récurrent.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx', in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
-    sourceTab = "DEB_Recurrent$"
+    sourceTab = "DEB_Récurrent$"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -168,12 +168,12 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     recSet.source = "SELECT * FROM [" & sourceTab & "]"
     recSet.Open
     
-    'Copy to wshDEB_Recurrent workbook
-    wshDEB_Recurrent.Range("A2").CopyFromRecordset recSet
+    'Copy to wshDEB_Récurrent workbook
+    wshDEB_Récurrent.Range("A2").CopyFromRecordset recSet
 
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
-    Dim rng As Range: Set rng = wshDEB_Recurrent.Range("A1").CurrentRegion
-    Call modAppli_Utils.ApplyWorksheetFormat(wshDEB_Recurrent, rng, 1)
+    Dim rng As Range: Set rng = wshDEB_Récurrent.Range("A1").CurrentRegion
+    Call modAppli_Utils.ApplyWorksheetFormat(wshDEB_Récurrent, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -197,7 +197,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Trans$"
                      
@@ -247,7 +247,7 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Détails$"
                      
@@ -297,7 +297,7 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Entête$"
                      
@@ -347,7 +347,7 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
 
     'Import FAC_Comptes_Clients from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "FAC_Comptes_Clients$"
                      
@@ -397,7 +397,7 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Détails$"
                      
@@ -447,7 +447,7 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Entête$"
                      
@@ -497,7 +497,7 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
 
     'Import FAC_Sommaire_Taux from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Sommaire_Taux$"
                      
@@ -550,7 +550,7 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
 
     'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Détails$"
                      
@@ -579,24 +579,24 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     End If
 
     Dim dataRange As Range
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastRow > 1 Then
-        Set dataRange = ws.Range("A2:A" & lastRow)
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If LastRow > 1 Then
+        Set dataRange = ws.Range("A2:A" & LastRow)
     End If
     
     'Enlever les lignes qui doivent être enlevées
     With ws
         .Range("A1").AutoFilter Field:=9, Criteria1:="=VRAI", Operator:=xlOr, Criteria2:=-1
         On Error Resume Next
-        .Rows("2:" & lastRow).SpecialCells(xlCellTypeVisible).Delete
+        .Rows("2:" & LastRow).SpecialCells(xlCellTypeVisible).Delete
         On Error GoTo 0
         .AutoFilterMode = False
     End With
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastRow > 1 Then
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If LastRow > 1 Then
         Set dataRange = ws.Range("A1").CurrentRegion
         Call ApplyWorksheetFormat(wshFAC_Projets_Détails, dataRange, 1)
     End If
@@ -631,7 +631,7 @@ Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
 
     'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Détails$"
                      
@@ -660,20 +660,20 @@ Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
         ws.Range("A2").CopyFromRecordset recSet
     End If
 
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Enlever les lignes dont la valeur estDétruite est égale à VRAI / -1 - 2024-11-15 @ 07:53
     Dim i As Long
-    For i = lastRow To 2 Step -1
+    For i = LastRow To 2 Step -1
         If UCase(ws.Cells(i, "I")) = "VRAI" Or ws.Cells(i, "I") = -1 Then
             ws.Rows(i).Delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastRow > 1 Then
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If LastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Projets_Détails, rng, 1)
     End If
@@ -703,7 +703,7 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Entête$"
                      
@@ -731,23 +731,23 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
         ws.Range("A2").CopyFromRecordset recSet
     End If
 
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    If lastRow >= 2 Then
-        For i = lastRow To 2 Step -1
-            If UCase(ws.Cells(i, 26).value) = "VRAI" Or _
-                ws.Cells(i, 26).value = -1 Then
+    If LastRow >= 2 Then
+        For i = LastRow To 2 Step -1
+            If UCase(ws.Cells(i, 26).Value) = "VRAI" Or _
+                ws.Cells(i, 26).Value = -1 Then
                 ws.Rows(i).Delete
             End If
         Next i
     End If
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastRow > 1 Then
+    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If LastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
         Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 1)
     End If
@@ -775,7 +775,7 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     
@@ -834,9 +834,9 @@ Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
     
     'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
-    sourceTab = "GL_EJ_Auto$"
+    sourceTab = "GL_EJ_Récurrente$"
                      
     'ADODB connection
     Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
@@ -894,7 +894,7 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_Trans$"
                      
@@ -947,7 +947,7 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"        '2024-02-14 @ 06:22
     sourceTab = "TEC_Local$"
     
@@ -997,7 +997,7 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", 0)
 
     Dim tbl As ListObject
-    Dim lastRow As Long
+    Dim LastRow As Long
     Dim lastCol As Long
     
     ' Trouver le tableau
@@ -1005,12 +1005,12 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     
     ' Déterminer la dernière ligne et colonne des nouvelles données
     With targetSheet
-        lastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
+        LastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
         lastCol = .Cells(tbl.Range.row, .Columns.count).End(xlToLeft).Column
     End With
     
     ' Redimensionner la plage du tableau
-    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
+    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(LastRow, lastCol))
     
     Call Log_Record("modImport:ResizeTable", startTime)
 

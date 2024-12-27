@@ -4,53 +4,96 @@
 Public startTime As Double
 Public previousCellAddress As Variant
 
+Private Sub Auto_Open()
+
+    Debug.Print "Auto_Open - Sub" & Now()
+
+    If Not wshAdmin.Range("B2").Value = "Initialisé" Then
+        Call Workbook_Open 'Force l'exécution de Workbook_Open
+    End If
+
+End Sub
+Private Sub Workbook_Activate()
+
+    If Application.EnableEvents = False Then Application.EnableEvents = True
+    
+    Debug.Print "Workbook_Activate - Sub" & Now()
+    
+    If Not wshAdmin.Range("B2").Value = "Initialisé" Then
+        Call Workbook_Open 'Force l'exécution de Workbook_Open
+    End If
+
+End Sub
+
 Private Sub Workbook_Open()
 
-    DoEvents
+    If Application.EnableEvents = False Then Application.EnableEvents = True
+    
+    Debug.Print "Workbook_Open - Sub" & Now()
+    
+    On Error GoTo ErrorHandler
+    
+    ' Réinitialiser les paramètres globaux d'Excel
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+    'Log initial activity
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
+    Application.EnableEvents = True
+    
+    'Vérifie l'état d'Excel
+    Dim isExcelAlreadyRunning As Boolean
+    isExcelAlreadyRunning = (Application.Workbooks.count > 1)
+    
+    If isExcelAlreadyRunning Then
+        Call Log_Record("OK - EXCEL était déjà actif lors de l'ouverture", Timer)
+    Else
+        Call Log_Record("OK - Nouvelle instance d'EXCEL démarrée", Timer)
+    End If
     
     'Le serveur est-il disponible ?
     If Fn_Is_Server_Available() = False Then
-        MsgBox "Le serveur (P:\) ne semble pas accessible" & vbNewLine & vbNewLine & _
-                "Veuillez vérifier la disponibilité de ce dernier", vbCritical, "Le serveur n'est pas disponible"
+        Call Log_Record("Erreur : Serveur n'est pas disponible", Timer)
+        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
         Application.Quit
     End If
     
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
-    wshAdmin.Range("F5").value = rootPath
-    
-    'Test pour valider que le serveur est accessible - 2024-09-24 @ 17:42
-    Dim isServerUp As Boolean
-    isServerUp = Fn_Check_Server_Access(rootPath)
+    Call Log_Record("OK - rootPath défini '" & rootPath & "'", Timer)
 
+    Application.EnableEvents = False
+    wshAdmin.Range("F5").Value = rootPath
+    Application.EnableEvents = True
+   
     'Vérification si le chemin est accessible
-    If isServerUp = False Then
-        MsgBox "Le répertoire principal n'est pas accessible." & vbNewLine & vbNewLine & _
+    If Fn_Check_Server_Access(rootPath) = False Then
+        Call Log_Record("Erreur : Accès au répertoire principal (P:\) impossible", Timer)
+        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If
 
-    DoEvents
-    
-    'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
+    Call Log_Record("OK - Validation d'accès serveur terminée", Timer)
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
     Call CreateUserActiveFile
     
     Call SetupUserDateFormat
     
-'    Application.ScreenUpdating = False
-    
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
+    Call WriteInfoOnMainMenu
+    wshMenu.Range("A1").Value = wshAdmin.Range("NomEntreprise").Value
+    
     Call HideDevShapesBasedOnUsername
     
-    Call WriteInfoOnMainMenu
-    
-    wshMenu.Activate
-    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    Application.EnableEvents = False
+    wshAdmin.Range("B2").Value = "Initialisé"
+    Application.EnableEvents = True
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -59,7 +102,6 @@ Private Sub Workbook_Open()
     End With
     
     Dim wb As Workbook: Set wb = ActiveWorkbook
-    wb.Application.Calculation = xlCalculationAutomatic
    
     'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
     Dim ws As Worksheet
@@ -71,7 +113,7 @@ Private Sub Workbook_Open()
     Next ws
     Application.DisplayAlerts = True
     
-'    Application.ScreenUpdating = True
+    wshMenu.Activate
 
     'Libérer la mémoire
     Set wb = Nothing
@@ -79,19 +121,22 @@ Private Sub Workbook_Open()
     
     Call Log_Record("ThisWorkbook:Workbook_Open", startTime)
     
+    Exit Sub
+    
+ErrorHandler:
+    Call Log_Record("Erreur dans Workbook_Open : " & Err.Description, Timer)
+    
 End Sub
 
 Sub CreateUserActiveFile()
 
-    DoEvents
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Integer
     FileNumber = FreeFile
@@ -116,8 +161,6 @@ End Sub
 
 Sub BackupMasterFile()
 
-    DoEvents
-
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
     
     On Error GoTo MASTER_NOT_AVAILABLE
@@ -126,10 +169,10 @@ Sub BackupMasterFile()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Dim backupFilePath As String
-    backupFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    backupFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -139,113 +182,6 @@ Sub BackupMasterFile()
     
     Exit Sub
     
-'    'Open the master file
-'    Dim masterWorkbook As Workbook
-'    On Error GoTo MASTER_NOT_AVAILABLE
-'    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-'                            "GCF_BD_MASTER.xlsx")
-'    If Err.Number <> 0 Then
-'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-'    End If
-'    On Error GoTo 0
-'
-'    'Get the current date and time in the format YYYYMMDD_HHMMSS
-'    Dim currentDateAndTime As String
-'    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
-
-'    'Create the backup file name
-'    Dim backupFileName As String
-'    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
-'
-'    'Define the backup file path (same directory as the master file)
-'    Dim backupFilePath As String
-'    backupFilePath = masterWorkbook.path & "\" & backupFileName
-'
-'    'Save a copy of the master workbook with the new name
-'    On Error Resume Next
-'    masterWorkbook.SaveCopyAs backupFilePath
-'    If Err.Number <> 0 Then
-'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-'    End If
-'
-'    'Close the master workbook
-'    masterWorkbook.Close SaveChanges:=False
-'    If Err.Number <> 0 Then
-'        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-'    End If
-'    On Error GoTo 0
-
-'    Application.ScreenUpdating = True
-
-'    'Libérer la mémoire
-'    Set masterWorkbook = Nothing
-    
-    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
-
-    Exit Sub
-
-MASTER_NOT_AVAILABLE:
-    MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
-            "Le fichier nécessite une réparation manuelle", _
-            vbCritical, _
-            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
-    Application.Quit
-
-End Sub
-
-Sub BackupMasterFile_OK()
-
-    DoEvents
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
-    
-    Application.ScreenUpdating = False
-    
-    'Open the master file
-    Dim masterWorkbook As Workbook
-    On Error GoTo MASTER_NOT_AVAILABLE
-    Set masterWorkbook = Workbooks.Open(wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
-                            "GCF_BD_MASTER.xlsx")
-    If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-    End If
-    On Error GoTo 0
-    
-'    'Get the current date and time in the format YYYYMMDD_HHMMSS
-'    Dim currentDateAndTime As String
-'    currentDateAndTime = Format$(Now, "YYYYMMDD_HHMMSS")
-
-    'Create the backup file name
-    Dim backupFileName As String
-    backupFileName = Left(masterWorkbook.Name, InStrRev(masterWorkbook.Name, ".") - 1) & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
-
-    'Define the backup file path (same directory as the master file)
-    Dim backupFilePath As String
-    backupFilePath = masterWorkbook.path & "\" & backupFileName
-
-    'Save a copy of the master workbook with the new name
-    On Error Resume Next
-    masterWorkbook.SaveCopyAs backupFilePath
-    If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-    End If
-
-    'Close the master workbook
-    masterWorkbook.Close SaveChanges:=False
-    If Err.Number <> 0 Then
-        Call Log_Record("   ThisWorkbook:BackupMasterFile - ERREUR - " & Err.Number & " - " & Err.Description, -1)
-    End If
-    On Error GoTo 0
-
-    Application.ScreenUpdating = True
-
-    'Libérer la mémoire
-    Set masterWorkbook = Nothing
-    
-    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
-
-    Exit Sub
-
 MASTER_NOT_AVAILABLE:
     MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
             "Le fichier nécessite une réparation manuelle", _
@@ -257,8 +193,6 @@ End Sub
 
 Sub SetupUserDateFormat()
 
-    DoEvents
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
 
     Dim userDateFormat As String
@@ -276,7 +210,7 @@ Sub SetupUserDateFormat()
             userDateFormat = "dd/mm/yyyy"
     End Select
 
-    wshAdmin.Range("B1").value = userDateFormat
+    wshAdmin.Range("B1").Value = userDateFormat
     
     Call Log_Record("ThisWorkbook:Setup_UserDateFormat", startTime)
     

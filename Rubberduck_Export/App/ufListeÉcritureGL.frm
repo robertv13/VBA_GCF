@@ -22,7 +22,7 @@ Private Sub lbListe…critureGL_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     ligne = lbListe…critureGL.ListIndex
     
     If ligne <> -1 Then
-        wshGL_EJ.Range("B3").value = lbListe…critureGL.List(ligne, 0)
+        wshGL_EJ.Range("B3").Value = lbListe…critureGL.List(ligne, 0)
     End If
     
     Unload ufListe…critureGL

@@ -14,12 +14,12 @@ Public Sub GL_Report_For_Selected_Accounts()
     'Reference the worksheet
     Dim ws As Worksheet: Set ws = wshGL_Rapport
 
-    If ws.Range("F6").value = "" Or ws.Range("H6").value = "" Then
+    If ws.Range("F6").Value = "" Or ws.Range("H6").Value = "" Then
         MsgBox "Vous devez saisir une date de début et une date de fin pour ce rapport!"
         Exit Sub
     End If
     
-    If ws.Range("H6").value < ws.Range("F6").value Then
+    If ws.Range("H6").Value < ws.Range("F6").Value Then
         MsgBox "La date de départ doit obligatoirement être antérieure" & vbNewLine & vbNewLine & _
                 "ou égale à la date de fin!", vbInformation
         Exit Sub
@@ -58,9 +58,9 @@ Public Sub GL_Report_For_Selected_Accounts()
         'Prepare Variables
         Dim dateDeb As Date, dateFin As Date, sortType As String
         With wshGL_Rapport
-            dateDeb = CDate(.Range("F6").value)
-            dateFin = CDate(.Range("H6").value)
-            If .Range("B3").value = "Vrai" Then
+            dateDeb = CDate(.Range("F6").Value)
+            dateFin = CDate(.Range("H6").Value)
+            If .Range("B3").Value = "Vrai" Then
                 sortType = "Date"
             Else
                 sortType = "Transaction"
@@ -125,16 +125,16 @@ Public Sub Print_Results_From_GL_Trans(compte As String, descGL As String, solde
     End If
     
     lastRowUsed_AB = lastRowUsed_AB + 2
-    ws.Range("A" & lastRowUsed_AB).value = compte & " - " & descGL
+    ws.Range("A" & lastRowUsed_AB).Value = compte & " - " & descGL
     ws.Range("A" & lastRowUsed_AB).Font.Bold = True
     
     'Solde d'ouverture pour ce compte
     Dim glNo As String
     glNo = compte
     solde = soldeOuverture
-    ws.Range("D" & lastRowUsed_AB).value = "Solde d'ouverture"
+    ws.Range("D" & lastRowUsed_AB).Value = "Solde d'ouverture"
     
-    ws.Range("H" & lastRowUsed_AB).value = solde
+    ws.Range("H" & lastRowUsed_AB).Value = solde
     ws.Range("H" & lastRowUsed_AB).Font.Bold = True
     lastRowUsed_AB = lastRowUsed_AB + 1
     saveFirstRow = lastRowUsed_AB
@@ -148,18 +148,18 @@ Public Sub Print_Results_From_GL_Trans(compte As String, descGL As String, solde
         Dim i As Long, sumDT As Currency, sumCT As Currency
         'Read thru the rows
         For i = 2 To lastUsedTrans
-            ws.Cells(lastRowUsed_AB, 2).value = wshGL_Trans.Range("Q" & i).value
-            ws.Cells(lastRowUsed_AB, 2).NumberFormat = wshAdmin.Range("B1").value
-            ws.Cells(lastRowUsed_AB, 3).value = wshGL_Trans.Range("R" & i).value
-            ws.Cells(lastRowUsed_AB, 4).value = wshGL_Trans.Range("S" & i).value
-            ws.Cells(lastRowUsed_AB, 5).value = wshGL_Trans.Range("P" & i).value
-            ws.Cells(lastRowUsed_AB, 6).value = wshGL_Trans.Range("V" & i).value
-            ws.Cells(lastRowUsed_AB, 7).value = wshGL_Trans.Range("W" & i).value
-            solde = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
-            ws.Cells(lastRowUsed_AB, 8).value = solde
+            ws.Cells(lastRowUsed_AB, 2).Value = wshGL_Trans.Range("Q" & i).Value
+            ws.Cells(lastRowUsed_AB, 2).NumberFormat = wshAdmin.Range("B1").Value
+            ws.Cells(lastRowUsed_AB, 3).Value = wshGL_Trans.Range("R" & i).Value
+            ws.Cells(lastRowUsed_AB, 4).Value = wshGL_Trans.Range("S" & i).Value
+            ws.Cells(lastRowUsed_AB, 5).Value = wshGL_Trans.Range("P" & i).Value
+            ws.Cells(lastRowUsed_AB, 6).Value = wshGL_Trans.Range("V" & i).Value
+            ws.Cells(lastRowUsed_AB, 7).Value = wshGL_Trans.Range("W" & i).Value
+            solde = solde + CCur(wshGL_Trans.Range("V" & i).Value) - CCur(wshGL_Trans.Range("W" & i).Value)
+            ws.Cells(lastRowUsed_AB, 8).Value = solde
             
-            sumDT = sumDT + wshGL_Trans.Range("V" & i).value
-            sumCT = sumCT + wshGL_Trans.Range("W" & i).value
+            sumDT = sumDT + wshGL_Trans.Range("V" & i).Value
+            sumCT = sumCT + wshGL_Trans.Range("W" & i).Value
             
             lastRowUsed_AB = lastRowUsed_AB + 1
         Next i
@@ -191,8 +191,8 @@ No_Transaction:
         End With
     End With
     
-    ws.Range("F" & lastRowUsed_AB).value = sumDT
-    ws.Range("G" & lastRowUsed_AB).value = sumCT
+    ws.Range("F" & lastRowUsed_AB).Value = sumDT
+    ws.Range("G" & lastRowUsed_AB).Value = sumCT
     
     With ws.Range("A" & saveFirstRow & ":H" & lastRowUsed_AB).Font
         .Name = "Aptos Narrow"
@@ -211,10 +211,10 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", 0)
     
     With ws
-        .Range("B3").value = True 'Sort by Date
-        .Range("F4").value = "Dates manuelles"
-        .Range("F6").value = ""
-        .Range("H6").value = ""
+        .Range("B3").Value = True 'Sort by Date
+        .Range("F4").Value = "Dates manuelles"
+        .Range("F6").Value = ""
+        .Range("H6").Value = ""
         .Range("F4").Select
     End With
     

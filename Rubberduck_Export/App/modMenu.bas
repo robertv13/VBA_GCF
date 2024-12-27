@@ -101,13 +101,13 @@ End Sub
 
 Sub shpExitApp_Click()
 
-    Call SortirApplicationAprèsSauvegarde
+    Call SauvegarderEtSortirApplication
 
 End Sub
 
-Sub SortirApplicationAprèsSauvegarde() '2024-08-30 @ 07:37
+Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SortirApplicationAprèsSauvegarde", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -117,24 +117,26 @@ Sub SortirApplicationAprèsSauvegarde() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
-    
+        Application.EnableEvents = False
+        wshAdmin.Range("B1").Value = ""
+        Application.EnableEvents = True
+        
         Call Delete_User_Active_File
 
-        Application.ScreenUpdating = True
-        
-        Call Log_Record("modMenu:SortirApplicationAprèsSauvegarde", startTime)
-        
         On Error Resume Next
-        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:SortirApplicationAprèsSauvegarde) *****", 0)
+        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****", 0)
         Call Log_Record("", -1)
         On Error GoTo 0
         
-        'Really ends here !!!
+'        Application.ScreenUpdating = True
+        
+       'Really ends here !!!
         Dim wb As Workbook: Set wb = ActiveWorkbook
+        Application.EnableEvents = False
         ActiveWorkbook.Close SaveChanges:=True
+        Application.EnableEvents = True
         
         'Never pass here... It's too late
-        Application.EnableEvents = True
         Application.Application.Quit
     End If
     
@@ -149,10 +151,13 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", 0)
     
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If Fn_Get_Windows_Username <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If userName <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -166,8 +171,6 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
 End Sub
 
 Sub HideDevShapesBasedOnUsername()
-    
-    DoEvents
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", 0)
     
@@ -200,76 +203,6 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
     End If
         
-'    For Each shp In ws.Shapes
-'        'Check the username and hide shapes accordingly
-'        Select Case shp.Name
-'            Case "Import & Reorganisation de MASTER des Tableaux (MASTER)"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "VérificationIntégrité"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "RechercheCode"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "Correction nom (TEC)"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "Correction nom (CAR)"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "RéférencesCirculaires"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "ChangeReferenceSystem"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case "ListeModules&Routines"
-'                If Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-'                    Fn_Get_Windows_Username = "robertmv" Then
-'                    shp.Visible = msoTrue
-'                Else
-'                    shp.Visible = msoFalse
-'                End If
-'
-'            Case Else
-'        End Select
-'    Next shp
-
     'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing
@@ -280,15 +213,13 @@ End Sub
 
 Sub Delete_User_Active_File()
 
-    DoEvents
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> "" Then
         Kill traceFilePath

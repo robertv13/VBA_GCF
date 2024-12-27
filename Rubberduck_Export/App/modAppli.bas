@@ -8,7 +8,7 @@ Option Explicit
 '    Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #Else
     '32-bit Excel (anciennes versions)
-    Private Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
+'    Private Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
 '    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #End If
 
@@ -32,120 +32,287 @@ Public logSaisieHeuresVeryDetailed As Boolean
 Public flagEtapeFacture As Integer
 
 'Using Enum to specify the column number of worksheets (data)
-Public Enum DB_Clients '2024-10-26 @ 17:41
-    fClntMFFirst = 1
-    fClntMFClientNom = fClntMFFirst
-    fClntMFClient_ID
-    fClntMFNomClientSystème
-    fClntMFContactFacturation
-    fClntMFTitreContactFacturation
-    fClntMFCourrielFacturation
-    fClntMFAdresse_1
-    fClntMFAdresse_2
-    fClntMFVille
-    fClntMFProvince
-    fClntMFCodePostal
-    fClntMFPays
-    fClntMFRéféréPar
-    fClntMFFinAnnée
-    fClntMFComptable
-    fClntMFNotaire_Avocat
-    fClntMFTimeStamp
-    fClntMFLast = fClntMFTimeStamp
+Public Enum BD_Clients '2024-10-26 @ 17:41
+    [_First] = 1
+    fClntFMClientNom = [_First]
+    fClntFMClientID
+    fClntFMNomClientSystème
+    fClntFMContactFacturation
+    fClntFMTitreContactFacturation
+    fClntFMCourrielFacturation
+    fClntFMAdresse1
+    fClntFMAdresse2
+    fClntFMVille
+    fClntFMProvince
+    fClntFMCodePostal
+    fClntFMPays
+    fClntFMRéféréPar
+    fClntFMFinAnnée
+    fClntFMComptable
+    fClntFMNotaireAvocat
+    fClntFMTimeStamp
+    [_Last]
 End Enum
 
-Public Enum DEB_Trans_data_Columns
-    fDebTFirst = 1
-    fDebTNo_Entrée = fDebTFirst
+Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
+    [_First] = 1
+    fFourFMNomFournisseur = [_First]
+    fFourFMFournID
+    fFourFMContact
+    fFourFMCourrielContact
+    fFourFMAdresse1
+    fFourFMAdresse2
+    fFourFMVille
+    fFourFMProvince
+    fFourFMCodePostal
+    fFourFMPays
+    fFourFMNoTPS
+    fFourFMNoTVQ
+    [_Last]
+End Enum
+
+Public Enum DEB_Récurrent
+    [_First] = 1
+    fDebRNoDebRec = [_First]
+    fDebRDate
+    fDebRType
+    fDebRBeneficiaire
+    fDebRReference
+    fDebRNoCompte
+    fDebRCompte
+    fDebRCodeTaxe
+    fDebRTotal
+    fDebRTPS
+    fDebRTVQ
+    fDebRCréditTPS
+    fDebRCréditTVQ
+    [_Last]
+End Enum
+
+Public Enum DEB_Trans
+    [_First] = 1
+    fDebTNoEntrée = [_First]
     fDebTDate
     fDebTType
     fDebTBeneficiaire
+    fDebTFournID
+    fDebTDescription
     fDebTReference
-    fDebTNo_Compte
+    fDebTNoCompte
+    fDebTCompte
     fDebTCodeTaxe
-    fDebTTOTAL
+    fDebTTotal
     fDebTTPS
     fDebTTVQ
-    fDebTCrédit_TPS
-    fDebTCrédit_TVQ
+    fDebTCréditTPS
+    fDebTCréditTVQ
+    fDebTDépense
     fDebTAutreRemarque
     fDebTTimeStamp
-    fDebTLast = fDebTTimeStamp
+    [_Last]
 End Enum
 
-Public Enum FAC_Entête_Data_Columns
-    fFacEntFirst = 1
-    fFacEntInv_No = fFacEntFirst
-    fFacEntDate_Facture
-    fFacEntFouP
-    fFacEntCust_ID
-    fFacEntContact
-    fFacEntNom_Client
-    fFacEntAdresse1
-    fFacEntAdresse2
-    fFacEntAdresse3
-    fFacEntHonoraires
-    fFacEntAF1_Desc
-    fFacEntAutresFrais_1
-    fFacEntAF2_Desc
-    fFacEntAutresFrais_2
-    fFacEntAF3_Desc
-    fFacEntAutresFrais_3
-    fFacEntTaux_TPS
-    fFacEntMnt_TPS
-    fFacEntTaux_TVQ
-    fFacEntMntTVQ
-    fFacEntAR_Total
-    fFacEntDépôt
-    fFacEntLast = fFacEntDépôt
+Public Enum ENC_Détails
+    [_First] = 1
+    fEncDPayID = [_First]
+    fEncDInvNo
+    fEncDCustomer
+    fEncDPayDate
+    fEncDPayAmount
+    [_Last]
 End Enum
 
-Public Enum GL_EJ_Recurrente_Data_Columns
-    fGLEJrFirst = 1
-    fGLEJrNo_EJA = fGLEJrFirst
-    fGLEJrDescription
-    fGLEJrNo_Compte
-    fGLEJrCompte
-    fGLEJrDébit
-    fGLEJrCrédit
-    fGLEJrAutreRemarque
-    fGLEJrLast = fGLEJrAutreRemarque
+Public Enum ENC_Entête
+    [_First] = 1
+    fEncEPayID = [_First]
+    fEncEPayDate
+    fEncECustomer
+    fEncECodeClient
+    fEncEPayType
+    fEncEAmount
+    fEncENotes
+    [_Last]
 End Enum
 
-Public Enum GL_Trans_Data_Columns
-    fGLtFirst = 1
-    fGLtEntryNo = fGLtFirst
-    fGLtDate
-    fGLtDescr
-    fGLtSource
-    fGLtGLNo
-    fGLtCompte
-    fGLtdt
-    fGLtct
-    fGLtRem
-    fGLtTStamp
-    fGLtLast = fGLtTStamp
+Public Enum FAC_Comptes_Clients
+    [_First] = 1
+    fFacCCInvNo = [_First]
+    fFacCCInvoiceDate
+    fFacCCCustomer
+    fFacCCCodeClient
+    fFacCCStatus
+    fFacCCTerms
+    fFacCCDueDate
+    fFacCCTotal
+    fFacCCTotalPaid
+    fFacCCBalance
+    fFacCCDaysOverdue
+    [_Last]
 End Enum
 
-Public Enum TEC_Data_Columns
-    fTEClFirst = 1
-    fTEClTEC_ID = fTEClFirst
-    fTEClProf_ID
-    fTEClProf
-    fTEClDate
-    fTEClClient_ID
-    fTEClClientNom
-    fTEClDescription
-    fTEClHeures
-    fTEClCommentaireNote
-    fTEClEstFacturable
-    fTEClDateSaisie
-    fTEClEstFacturee
-    fTEClDateFacturee
-    fTEClEstDetruit
-    fTEClVersionApp
-    fTEClNoFacture
-    fTEClLast = fTEClNoFacture
+Public Enum FAC_Détails
+    [_First] = 1
+    fFacDInvNo = [_First]
+    fFacDDescription
+    fFacDHeures
+    fFacDTaux
+    fFacDHonoraires
+    fFacDInvRow
+    [_Last]
+End Enum
+
+Public Enum FAC_Entête
+    [_First] = 1
+    fFacEInvNo = [_First]
+    fFacEDateFacture
+    fFacEACouC
+    fFacECustID
+    fFacEContact
+    fFacENomClient
+    fFacEAdresse1
+    fFacEAdresse2
+    fFacEAdresse3
+    fFacEHonoraires
+    fFacEAF1Desc
+    fFacEAutresFrais1
+    fFacEAF2Desc
+    fFacEAutresFrais2
+    fFacEAF3Desc
+    fFacEAutresFrais3
+    fFacETauxTPS
+    fFacEMntTPS
+    fFacETauxTVQ
+    fFacEMntTVQ
+    fFacEARTotal
+    fFacEDépôt
+    [_Last]
+End Enum
+
+Public Enum FAC_Projets_Détails
+    [_First] = 1
+    fFacPDProjetID = [_First]
+    fFacPDNomClient
+    fFacPDClientID
+    fFacPDTECID
+    fFacPDProfID
+    fFacPDDate
+    fFacPDProf
+    fFacPDHeures
+    fFacPDestDetruite
+    fFacPDTimeStamp
+    [_Last]
+End Enum
+
+Public Enum FAC_Projets_Entête
+    [_First] = 1
+    fFacPEProjetID = [_First]
+    fFacPENomClient
+    fFacPEClientID
+    fFacPEDate
+    fFacPEHonoTotal
+    fFacPEProf1
+    fFacPEHres1
+    fFacPETauxH1
+    fFacPEHono1
+    fFacPEProf2
+    fFacPEHres2
+    fFacPETauxH2
+    fFacPEHono2
+    fFacPEProf3
+    fFacPEHres3
+    fFacPETauxH3
+    fFacPEHono3
+    fFacPEProf4
+    fFacPEHres4
+    fFacPETauxH4
+    fFacPEHono4
+    fFacPEProf5
+    fFacPEHres5
+    fFacPETauxH5
+    fFacPEHono5
+    fFacPEestDetruite
+    fFacPETimeStamp
+    [_Last]
+End Enum
+
+Public Enum FAC_Sommaire_Taux
+    [_First] = 1
+    fFacSTInvNo = [_First]
+    fFacSTSéquence
+    fFacSTProf
+    fFacSTHeures
+    fFacSTTaux
+    [_Last]
+End Enum
+
+Public Enum GL_EJ_Récurrente
+    [_First] = 1
+    fGlEjRNoEjR = [_First]
+    fGlEjRDescription
+    fGlEjRNoCompte
+    fGlEjRCompte
+    fGlEjRDébit
+    fGlEjRCrédit
+    fGlEjRAutreRemarque
+    [_Last]
+End Enum
+
+Public Enum GL_Trans
+    [_First] = 1
+    fGlTNoEntrée = [_First]
+    fGlTDate
+    fGlTDescription
+    fGlTSource
+    fGlTNoCompte
+    fGlTCompte
+    fGlTDébit
+    fGlTCrédit
+    fGlTAutreRemarque
+    fGlTTimeStamp
+    [_Last]
+End Enum
+
+Public Enum TEC_Local
+    [_First] = 1
+    fTECTECID = [_First]
+    fTECProfID
+    fTECProf
+    fTECDate
+    fTECClientID
+    fTECClientNom
+    fTECDescription
+    fTECHeures
+    fTECCommentaireNote
+    fTECEstFacturable
+    fTECDateSaisie
+    fTECEstFacturee
+    fTECDateFacturee
+    fTECEstDetruit
+    fTECVersionApp
+    fTECNoFacture
+    [_Last]
+End Enum
+
+Public Enum TEC_TDB_Data
+    [_First] = 1
+    fTECTDBTECID = [_First]
+    fTECTDBProfID
+    fTECTDBProf
+    fTECTDBDate
+    fTECTDBClientID
+    fTECTDBClientNom
+    fTECTDBEstClntFact
+    fTECTDBH_Saisies
+    fTECTDBEstFacturable
+    fTECTDBEstFacturee
+    fTECTDBEstDetruite
+    fTECTDBH_Détruites
+    fTECTDBH_ND
+    fTECTDBH_Facturables
+    fTECTDBH_NonFact
+    fTECTDBH_Facturées
+    fTECTDBH_TEC
+    [_Last]
 End Enum
 
 Sub Set_Root_Path(ByRef rootPath As String)
@@ -162,52 +329,26 @@ End Sub
 
 Sub WriteInfoOnMainMenu()
 
-    DoEvents
-    
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", 0)
     
-'    Application.EnableEvents = False
     wshMenu.Unprotect
-'    Application.ScreenUpdating = True
     
-    Dim arrInfo() As String
-    ReDim arrInfo(1 To 4)
+    Application.EnableEvents = False
     
     With wshMenu
-        .Range("A30").value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
-        .Range("A31").value = "Version - " & ThisWorkbook.Name
-        .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
-        .Range("A33").value = "Environnement - " & wshAdmin.Range("F5").value
+        .Range("A30").Value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss")
+        .Range("A31").Value = "Version - " & ThisWorkbook.Name
+        .Range("A32").Value = "Utilisateur - " & Fn_Get_Windows_Username
+        .Range("A33").Value = "Environnement - " & wshAdmin.Range("F5").Value
     End With
     
+    Application.EnableEvents = True
     
-'    With wshMenu.Range("$A$30")
-'        .Font.size = 8
-'        .Font.color = vbBlue
-'        .value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
-'    End With
-'
-'    With wshMenu.Range("$A$31")
-'        .Font.size = 8
-'        .Font.color = vbBlack
-'        .value = "'" & CStr("Version - " & ThisWorkbook.Name)
-'    End With
-'
-'    With wshMenu.Range("$A$32")
-'        .Font.size = 8
-'        .Font.color = vbBlack
-'        .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
-'    End With
-'
-'    With wshMenu.Range("$A$33")
-'        .Font.size = 8
-'        .Font.color = vbRed
-'        .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
-'    End With
-'
-'    Application.EnableEvents = True
-'    Application.ScreenUpdating = False
-
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
     Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
 
 End Sub
@@ -225,25 +366,25 @@ Sub WriteInfoOnMainMenu_OK()
     With wshMenu.Range("$A$30")
         .Font.size = 8
         .Font.color = vbBlue
-        .value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss"))
+        .Value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     End With
     
     With wshMenu.Range("$A$31")
         .Font.size = 8
         .Font.color = vbBlack
-        .value = "'" & CStr("Version - " & ThisWorkbook.Name)
+        .Value = "'" & CStr("Version - " & ThisWorkbook.Name)
     End With
     
     With wshMenu.Range("$A$32")
         .Font.size = 8
         .Font.color = vbBlack
-        .value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
+        .Value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
     End With
     
     With wshMenu.Range("$A$33")
         .Font.size = 8
         .Font.color = vbRed
-        .value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").value)
+        .Value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").Value)
     End With
 
     Application.EnableEvents = True

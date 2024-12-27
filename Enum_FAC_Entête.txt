@@ -1,0 +1,27 @@
+Public Enum FAC_Entête
+[_First] = 1
+fFacEntInv_No = [_First]
+fFacEntDate_Facture
+fFacEntFouP
+fFacEntCust_ID
+fFacEntContact
+fFacEntNom_Client
+fFacEntAdresse1
+fFacEntAdresse2
+fFacEntAdresse3
+fFacEntHonoraires
+fFacEntAF1_Desc
+fFacEntAutresFrais_1
+fFacEntAF2_Desc
+fFacEntAutresFrais_2
+fFacEntAF3_Desc
+fFacEntAutresFrais_3
+fFacEntTaux_TPS
+fFacEntMnt_TPS
+fFacEntTaux_TVQ
+fFacEntMntTVQ
+fFacEntAR_Total
+fFacEntDépôt
+[_Last]
+End Enum
+

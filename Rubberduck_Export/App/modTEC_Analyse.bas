@@ -13,12 +13,11 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Cells.RemoveSubtotal
 '    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
     
-    'Clear the worksheet from row 5 until the last row used
+    'Clear the worksheet from row 6 until the last row used
     Dim destLastUsedRow As Long
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, "B").End(xlUp).row
     If destLastUsedRow < 6 Then destLastUsedRow = 6
     wsDest.Range("A6:I" & destLastUsedRow).Clear
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La zone A5:I" & destLastUsedRow & " a été effacée", -1)
     
     'Créer un dict pour tous les clients FACTURABLES
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
@@ -28,8 +27,8 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set dictClients = New Dictionary
     Dim clientData As Variant
     'Charger toutes les données des clients dans un tableau
-    clientData = wsClientsMF.Range(wsClientsMF.Cells(2, fClntMFClient_ID), _
-                               wsClientsMF.Cells(lastUsedRowClient, fClntMFClientNom)).value
+    clientData = wsClientsMF.Range(wsClientsMF.Cells(2, fClntFMClientID), _
+                               wsClientsMF.Cells(lastUsedRowClient, fClntFMClientNom)).Value
 
     ' Parcourir le tableau pour ajouter les clients facturables au dictionnaire
     Dim i As Long
@@ -39,53 +38,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         End If
     Next i
 
-'    For i = 2 To lastUsedRowClient
-'        'On ne considère que les clients FACTURABLES
-'        If Fn_Is_Client_Facturable(wsClientsMF.Cells(i, fClntMFClient_ID).value) = True Then
-'            dictClients.Add CStr(wsClientsMF.Cells(i, fClntMFClient_ID).value), wsClientsMF.Cells(i, fClntMFClientNom).value
-'        End If
-'    Next i
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le dictClients a été créé", -1)
-
-    'Calculate the center of the used range
-    Dim centerX As Double, centerY As Double
-    centerX = 430
-    centerY = 60
-
-    'Set the dimensions of the progress bar
-    Dim barWidth As Double, barHeight As Double
-    barWidth = 300
-    barHeight = 25  'Height of the progress bar
-
-    'Create the background shape of the progress bar positioned in the center of the visible range
-    Dim progressBarBg As Shape
-    Set progressBarBg = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, barWidth, barHeight)
-    progressBarBg.Fill.ForeColor.RGB = RGB(255, 255, 255)  ' White background
-    progressBarBg.Line.Visible = msoTrue  'Show the border of the progress bar
-    progressBarBg.TextFrame.HorizontalAlignment = xlHAlignCenter
-    progressBarBg.TextFrame.VerticalAlignment = xlVAlignCenter
-    progressBarBg.TextFrame.Characters.Font.size = 14
-    progressBarBg.TextFrame.Characters.Font.color = RGB(0, 0, 0) 'Black font
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à 0 %"
-    
-    'Create the fill shape of the progress bar
-    Dim progressBarFill As Shape
-    Set progressBarFill = ActiveSheet.Shapes.AddShape(msoShapeRectangle, centerX - barWidth / 3, centerY - barHeight / 2, 0, barHeight)
-    progressBarFill.Fill.ForeColor.RGB = RGB(0, 255, 0)  ' Green fill color
-    progressBarFill.Fill.Transparency = 0.6  'Set transparency to 60%
-    progressBarFill.Line.Visible = msoFalse  'Hide the border of the fill
-    
-    'Update the progress bar fill
-    progressBarFill.Width = 0.15 * barWidth  '15 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.15, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 15 %", -1)
-    
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
     'Set the source worksheet, lastUsedRow and lastUsedCol
@@ -100,20 +52,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim lastUsedCol As Long
     lastUsedCol = firstEmptyCol - 1
     
-    'Update the progress bar fill
-    progressBarFill.Width = 0.2 * barWidth  '20 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.2, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-    
     Application.EnableEvents = False
     
     'Appel à AdvancedFilter # 2 dans TEC_Local
-    Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").value)), "VRAI", "FAUX", "FAUX")
+    Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
     
     Dim lastUsedResult As Long
     lastUsedResult = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
@@ -121,7 +63,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Charger les données sources dans un tableau (beaucoup plus rapide)
     Dim sourceData As Variant
     Dim rowCount As Long
-    sourceData = wsSource.Range("AQ3:AX" & lastUsedResult).value
+    sourceData = wsSource.Range("AQ3:AX" & lastUsedResult).Value
     rowCount = UBound(sourceData, 1)
 
     'Initialiser un tableau pour les données de sortie (beaucoup plus rapide)
@@ -150,24 +92,13 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Écrire les données de sortie dans la feuille & formater quelques colonnes
     If r > 1 Then
-        wsDest.Range("A7:H" & r - 1 + 6).value = outputData
+        wsDest.Range("A7:H" & r - 1 + 6).Value = outputData
         'Formats
         wsDest.Range("E7:F" & r - 1 + 6).HorizontalAlignment = xlCenter
         wsDest.Range("H7:H" & r - 1 + 6).NumberFormat = "#,##0.00"
     End If
     
     Application.EnableEvents = False
-   
-    'Update the progress bar fill
-    progressBarFill.Width = 0.45 * barWidth  '45 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.45, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 45 %", -1)
    
     'Find the last row in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
@@ -186,18 +117,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         .SortMethod = xlPinYin
         .Apply
     End With
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les données sont triées", -1)
-    
-    'Update the progress bar fill
-    progressBarFill.Width = 0.6 * barWidth  '60 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.6, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 60 % (dernière étape avant le GroupBy...", -1)
     
     'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
@@ -216,17 +135,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Add a formula to sum the billed amounts at the top row
     wsDest.Range("D7").formula = "=SUM(D8:D" & destLastUsedRow & ")"
     wsDest.Range("D7").NumberFormat = "#,##0.00 $"
-    
-    'Update the progress bar fill
-    progressBarFill.Width = 0.75 * barWidth  '75 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.75, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 75 %", -1)
     
     'Change the format of the top row (Total General)
     With wsDest.Range("C7:D7")
@@ -265,7 +173,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Change the format of all Client's Total rows
     For r = 7 To destLastUsedRow
-        If wsDest.Range("A" & r).value = "" Then
+        If wsDest.Range("A" & r).Value = "" Then
             With wsDest.Range("C" & r).Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
@@ -281,12 +189,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 '                If InStr(.value, "Total ") = 1 Then
 '                    .value = Mid(.value, 7)
 '                End If
-                If .value = "Total général" Then
-                    .value = "G r a n d   T o t a l"
+                If .Value = "Total général" Then
+                    .Value = "G r a n d   T o t a l"
                 End If
             End With
             'Mettre de l'emphase sur les cellules d'heures, si le montant du projet <> 0,00 $
-            If wsDest.Range("D" & r).value = 0 Then
+            If wsDest.Range("D" & r).Value = 0 Then
                 With wsDest.Range("H" & r).Font
                     .Name = "Aptos Narrow"
                     .size = 12
@@ -295,55 +203,22 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             End If
         End If
     Next r
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les ajustements de format ont été complétés", -1)
-    
-    'Update the progress bar fill
-    progressBarFill.Width = 0.85 * barWidth  '85 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.85, "0%")
-    
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 85 %", -1)
     
     'Set conditional formats for total hours (Client's total)
     Dim rngTotals As Range: Set rngTotals = wsDest.Range("C8:C" & destLastUsedRow)
     Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - La mise en forme conditionnelle est en place", -1)
     
     'Bring in all the invoice requests
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Obtenir les requêtes de factures existantes", -1)
     
     'Clean up the summary area of the worksheet
     Call Clean_Up_Summary_Area(wsDest)
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Nettoyage de la zone 'Sommaire' est nettoyée", -1)
-    
-    'Update the progress bar fill
-    progressBarFill.Width = 0.95 * barWidth   '95 %
-    'Update the caption on the background shape
-    progressBarBg.TextFrame.Characters.Text = "Préparation complétée à " & Format$(0.95, "0%")
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - ProgressBar @ 95 %", -1)
-    
-    DoEvents
-        
-    'Temporarily enable screen updating to show the progress bar
-    Application.ScreenUpdating = True
-    DoEvents  'Allow Excel to process other events
-    Application.ScreenUpdating = False
-    
-    progressBarBg.Delete
-    progressBarFill.Delete
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
     'Libérer la mémoire
     Set dictClients = Nothing
-    Set progressBarBg = Nothing
-    Set progressBarFill = Nothing
     Set rngTotals = Nothing
     Set wsClientsMF = Nothing
     Set wsDest = Nothing
@@ -373,7 +248,7 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
     'Loop each cell in column C to find Totals row
     Dim totalRange As Range, cell As Range
     For Each cell In rng
-        If InStr(1, cell.value, "Total ", vbTextCompare) > 0 Then
+        If InStr(1, cell.Value, "Total ", vbTextCompare) > 0 Then
             If totalRange Is Nothing Then
                 Set totalRange = ws.Cells(cell.row, 8) 'Column H
             Else
@@ -445,11 +320,11 @@ Sub Build_Hours_Summary(rowSelected As Long)
     saveR = rowSelected
     i = rowSelected
     Do Until Cells(i, 5) = ""
-        If Cells(i, 6).value <> "" Then
-            If dictHours.Exists(Cells(i, 6).value) Then
-                dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
+        If Cells(i, 6).Value <> "" Then
+            If dictHours.Exists(Cells(i, 6).Value) Then
+                dictHours(Cells(i, 6).Value) = dictHours(Cells(i, 6).Value) + Cells(i, 8).Value
             Else
-                dictHours.Add Cells(i, 6).value, Cells(i, 8).value
+                dictHours.Add Cells(i, 6).Value, Cells(i, 8).Value
             End If
             Cells(i, 8).Font.color = RGB(166, 166, 166) 'RMV_15
         End If
@@ -462,17 +337,17 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Application.EnableEvents = False
     
-    ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
+    ws.Range("O" & rowSelected).Value = 0 'Reset the total WIP value
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 10).value = prof
+        Cells(rowSelected, 10).Value = prof
         Dim strProf As String
         strProf = prof
         profID = Fn_GetID_From_Initials(strProf)
         Cells(rowSelected, "K").HorizontalAlignment = xlRight
         Cells(rowSelected, "K").NumberFormat = "#,##0.00"
-        Cells(rowSelected, "K").value = dictHours(prof)
-        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
-        Cells(rowSelected, "L").value = tauxHoraire
+        Cells(rowSelected, "K").Value = dictHours(prof)
+        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").Value)
+        Cells(rowSelected, "L").Value = tauxHoraire
         Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
         Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, "M").HorizontalAlignment = xlRight
@@ -523,14 +398,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
 
     'Save the TOTAL WIP value
     With ws.Range("N" & saveR)
-        .value = "Valeur TEC:"
+        .Value = "Valeur TEC:"
         .Font.Italic = True
         .Font.Bold = True
         .HorizontalAlignment = xlRight
     End With
     With ws.Range("O" & saveR)
         .NumberFormat = "#,##0.00 $"
-        .value = ws.Range("M" & rowSelected).value
+        .Value = ws.Range("M" & rowSelected).Value
         .Font.Bold = True
         .HorizontalAlignment = xlRight
     End With
@@ -574,10 +449,10 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
     Dim result As Variant
     Dim i As Long, r As Long
     For i = 2 To sourceLastUsedRow
-        If wsSource.Cells(i, 26).value <> "True" Then
-            clientName = wsSource.Cells(i, 2).value
-            clientID = wsSource.Cells(i, 3).value
-            honoTotal = wsSource.Cells(i, 5).value
+        If wsSource.Cells(i, 26).Value <> "True" Then
+            clientName = wsSource.Cells(i, 2).Value
+            clientID = wsSource.Cells(i, 3).Value
+            honoTotal = wsSource.Cells(i, 5).Value
             'Using XLOOKUP to find the result directly
             result = Application.WorksheetFunction.XLookup("Total " & clientName, _
                                                            rngTotal, _
@@ -588,7 +463,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
             
             If result <> "Not Found" Then
                 r = Application.WorksheetFunction.Match(result, rngTotal, 0)
-                wsActive.Cells(r, 4).value = honoTotal
+                wsActive.Cells(r, 4).Value = honoTotal
                 wsActive.Cells(r, 4).NumberFormat = "#,##0.00 $"
             End If
         End If
@@ -608,7 +483,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails$"
     
@@ -626,11 +501,11 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
 
     'Get the maximum value
     Dim MaxValue As Long
-    If IsNull(rs.Fields("MaxValue").value) Then
+    If IsNull(rs.Fields("MaxValue").Value) Then
         'Handle empty table (assign a default value, e.g., 1)
         projetID = 1
     Else
-        projetID = rs.Fields("MaxValue").value + 1
+        projetID = rs.Fields("MaxValue").Value + 1
     End If
     
     'Close the previous recordset (no longer needed)
@@ -646,18 +521,19 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     For l = fr To lr
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("ProjetID").value = projetID
-            rs.Fields("NomClient").value = wshTEC_Analyse.Range("C" & l).value
-            rs.Fields("ClientID").value = clientID
-            rs.Fields("TECID").value = wshTEC_Analyse.Range("A" & l).value
-            rs.Fields("ProfID").value = wshTEC_Analyse.Range("B" & l).value
-            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).value, "yyyy-mm-dd")
-            rs.Fields("Date").value = dateTEC
-            rs.Fields("Prof").value = wshTEC_Analyse.Range("F" & l).value
-            rs.Fields("estDetruite") = 0 'Faux
-            rs.Fields("Heures").value = CDbl(wshTEC_Analyse.Range("H" & l).value)
+            'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
+            rs.Fields(fFacPDProjetID - 1).Value = projetID
+            rs.Fields(fFacPDNomClient - 1).Value = wshTEC_Analyse.Range("C" & l).Value
+            rs.Fields(fFacPDClientID - 1).Value = clientID
+            rs.Fields(fFacPDTECID - 1).Value = wshTEC_Analyse.Range("A" & l).Value
+            rs.Fields(fFacPDProfID - 1).Value = wshTEC_Analyse.Range("B" & l).Value
+            dateTEC = Format$(wshTEC_Analyse.Range("E" & l).Value, "yyyy-mm-dd")
+            rs.Fields(fFacPDDate - 1).Value = dateTEC
+            rs.Fields(fFacPDProf - 1).Value = wshTEC_Analyse.Range("F" & l).Value
+            rs.Fields(fFacPDestDetruite - 1) = 0 'Faux
+            rs.Fields(fFacPDHeures - 1).Value = CDbl(wshTEC_Analyse.Range("H" & l).Value)
             timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields("TimeStamp").value = timeStamp
+            rs.Fields(fFacPDTimeStamp - 1).Value = timeStamp
         rs.update
     Next l
     
@@ -691,18 +567,18 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     Dim dateTEC As String, timeStamp As String
     Dim i As Long
     For i = fr To lr
-        wshFAC_Projets_Détails.Range("A" & rn).value = projetID
-        wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
-        wshFAC_Projets_Détails.Range("C" & rn).value = clientID
-        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
-        wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
-        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "yyyy-mm-dd")
-        wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
-        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
-        wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
-        wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
+        wshFAC_Projets_Détails.Range("A" & rn).Value = projetID
+        wshFAC_Projets_Détails.Range("B" & rn).Value = wshTEC_Analyse.Range("C" & i).Value
+        wshFAC_Projets_Détails.Range("C" & rn).Value = clientID
+        wshFAC_Projets_Détails.Range("D" & rn).Value = wshTEC_Analyse.Range("A" & i).Value
+        wshFAC_Projets_Détails.Range("E" & rn).Value = wshTEC_Analyse.Range("B" & i).Value
+        dateTEC = Format$(wshTEC_Analyse.Range("E" & i).Value, "yyyy-mm-dd")
+        wshFAC_Projets_Détails.Range("F" & rn).Value = dateTEC
+        wshFAC_Projets_Détails.Range("G" & rn).Value = wshTEC_Analyse.Range("F" & i).Value
+        wshFAC_Projets_Détails.Range("H" & rn).Value = wshTEC_Analyse.Range("H" & i).Value
+        wshFAC_Projets_Détails.Range("I" & rn).Value = "FAUX"
         timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        wshFAC_Projets_Détails.Range("J" & rn).value = timeStamp
+        wshFAC_Projets_Détails.Range("J" & rn).Value = timeStamp
         rn = rn + 1
     Next i
     
@@ -713,7 +589,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
 End Sub
 
 Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
-                                                    sheetName As String, _
+                                                    SheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
@@ -723,7 +599,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & SheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -744,7 +620,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête$"
     
@@ -763,20 +639,49 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Dim l As Long
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields("ProjetID").value = projetID
-        rs.Fields("NomClient").value = nomCLient
-        rs.Fields("ClientID").value = clientID
-        rs.Fields("Date").value = dte
-        rs.Fields("HonoTotal").value = hono
-        For c = 1 To UBound(arr, 1)
-            rs.Fields("Prof" & c).value = arr(c, 1)
-            rs.Fields("Hres" & c).value = arr(c, 2)
-            rs.Fields("TauxH" & c).value = arr(c, 3)
-            rs.Fields("Hono" & c).value = arr(c, 4)
-        Next c
-        rs.Fields("estDétruite").value = 0 'Faux
+        'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
+        rs.Fields(fFacPEProjetID - 1).Value = projetID
+        rs.Fields(fFacPENomClient - 1).Value = nomCLient
+        rs.Fields(fFacPEClientID - 1).Value = clientID
+        rs.Fields(fFacPEDate - 1).Value = dte
+        rs.Fields(fFacPEHonoTotal - 1).Value = hono
+        
+        rs.Fields(fFacPEProf1 - 1).Value = arr(1, 1)
+        rs.Fields(fFacPEHres1 - 1).Value = arr(1, 2)
+        rs.Fields(fFacPETauxH1 - 1).Value = arr(1, 3)
+        rs.Fields(fFacPEHono1 - 1).Value = arr(1, 4)
+        
+        If UBound(arr, 1) >= 2 Then
+            rs.Fields(fFacPEProf2 - 1).Value = arr(2, 1)
+            rs.Fields(fFacPEHres2 - 1).Value = arr(2, 2)
+            rs.Fields(fFacPETauxH2 - 1).Value = arr(2, 3)
+            rs.Fields(fFacPEHono2 - 1).Value = arr(2, 4)
+        End If
+        
+        If UBound(arr, 1) >= 3 Then
+            rs.Fields(fFacPEProf3 - 1).Value = arr(3, 1)
+            rs.Fields(fFacPEHres3 - 1).Value = arr(3, 2)
+            rs.Fields(fFacPETauxH3 - 1).Value = arr(3, 3)
+            rs.Fields(fFacPEHono3 - 1).Value = arr(3, 4)
+        End If
+        
+        If UBound(arr, 1) >= 4 Then
+            rs.Fields(fFacPEProf4 - 1).Value = arr(4, 1)
+            rs.Fields(fFacPEHres4 - 1).Value = arr(4, 2)
+            rs.Fields(fFacPETauxH4 - 1).Value = arr(4, 3)
+            rs.Fields(fFacPEHono4 - 1).Value = arr(4, 4)
+        End If
+        
+        If UBound(arr, 1) >= 5 Then
+            rs.Fields(fFacPEProf5 - 1).Value = arr(5, 1)
+            rs.Fields(fFacPEHres5 - 1).Value = arr(5, 2)
+            rs.Fields(fFacPETauxH5 - 1).Value = arr(5, 3)
+            rs.Fields(fFacPEHono5 - 1).Value = arr(5, 4)
+        End If
+        
+        rs.Fields(fFacPEestDetruite - 1).Value = 0 'Faux
         timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.Fields("TimeStamp").value = timeStamp
+        rs.Fields(fFacPETimeStamp - 1).Value = timeStamp
     rs.update
     
     'Close recordset and connection
@@ -807,21 +712,21 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String,
     rn = lastUsedRow + 1
     
     Dim dateTEC As String, timeStamp As String
-    wshFAC_Projets_Entête.Range("A" & rn).value = projetID
-    wshFAC_Projets_Entête.Range("B" & rn).value = nomCLient
-    wshFAC_Projets_Entête.Range("C" & rn).value = clientID
-    wshFAC_Projets_Entête.Range("D" & rn).value = dte
-    wshFAC_Projets_Entête.Range("E" & rn).value = hono
+    wshFAC_Projets_Entête.Range("A" & rn).Value = projetID
+    wshFAC_Projets_Entête.Range("B" & rn).Value = nomCLient
+    wshFAC_Projets_Entête.Range("C" & rn).Value = clientID
+    wshFAC_Projets_Entête.Range("D" & rn).Value = dte
+    wshFAC_Projets_Entête.Range("E" & rn).Value = hono
     'Assign values from the array to the worksheet using .Cells
     Dim i As Long, j As Long
     For i = 1 To UBound(arr, 1)
         For j = 1 To UBound(arr, 2)
-            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
+            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).Value = arr(i, j)
         Next j
     Next i
-    wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
+    wshFAC_Projets_Entête.Range("Z" & rn).Value = "FAUX"
     timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    wshFAC_Projets_Entête.Range("AA" & rn).value = timeStamp
+    wshFAC_Projets_Entête.Range("AA" & rn).Value = timeStamp
     
     Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally", startTime)
 
@@ -830,7 +735,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String,
 End Sub
 
 Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
-                                                   sheetName As String, _
+                                                   SheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
@@ -840,7 +745,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & sheetName & "] SET estDétruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & SheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -849,14 +754,14 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
 End Sub
 
-Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
+Sub Add_And_Modify_Checkbox(StartRow As Long, LastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Define the range for the summary
     Dim summaryRange As Range
-    Set summaryRange = ws.Range(ws.Cells(startRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
+    Set summaryRange = ws.Range(ws.Cells(StartRow, 10), ws.Cells(LastRow, 13)) 'Columns J to M
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -865,8 +770,8 @@ Sub Add_And_Modify_Checkbox(startRow As Long, lastRow As Long)
     Dim checkBox As OLEObject
     With ws
         Set checkBox = .OLEObjects.Add(ClassType:="Forms.CheckBox.1", _
-                    Left:=.Cells(lastRow, 14).Left + 5, _
-                    Top:=.Cells(lastRow, 14).Top, Width:=80, Height:=16)
+                    Left:=.Cells(LastRow, 14).Left + 5, _
+                    Top:=.Cells(LastRow, 14).Top, Width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object
@@ -916,7 +821,7 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     'Loop through each row starting at row r
     Dim saveR As Long
     saveR = r
-    Do While wshTEC_Analyse.Range("A" & r).value <> ""
+    Do While wshTEC_Analyse.Range("A" & r).Value <> ""
         r = r + 1
     Loop
 
@@ -1016,7 +921,9 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).row
+    Application.EnableEvents = False
     wshTEC_Analyse.Range("C6:O" & usedLastRow).Clear
+    Application.EnableEvents = True
     
     wshTEC_Analyse.Visible = xlSheetVeryHidden
     

@@ -25,7 +25,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Me.Application.Calculation = xlCalculationAutomatic
 
    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").value = Format$(Date, wshAdmin.Range("B1").value) '2024-10-29 @ 07:34
+    Me.Range("H3").Value = Format$(Date, wshAdmin.Range("B1").Value) '2024-10-29 @ 07:34
     
 '    Call TEC_Sort_Group_And_Subtotal
     
@@ -34,7 +34,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Application.EnableEvents = False
     
     'Indique la dernière ligne explosé, qui doit être refermé en passant au suivant
-    ws.Range("B2").value = 0
+    ws.Range("B2").Value = 0
     
     With ws
         .Unprotect
@@ -67,12 +67,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     ws.Visible = xlSheetVisible
     
-'CommentOut - 2024-11-28 @ 05:51
-'    With ws
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlNoRestrictions
-'    End With
-    
     'Libérer la mémoire
     Set ws = Nothing
     
@@ -103,10 +97,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim rowRange As Range
         Dim firstExpandedRow As Long
         If Target.Cells.count = 1 And Target.row > 6 Then
-            If Target.value <> "" Then
+            If Target.Value <> "" Then
                 Call Delete_CheckBox
-                If wshTEC_Analyse.Range("B2").value <> 0 Then
-                    firstExpandedRow = wshTEC_Analyse.Range("B2").value
+                If wshTEC_Analyse.Range("B2").Value <> 0 Then
+                    firstExpandedRow = wshTEC_Analyse.Range("B2").Value
                     If Rows(firstExpandedRow).ShowDetail Then
                         'Referme le groupe sous cette ligne
                         Rows(firstExpandedRow).ShowDetail = False
@@ -117,7 +111,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                 For Each cell In Target
                     'Define the range for the entire row
                     Application.EnableEvents = False
-                    wshTEC_Analyse.Range("B2").value = Target.row
+                    wshTEC_Analyse.Range("B2").Value = Target.row
                     Application.EnableEvents = True
                     Set rowRange = cell.EntireRow
                     'Check if the row is part of a group
@@ -155,23 +149,23 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(Target.Text, 45, 0)
         If fullDate <> "Invalid Date" Then
-            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
             Call TEC_Sort_Group_And_Subtotal
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Analyse_131")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("H3").value) > Date Then
+        If CDate(Range("H3").Value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -208,7 +202,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     'Getting to the Client's Total Row (which is the line before the start of the summary)
     Dim i As Long
     For i = chkboxRow To 7 Step -1
-        If ws.Range("M" & i).value = 0 Then
+        If ws.Range("M" & i).Value = 0 Then
             Exit For
         End If
     Next i
@@ -216,38 +210,38 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     totalRow = i
     
     'Additional code based on the checkbox state
-    If chkBox.Object.value = True Then
+    If chkBox.Object.Value = True Then
         
         'Is there a billing project that already exist for this customer ?
         Dim cell As String
-        cell = Fn_Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).value, _
-                                                        ws.Range("D" & totalRow).value)
+        cell = Fn_Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).Value, _
+                                                        ws.Range("D" & totalRow).Value)
         
         Select Case cell
             Case "REMPLACER"
                 Application.EnableEvents = False
-                ws.Range("D" & totalRow).value = ws.Range("M" & chkboxRow).value
+                ws.Range("D" & totalRow).Value = ws.Range("M" & chkboxRow).Value
                 Application.EnableEvents = True
                 
                 Dim firstRow As Long: firstRow = totalRow + 1
-                Dim lastRow As Long, r As Long
+                Dim LastRow As Long, r As Long
                 r = firstRow
-                Do While ws.Range("A" & r).value <> ""
-                    lastRow = r
+                Do While ws.Range("A" & r).Value <> ""
+                    LastRow = r
                     r = r + 1
                 Loop
                 
                 Dim nomCLient As String
                 Dim clientID As String
-                nomCLient = ws.Range("C" & firstRow).value
+                nomCLient = ws.Range("C" & firstRow).Value
                 clientID = Fn_GetID_From_Client_Name(nomCLient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, LastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, LastRow, projetID)
                 
                 r = firstRow
-                Do While ws.Range("J" & r).value <> ""
+                Do While ws.Range("J" & r).Value <> ""
                     r = r + 1
                 Loop
                 r = r - 1 'Last line of summary, excluding totals
@@ -255,15 +249,15 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim arr() As Variant
                 ReDim arr(1 To (r - firstRow + 1), 1 To 4)
                 Dim rngSummary As Range: Set rngSummary = ws.Range("J" & firstRow & ":M" & r)
-                arr = rngSummary.value
+                arr = rngSummary.Value
                 
                 'Set the date
                 Dim dateProjet As String
-                dateProjet = Format$(ws.Range("H3").value, "dd/mm/yyyy")
+                dateProjet = Format$(ws.Range("H3").Value, "dd/mm/yyyy")
                 
                 'Determine the summary total
                 Dim hono As Double
-                hono = ws.Range("M" & r + 1).value
+                hono = ws.Range("M" & r + 1).Value
                 
                 Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomCLient, clientID, dateProjet, hono, arr)
                 Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomCLient, clientID, dateProjet, hono, arr)
@@ -273,7 +267,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Application.EnableEvents = True
                 
             Case "SUPPRIMER"
-                ws.Range("D" & totalRow).value = 0
+                ws.Range("D" & totalRow).Value = 0
                 firstRow = totalRow + 1
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 
@@ -283,7 +277,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
             
         End Select
     Else
-        ws.Range("D" & totalRow).value = 0
+        ws.Range("D" & totalRow).Value = 0
         'Perform actions when checkbox is unchecked
         Application.EnableEvents = True
         Call Groups_SubTotals_Collapse_A_Client(firstRow)

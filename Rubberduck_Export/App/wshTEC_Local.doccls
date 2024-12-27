@@ -9,26 +9,3 @@ Private Sub Worksheet_Activate()
     Call Log_Record("wshTEC_Local:Worksheet_Activate", startTime)
 
 End Sub
-
-'CommentOut - 2024-12-05 @ 14:41
-'Sub test_last()
-'
-'    Dim ws As Worksheet: Set ws = wshFAC_Entête
-'
-'    'Dernière colonne utilisée
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ActiveSheet.Rows.count, 1).End(xlUp).row
-'    Debug.Print lastUsedRow
-'    '-OU-
-'    lastUsedRow = ws.Cells(ActiveSheet.Rows.count, "A").End(xlUp).row
-'    Debug.Print lastUsedRow
-'
-'    'Dernière colonne utilisée
-'    Dim lastUsedCol As Long
-'    lastUsedCol = ws.Cells(2, 1).End(xlToRight).Column
-'    Debug.Print lastUsedCol
-'
-'    'Libérer la mémoire
-'    Set ws = Nothing
-'
-'End Sub

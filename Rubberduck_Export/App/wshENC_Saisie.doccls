@@ -79,7 +79,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     With ws
-        .Range("K5").value = Format$(Now(), wshAdmin.Range("B1").value)
+        .Range("K5").Value = Format$(Now(), wshAdmin.Range("B1").Value)
         .Range("F5").Select
         previousCellAddress = .Range("F5").Address
     End With
@@ -87,7 +87,7 @@ Private Sub Worksheet_Activate()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)
+    Call Log_Record("wshENC_Saisie:Worksheet_Activate", startTime)
 
 End Sub
 
@@ -132,10 +132,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'On Customer Change and only on new payments
     If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
-        Me.Range("F5").value <> Empty And _
-            Me.Range("B6").value = "" Then
+        Me.Range("F5").Value <> Empty And _
+            Me.Range("B6").Value = "" Then
         Application.EnableEvents = False
-        clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").value)
+        clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").Value)
         Call ENC_Remove_Check_Boxes(36)
         Call ENC_Get_OS_Invoices(clientCode)
         Application.EnableEvents = True
@@ -146,12 +146,12 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(Target.Text, 30, 0)
         If fullDate <> "Invalid Date" Then
-            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

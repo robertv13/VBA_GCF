@@ -19,14 +19,14 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = False
     
-    Dim clientName As String: clientName = ws.Range("D4").value
-    Dim dateFrom As Date: dateFrom = ws.Range("G6").value
-    Dim dateTo As Date: dateTo = ws.Range("I6").value
+    Dim clientName As String: clientName = ws.Range("D4").Value
+    Dim dateFrom As Date: dateFrom = ws.Range("G6").Value
+    Dim dateTo As Date: dateTo = ws.Range("I6").Value
     
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntMFClient_ID)
+    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntFMClientID)
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
@@ -59,29 +59,31 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
+    'wshFAC_Entête_AF#1
+
     With ws
     
         'Effacer les données de la dernière utilisation
-        .Range("X14:X19").ClearContents
-        .Range("X14").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("X6:X10").ClearContents
+        .Range("X6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
         Set rngData = .Range("l_tbl_FAC_Entête[#All]")
-        .Range("X15").value = rngData.Address
+        .Range("X7").Value = rngData.Address
         
         'Définir le range des critères
         Dim rngCriteria As Range
         Set rngCriteria = .Range("X2:X3")
-        .Range("X3").value = codeClient
-        .Range("X16").value = rngCriteria.Address
+        .Range("X3").Value = codeClient
+        .Range("X8").Value = rngCriteria.Address
         
         'Définir le range des résultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = .Range("Z1").CurrentRegion
         rngResult.offset(2, 0).Clear
         Set rngResult = .Range("Z2:AU2")
-        .Range("X17").value = rngResult.Address
+        .Range("X9").Value = rngResult.Address
         
         rngData.AdvancedFilter _
                     action:=xlFilterCopy, _
@@ -92,7 +94,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
         'Quels sont les résultats ?
         Dim lastResultRow As Long
         lastResultRow = .Cells(.Rows.count, "Z").End(xlUp).row
-        .Range("X18").value = lastResultRow - 2 & " lignes"
+        .Range("X10").Value = lastResultRow - 2 & " lignes"
          
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 4 Then Exit Sub
@@ -131,23 +133,23 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
         Dim i As Long, r As Long
         For i = 3 To lastUsedRow
             'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
-            If .Range("AA" & i).value >= dateMin And .Range("AA" & i).value <= dateMax And _
-                .Range("AB" & i).value = "C" Then
+            If .Range("AA" & i).Value >= dateMin And .Range("AA" & i).Value <= dateMax And _
+                .Range("AB" & i).Value = "C" Then
                 r = r + 1
-                arr(r, 1) = .Range("Z" & i).value  'Invoice number
-                arr(r, 2) = .Range("AA" & i).value 'Invoice Date
-                arr(r, 3) = .Range("AI" & i).value 'Fees
-                arr(r, 4) = .Range("AK" & i).value 'Misc. 1
-                arr(r, 5) = .Range("AM" & i).value 'Misc. 2
-                arr(r, 6) = .Range("AO" & i).value 'Misc. 3
-                arr(r, 7) = .Range("AQ" & i).value 'GST $
-                arr(r, 8) = .Range("AS" & i).value 'PST $
-                arr(r, 9) = .Range("AU" & i).value 'Deposit
-                arr(r, 10) = .Range("AT" & i).value 'AR_Total
-                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).value)
-                arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).value)
+                arr(r, 1) = .Range("Z" & i).Value  'Invoice number
+                arr(r, 2) = .Range("AA" & i).Value 'Invoice Date
+                arr(r, 3) = .Range("AI" & i).Value 'Fees
+                arr(r, 4) = .Range("AK" & i).Value 'Misc. 1
+                arr(r, 5) = .Range("AM" & i).Value 'Misc. 2
+                arr(r, 6) = .Range("AO" & i).Value 'Misc. 3
+                arr(r, 7) = .Range("AQ" & i).Value 'GST $
+                arr(r, 8) = .Range("AS" & i).Value 'PST $
+                arr(r, 9) = .Range("AU" & i).Value 'Deposit
+                arr(r, 10) = .Range("AT" & i).Value 'AR_Total
+                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).Value)
+                arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).Value)
                 'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).value, "Dollars")
+                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).Value, "Dollars")
             End If
         Next i
     End With
@@ -164,21 +166,21 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     
     With wshFAC_Historique
         For i = 1 To UBound(arr, 1)
-            .Range("C" & i + 8).value = arr(i, 1)
-            .Range("D" & i + 8).value = Format$(arr(i, 2), wshAdmin.Range("B1").value)
-            .Range("E" & i + 8).value = arr(i, 3)
-            .Range("F" & i + 8).value = arr(i, 13)
-            .Range("G" & i + 8).value = arr(i, 4)
-            .Range("H" & i + 8).value = arr(i, 5)
-            .Range("I" & i + 8).value = arr(i, 6)
-            .Range("J" & i + 8).value = arr(i, 7)
-            .Range("K" & i + 8).value = arr(i, 8)
-            .Range("L" & i + 8).value = arr(i, 9)
-            .Range("M" & i + 8).value = arr(i, 10)
+            .Range("C" & i + 8).Value = arr(i, 1)
+            .Range("D" & i + 8).Value = Format$(arr(i, 2), wshAdmin.Range("B1").Value)
+            .Range("E" & i + 8).Value = arr(i, 3)
+            .Range("F" & i + 8).Value = arr(i, 13)
+            .Range("G" & i + 8).Value = arr(i, 4)
+            .Range("H" & i + 8).Value = arr(i, 5)
+            .Range("I" & i + 8).Value = arr(i, 6)
+            .Range("J" & i + 8).Value = arr(i, 7)
+            .Range("K" & i + 8).Value = arr(i, 8)
+            .Range("L" & i + 8).Value = arr(i, 9)
+            .Range("M" & i + 8).Value = arr(i, 10)
             If arr(i, 10) - arr(i, 11) > 0 Then
-                .Range("N" & i + 8).value = Format$(WorksheetFunction.Max(0, Now() - arr(i, 12)), "# ###")
+                .Range("N" & i + 8).Value = Format$(WorksheetFunction.Max(0, Now() - arr(i, 12)), "# ###")
             End If
-            .Range("O" & i + 8).value = arr(i, 10) - arr(i, 11) 'Balance
+            .Range("O" & i + 8).Value = arr(i, 10) - arr(i, 11) 'Balance
         Next i
     End With
     
@@ -203,14 +205,14 @@ Sub Insert_PDF_Icons(lastUsedRow As Long)
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
+    iconPath = wshAdmin.Range("F5").Value & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
     
     Dim pic As Picture
     Dim cell As Range
     
     'Loop through each row and insert the icon if there is data in column C
     For i = 9 To lastUsedRow
-        If ws.Cells(i, 3).value <> "" Then
+        If ws.Cells(i, 3).Value <> "" Then
             Set cell = ws.Cells(i, 16) 'Set the cell where the icon should be inserted (column P)
             
             'Insert the icon
@@ -247,8 +249,8 @@ Sub Display_PDF_Invoice()
     rowNumber = targetCell.row
     
     'Assuming the invoice number is in column E (5th column)
-    fullPDFFileName = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
-                            Application.PathSeparator & ws.Cells(rowNumber, 3).value & ".pdf"
+    fullPDFFileName = wshAdmin.Range("F5").Value & FACT_PDF_PATH & _
+                            Application.PathSeparator & ws.Cells(rowNumber, 3).Value & ".pdf"
     
     'Ouvrir la version PDF de la facture, si elle existe
     If Dir(fullPDFFileName) <> "" Then
@@ -281,53 +283,6 @@ Sub Remove_All_PDF_Icons() 'RMV - 2024-07-24 @ 19:58
     
 End Sub
 
-'CommentOut - 2024-11-16
-'Sub Test_Advanced_Filter_FAC_Entête() '2024-06-27 @ 14:51
-'
-'    Dim ws As Worksheet: Set ws = wshFAC_Entête
-'
-'    'Clear previous results
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Range("Z9999").End(xlUp).row
-'    ws.Range("Z3:AU" & lastUsedRow).ClearContents
-'
-'    'Define the source range including headers
-'    lastUsedRow = ws.Cells(ws.rows.count, "A").End(xlUp).row
-'    Dim srcRange As Range: Set srcRange = ws.Range("A2:V" & lastUsedRow)
-'
-'    'Define the criteria range including headers
-'    Dim criteriaRange As Range: Set criteriaRange = ws.Range("X2:X3")
-'
-'    'Define the destination range starting from Y3
-'    Dim destRange As Range: Set destRange = ws.Range("Z2:AU2")
-'
-'    'Apply the advanced filter
-'    srcRange.AdvancedFilter action:=xlFilterCopy, _
-'                            criteriaRange:=criteriaRange, _
-'                            CopyToRange:=destRange, _
-'                            Unique:=False
-'
-'    Dim lastResultRow As Long
-'    lastResultRow = ws.Range("Z9999").End(xlUp).row
-'    If lastResultRow < 4 Then Exit Sub
-'    With ws.Sort 'Sort - Inv_No
-'        .SortFields.Clear
-'        .SortFields.add key:=wshTEC_Local.Range("Z3"), _
-'            SortOn:=xlSortOnValues, _
-'            Order:=xlAscending, _
-'            DataOption:=xlSortNormal 'Sort Based On Invoice Number
-'        .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
-'        .Apply 'Apply Sort
-'     End With
-'
-'    'Libérer la mémoire
-'    Set criteriaRange = Nothing
-'    Set destRange = Nothing
-'    Set srcRange = Nothing
-'    Set ws = Nothing
-'
-'End Sub
-'
 Sub FAC_Historique_Clear_All_Cells()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Historique:FAC_Historique_Clear_All_Cells", 0)
@@ -379,9 +334,9 @@ Sub FAC_Historique_Montrer_Bouton()
     
     Application.EnableEvents = False
     
-    If IsDate(wshFAC_Historique.Range("G6").value) And _
-        IsDate(wshFAC_Historique.Range("I6").value) And _
-        Trim(wshFAC_Historique.Range("D4").value) <> "" Then
+    If IsDate(wshFAC_Historique.Range("G6").Value) And _
+        IsDate(wshFAC_Historique.Range("I6").Value) And _
+        Trim(wshFAC_Historique.Range("D4").Value) <> "" Then
         shp.Visible = True
     Else
         shp.Visible = False

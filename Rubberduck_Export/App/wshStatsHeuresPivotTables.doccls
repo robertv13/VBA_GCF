@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate()
     'Ensure all pending events are processed - 2024-10-12 @ 11:33
     DoEvents
     
-    Me.Range("B4").value = ""
+    Me.Range("B4").Value = ""
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -87,32 +87,32 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         ws.Unprotect
         
         'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
-        Select Case Target.value
+        Select Case Target.Value
             Case "Guillaume"
-                wshTEC_TDB_Data.Range("S7").value = "GC"
+                wshTEC_TDB_Data.Range("S7").Value = "GC"
             Case "Vladimir"
-                wshTEC_TDB_Data.Range("S7").value = "VG"
+                wshTEC_TDB_Data.Range("S7").Value = "VG"
             Case "Michel"
-                wshTEC_TDB_Data.Range("S7").value = "ML"
+                wshTEC_TDB_Data.Range("S7").Value = "ML"
             Case "Annie"
-                wshTEC_TDB_Data.Range("S7").value = "AR"
+                wshTEC_TDB_Data.Range("S7").Value = "AR"
             Case "Tous"
-                wshTEC_TDB_Data.Range("S7").value = ""
+                wshTEC_TDB_Data.Range("S7").Value = ""
         End Select
         
-        If wshTEC_TDB_Data.Range("BJ2").value <> "" Then
+        If wshTEC_TDB_Data.Range("BJ2").Value <> "" Then
             ws.Range("S:V").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AW2").value <> "" Then
+        If wshTEC_TDB_Data.Range("AW2").Value <> "" Then
             ws.Range("N:R").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AJ2").value <> "" Then
+        If wshTEC_TDB_Data.Range("AJ2").Value <> "" Then
             ws.Range("I:M").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("W2").value <> "" Then
+        If wshTEC_TDB_Data.Range("W2").Value <> "" Then
             ws.Range("D:H").EntireColumn.Hidden = False
         End If
     

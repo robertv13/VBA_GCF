@@ -28,7 +28,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     End With
     
     'Cette cellule peut aussi contenir "Client:"
-    ws.Range("E6").value = "Description:"
+    ws.Range("E6").Value = "Description:"
     
     Call GL_EJ_Clear_All_Cells
     
@@ -50,9 +50,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Call Sauvegarder_Forme(shp)
     
     With ws
-        .Range("B2").value = -1
-        .Range("B3").value = -1
-        .Range("K4").value = Format$(Now(), wshAdmin.Range("B1").value)
+        .Range("B2").Value = -1
+        .Range("B3").Value = -1
+        .Range("K4").Value = Format$(Now(), wshAdmin.Range("B1").Value)
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -92,7 +92,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Compte has been selected
     If Not Intersect(Target, wshGL_EJ.Range("E9:E23")) Is Nothing Then
         Target.Interior.color = HIGHLIGHT_COLOR
-        If Target.row = 9 And wshGL_EJ.Range("F4").value = "Remise TPS/TVQ" Then
+        If Target.row = 9 And wshGL_EJ.Range("F4").Value = "Remise TPS/TVQ" Then
             Call GL_EJ_Construire_Remise_TPS_TVQ(Target.row)
         End If
     End If
@@ -130,10 +130,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("F4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
-            If UCase(Trim(Range("F4").value)) = "AUTO" Then
-                wshGL_EJ.Range("B2").value = -1
+            If UCase(Trim(Range("F4").Value)) = "AUTO" Then
+                wshGL_EJ.Range("B2").Value = -1
                 ufListeEJAuto.show
-                If wshGL_EJ.Range("B2").value >= 0 Then
+                If wshGL_EJ.Range("B2").Value >= 0 Then
                     wshGL_EJ.Range("K4").Activate
                     wshGL_EJ.Range("K4").Select
                 Else
@@ -141,21 +141,21 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 End If
             End If
         Application.EnableEvents = True
-        If Target.value = "Renversement" Then
+        If Target.Value = "Renversement" Then
             Call GL_EJ_Renverser_Ecriture
         End If
-        If Target.value = "Dépôt de client" Then
+        If Target.Value = "Dépôt de client" Then
             Call GL_EJ_Depot_Client
         End If
     End If
     
     'Description -OU- Nom du client a changé
     If Not Intersect(Target, Range("F6")) Is Nothing Then
-        If wshGL_EJ.Range("F4").value = "Dépôt de client" Then
+        If wshGL_EJ.Range("F4").Value = "Dépôt de client" Then
             Application.EnableEvents = False
             Dim clientCode As String
-            clientCode = Fn_GetID_From_Client_Name(Me.Range("F6").value)
-            Me.Range("B6").value = clientCode
+            clientCode = Fn_GetID_From_Client_Name(Me.Range("F6").Value)
+            Me.Range("B6").Value = clientCode
             Application.EnableEvents = True
             End If
     End If
@@ -167,18 +167,18 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_EJ_123")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
-        If CDate(Me.Range("K4").value) > Now() Then
+        If CDate(Me.Range("K4").Value) > Now() Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
-                Target.value = ""
+                Target.Value = ""
                 Target.Activate
                 Target.Select
             End If
@@ -190,20 +190,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("E9:G23")) Is Nothing Then
         Application.EnableEvents = False
         With wshGL_EJ
-            If .Range("E" & Target.row).value <> "" Then
-                .Range("L" & Target.row).value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.row).value)
+            If .Range("E" & Target.row).Value <> "" Then
+                .Range("L" & Target.row).Value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.row).Value)
             End If
             
-            If Target.row > 9 And wshGL_EJ.Range("F4").value <> "Remise TPS/TVQ" And _
-                (.Range("H26").value <> 0 Or .Range("I26").value <> 0) And _
-                .Range("H26").value <> .Range("I26").value Then
-                    If .Range("H26").value > .Range("I26").value Then
-                        .Range("I" & Target.row).value = .Range("H26").value - .Range("I26").value
+            If Target.row > 9 And wshGL_EJ.Range("F4").Value <> "Remise TPS/TVQ" And _
+                (.Range("H26").Value <> 0 Or .Range("I26").Value <> 0) And _
+                .Range("H26").Value <> .Range("I26").Value Then
+                    If .Range("H26").Value > .Range("I26").Value Then
+                        .Range("I" & Target.row).Value = .Range("H26").Value - .Range("I26").Value
                         Application.EnableEvents = True
                         .Range("I" & Target.row).Select
                         Application.EnableEvents = False
                     Else
-                        .Range("H" & Target.row).value = .Range("I26").value - .Range("H26").value
+                        .Range("H" & Target.row).Value = .Range("I26").Value - .Range("H26").Value
                         Application.EnableEvents = True
                         .Range("H" & Target.row).Select
                         Application.EnableEvents = False
@@ -215,11 +215,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
     If Not Intersect(Target, Range("H9:I23")) Is Nothing Then
-        If (wshGL_EJ.Range("H" & Target.row).value < 0 Or wshGL_EJ.Range("I" & Target.row).value < 0) Then
+        If (wshGL_EJ.Range("H" & Target.row).Value < 0 Or wshGL_EJ.Range("I" & Target.row).Value < 0) Then
             MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
-        If Range("H26").value <> Range("I26").value Then
+        If Range("H26").Value <> Range("I26").Value Then
             With Range("H26:I26").Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic

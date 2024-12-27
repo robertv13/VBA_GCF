@@ -1,71 +1,6 @@
 Attribute VB_Name = "modGL_Stuff"
 Option Explicit
 
-'CommentOut - 2024-11-18 @ 06:39
-'Public Sub GL_Get_Account_Trans_AF(glCode As String, dateDeb As Date, dateFin As Date) '2024-11-17 @ 18:41
-'
-'    Dim ws As Worksheet: Set ws = wshGL_Trans
-'
-'    'Effacer les données de la dernière utilisation
-'    ws.Range("M6:M10").ClearContents
-'    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-'
-'    'Définir le range pour la source des données en utilisant un tableau
-'    Dim rngData As Range
-'    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-'    ws.Range("M7").value = rngData.address
-'
-'    'Définir le range des critères
-'    Dim rngCriteria As Range
-'    Set rngCriteria = ws.Range("L2:N3")
-'    With ws
-'        .Range("L3").value = glCode
-'        .Range("M3").value = ">=" & CLng(dateDeb)
-'        .Range("N3").value = "<=" & CLng(dateFin)
-'    End With
-'    ws.Range("M8").value = rngCriteria.address
-'
-'    'Définir le range des résultats et effacer avant le traitement
-'    Dim rngResult As Range
-'    Set rngResult = ws.Range("P1").CurrentRegion
-'    rngResult.Offset(1, 0).Clear
-'    Set rngResult = ws.Range("P1:Y1")
-'    ws.Range("M9").value = rngResult.address
-'
-'    rngData.AdvancedFilter _
-'                action:=xlFilterCopy, _
-'                criteriaRange:=rngCriteria, _
-'                CopyToRange:=rngResult, _
-'                Unique:=False
-'
-'    'Quels sont les résultats ?
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.rows.count, "P").End(xlUp).row
-'    ws.Range("M10").value = lastUsedRow
-'    Set rngResult = ws.Range("P1:Y" & lastUsedRow)
-'
-'    'Est-il nécessaire de trier les résultats ?
-'    If lastUsedRow > 2 Then
-'        With ws.Sort
-'            .SortFields.Clear
-'                .SortFields.add _
-'                    key:=ws.Range("Q2"), _
-'                    SortOn:=xlSortOnValues, _
-'                    Order:=xlAscending, _
-'                    DataOption:=xlSortNormal 'Trier par date de transaction
-'                .SortFields.add _
-'                    key:=ws.Range("P2"), _
-'                    SortOn:=xlSortOnValues, _
-'                    Order:=xlAscending, _
-'                    DataOption:=xlSortNormal 'Trier par numéro d'écriture
-'            .SetRange rngResult
-'            .Header = xlYes
-'            .Apply
-'        End With
-'    End If
-'
-'End Sub
-'
 Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Get_Account_Trans_AF(" & glNo & " - De " & dateDeb & " à " & dateFin & ")", 0)
@@ -73,29 +8,31 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     'Les données à AF proviennent de GL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
     
+    'wshGL_Trans_AF#1
+
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
-    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-    ws.Range("M7").value = rngData.Address
+    ws.Range("M7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("L2:N3")
-    ws.Range("L3").value = glNo
-    ws.Range("M3").value = ">=" & CLng(dateDeb)
-    ws.Range("N3").value = "<=" & CLng(dateFin)
-    ws.Range("M8").value = rngCriteria.Address
+    ws.Range("L3").Value = glNo
+    ws.Range("M3").Value = ">=" & CLng(dateDeb)
+    ws.Range("N3").Value = "<=" & CLng(dateFin)
+    ws.Range("M8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("P1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("P1:Y1")
-    ws.Range("M9").value = rngResult.Address
+    ws.Range("M9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -106,7 +43,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    ws.Range("M10").value = lastUsedRow - 1 & " lignes"
+    ws.Range("M10").Value = lastUsedRow - 1 & " lignes"
     
     If lastUsedRow > 2 Then
         With ws.Sort
@@ -146,7 +83,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -164,11 +101,11 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
     
     'Get the last used row
     Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
+    If IsNull(rs.Fields("MaxEJNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 0
     Else
-        lastJE = rs.Fields("MaxEJNo").value
+        lastJE = rs.Fields("MaxEJNo").Value
     End If
     
     'Calculate the new JE number
@@ -184,21 +121,21 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
     For i = LBound(arr, 1) To UBound(arr, 1)
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
-                rs.Fields("No_Entrée") = GLEntryNo
-                rs.Fields("Date") = CDate(df)
-                rs.Fields("Description") = desc
-                rs.Fields("Source") = source
-                rs.Fields("No_Compte") = arr(i, 1)
-                rs.Fields("Compte") = arr(i, 2)
+                'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
+                rs.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
+                rs.Fields(fGlTDate - 1).Value = CDate(df)
+                rs.Fields(fGlTDescription - 1).Value = desc
+                rs.Fields(fGlTSource - 1).Value = source
+                rs.Fields(fGlTNoCompte - 1).Value = arr(i, 1)
+                rs.Fields(fGlTCompte - 1).Value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                    rs.Fields("Débit") = arr(i, 3)
+                    rs.Fields(fGlTDébit - 1).Value = arr(i, 3)
                 Else
-                    rs.Fields("Crédit") = -arr(i, 3)
+                    rs.Fields(fGlTCrédit - 1).Value = -arr(i, 3)
                 End If
-                rs.Fields("AutreRemarque") = arr(i, 4)
+                rs.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
                 timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-                rs.Fields("TimeStamp") = timeStamp
-                Debug.Print "#063 - GL_Trans - " & CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                rs.Fields(fGlTTimeStamp - 1).Value = timeStamp
             rs.update
 Nothing_to_Post:
     Next i
@@ -234,19 +171,19 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = GLEntryNo
-                .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = desc
-                .Range("D" & rowToBeUsed).value = source
-                .Range("E" & rowToBeUsed).value = arr(i, 1)
-                .Range("F" & rowToBeUsed).value = arr(i, 2)
+                .Range("A" & rowToBeUsed).Value = GLEntryNo
+                .Range("B" & rowToBeUsed).Value = CDate(df)
+                .Range("C" & rowToBeUsed).Value = desc
+                .Range("D" & rowToBeUsed).Value = source
+                .Range("E" & rowToBeUsed).Value = arr(i, 1)
+                .Range("F" & rowToBeUsed).Value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).value = CDbl(arr(i, 3))
+                     .Range("G" & rowToBeUsed).Value = CDbl(arr(i, 3))
                 Else
-                     .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
+                     .Range("H" & rowToBeUsed).Value = -CDbl(arr(i, 3))
                 End If
-                .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                .Range("I" & rowToBeUsed).Value = arr(i, 4)
+                .Range("J" & rowToBeUsed).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
             End If
         Next i
@@ -269,12 +206,12 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Dim topPosition As Double
 
     'Trouver la dernière ligne de la plage L4:T*
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Calculer les positions (Left & Top) du bouton
-    leftPosition = ws.Range("T" & lastRow).Left
-    topPosition = ws.Range("S" & lastRow).Top + (2 * ws.Range("S" & lastRow).Height)
+    leftPosition = ws.Range("T" & LastRow).Left
+    topPosition = ws.Range("S" & LastRow).Top + (2 * ws.Range("S" & LastRow).Height)
 
     ' Ajouter une Shape
     Set btn = ws.Shapes.AddShape(msoShapeRoundedRectangle, Left:=leftPosition, Top:=topPosition, _
@@ -311,8 +248,8 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     Application.EnableEvents = True
 
     'Trouver la dernière ligne de la plage M4:T*
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
+    Dim LastRow As Long
+    LastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Supprimer la shape
     On Error Resume Next
