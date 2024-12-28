@@ -659,7 +659,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -784,7 +784,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJANo As Long
-    strSQL = "SELECT MAX(No_EJA) AS MaxEJANo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEjR) AS MaxEJANo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn

@@ -6,8 +6,6 @@ Sub DEB_Saisie_Click()
     
     Application.ScreenUpdating = False
     
-    Call Fournisseur_List_Import_All
-    
     Application.EnableEvents = True
     
     fromMenu = True '2024-09-30 @ 09:33

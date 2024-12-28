@@ -79,7 +79,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(No_Entrée) AS MaxDebTransNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrée) AS MaxDebTransNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -367,7 +367,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxDebRecNo As Long
-    strSQL = "SELECT MAX(No_Deb_Rec) AS MaxDebRecNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoDebRec) AS MaxDebRecNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn

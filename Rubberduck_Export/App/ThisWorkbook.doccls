@@ -4,32 +4,14 @@
 Public startTime As Double
 Public previousCellAddress As Variant
 
-Private Sub Auto_Open()
-
-    Debug.Print "Auto_Open - Sub" & Now()
-
-    If Not wshAdmin.Range("B2").Value = "Initialisé" Then
-        Call Workbook_Open 'Force l'exécution de Workbook_Open
-    End If
-
-End Sub
-Private Sub Workbook_Activate()
-
-    If Application.EnableEvents = False Then Application.EnableEvents = True
-    
-    Debug.Print "Workbook_Activate - Sub" & Now()
-    
-    If Not wshAdmin.Range("B2").Value = "Initialisé" Then
-        Call Workbook_Open 'Force l'exécution de Workbook_Open
-    End If
-
-End Sub
-
 Private Sub Workbook_Open()
 
-    If Application.EnableEvents = False Then Application.EnableEvents = True
     
-    Debug.Print "Workbook_Open - Sub" & Now()
+End Sub
+
+Private Sub Workbook_Open_20241228()
+
+    If Application.EnableEvents = False Then Application.EnableEvents = True
     
     On Error GoTo ErrorHandler
     
@@ -91,10 +73,6 @@ Private Sub Workbook_Open()
     
     Call HideDevShapesBasedOnUsername
     
-    Application.EnableEvents = False
-    wshAdmin.Range("B2").Value = "Initialisé"
-    Application.EnableEvents = True
-    
     'Protection de la feuille wshMenu
     With wshMenu
         .Protect UserInterfaceOnly:=True
@@ -125,94 +103,6 @@ Private Sub Workbook_Open()
     
 ErrorHandler:
     Call Log_Record("Erreur dans Workbook_Open : " & Err.Description, Timer)
-    
-End Sub
-
-Sub CreateUserActiveFile()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
-    
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
-    Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
-    
-    Dim FileNumber As Integer
-    FileNumber = FreeFile
-    
-    On Error GoTo Error_Handling
-    Open traceFilePath For Output As FileNumber
-    On Error GoTo 0
-    
-    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
-    Close FileNumber
-    
-    Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
-    
-    Exit Sub
-
-Error_Handling:
-    MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
-            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
-
-End Sub
-
-Sub BackupMasterFile()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
-    
-    On Error GoTo MASTER_NOT_AVAILABLE
-    
-'    Application.ScreenUpdating = False
-    
-    'Chemin source (fichier principal) et destination (sauvegarde)
-    Dim masterFilePath As String
-    masterFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-    
-    Dim backupFilePath As String
-    backupFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
-    
-    'Créer directement une copie du fichier sans ouvrir Excel
-    FileCopy masterFilePath, backupFilePath
-
-    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
-    
-    Exit Sub
-    
-MASTER_NOT_AVAILABLE:
-    MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
-            "Le fichier nécessite une réparation manuelle", _
-            vbCritical, _
-            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
-    Application.Quit
-
-End Sub
-
-Sub SetupUserDateFormat()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
-
-    Dim userDateFormat As String
-    
-    Select Case Fn_Get_Windows_Username
-        Case "GuillaumeCharron", "Guillaume"
-            userDateFormat = "dd/mm/yy"
-        Case "vgervais", "user"
-            userDateFormat = "dd/mm/yyyy"
-        Case "Annie"
-            userDateFormat = "yyyy/mm/dd"
-        Case "Robert M. Vigneault", "robertmv"
-            userDateFormat = "dd/mm/yyyy"
-        Case Else
-            userDateFormat = "dd/mm/yyyy"
-    End Select
-
-    wshAdmin.Range("B1").Value = userDateFormat
-    
-    Call Log_Record("ThisWorkbook:Setup_UserDateFormat", startTime)
     
 End Sub
 

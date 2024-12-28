@@ -25,11 +25,13 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceWorksheet & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceWorksheet & "]"
+        .Open
+    End With
 
     'Copy to wshAdmin workbook
     wshAdmin.Range("T11").CopyFromRecordset recSet
@@ -77,11 +79,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        recSet.Open
+    End With
     
     'Copier le recSet vers wsLocal
     wsLocal.Range("A2").CopyFromRecordset recSet
@@ -93,43 +97,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Call ResizeTable(wsLocal, tableName)
     Call ApplyFormatting(wsLocal, tableName)
     
-'    'Redimensionner le tableau local
-'    Dim tblLocal As ListObject
-'    Dim dataRange As Range
-'    Dim lastRow As Long, lastCol As Long
-'    If wsLocal.ListObjects.count > 0 Then
-'        Set tblLocal = wsLocal.ListObjects(1) 'Supposons qu'il y a un seul tableau par feuille
-'        'Rechercher la dernière ligne avec des données
-'        Dim i As Long
-'        For i = tblLocal.ListRows.count To 1 Step -1
-'            If tblLocal.DataBodyRange.Cells(i, 2).value <> "" Then
-'                lastRow = i
-'                Exit For
-'            End If
-'        Next i
-''        lastRow = tblLocal.ListRows.count
-'        lastCol = wsLocal.Cells(1, wsLocal.Columns.count).End(xlToLeft).Column
-'        Set dataRange = wsLocal.Range("A1", wsLocal.Cells(lastRow + 1, lastCol))
-'        'Redimensionner le tableau pour s’adapter à la nouvelle plage
-'        tblLocal.Resize dataRange
-'    End If
-'
-'    'Setup the format of the worksheet - 2024-07-20 @ 18:31
-'    Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-'    Call modAppli_Utils.ApplyWorksheetFormat(wsLocal, rng, 1)
-    
     'Close resource
     recSet.Close
     connStr.Close
     
-'    Application.ScreenUpdating = True
-    
     'Libérer la mémoire
     Set connStr = Nothing
-'    Set dataRange = Nothing
     Set recSet = Nothing
-'    Set rng = Nothing
-'    Set tblLocal = Nothing
     Set wsLocal = Nothing
     
     Call Log_Record("modImport:Client_List_Import_All", startTime)
@@ -162,12 +136,13 @@ Sub DEB_Recurrent_Import_All() '2024-07-08 @ 08:43
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
-    
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     'Copy to wshDEB_Récurrent workbook
     wshDEB_Récurrent.Range("A2").CopyFromRecordset recSet
 
@@ -212,11 +187,13 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshDEB_Trans workbook
     wshDEB_Trans.Range("A2").CopyFromRecordset recSet
@@ -262,11 +239,13 @@ Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshENC_Détails workbook
     wshENC_Détails.Range("A2").CopyFromRecordset recSet
@@ -312,11 +291,13 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshENC_Entête workbook
     wshENC_Entête.Range("A2").CopyFromRecordset recSet
@@ -362,11 +343,13 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshCAR workbook
     wshFAC_Comptes_Clients.Range("A3").CopyFromRecordset recSet
@@ -412,11 +395,13 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshFAC_Détails workbook
     wshFAC_Détails.Range("A3").CopyFromRecordset recSet
@@ -462,11 +447,13 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshFAC_Entête workbook
     wshFAC_Entête.Range("A3").CopyFromRecordset recSet
@@ -512,11 +499,13 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshFAC_Entête workbook
     wshFAC_Sommaire_Taux.Range("A2").CopyFromRecordset recSet
@@ -567,11 +556,13 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy all rows to wshFAC_Projets_Détails workbook
     If recSet.RecordCount > 0 Then
@@ -648,12 +639,13 @@ Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
-    recSet.CursorType = adOpenKeyset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy all rows to wshFAC_Projets_Détails workbook
     If recSet.RecordCount > 0 Then
@@ -720,11 +712,13 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     
     'Définir le type de curseur pour permettre l'utilisation de .RecordCount
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshFAC_Projets_Entête workbook
     If recSet.RecordCount > 0 Then
@@ -790,11 +784,13 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshBD_Fournisseurs workbook
     wshBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
@@ -849,11 +845,13 @@ Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshGL_EJ_Recurrente workbook
     wshGL_EJ_Recurrente.Range("A2").CopyFromRecordset recSet
@@ -909,12 +907,13 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
-    
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     'Copy to wsLocal workbook
     wsLocal.Range("A2").CopyFromRecordset recSet
 
@@ -962,30 +961,20 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    recSet.ActiveConnection = connStr
-    recSet.CursorType = adOpenStatic
-    recSet.LockType = adLockReadOnly
-    recSet.source = "SELECT * FROM [" & sourceTab & "]"
-    recSet.Open
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
     
     'Copy to wshTEC_Local workbook
     ws.Range("A3").CopyFromRecordset recSet
 
-'    'Redimensionner le tableau
-'    Dim tbl As ListObject
-'    Set tbl = ws.ListObjects("l_tbl_TEC_Local")
-'    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-'
-'    'Setup the format of the worksheet using a Sub
-'    Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 2)
-'
-'    Application.ScreenUpdating = True
-'
     'Libérer la mémoire
     Set connStr = Nothing
     Set recSet = Nothing
-'    Set rng = Nothing
-'    Set tbl = Nothing
     Set ws = Nothing
     
     Call Log_Record("modImport:TEC_Import_All", startTime)
@@ -1028,31 +1017,6 @@ Sub ApplyFormatting(targetSheet As Worksheet, tableName As String)
     ' Appliquer un style existant au tableau
     tbl.tableStyle = "TableStyleMedium2" ' Modifier selon le style souhaité
     
-    ' Appliquer des formats additionnels si nécessaire
-'    With tbl.DataBodyRange
-'        .Font.Bold = False
-'        .HorizontalAlignment = xlCenter
-'    End With
-
     Call Log_Record("modImport:ApplyFormatting", startTime)
     
 End Sub
-
-Sub GetTableStyleName()
-
-    Dim ws As Worksheet
-    Dim tbl As ListObject
-    Dim tableStyle As String
-    
-    ' Spécifiez la feuille et le tableau
-    Set ws = wshBD_Clients ' Remplacez par le nom de votre feuille
-    Set tbl = ws.ListObjects("l_tbl_BD_Clients") ' Remplacez par le nom de votre tableau
-    
-    ' Récupérer le style du tableau
-    tableStyle = tbl.tableStyle
-    
-    ' Afficher le style dans une MsgBox
-    MsgBox "Le style du tableau '" & tbl.Name & "' est : " & tableStyle, vbInformation
-    
-End Sub
-

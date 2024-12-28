@@ -119,6 +119,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     If confirmation = vbYes Then
         Application.EnableEvents = False
         wshAdmin.Range("B1").Value = ""
+        wshAdmin.Range("B2").Value = ""
         Application.EnableEvents = True
         
         Call Delete_User_Active_File
@@ -128,16 +129,17 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         Call Log_Record("", -1)
         On Error GoTo 0
         
-'        Application.ScreenUpdating = True
+        Application.ScreenUpdating = True
         
-       'Really ends here !!!
+       'On termine ici...
         Dim wb As Workbook: Set wb = ActiveWorkbook
         Application.EnableEvents = False
         ActiveWorkbook.Close SaveChanges:=True
         Application.EnableEvents = True
         
-        'Never pass here... It's too late
+        'On tente de quitter l'application EXCEL
         Application.Application.Quit
+        
     End If
     
     'Libérer la mémoire

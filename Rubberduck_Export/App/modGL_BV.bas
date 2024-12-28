@@ -26,25 +26,21 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
 
     'Clear Detail transaction section
     wshGL_BV.Range("L4").CurrentRegion.offset(3, 0).Clear
-'   CommenOut - 2024-11-18 @ 07:05
-'    With wshGL_BV.Range("S4:S9999").Interior
-'        .Pattern = xlNone
-'        .TintAndShade = 0
-'        .PatternTintAndShade = 0
-'    End With
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date
     wshGL_BV.Range("C2").Value = "Au " & Format$(dateCutOff, wshAdmin.Range("B1").Value)
 
+    Application.EnableEvents = False
     wshGL_BV.Range("B2").Value = 3
     wshGL_BV.Range("B10").Value = 0
+    Application.EnableEvents = True
     
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
     Dim rngResultAF As Range
     Call GL_Get_Account_Trans_AF("", #7/31/2024#, dateCutOff, rngResultAF)
+
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
-    
     lastUsedRow = rngResultAF.Rows.count
     If lastUsedRow < 2 Then Exit Sub
     
@@ -62,9 +58,6 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To lastUsedRow
         glNo = rngResultAF.Cells(i, 5)
-'        glNo = .Range("T" & i).value
-'        t1 = t1 + rngResultAF.Cells(i, 7).value
-'        t2 = t2 + rngResultAF.Cells(i, 8).value
         If Not dictSolde.Exists(glNo) Then
             dictSolde.Add glNo, newRowID
             arrSolde(newRowID, 1) = glNo

@@ -7,7 +7,6 @@ Private Sub Worksheet_Activate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", 0)
     
     If fromMenu = False Then
-        Debug.Print "#006 - wshDEB_Saisie_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
     
@@ -17,6 +16,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
+    Call Fournisseur_List_Import_All
     Call DEB_Trans_Import_All
     Call GL_Trans_Import_All
     Call Fournisseur_List_Import_All
@@ -212,7 +212,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
     End If

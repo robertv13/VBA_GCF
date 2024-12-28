@@ -401,12 +401,6 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Close
             rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
             
-            ' Parcourir les champs et afficher leur type
-            Dim fld As Object
-            For Each fld In rs.Fields
-                Debug.Print "Nom du champ : " & fld.Name
-                Debug.Print "Type de données : " & TypeNameADO(fld.Type)
-            Next fld
             'Create a new RecordSet and update all fields of the recordset before updating it
             rs.AddNew
             rs.Fields(fTECTECID - 1).Value = nextID
@@ -1018,28 +1012,3 @@ Sub UpdatePivotTables()
     
 End Sub
 
-' Fonction pour convertir les types ADO en texte compréhensible
-Function TypeNameADO(dataType As Long) As String
-    Select Case dataType
-        Case 2: TypeNameADO = "SmallInt"
-        Case 3: TypeNameADO = "Integer"
-        Case 4: TypeNameADO = "Single"
-        Case 5: TypeNameADO = "Double"
-        Case 6: TypeNameADO = "Currency"
-        Case 7: TypeNameADO = "Date"
-        Case 8: TypeNameADO = "String (BSTR)"
-        Case 11: TypeNameADO = "Boolean"
-        Case 12: TypeNameADO = "Variant"
-        Case 17: TypeNameADO = "Byte"
-        Case 72: TypeNameADO = "GUID"
-        Case 128: TypeNameADO = "Binary"
-        Case 129: TypeNameADO = "Char"
-        Case 130: TypeNameADO = "WChar"
-        Case 131: TypeNameADO = "Decimal"
-        Case 200: TypeNameADO = "VarChar"
-        Case 201: TypeNameADO = "Memo/LongText"
-        Case 202: TypeNameADO = "VarWChar"
-        Case 203: TypeNameADO = "LongVarWChar"
-        Case Else: TypeNameADO = "Type Inconnu (" & dataType & ")"
-    End Select
-End Function

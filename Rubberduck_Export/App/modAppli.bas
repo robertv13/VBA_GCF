@@ -315,6 +315,109 @@ Public Enum TEC_TDB_Data
     [_Last]
 End Enum
 
+Sub Auto_Open() '2024-12-28 @ 11:09
+
+    Call CodeEssentielDepart
+    
+End Sub
+
+Sub CodeEssentielDepart()
+
+    If Application.EnableEvents = False Then Application.EnableEvents = True
+    
+    On Error GoTo ErrorHandler
+    
+    ' Réinitialiser les paramètres globaux d'Excel
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+    'Log initial activity
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****", 0)
+    Application.EnableEvents = True
+    
+    'Vérifie l'état d'Excel
+    Dim isExcelAlreadyRunning As Boolean
+    isExcelAlreadyRunning = (Application.Workbooks.count > 1)
+    
+    If isExcelAlreadyRunning Then
+        Call Log_Record("OK - EXCEL était déjà actif lors de l'ouverture", Timer)
+    Else
+        Call Log_Record("OK - Nouvelle instance d'EXCEL démarrée", Timer)
+    End If
+    
+    'Le serveur est-il disponible ?
+    If Fn_Is_Server_Available() = False Then
+        Call Log_Record("Erreur : Serveur n'est pas disponible", Timer)
+        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
+        Application.Quit
+    End If
+    
+    Dim rootPath As String
+    Call Set_Root_Path(rootPath)
+    Call Log_Record("OK - rootPath défini '" & rootPath & "'", Timer)
+
+    Application.EnableEvents = False
+    wshAdmin.Range("F5").Value = rootPath
+    Application.EnableEvents = True
+   
+    'Vérification si le chemin est accessible
+    If Fn_Check_Server_Access(rootPath) = False Then
+        Call Log_Record("Erreur : Accès au répertoire principal (P:\) impossible", Timer)
+        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
+               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
+        Exit Sub
+    End If
+
+    Call Log_Record("OK - Validation d'accès serveur terminée", Timer)
+    
+    'Création d'un fichier qui indique de l'utilisateur utilise l'application
+    Call CreateUserActiveFile
+    
+    Call SetupUserDateFormat
+    
+    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
+    Call BackupMasterFile
+    
+    Call WriteInfoOnMainMenu
+    wshMenu.Range("A1").Value = wshAdmin.Range("NomEntreprise").Value
+    
+    Call HideDevShapesBasedOnUsername
+    
+    'Protection de la feuille wshMenu
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions '2024-10-14 @ 11:28
+    End With
+    
+    Dim wb As Workbook: Set wb = ActiveWorkbook
+   
+    'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
+    Dim ws As Worksheet
+    Application.DisplayAlerts = False
+    For Each ws In wb.Worksheets
+        If InStr(ws.CodeName, "wsh") <> 1 And InStr(ws.CodeName, "Feuil") = 1 Then
+            ws.Delete
+        End If
+    Next ws
+    Application.DisplayAlerts = True
+    
+    wshMenu.Activate
+
+    'Libérer la mémoire
+    Set wb = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modAppli:CodeEssentielDepart", startTime)
+    
+    Exit Sub
+    
+ErrorHandler:
+    Call Log_Record("Erreur dans modAppli:CodeEssentielDepart : " & Err.Description, Timer)
+
+End Sub
+
 Sub Set_Root_Path(ByRef rootPath As String)
    
     DoEvents
@@ -324,6 +427,94 @@ Sub Set_Root_Path(ByRef rootPath As String)
     Else
         rootPath = "P:\Administration\APP\GCF"
     End If
+
+End Sub
+
+Sub CreateUserActiveFile()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
+    
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    Dim traceFilePath As String
+    traceFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    
+    Dim FileNumber As Integer
+    FileNumber = FreeFile
+    
+    On Error GoTo Error_Handling
+    Open traceFilePath For Output As FileNumber
+    On Error GoTo 0
+    
+    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
+    Close FileNumber
+    
+    Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
+    
+    Exit Sub
+
+Error_Handling:
+    MsgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
+            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
+            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
+
+End Sub
+
+Sub SetupUserDateFormat()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
+
+    Dim userDateFormat As String
+    
+    Select Case Fn_Get_Windows_Username
+        Case "GuillaumeCharron", "Guillaume"
+            userDateFormat = "dd/mm/yy"
+        Case "vgervais", "user"
+            userDateFormat = "dd/mm/yyyy"
+        Case "Annie"
+            userDateFormat = "yyyy/mm/dd"
+        Case "Robert M. Vigneault", "robertmv"
+            userDateFormat = "dd/mm/yyyy"
+        Case Else
+            userDateFormat = "dd/mm/yyyy"
+    End Select
+
+    wshAdmin.Range("B1").Value = userDateFormat
+    
+    Call Log_Record("ThisWorkbook:Setup_UserDateFormat", startTime)
+    
+End Sub
+
+Sub BackupMasterFile()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
+    
+    On Error GoTo MASTER_NOT_AVAILABLE
+    
+'    Application.ScreenUpdating = False
+    
+    'Chemin source (fichier principal) et destination (sauvegarde)
+    Dim masterFilePath As String
+    masterFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    
+    Dim backupFilePath As String
+    backupFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
+    
+    'Créer directement une copie du fichier sans ouvrir Excel
+    FileCopy masterFilePath, backupFilePath
+
+    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
+    
+    Exit Sub
+    
+MASTER_NOT_AVAILABLE:
+    MsgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
+            "Le fichier nécessite une réparation manuelle", _
+            vbCritical, _
+            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
+    Application.Quit
 
 End Sub
 
@@ -352,47 +543,3 @@ Sub WriteInfoOnMainMenu()
     Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
 
 End Sub
-
-Sub WriteInfoOnMainMenu_OK()
-
-    DoEvents
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", 0)
-    
-    Application.EnableEvents = False
-    wshMenu.Unprotect
-    Application.ScreenUpdating = True
-    
-    With wshMenu.Range("$A$30")
-        .Font.size = 8
-        .Font.color = vbBlue
-        .Value = "'" & CStr("Heure - " & Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
-    End With
-    
-    With wshMenu.Range("$A$31")
-        .Font.size = 8
-        .Font.color = vbBlack
-        .Value = "'" & CStr("Version - " & ThisWorkbook.Name)
-    End With
-    
-    With wshMenu.Range("$A$32")
-        .Font.size = 8
-        .Font.color = vbBlack
-        .Value = "'" & CStr("Utilisateur - " & Fn_Get_Windows_Username)
-    End With
-    
-    With wshMenu.Range("$A$33")
-        .Font.size = 8
-        .Font.color = vbRed
-        .Value = "'" & CStr("Environnement - " & wshAdmin.Range("F5").Value)
-    End With
-
-    Application.EnableEvents = True
-    Application.ScreenUpdating = False
-    
-    DoEvents '2024-08-23 @ 06:21
-
-    Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
-
-End Sub
-

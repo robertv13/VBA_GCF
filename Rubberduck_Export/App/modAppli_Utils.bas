@@ -1,6 +1,10 @@
 Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
+'Variables globales pour le module
+Dim verificationIntegriteOK As Boolean
+Dim soldeComptesClients As Currency
+
 '@Folder("")
 
 Public Sub ConvertRangeBooleanToText(rng As Range)
@@ -29,6 +33,9 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Integrity_Verification", 0)
 
     Application.ScreenUpdating = False
+    
+    'Variable pour déterminer à la fin s'il y a des erreurs...
+    verificationIntegriteOK = True
     
     Call Erase_And_Create_Worksheet("X_Analyse_Intégrité")
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
@@ -254,7 +261,12 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Dim header2 As String: header2 = ""
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
-    MsgBox "La vérification d'intégrité est terminé" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+    
+    If verificationIntegriteOK = True Then
+        MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+    Else
+        MsgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+    End If
     
     ThisWorkbook.Worksheets("X_Analyse_Intégrité").Activate
     
@@ -498,7 +510,7 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de description")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_descr & " cas de doublons pour les descriptions")
         r = r + 1
     End If
     
@@ -506,7 +518,7 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de code de G/L")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_code & " cas de doublons pour les codes de G/L")
         r = r + 1
     End If
     
@@ -514,10 +526,15 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun type de G/L invalide")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_type & " cas de types de G/L invalides")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_type & " cas de types de G/L invalides")
         r = r + 1
     End If
     r = r + 1
+    
+    'Cas problème dans cette vérification ?
+    If cas_doublon_descr <> 0 Or cas_doublon_descr <> 0 Or cas_type <> 0 Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     'Libérer la mémoire
@@ -559,7 +576,6 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long, code As String, nom As String, nomClientSysteme As String
     Dim cas_doublon_nom As Long
     Dim cas_doublon_code As Long
-    Dim cas_doublon_nom_client_Systeme As Long
     Dim cas_courriel_invalide As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         nom = arr(i, 1)
@@ -609,7 +625,7 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de nom")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
         r = r + 1
     End If
     
@@ -617,7 +633,7 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de code")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
         r = r + 1
     End If
     
@@ -625,11 +641,16 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Toutes les adresses courriel sont valides")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_courriel_invalide & " cas de courriels INVALIDES")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_courriel_invalide & " cas de courriels INVALIDES")
         r = r + 1
     End If
     
     r = r + 1
+    
+    'Cas problème dans cette vérification ?
+    If cas_doublon_nom <> 0 Or cas_doublon_code <> 0 Or cas_courriel_invalide <> 0 Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     'Libérer la mémoire
@@ -709,18 +730,23 @@ Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de nom")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_nom & " cas de doublons pour les noms")
         r = r + 1
     End If
     If cas_doublon_code = 0 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de code")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_code & " cas de doublons pour les codes")
         r = r + 1
     End If
     r = r + 1
     
+    'Cas problème dans cette vérification ?
+    If cas_doublon_nom <> 0 Or cas_doublon_code <> 0 Then
+        verificationIntegriteOK = False
+    End If
+
 Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
@@ -748,7 +774,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -767,7 +793,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         Exit Sub
     End If
@@ -789,60 +815,74 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
     Dim GL As String, descGL As String
+    
+    Dim isDebTransValid As Boolean
+    isDebTransValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         
         If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         
         p = InStr(strGL, "^C:" & arr(i, 8))
         If p = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 8) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 8) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         If p > 0 Then
             GL = Mid(strGL, p + 3)
             descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
             If descGL <> Trim(arr(i, 9)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
                 r = r + 1
+                isDebTransValid = False
             End If
         End If
         
         'Total
         If IsNumeric(arr(i, 11)) = False Or arr(i, 11) * 100 <> Int(arr(i, 11) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         'TPS
         If IsNumeric(arr(i, 12)) = False Or arr(i, 12) * 100 <> Int(arr(i, 12) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         'TVQ
         If IsNumeric(arr(i, 13)) = False Or arr(i, 13) * 100 <> Int(arr(i, 13) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         'Intrant TPS
         If IsNumeric(arr(i, 14)) = False Or arr(i, 14) * 100 <> Int(arr(i, 14) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         'Intrant TVQ
         If IsNumeric(arr(i, 15)) = False Or arr(i, 15) * 100 <> Int(arr(i, 15) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         '$ dépense
         If IsNumeric(arr(i, 16)) = False Or arr(i, 16) * 100 <> Int(arr(i, 16) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
             r = r + 1
+            isDebTransValid = False
         End If
         readRows = readRows + 1
     Next i
@@ -850,6 +890,9 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
     r = r + 2
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isDebTransValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set ligne = Nothing
@@ -878,7 +921,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRowDetails As Long
     lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRowDetails <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -917,12 +960,17 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim dictENC As Scripting.Dictionary
     Set dictENC = New Scripting.Dictionary
     Dim totalEncDetails As Currency
+    
+    Dim isEncDétailsValid As Boolean
+    isEncDétailsValid = True
+    
     For i = 2 To lastUsedRowDetails
         pmtNo = CLng(ws.Range("A" & i).Value)
         If pmtNo <> oldpmtNo Then
             If InStr(strPmtNo, pmtNo) = 0 Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
                 r = r + 1
+                isEncDétailsValid = False
             End If
             strPmtNo = strPmtNo & pmtNo & "|"
             oldpmtNo = pmtNo
@@ -937,18 +985,21 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
                         0, _
                         1)
         If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
             r = r + 1
+            isEncDétailsValid = False
         End If
         
         If IsDate(ws.Range("D" & i).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La date '" & ws.Range("D" & i).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Range("D" & i).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
             r = r + 1
+            isEncDétailsValid = False
         End If
         
         If IsNumeric(ws.Range("E" & i).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le montant '" & ws.Range("E" & i).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant '" & ws.Range("E" & i).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
+            isEncDétailsValid = False
         Else
             If dictENC.Exists(Inv_No) Then
                 dictENC(Inv_No) = dictENC(Inv_No) + ws.Range("E" & i).Value
@@ -972,10 +1023,11 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
         Inv_No = wsComptes_Clients.Cells(i, 1).Value
         totalPaid = wsComptes_Clients.Cells(i, "I").Value
         If totalPaid <> dictENC(Inv_No) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "Pour la facture '" & Inv_No & "', le total des enc. " _
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des enc. " _
                             & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
                             & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
             r = r + 1
+            isEncDétailsValid = False
         End If
     Next i
     
@@ -990,6 +1042,9 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + lastUsedRowDetails - 1
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isEncDétailsValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set dictENC = Nothing
@@ -1028,7 +1083,7 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1057,11 +1112,16 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim pmtNo As String
     Dim totals As Currency
     Dim result As Variant
+    
+    Dim isEncEntêteValid As Boolean
+    isEncEntêteValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         pmtNo = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
             r = r + 1
+            isEncEntêteValid = False
         End If
         
         Dim codeClient As String
@@ -1073,8 +1133,9 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
                         0, _
                         1)
         If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
             r = r + 1
+            isEncEntêteValid = False
         End If
         totals = totals + arr(i, 6)
     Next i
@@ -1091,6 +1152,9 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1)
+    
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isEncEntêteValid
     
 Clean_Exit:
     'Libérer la mémoire
@@ -1120,7 +1184,7 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1148,6 +1212,10 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     Dim Inv_No As String, oldInv_No As String
     Dim result As Variant
+    
+    Dim isFACDétailsValid As Boolean
+    isFACDétailsValid = True
+    
     For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
         Inv_No = CStr(arr(i, 1))
 '        Debug.Print "#018 - Inv_no = ", Inv_No, ", de type ", TypeName(Inv_No)
@@ -1165,20 +1233,24 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
             oldInv_No = CStr(Inv_No)
         End If
         If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
             r = r + 1
+            isFACDétailsValid = False
         End If
         If IsNumeric(arr(i, 3)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
+            isFACDétailsValid = False
         End If
         If IsNumeric(arr(i, 4)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
+            isFACDétailsValid = False
         End If
         If IsNumeric(arr(i, 5)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
+            isFACDétailsValid = False
         End If
     Next i
     
@@ -1187,6 +1259,9 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - 2
+    
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isFACDétailsValid
     
 Clean_Exit:
     'Libérer la mémoire
@@ -1217,7 +1292,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1249,24 +1324,32 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim Inv_No As String
     Dim totals(1 To 8, 1 To 2) As Currency
     Dim nbFactC As Long, nbFactAC As Long
+    
+    Dim isFACEntêteValid As Boolean
+    isFACEntêteValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         If IsDate(arr(i, 2)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
+            isFACEntêteValid = False
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
+                isFACEntêteValid = False
             End If
         End If
         If arr(i, 3) <> "C" And arr(i, 3) <> "AC" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le type de facture '" & arr(i, 3) & "' pour la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le type de facture '" & arr(i, 3) & "' pour la facture '" & Inv_No & "' est INVALIDE")
+            isFACEntêteValid = False
             r = r + 1
         End If
         If arr(i, 19) <> 0.09975 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le % de TVQ, soit '" & arr(i, 19) & "' pour la facture '" & Inv_No & "' est ERRONÉ")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le % de TVQ, soit '" & arr(i, 19) & "' pour la facture '" & Inv_No & "' est ERRONÉ")
             r = r + 1
+            isFACEntêteValid = False
         End If
         If arr(i, 3) = "C" Then
             totals(1, 1) = totals(1, 1) + arr(i, 10)
@@ -1371,6 +1454,9 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isFACEntêteValid
+    
 Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
@@ -1399,7 +1485,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1429,64 +1515,81 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     Dim Inv_No As String
     Dim totals(1 To 3, 1 To 2) As Currency
     Dim nbFactC As Long, nbFactAC As Long
+    
+    Dim isFACCCValid As Boolean
+    isFACCCValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         Dim invType As String
         invType = Fn_Get_Invoice_Type(Inv_No)
         If invType <> "C" And invType <> "AC" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsDate(CDate(arr(i, 2))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, 2) & "'")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
+                isFACCCValid = False
             End If
         End If
         If Fn_Validate_Client_Number(CStr(arr(i, 4))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
             r = r + 1
+            isFACCCValid = False
         End If
         If arr(i, 5) <> "Paid" And arr(i, 5) <> "Unpaid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsDate(CDate(arr(i, 7))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", la date due '" & arr(i, 7) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date due '" & arr(i, 7) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsNumeric(arr(i, 9)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsNumeric(arr(i, 10)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         'PLUG pour s'assurer que le solde impayé est belt et bien aligner sur le total et $ payé à date
         If arr(i, 10) <> arr(i, 8) - arr(i, 9) Then
             arr(i, 10) = arr(i, 8) - arr(i, 9)
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & ", j'ai ajusté le solde de la facture à " & Format$(arr(i, 8), "###,##0.00 $") & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & ", j'ai ajusté le solde de la facture à " & Format$(arr(i, 8), "###,##0.00 $") & "'")
             r = r + 1
+            isFACCCValid = False
         End If
         If IsNumeric(arr(i, 11)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** L'âge (jours) de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'âge (jours) de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
-        End If
+            isFACCCValid = False
+       End If
         If arr(i, 10) = 0 And arr(i, 5) = "Unpaid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If arr(i, 10) <> 0 And arr(i, 5) = "Paid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
+            isFACCCValid = False
         End If
         If invType = "C" Then
             totals(1, 1) = totals(1, 1) + arr(i, 8)
@@ -1531,6 +1634,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.Bold = True
     r = r + 2
+    soldeComptesClients = totals(3, 1)
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
@@ -1549,6 +1653,9 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isFACCCValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
@@ -1579,7 +1686,7 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1605,6 +1712,10 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
     Dim rng As Range
     Set rng = ws.Range("A1:E" & lastUsedRow)
     Dim arr() As Variant
+    
+    Dim isFACSTValid As Boolean
+    isFACSTValid = True
+    
     Dim headerRows As Long
     headerRows = 1
     Call Tx_Range_2_2D_Array(rng, arr, 1)
@@ -1613,29 +1724,34 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
         If Fn_Is_String_Valid(CStr(arr(i, 1)), rngMaster) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la facture '" & arr(i, 1) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la facture '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
+            isFACSTValid = False
         End If
         If IsNumeric(arr(i, 2)) = False Or arr(i, 2) <> CLng(Int(arr(i, 2))) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la valeur de la séquence '" & arr(i, 2) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur de la séquence '" & arr(i, 2) & "' est INVALIDE")
             r = r + 1
+            isFACSTValid = False
         End If
         
         If Fn_Is_String_Valid(CStr(arr(i, 3)), rngProf) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
+            isFACSTValid = False
         End If
         
         'Heures
         If IsNumeric(arr(i, 4)) = False Or Abs((arr(i, 4) * 100) - Round(arr(i, 4) * 100, 0)) > tol Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", les heures '" & arr(i, 4) & "' sont INVALIDES")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", les heures '" & arr(i, 4) & "' sont INVALIDES")
             r = r + 1
+            isFACSTValid = False
         End If
         
         'Taux Horaire
         If IsNumeric(arr(i, 5)) = False Or Abs((arr(i, 5) * 100) - Round(arr(i, 5) * 100, 0)) > tol Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le taux horaire '" & arr(i, 5) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le taux horaire '" & arr(i, 5) & "' est INVALIDE")
             r = r + 1
+            isFACSTValid = False
         End If
         readRows = readRows + 1
     Next i
@@ -1643,6 +1759,9 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
     r = r + 2
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isFACSTValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
@@ -1672,7 +1791,7 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1688,7 +1807,7 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.Rows.count
     If numRows <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1702,81 +1821,102 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim i As Long
     Dim projetID As String
     Dim codeClient As String
+    
+    Dim isFacProjetEntêteValid As Boolean
+    isFacProjetEntêteValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
         projetID = arr(i, 1)
         'Client valide ?
         codeClient = Trim(arr(i, 3))
         If Fn_Validate_Client_Number(codeClient) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If IsDate(arr(i, 4)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If IsNumeric(arr(i, 5)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If IsNumeric(arr(i, 7)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If IsNumeric(arr(i, 9)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
             r = r + 1
         End If
         If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
         If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
             r = r + 1
+            isFacProjetEntêteValid = False
         End If
     Next i
     
@@ -1786,6 +1926,9 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1)
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isFacProjetEntêteValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set ws = Nothing
@@ -1811,7 +1954,7 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1848,6 +1991,10 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim codeClient As String
     Dim result As Variant
     
+    'Sauvegarde la ligne active
+    Dim saveR As Long
+    saveR = r
+    
     'À partir de la mémoire (Array)
     For i = LBound(arr, 1) To UBound(arr, 1)
         projetID = CLng(arr(i, 1))
@@ -1861,28 +2008,33 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
             oldProjetID = projetID
         End If
         If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
             r = r + 1
         End If
         'Client valide ?
         codeClient = Trim(arr(i, 3))
         If Fn_Validate_Client_Number(codeClient) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
             r = r + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
         End If
         If IsNumeric(arr(i, 8)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
             r = r + 1
         End If
     Next i
+    
+    'Est-ce qu'il y a eu des messages de générés ?
+    If saveR <> r Then
+        verificationIntegriteOK = False
+    End If
     
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
     r = r + 2
@@ -1917,7 +2069,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -1941,10 +2093,14 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
+    Dim isGLTransValid As Boolean
+    isGLTransValid = True
+    
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
+        isGLTransValid = False
         Exit Sub
     End If
     
@@ -1986,44 +2142,51 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
             row = row + 1
         End If
         If IsDate(arr(i, 2)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
+            isGLTransValid = False
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date avec le mauvais format '" & arr(i, 2) & "'")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date avec le mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
+                isGLTransValid = False
             End If
         End If
         glCode = arr(i, 5)
         If InStr(1, strCodeGL, glCode + "|:|") = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
             r = r + 1
+            isGLTransValid = False
         End If
         If glCode = "1100" Then
             arTotal = arTotal + arr(i, 7) - arr(i, 8)
         End If
         glDescr = arr(i, 6)
         If InStr(1, strDescGL, glDescr + "|:|") = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La description du compte '" & glDescr & "' à la ligne " & i & " est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La description du compte '" & glDescr & "' à la ligne " & i & " est INVALIDE")
             r = r + 1
+            isGLTransValid = False
         End If
         dt = arr(i, 7)
         If IsNumeric(dt) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le montant du débit '" & dt & "' à la ligne " & i & " n'est pas une valeur numérique")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant du débit '" & dt & "' à la ligne " & i & " n'est pas une valeur numérique")
             r = r + 1
+            isGLTransValid = False
         End If
         ct = arr(i, 8)
         If IsNumeric(ct) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le montant du débit '" & ct & "' à la ligne " & i & " n'est pas une valeur numérique")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant du débit '" & ct & "' à la ligne " & i & " n'est pas une valeur numérique")
             r = r + 1
+            isGLTransValid = False
         End If
         currentRow = dict_GL_Entry(GL_Entry_No)
         sum_arr(currentRow, 2) = sum_arr(currentRow, 2) + dt
         sum_arr(currentRow, 3) = sum_arr(currentRow, 3) + ct
         If arr(i, 10) <> "" Then
             If IsDate(arr(i, 10)) = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
                 r = r + 1
+                isGLTransValid = False
             End If
         End If
     Next i
@@ -2036,8 +2199,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
         dt = Round(sum_arr(v, 2), 2)
         ct = Round(sum_arr(v, 3), 2)
         If dt <> ct Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Écriture # " & v & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Écriture # " & v & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
             r = r + 1
+            isGLTransValid = False
             cas_hors_balance = cas_hors_balance + 1
         End If
         sum_dt = sum_dt + dt
@@ -2061,8 +2225,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
         rng.Characters(InStr(rng.Value, "C"), Len(rng.Value) - 7).Font.Bold = True
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hors_balance & " écriture(s) qui ne balance(nt) pas !!!")
         r = r + 1
+        isGLTransValid = False
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Les totaux des transactions sont:")
     r = r + 1
@@ -2074,8 +2239,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     If sum_dt - sum_ct <> 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Hors-Balance de " & Format$(sum_dt - sum_ct, "###,###,##0.00 $"))
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Hors-Balance de " & Format$(sum_dt - sum_ct, "###,###,##0.00 $"))
         r = r + 1
+        isGLTransValid = False
     End If
     
     'Un peu de couleur
@@ -2084,6 +2250,13 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.Value, Left(arTotal, 1)), 15).Font.color = vbRed
     rng.Characters(InStr(rng.Value, Left(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
+    If soldeComptesClients <> arTotal Then
+        MsgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
+                "diffère entre les 2 sources...", vbCritical, "FAC_Comptes_Clients <> Solde au Grand-Livre !!!"
+    End If
+    
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isGLTransValid
     
 Clean_Exit:
     Application.ScreenUpdating = True
@@ -2115,7 +2288,7 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -2127,6 +2300,9 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshGL_EJ_Recurrente'")
     r = r + 1
     
+    Dim isGlEjRécurrenteValid As Boolean
+    isGlEjRécurrenteValid = True
+    
     'On a besoin des comptes du G/L pour la validation
     On Error Resume Next
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
@@ -2134,8 +2310,9 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
 
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:checkGL_EJ_Recurrente"
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
+        isGlEjRécurrenteValid = False
         Exit Sub
     End If
     
@@ -2159,33 +2336,38 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     Dim GL As String, descGL As String
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le numéro d'écriture '" & arr(i, 1) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le numéro d'écriture '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
+            isGlEjRécurrenteValid = False
         End If
         
         p = InStr(strGL, Trim(arr(i, 3)))
         If p = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 3) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
+            isGlEjRécurrenteValid = False
         End If
         If p > 0 Then
             GL = Mid(strGL, p)
             descGL = Mid(GL, InStr(GL, "-") + 1, InStr(GL, " | ") - 6)
             If descGL <> Trim(arr(i, 4)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 4) & "' est INVALIDE")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 4) & "' est INVALIDE")
                 r = r + 1
+                isGlEjRécurrenteValid = False
             End If
         End If
         If arr(i, 5) <> "" Then
             If IsNumeric(arr(i, 5)) = False Or arr(i, 5) <> Round(arr(i, 5), 2) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le $ du débit '" & arr(i, 5) & "' est INVALIDE")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du débit '" & arr(i, 5) & "' est INVALIDE")
                 r = r + 1
+                isGlEjRécurrenteValid = False
             End If
         End If
         If arr(i, 6) <> "" Then
             If IsNumeric(arr(i, 6)) = False Or arr(i, 6) <> Round(arr(i, 6), 2) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le $ du crédit '" & arr(i, 6) & "' est INVALIDE")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du crédit '" & arr(i, 6) & "' est INVALIDE")
                 r = r + 1
+                isGlEjRécurrenteValid = False
             End If
         End If
         readRows = readRows + 1
@@ -2194,6 +2376,9 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
     r = r + 2
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isGlEjRécurrenteValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set ligne = Nothing
@@ -2222,7 +2407,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -2260,49 +2445,60 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
     
     minDate = "12/31/2999"
+    
+    Dim isTECTDBValid As Boolean
+    isTECTDBValid = True
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         TECID = arr(i, 1)
 '        prof = arr(i, 3)
         If Fn_Is_String_Valid(CStr(arr(i, 3)), rngProf) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
+            isTECTDBValid = False
         End If
         dateTEC = arr(i, 4)
         If IsDate(dateTEC) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
+            isTECTDBValid = False
             cas_date_invalide = cas_date_invalide + 1
         Else
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
         If dateTEC <> Int(dateTEC) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "***** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
             r = r + 1
+            isTECTDBValid = False
         End If
         clientCode = arr(i, 5)
         hres = arr(i, 8)
         If IsNumeric(hres) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
+            isTECTDBValid = False
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 9)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
+            isTECTDBValid = False
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
+            isTECTDBValid = False
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 11)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
+            isTECTDBValid = False
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
@@ -2339,9 +2535,10 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         If dict_TEC_ID.Exists(TECID) = False Then
             dict_TEC_ID.Add TECID, 0
         Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
-            cas_doublon_TECID = cas_doublon_TECID + 1
+            isTECTDBValid = False
+           cas_doublon_TECID = cas_doublon_TECID + 1
         End If
         
     Next i
@@ -2356,7 +2553,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TEC_ID")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
         r = r + 1
     End If
     
@@ -2364,7 +2561,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_date_invalide & " cas de date INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         r = r + 1
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -2376,7 +2573,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune heures INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
         r = r + 1
     End If
     
@@ -2384,7 +2581,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturable' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         r = r + 1
     End If
     
@@ -2392,7 +2589,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturee' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         r = r + 1
     End If
     
@@ -2400,7 +2597,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estDetruit' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         r = r + 1
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La somme des heures saisies donne ces résultats:")
@@ -2461,6 +2658,9 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 2
 
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isTECTDBValid
+
 Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
@@ -2491,7 +2691,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Cette feuille est vide !!!")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
     End If
@@ -2582,6 +2782,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     
     minDate = "12/31/2999"
     
+    Dim isTECValid As Boolean
+    isTECValid = True
+    
     Dim arrHres(1 To 10000, 1 To 6) As Variant
     Dim arrRow As Integer, pArr As Integer, rArr As Integer
     
@@ -2610,41 +2813,47 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         dateTEC = arrTEC_Local_Data(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
+            isTECValid = False
             cas_date_invalide = cas_date_invalide + 1
         Else
             If dateTEC < minDate Then minDate = dateTEC
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
         If dateTEC > Date Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
             r = r + 1
+            isTECValid = False
             cas_date_future = cas_date_future + 1
         End If
         If dateTEC <> Int(dateTEC) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "***** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
             r = r + 1
+            isTECValid = False
         End If
         
         'Validate clientCode
         codeClient = Trim(arrTEC_Local_Data(i, 5))
         If dictClient.Exists(codeClient) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le code de client '" & codeClient & "' est INVALIDE !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le code de client '" & codeClient & "' est INVALIDE !!!")
             r = r + 1
+            isTECValid = False
         End If
         nomCLient = arrTEC_Local_Data(i, 6)
         hres = arrTEC_Local_Data(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
+            isTECValid = False
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arrTEC_Local_Data(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
+            isTECValid = False
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
 
@@ -2677,8 +2886,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
         estFacturee = UCase(arrTEC_Local_Data(i, 12))
         If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
+            isTECValid = False
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         
@@ -2686,41 +2896,47 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             dateFact = arrTEC_Local_Data(i, 13)
             testDate = IsDate(dateFact)
             If testDate = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
                 r = r + 1
+                isTECValid = False
                 cas_date_fact_invalide = cas_date_fact_invalide + 1
             End If
             If dateFact > Now() Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "***** TEC_ID =" & TECID & " a une date de facture FUTURE '" & dateFact & " !!!")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date de facture FUTURE '" & dateFact & " !!!")
                 r = r + 1
+                isTECValid = False
                 cas_date_facture_future = cas_date_facture_future + 1
             End If
             If dateFact <> Int(dateFact) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "***** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
                 r = r + 1
+                isTECValid = False
             End If
         End If
         
         estDetruit = arrTEC_Local_Data(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
+            isTECValid = False
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
         End If
         
         invNo = CStr(arrTEC_Local_Data(i, 16))
         If Len(invNo) > 0 Then
             If estFacturee <> "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
                     " - Incongruité entre le numéro de facture '" & invNo & "' et " & _
                     "'estFacture' qui vaut '" & estFacturee & "'")
                 r = r + 1
+                isTECValid = False
             End If
             If dictFacture.Exists(invNo) = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
                     " - Le numéro de facture '" & invNo & "' " & _
                     "n'existe pas dans le fichier FAC_Entête")
                 r = r + 1
+                isTECValid = False
             Else 'Accumule les heures pour cette facture
                 If dictFactureHres.Exists(invNo) = True Then
                     dictFactureHres(invNo) = dictFactureHres(invNo) + arrTEC_Local_Data(i, 8)
@@ -2730,10 +2946,11 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             End If
         Else
             If estFacturee = "Vrai" Or estFacturee = "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "****** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
                     " - Incongruité entre le numéro de facture vide et " & _
                     "'estFacture' qui vaut '" & estFacturee & "'")
                 r = r + 1
+                isTECValid = False
             End If
         End If
 
@@ -2789,8 +3006,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         If dict_TEC_ID.Exists(TECID) = False Then
             dict_TEC_ID.Add TECID, 0
         Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
+            isTECValid = False
             cas_doublon_TECID = cas_doublon_TECID + 1
         End If
         If dict_prof.Exists(prof & "-" & profID) = False Then
@@ -2808,7 +3026,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TEC_ID")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
         r = r + 1
     End If
     
@@ -2816,7 +3034,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_date_invalide & " cas de date INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         r = r + 1
     End If
     
@@ -2824,7 +3042,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date dans le futur")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_date_future & " cas de date FUTURE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_future & " cas de date FUTURE")
         r = r + 1
     End If
     
@@ -2837,7 +3055,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune heures INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
         r = r + 1
     End If
     
@@ -2845,7 +3063,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturable' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         r = r + 1
     End If
     
@@ -2853,7 +3071,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturee' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         r = r + 1
     End If
     
@@ -2861,7 +3079,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date de facture INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_date_fact_invalide & " cas de date de facture INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_fact_invalide & " cas de date de facture INVALIDE")
         r = r + 1
     End If
     
@@ -2869,7 +3087,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estDetruit' n'est INVALIDE")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         r = r + 1
     End If
     
@@ -2884,7 +3102,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     For Each key In dictFacture.keys
         totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
         If Round(totalHoursBilled, 2) <> Round(dictFactureHres(key), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Facture '" & CStr(key) & _
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
                         Round(dictFactureHres(key), 2) & " vs. " & Round(totalHoursBilled, 2))
             r = r + 1
@@ -2896,8 +3114,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Toutes les heures facturées balancent, selon les 2 sources")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "****** Certaines factures sont à vérifier pour que les heures facturées balancent, selon les 2 sources")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Certaines factures sont à vérifier pour que les heures facturées balancent, selon les 2 sources")
         r = r + 1
+        isTECValid = False
     End If
         
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
@@ -3004,6 +3223,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     End If
     r = r + 1
     
+    'Cas problème dans cette vérification ?
+    verificationIntegriteOK = isTECValid
+
 Clean_Exit:
 
     'Libérer la mémoire

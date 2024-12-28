@@ -1,6 +1,7 @@
 Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
+'Variables globales pour le module
 Dim LastRow As Long, lastResultRow As Long
 Dim payRow As Long
 
@@ -239,7 +240,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxPmtNo As Long
-    strSQL = "SELECT MAX(Pay_ID) AS MaxPmtNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(PayID) AS MaxPmtNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxPmtNo
     rs.Open strSQL, conn
@@ -414,8 +415,9 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
             'Open the recordset for the specified invoice
             Dim Inv_No As String
             Inv_No = CStr(Trim(wshENC_Saisie.Range("F" & r).Value))
+            
             Dim strSQL As String
-            strSQL = "SELECT * FROM [" & destinationTab & "] WHERE Invoice_No = '" & Inv_No & "'"
+            strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
             rs.Open strSQL, conn, 2, 3
             If Not rs.EOF Then
                 'Mettre à jour Amount_Paid
@@ -525,7 +527,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -552,7 +554,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         'Add fields to the recordset before updating it
         rs.Fields(fGlTNoEntrée - 1).Value = nextJENo
         rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7" - 1).Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
             rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             rs.Fields(fGlTSource - 1).Value = UCase(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
             rs.Fields(fGlTNoCompte - 1).Value = "2400" 'Hardcoded
@@ -573,7 +575,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         'Add fields to the recordset before updating it
         rs.Fields(fGlTNoEntrée - 1).Value = nextJENo
         rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7" - 1).Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
             rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             rs.Fields(fGlTSource - 1).Value = UCase(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
         Else
@@ -814,15 +816,17 @@ End Sub
 
 Sub shp_ENC_Exit_Click()
 
-    Call ENC_Back_To_FAC_Menu
+    Call ENC_Back_To_GL_Menu
 
 End Sub
 
-Sub ENC_Back_To_FAC_Menu()
+Sub ENC_Back_To_GL_Menu()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Back_To_GL_Menu", 0)
    
-    wshENC_Saisie.Unprotect
+    If wshENC_Saisie.ProtectContents Then
+        wshENC_Saisie.Unprotect
+    End If
     
     Application.EnableEvents = False
     
@@ -835,7 +839,7 @@ Sub ENC_Back_To_FAC_Menu()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modENC_Saisie:ENC_Back_To_FAC_Menu", startTime)
+    Call Log_Record("modENC_Saisie:ENC_Back_To_GL_Menu", startTime)
 
 End Sub
 

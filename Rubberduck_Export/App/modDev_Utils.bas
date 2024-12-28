@@ -1718,8 +1718,8 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     
 ErrorHandler:
 
-    MsgBox "Une erreur est survenue avec le fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                Err.Description, vbCritical, "Fichier 'LogMainApp.log' n'est pas accessible"
+    MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
+                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wshAdmin.Range("F5").Value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True

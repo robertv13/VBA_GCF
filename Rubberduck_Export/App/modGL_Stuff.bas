@@ -94,7 +94,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(No_Entrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the next JE number
     rs.Open strSQL, conn
