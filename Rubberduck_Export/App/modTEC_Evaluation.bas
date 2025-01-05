@@ -204,7 +204,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
             With ws.Range("H" & currentRow).Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
-                .color = 65535
+                .COLOR = 65535
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
              End With
@@ -218,12 +218,12 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     
     'Obtenir le solde d'ouverture & les transactions pour le compte TEC au Grand Livre
     Dim solde As Double
-    solde = Fn_Get_GL_Account_Balance("1210", maxDate)
+    solde = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Travaux en cours"), maxDate)
     
     'Afficher le solde des TEC au Grand Livre
     ws.Range("D3").Font.Bold = True
     ws.Range("D3").Font.size = 12
-    ws.Range("D3").Font.color = vbRed
+    ws.Range("D3").Font.COLOR = vbRed
     Dim message As String
     message = "Le solde au grand livre pour les TEC est de " & Format$(solde, "###,##0.00 $")
     If valeurTEC = solde Then

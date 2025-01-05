@@ -266,7 +266,7 @@ Sub PreparerRapportTECFacturés()
             .Font.size = 9
             .Font.Bold = True
             .Font.Italic = True
-            .Font.color = vbWhite
+            .Font.COLOR = vbWhite
             .HorizontalAlignment = xlCenter
         End With
         
@@ -307,7 +307,7 @@ Sub PreparerRapportTECFacturés()
         With .Range("A4:D4").Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .color = 12611584
+            .COLOR = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -904,7 +904,7 @@ Sub ConfirmerConfirmationFacture()
                          vbYesNo + vbQuestion, "Confirmation de facture")
     If answerYesNo = vbNo Then
         MsgBox _
-            Prompt:="Cette facture ne sera PAS CONFIRMÉE ! ", _
+            prompt:="Cette facture ne sera PAS CONFIRMÉE ! ", _
             Title:="Confirmation", _
             Buttons:=vbCritical
             GoTo Clean_Exit
@@ -1102,7 +1102,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'AR amount
         If hono + misc1 + misc2 + misc3 + tps + tvq Then
-            MyArray(1, 1) = "1100"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Comptes Clients")
             MyArray(1, 2) = "Comptes clients"
             MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
             MyArray(1, 4) = ""
@@ -1110,7 +1110,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'Professional Fees (hono)
         If hono Then
-            MyArray(2, 1) = "4000"
+            MyArray(2, 1) = ObtenirNoGlIndicateur("Revenus de consultation")
             MyArray(2, 2) = "Revenus de consultation"
             MyArray(2, 3) = -hono
             MyArray(2, 4) = ""
@@ -1118,7 +1118,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'Miscellaneous Amount # 1 (misc1)
         If misc1 Then
-            MyArray(3, 1) = "4010"
+            MyArray(3, 1) = ObtenirNoGlIndicateur("Revenus frais de poste")
             MyArray(3, 2) = "Revenus - Frais de poste"
             MyArray(3, 3) = -misc1
             MyArray(3, 4) = ""
@@ -1126,7 +1126,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'Miscellaneous Amount # 2 (misc2)
         If misc2 Then
-            MyArray(4, 1) = "4015"
+            MyArray(4, 1) = ObtenirNoGlIndicateur("Revenus sous-traitants")
             MyArray(4, 2) = "Revenus - Sous-traitants"
             MyArray(4, 3) = -misc2
             MyArray(4, 4) = ""
@@ -1134,7 +1134,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'Miscellaneous Amount # 3 (misc3)
         If misc3 Then
-            MyArray(5, 1) = "4020"
+            MyArray(5, 1) = ObtenirNoGlIndicateur("Revenus autres frais")
             MyArray(5, 2) = "Revenus - Autres Frais"
             MyArray(5, 3) = -misc3
             MyArray(5, 4) = ""
@@ -1142,7 +1142,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'GST to pay (tps)
         If tps Then
-            MyArray(6, 1) = "1202"
+            MyArray(6, 1) = ObtenirNoGlIndicateur("TPS Facturée")
             MyArray(6, 2) = "TPS percues"
             MyArray(6, 3) = -tps
             MyArray(6, 4) = ""
@@ -1150,7 +1150,7 @@ Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
         
         'PST to pay (tvq)
         If tvq Then
-            MyArray(7, 1) = "1203"
+            MyArray(7, 1) = ObtenirNoGlIndicateur("TVQ Facturée")
             MyArray(7, 2) = "TVQ percues"
             MyArray(7, 3) = -tvq
             MyArray(7, 4) = ""

@@ -15,13 +15,13 @@ Private Sub Worksheet_Activate()
     
     'Corps de la facture
     With Me.Range("A21:F88").Font
-        .color = -11511710
+        .COLOR = -11511710
         .TintAndShade = 0
     End With
     
     'Message au bas de la facture (Somme due)
     With Me.Range("B81:E81").Font
-        .color = vbWhite
+        .COLOR = vbWhite
         .TintAndShade = 0
     End With
 

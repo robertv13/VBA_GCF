@@ -190,7 +190,7 @@ Sub Check_Invoice_Template()
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .color = 12611584
+            .COLOR = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -1616,60 +1616,6 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
-'Sub SetTabOrder_OK(ws As Worksheet) '2024-06-15 @ 13:58
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder(" & ws.CodeName & ")", 0)
-'
-'    'Clear previous settings AND protect the worksheet
-'    With ws
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlNoRestrictions
-'    End With
-'
-'    'Collect all unprotected cells
-'    Dim cell As Range
-'    Dim unprotectedCells As Range
-'    Application.ScreenUpdating = False
-'    For Each cell In ws.usedRange
-'        If Not cell.Locked Then
-'            If unprotectedCells Is Nothing Then
-'                Set unprotectedCells = cell
-'            Else
-'                Set unprotectedCells = Union(unprotectedCells, cell)
-'            End If
-'        End If
-'    Next cell
-'
-'    'Sort to ensure cells are sorted left-to-right, top-to-bottom
-'    If Not unprotectedCells Is Nothing Then
-'        Dim sortedCells As Range: Set sortedCells = unprotectedCells
-'        Debug.Print "#036 - " & ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-'
-'        'Enable TAB through unprotected cells
-'        Application.EnableEvents = False
-''        Dim i As Long
-''        For i = 1 To sortedCells.count
-''            If i = sortedCells.count Then
-''                sortedCells.Cells(i).Next.Select
-''            Else
-''                sortedCells.Cells(i).Next.Select
-''                sortedCells.Cells(i + 1).Activate
-''            End If
-''        Next i
-'    End If
-'
-'    Application.ScreenUpdating = True
-'    Application.EnableEvents = True
-'
-'    'Libérer la mémoire
-'    Set cell = Nothing
-'    Set unprotectedCells = Nothing
-'    Set sortedCells = Nothing
-'
-'    Call Log_Record("modDev_Utils:SetTabOrder", startTime)
-'
-'End Sub
-'
 Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-12-14 @ 08:25
 
     On Error GoTo ErrorHandler
@@ -1708,7 +1654,7 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #FileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " = '" & _
+                        procedureName & " *** = '" & _
                         Format(elapsedTime, "0.0000") & " secondes" & "'" & vbCrLf
     End If
     

@@ -1,0 +1,192 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_Rapport:Worksheet_Activate", 0)
+    
+    Application.ScreenUpdating = False
+    
+    Call GL_Trans_Import_All
+    
+    Dim ws As Worksheet: Set ws = wshGL_Rapport
+    ws.Unprotect
+    
+    'Setup a listBox
+    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
+    lb.Height = 328
+    lb.Width = 275
+    
+    'Ensure it is a ListBox
+    If TypeName(lb.Object) = "ListBox" Then
+        With lb.Object
+            'Clear existing items
+            .Clear
+
+            Dim arr As Variant
+            arr = Fn_Get_Plan_Comptable(2) 'Returns an array with 2 columns
+            
+            'Add items to the ListBox
+            Dim i As Long
+            For i = LBound(arr, 1) To UBound(arr, 1)
+                .AddItem arr(i, 1) & " " & arr(i, 2)
+            Next i
+        End With
+    End If
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 95
+
+    Application.EnableEvents = False
+    
+    'Hide column A & B
+    With ws
+        .Range("A:B").EntireColumn.Hidden = True
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+        .EnableCalculation = True
+    End With
+    
+    Call SetTabOrder(ws)
+
+    Call GL_Rapport_Clear_All_Cells(ws)
+    
+    Application.EnableEvents = True
+    
+    'Première saisie
+    ws.Range("F4").Select
+    
+    'Libérer la mémoire
+    Set lb = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("wshGL_Rapport:Worksheet_Activate", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.color = xlNone
+    End If
+ 
+    'Dates period has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("F4")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+
+    'From Date has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'To Date has ben selected
+    If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim fullDate As Variant
+    
+    'Period change
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        Application.EnableEvents = False
+        Select Case Range("F4").Value
+            Case "Aujourd'hui"
+                wshGL_Rapport.Range("F6").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+            Case "Mois Courant"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").Value)
+            Case "Mois Dernier"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("MoisPrecDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("MoisPrecA"), wshAdmin.Range("B1").Value)
+            Case "Trimestre courant"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("TrimDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("TrimA"), wshAdmin.Range("B1").Value)
+            Case "Trimestre précédent"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("TrimPrecDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("TrimPrecA"), wshAdmin.Range("B1").Value)
+            Case "Année courante"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("AnneeDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").Value)
+            Case "Année précédente"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("AnneePrecDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("AnneePrecA"), wshAdmin.Range("B1").Value)
+            Case "7 derniers jours"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("SeptJoursDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("SeptJoursA"), wshAdmin.Range("B1").Value)
+            Case "15 derniers jours"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("QuinzeJoursDe"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("QuinzeJoursA"), wshAdmin.Range("B1").Value)
+            Case "Semaine"
+                wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").Value)
+            Case Else
+                wshGL_Rapport.Range("F6").Value = ""
+                wshGL_Rapport.Range("H6").Value = ""
+        End Select
+        Application.EnableEvents = True
+    End If
+    
+    'From date has changed
+    If Not Intersect(Target, Range("F6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_Rapport_141")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+    End If
+    
+    'To date has changed
+    If Not Intersect(Target, Range("H6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_Rapport_157")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+    End If
+
+Clean_Exit:
+
+        Application.EnableEvents = True
+
+End Sub
+
+Private Sub cbTous_Click()
+
+    Dim lb As OLEObject: Set lb = Me.OLEObjects("ListBox1")
+    
+    Dim i As Long
+    With lb.Object
+        For i = 0 To .ListCount - 1
+            .Selected(i) = Not (.Selected(i))
+        Next i
+    End With
+
+    'Libérer la mémoire
+    Set lb = Nothing
+    
+End Sub

@@ -1,0 +1,12 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Call Hide_All_Worksheets_Except_Menu
+
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+End Sub

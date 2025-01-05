@@ -1,0 +1,377 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", 0)
+    
+    If fromMenu = False Then
+        Exit Sub
+    End If
+    
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    Call Fournisseur_List_Import_All
+    Call DEB_Trans_Import_All
+    Call GL_Trans_Import_All
+    Call Fournisseur_List_Import_All
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+    
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    'Hide column A & B
+    With ws
+        .Unprotect
+        .Range("A:B").EntireColumn.Hidden = True
+    End With
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    Call SetTabOrder(ws)
+    
+    Application.ScreenUpdating = True
+    
+    Call DEB_Saisie_Clear_All_Cells
+    
+    Application.EnableEvents = True
+    
+    With ws
+        .Activate
+        .Range("F4").Select
+        ActiveWindow.ScrollRow = 1
+        ActiveWindow.ScrollColumn = 3
+        previousCellAddress = .Range("F4").Address
+    End With
+
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.color = xlNone
+    End If
+    
+    'Type is selected
+    If Not Intersect(Target, Range("F4")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Beneficiaire is selected
+    If Not Intersect(Target, Range("J4")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Date is selected
+    If Not Intersect(Target, Range("O4")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Description is selected
+    If Not Intersect(Target, Range("$F$6")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Reference is selected
+    If Not Intersect(Target, Range("M6")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Total Amount is selected
+    If Not Intersect(Target, Range("O6")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Account is selected
+    If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+        Application.EnableEvents = False
+        wshDEB_Saisie.Range("B4").Value = Target.Address
+        Application.EnableEvents = True
+    End If
+    
+    'Tax code is selected (TPS/TVQ is the default)
+    If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Value = "TPS/TVQ"
+    End If
+    
+    'Amount is selected (Amount to distribute by default)
+    If Not Intersect(Target, Range("I9:I23")) Is Nothing Then
+        If Target.Value = "" Then
+            Application.EnableEvents = False
+            Dim suggestedAmount As Double
+            suggestedAmount = wshDEB_Saisie.Range("O6").Value - wshDEB_Saisie.Range("I26").Value
+            If suggestedAmount > 0 Then
+                Call DEBSuggestedAmount(Target.row, suggestedAmount)
+            End If
+            Application.EnableEvents = True
+        End If
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+   
+   'Force GST/TPS calculation with a formula, but also accept user input
+    If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Force PST/TVQ calculation with a formula, but also accept user input
+    If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Credit GST/TPS
+    If Not Intersect(Target, Range("L9:L23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Credit PST/TVQ
+    If Not Intersect(Target, Range("M9:M23")) Is Nothing Then
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+
+    'Calculate the NET amount (Expense), but also accept user input
+    If Not Intersect(Target, Range("N9:O23")) Is Nothing Then
+        If Range("I" & Target.row).Value <> 0 And _
+            Range("H" & Target.row).Value <> "M" Then
+                Range("N" & Target.row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
+        End If
+        Target.Interior.color = HIGHLIGHT_COLOR
+    End If
+    
+    'Save the current cell Address
+    previousCellAddress = Target.Address
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    On Error GoTo ErrorHandler
+    
+    Application.EnableEvents = False
+    
+    Call Process_Change(Target)
+    
+    Application.EnableEvents = True
+    
+    Exit Sub
+    
+ErrorHandler:
+    Application.EnableEvents = True 'Ensure events are re-enabled if an error occurs
+    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur"
+
+End Sub
+
+Private Sub Process_Change(ByVal Target As Range)
+
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
+    
+    Dim startCell As Range: Set startCell = ws.Range("E9")
+    
+    Dim GLRange As Range: Set GLRange = ws.Range(startCell.offset(0, 0), startCell.offset(14, 0))
+    Dim amountRange As Range: Set amountRange = ws.Range(startCell.offset(0, 2), startCell.offset(14, 2))
+    Dim gstRange As Range: Set gstRange = ws.Range(startCell.offset(0, 3), startCell.offset(14, 3))
+    Dim pstRange As Range: Set pstRange = ws.Range(startCell.offset(0, 4), startCell.offset(14, 4))
+    Dim gstCreditRange As Range: Set gstCreditRange = ws.Range(startCell.offset(0, 5), startCell.offset(14, 5))
+    Dim pstCreditRange As Range: Set pstCreditRange = ws.Range(startCell.offset(0, 6), startCell.offset(14, 6))
+    Dim netAmountRange As Range: Set netAmountRange = ws.Range(startCell.offset(0, 7), startCell.offset(14, 7))
+    
+    Dim fullDate As Variant
+    Dim amount As Currency
+    Dim gst As Currency, pst As Currency
+    Dim gstCredit As Currency, pstCredit As Currency
+    Dim netAmount As Currency
+    
+    'Date has changed
+    If Not Application.Intersect(Target, Range("O4")) Is Nothing Then
+        'Temporarily disable events to prevent infinite loop
+        Application.EnableEvents = False
+        
+        'Try to convert the input to a complete valid date
+        fullDate = Fn_Complete_Date(Target.Text, 30, 15)
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshDEB_Saisie_190")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+        Application.EnableEvents = True
+    End If
+    
+    'Account has changed
+    If Not Intersect(Target, GLRange) Is Nothing Then
+        If Target.Value <> "" Then
+            Application.EnableEvents = False
+            wshDEB_Saisie.Range("Q" & Target.row).Value = _
+                Fn_GetGL_Code_From_GL_Description(Target.Value)
+            Application.EnableEvents = True
+        End If
+    End If
+    
+    'Total Amount has changed
+    If Not Intersect(Target, amountRange) Is Nothing Then
+        'If the user changes the Amount cell
+        Dim cell As Range
+        For Each cell In Target
+            Debug.Print "#001 - cell.address = " & cell.Address & "   cell.Value = " & cell.Value
+            If cell.Value = 0 Then
+                cell.offset(0, 1).Value = "" 'Clear GST
+                cell.offset(0, 2).Value = "" 'Clear PST
+                cell.offset(0, 3).Value = "" 'Clear GST_Credit
+                cell.offset(0, 4).Value = "" 'Clear PST_Credit
+                cell.offset(0, 5).Value = "" 'Clear netAmount
+                'Move focus to netAmount
+                If previousCellAddress <> "" Then
+                    Range(previousCellAddress).Interior.color = xlNone
+                End If
+                cell.offset(0, 5).Select 'Input NET amount
+            Else
+                Debug.Print "#002 - Total amount - " & wshDEB_Saisie.Range("O4").Value & " " & wshDEB_Saisie.Range("H" & Target.row).Value & " " & _
+                    Target.Value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
+                    netAmount
+                'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
+                If wshDEB_Saisie.Range("H" & Target.row).Value <> "M" Then
+                    Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").Value, _
+                                                       wshDEB_Saisie.Range("H" & Target.row).Value, _
+                                                       Target.Value, _
+                                                       gst, pst, gstCredit, pstCredit, _
+                                                       netAmount)
+
+                    Application.EnableEvents = False
+                    cell.offset(0, 1).Value = gst
+                    cell.offset(0, 2).Value = pst
+                    cell.offset(0, 3).Value = gstCredit
+                    cell.offset(0, 4).Value = pstCredit
+                    cell.offset(0, 5).Value = netAmount
+                    Application.EnableEvents = True
+                    If previousCellAddress <> "" Then
+                        Range(previousCellAddress).Interior.color = xlNone
+                    End If
+                    'Move to the next line
+                    cell.offset(1, -4).Select
+                End If
+            End If
+        Next cell
+    End If
+    
+    If Not Intersect(Target, netAmountRange) Is Nothing Then
+        'If the user changes the netAmount cell
+        Dim cellNet As Range
+        For Each cellNet In Target
+            Debug.Print "#003 - " & cellNet.Address & " = " & cellNet.Value
+            If cellNet.Value <> "" Then
+                amount = 0
+                Debug.Print "#004 - Net amount (Manual Input) netAmount - " & wshDEB_Saisie.Range("O4").Value & " " & wshDEB_Saisie.Range("H" & Target.row).Value & " " & _
+                    amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
+                    Target.Value
+                'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
+                If wshDEB_Saisie.Range("H" & Target.row).Value <> "M" Then
+                    Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").Value, _
+                                                       wshDEB_Saisie.Range("H" & Target.row).Value, _
+                                                       amount, _
+                                                       gst, pst, gstCredit, pstCredit, _
+                                                       Target.Value)
+
+                    'Calculate Amount, GST, PST, GST_Credit, PST_Credit based on the netAmount
+                    Application.EnableEvents = False
+                    Debug.Print "#005 - " & cellNet.Address
+                    cellNet.offset(0, -5).Value = amount
+                    cellNet.offset(0, -4).Value = gst
+                    cellNet.offset(0, -3).Value = pst
+                    cellNet.offset(0, -2).Value = gstCredit
+                    cellNet.offset(0, -1).Value = pstCredit
+                    Application.EnableEvents = True
+                    'Move to the previous cell
+                    cellNet.offset(0, -1).Select
+                End If
+            End If
+        Next cellNet
+    End If
+    
+    If Not Intersect(Target, gstRange) Is Nothing Then
+        gst = cell.offset(0, 1).Value
+    End If
+
+    If Not Intersect(Target, pstRange) Is Nothing Then
+        pst = cell.offset(0, 2).Value
+    End If
+    
+    If Not Intersect(Target, gstCreditRange) Is Nothing Then
+        gstCredit = cell.offset(0, 3).Value
+        netAmount = amount - gstCredit
+        cell.offset(0, 5).Value = netAmount
+    End If
+    
+    If Not Intersect(Target, pstCreditRange) Is Nothing Then
+        pstCredit = cell.offset(0, 4).Value
+        netAmount = amount - gstCredit - pstCredit
+        cell.offset(0, 5).Value = netAmount
+    End If
+    
+    'Force TAB order after a cell has been changed - 2024-08-25 @ 10:35
+    If Not Intersect(Target, Me.Range("F4")) Is Nothing Then
+        Me.Range("J4").Select
+    ElseIf Not Intersect(Target, Me.Range("J4")) Is Nothing Then
+        Me.Range("O4").Select
+    ElseIf Not Intersect(Target, Me.Range("O4")) Is Nothing Then
+        Me.Range("F6").Select
+    ElseIf Not Intersect(Target, Me.Range("F6")) Is Nothing Then
+        Me.Range("M6").Select
+    ElseIf Not Intersect(Target, Me.Range("M6")) Is Nothing Then
+        Me.Range("O6").Select
+    End If
+
+    'Libérer la mémoire
+    Set amountRange = Nothing
+    Set cell = Nothing
+    Set cellNet = Nothing
+    Set GLRange = Nothing
+    Set gstRange = Nothing
+    Set gstCreditRange = Nothing
+    Set netAmountRange = Nothing
+    Set pstRange = Nothing
+    Set pstCreditRange = Nothing
+    Set startCell = Nothing
+    Set ws = Nothing
+    
+End Sub
+
+Sub DEBSuggestedAmount(rowNumber As Long, suggestedAmount As Double)
+
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
+    
+    Application.EnableEvents = False
+    
+    Dim targetCell As Range: Set targetCell = ws.Cells(rowNumber, 5 + 4) ' Assuming E9 is the starting cell
+    
+    targetCell.Value = suggestedAmount
+    
+    Application.EnableEvents = True
+    
+    Call Process_Change(targetCell)
+    
+    'Libérer la mémoire
+    Set targetCell = Nothing
+    Set ws = Nothing
+    
+End Sub
+

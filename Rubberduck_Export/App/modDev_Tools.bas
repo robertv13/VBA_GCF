@@ -211,11 +211,11 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
             End If
     
             'Compare Background Color
-            If col1.Interior.color <> col2.Interior.color Then
-                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.color & " vs " & col2.Interior.color & vbCrLf
+            If col1.Interior.COLOR <> col2.Interior.COLOR Then
+                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.COLOR & " vs " & col2.Interior.COLOR & vbCrLf
                 wsDiff.Cells(diffRow, 3).Value = i
-                wsDiff.Cells(diffRow, 4).Value = col1.Interior.color
-                wsDiff.Cells(diffRow, 5).Value = col2.Interior.color
+                wsDiff.Cells(diffRow, 4).Value = col1.Interior.COLOR
+                wsDiff.Cells(diffRow, 5).Value = col2.Interior.COLOR
             End If
     
         Next i

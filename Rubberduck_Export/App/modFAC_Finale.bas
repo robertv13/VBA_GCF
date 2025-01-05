@@ -1583,7 +1583,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         Dim t As Variant
         i = rowFAC_Finale + 1
         For Each t In dictTaux.keys
-            wshFAC_Finale.Range("C" & i & ":D" & i).Font.color = RGB(0, 0, 0)
+            wshFAC_Finale.Range("C" & i & ":D" & i).Font.COLOR = RGB(0, 0, 0)
             wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("C" & i).Font.Bold = False

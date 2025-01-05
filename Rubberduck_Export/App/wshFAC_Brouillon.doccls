@@ -74,7 +74,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange" & ":" & Target.Address, 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = BASIC_COLOR
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
     End If
     
     'Masquer la forme (détail TEC) si elle est présente
@@ -88,12 +88,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Client has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Date has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'WIP description has been selected
@@ -126,17 +126,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Template has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Service description has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Honoraires has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O47")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
         wshFAC_Brouillon.Unprotect
     End If
 

@@ -114,7 +114,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", 0)
 
     If ufSaisieHeures.txtTEC_ID.Value = "" Then
-        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
             Buttons:=vbCritical
         GoTo Clean_Exit
     End If
@@ -124,7 +124,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
         MsgBox _
-        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
+        prompt:="Cet enregistrement ne sera PAS détruit ! ", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         GoTo Clean_Exit
@@ -151,7 +151,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     End With
     
     MsgBox _
-        Prompt:="L'enregistrement a été DÉTRUIT !", _
+        prompt:="L'enregistrement a été DÉTRUIT !", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         

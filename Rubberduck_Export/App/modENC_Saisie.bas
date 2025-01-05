@@ -4,6 +4,7 @@ Option Explicit
 'Variables globales pour le module
 Dim LastRow As Long, lastResultRow As Long
 Dim payRow As Long
+Public Const COULEUR_FEUILLE As Long = 14277081
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
@@ -147,7 +148,7 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
            .Range("K7").Value = 0 Then
             MsgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
                 "1. Un client valide" & vbNewLine & _
-                "2. Une date d'encaissements" & vbNewLine & _
+                "2. Une date d'encaissement" & vbNewLine & _
                 "3. Un type de paiement et" & vbNewLine & _
                 "4. Des montants appliqués" & vbNewLine & vbNewLine & _
                 "AVANT de sauvegarder la transaction.", vbExclamation
@@ -183,6 +184,25 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
             Call ENC_Update_Locally_Comptes_Clients(12, lastOSRow)
         End If
                 
+        'Mise à jour du bordereau de dépôt
+        Dim lastUsedBordereau As Long
+        lastUsedBordereau = .Cells(.Rows.count, "P").End(xlUp).row
+        lastUsedBordereau = lastUsedBordereau + 1
+        Application.EnableEvents = False
+        .Range("O" & lastUsedBordereau & ":Q" & lastUsedBordereau + 1).Clear
+        
+        .Range("O" & lastUsedBordereau).Value = wshENC_Saisie.pmtNo
+        .Range("O" & lastUsedBordereau).HorizontalAlignment = xlCenter
+        .Range("P" & lastUsedBordereau).Value = wshENC_Saisie.Range("F5").Value
+        .Range("P" & lastUsedBordereau).HorizontalAlignment = xlLeft
+        .Range("Q" & lastUsedBordereau).Value = wshENC_Saisie.Range("K7").Value
+        .Range("Q" & lastUsedBordereau).NumberFormat = "###,##0.00 $"
+        .Range("Q" & lastUsedBordereau).HorizontalAlignment = xlRight
+        .Range("Q" & lastUsedBordereau + 2).formula = "=sum(Q6:Q" & lastUsedBordereau & ")"
+        .Range("Q" & lastUsedBordereau + 2).NumberFormat = "###,##0.00 $"
+        .Range("Q" & lastUsedBordereau + 2).Font.Bold = True
+        Application.EnableEvents = True
+        
         'Prepare G/L posting
         Dim noEnc As String, nomCLient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
@@ -557,12 +577,12 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
             rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             rs.Fields(fGlTSource - 1).Value = UCase(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = "2400" 'Hardcoded
+            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
             rs.Fields(fGlTCompte - 1).Value = "Produit perçu d'avance" 'Hardcoded
         Else
             rs.Fields(fGlTDescription - 1).Value = nom
             rs.Fields(fGlTSource - 1).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = "1000" 'Hardcoded
+            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Encaisse")
             rs.Fields(fGlTCompte - 1).Value = "Encaisse" 'Hardcoded
         End If
         rs.Fields(fGlTDébit - 1).Value = montant
@@ -582,7 +602,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
             rs.Fields(fGlTDescription - 1).Value = nom
             rs.Fields(fGlTSource - 1).Value = "ENCAISSEMENT:" & Format$(no, "00000")
         End If
-        rs.Fields(fGlTNoCompte - 1).Value = "1100" 'Hardcoded
+        rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Comptes Clients")
         rs.Fields(fGlTCompte - 1).Value = "Comptes clients" 'Hardcoded
         rs.Fields(fGlTCrédit - 1).Value = montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
@@ -626,12 +646,12 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
             .Range("C" & rowToBeUsed).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             .Range("D" & rowToBeUsed).Value = UCase(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = "2400" 'Hardcoded
+            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
             .Range("F" & rowToBeUsed).Value = "Produit perçu d'avance" 'Hardcoded
         Else
             .Range("C" & rowToBeUsed).Value = nom
             .Range("D" & rowToBeUsed).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = "1000" 'Hardcoded
+            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Encaisse")
             .Range("F" & rowToBeUsed).Value = "Encaisse" 'Hardcoded
         End If
         .Range("G" & rowToBeUsed).Value = montant
@@ -649,7 +669,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
             .Range("C" & rowToBeUsed).Value = nom
             .Range("D" & rowToBeUsed).Value = "ENCAISSEMENT:" & Format$(no, "00000")
         End If
-        .Range("E" & rowToBeUsed).Value = "1100" 'Hardcoded
+        .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Comptes Clients")
         .Range("F" & rowToBeUsed).Value = "Comptes clients" 'Hardcoded
         .Range("H" & rowToBeUsed).Value = montant
         .Range("I" & rowToBeUsed).Value = desc
@@ -746,25 +766,25 @@ Sub ENC_Clear_Cells()
     
         Application.EnableEvents = False
         
-        'Note the lastUsedRow for checkBox deletion
-        Dim lastUsedRow As Long
-        lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).row
-        If lastUsedRow > 36 Then
-            lastUsedRow = 36
-        End If
-        
-        .Range("B5,F5:H5,K5,F7,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
+        .Range("B5,F5:H5,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
         .Range("B12:B36").ClearContents
         
-        If lastUsedRow > 11 Then
-            Call ENC_Remove_Check_Boxes(lastUsedRow)
-        End If
-        
         .Range("K5").Value = ""
-        .Range("F7").Value = "Banque" ' Set Default type
+        .Range("F7").Value = "Banque" 'Set Default type
         .Range("F5").Activate
+        
     End With
     
+    'Note the lastUsedRow for checkBox deletion
+    Dim lastUsedRow As Long
+    lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).row
+    If lastUsedRow > 36 Then
+        lastUsedRow = 36
+    End If
+    If lastUsedRow > 11 Then
+        Call ENC_Remove_Check_Boxes(lastUsedRow)
+    End If
+        
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
             .Pattern = xlNone
             .TintAndShade = 0
@@ -843,4 +863,52 @@ Sub ENC_Back_To_GL_Menu()
 
 End Sub
 
+Sub AjusteLibelléEncaissement(typeTrans As String)
+
+    Application.EnableEvents = False
+    
+    If Not typeTrans = "Régularisations" Then
+        wshENC_Saisie.Range("J5").Value = "Date encaissement:"
+        wshENC_Saisie.Range("J5").Font.COLOR = vbBlack
+        wshENC_Saisie.Range("J7").Value = "Total encaissement:"
+        wshENC_Saisie.Range("J7").Font.COLOR = vbBlack
+    Else
+        wshENC_Saisie.Range("J5").Value = "Date RÉGULARISATION:"
+        wshENC_Saisie.Range("J5").Font.COLOR = vbRed
+        wshENC_Saisie.Range("J7").Value = "Total RÉGULARISATION:"
+        wshENC_Saisie.Range("J7").Font.COLOR = vbRed
+    End If
+
+    Application.EnableEvents = True
+
+End Sub
+
+Sub ValiderEtLancerufEncRégularisation()
+
+    Dim ws As Worksheet
+    Set ws = wshENC_Saisie
+    
+    'Vérification des champs obligatoires
+    If IsEmpty(ws.Range("F5").Value) Then
+        MsgBox "Le client est obligatoire. Veuillez le choisir avant de continuer.", vbExclamation
+        Exit Sub
+    End If
+
+    If IsEmpty(ws.Range("K5").Value) Then
+        MsgBox "La date est obligatoire. Veuillez la saisir avant de continuer.", vbExclamation
+        Exit Sub
+    End If
+    
+    If ws.Range("K7").Value = 0 Then
+        MsgBox "Le montant de la régularisation est obligatoire. Veuillez le fournir avant de continuer.", vbExclamation
+        Exit Sub
+    End If
+    
+    'Condition pour lancer le UserForm
+    If ws.Range("F7").Value = "Régularisations" Then
+        ' Lancer le UserForm
+        ufEncRégularisation.show
+    End If
+    
+End Sub
 

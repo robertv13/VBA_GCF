@@ -74,7 +74,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = Format$(ddm, wshAdmin.Range("B1").Value & " hh:mm:ss") & _
             " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
-    rng.Characters(1, 19).Font.color = vbRed
+    rng.Characters(1, 19).Font.COLOR = vbRed
     rng.Characters(1, 19).Font.Bold = True
 
     r = r + 2
@@ -177,6 +177,26 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call checkENC_Détails(r, readRows)
     
+    'wshREGUL_Entête ------------------------------------------------------------ REGUL_Entête
+    Call AddMessageToWorkSheet(wsOutput, r, 1, "REGUL_Entête")
+    
+    Call REGUL_Entête_Import_All
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "REGUL_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    r = r + 1
+    
+    Call checkREGUL_Entête(r, readRows)
+    
+    'wshREGUL_Détails ---------------------------------------------------------- REGUL_Détails
+    Call AddMessageToWorkSheet(wsOutput, r, 1, "REGUL_Détails")
+    
+    Call REGUL_Détails_Import_All
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "REGUL_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    r = r + 1
+    
+    Call checkREGUL_Détails(r, readRows)
+    
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
@@ -251,16 +271,15 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'Un peu de couleur
     Set rng = wsOutput.Range("A" & r)
     rng.Value = "**** " & Format$(readRows, "###,##0") & _
-                                    " lignes analysées dans l'ensemble des tables ***"
-    rng.Characters(6, 6).Font.color = vbRed
+                    " lignes analysées dans l'ensemble des tables - " & _
+                    Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss") & " ***"
+    rng.Characters(6, 6).Font.COLOR = vbRed
     rng.Characters(6, 6).Font.Bold = True
-'    r = r + 1
     
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
     Dim header2 As String: header2 = ""
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
-    
     
     If verificationIntegriteOK = True Then
         MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
@@ -323,9 +342,6 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
 CleanUp:
     On Error Resume Next
     Application.PrintCommunication = True
-'    If Err.Number <> 0 Then
-'        MsgBox "Error setting PrintCommunication to True: " & Err.Description, vbCritical
-'    End If
     On Error GoTo 0
     
 End Sub
@@ -577,43 +593,52 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
     Dim cas_doublon_nom As Long
     Dim cas_doublon_code As Long
     Dim cas_courriel_invalide As Long
+    Dim ligneNonVides As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
-        nom = arr(i, 1)
-        code = arr(i, 2)
-        nomClientSysteme = arr(i, 3)
-        
-        'Doublon sur le nom ?
-        If dict_nom_client.Exists(nom) = False Then
-            dict_nom_client.Add nom, code
-        Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
-            r = r + 1
-            cas_doublon_nom = cas_doublon_nom + 1
-        End If
-        
-        'Doublon sur le code de client ?
-        If dict_code_client.Exists(code) = False Then
-            dict_code_client.Add code, nom
-        Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
-            r = r + 1
-            cas_doublon_code = cas_doublon_code + 1
-        End If
-        
-        If Trim(arr(i, 6)) <> "" Then
-            If Fn_ValiderCourriel(arr(i, 6)) = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
+        If Not Trim(arr(i, 2)) = "" Then
+        ligneNonVides = ligneNonVides + 1
+            nom = arr(i, 1)
+            code = arr(i, 2)
+            nomClientSysteme = arr(i, 3)
+            
+            'Doublon sur le nom ?
+            If dict_nom_client.Exists(nom) = False Then
+                dict_nom_client.Add nom, code
+            Else
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
                 r = r + 1
-                cas_courriel_invalide = cas_courriel_invalide + 1
+                cas_doublon_nom = cas_doublon_nom + 1
+            End If
+            
+            'Doublon sur le code de client ?
+            If dict_code_client.Exists(code) = False Then
+                dict_code_client.Add code, nom
+            Else
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
+                r = r + 1
+                cas_doublon_code = cas_doublon_code + 1
+            End If
+            
+            If Trim(arr(i, 6)) <> "" Then
+                If Fn_ValiderCourriel(arr(i, 6)) = False Then
+                    Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
+                    r = r + 1
+                    cas_courriel_invalide = cas_courriel_invalide + 1
+                End If
             End If
         End If
-        
     Next i
+    
+    'Toutes les lignes sont-elles non-vides ?
+    If UBound(arr, 1) - 1 <> ligneNonVides Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La feuille comporte un ou des ligne(s) vide(s)")
+        r = r + 1
+    End If
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Un total de " & Format$(UBound(arr, 1) - 1, "##,##0") & " clients ont été analysés!"
-    rng.Characters(13, 5).Font.color = vbRed
+    rng.Characters(13, 5).Font.COLOR = vbRed
     rng.Characters(13, 5).Font.Bold = True
 
     r = r + 1
@@ -648,8 +673,11 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'Cas problème dans cette vérification ?
-    If cas_doublon_nom <> 0 Or cas_doublon_code <> 0 Or cas_courriel_invalide <> 0 Then
-        verificationIntegriteOK = False
+    If cas_doublon_nom <> 0 Or _
+        cas_doublon_code <> 0 Or _
+        cas_courriel_invalide <> 0 Or _
+        UBound(arr, 1) - 1 <> ligneNonVides Then
+            verificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -718,7 +746,7 @@ Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Un total de " & Format$(UBound(arr, 1) - 1, "#,##0") & " fournisseurs ont été analysés!"
-    rng.Characters(13, 3).Font.color = vbRed
+    rng.Characters(13, 3).Font.COLOR = vbRed
     rng.Characters(13, 3).Font.Bold = True
 
     r = r + 1
@@ -891,7 +919,9 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isDebTransValid
+    If isDebTransValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
     'Libérer la mémoire
@@ -1034,7 +1064,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.Bold = True
 
     r = r + 2
@@ -1043,8 +1073,10 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + lastUsedRowDetails - 1
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isEncDétailsValid
-
+    If isEncDétailsValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
 Clean_Exit:
     'Libérer la mémoire
     Set dictENC = Nothing
@@ -1146,7 +1178,7 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Bold = True
     r = r + 2
     
@@ -1154,7 +1186,9 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isEncEntêteValid
+    If isEncEntêteValid = False Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     'Libérer la mémoire
@@ -1167,6 +1201,271 @@ Clean_Exit:
     Application.ScreenUpdating = True
     
     Call Log_Record("modAppli:checkENC_Entête", startTime)
+
+End Sub
+
+Private Sub checkREGUL_Détails(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkREGUL_Détails", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'wshREGUL_Détails
+    Dim ws As Worksheet: Set ws = wshREGUL_Détails
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRowDetails As Long
+    lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastUsedRowDetails <= 2 - HeaderRow Or ws.Cells(lastUsedRowDetails, 1).Value = "" Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRowDetails, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    'REGUL_Entête Worksheet
+    Dim wsEntete As Worksheet: Set wsEntete = wshREGUL_Entête
+    Dim lastUsedRowEntete As Long
+    lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
+    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
+    Dim strRegulNo As String
+    Dim i As Long
+    For i = 2 To lastUsedRowEntete
+        strRegulNo = strRegulNo & CLng(wsEntete.Cells(i, fREGULDRegulID).Value) & "|"
+    Next i
+    
+    'FAC_Entête Worksheet
+    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
+    Dim lastUsedRowFacEntete As Long
+    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
+    Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshREGUL_Détails'")
+    r = r + 1
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim regulNo As Long, oldRegulNo As Long
+    Dim result As Variant
+    'Dictionary pour accumuler les encaissements par facture
+    Dim dictRegul As Scripting.Dictionary
+    Set dictRegul = New Scripting.Dictionary
+    Dim totalRegulDetails As Currency
+    
+    Dim isRegulDétailsValid As Boolean
+    isRegulDétailsValid = True
+    
+    For i = 2 To lastUsedRowDetails
+        regulNo = CLng(ws.Cells(i, fREGULDRegulID).Value)
+        If regulNo <> oldRegulNo Then
+            If InStr(strRegulNo, regulNo) = 0 Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La régularisation '" & regulNo & "' à la ligne " & i & " n'existe pas dans REGUL_Entête")
+                r = r + 1
+                isRegulDétailsValid = False
+            End If
+            strRegulNo = strRegulNo & regulNo & "|"
+            oldRegulNo = regulNo
+        End If
+        
+        Dim Inv_No As String
+        Inv_No = CStr(ws.Cells(i, fREGULDFactNo).Value)
+        result = Application.WorksheetFunction.XLookup(Inv_No, _
+                        rngFACEntete, _
+                        rngFACEntete, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", de la régularisation '" & regulNo & "' n'existe pas dans FAC_Entête")
+            r = r + 1
+            isRegulDétailsValid = False
+        End If
+        
+        If IsDate(ws.Cells(i, fREGULDDate).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fREGULDDate).Value & "', ligne " & i & ", de la régularisation '" & regulNo & "' est INVALIDE '")
+            r = r + 1
+            isRegulDétailsValid = False
+        End If
+        
+        If IsNumeric(ws.Cells(i, fREGULDHono).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Les honoraires '" & ws.Cells(i, fREGULDHono).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+            r = r + 1
+            isRegulDétailsValid = False
+        Else
+            If dictRegul.Exists(Inv_No) Then
+                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+            Else
+                dictRegul.Add Inv_No, ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+            End If
+            totalRegulDetails = totalRegulDetails + ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+        End If
+    Next i
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
+    r = r + 1
+    
+    'Compare les régularisations accumulés (dictRegul) avec wshFAC_Comptes_Clients
+    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
+    Dim lastUsedRow As Long
+    lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.Rows.count, 1).End(xlUp).row
+    Dim totalRegul As Currency
+    
+    For i = 3 To lastUsedRow
+        Inv_No = wsComptes_Clients.Cells(i, fFacCCInvNo).Value
+        totalRegul = wsComptes_Clients.Cells(i, fFacCCTotalPaid).Value
+        totalRegul = 0 'TODO - Une fois le fichier MASTER modifié, ajuster ce code
+        If totalRegul <> dictRegul(Inv_No) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des régularisations " _
+                            & "(wshFAC_Comptes_clients) " & Format$(totalRegul, "###,##0.00 $") _
+                            & " est <> du détail des régul. " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
+            r = r + 1
+            isRegulDétailsValid = False
+        End If
+    Next i
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.Value = "Total des régularisations : " & Format$(totalRegulDetails, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.Value, Left(totalRegulDetails, 1)), 12).Font.COLOR = vbRed
+    rng.Characters(InStr(rng.Value, Left(totalRegulDetails, 1)), 12).Font.Bold = True
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + lastUsedRowDetails - 1
+    
+    'Cas problème dans cette vérification ?
+    If isRegulDétailsValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set dictRegul = Nothing
+    Set rngEntete = Nothing
+    Set rngFACEntete = Nothing
+    Set ws = Nothing
+    Set wsFACEntete = Nothing
+    Set wsEntete = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:checkREGUL_Détails", startTime)
+
+End Sub
+
+Private Sub checkREGUL_Entête(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkREGUL_Entête", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'Clients Master File
+    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
+    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
+    
+    'wshREGUL_Entête
+    Dim ws As Worksheet: Set ws = wshREGUL_Entête
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    If lastUsedRow <= HeaderRow Or ws.Cells(lastUsedRow, 1).Value = "" Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshREGUL_Entête'")
+    r = r + 1
+    
+    If lastUsedRow = HeaderRow Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
+    Dim arr As Variant
+    arr = wshREGUL_Entête.Range("A1").CurrentRegion.offset(1, 0) _
+              .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim regulNo As String
+    Dim totals As Currency
+    Dim result As Variant
+    
+    Dim isRegulEntêteValid As Boolean
+    isRegulEntêteValid = True
+    
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        regulNo = arr(i, fREGULERegulID)
+        If IsDate(arr(i, fREGULEDate)) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & arr(i, fREGULEDate) & "' de la régularisation '" & arr(i, fREGULERegulID) & "' n'est pas VALIDE")
+            r = r + 1
+            isRegulEntêteValid = False
+        End If
+        
+        Dim codeClient As String
+        codeClient = arr(i, fREGULEClientID)
+        result = Application.WorksheetFunction.XLookup(codeClient, _
+                        rngClients, _
+                        rngClients, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' de la régularisation '" & regulNo & "' est INVALIDE")
+            r = r + 1
+            isRegulEntêteValid = False
+        End If
+        totals = totals + arr(i, fREGULETotal)
+    Next i
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
+    r = r + 1
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.Value = "Total des régularisations : " & Format$(totals, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.COLOR = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Bold = True
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
+    'Cas problème dans cette vérification ?
+    If isRegulEntêteValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set rng = Nothing
+    Set rngClients = Nothing
+    Set ws = Nothing
+    Set wsClients = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli:checkREGUL_Entête", startTime)
 
 End Sub
 
@@ -1261,7 +1560,9 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - 2
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isFACDétailsValid
+    If isFACDétailsValid = False Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     'Libérer la mémoire
@@ -1380,7 +1681,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
-    rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
 
@@ -1406,7 +1707,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(7, 1), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(7, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(7, 1), 1)), 15).Font.Bold = True
     r = r + 1
 
@@ -1417,7 +1718,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "Totaux des factures À CONFIRMER (" & nbFactAC & " factures)"
-    rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
     
@@ -1443,7 +1744,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(7, 2), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(7, 2), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(7, 2), 1)), 15).Font.Bold = True
     r = r + 1
 
@@ -1455,7 +1756,9 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isFACEntêteValid
+    If isFACEntêteValid = False Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     'Libérer la mémoire
@@ -1610,28 +1913,28 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "Totaux des factures CONFIRMÉES (" & nbFactC & " factures)"
-    rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, "CONFIRMÉES"), 10).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(1, 1), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(1, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(1, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(2, 1), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(2, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(2, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.Bold = True
     r = r + 2
     soldeComptesClients = totals(3, 1)
@@ -1639,14 +1942,14 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "Total des factures À CONFIRMER (" & nbFactAC & " factures)"
-    rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, "À CONFIRMER"), 11).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.Value, Left(totals(1, 2), 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(1, 2), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(1, 2), 1)), 15).Font.Bold = True
     r = r + 2
     
@@ -1654,7 +1957,9 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isFACCCValid
+    If isFACCCValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
     'Libérer la mémoire
@@ -1760,7 +2065,9 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isFACSTValid
+    If isFACSTValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
     'Libérer la mémoire
@@ -1927,7 +2234,9 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1)
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isFacProjetEntêteValid
+    If isFacProjetEntêteValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
     'Libérer la mémoire
@@ -2134,6 +2443,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim arTotal As Currency
     Dim GL_Entry_No As String, glCode As String, glDescr As String
     Dim result As Variant
+    Dim CCGlNo As String
+    CCGlNo = ObtenirNoGlIndicateur("Comptes Clients")
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
         If dict_GL_Entry.Exists(GL_Entry_No) = False Then
@@ -2152,13 +2464,13 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
                 isGLTransValid = False
             End If
         End If
-        glCode = arr(i, 5)
+        glCode = CStr(arr(i, 5))
         If InStr(1, strCodeGL, glCode + "|:|") = 0 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
             r = r + 1
             isGLTransValid = False
         End If
-        If glCode = "1100" Then
+        If glCode = CCGlNo Then
             arTotal = arTotal + arr(i, 7) - arr(i, 8)
         End If
         glDescr = arr(i, 6)
@@ -2221,7 +2533,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
         'Un peu de couleur
         Dim rng As Range: Set rng = wsOutput.Range("B" & r)
         rng.Value = "       Chacune des écritures balancent au niveau de l'écriture"
-        rng.Characters(InStr(rng.Value, "C"), Len(rng.Value) - 7).Font.color = vbRed
+        rng.Characters(InStr(rng.Value, "C"), Len(rng.Value) - 7).Font.COLOR = vbRed
         rng.Characters(InStr(rng.Value, "C"), Len(rng.Value) - 7).Font.Bold = True
         r = r + 1
     Else
@@ -2247,7 +2559,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.Value = "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(arTotal, 1)), 15).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, Left(arTotal, 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
     If soldeComptesClients <> arTotal Then
@@ -2256,7 +2568,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isGLTransValid
+    If isGLTransValid = False Then
+        verificationIntegriteOK = False
+    End If
     
 Clean_Exit:
     Application.ScreenUpdating = True
@@ -2377,8 +2691,10 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     r = r + 2
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isGlEjRécurrenteValid
-
+    If isGlEjRécurrenteValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
 Clean_Exit:
     'Libérer la mémoire
     Set ligne = Nothing
@@ -2654,12 +2970,14 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Heures TEC             : " & formattedHours
-    rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 2
 
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isTECTDBValid
+    If isTECTDBValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
     'Libérer la mémoire
@@ -2684,7 +3002,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3261 'What is the last TECID analyzed ?
+    lastTECIDReported = 3265 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3173,7 +3491,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.Value = "       Heures TEC             : " & formattedHours
-    rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.color = vbRed
+    rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.Bold = True
     r = r + 1
     
@@ -3184,7 +3502,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         'Un peu de couleur
         Set rng = wsOutput.Range("B" & r)
         rng.Value = "Sommaire des heures selon la DATE de la charge (" & maxTECID & ")"
-        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.color = vbGreen
+        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.COLOR = vbGreen
         rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.Bold = True
         r = r + 1
     
@@ -3224,7 +3542,9 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'Cas problème dans cette vérification ?
-    verificationIntegriteOK = isTECValid
+    If isTECValid = False Then
+        verificationIntegriteOK = False
+    End If
 
 Clean_Exit:
 
@@ -3252,7 +3572,7 @@ Sub Make_It_As_Header(r As Range)
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .color = 12611584
+            .COLOR = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -3308,7 +3628,7 @@ Sub ApplyConditionalFormatting(rng As Range, headerRows As Long, Optional EmptyL
     For i = 1 To dataRange.Rows.count
         'Vérifier la position réelle de la ligne dans la feuille
         If (dataRange.Rows(i).row + headerRows) Mod 2 = 0 Then
-            dataRange.Rows(i).Interior.color = RGB(173, 216, 230) ' Bleu pâle
+            dataRange.Rows(i).Interior.COLOR = RGB(173, 216, 230) ' Bleu pâle
         End If
     Next i
     
@@ -3974,8 +4294,7 @@ Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
         'Parcourt toutes les cellules de la plage (contiguës ou non)
         For Each cellule In plage
             On Error Resume Next
-            cellule.Interior.color = couleurRVB
-            Debug.Print "#666 - " & cellule.Address
+            cellule.Interior.COLOR = couleurRVB
             On Error GoTo 0
         Next cellule
     Else

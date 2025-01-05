@@ -325,7 +325,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     On Error GoTo 0
     
     If Not IsNumeric(Me.txtHeures.Value) Then
-        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+        MsgBox prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
 '        Cancel = True
@@ -338,7 +338,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     If heure < 0 Or heure > 24 Then
         MsgBox _
-            Prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
+            prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
                     "ou dépasser 24 pour une charge", _
             Title:="Validation d'une valeur numérique", _
             Buttons:=vbCritical
@@ -450,7 +450,7 @@ Private Sub cmdUpdate_Click()
     If ufSaisieHeures.txtTEC_ID.Value <> "" Then
         Call TEC_Modifie_Ligne
     Else
-        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
+        MsgBox prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -466,7 +466,7 @@ Private Sub cmdDelete_Click()
     If ufSaisieHeures.txtTEC_ID.Value <> "" Then
         Call TEC_Efface_Ligne
     Else
-        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
                Title:="", _
                Buttons:=vbCritical
     End If

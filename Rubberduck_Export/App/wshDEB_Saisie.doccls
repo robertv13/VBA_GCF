@@ -63,42 +63,42 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Range(previousCellAddress).Interior.COLOR = xlNone
     End If
     
     'Type is selected
     If Not Intersect(Target, Range("F4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Beneficiaire is selected
     If Not Intersect(Target, Range("J4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Date is selected
     If Not Intersect(Target, Range("O4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Description is selected
     If Not Intersect(Target, Range("$F$6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Reference is selected
     If Not Intersect(Target, Range("M6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Total Amount is selected
     If Not Intersect(Target, Range("O6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Account is selected
     If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
         Application.EnableEvents = False
         wshDEB_Saisie.Range("B4").Value = Target.Address
         Application.EnableEvents = True
@@ -106,7 +106,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Tax code is selected (TPS/TVQ is the default)
     If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
         Target.Value = "TPS/TVQ"
     End If
     
@@ -121,27 +121,27 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             End If
             Application.EnableEvents = True
         End If
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
    
    'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Force PST/TVQ calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Credit GST/TPS
     If Not Intersect(Target, Range("L9:L23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Credit PST/TVQ
     If Not Intersect(Target, Range("M9:M23")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Calculate the NET amount (Expense), but also accept user input
@@ -150,7 +150,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Range("H" & Target.row).Value <> "M" Then
                 Range("N" & Target.row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
         End If
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Save the current cell Address
@@ -241,7 +241,7 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.offset(0, 5).Value = "" 'Clear netAmount
                 'Move focus to netAmount
                 If previousCellAddress <> "" Then
-                    Range(previousCellAddress).Interior.color = xlNone
+                    Range(previousCellAddress).Interior.COLOR = xlNone
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
             Else
@@ -264,7 +264,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     cell.offset(0, 5).Value = netAmount
                     Application.EnableEvents = True
                     If previousCellAddress <> "" Then
-                        Range(previousCellAddress).Interior.color = xlNone
+                        Range(previousCellAddress).Interior.COLOR = xlNone
                     End If
                     'Move to the next line
                     cell.offset(1, -4).Select

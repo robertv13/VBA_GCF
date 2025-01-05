@@ -1,0 +1,14 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+    
+    Dim ws As Worksheet: Set ws = wshMenuFAC
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+End Sub

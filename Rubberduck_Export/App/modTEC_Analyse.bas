@@ -141,12 +141,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .color = 65535
+            .COLOR = 65535
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
         With .Font
-            .color = -16776961
+            .COLOR = -16776961
             .TintAndShade = 0
             .Bold = True
             .size = 12
@@ -158,7 +158,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .color = 255
+            .COLOR = 255
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -271,25 +271,25 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
             'Rule for values > 50 (Highest priority)
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
             With .item(.count)
-                .Interior.color = RGB(255, 0, 0) 'Red color
+                .Interior.COLOR = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
             With .item(.count)
-                .Interior.color = RGB(255, 165, 0) 'Orange color
+                .Interior.COLOR = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
             With .item(.count)
-                .Interior.color = RGB(255, 255, 0) 'Yellow color
+                .Interior.COLOR = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
             With .item(.count)
-                .Interior.color = RGB(144, 238, 144) 'Light green color
+                .Interior.COLOR = RGB(144, 238, 144) 'Light green color
             End With
         End With
     End If
@@ -326,7 +326,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
             Else
                 dictHours.Add Cells(i, 6).Value, Cells(i, 8).Value
             End If
-            Cells(i, 8).Font.color = RGB(166, 166, 166) 'RMV_15
+            Cells(i, 8).Font.COLOR = RGB(166, 166, 166) 'RMV_15
         End If
         i = i + 1
     Loop

@@ -227,7 +227,7 @@ Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
     regex.Global = False
     
     'Last chance to accept a invalid email address...
-    If regex.test(courriel) = False Then
+    If regex.Test(courriel) = False Then
         Dim msgValue As VbMsgBoxResult
         msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
                             "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
@@ -738,7 +738,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
-            If Not regex.test(adresse) Then
+            If Not regex.Test(adresse) Then
                 Fn_ValiderCourriel = False
                 Exit Function
             End If
@@ -1027,7 +1027,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.Value = "" Then
-        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
+        MsgBox prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -1036,7 +1036,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Date de la charge ?
     If ufSaisieHeures.txtDate.Value = "" Or IsDate(ufSaisieHeures.txtDate.Value) = False Then
-        MsgBox Prompt:="La date est OBLIGATOIRE !", _
+        MsgBox prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtDate.SetFocus
@@ -1045,7 +1045,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Nom du client & code de client ?
     If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClient_ID = "" Then
-        MsgBox Prompt:="Le client et son code sont OBLIGATOIRES !", _
+        MsgBox prompt:="Le client et son code sont OBLIGATOIRES !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtClient.SetFocus
@@ -1054,7 +1054,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Heures valides ?
     If ufSaisieHeures.txtHeures.Value = "" Or IsNumeric(ufSaisieHeures.txtHeures.Value) = False Then
-        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+        MsgBox prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtHeures.SetFocus
@@ -1700,3 +1700,43 @@ Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
     On Error GoTo 0
     
 End Function
+
+Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
+
+    'Plage où sont situés les liens (indicateur/no Gl)
+    Dim plage As Range
+    Set plage = wshAdmin.Range("D44:F59")
+    
+    'Parcourir chaque cellule dans la première colonne de la plage
+    Dim cellule As Range
+    For Each cellule In plage.Columns(1).Cells
+        If cellule.Value = indic Then
+            'Retourner la valeur de la troisième colonne pour la ligne correspondante
+            ObtenirNoGlIndicateur = cellule.offset(0, 1).Value
+            Exit Function
+        End If
+    Next cellule
+    
+    'Si la valeur n'est pas trouvée
+    ObtenirNoGlIndicateur = "Non trouvé"
+
+End Function
+
+'Fonction pour centraliser tous les messages de l'application - 2024-12-29 @ 07:37
+Function AppMsgBox(message As String _
+                 , Optional boutons As VbMsgBoxStyle = vbOKOnly _
+                 , Optional titre As String = "") As VbMsgBoxResult
+                 
+    AppMsgBox = MsgBox(message, boutons, titre)
+                 
+End Function
+
+Sub test_AppMsgBox()
+
+    Dim r As VbMsgBoxResult
+    r = AppMsgBox("Voulez-vous continuer ?", vbYesNo + vbQuestion + vbDefaultButton1, "Confirmation avant de continuer")
+
+    Debug.Print r
+    
+End Sub
+

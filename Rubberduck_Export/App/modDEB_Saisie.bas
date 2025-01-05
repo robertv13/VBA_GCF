@@ -13,7 +13,7 @@ Sub DEB_Saisie_Update()
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> "" Then
-        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.color = xlNone
+        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.COLOR = xlNone
     End If
     
     'Date is not valid OR the transaction does not balance
@@ -155,7 +155,7 @@ End Sub
 
 Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally(" & r & ")", 0)
     
     Application.ScreenUpdating = False
     
@@ -192,6 +192,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshDEB_Trans.Range("Q" & rowToBeUsed).Value = ""
         wshDEB_Trans.Range("R" & rowToBeUsed).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
+        Call Log_Record("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
     Next i
     
     Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", startTime)
@@ -227,25 +228,25 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Select Case deboursType
         Case "Chèque", "Virement", "Paiement pré-autorisé"
-            MyArray(1, 1) = "1000"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
             MyArray(1, 2) = "Encaisse"
         Case "Carte de crédit"
-            MyArray(1, 1) = "2010"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Carte de crédit")
             MyArray(1, 2) = "Carte de crédit"
         Case "Avances avec Guillaume Charron"
-            MyArray(1, 1) = "2200"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances Guillaume Charron")
             MyArray(1, 2) = "Avances avec Guillaume Charron"
         Case "Avances avec 9249-3626 Québec inc."
-            MyArray(1, 1) = "2210"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9249-3626 Québec inc.")
             MyArray(1, 2) = "Avances avec 9249-3626 Québec inc."
         Case "Avances avec 9333-4829 Québec inc."
-            MyArray(1, 1) = "2220"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9333-4829 Québec inc.")
             MyArray(1, 2) = "Avances avec 9333-4829 Québec inc."
         Case "Autre"
-            MyArray(1, 1) = "1000"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
             MyArray(1, 2) = "Encaisse"
         Case Else
-            MyArray(1, 1) = "1000"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
             MyArray(1, 2) = "Encaisse"
     End Select
     
@@ -266,7 +267,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         arrRow = arrRow + 1
         
         If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = "1200"
+            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS Payée")
             MyArray(arrRow, 2) = "TPS payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).Value
             MyArray(arrRow, 4) = ""
@@ -274,7 +275,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         End If
 
         If wshDEB_Saisie.Range("M" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = "1201"
+            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ Payée")
             MyArray(arrRow, 2) = "TVQ payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).Value
             MyArray(arrRow, 4) = ""

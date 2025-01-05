@@ -63,27 +63,27 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Range(previousCellAddress).Interior.COLOR = xlNone
     End If
 
     'Client has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("D4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Dates period has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("D6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Dates from has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("G6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Dates to has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("I6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Save the current cell Address
@@ -98,7 +98,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Client name change
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         Call FAC_Historique_Montrer_Bouton
-        Range(Target.Address).Interior.color = xlNone
+        Range(Target.Address).Interior.COLOR = xlNone
         Application.Goto Range("D6")
      End If
    

@@ -77,12 +77,12 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Range(previousCellAddress).Interior.COLOR = xlNone
     End If
     
     'Invoice Number is selected
     If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
@@ -90,7 +90,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Call NettoyerCellulesEtIconesPDF
         Call TraiterToutesLesFacturesAC(Target.Value)
         wshFAC_Confirmation.Range("F5").Value = Target.Value
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Save the current cell Address

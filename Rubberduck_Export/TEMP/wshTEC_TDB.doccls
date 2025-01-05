@@ -1,0 +1,18 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", 0)
+   
+    Application.ScreenUpdating = False
+    
+    Call modTEC_TDB.ActualiserTEC_TDB
+    
+    'Set the zoom factor to 98% when this worksheet is activated
+    ActiveWindow.Zoom = 98
+
+    Application.ScreenUpdating = True
+
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate", startTime)
+
+End Sub

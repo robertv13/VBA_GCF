@@ -701,7 +701,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
 
     'Section des TEC pour le client à une date données
     With wshFAC_Brouillon
-        .Range("D7:H" & lastUsedRow + 2).Font.color = vbBlack
+        .Range("D7:H" & lastUsedRow + 2).Font.COLOR = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
         
         Application.EnableEvents = False
@@ -745,7 +745,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     
     'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
     Dim soldeDépôt As Double
-    soldeDépôt = Fn_Get_GL_Account_Balance("2400", wshFAC_Brouillon.Range("O3").Value)
+    soldeDépôt = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
     
     'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
     Dim lastUsedRowResult As Double
@@ -768,7 +768,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         'Cellule en surbrillance
         With wshFAC_Brouillon.Range("O57")
             .Value = WorksheetFunction.Min(soldeDepotClient, wshFAC_Brouillon.Range("O55").Value)
-            .Interior.color = RGB(255, 255, 0)
+            .Interior.COLOR = RGB(255, 255, 0)
             .Select
         End With
         

@@ -4,12 +4,7 @@
 Public startTime As Double
 Public previousCellAddress As Variant
 
-Private Sub Workbook_Open()
-
-    
-End Sub
-
-Private Sub Workbook_Open_20241228()
+Private Sub Workbook_Open_OK_20241228()
 
     If Application.EnableEvents = False Then Application.EnableEvents = True
     

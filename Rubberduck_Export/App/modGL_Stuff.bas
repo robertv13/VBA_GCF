@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Get_Account_Trans_AF(" & glNo & " - De " & dateDeb & " à " & dateFin & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF(" & glNo & " - De " & dateDeb & " à " & dateFin & ")", 0)
 
     'Les données à AF proviennent de GL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
@@ -74,13 +74,13 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_Rapport:GL_Get_Account_Trans_AF", startTime)
+    Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", startTime)
 
 End Sub
 
 Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", 0)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
@@ -152,13 +152,13 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_Posting:GL_Posting_To_DB", startTime)
+    Call Log_Record("modGL_Stuff:GL_Posting_To_DB", startTime)
 
 End Sub
 
 Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_Locally", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", 0)
     
     Application.ScreenUpdating = False
     
@@ -185,13 +185,14 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write
                 .Range("I" & rowToBeUsed).Value = arr(i, 4)
                 .Range("J" & rowToBeUsed).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
+                Call Log_Record("   modGL_Stuff:GL_Posting_Locally", -1)
             End If
         Next i
     End With
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_Posting:GL_Posting_Locally", startTime)
+    Call Log_Record("modGL_Stuff:GL_Posting_Locally", startTime)
 
 End Sub
 

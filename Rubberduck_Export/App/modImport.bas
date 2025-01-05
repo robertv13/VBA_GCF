@@ -317,6 +317,112 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
 
 End Sub
 
+Sub REGUL_Détails_Import_All() '2025-01-05 @ 11:23
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:REGUL_Détails_Import_All", 0)
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshREGUL_Détails.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER.xlsx"
+    sourceTab = "REGUL_Détails$"
+                     
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
+    
+    'Copy to wshREGUL_Détails worksheet
+    If recSet.EOF = False Then
+        wshREGUL_Détails.Range("A2").CopyFromRecordset recSet
+    End If
+
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
+    Dim rng As Range: Set rng = wshREGUL_Détails.Range("A1").CurrentRegion
+    Call modAppli_Utils.ApplyWorksheetFormat(wshREGUL_Détails, rng, 1)
+    
+    Application.ScreenUpdating = True
+    
+    'Libérer la mémoire
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
+    
+    Call Log_Record("modImport:REGUL_Détails_Import_All", startTime)
+
+End Sub
+
+Sub REGUL_Entête_Import_All() '2025-01-05 @ 11:25
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:REGUL_Entête_Import_All", 0)
+    
+    Application.ScreenUpdating = False
+    
+    'Clear all cells, but the headers, in the target worksheet
+    wshREGUL_Entête.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+
+    'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
+    Dim sourceWorkbook As String, sourceTab As String
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_MASTER.xlsx"
+    sourceTab = "REGUL_Entête$"
+                     
+    'ADODB connection
+    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    
+    'Connection String specific to EXCEL
+    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+                               "Data Source = " & sourceWorkbook & ";" & _
+                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    connStr.Open
+    
+    'Recordset
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    With recSet
+        .ActiveConnection = connStr
+        .CursorType = adOpenStatic
+        .LockType = adLockReadOnly
+        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Open
+    End With
+    
+    'Copy to wshREGUL_Entête workbook
+    wshREGUL_Entête.Range("A2").CopyFromRecordset recSet
+    
+   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
+    Dim rng As Range: Set rng = wshREGUL_Entête.Range("A1").CurrentRegion
+    Call modAppli_Utils.ApplyWorksheetFormat(wshREGUL_Entête, rng, 1)
+
+    Application.ScreenUpdating = True
+    
+    'Libérer la mémoire
+    Set connStr = Nothing
+    Set recSet = Nothing
+    Set rng = Nothing
+    
+    Call Log_Record("modImport:REGUL_Entête_Import_All", startTime)
+
+End Sub
+
 Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", 0)

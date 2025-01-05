@@ -45,25 +45,8 @@ Private Sub Worksheet_Activate()
     
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
-    Set cellsToColor = Union(ws.Range("I5"), ws.Range("F6"))
-    Dim color As Long
-    color = RGB(217, 217, 217)
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, color)
-    
-'    With ws.Range("I5").Interior
-'        .Pattern = xlSolid
-'        .PatternColorIndex = xlAutomatic
-'        .ThemeColor = xlThemeColorAccent6
-'        .TintAndShade = 0.599993896298105
-'        .PatternTintAndShade = 0
-'    End With
-'    With ws.Range("F6").Interior
-'        .Pattern = xlSolid
-'        .PatternColorIndex = xlAutomatic
-'        .ThemeColor = xlThemeColorAccent6
-'        .TintAndShade = 0.599993896298105
-'        .PatternTintAndShade = 0
-'    End With
+    Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("G7"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_FEUILLE)
     
     'Protect the Worksheet
     With ws
@@ -75,15 +58,26 @@ Private Sub Worksheet_Activate()
     
     Call ENC_Remove_Check_Boxes(36)
     
+    'Efface les données du bordereau total
+    Dim lastUsedBordereau As Long
+    lastUsedBordereau = ws.Cells(ws.Rows.count, "O").End(xlUp).row
+    If lastUsedBordereau < 6 Then
+        lastUsedBordereau = 6
+    End If
+    ws.Range("O6:Q" & lastUsedBordereau + 2).Clear
+    
+    Call AjusteLibelléEncaissement("Banque")
+    
+    With ws
+        .Range("K5").Value = Format$(Date, wshAdmin.Range("B1").Value)
+        .Range("B1").Select
+    End With
+
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    With ws
-        .Range("K5").Value = Format$(Now(), wshAdmin.Range("B1").Value)
-        .Range("F5").Select
-        previousCellAddress = .Range("F5").Address
-    End With
-
+    wshENC_Saisie.Range("F5:H5").Select
+    
     'Libérer la mémoire
     Set ws = Nothing
     
@@ -94,32 +88,52 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Debug.Print "Previous = " & previousCellAddress & " - Current = " & Target.Address
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
     End If
     
     'Client has been selected
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+'        MsgBox "Cellule F5 sélectionnée, prêt pour la saisie.", vbInformation
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Date has been selected
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Payment Type has been selected
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Total deposit has been selected
     If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'Comments has been selected
     If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
+    End If
+    
+    'Première case à cocher a été sélectionnée
+    If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
+        Call ValiderEtLancerufEncRégularisation
+    End If
+    
+    'Ne devrait pas passer ici...
+    If Not Intersect(Target, Me.Range("I5")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_FEUILLE
+        Me.Range("K5").Select
+        Exit Sub
+    End If
+    
+    If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_FEUILLE
+        Me.Range("K7").Select
+        Exit Sub
     End If
     
     previousCellAddress = Target.Address
@@ -153,21 +167,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = True
             Application.Goto Range(Target.Address)
         End If
+        Target.Interior.COLOR = COULEUR_FEUILLE
         Application.EnableEvents = True
     End If
     
-    'Force TAB order after a cell has been changed
-    On Error Resume Next
-    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
-        Me.Range("K5").Select
-'    ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-'        Me.Range("F7").Select
-    ElseIf Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Me.Range("K7").Select
-    ElseIf Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Me.Range("F9").Select
+    'Type a changé
+    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        Call AjusteLibelléEncaissement(Target.Value)
     End If
-    On Error GoTo 0
-
+    
 End Sub
 

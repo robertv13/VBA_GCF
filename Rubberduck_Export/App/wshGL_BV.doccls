@@ -68,7 +68,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Range(previousCellAddress).Interior.COLOR = xlNone
     End If
 
 '    'Définir la zone de la BV
@@ -88,7 +88,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
 '    Dim estZoneSensile As Boolean

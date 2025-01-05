@@ -112,8 +112,8 @@ Sub JE_Renversement_Update()
         End If
     Next i
     
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.color = vbBlack
-    wshGL_EJ.Range("E9:K23").Font.color = vbBlack
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.COLOR = vbBlack
+    wshGL_EJ.Range("E9:K23").Font.COLOR = vbBlack
 
     'Retour à la source
     wshGL_EJ.Range("F4").Value = ""
@@ -183,9 +183,9 @@ Sub GL_EJ_Clear_All_Cells()
     With wshGL_EJ
         .Range("B6").ClearContents 'Code de client
         .Range("F4,F6:K6").ClearContents
-        .Range("F4, K4, F6:K6").Font.color = vbBlack
+        .Range("F4, K4, F6:K6").Font.COLOR = vbBlack
         .Range("E9:K23").ClearContents
-        .Range("E9:K23").Font.color = vbBlack
+        .Range("E9:K23").Font.COLOR = vbBlack
 '        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
         .Range("E6").Value = "Description:"
@@ -233,7 +233,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     wshGL_EJ.Range("V6").Value = "du " & Format$(dateFin, wshAdmin.Range("B1").Value)
     
     Dim rngResultAF As Range
-    Call GL_Get_Account_Trans_AF("4000", Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
+    Call GL_Get_Account_Trans_AF(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
     cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
                     - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
@@ -246,7 +246,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TPS percues
-    cases(105) = Fn_Get_GL_Account_Balance("1202", dateFin)
+    cases(105) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Facturée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(105)
@@ -263,7 +263,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = Fn_Get_GL_Account_Balance("1203", dateFin)
+    cases(205) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Facturée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(205)
@@ -279,7 +279,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = -cases(205)
     End With
     
-    cases(108) = Fn_Get_GL_Account_Balance("1200", dateFin)
+    cases(108) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Payée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TPS payées"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(108)
@@ -295,7 +295,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = cases(108)
     End With
     
-    cases(208) = Fn_Get_GL_Account_Balance("1201", dateFin)
+    cases(208) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Payée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TVQ payées"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(208)
@@ -439,8 +439,8 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.color = vbRed
-    wshGL_EJ.Range("E9:K23").Font.color = vbRed
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.COLOR = vbRed
+    wshGL_EJ.Range("E9:K23").Font.COLOR = vbRed
     
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
@@ -1020,7 +1020,7 @@ End Sub
 Sub ckbRecurrente_Click()
 
     If wshGL_EJ.ckbRecurrente.Value = True Then
-        wshGL_EJ.ckbRecurrente.BackColor = HIGHLIGHT_COLOR
+        wshGL_EJ.ckbRecurrente.BackColor = COULEUR_SAISIE
     Else
         wshGL_EJ.ckbRecurrente.BackColor = RGB(217, 217, 217)
     End If

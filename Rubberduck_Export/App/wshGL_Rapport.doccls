@@ -68,22 +68,22 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = xlNone
+        Range(previousCellAddress).Interior.COLOR = xlNone
     End If
  
     'Dates period has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("F4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
 
     'From Date has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("F6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'To Date has ben selected
     If Not Intersect(Target, wshGL_Rapport.Range("H6")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Save the current cell Address

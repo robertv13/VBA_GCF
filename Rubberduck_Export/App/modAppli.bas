@@ -15,8 +15,8 @@ Option Explicit
 'Public Const VK_NUMLOCK As Long = &H90
 
 Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
-Public Const HIGHLIGHT_COLOR As String = &HCCFFCC 'Light green (Pastel Green)
-Public Const BASIC_COLOR As Long = 16777215 '2024-07-23 @ 08:15
+Public Const COULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
+Public Const COULEUR_BASE As Long = 16777215 '2024-07-23 @ 08:15
 
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
@@ -272,6 +272,31 @@ Public Enum GL_Trans
     [_Last]
 End Enum
 
+Public Enum REGUL_Détails
+    [_First] = 1
+    fREGULDRegulID = [_First]
+    fREGULDFactNo
+    fREGULDDate
+    fREGULDHono
+    fREGULDFrais
+    fREGULDTPS
+    fREGULDTVQ
+    fREGULDTimeStamp
+    [_Last]
+End Enum
+
+Public Enum REGUL_Entête
+    [_First] = 1
+    fREGULERegulID = [_First]
+    fREGULEDate
+    fREGULEClientID
+    fREGULEClientNom
+    fREGULETotal
+    fREGULENotes
+    fREGULETimeStamp
+    [_Last]
+End Enum
+
 Public Enum TEC_Local
     [_First] = 1
     fTECTECID = [_First]
@@ -333,30 +358,14 @@ Sub CodeEssentielDepart()
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
-    'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****", 0)
-    Application.EnableEvents = True
-    
-    'Vérifie l'état d'Excel
-    Dim isExcelAlreadyRunning As Boolean
-    isExcelAlreadyRunning = (Application.Workbooks.count > 1)
-    
-    If isExcelAlreadyRunning Then
-        Call Log_Record("OK - EXCEL était déjà actif lors de l'ouverture", Timer)
-    Else
-        Call Log_Record("OK - Nouvelle instance d'EXCEL démarrée", Timer)
-    End If
-    
     'Le serveur est-il disponible ?
     If Fn_Is_Server_Available() = False Then
-        Call Log_Record("Erreur : Serveur n'est pas disponible", Timer)
         MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
         Application.Quit
     End If
     
     Dim rootPath As String
     Call Set_Root_Path(rootPath)
-    Call Log_Record("OK - rootPath défini '" & rootPath & "'", Timer)
 
     Application.EnableEvents = False
     wshAdmin.Range("F5").Value = rootPath
@@ -364,13 +373,16 @@ Sub CodeEssentielDepart()
    
     'Vérification si le chemin est accessible
     If Fn_Check_Server_Access(rootPath) = False Then
-        Call Log_Record("Erreur : Accès au répertoire principal (P:\) impossible", Timer)
         MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If
 
-    Call Log_Record("OK - Validation d'accès serveur terminée", Timer)
+    'Log initial activity
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****", 0)
+    Application.EnableEvents = True
+    
+    Call Log_Record("Validation d'accès serveur terminée", Timer)
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
     Call CreateUserActiveFile
@@ -543,3 +555,4 @@ Sub WriteInfoOnMainMenu()
     Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
 
 End Sub
+

@@ -1,0 +1,121 @@
+﻿Option Explicit
+
+'Ces variables sont disponibles partout dans l'application
+Public startTime As Double
+Public previousCellAddress As Variant
+
+Private Sub Workbook_Open()
+
+    
+End Sub
+
+Private Sub Workbook_Open_20241228()
+
+    If Application.EnableEvents = False Then Application.EnableEvents = True
+    
+    On Error GoTo ErrorHandler
+    
+    ' Réinitialiser les paramètres globaux d'Excel
+    Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+    'Log initial activity
+    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
+    Application.EnableEvents = True
+    
+    'Vérifie l'état d'Excel
+    Dim isExcelAlreadyRunning As Boolean
+    isExcelAlreadyRunning = (Application.Workbooks.count > 1)
+    
+    If isExcelAlreadyRunning Then
+        Call Log_Record("OK - EXCEL était déjà actif lors de l'ouverture", Timer)
+    Else
+        Call Log_Record("OK - Nouvelle instance d'EXCEL démarrée", Timer)
+    End If
+    
+    'Le serveur est-il disponible ?
+    If Fn_Is_Server_Available() = False Then
+        Call Log_Record("Erreur : Serveur n'est pas disponible", Timer)
+        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
+        Application.Quit
+    End If
+    
+    Dim rootPath As String
+    Call Set_Root_Path(rootPath)
+    Call Log_Record("OK - rootPath défini '" & rootPath & "'", Timer)
+
+    Application.EnableEvents = False
+    wshAdmin.Range("F5").Value = rootPath
+    Application.EnableEvents = True
+   
+    'Vérification si le chemin est accessible
+    If Fn_Check_Server_Access(rootPath) = False Then
+        Call Log_Record("Erreur : Accès au répertoire principal (P:\) impossible", Timer)
+        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
+               "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
+        Exit Sub
+    End If
+
+    Call Log_Record("OK - Validation d'accès serveur terminée", Timer)
+    
+    'Création d'un fichier qui indique de l'utilisateur utilise l'application
+    Call CreateUserActiveFile
+    
+    Call SetupUserDateFormat
+    
+    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
+    Call BackupMasterFile
+    
+    Call WriteInfoOnMainMenu
+    wshMenu.Range("A1").Value = wshAdmin.Range("NomEntreprise").Value
+    
+    Call HideDevShapesBasedOnUsername
+    
+    'Protection de la feuille wshMenu
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions '2024-10-14 @ 11:28
+    End With
+    
+    Dim wb As Workbook: Set wb = ActiveWorkbook
+   
+    'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
+    Dim ws As Worksheet
+    Application.DisplayAlerts = False
+    For Each ws In wb.Worksheets
+        If InStr(ws.CodeName, "wsh") <> 1 And InStr(ws.CodeName, "Feuil") = 1 Then
+            ws.Delete
+        End If
+    Next ws
+    Application.DisplayAlerts = True
+    
+    wshMenu.Activate
+
+    'Libérer la mémoire
+    Set wb = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("ThisWorkbook:Workbook_Open", startTime)
+    
+    Exit Sub
+    
+ErrorHandler:
+    Call Log_Record("Erreur dans Workbook_Open : " & Err.Description, Timer)
+    
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    
+    Cancel = True
+    ufExitDisable.show
+
+End Sub
+
+'Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2024-11-22 @ 15:44
+'
+'    MsgBox "Évènement 'Workbook_SheetActivate' " & Sh.Name
+'
+'End Sub
+

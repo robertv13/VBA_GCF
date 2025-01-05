@@ -25,9 +25,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Me.Application.Calculation = xlCalculationAutomatic
 
    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").Value = Format$(Date, wshAdmin.Range("B1").Value) '2024-10-29 @ 07:34
-    
-'    Call TEC_Sort_Group_And_Subtotal
+    Me.Range("H3").NumberFormat = wshAdmin.Range("B1").Value
+    Me.Range("H3").Value = Date
     
     Call SetTabOrder(ws)
     
@@ -81,12 +80,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Debug.Print "#013 - " & Target.Address
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = BASIC_COLOR
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Analyse.Range("H3")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Check if the selected cell is in column C, D or H
@@ -149,7 +148,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(Target.Text, 45, 0)
         If fullDate <> "Invalid Date" Then
-            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            Target.Value = fullDate
             Call TEC_Sort_Group_And_Subtotal
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Analyse_131")

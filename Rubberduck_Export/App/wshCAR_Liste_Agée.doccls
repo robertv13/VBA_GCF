@@ -64,12 +64,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange" & " - " & Target.Address, 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.color = BASIC_COLOR
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
     End If
     
     'Is Niveau de Détail been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("B4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Is Ordre de tri been selected ?
@@ -77,17 +77,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If wshCAR_Liste_Agée.Range("B4").Value = "Client" Then
             wshCAR_Liste_Agée.Range("D4").Value = "Nom de client"
         End If
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Is Solde à 0,00 $ been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("F4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Is Date Limite been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agée.Range("H4")) Is Nothing Then
-        Target.Interior.color = HIGHLIGHT_COLOR
+        Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Save the current cell Address
