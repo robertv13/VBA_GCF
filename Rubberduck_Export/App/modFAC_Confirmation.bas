@@ -427,14 +427,14 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
-        With ws.Sort 'Sort - Date, ProfID, TEC_ID
+        With ws.Sort 'Sort - Date, ProfID, TECID
             .SortFields.Clear
             'First sort On Date
             .SortFields.Add key:=ws.Range("BM3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            'Second, sort On Prof_ID
+            'Second, sort On ProfID
             .SortFields.Add key:=ws.Range("BK3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
@@ -1009,7 +1009,7 @@ Sub MAJStatutFactureBD_MASTER(invoice As String)
 
     Dim SQL As String
     'Open the recordset for the specified invoice
-    SQL = "SELECT * FROM [" & destinationTab & "] WHERE Inv_No = '" & invoice & "'"
+    SQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
     rs.Open SQL, conn, 2, 3
     If Not rs.EOF Then
         'Update AC_ouC with 'C'

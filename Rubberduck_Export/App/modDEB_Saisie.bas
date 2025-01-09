@@ -27,7 +27,7 @@ Sub DEB_Saisie_Update()
     rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
-    'Get the Fourn_ID
+    'Get the FournID
     wshDEB_Saisie.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
 
     'Transfert des données vers DEB_Trans, entête d'abord puis une ligne à la fois

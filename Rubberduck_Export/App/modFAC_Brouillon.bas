@@ -617,11 +617,11 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
             .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Prof_ID
+                DataOption:=xlSortNormal 'Sort Based On ProfID
             .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+                DataOption:=xlSortNormal 'Sort Based On TECID
             .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
@@ -667,7 +667,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
             arr(i - 2, 4) = .Range("AX" & i).Value 'Heures
             totalHres = totalHres + .Range("AX" & i).Value
             arr(i - 2, 5) = .Range("BB" & i).Value 'Facturée ou pas
-            arr(i - 2, 6) = .Range("AQ" & i).Value 'TEC_ID
+            arr(i - 2, 6) = .Range("AQ" & i).Value 'TECID
             'Commentaires doivent être affichés
             If Trim(.Range("AY" & i).Value) <> "" Then
                 fraisDiversMsg = Trim(.Range("AY" & i).Value)
@@ -685,11 +685,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless

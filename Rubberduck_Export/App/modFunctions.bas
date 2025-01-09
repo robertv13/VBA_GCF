@@ -69,7 +69,7 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
                                                    1)
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result
-        ufSaisieHeures.txtClient_ID.Value = result
+        ufSaisieHeures.txtClientID.Value = result
     Else
         MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
@@ -554,26 +554,26 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     
 End Function
 
-Public Function Fn_Find_Row_Number_TEC_ID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
+Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", 0)
     
     On Error Resume Next
         Dim cell As Range
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
-            Fn_Find_Row_Number_TEC_ID = cell.row
-            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - Row # = " & Fn_Find_Row_Number_TEC_ID, -1)
+            Fn_Find_Row_Number_TECID = cell.row
+            Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID" & " - Row # = " & Fn_Find_Row_Number_TECID, -1)
         Else
-            Fn_Find_Row_Number_TEC_ID = -1 'Not found
-            Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID" & " - TECID = WAS NOT FOUND...", -1)
+            Fn_Find_Row_Number_TECID = -1 'Not found
+            Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID" & " - TECID = WAS NOT FOUND...", -1)
         End If
     On Error GoTo 0
     
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call Log_Record("modFunctions:Fn_Find_Row_Number_TEC_ID", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", startTime)
     
 End Function
 
@@ -1044,7 +1044,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     'Nom du client & code de client ?
-    If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClient_ID = "" Then
+    If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClientID = "" Then
         MsgBox prompt:="Le client et son code sont OBLIGATOIRES !", _
                Title:="Vérification", _
                Buttons:=vbCritical

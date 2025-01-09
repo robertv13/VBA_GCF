@@ -15,7 +15,7 @@ Sub ObtenirHeuresFacturéesParFacture()
     For i = 3 To lastUsedRow
         If ws.Cells(i, 16).Value >= "24-24609" Then
             s = ws.Cells(i, 16).Value & "-" & Format$(ws.Cells(i, 2), "00")
-            'Ajoute au sommaire par facture / par Prof_ID
+            'Ajoute au sommaire par facture / par ProfID
             If dict.Exists(s) Then
                 dict(s) = dict(s) + ws.Cells(i, 8).Value
             Else

@@ -103,7 +103,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Find the last row in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
 
-    'Sort by Client_ID (column E) and Date (column D) in the destination worksheet
+    'Sort by ClientID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.Clear
     wsDest.Sort.SortFields.Add key:=wsDest.Range("C7:C" & destLastUsedRow), Order:=xlAscending
     wsDest.Sort.SortFields.Add key:=wsDest.Range("E7:E" & destLastUsedRow), Order:=xlAscending

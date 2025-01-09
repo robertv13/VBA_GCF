@@ -2705,7 +2705,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     
 '    Dim arr As Variant
 '    arr = ws.Range("A1").CurrentRegion.Offset(1)
-    Dim dict_TEC_ID As New Dictionary
+    Dim dict_TECID As New Dictionary
     
     Dim i As Long, TECID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
     Dim minDate As Date, maxDate As Date
@@ -2732,7 +2732,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         End If
         dateTEC = arr(i, 4)
         If IsDate(dateTEC) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECTDBValid = False
             cas_date_invalide = cas_date_invalide + 1
@@ -2741,35 +2741,35 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
         If dateTEC <> Int(dateTEC) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & TECID)
             r = r + 1
             isTECTDBValid = False
         End If
         clientCode = arr(i, 5)
         hres = arr(i, 8)
         If IsNumeric(hres) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
             isTECTDBValid = False
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arr(i, 9)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
             isTECTDBValid = False
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
         End If
         estFacturee = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             isTECTDBValid = False
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
         End If
         estDetruit = arr(i, 11)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
             isTECTDBValid = False
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
@@ -2805,10 +2805,10 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Dictionary
-        If dict_TEC_ID.Exists(TECID) = False Then
-            dict_TEC_ID.Add TECID, 0
+        If dict_TECID.Exists(TECID) = False Then
+            dict_TECID.Add TECID, 0
         Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TECID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
             isTECTDBValid = False
            cas_doublon_TECID = cas_doublon_TECID + 1
@@ -2823,10 +2823,10 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
     If cas_doublon_TECID = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TECID")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
         r = r + 1
     End If
     
@@ -2959,7 +2959,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3323 'What is the last TECID analyzed ?
+    lastTECIDReported = 3325 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3035,7 +3035,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0 'Réactiver la gestion normale des erreurs
     
     Dim dictFactureHres As New Dictionary
-    Dim dict_TEC_ID As New Dictionary
+    Dim dict_TECID As New Dictionary
     Dim dict_prof As New Dictionary
     
     Dim TECID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
@@ -3088,7 +3088,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         dateTEC = arrTEC_Local_Data(i, 4)
         testDate = IsDate(dateTEC)
         If testDate = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & TECID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECValid = False
             cas_date_invalide = cas_date_invalide + 1
@@ -3097,13 +3097,13 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             If dateTEC > maxDate Then maxDate = dateTEC
         End If
         If dateTEC > Date Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & TECID & " a une date FUTURE '" & dateTEC & " !!!")
             r = r + 1
             isTECValid = False
             cas_date_future = cas_date_future + 1
         End If
         If dateTEC <> Int(dateTEC) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & TECID)
             r = r + 1
             isTECValid = False
         End If
@@ -3119,14 +3119,14 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         hres = arrTEC_Local_Data(i, 8)
         testHres = IsNumeric(hres)
         If testHres = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur des heures est INVALIDE '" & hres & " !!!")
             r = r + 1
             isTECValid = False
             cas_hres_invalide = cas_hres_invalide + 1
         End If
         estFacturable = arrTEC_Local_Data(i, 10)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
             r = r + 1
             isTECValid = False
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
@@ -3161,7 +3161,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
         estFacturee = UCase(arrTEC_Local_Data(i, 12))
         If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
             isTECValid = False
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
@@ -3171,19 +3171,19 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             dateFact = arrTEC_Local_Data(i, 13)
             testDate = IsDate(dateFact)
             If testDate = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & TECID & " a une date de facture INVALIDE '" & dateFact & " !!!")
                 r = r + 1
                 isTECValid = False
                 cas_date_fact_invalide = cas_date_fact_invalide + 1
             End If
             If dateFact > Now() Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID =" & TECID & " a une date de facture FUTURE '" & dateFact & " !!!")
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & TECID & " a une date de facture FUTURE '" & dateFact & " !!!")
                 r = r + 1
                 isTECValid = False
                 cas_date_facture_future = cas_date_facture_future + 1
             End If
             If dateFact <> Int(dateFact) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TEC_ID =" & TECID)
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TECID =" & TECID)
                 r = r + 1
                 isTECValid = False
             End If
@@ -3191,7 +3191,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         
         estDetruit = arrTEC_Local_Data(i, 14)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
             r = r + 1
             isTECValid = False
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
@@ -3200,14 +3200,14 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         invNo = CStr(arrTEC_Local_Data(i, 16))
         If Len(invNo) > 0 Then
             If estFacturee <> "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & _
                     " - Incongruité entre le numéro de facture '" & invNo & "' et " & _
                     "'estFacture' qui vaut '" & estFacturee & "'")
                 r = r + 1
                 isTECValid = False
             End If
             If dictFacture.Exists(invNo) = False Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & _
                     " - Le numéro de facture '" & invNo & "' " & _
                     "n'existe pas dans le fichier FAC_Entête")
                 r = r + 1
@@ -3221,7 +3221,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             End If
         Else
             If estFacturee = "Vrai" Or estFacturee = "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TEC_ID = " & TECID & _
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & TECID & _
                     " - Incongruité entre le numéro de facture vide et " & _
                     "'estFacture' qui vaut '" & estFacturee & "'")
                 r = r + 1
@@ -3278,10 +3278,10 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Dictionaries
-        If dict_TEC_ID.Exists(TECID) = False Then
-            dict_TEC_ID.Add TECID, 0
+        If dict_TECID.Exists(TECID) = False Then
+            dict_TECID.Add TECID, 0
         Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TEC_ID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TECID '" & TECID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
             isTECValid = False
             cas_doublon_TECID = cas_doublon_TECID + 1
@@ -3298,10 +3298,10 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     readRows = readRows + UBound(arrTEC_Local_Data, 1) - HeaderRow
     
     If cas_doublon_TECID = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TECID")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TEC_ID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
         r = r + 1
     End If
     
@@ -3510,7 +3510,7 @@ Clean_Exit:
     Set dictFacture = Nothing
     Set dictTimeStamp = Nothing
     Set dict_prof = Nothing
-    Set dict_TEC_ID = Nothing
+    Set dict_TECID = Nothing
     Set key = Nothing
     Set rng = Nothing
     Set rngTEC_LocalData = Nothing

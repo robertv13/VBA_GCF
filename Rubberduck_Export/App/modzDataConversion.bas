@@ -69,15 +69,15 @@ Sub AjusteNomClient()
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Loop through each row starting from row 2 (headers are 1 row)
-    Dim client As String, client_ID As String, contactFacturation As String
+    Dim client As String, clientID As String, contactFacturation As String
     Dim posOpenParenthesis As Integer, posCloseParenthesis As Integer
     Dim numberOpenParenthesis As Integer, numberCloseParenthesis As Integer
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
-        client = ws.Cells(i, 1).Value
-        client_ID = ws.Cells(i, 2).Value
-        contactFacturation = ws.Cells(i, 3).Value
+        client = ws.Cells(i, fClntFMClientNom).Value
+        clientID = ws.Cells(i, fClntFMClientID).Value
+        contactFacturation = ws.Cells(i, fClntFMContactFacturation).Value
         
         'Process the data and make adjustments if necessary
         posOpenParenthesis = InStr(client, "(")
@@ -120,14 +120,14 @@ Sub AjouteContactDansNomClient()
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Loop through each row starting from row 2 (headers are 1 row)
-    Dim client As String, client_ID As String, contactFacturation As String
+    Dim client As String, clientID As String, contactFacturation As String
     Dim posOpenSquareBracket As Integer, posCloseSquareBracket As Integer
     Dim numberOpenSquareBracket As Integer, numberCloseSquareBracket As Integer
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
         client = ws.Cells(i, fClntFMClientNom).Value
-        client_ID = ws.Cells(i, fClntFMClientID).Value
+        clientID = ws.Cells(i, fClntFMClientID).Value
         contactFacturation = Trim(ws.Cells(i, fClntFMContactFacturation).Value)
         
         'Process the data and make adjustments if necessary
@@ -199,7 +199,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     Dim clientCode As String
     Dim clientCodeFromDB As String
     Dim errorMesg As String
-    Dim TEC_ID As Long: TEC_ID = 342
+    Dim TECID As Long: TECID = 342
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
@@ -223,8 +223,8 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
             client = myInfo(3)
         End If
         
-        TEC_ID = TEC_ID + 1
-        wsDest.Range("A" & rowNum).Value = TEC_ID
+        TECID = TECID + 1
+        wsDest.Range("A" & rowNum).Value = TECID
         wsDest.Range("B" & rowNum).Value = ObtenirProfIDAvecInitiales(prof)
         wsDest.Range("C" & rowNum).Value = prof
         wsDest.Range("D" & rowNum).Value = rst.Fields(1).Value
@@ -936,7 +936,7 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
     wsOutput.Range("A1").Value = "TEC_Nom_Client"
     wsOutput.Range("B1").Value = "Code_de_Client"
     wsOutput.Range("C1").Value = "Nom_Client_Master"
-    wsOutput.Range("D1").Value = "TEC_ID"
+    wsOutput.Range("D1").Value = "TECID"
     wsOutput.Range("E1").Value = "TEC_Prof"
     wsOutput.Range("F1").Value = "TEC_Date"
     Call Make_It_As_Header(wsOutput.Range("A1:F1"))

@@ -565,16 +565,16 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    Dim r As Long, TEC_ID As Long, SQL As String
+    Dim r As Long, TECID As Long, SQL As String
     For r = firstRow To LastRow
         If wshTEC_Local.Range("BB" & r).Value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
-        TEC_ID = wshTEC_Local.Range("AQ" & r).Value
+        TECID = wshTEC_Local.Range("AQ" & r).Value
         
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & TEC_ID
+        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & TECID
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update EstFacturee, DateFacturee & NoFacture
@@ -627,7 +627,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
         If wshTEC_Local.Range("BB" & r).Value = "FAUX" And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
             TECID = wshTEC_Local.Range("AQ" & r).Value
-            rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)
+            rowToBeUpdated = Fn_Find_Row_Number_TECID(TECID, lookupRange)
 '            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
             wshTEC_Local.Range("L" & rowToBeUpdated).Value = "VRAI"
             wshTEC_Local.Range("M" & rowToBeUpdated).Value = Format$(Now(), "yyyy-mm-dd")
@@ -931,7 +931,7 @@ End Function
 ''            .SortFields.add Key:=wshGL_Trans.Range("Y3"), _
 ''                SortOn:=xlSortOnValues, _
 ''                Order:=xlAscending, _
-''                DataOption:=xlSortNormal 'Sort Based On TEC_ID
+''                DataOption:=xlSortNormal 'Sort Based On TECID
 ''            .SetRange wshFAC_Entête.Range("X2:AQ" & lastResultRow) 'Set Range
 ''            .Apply 'Apply Sort
 ''         End With
