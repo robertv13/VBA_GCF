@@ -62,14 +62,14 @@ Private Sub cbbNoFacture_AfterUpdate()
     invNo = ufEncRégularisation.cbbNoFacture.Value
     
     Dim rngTrouve As Range
-    Set rngTrouve = wsCC.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    Set rngTrouve = wsCC.Columns(fFacCCInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
 
     Dim soldeFacture As Currency
     Dim dateFacture As String
     
     If Not rngTrouve Is Nothing Then
         'Si la valeur est trouvée, récupérer d'autres colonnes
-        soldeFacture = CCur(rngTrouve.offset(0, 9).Value)
+        soldeFacture = CCur(rngTrouve.offset(0, 10).Value)
         dateFacture = Format$(rngTrouve.offset(0, 1).Value, wshAdmin.Range("B1").Value)
         ufEncRégularisation.lblDateFactureData.Caption = dateFacture
         ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
@@ -201,6 +201,8 @@ Private Sub cmbAccepte_Click()
 
     'Confirmation
     MsgBox "Toujours prêt a continuer ?", vbYesNo
+    
+    Call MAJ_Regularisation
     
 End Sub
 

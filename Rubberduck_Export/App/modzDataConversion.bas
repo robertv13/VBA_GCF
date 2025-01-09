@@ -476,9 +476,9 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     Dim clientCode As String
     Dim clientCodeFromDB As String
     Dim totalFact As Double
-    Dim recu As Double
+    Dim recu As Currency, regul As Currency
     Dim dateRecu As String
-    Dim solde As Double
+    Dim solde As Currency
     Dim joursDue As Long
     
     Dim errorMesg As String
@@ -490,6 +490,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         factNo = rst.Fields(2).Value
         totalFact = rst.Fields(3).Value
         recu = rst.Fields(4).Value
+        regul = 0
         If IsNull(rst.Fields(5).Value) Then
             dateRecu = ""
         Else
@@ -517,19 +518,20 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
             errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
         End If
         
-        wsDest.Range("A" & rowNum).Value = factNo
-        wsDest.Range("B" & rowNum).Value = dateFact
-        wsDest.Range("C" & rowNum).Value = client
-        wsDest.Range("D" & rowNum).Value = clientCode
-        wsDest.Range("E" & rowNum).Value = "Unpaid"
-        wsDest.Range("F" & rowNum).Value = "Net 30"
+        wsDest.Cells(rowNum, fFacCCInvNo).Value = factNo
+        wsDest.Cells(rowNum, fFacCCInvoiceDate).Value = dateFact
+        wsDest.Cells(rowNum, fFacCCCustomer).Value = client
+        wsDest.Cells(rowNum, fFacCCCodeClient).Value = clientCode
+        wsDest.Cells(rowNum, fFacCCStatus).Value = "Unpaid"
+        wsDest.Cells(rowNum, fFacCCTerms).Value = "Net 30"
         dateDue = DateAdd("d", 30, CDate(dateFact))
-        wsDest.Range("G" & rowNum).Value = Format$(CDate(dateDue), "mm/dd/yyyy")
-        wsDest.Range("H" & rowNum).Value = totalFact
-        wsDest.Range("I" & rowNum).Value = recu
-        wsDest.Range("J" & rowNum).Value = totalFact - recu
+        wsDest.Cells(rowNum, fFacCCDueDate).Value = Format$(CDate(dateDue), "mm/dd/yyyy")
+        wsDest.Cells(rowNum, fFacCCTotal).Value = totalFact
+        wsDest.Cells(rowNum, fFacCCTotalPaid).Value = recu
+        wsDest.Cells(rowNum, fFacCCTotalRegul).Value = 0
+        wsDest.Cells(rowNum, fFacCCBalance).Value = totalFact - recu - regul
         joursDue = DateDiff("d", dateDue, Date)
-        wsDest.Range("K" & rowNum).Value = joursDue
+        wsDest.Cells(rowNum, fFacCCDaysOverdue).Value = joursDue
         rowNum = rowNum + 1
 
         rst.MoveNext
@@ -1032,11 +1034,11 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     Dim i As Long
     For i = 2 To lastUsedRowClientMF
         'Enlève les informations de contact
-        clientName = wsMF.Cells(i, 1).Value
+        clientName = wsMF.Cells(i, fClntFMClientNom).Value
         Do While InStr(clientName, "[") > 0 And InStr(clientName, "]") > 0
             clientName = Fn_Strip_Contact_From_Client_Name(clientName)
         Loop
-        dictClients.Add CStr(wsMF.Cells(i, 2).Value), clientName
+        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).Value), clientName
     Next i
     
     'Setup output file

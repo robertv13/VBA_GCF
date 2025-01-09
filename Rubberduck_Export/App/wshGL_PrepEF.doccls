@@ -1,0 +1,191 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", 0)
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    Call GL_Trans_Import_All
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    Me.Application.Calculation = xlCalculationAutomatic
+    
+    Dim ws As Worksheet: Set ws = wshGL_PrepEF
+    
+    'Clear the display area & display the account number & description
+    Application.EnableEvents = False
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlNoRestrictions
+    End With
+    
+'    Dim cbx As Shape
+'    For Each cbx In wshGL_PrepEF.Shapes
+'        If InStr(cbx.Name, "GL_Trans") Then
+'            cbx.Delete
+'        End If
+'    Next cbx
+'
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    ws.Range("J1").Value = ""
+    
+    With ws
+        .Range("J1").Select
+        previousCellAddress = .Range("J1").Address
+    End With
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+'    If Not dynamicShape Is Nothing Then
+'        If dynamicShape.Visible = True Then
+'            dynamicShape.Visible = False
+'        End If
+'    End If
+'
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.COLOR = xlNone
+    End If
+
+    'Date selected
+    If Not Intersect(Target, wshGL_PrepEF.Range("J1")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_SAISIE
+    End If
+    
+'    'An account has been selected from Trial Balance
+'    If Not Intersect(Target, wshGL_PrepEF.Range("D4:G" & Range("B2").Value - 2)) Is Nothing Then
+'        If Target.CountLarge > 1 Then Exit Sub
+'        Call GL_PrepEF_Effacer_Zone_Et_Shape
+'        Application.EnableEvents = False
+'        Dim GLAcct As String, GLDescription As String, DateLimite As Date
+'        GLAcct = CStr(Range("D" & Target.row).Value)
+'        GLDescription = Range("E" & Target.row).Value
+'        DateLimite = Format$(Range("J1").Value, wshAdmin.Range("B1").Value)
+'        wshGL_PrepEF.Range("B10").Value = 0
+'        Range("T2").Value = "Toutes les dates"
+'        'Display all transactions for the selected G/L
+'        Call GL_PrepEF_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, DateLimite)
+'        Application.EnableEvents = True
+'    End If
+'
+'    'Get the entire transaction, from a selected line
+'    If Not Intersect(Target, wshGL_PrepEF.Range("M4:T9999")) Is Nothing And _
+'        Target.Cells.count = 1 And _
+'        wshGL_PrepEF.Range("M" & Target.row) <> "" Then
+'            Dim noJE As Long
+'            noJE = wshGL_PrepEF.Range("N" & Target.row).Value
+'            Application.EnableEvents = False
+'            wshGL_PrepEF.Range("B10").Value = Target.row
+'            Application.EnableEvents = True
+'            Call GL_Get_JE_Detail_Trans_AF(noJE)
+'            Call wshGL_PrepEF_Display_JE_Trans_With_Shape
+'    Else
+'        Application.EnableEvents = False
+'        wshGL_PrepEF.Range("B10").Value = 0
+'        Application.EnableEvents = True
+'        Dim shp As Shape
+'        On Error Resume Next
+'            Set shp = wshGL_PrepEF.Shapes("JE_Detail_Trans")
+'        On Error GoTo 0
+'        If shp Is Nothing Then
+'            Set shp = wshGL_PrepEF.Shapes.AddShape(msoShapeRoundedRectangle, 50, 50, 100, 50)
+'            shp.Name = "JE_Detail_Trans"
+'        End If
+'        Set shp = wshGL_PrepEF.Shapes("JE_Detail_Trans")
+'        shp.Visible = msoFalse
+'    End If
+'
+'    'Vérifier si le curseur est en dehors de la zone
+'    If Not Intersect(Target, rngDetailTrans) Is Nothing Then
+'        'Si un bouton existe, l'effacer
+'        Dim btn As Shape
+'        On Error Resume Next
+'        Set btn = Me.Shapes("EffacerBouton")
+'        If Not btn Is Nothing Then btn.Delete
+'        On Error GoTo 0
+'
+'        'Effacer la zone des résultats
+'        rngDetailTrans.Clear
+'
+'        'Ramener le focus à C4
+'        Application.EnableEvents = False
+'        Me.Range("C4").Select
+'        Application.EnableEvents = True
+'    End If
+    
+    'Libérer la mémoire
+'    Set rngBV = Nothing
+'    Set rngDetailTrans = Nothing
+'    Set rngZonesSensibles = Nothing
+
+    'Libérer la mémoire
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-31
+
+    Dim fullDate As Variant
+    
+    'Changement de date de BV
+    If Not Intersect(Target, Range("J1")) Is Nothing Then 'Cut-off date has changed
+        'Temporarily disable events to prevent infinite loop
+        Application.EnableEvents = False
+        
+       'Try to convert the input to a complete valid date
+        fullDate = Fn_Complete_Date(Target.Value, 999, 15)
+       
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+        
+        Range("B9").Value = Range("J1").Value
+        
+        Dim ws As Worksheet
+        Set ws = wshGL_PrepEF
+        Call GL_Trial_Balance_Build(ws, Range("J1").Value)
+        
+        Application.EnableEvents = True
+    End If
+
+'    'Changement des dates (from/to) pour les transactions détaillées
+'    If Not Intersect(Target, Range("T2")) Is Nothing Then 'Dates have changed
+'        If Range("T2").Value <> "" Then
+'            Application.EnableEvents = False
+'
+'            Call GL_PrepEF_Determine_From_And_To_Date(Range("T2").Value)
+'
+'            'Force redisplay of GL Transactions details
+'            Call GL_PrepEF_Display_Trans_For_Selected_Account(Range("B6").Value, Range("B7").Value, _
+'                Range("B8").Value, Range("B9").Value)
+'        End If
+'    End If
+'
+Clean_Exit:
+
+    Application.EnableEvents = True
+
+End Sub
+

@@ -52,7 +52,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
     Dim lastResultRow As Long
-    lastResultRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AT").End(xlUp).row
+    lastResultRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
         
     If lastResultRow > 2 Then
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
@@ -192,6 +192,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     With wshFAC_Entête
         .Range("A" & firstFreeRow).Value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).Value = Format$(wshFAC_Brouillon.Range("O3").Value, "mm-dd-yyyy")
+        .Range("C" & firstFreeRow).Value = "AC"
         .Range("D" & firstFreeRow).Value = wshFAC_Brouillon.Range("B18").Value
         .Range("E" & firstFreeRow).Value = wshFAC_Finale.Range("B23").Value
         .Range("F" & firstFreeRow).Value = wshFAC_Finale.Range("B24").Value
@@ -489,6 +490,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value) + 30
         rs.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
         rs.Fields(fFacCCTotalPaid - 1).Value = 0
+        rs.Fields(fFacCCTotalRegul - 1).Value = 0
         rs.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
         rs.Fields(fFacCCDaysOverdue - 1).Value = -30
     End With
@@ -524,17 +526,18 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     firstFreeRow = wshFAC_Comptes_Clients.Cells(wshFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
    
     With wshFAC_Comptes_Clients
-        .Range("A" & firstFreeRow).Value = wshFAC_Finale.Range("E28")
-        .Range("B" & firstFreeRow).Value = wshFAC_Brouillon.Range("O3").Value
-        .Range("C" & firstFreeRow).Value = wshFAC_Finale.Range("B24").Value
-        .Range("D" & firstFreeRow).Value = wshFAC_Brouillon.Range("B18").Value
-        .Range("E" & firstFreeRow).Value = "Unpaid"
-        .Range("F" & firstFreeRow).Value = "Net 30"
-        .Range("G" & firstFreeRow).Value = CDate(wshFAC_Brouillon.Range("O3").Value) + 30
-        .Range("H" & firstFreeRow).Value = wshFAC_Finale.Range("E81").Value
-        .Range("I" & firstFreeRow).formula = 0
-'        .Range("J" & firstFreeRow).formula = "=G" & firstFreeRow & "-H" & firstFreeRow
-'        .Range("K" & firstFreeRow).formula = "=IF(H" & firstFreeRow & "<G" & firstFreeRow & ",NOW()-F" & firstFreeRow & ")"
+        .Cells(firstFreeRow, fFacCCInvNo).Value = wshFAC_Finale.Range("E28")
+        .Cells(firstFreeRow, fFacCCInvoiceDate).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
+        .Cells(firstFreeRow, fFacCCCustomer).Value = wshFAC_Finale.Range("B24").Value
+        .Cells(firstFreeRow, fFacCCCodeClient).Value = wshFAC_Brouillon.Range("B18").Value
+        .Cells(firstFreeRow, fFacCCStatus).Value = "Unpaid"
+        .Cells(firstFreeRow, fFacCCTerms).Value = "Net 30"
+        .Cells(firstFreeRow, fFacCCDueDate).Value = CDate(wshFAC_Brouillon.Range("O3").Value) + 30
+        .Cells(firstFreeRow, fFacCCTotal).Value = wshFAC_Finale.Range("E81").Value
+        .Cells(firstFreeRow, fFacCCTotalPaid).Value = 0
+        .Cells(firstFreeRow, fFacCCTotalRegul).Value = 0
+        .Cells(firstFreeRow, fFacCCBalance).Value = wshFAC_Finale.Range("E81").Value
+        .Cells(firstFreeRow, fFacCCDaysOverdue).Value = -30
     End With
 
 nothing_to_update:
@@ -564,25 +567,25 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
 
     Dim r As Long, TEC_ID As Long, SQL As String
     For r = firstRow To LastRow
-        If wshTEC_Local.Range("BA" & r).Value = True Or _
+        If wshTEC_Local.Range("BB" & r).Value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
         TEC_ID = wshTEC_Local.Range("AQ" & r).Value
         
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TEC_ID=" & TEC_ID
+        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & TEC_ID
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update EstFacturee, DateFacturee & NoFacture
             rs.Fields(fTECEstFacturee - 1).Value = "VRAI"
-            rs.Fields(fTECDateFacturee - 1).Value = Format$(Now(), "yyyy-mm-dd")
+            rs.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
             rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
             rs.Fields(fTECNoFacture - 1).Value = wshFAC_Brouillon.Range("O6").Value
             rs.update
         Else
             'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TEC_ID '" & r & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
@@ -621,7 +624,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     
     Dim r As Long, rowToBeUpdated As Long, TECID As Long
     For r = firstResultRow To lastResultRow
-        If wshTEC_Local.Range("BA" & r).Value = False And _
+        If wshTEC_Local.Range("BB" & r).Value = "FAUX" And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
             TECID = wshTEC_Local.Range("AQ" & r).Value
             rowToBeUpdated = Fn_Find_Row_Number_TEC_ID(TECID, lookupRange)

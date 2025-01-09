@@ -657,7 +657,7 @@ Function Fn_Get_Invoice_Due_Date(invNo As String)
     Set foundCell = ws.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
     
     If Not foundCell Is Nothing Then
-        Fn_Get_Invoice_Due_Date = ws.Cells(foundCell.row, 7)
+        Fn_Get_Invoice_Due_Date = ws.Cells(foundCell.row, fFacCCDueDate)
     Else
         Fn_Get_Invoice_Due_Date = ""
     End If
@@ -1719,6 +1719,70 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
     
     'Si la valeur n'est pas trouvée
     ObtenirNoGlIndicateur = "Non trouvé"
+
+End Function
+
+Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Currency
+
+    Dim ws As Worksheet: Set ws = wshENC_Détails
+    
+    Dim premièreCellule As Range, celluleTrouvée As Range
+    Dim ligne As Long
+    
+    'Rechercher la première cellule avec le numéro de facture
+    Set premièreCellule = ws.Columns(2).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    Fn_Obtenir_Paiements_Facture = 0
+    
+    If Not premièreCellule Is Nothing Then
+        'Démarrer la recherche à partir de la première cellule trouvée
+        Set celluleTrouvée = premièreCellule
+        Do
+            'Obtenir la ligne correspondante
+            ligne = celluleTrouvée.row
+            'Vérifier la date dans la colonne appropriée
+            If IsDate(ws.Cells(ligne, 4).Value) And ws.Cells(ligne, 4).Value <= dateLimite Then
+                'Additionner le montant du paiement
+                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(ligne, 5).Value
+            End If
+            'Rechercher la prochaine occurrence
+            Set celluleTrouvée = ws.Columns(2).FindNext(celluleTrouvée)
+        Loop While Not celluleTrouvée Is Nothing And celluleTrouvée.Address <> premièreCellule.Address
+    End If
+
+End Function
+
+Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date) As Currency
+
+    Dim ws As Worksheet: Set ws = wshCC_Régularisations
+    
+    Dim premièreCellule As Range, celluleTrouvée As Range
+    Dim ligne As Long
+    
+    'Rechercher la première cellule avec le numéro de facture
+    Set premièreCellule = ws.Columns(fREGULInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    Fn_Obtenir_Régularisations_Facture = 0
+    
+    If Not premièreCellule Is Nothing Then
+        'Démarrer la recherche à partir de la première cellule trouvée
+        Set celluleTrouvée = premièreCellule
+        Do
+            'Obtenir la ligne correspondante
+            ligne = celluleTrouvée.row
+            'Vérifier la date dans la colonne appropriée
+            If IsDate(ws.Cells(ligne, fREGULDate).Value) And ws.Cells(ligne, fREGULDate).Value <= dateLimite Then
+                'Additionner les cellules pertinentes
+                Fn_Obtenir_Régularisations_Facture = Fn_Obtenir_Régularisations_Facture + _
+                                                        ws.Cells(ligne, fREGULHono).Value + _
+                                                        ws.Cells(ligne, fREGULFrais).Value + _
+                                                        ws.Cells(ligne, fREGULTPS).Value + _
+                                                        ws.Cells(ligne, fREGULTVQ).Value
+            End If
+            'Rechercher la prochaine occurrence
+            Set celluleTrouvée = ws.Columns(fREGULInvNo).FindNext(celluleTrouvée)
+        Loop While Not celluleTrouvée Is Nothing And celluleTrouvée.Address <> premièreCellule.Address
+    End If
 
 End Function
 

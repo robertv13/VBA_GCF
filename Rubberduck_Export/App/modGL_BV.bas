@@ -5,35 +5,38 @@ Public dynamicShape As Shape
 
 Sub shp_GL_BV_Actualiser_Click()
 
-    Call GL_Trial_Balance_Build(wshGL_BV.Range("J1").Value)
+    Dim ws As Worksheet
+    Set ws = wshGL_BV
+    
+    Call GL_Trial_Balance_Build(ws, ws.Range("J1").Value)
 
 End Sub
 
-Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
+Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07:50
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_Trial_Balance_Build(" & dateCutOff & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_Trial_Balance_Build(" & ws.Name & " " & dateCutOff & ")", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
     'Clear TB cells - Contents & formats
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row
-    wshGL_BV.Unprotect '2024-08-24 @ 16:38
+    lastUsedRow = ws.Cells(ws.Rows.count, "D").End(xlUp).row
+    ws.Unprotect '2024-08-24 @ 16:38
     Application.EnableEvents = False
-    wshGL_BV.Range("D4" & ":G" & lastUsedRow + 2).Clear
+    ws.Range("D4" & ":G" & lastUsedRow + 2).Clear
     Application.EnableEvents = True
 
     'Clear Detail transaction section
-    wshGL_BV.Range("L4").CurrentRegion.offset(3, 0).Clear
+    ws.Range("L4").CurrentRegion.offset(3, 0).Clear
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date
-    wshGL_BV.Range("C2").Value = "Au " & Format$(dateCutOff, wshAdmin.Range("B1").Value)
+    ws.Range("C2").Value = "Au " & Format$(dateCutOff, wshAdmin.Range("B1").Value)
 
     Application.EnableEvents = False
-    wshGL_BV.Range("B2").Value = 3
-    wshGL_BV.Range("B10").Value = 0
+    ws.Range("B2").Value = 3
+    ws.Range("B10").Value = 0
     Application.EnableEvents = True
     
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
@@ -73,8 +76,8 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     
     Dim sumDT As Currency, sumCT As Currency, GLNoPlusDesc As String
     Dim currRow As Long: currRow = 4
-    wshGL_BV.Range("D4:D" & UBound(arrSolde, 1)).HorizontalAlignment = xlCenter
-    wshGL_BV.Range("F4:G" & UBound(arrSolde, 1) + 3).HorizontalAlignment = xlRight
+    ws.Range("D4:D" & UBound(arrSolde, 1)).HorizontalAlignment = xlCenter
+    ws.Range("F4:G" & UBound(arrSolde, 1) + 3).HorizontalAlignment = xlRight
     
     Dim r As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
@@ -82,13 +85,13 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
         If glNo <> "" Then
             r = dictSolde.item(glNo) 'Get the value of the item associated with GLNo
             If r <> 0 Then
-                wshGL_BV.Range("D" & currRow).Value = glNo
-                wshGL_BV.Range("E" & currRow).Value = arr(i, 2)
+                ws.Range("D" & currRow).Value = glNo
+                ws.Range("E" & currRow).Value = arr(i, 2)
                 If arrSolde(r, 2) >= 0 Then
-                    wshGL_BV.Range("F" & currRow).Value = Format$(arrSolde(r, 2), "###,###,##0.00")
+                    ws.Range("F" & currRow).Value = Format$(arrSolde(r, 2), "###,###,##0.00")
                     sumDT = sumDT + arrSolde(r, 2)
                 Else
-                    wshGL_BV.Range("G" & currRow).Value = Format$(-arrSolde(r, 2), "###,###,##0.00")
+                    ws.Range("G" & currRow).Value = Format$(-arrSolde(r, 2), "###,###,##0.00")
                     sumCT = sumCT - arrSolde(r, 2)
                 End If
                 currRow = currRow + 1
@@ -97,10 +100,10 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     Next i
 
     currRow = currRow + 1
-    wshGL_BV.Range("B2").Value = currRow
+    ws.Range("B2").Value = currRow
     
     'Unprotect the active cells of the TB area
-    With wshGL_BV '2024-08-21 @ 07:10
+    With ws '2024-08-21 @ 07:10
         .Unprotect
         .Range("D4:G" & currRow - 2).Locked = False
         .Protect UserInterfaceOnly:=True
@@ -109,11 +112,11 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     
     'Output Debit total
     Dim rng As Range
-    Set rng = wshGL_BV.Range("F" & currRow)
+    Set rng = ws.Range("F" & currRow)
     Call GL_BV_Display_TB_Totals(rng, sumDT) 'Débit total - 2024-06-09 @ 07:51
     
     'Output Credit total
-    Set rng = wshGL_BV.Range("G" & currRow)
+    Set rng = ws.Range("G" & currRow)
     Call GL_BV_Display_TB_Totals(rng, sumCT) 'Débit total - 2024-06-09 @ 07:51
     
     'Setup page for printing purposes
@@ -132,7 +135,7 @@ Sub GL_Trial_Balance_Build(dateCutOff As Date) '2024-11-18 @ 07:50
     ActiveWindow.ScrollRow = 4
     
     Application.EnableEvents = False
-    wshGL_BV.Range("C4").Select
+    ws.Range("C4").Select
     Application.EnableEvents = True
     
     'Libérer la mémoire
@@ -592,7 +595,7 @@ Sub wshGL_BV_Create_Dynamic_Shape()
     End If
 
     'Libérer la mémoire
-    Set dynamicShape = Nothing
+'    Set dynamicShape = Nothing
     
 End Sub
 

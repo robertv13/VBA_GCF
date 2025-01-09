@@ -10,8 +10,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices", 0)
     
-    Dim ws As Worksheet
-    Set ws = wshENC_Saisie
+    Dim ws As Worksheet: Set ws = wshENC_Saisie
     
     Application.EnableEvents = False
     ws.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
@@ -21,7 +20,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
-    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "P").End(xlUp).row
+    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "Q").End(xlUp).row
     
     Dim i As Integer
     'Unlock the required area
@@ -39,14 +38,21 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     Dim rr As Integer: rr = 12
     With wshFAC_Comptes_Clients
         For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
-            If .Range("U" & i).Value <> 0 And _
-                            Fn_Invoice_Is_Confirmed(.Range("Q" & i).Value) = True Then
+'            If .Range("U" & i).Value <> 0 And _
+'                            Fn_Invoice_Is_Confirmed(.Range("Q" & i).Value) = True Then
+            If .Range("W" & i).Value <> 0 And _
+                            Fn_Invoice_Is_Confirmed(.Range("R" & i).Value) = True Then
                 Application.EnableEvents = False
-                wshENC_Saisie.Range("F" & rr).Value = .Range("Q" & i).Value
-                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("R" & i).Value, wshAdmin.Range("B1").Value)
-                wshENC_Saisie.Range("H" & rr).Value = .Range("S" & i).Value
-                wshENC_Saisie.Range("I" & rr).Value = .Range("T" & i).Value
-                wshENC_Saisie.Range("J" & rr).Value = .Range("U" & i).Value
+'                wshENC_Saisie.Range("F" & rr).Value = .Range("Q" & i).Value
+                wshENC_Saisie.Range("F" & rr).Value = .Range("R" & i).Value
+'                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("R" & i).Value, wshAdmin.Range("B1").Value)
+                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("S" & i).Value, wshAdmin.Range("B1").Value)
+'                wshENC_Saisie.Range("H" & rr).Value = .Range("S" & i).Value
+                wshENC_Saisie.Range("H" & rr).Value = .Range("T" & i).Value
+'                wshENC_Saisie.Range("I" & rr).Value = .Range("T" & i).Value
+                wshENC_Saisie.Range("I" & rr).Value = .Range("U" & i).Value + .Range("V" & i).Value
+'                wshENC_Saisie.Range("J" & rr).Value = .Range("U" & i).Value
+                wshENC_Saisie.Range("J" & rr).Value = .Range("W" & i).Value
                 Application.EnableEvents = True
                 rr = rr + 1
             End If
@@ -69,26 +75,28 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     
     'Effacer les données de la dernière utilisation
-    ws.Range("M6:M10").ClearContents
-    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("N6:N10").ClearContents
+    ws.Range("N6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
 
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("tblFAC_Comptes_Clients[#All]")
-    ws.Range("M7").Value = rngData.Address
+    ws.Range("N7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("M2:N3")
-    ws.Range("M3").Value = wshENC_Saisie.clientCode
-    ws.Range("M8").Value = rngCriteria.Address
+    ws.Range("N3").Value = wshENC_Saisie.clientCode
+    ws.Range("N8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-    Set rngResult = ws.Range("P1").CurrentRegion
+'    Set rngResult = ws.Range("P1").CurrentRegion
+    Set rngResult = ws.Range("Q1").CurrentRegion
     rngResult.offset(2, 0).Clear
-    Set rngResult = ws.Range("P2:U2")
-    ws.Range("M9").Value = rngResult.Address
+'    Set rngResult = ws.Range("P2:U2")
+    Set rngResult = ws.Range("Q2:W2")
+    ws.Range("N9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 xlFilterCopy, _
@@ -97,27 +105,35 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
                 Unique:=False
                                         
     'Est-ce que nous avons des résultats ?
-    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    ws.Range("M10").Value = lastResultRow - 2 & " lignes"
+'    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "Q").End(xlUp).row
+    ws.Range("N10").Value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - InvNo
             .SortFields.Clear
-            'First sort On InvNo
-            .SortFields.Add key:=ws.Range("Q3"), _
+            'Sort On InvNo
+'            .SortFields.Add key:=ws.Range("Q3"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal
+'            .SetRange ws.Range("P3:W" & lastResultRow)
+            .SortFields.Add key:=ws.Range("R3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            .SetRange ws.Range("P3:U" & lastResultRow)
+            .SetRange ws.Range("Q3:W" & lastResultRow)
             .Apply 'Apply Sort
          End With
     End If
     
-    'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
+'    'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
+    'PLUG - Recalculate Column 'W' - Balance after AdvancedFilter
     Dim r As Integer
     For r = 3 To lastResultRow
-        ws.Range("U" & r).Value = ws.Range("S" & r).Value - ws.Range("T" & r).Value
+'        ws.Range("U" & r).Value = ws.Range("S" & r).Value - ws.Range("T" & r).Value
+        ws.Range("W" & r).Value = ws.Range("T" & r).Value - ws.Range("U" & r).Value - ws.Range("V" & r).Value
     Next r
 
     'libérer la mémoire
@@ -454,7 +470,8 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
                     rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
                 End If
                 'Mettre à jour le solde de la facture
-                rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value
+'                rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value
+                rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value
                 rs.update
             Else
                 'Handle the case where the specified ID is not found
@@ -505,13 +522,13 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, LastRow As Integer) 
         Dim rowToBeUpdated As Long
         If Not foundRange Is Nothing Then
             rowToBeUpdated = foundRange.row
-            ws.Range("I" & rowToBeUpdated).Value = ws.Range("I" & rowToBeUpdated).Value + wshENC_Saisie.Range("K" & r).Value
-            ws.Range("J" & rowToBeUpdated).Value = ws.Range("H" & rowToBeUpdated).Value - wshENC_Saisie.Range("K" & r).Value
+            ws.Cells(rowToBeUpdated, fFacCCTotalPaid).Value = ws.Cells(rowToBeUpdated, fFacCCTotalPaid).Value + wshENC_Saisie.Range("K" & r).Value
+            ws.Cells(rowToBeUpdated, fFacCCBalance).Value = ws.Cells(rowToBeUpdated, fFacCCBalance).Value - wshENC_Saisie.Range("K" & r).Value
             'Est-ce que le solde de la facture est à 0,00 $ ?
-            If ws.Range("J" & rowToBeUpdated).Value = 0 Then
-                ws.Range("E" & rowToBeUpdated) = "Paid"
+            If ws.Cells(rowToBeUpdated, fFacCCBalance).Value = 0 Then
+                ws.Cells(rowToBeUpdated, fFacCCStatus) = "Paid"
             Else
-                ws.Range("E" & rowToBeUpdated) = "Unpaid"
+                ws.Cells(rowToBeUpdated, fFacCCStatus) = "Unpaid"
             End If
         Else
             MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical

@@ -89,7 +89,10 @@ Sub EF_Click()
 
     Application.ScreenUpdating = False
 
-    MsgBox "Ajouter la fonction 'États Financiers'"
+    With wshGL_PrepEF
+        .Visible = xlSheetVisible
+        .Activate
+    End With
 
     Application.ScreenUpdating = True
 

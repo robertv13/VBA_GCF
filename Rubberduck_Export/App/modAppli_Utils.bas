@@ -177,25 +177,15 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call checkENC_Détails(r, readRows)
     
-    'wshREGUL_Entête ------------------------------------------------------------ REGUL_Entête
-    Call AddMessageToWorkSheet(wsOutput, r, 1, "REGUL_Entête")
+    'wshCC_Régularisations ---------------------------------------------------------- CC_Régularisations
+    Call AddMessageToWorkSheet(wsOutput, r, 1, "CC_Régularisations")
     
-    Call REGUL_Entête_Import_All
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "REGUL_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call CC_Régularisations_Import_All
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
-    Call checkREGUL_Entête(r, readRows)
-    
-    'wshREGUL_Détails ---------------------------------------------------------- REGUL_Détails
-    Call AddMessageToWorkSheet(wsOutput, r, 1, "REGUL_Détails")
-    
-    Call REGUL_Détails_Import_All
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "REGUL_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
-    r = r + 1
-    
-    Call checkREGUL_Détails(r, readRows)
+    Call checkCC_Régularisations(r, readRows)
     
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
@@ -968,7 +958,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim strPmtNo As String
     Dim i As Long
     For i = 2 To lastUsedRowEntete
-        strPmtNo = strPmtNo & CLng(wsEntete.Range("A" & i).Value) & "|"
+        strPmtNo = strPmtNo & CLng(wsEntete.Cells(i, fEncEPayID).Value) & "|"
     Next i
     
     'FAC_Entête Worksheet
@@ -995,7 +985,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     isEncDétailsValid = True
     
     For i = 2 To lastUsedRowDetails
-        pmtNo = CLng(ws.Range("A" & i).Value)
+        pmtNo = CLng(ws.Cells(i, fEncDPayID).Value)
         If pmtNo <> oldpmtNo Then
             If InStr(strPmtNo, pmtNo) = 0 Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
@@ -1007,7 +997,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
         End If
         
         Dim Inv_No As String
-        Inv_No = CStr(ws.Range("B" & i).Value)
+        Inv_No = CStr(ws.Cells(i, fEncDInvNo).Value)
         result = Application.WorksheetFunction.XLookup(Inv_No, _
                         rngFACEntete, _
                         rngFACEntete, _
@@ -1020,23 +1010,23 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
             isEncDétailsValid = False
         End If
         
-        If IsDate(ws.Range("D" & i).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Range("D" & i).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
+        If IsDate(ws.Cells(i, fEncDPayDate).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fEncDPayDate).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
             r = r + 1
             isEncDétailsValid = False
         End If
         
-        If IsNumeric(ws.Range("E" & i).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant '" & ws.Range("E" & i).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
+        If IsNumeric(ws.Cells(i, fEncDPayAmount).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant '" & ws.Cells(i, fEncDPayAmount).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
             isEncDétailsValid = False
         Else
             If dictENC.Exists(Inv_No) Then
-                dictENC(Inv_No) = dictENC(Inv_No) + ws.Range("E" & i).Value
+                dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
             Else
-                dictENC.Add Inv_No, ws.Range("E" & i).Value
+                dictENC.Add Inv_No, ws.Cells(i, fEncDPayAmount).Value
             End If
-            totalEncDetails = totalEncDetails + ws.Range("E" & i).Value
+            totalEncDetails = totalEncDetails + ws.Cells(i, fEncDPayAmount).Value
         End If
     Next i
     
@@ -1050,10 +1040,10 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim totalPaid As Currency
     
     For i = 3 To lastUsedRow
-        Inv_No = wsComptes_Clients.Cells(i, 1).Value
-        totalPaid = wsComptes_Clients.Cells(i, "I").Value
+        Inv_No = wsComptes_Clients.Cells(i, fFacCCInvNo).Value
+        totalPaid = wsComptes_Clients.Cells(i, fFacCCTotalPaid).Value
         If totalPaid <> dictENC(Inv_No) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des enc. " _
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Ligne # " & i & " - La facture '" & Inv_No & "', le total des enc. " _
                             & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
                             & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
             r = r + 1
@@ -1204,16 +1194,16 @@ Clean_Exit:
 
 End Sub
 
-Private Sub checkREGUL_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkREGUL_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkCC_Régularisations", 0)
 
     Application.ScreenUpdating = False
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshREGUL_Détails
-    Dim ws As Worksheet: Set ws = wshREGUL_Détails
+    'wshCC_Régularisations
+    Dim ws As Worksheet: Set ws = wshCC_Régularisations
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRowDetails As Long
     lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1227,54 +1217,40 @@ Private Sub checkREGUL_Détails(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    'REGUL_Entête Worksheet
-    Dim wsEntete As Worksheet: Set wsEntete = wshREGUL_Entête
-    Dim lastUsedRowEntete As Long
-    lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
-    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
-    Dim strRegulNo As String
-    Dim i As Long
-    For i = 2 To lastUsedRowEntete
-        strRegulNo = strRegulNo & CLng(wsEntete.Cells(i, fREGULDRegulID).Value) & "|"
-    Next i
-    
     'FAC_Entête Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
     Dim lastUsedRowFacEntete As Long
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshREGUL_Détails'")
+    'Clients Master File
+    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
+    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshCC_Régularisations'")
     r = r + 1
     
     'Array pointer
     Dim row As Long: row = 1
     Dim currentRow As Long
         
-    Dim regulNo As Long, oldRegulNo As Long
+    Dim regulNo As Long
     Dim result As Variant
     'Dictionary pour accumuler les encaissements par facture
     Dim dictRegul As Scripting.Dictionary
     Set dictRegul = New Scripting.Dictionary
-    Dim totalRegulDetails As Currency
+    Dim totalRégularisations As Currency
     
-    Dim isRegulDétailsValid As Boolean
-    isRegulDétailsValid = True
+    Dim isRegularisationValid As Boolean
+    isRegularisationValid = True
     
+    Dim Inv_No As String
+    Dim i As Long
     For i = 2 To lastUsedRowDetails
-        regulNo = CLng(ws.Cells(i, fREGULDRegulID).Value)
-        If regulNo <> oldRegulNo Then
-            If InStr(strRegulNo, regulNo) = 0 Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La régularisation '" & regulNo & "' à la ligne " & i & " n'existe pas dans REGUL_Entête")
-                r = r + 1
-                isRegulDétailsValid = False
-            End If
-            strRegulNo = strRegulNo & regulNo & "|"
-            oldRegulNo = regulNo
-        End If
-        
-        Dim Inv_No As String
-        Inv_No = CStr(ws.Cells(i, fREGULDFactNo).Value)
+        regulNo = CLng(ws.Cells(i, fREGULRegulID).Value)
+        Inv_No = CStr(ws.Cells(i, fREGULInvNo).Value)
         result = Application.WorksheetFunction.XLookup(Inv_No, _
                         rngFACEntete, _
                         rngFACEntete, _
@@ -1284,27 +1260,85 @@ Private Sub checkREGUL_Détails(ByRef r As Long, ByRef readRows As Long)
         If result = "Not Found" Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", de la régularisation '" & regulNo & "' n'existe pas dans FAC_Entête")
             r = r + 1
-            isRegulDétailsValid = False
+            isRegularisationValid = False
         End If
         
-        If IsDate(ws.Cells(i, fREGULDDate).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fREGULDDate).Value & "', ligne " & i & ", de la régularisation '" & regulNo & "' est INVALIDE '")
+        If IsDate(ws.Cells(i, fREGULDate).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fREGULDate).Value & "', ligne " & i & ", de la régularisation '" & regulNo & "' est INVALIDE '")
             r = r + 1
-            isRegulDétailsValid = False
+            isRegularisationValid = False
         End If
         
-        If IsNumeric(ws.Cells(i, fREGULDHono).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Les honoraires '" & ws.Cells(i, fREGULDHono).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+        Dim codeClient As String
+        codeClient = ws.Cells(i, fREGULClientID).Value
+        result = Application.WorksheetFunction.XLookup(codeClient, _
+                        rngClients, _
+                        rngClients, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' de la régularisation '" & regulNo & "' est INVALIDE")
             r = r + 1
-            isRegulDétailsValid = False
+            isRegularisationValid = False
+        End If
+        
+        'Vérification du montant des honoraires
+        If IsNumeric(ws.Cells(i, fREGULHono).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant des honoraires '" & ws.Cells(i, fREGULHono).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+            r = r + 1
+            isRegularisationValid = False
         Else
             If dictRegul.Exists(Inv_No) Then
-                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULHono).Value
             Else
-                dictRegul.Add Inv_No, ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+                dictRegul.Add Inv_No, ws.Cells(i, fREGULHono).Value
             End If
-            totalRegulDetails = totalRegulDetails + ws.Cells(i, fREGULDHono).Value + ws.Cells(i, fREGULDFrais).Value + ws.Cells(i, fREGULDTPS).Value + ws.Cells(i, fREGULDTVQ).Value
+            totalRégularisations = totalRégularisations + ws.Cells(i, fREGULHono).Value
         End If
+        
+        'Vérification du montant des frais
+        If IsNumeric(ws.Cells(i, fREGULFrais).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant des frais '" & ws.Cells(i, fREGULFrais).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+            r = r + 1
+            isRegularisationValid = False
+        Else
+            If dictRegul.Exists(Inv_No) Then
+                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULFrais).Value
+            Else
+                dictRegul.Add Inv_No, ws.Cells(i, fREGULFrais).Value
+            End If
+            totalRégularisations = totalRégularisations + ws.Cells(i, fREGULFrais).Value
+        End If
+    
+        'Vérification du montant de TPS
+        If IsNumeric(ws.Cells(i, fREGULTPS).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant de TPS '" & ws.Cells(i, fREGULTPS).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+            r = r + 1
+            isRegularisationValid = False
+        Else
+            If dictRegul.Exists(Inv_No) Then
+                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTPS).Value
+            Else
+                dictRegul.Add Inv_No, ws.Cells(i, fREGULTPS).Value
+            End If
+            totalRégularisations = totalRégularisations + ws.Cells(i, fREGULTPS).Value
+        End If
+        
+        'Vérification du montant de TVQ
+        If IsNumeric(ws.Cells(i, fREGULTVQ).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant de TPS '" & ws.Cells(i, fREGULTVQ).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
+            r = r + 1
+            isRegularisationValid = False
+        Else
+            If dictRegul.Exists(Inv_No) Then
+                dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTVQ).Value
+            Else
+                dictRegul.Add Inv_No, ws.Cells(i, fREGULTVQ).Value
+            End If
+            totalRégularisations = totalRégularisations + ws.Cells(i, fREGULTVQ).Value
+        End If
+    
     Next i
     
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
@@ -1318,154 +1352,44 @@ Private Sub checkREGUL_Détails(ByRef r As Long, ByRef readRows As Long)
     
     For i = 3 To lastUsedRow
         Inv_No = wsComptes_Clients.Cells(i, fFacCCInvNo).Value
-        totalRegul = wsComptes_Clients.Cells(i, fFacCCTotalPaid).Value
-        totalRegul = 0 'TODO - Une fois le fichier MASTER modifié, ajuster ce code
+        totalRegul = wsComptes_Clients.Cells(i, fFacCCTotalRegul).Value
         If totalRegul <> dictRegul(Inv_No) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des régularisations " _
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des régularisations de " _
                             & "(wshFAC_Comptes_clients) " & Format$(totalRegul, "###,##0.00 $") _
-                            & " est <> du détail des régul. " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
+                            & " est <> du détail des régularisations (wshCC_Régularisations) " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
             r = r + 1
-            isRegulDétailsValid = False
+            isRegularisationValid = False
         End If
     Next i
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.Value = "Total des régularisations : " & Format$(totalRegulDetails, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totalRegulDetails, 1)), 12).Font.COLOR = vbRed
-    rng.Characters(InStr(rng.Value, Left(totalRegulDetails, 1)), 12).Font.Bold = True
+    rng.Value = "Total des régularisations : " & Format$(totalRégularisations, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.Value, Left(totalRégularisations, 1)), 12).Font.COLOR = vbRed
+    rng.Characters(InStr(rng.Value, Left(totalRégularisations, 1)), 12).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
     readRows = readRows + lastUsedRowDetails - 1
     
     'Cas problème dans cette vérification ?
-    If isRegulDétailsValid = False Then
+    If isRegularisationValid = False Then
         verificationIntegriteOK = False
     End If
     
 Clean_Exit:
     'Libérer la mémoire
     Set dictRegul = Nothing
-    Set rngEntete = Nothing
+    Set rngClients = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
-    Set wsFACEntete = Nothing
-    Set wsEntete = Nothing
-    Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli:checkREGUL_Détails", startTime)
-
-End Sub
-
-Private Sub checkREGUL_Entête(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkREGUL_Entête", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'Clients Master File
-    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
-    Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
-    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
-    
-    'wshREGUL_Entête
-    Dim ws As Worksheet: Set ws = wshREGUL_Entête
-    Dim HeaderRow As Long: HeaderRow = 1
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
-    If lastUsedRow <= HeaderRow Or ws.Cells(lastUsedRow, 1).Value = "" Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshREGUL_Entête'")
-    r = r + 1
-    
-    If lastUsedRow = HeaderRow Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-
-    Dim arr As Variant
-    arr = wshREGUL_Entête.Range("A1").CurrentRegion.offset(1, 0) _
-              .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
-    
-    'Array pointer
-    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
-    Dim i As Long
-    Dim regulNo As String
-    Dim totals As Currency
-    Dim result As Variant
-    
-    Dim isRegulEntêteValid As Boolean
-    isRegulEntêteValid = True
-    
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        regulNo = arr(i, fREGULERegulID)
-        If IsDate(arr(i, fREGULEDate)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & arr(i, fREGULEDate) & "' de la régularisation '" & arr(i, fREGULERegulID) & "' n'est pas VALIDE")
-            r = r + 1
-            isRegulEntêteValid = False
-        End If
-        
-        Dim codeClient As String
-        codeClient = arr(i, fREGULEClientID)
-        result = Application.WorksheetFunction.XLookup(codeClient, _
-                        rngClients, _
-                        rngClients, _
-                        "Not Found", _
-                        0, _
-                        1)
-        If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' de la régularisation '" & regulNo & "' est INVALIDE")
-            r = r + 1
-            isRegulEntêteValid = False
-        End If
-        totals = totals + arr(i, fREGULETotal)
-    Next i
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
-    r = r + 1
-    
-    'Un peu de couleur
-    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.Value = "Total des régularisations : " & Format$(totals, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.COLOR = vbRed
-    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Bold = True
-    r = r + 2
-    
-    'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1)
-    
-    'Cas problème dans cette vérification ?
-    If isRegulEntêteValid = False Then
-        verificationIntegriteOK = False
-    End If
-    
-Clean_Exit:
-    'Libérer la mémoire
-    Set rng = Nothing
-    Set rngClients = Nothing
-    Set ws = Nothing
     Set wsClients = Nothing
+    Set wsFACEntete = Nothing
     Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkREGUL_Entête", startTime)
+    Call Log_Record("modAppli:checkCC_Régularisations", startTime)
 
 End Sub
 
@@ -1816,14 +1740,14 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
         
     Dim i As Long
     Dim Inv_No As String
-    Dim totals(1 To 3, 1 To 2) As Currency
+    Dim totals(1 To 4, 1 To 2) As Currency
     Dim nbFactC As Long, nbFactAC As Long
     
     Dim isFACCCValid As Boolean
     isFACCCValid = True
     
     For i = LBound(arr, 1) To UBound(arr, 1)
-        Inv_No = arr(i, 1)
+        Inv_No = arr(i, fFacCCInvNo)
         Dim invType As String
         invType = Fn_Get_Invoice_Type(Inv_No)
         If invType <> "C" And invType <> "AC" Then
@@ -1831,78 +1755,104 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isFACCCValid = False
         End If
-        If IsDate(CDate(arr(i, 2))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date '" & arr(i, 2) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Date ?
+        If IsDate(CDate(arr(i, fFacCCInvoiceDate))) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date '" & arr(i, fFacCCInvoiceDate) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         Else
-            If arr(i, 2) <> Int(arr(i, 2)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, 2) & "'")
+            If arr(i, fFacCCInvoiceDate) <> Int(arr(i, fFacCCInvoiceDate)) Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, fFacCCInvoiceDate) & "'")
                 r = r + 1
                 isFACCCValid = False
             End If
         End If
-        If Fn_Validate_Client_Number(CStr(arr(i, 4))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, 4)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
+        
+        'Code client ?
+        If Fn_Validate_Client_Number(CStr(arr(i, fFacCCCodeClient))) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, fFacCCCodeClient)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
             r = r + 1
             isFACCCValid = False
         End If
-        If arr(i, 5) <> "Paid" And arr(i, 5) <> "Unpaid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Status (Paid or Unpaid)
+        If arr(i, fFacCCStatus) <> "Paid" And arr(i, fFacCCStatus) <> "Unpaid" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        If IsDate(CDate(arr(i, 7))) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date due '" & arr(i, 7) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Date due
+        If IsDate(CDate(arr(i, fFacCCDueDate))) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date due '" & arr(i, fFacCCDueDate) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        If IsNumeric(arr(i, 8)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Total
+        If IsNumeric(arr(i, fFacCCTotal)) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, fFacCCTotal) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        If IsNumeric(arr(i, 9)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Encaissé à date
+        If IsNumeric(arr(i, fFacCCTotalPaid)) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, fFacCCTotalPaid) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        If IsNumeric(arr(i, 10)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
+        
+        'Régularisation à date
+        If IsNumeric(arr(i, fFacCCTotalRegul)) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant régularisé à date '" & arr(i, fFacCCTotalRegul) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        'PLUG pour s'assurer que le solde impayé est belt et bien aligner sur le total et $ payé à date
-        If arr(i, 10) <> arr(i, 8) - arr(i, 9) Then
-            arr(i, 10) = arr(i, 8) - arr(i, 9)
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & ", j'ai ajusté le solde de la facture à " & Format$(arr(i, 8), "###,##0.00 $") & "'")
+        
+        'Solde à recevoir
+        If IsNumeric(arr(i, fFacCCBalance)) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, fFacCCBalance) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
-        If IsNumeric(arr(i, 11)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'âge (jours) de la facture '" & arr(i, 8) & "' de la facture '" & Inv_No & "' est INVALIDE")
-            r = r + 1
-            isFACCCValid = False
-       End If
-        If arr(i, 10) = 0 And arr(i, 5) = "Unpaid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
+        
+        'PLUG pour s'assurer que le solde impayé est bel et bien aligné sur le total moins le payé à date - les régularisations
+'        If arr(i, fFacCCBalance) <> arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) Then
+        If arr(i, fFacCCBalance) <> arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul) Then
+'            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & _
+'                    ", le solde à recevoir est erroné, soit " & Format$(arr(i, fFacCCBalance), "###,##0.00 $") & "' vs. " & _
+'                    "'" & Format$(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid), "###,##0.00 $") & "'")
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & _
+                    ", le solde à recevoir est erroné, soit " & Format$(CCur(arr(i, fFacCCBalance)), "###,##0.00 $") & "' vs. " & _
+                    "'" & Format$(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul), "###,##0.00 $") & "'")
             r = r + 1
             isFACCCValid = False
         End If
-        If arr(i, 10) <> 0 And arr(i, 5) = "Paid" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, 5) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, 10), "#,##0.00 $") & " est INVALIDE")
+        
+        'Le statut est-il exact
+        If arr(i, fFacCCBalance) = 0 And arr(i, fFacCCStatus) = "Unpaid" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, fFacCCBalance), "#,##0.00 $") & " est INVALIDE")
+            r = r + 1
+            isFACCCValid = False
+        End If
+        If arr(i, fFacCCBalance) <> 0 And arr(i, fFacCCStatus) = "Paid" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, fFacCCBalance), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
             isFACCCValid = False
         End If
         If invType = "C" Then
-            totals(1, 1) = totals(1, 1) + arr(i, 8)
-            totals(2, 1) = totals(2, 1) + arr(i, 9)
-            totals(3, 1) = totals(3, 1) + arr(i, 10)
+            totals(1, 1) = totals(1, 1) + arr(i, fFacCCTotal)
+            totals(2, 1) = totals(2, 1) + arr(i, fFacCCTotalPaid)
+            totals(3, 1) = totals(3, 1) + arr(i, fFacCCTotalRegul)
+            totals(4, 1) = totals(4, 1) + arr(i, fFacCCBalance)
             nbFactC = nbFactC + 1
         Else
-            totals(1, 2) = totals(1, 2) + arr(i, 8)
-            totals(2, 2) = totals(2, 2) + arr(i, 9)
-            totals(3, 2) = totals(3, 2) + arr(i, 10)
+            totals(1, 2) = totals(1, 2) + arr(i, fFacCCTotal)
+            totals(2, 2) = totals(2, 2) + arr(i, fFacCCTotalPaid)
+            totals(3, 2) = totals(3, 2) + arr(i, fFacCCTotalRegul)
+           totals(4, 2) = totals(4, 2) + arr(i, fFacCCBalance)
             nbFactAC = nbFactAC + 1
         End If
     Next i
@@ -1919,25 +1869,32 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Total des factures         : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left(totals(1, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(1, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Montants encaissés à date : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Montants encaissés à date  : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left(totals(2, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(2, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Solde à recevoir          : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Montant régularisé à date  : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.COLOR = vbRed
     rng.Characters(InStr(rng.Value, Left(totals(3, 1), 1)), 15).Font.Bold = True
+    r = r + 1
+    
+    'Un peu de couleur
+    Set rng = wsOutput.Range("B" & r)
+    rng.Value = "       Solde à recevoir           : " & Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Characters(InStr(rng.Value, Left(totals(4, 1), 1)), 15).Font.COLOR = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals(4, 1), 1)), 15).Font.Bold = True
     r = r + 2
-    soldeComptesClients = totals(3, 1)
+    soldeComptesClients = totals(4, 1)
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
@@ -3002,7 +2959,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3265 'What is the last TECID analyzed ?
+    lastTECIDReported = 3323 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3750,15 +3707,18 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
         
         Case "wshFAC_Comptes_Clients"
             With wshFAC_Comptes_Clients
-                .Range("A2:B" & lastUsedRow & ", " & _
-                       "D2:G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C3:C" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("H3:J" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("B3:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("G3:G" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("H3:J" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("J3").formula = "=H3-I3"
-                .Range("K3").formula = "=NOW()-G3"
+                .Range(.Cells(3, fFacCCInvNo), .Cells(lastUsedRow, fFacCCInvoiceDate)).HorizontalAlignment = xlCenter
+                .Range(.Cells(3, fFacCCCodeClient), .Cells(lastUsedRow, fFacCCDueDate)).HorizontalAlignment = xlCenter
+                .Range(.Cells(3, fFacCCCustomer), .Cells(lastUsedRow, fFacCCCustomer)).HorizontalAlignment = xlLeft
+                .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).HorizontalAlignment = xlRight
+                .Range(.Cells(3, fFacCCInvoiceDate), .Cells(lastUsedRow, fFacCCInvoiceDate)).NumberFormat = "yyyy-mm-dd"
+                .Range(.Cells(3, fFacCCDueDate), .Cells(lastUsedRow, fFacCCDueDate)).NumberFormat = "yyyy-mm-dd"
+                .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).NumberFormat = "###,##0.00 $"
+                
+'                .Cells(3, fFacCCBalance).formula = "=H3-I3"
+                .Cells(3, fFacCCBalance).formula = "=H3-I3+J3"
+                .Cells(3, fFacCCDaysOverdue).formula = "=NOW()-G3"
+                
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         

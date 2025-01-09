@@ -120,25 +120,27 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim montantEntete As Currency, totalEntêteCC As Currency
     Dim i As Long
     For i = 3 To lastRowEntete
-        facture = wsEntete.Cells(i, 1).Value
-        montantEntete = wsEntete.Cells(i, "U").Value
+        facture = wsEntete.Cells(i, fFacEInvNo).Value
+        montantEntete = wsEntete.Cells(i, fFacEARTotal).Value
         totalEntêteCC = totalEntêteCC + montantEntete
         If Len(facture) > 0 Then dictEntete(facture) = montantEntete
     Next i
     
     'Lire wshFAC_Comptes_Clients
-    Dim montantCompte As Currency, totalComptesClients As Currency, montantPayé As Currency
+    Dim montantCompte As Currency, totalComptesClients As Currency
+    Dim montantPayé As Currency, montantRégul As Currency
     Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
     lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).row
     For i = 3 To lastRowComptes
-        facture = wsComptesClients.Cells(i, 1).Value
-        montantCompte = wsComptesClients.Cells(i, 8).Value
+        facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
+        montantCompte = wsComptesClients.Cells(i, fFacCCTotal).Value
         totalComptesClients = totalComptesClients + montantCompte
-        montantPayé = wsComptesClients.Cells(i, 9).Value
-        solde = wsComptesClients.Cells(i, 10).Value
-        If solde <> montantCompte - montantPayé Then Stop
+        montantPayé = wsComptesClients.Cells(i, fFacCCTotalPaid).Value
+        montantRégul = wsComptesClients.Cells(i, fFacCCTotalRegul).Value
+        solde = wsComptesClients.Cells(i, fFacCCBalance).Value
+        If solde <> montantCompte - montantPayé - montantRégul Then Stop
         soldeCC1 = soldeCC1 + solde
-        soldeCC2 = soldeCC2 + montantCompte - montantPayé
+        soldeCC2 = soldeCC2 + montantCompte - montantPayé - montantRégul
         If soldeCC1 <> soldeCC2 Then Stop
         If Len(facture) > 0 Then dictComptesClients(facture) = montantCompte
     Next i
@@ -159,7 +161,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
                 rowRapport = rowRapport + 1
             End If
         Else
-            ' Facture manquante dans wshFAC_Comptes_Clients
+            'Facture manquante dans wshFAC_Comptes_Clients
             wsRapport.Cells(rowRapport, 1).Value = fact
             wsRapport.Cells(rowRapport, 2).Value = dictEntete(fact)
             wsRapport.Cells(rowRapport, 3).Value = "Manquant"
@@ -168,7 +170,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         End If
     Next fact
     
-    ' Vérifier les factures manquantes dans wshFAC_Entête
+    'Vérifier les factures manquantes dans wshFAC_Entête
     For Each fact In dictComptesClients.keys
         If Not dictEntete.Exists(fact) Then
             wsRapport.Cells(rowRapport, 1).Value = fact

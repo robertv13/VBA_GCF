@@ -71,6 +71,22 @@ Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
     [_Last]
 End Enum
 
+Public Enum CC_Régularisations
+    [_First] = 1
+    fREGULRegulID = [_First]
+    fREGULInvNo
+    fREGULDate
+    fREGULClientID
+    fREGULClientNom
+    fREGULHono
+    fREGULFrais
+    fREGULTPS
+    fREGULTVQ
+    fREGULDescription
+    fREGULTimeStamp
+    [_Last]
+End Enum
+
 Public Enum DEB_Récurrent
     [_First] = 1
     fDebRNoDebRec = [_First]
@@ -145,6 +161,7 @@ Public Enum FAC_Comptes_Clients
     fFacCCDueDate
     fFacCCTotal
     fFacCCTotalPaid
+    fFacCCTotalRegul
     fFacCCBalance
     fFacCCDaysOverdue
     [_Last]
@@ -269,31 +286,6 @@ Public Enum GL_Trans
     fGlTCrédit
     fGlTAutreRemarque
     fGlTTimeStamp
-    [_Last]
-End Enum
-
-Public Enum REGUL_Détails
-    [_First] = 1
-    fREGULDRegulID = [_First]
-    fREGULDFactNo
-    fREGULDDate
-    fREGULDHono
-    fREGULDFrais
-    fREGULDTPS
-    fREGULDTVQ
-    fREGULDTimeStamp
-    [_Last]
-End Enum
-
-Public Enum REGUL_Entête
-    [_First] = 1
-    fREGULERegulID = [_First]
-    fREGULEDate
-    fREGULEClientID
-    fREGULEClientNom
-    fREGULETotal
-    fREGULENotes
-    fREGULETimeStamp
     [_Last]
 End Enum
 

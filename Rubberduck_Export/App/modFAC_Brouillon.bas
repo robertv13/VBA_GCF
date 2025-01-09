@@ -563,13 +563,13 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
         'Effacer les données de la dernière utilisation
-        ws.Range("AM10:AM14").ClearContents
-        ws.Range("AM10").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        ws.Range("AM6:AM10").ClearContents
+        ws.Range("AM6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
         Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
-        ws.Range("AM11").Value = rngData.Address
+        ws.Range("AM7").Value = rngData.Address
         
         'Définir le range des critères
         Dim rngCriteria As Range
@@ -583,15 +583,14 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
             .Range("AN3").Value = ""
         End If
         .Range("AO3").Value = isDeleted
-        .Range("AM12").Value = rngCriteria.Address
-        ws.Range("AM12").Value = rngCriteria.Address
+        .Range("AM8").Value = rngCriteria.Address
         
         'Définir le range des résultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = ws.Range("AQ1").CurrentRegion
         rngResult.offset(2, 0).Clear
         Set rngResult = ws.Range("AQ2:BF2")
-        ws.Range("AM13").Value = rngResult.Address
+        .Range("AM9").Value = rngResult.Address
         
         rngData.AdvancedFilter _
                     action:=xlFilterCopy, _
@@ -601,7 +600,7 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         
         'Combien avons-nous de lignes en résultat ?
         lastResultRow = .Cells(.Rows.count, "AQ").End(xlUp).row
-        ws.Range("AM14").Value = lastResultRow - 2 & " lignes"
+        .Range("AM10").Value = lastResultRow - 2 & " lignes"
 
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 3 Then
@@ -686,11 +685,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1199,7 +1198,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

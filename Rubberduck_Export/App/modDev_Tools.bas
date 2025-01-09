@@ -69,58 +69,6 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     
 End Sub
 
-Sub Build_File_Layouts() '2024-03-26 @ 14:35
-
-    Dim arr(1 To 20, 1 To 2) As Variant
-    Dim output(1 To 150, 1 To 5) As Variant
-    Dim r As Long
-    r = 0
-    r = r + 1: arr(r, 1) = "AR_Entête": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "BD_Clients": arr(r, 2) = "A1:Q1"
-    r = r + 1: arr(r, 1) = "Doc_ConditionalFormatting": arr(r, 2) = "A1:E1"
-    r = r + 1: arr(r, 1) = "Doc_Formules": arr(r, 2) = "A1:H1"
-    r = r + 1: arr(r, 1) = "Doc_NamedRanges": arr(r, 2) = "A1:B1"
-    r = r + 1: arr(r, 1) = "Doc_Subs&Functions": arr(r, 2) = "A1:G1"
-    r = r + 1: arr(r, 1) = "ENC_Entête": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "ENC_Détail": arr(r, 2) = "A3:F3"
-    r = r + 1: arr(r, 1) = "FAC_Entête": arr(r, 2) = "A3:T3"
-    r = r + 1: arr(r, 1) = "FAC_Détails": arr(r, 2) = "A3:G3"
-    r = r + 1: arr(r, 1) = "GL_Trans": arr(r, 2) = "A1:J1"
-    r = r + 1: arr(r, 1) = "GL_EJ_Récurrente": arr(r, 2) = "C1:J1"
-    r = r + 1: arr(r, 1) = "Invoice List": arr(r, 2) = "A2:J2"
-    r = r + 1: arr(r, 1) = "TEC_Local": arr(r, 2) = "A2:P2"
-    r = 1
-    Dim i As Long, colNo As Long
-    For i = 1 To UBound(arr, 1)
-        If arr(i, 1) = "" Then Exit For
-        Dim rng As Range: Set rng = Sheets(arr(i, 1)).Range(arr(i, 2))
-        colNo = 0
-        Dim cell As Range
-        For Each cell In rng
-            colNo = colNo + 1
-            output(r, 2) = arr(i, 1)
-            output(r, 3) = Chr(64 + colNo)
-            output(r, 4) = colNo
-            output(r, 5) = cell.Value
-            r = r + 1
-        Next cell
-    Next i
-    
-    'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = wshzDocTableLayouts
-    Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row 'Last Used Row
-    wsOutput.Range("A2:F" & lastUsedRow + 1).ClearContents
-    
-    wsOutput.Range("A2").Resize(r, 5).Value = output
-    
-    'Libérer la mémoire
-    Set rng = Nothing
-    Set cell = Nothing
-    Set wsOutput = Nothing
-    
-End Sub
-
 Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 16:24
 
     'Erase and create a new worksheet for differences
@@ -1201,8 +1149,12 @@ Sub Main() '2024-12-25 @ 15:27
     Dim outputRow As Long
     outputRow = 1
     
+    Application.ScreenUpdating = False
+    
     Call ListeEnumsGenerique("BD_Clients", 1, arrOut, outputRow)
     Call ListeEnumsGenerique("BD_Fournisseurs", 1, arrOut, outputRow)
+    
+    Call ListeEnumsGenerique("CC_Régularisations", 1, arrOut, outputRow)
     
     Call ListeEnumsGenerique("DEB_Récurrent", 1, arrOut, outputRow)
     Call ListeEnumsGenerique("DEB_Trans", 1, arrOut, outputRow)
@@ -1222,6 +1174,8 @@ Sub Main() '2024-12-25 @ 15:27
     
     Call ListeEnumsGenerique("TEC_Local", 2, arrOut, outputRow)
     Call ListeEnumsGenerique("TEC_TDB_Data", 1, arrOut, outputRow)
+    
+    Application.ScreenUpdating = True
     
     'Écriture des résultats (tableau) dans la feuille
     With wsOut

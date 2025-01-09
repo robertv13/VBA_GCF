@@ -104,14 +104,14 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If Target.CountLarge > 1 Then Exit Sub
         Call GL_BV_Effacer_Zone_Et_Shape
         Application.EnableEvents = False
-        Dim GLAcct As String, GLDescription As String, DateLimite As Date
+        Dim GLAcct As String, GLDescription As String, dateLimite As Date
         GLAcct = CStr(Range("D" & Target.row).Value)
         GLDescription = Range("E" & Target.row).Value
-        DateLimite = Format$(Range("J1").Value, wshAdmin.Range("B1").Value)
+        dateLimite = Format$(Range("J1").Value, wshAdmin.Range("B1").Value)
         wshGL_BV.Range("B10").Value = 0
         Range("T2").Value = "Toutes les dates"
         'Display all transactions for the selected G/L
-        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, DateLimite)
+        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, dateLimite)
         Application.EnableEvents = True
     End If
     
@@ -190,13 +190,15 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").Value = Range("J1").Value
 '        Range("L2").value = ""
         
-        Call GL_Trial_Balance_Build(Range("J1").Value)
+        Dim ws As Worksheet
+        Set ws = wshGL_BV
+        Call GL_Trial_Balance_Build(ws, Range("J1").Value)
         
         Application.EnableEvents = True
     End If

@@ -16,6 +16,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = wshFAC_Comptes_Clients
     Dim wsPaiements As Worksheet: Set wsPaiements = wshENC_Détails
+    Dim wsRégularisations As Worksheet: Set wsRégularisations = wshCC_Régularisations
     
     'Utilisation de la même feuille
     Dim rngResultat As Range
@@ -72,7 +73,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     
     Dim client As String, numFacture As String
     Dim dateFacture As Date, dateDue As Date
-    Dim montantFacture As Currency, montantPaye As Currency, montantRestant As Currency
+    Dim montantFacture As Currency, montantPaye As Currency, montantRegul As Currency, montantRestant As Currency
     Dim trancheAge As String
     Dim ageFacture As Long, i As Long, r As Long
     
@@ -81,27 +82,30 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     r = 8
     For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
-        numFacture = CStr(rngFactures.Cells(i, 1).Value)
+        numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).Value)
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
         End If
+        
         'Est-ce que la facture est à l'intérieur de la date limite ?
-        dateFacture = rngFactures.Cells(i, 2).Value
-        If rngFactures.Cells(i, 2).Value > CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
-            Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, 2).Value & " .vs. " & wshCAR_Liste_Agée.Range("H4").Value
+        dateFacture = rngFactures.Cells(i, fFacCCInvoiceDate).Value
+        If rngFactures.Cells(i, fFacCCInvoiceDate).Value > CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
+            Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, fFacCCInvoiceDate).Value & " .vs. " & wshCAR_Liste_Agée.Range("H4").Value
             GoTo Next_Invoice
         End If
         
-        client = rngFactures.Cells(i, 4).Value
+        client = rngFactures.Cells(i, fFacCCCodeClient).Value
         'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        dateDue = rngFactures.Cells(i, 7).Value
-        montantFacture = CCur(rngFactures.Cells(i, 8).Value)
+        dateDue = rngFactures.Cells(i, fFacCCDueDate).Value
+        montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).Value)
         
-        'Obtenir les paiemnets pour cette facture
-        montantPaye = CCur(Application.WorksheetFunction.SumIf(wsPaiements.Range("B:B"), numFacture, wsPaiements.Range("E:E")))
-        montantRestant = montantFacture - montantPaye
+        'Obtenir les paiements pour cette facture
+        montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
+        montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
+        
+        montantRestant = montantFacture - montantPaye + montantRegul
         
         'Exclus les soldes de facture à 0,00 $ SI ET SEULMENT SI F4 = "NON"
         If UCase(wshCAR_Liste_Agée.Range("F4").Value) = "NON" And montantRestant = 0 Then
@@ -125,7 +129,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
                 trancheAge = "Non défini"
         End Select
         
-        Dim ngPaiements As Range
+        Dim rngPaiements As Range
         Dim RowOffset As Long
         Dim tableau As Variant
         'Ajouter les données au dictionnaire en fonction du niveau de détail
@@ -159,7 +163,6 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).Value = dateFacture
                 wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wshAdmin.Range("B1").Value
-'               If Len(numFacture) = 8 And numFacture >= "24-24650" Then Stop
                 wshCAR_Liste_Agée.Cells(r, 5).Value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -194,20 +197,44 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
                 
                 'Transactions de paiements par la suite
                 Dim rngPaiementsAssoc As Range
-                Dim firstAddress As String
+                Dim pmtFirstAddress As String
                 'Obtenir tous les paiements pour la facture
                 Set rngPaiementsAssoc = wsPaiements.Range("B:B").Find(numFacture, LookIn:=xlValues, LookAt:=xlWhole)
                 If Not rngPaiementsAssoc Is Nothing Then
-                    firstAddress = rngPaiementsAssoc.Address
-                        Do
-                        r = r + 1
-                        wshCAR_Liste_Agée.Cells(r, 2).Value = client
-                        wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
-                        wshCAR_Liste_Agée.Cells(r, 4).Value = "Paiement"
-                        wshCAR_Liste_Agée.Cells(r, 5).Value = rngPaiementsAssoc.offset(0, 2).Value
-                        wshCAR_Liste_Agée.Cells(r, 6).Value = -rngPaiementsAssoc.offset(0, 3).Value ' Montant du paiement
+                    pmtFirstAddress = rngPaiementsAssoc.Address
+                    Do
+                        If rngPaiementsAssoc.offset(0, 2).Value <= CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
+                            r = r + 1
+                            wshCAR_Liste_Agée.Cells(r, 2).Value = client
+                            wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
+                            wshCAR_Liste_Agée.Cells(r, 4).Value = "Paiement"
+                            wshCAR_Liste_Agée.Cells(r, 5).Value = rngPaiementsAssoc.offset(0, 2).Value
+                            wshCAR_Liste_Agée.Cells(r, 6).Value = -rngPaiementsAssoc.offset(0, 3).Value 'Montant du paiement
+                        End If
                         Set rngPaiementsAssoc = wsPaiements.Columns("B:B").FindNext(rngPaiementsAssoc)
-                    Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
+                    Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> pmtFirstAddress
+                End If
+                'Transactions de régularisations par la suite
+                Dim rngRégularisationAssoc As Range
+                Dim regulFirstAddress As String
+                'Obtenir toutes les régularisations pour la facture
+                Set rngRégularisationAssoc = wsRégularisations.Range("B:B").Find(numFacture, LookIn:=xlValues, LookAt:=xlWhole)
+                If Not rngRégularisationAssoc Is Nothing Then
+                    regulFirstAddress = rngRégularisationAssoc.Address
+                    Do
+                        If rngRégularisationAssoc.offset(0, 1).Value <= CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
+                            r = r + 1
+                            wshCAR_Liste_Agée.Cells(r, 2).Value = client
+                            wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
+                            wshCAR_Liste_Agée.Cells(r, 4).Value = "Régularisation"
+                            wshCAR_Liste_Agée.Cells(r, 5).Value = rngRégularisationAssoc.offset(0, 1).Value
+                            wshCAR_Liste_Agée.Cells(r, 6).Value = rngRégularisationAssoc.offset(0, 4).Value + _
+                                rngRégularisationAssoc.offset(0, 5).Value + _
+                                rngRégularisationAssoc.offset(0, 6).Value + _
+                                rngRégularisationAssoc.offset(0, 7).Value
+                        End If
+                        Set rngRégularisationAssoc = wsRégularisations.Columns("B:B").FindNext(rngRégularisationAssoc)
+                    Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
                 End If
         End Select
 
