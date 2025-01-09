@@ -107,6 +107,8 @@ End Sub
 
 Sub CM_Update_External_GCF_BD_Entrée(action As String)
 
+    On Error GoTo ErrorHandler
+    
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", action, 0)
     
     Application.ScreenUpdating = False
@@ -159,7 +161,6 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
             foundCell.Offset(0, -1).Value = ufClientMF.txtNomClient.Value
             foundCell.Offset(0, 0).Value = ufClientMF.txtCodeClient.Value
             foundCell.Offset(0, 1).Value = ufClientMF.txtNomClientSysteme.Value
-            
             foundCell.Offset(0, 2).Value = ufClientMF.txtContactFact.Value
             foundCell.Offset(0, 3).Value = ufClientMF.txtTitreContact.Value
             foundCell.Offset(0, 4).Value = ufClientMF.txtCourrielFact.Value
@@ -181,8 +182,9 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
 
     'Ferme ET sauvegarde le fichier Excel
     wb.Close SaveChanges:=True
-    
-    'Nettoyer les objets
+
+CleanUp:
+    'Nettoyer les ressources
     Set foundCell = Nothing
     Set ws = Nothing
     Set wb = Nothing
@@ -190,11 +192,18 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
     'Is the file really modified on disk ?
     Call CM_Verify_DDM(destinationFileName)
     
+    'Restauration des paramètres Excel
     Application.Visible = True
     Application.ScreenUpdating = True
     
     Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
     
+    Exit Sub
+    
+ErrorHandler:
+    MsgBox "Erreur: " & Err.Description, vbCritical
+    Resume CleanUp
+
 End Sub
 
 'Procédure remplacée par CM_Update_External_GCF_BD_Entrée - 2024-08-23 - Problème avec ADO...
@@ -367,24 +376,24 @@ Sub CM_Add_SearchColumn()
 
     With ufClientMF.cmbSearchColumn
         .Clear
-        .AddItem "Client_ID"
+        .AddItem "ClientID"
         .AddItem "ClientNom"
         .AddItem "NomCLientSystème"
         .AddItem "ContactFacturation"
         .AddItem "TitreContactFacturation"
         .AddItem "CourrielFacturation"
-        .AddItem "Adresse_1"
-        .AddItem "Adresse_2"
+        .AddItem "Adresse1"
+        .AddItem "Adresse2"
         .AddItem "Ville"
         .AddItem "Province"
         .AddItem "CodePostal"
         .AddItem "Pays"
-        .AddItem "Référé par"
-        .AddItem "Fin d'année"
+        .AddItem "RéféréPar"
+        .AddItem "FinAnnée"
         .AddItem "Comptable"
-        .AddItem "Notaire/Avocat"
+        .AddItem "NotaireAvocat"
         
-        .Value = "Client_ID"
+        .Value = "ClientID"
     End With
     
     ufClientMF.EnableEvents = True

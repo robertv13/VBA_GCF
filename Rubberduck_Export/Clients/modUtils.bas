@@ -5,9 +5,8 @@ Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (By
 
 Sub CM_Log_Activities(moduleProcName As String, param1 As String, Optional ByVal startTime As Double = 0) '2024-08-22 @ 05:48
 
-    Dim ms As String
-    
     'Ajoute les centièmes de secondes à la chaîne de temps
+    Dim ms As String
     ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les centièmes de secondes sous forme de texte
     
     Dim currentTime As String
@@ -29,43 +28,37 @@ Sub CM_Log_Activities(moduleProcName As String, param1 As String, Optional ByVal
     
     Open logFile For Append As #fileNum
     
-    Dim moduleName As String, procName As String
-    If InStr(moduleProcName, ":") Then
-        moduleName = Left(moduleProcName, InStr(moduleProcName, ":") - 1)
-        procName = Right(moduleProcName, Len(moduleProcName) - InStr(moduleProcName, ":"))
-    Else
-        moduleName = moduleProcName
-        procName = ""
-    End If
-    
+'    Dim moduleName As String, procName As String
+'    If InStr(moduleProcName, ":") Then
+'        moduleName = Left(moduleProcName, InStr(moduleProcName, ":") - 1)
+'        procName = Right(moduleProcName, Len(moduleProcName) - InStr(moduleProcName, ":"))
+'    Else
+'        moduleName = moduleProcName
+'        procName = ""
+'    End If
+'
     If startTime = 0 Then
         startTime = Timer 'Start timing
         Print #fileNum, currentTime & " | " & _
-                        ThisWorkbook.Name & " | " & _
                         Fn_Get_Windows_Username & " | " & _
-                        moduleName & " | " & _
-                        procName & " | " & _
-                        "" & " | " & _
+                        ThisWorkbook.Name & " | " & _
+                        moduleProcName & " | " & _
                         param1
                         
     ElseIf startTime <= 0 Then 'Log intermédiaire
         Print #fileNum, currentTime & " | " & _
-                        ThisWorkbook.Name & " | " & _
                         Fn_Get_Windows_Username & " | " & _
-                        moduleName & " | " & _
-                        procName & " | " & _
+                        ThisWorkbook.Name & " | " & _
+                        moduleProcName & " | " & _
                         "checkPoint" & " | " & _
                         param1
     Else
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, currentTime & " | " & _
-                        ThisWorkbook.Name & " | " & _
                         Fn_Get_Windows_Username & " | " & _
-                        moduleName & " | " & _
-                        procName & " (sortie)" & " | " & _
-                        Format(elapsedTime, "#0.0000") & " secondes | " & _
-                        param1 & vbCrLf
+                        ThisWorkbook.Name & " | " & _
+                        moduleProcName & " = '" & Format$(elapsedTime, "#0.0000") & " secondes" & "'"
     End If
     
     Close #fileNum
@@ -142,7 +135,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
 
     'Requête pour trouver la valeur maximale pour les codes de 1 à 999
     Dim sqlQuery As String
-    sqlQuery = "SELECT MAX(Val(Client_ID)) AS MaxSmallCodes FROM [" & strSheet & "] WHERE Val(Client_ID) >= 1 AND Val(Client_ID) <= 999"
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxSmallCodes FROM [" & strSheet & "] WHERE Val(ClientID) >= 1 AND Val(ClientID) <= 999"
     Dim rs As Object
     Set rs = cn.Execute(sqlQuery)
 
@@ -155,7 +148,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     rs.Close
 
     'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
-    sqlQuery = "SELECT MAX(Val(Client_ID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(Client_ID) >= 4 AND Val(Client_ID) >= 1000 AND Val(Client_ID) < 2000"
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 1000 AND Val(ClientID) < 2000"
     Set rs = cn.Execute(sqlQuery)
 
     If Not rs.EOF Then
@@ -217,12 +210,12 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
             'Boucle sur les feuilles à vérifier (exemple: "Sheet1", "Sheet2")
             Dim feuilleRechercher As Variant
             Dim plageRechercher As String, colName As String, feuilleName As String
-            For Each feuilleRechercher In Array("ENC_Entête|codeClient", _
+            For Each feuilleRechercher In Array("ENC_Entête|CodeClient", _
                                                 "FAC_Comptes_Clients|CodeClient", _
-                                                "FAC_Entête|Cust_ID", _
+                                                "FAC_Entête|CustID", _
                                                 "FAC_Projets_Détails|ClientID", _
                                                 "FAC_Projets_Entête|ClientID", _
-                                                "TEC_Local|Client_ID")
+                                                "TEC_Local|ClientID")
                 colName = Mid(feuilleRechercher, InStr(feuilleRechercher, "|") + 1)
                 feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
                 plageRechercher = feuilleName & "$"
