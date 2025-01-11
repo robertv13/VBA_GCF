@@ -137,7 +137,7 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
         rs.Fields(fREGULDescription - 1).Value = wshENC_Saisie.Range("F9").Value
         rs.Fields(fREGULTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     rs.Close
@@ -189,6 +189,8 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Update_Comptes_Clients_DB", 0)
     
+    Dim errMsg As String
+    
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
@@ -209,30 +211,30 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
     rs.Open strSQL, conn, 2, 3
-    If Not rs.EOF Then
+    If Not (rs.BOF Or rs.EOF) Then
+        Dim mntRegulTotal As Double
+        mntRegulTotal = CDbl(ufEncRégularisation.txtHonoraires.Value) + _
+                        CDbl(ufEncRégularisation.txtFraisDivers.Value) + _
+                        CDbl(ufEncRégularisation.txtTPS.Value) + _
+                        CDbl(ufEncRégularisation.txtTVQ.Value)
+
         'Mettre à jour Régularisation totale
-        rs.Fields(fFacCCTotalRegul - 1).Value = rs.Fields(fFacCCTotalRegul - 1).Value + _
-                                                CCur(ufEncRégularisation.txtHonoraires.Value) + _
-                                                CCur(ufEncRégularisation.txtFraisDivers.Value) + _
-                                                CCur(ufEncRégularisation.txtTPS.Value) + _
-                                                CCur(ufEncRégularisation.txtTVQ.Value)
+        rs.Fields(fFacCCTotalRegul - 1).Value = rs.Fields(fFacCCTotalRegul - 1).Value + mntRegulTotal
+        'Mettre à jour le solde de la facture
+        rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCBalance - 1).Value + mntRegulTotal
         'Mettre à jour Status
-        If rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value = 0 Then
+        If rs.Fields(fFacCCBalance - 1).Value = 0 Then
             rs.Fields(fFacCCStatus - 1).Value = "Paid"
         Else
             rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
         End If
-        'Mettre à jour le solde de la facture
-        rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value
-        rs.update
+        rs.Update
     Else
         MsgBox "Problème avec la facture '" & Inv_No & "'" & vbNewLine & vbNewLine & _
                "Contactez le développeur SVP", vbCritical, "Impossible de trouver la facture dans Comptes_Clients"
     End If
     'Update the recordset (create the record)
     rs.Close
-    
-Clean_Exit:
     
     'Close recordset and connection
     Set rs = Nothing
@@ -351,7 +353,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtHonoraires.Value)
             rs.Fields(fGlTAutreRemarque - 1).Value = desc
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     End If
     
     'Crédit - Frais Divers
@@ -367,7 +369,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtFraisDivers.Value)
             rs.Fields(fGlTAutreRemarque - 1).Value = desc
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     End If
     
     'Crédit - TPS
@@ -383,7 +385,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtTPS.Value)
             rs.Fields(fGlTAutreRemarque - 1).Value = desc
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     End If
     
     'Crédit - TVQ
@@ -399,7 +401,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtTVQ.Value)
             rs.Fields(fGlTAutreRemarque - 1).Value = desc
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     End If
     
     'Débit = Total de Honoraires, Frais Divers, TPS & TVQ
@@ -419,7 +421,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
         rs.Fields(fGlTCrédit - 1).Value = -regulTotal
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next

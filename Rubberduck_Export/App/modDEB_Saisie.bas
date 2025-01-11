@@ -134,7 +134,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                                               - wshDEB_Saisie.Range("M" & l).Value)
             rs.Fields(fDebTAutreRemarque - 1).Value = ""
             rs.Fields(fDebTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     Next l
     
     'Close recordset and connection
@@ -408,7 +408,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
             rs.Fields(fDebRTVQ - 1).Value = wshDEB_Saisie.Range("K" & l).Value
             rs.Fields(fDebRCréditTPS - 1).Value = wshDEB_Saisie.Range("L" & l).Value
             rs.Fields(fDebRCréditTVQ - 1).Value = wshDEB_Saisie.Range("M" & l).Value
-        rs.update
+        rs.Update
     Next l
     
     'Close recordset and connection

@@ -579,7 +579,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     
 End Sub
 
-Sub Erase_And_Create_Worksheet(SheetName As String)
+Sub Erase_And_Create_Worksheet(sheetName As String)
 
     Dim ws As Worksheet
     Dim wsExists As Boolean
@@ -587,7 +587,7 @@ Sub Erase_And_Create_Worksheet(SheetName As String)
     'Check if the worksheet exists
     wsExists = False
     For Each ws In ThisWorkbook.Worksheets
-        If ws.Name = SheetName Then
+        If ws.Name = sheetName Then
             wsExists = True
             Exit For
         End If
@@ -602,7 +602,7 @@ Sub Erase_And_Create_Worksheet(SheetName As String)
 
     'Create a new worksheet with the specified name
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
-    ws.Name = SheetName
+    ws.Name = sheetName
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -893,15 +893,15 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     Dim rowToMove As Range
 
     'Move completed item ($D = a) to the bottom of the list
-    Dim i As Long, LastRow As Long
+    Dim i As Long, lastRow As Long
     i = 2
 
     Application.EnableEvents = False
     
     While ws.Range("D2").Value = "a"
         Set rowToMove = tbl.ListRows(1).Range
-        LastRow = tbl.ListRows.count
-        rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(LastRow + 1)
+        lastRow = tbl.ListRows.count
+        rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(lastRow + 1)
         tbl.ListRows(1).Delete
     Wend
 
@@ -1823,10 +1823,10 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     
 End Sub
 
-Sub Log_Analysis()
+Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").Value & Application.PathSeparator & "LogMainApp.txt"
+    logFile = wshAdmin.Range("F5").Value & Application.PathSeparator & "LogMainApp.log"
     
     Dim FileNum As Integer
     FileNum = FreeFile
@@ -1917,4 +1917,57 @@ Sub Log_Analysis()
     Close #FileNum
     
 End Sub
+
+Sub shp_GetLastCellUsedRangeInAllSheets_Click()
+
+    Call GetLastCellUsedRangeInAllSheets
+
+End Sub
+
+Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
+    
+    Dim ws As Worksheet
+    Dim sheetNames As Variant
+    Dim sheetName As Variant
+    
+    Dim lastRow As Long, lastCol As Long
+    Dim cell As Range
+    
+    'Spécifiez les noms des feuilles de calcul
+    sheetNames = Array("BD_Clients", "BD_Fournisseurs", "CC_Régularisations", "DEB_Trans", "DEB_Récurrent", _
+                       "ENC_Détails", "ENC_Entête", "FAC_Comptes_Clients", "FAC_Détails", "FAC_Entête", _
+                       "FAC_Projets_Détails", "FAC_Projets_Entête", "FAC_Sommaire_Taux", "GL_EJ_Récurrente", _
+                       "GL_Trans", "TEC_Local", "TEC_TDB_Data")
+
+    For Each sheetName In sheetNames
+        Set ws = ThisWorkbook.Worksheets(sheetName)
+            'Trouver la dernière ligne utilisée
+            lastRow = ws.Cells.Find(What:="*", _
+                                    After:=ws.Cells(1, 1), _
+                                    LookAt:=xlPart, _
+                                    LookIn:=xlFormulas, _
+                                    SearchOrder:=xlByRows, _
+                                    SearchDirection:=xlPrevious, _
+                                    MatchCase:=False).row
+                                    
+            'Trouver la dernière colonne utilisée
+            lastCol = ws.Cells.Find(What:="*", _
+                                    After:=ws.Cells(1, 1), _
+                                    LookAt:=xlPart, _
+                                    LookIn:=xlFormulas, _
+                                    SearchOrder:=xlByColumns, _
+                                    SearchDirection:=xlPrevious, _
+                                    MatchCase:=False).Column
+                                    
+            Debug.Print ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).Value
+    '        ws.Range(ws.Cells(lastRow + 1, 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
+    '        ws.Range(ws.Cells(1, lastCol + 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
+    Next sheetName
+
+    MsgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
+           "Voir fenêtre Exécution", vbOKOnly, _
+           "Vérification des dernières lignes de tables"
+    
+End Sub
+
 

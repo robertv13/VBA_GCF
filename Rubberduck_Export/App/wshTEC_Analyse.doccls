@@ -155,7 +155,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -164,7 +164,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -223,10 +223,10 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Application.EnableEvents = True
                 
                 Dim firstRow As Long: firstRow = totalRow + 1
-                Dim LastRow As Long, r As Long
+                Dim lastRow As Long, r As Long
                 r = firstRow
                 Do While ws.Range("A" & r).Value <> ""
-                    LastRow = r
+                    lastRow = r
                     r = r + 1
                 Loop
                 
@@ -236,8 +236,8 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 clientID = Fn_GetID_From_Client_Name(nomCLient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, LastRow, projetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, LastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
                 Do While ws.Range("J" & r).Value <> ""

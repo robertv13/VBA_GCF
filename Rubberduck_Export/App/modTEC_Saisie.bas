@@ -348,7 +348,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields(fTECDateSaisie - 1).Value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
             rs.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(True)
             rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
-            rs.update
+            rs.Update
             
             Call Log_Saisie_Heures("DELETE" & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                                     dateValue & " | " & _
@@ -382,17 +382,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Open strSQL, conn
             
             'Get the last used row
-            Dim LastRow As Long
+            Dim lastRow As Long
             If IsNull(rs.Fields("MaxID").Value) Then
                 'Handle empty table (assign a default value, e.g., 0)
-                LastRow = 0
+                lastRow = 0
             Else
-                LastRow = rs.Fields("MaxID").Value
+                lastRow = rs.Fields("MaxID").Value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
-            nextID = LastRow + 1
+            nextID = lastRow + 1
             
             ufSaisieHeures.txtTECID.Value = nextID
             saveLogTECID = nextID
@@ -422,7 +422,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             rs.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
             rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
             rs.Fields(fTECNoFacture - 1).Value = ""
-            rs.update
+            rs.Update
             
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("ADD    " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
@@ -472,7 +472,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         End If
     End If
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next
@@ -628,10 +628,10 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     End With
     
     'Manually add to listBox (because some tests have to be made)
-    Dim LastRow As Long
-    LastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
      
     'Variables initiales
     Dim totalHeures As Currency: totalHeures = 0
@@ -641,8 +641,8 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim i As Long, ColIndex As Long
     
     'Remplissage du listBox
-    If LastRow >= 3 Then
-        Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
+    If lastRow >= 3 Then
+        Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To rng.Rows.count
             With ufSaisieHeures.lsbHresJour
                 .AddItem rng.Cells(i, 1).Value
@@ -701,9 +701,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     DoEvents
     
-    LastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
-    If LastRow > 1 Then
-        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & LastRow)
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+    If lastRow > 1 Then
+        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
         totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
         totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     End If
@@ -763,9 +763,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriat
     ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
     
     'Last Row used in first column of result
-    Dim LastRow As Long
-    LastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
-    If LastRow < 3 Then GoTo Rien_Aujourdhui
+    Dim lastRow As Long
+    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
+    If lastRow < 3 Then GoTo Rien_Aujourdhui
         
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
@@ -775,7 +775,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriat
     
     'Manually add to listBox (because some tests have to be made)
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & LastRow)
+    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
      
     Dim i As Long, j As Long
     Dim totalHeures As Currency
@@ -823,10 +823,10 @@ Rien_Aujourdhui:
     
     DoEvents
     
-    LastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+    If lastRow > 1 Then
         Dim rngResult As Range
-        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & LastRow)
+        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
         totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
         totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     End If

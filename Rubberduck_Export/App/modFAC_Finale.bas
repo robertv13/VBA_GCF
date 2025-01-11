@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Finale"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub shp_FAC_Finale_Save_Click()
 
@@ -160,7 +160,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
     End With
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next
@@ -273,7 +273,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
             rs.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
         End With
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     Next r
     
     'Create Summary By Rates lines
@@ -291,7 +291,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
                     rs.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
                 End With
-                rs.update
+                rs.Update
         End If
     Next i
     
@@ -357,9 +357,9 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Long, LastRow As Long
+    Dim firstRow As Long, lastRow As Long
     firstRow = 44
-    LastRow = 48
+    lastRow = 48
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
@@ -379,7 +379,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     noFacture = wshFAC_Finale.Range("E28").Value
     Dim seq As Long
     Dim r As Long
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         'Add fields to the recordset before updating it
         If wshFAC_Brouillon.Range("R" & r).Value <> "" Then
             rs.AddNew
@@ -392,7 +392,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
-            rs.update
+            rs.Update
         End If
     Next r
     
@@ -420,9 +420,9 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Application.ScreenUpdating = False
     
     'Fees summary from wshFAC_Brouillon
-    Dim firstRow As Long, LastRow As Long
+    Dim firstRow As Long, lastRow As Long
     firstRow = 44
-    LastRow = 48
+    lastRow = 48
     
     'Get the first free row
     Dim firstFreeRow As Long
@@ -432,7 +432,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     noFacture = wshFAC_Finale.Range("E28").Value
     Dim seq As Long
     Dim i As Long
-    For i = firstRow To LastRow
+    For i = firstRow To lastRow
         If wshFAC_Brouillon.Range("R" & i).Value <> "" Then
             With wshFAC_Sommaire_Taux
                 .Range("A" & firstFreeRow).Value = noFacture
@@ -496,7 +496,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     End With
     
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next
@@ -548,9 +548,9 @@ nothing_to_update:
 
 End Sub
 
-Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Update Billed Status in DB
+Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB(" & firstRow & ", " & LastRow & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB(" & firstRow & ", " & lastRow & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -566,7 +566,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim r As Long, TECID As Long, SQL As String
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         If wshTEC_Local.Range("BB" & r).Value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
@@ -582,7 +582,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
             rs.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
             rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
             rs.Fields(fTECNoFacture - 1).Value = wshFAC_Brouillon.Range("O6").Value
-            rs.update
+            rs.Update
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
@@ -592,7 +592,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, LastRow As Long) 'Up
             Exit Sub
         End If
         'Update the recordset (create the record)
-        rs.update
+        rs.Update
         rs.Close
 next_iteration:
     Next r

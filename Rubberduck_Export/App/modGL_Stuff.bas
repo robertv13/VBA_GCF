@@ -136,7 +136,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
                 rs.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
                 timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 rs.Fields(fGlTTimeStamp - 1).Value = timeStamp
-            rs.update
+            rs.Update
 Nothing_to_Post:
     Next i
 
@@ -207,12 +207,12 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Dim topPosition As Double
 
     'Trouver la dernière ligne de la plage L4:T*
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Calculer les positions (Left & Top) du bouton
-    leftPosition = ws.Range("T" & LastRow).Left
-    topPosition = ws.Range("S" & LastRow).Top + (2 * ws.Range("S" & LastRow).Height)
+    leftPosition = ws.Range("T" & lastRow).Left
+    topPosition = ws.Range("S" & lastRow).Top + (2 * ws.Range("S" & lastRow).Height)
 
     ' Ajouter une Shape
     Set btn = ws.Shapes.AddShape(msoShapeRoundedRectangle, Left:=leftPosition, Top:=topPosition, _
@@ -249,8 +249,8 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     Application.EnableEvents = True
 
     'Trouver la dernière ligne de la plage M4:T*
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
     'Supprimer la shape
     On Error Resume Next

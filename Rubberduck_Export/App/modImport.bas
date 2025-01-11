@@ -624,24 +624,24 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     End If
 
     Dim dataRange As Range
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If LastRow > 1 Then
-        Set dataRange = ws.Range("A2:A" & LastRow)
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
+        Set dataRange = ws.Range("A2:A" & lastRow)
     End If
     
     'Enlever les lignes qui doivent être enlevées
     With ws
         .Range("A1").AutoFilter Field:=9, Criteria1:="=VRAI", Operator:=xlOr, Criteria2:=-1
         On Error Resume Next
-        .Rows("2:" & LastRow).SpecialCells(xlCellTypeVisible).Delete
+        .Rows("2:" & lastRow).SpecialCells(xlCellTypeVisible).Delete
         On Error GoTo 0
         .AutoFilterMode = False
     End With
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
         Set dataRange = ws.Range("A1").CurrentRegion
         Call ApplyWorksheetFormat(wshFAC_Projets_Détails, dataRange, 1)
     End If
@@ -706,20 +706,20 @@ Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
         ws.Range("A2").CopyFromRecordset recSet
     End If
 
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Enlever les lignes dont la valeur estDétruite est égale à VRAI / -1 - 2024-11-15 @ 07:53
     Dim i As Long
-    For i = LastRow To 2 Step -1
+    For i = lastRow To 2 Step -1
         If UCase(ws.Cells(i, "I")) = "VRAI" Or ws.Cells(i, "I") = -1 Then
             ws.Rows(i).Delete
         End If
     Next i
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
         Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
         Call modAppli_Utils.ApplyWorksheetFormat(wshFAC_Projets_Détails, rng, 1)
     End If
@@ -779,13 +779,13 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
         ws.Range("A2").CopyFromRecordset recSet
     End If
 
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Delete the rows that column (isDétruite) is set to TRUE
     Dim i As Long
-    If LastRow >= 2 Then
-        For i = LastRow To 2 Step -1
+    If lastRow >= 2 Then
+        For i = lastRow To 2 Step -1
             If UCase(ws.Cells(i, 26).Value) = "VRAI" Or _
                 ws.Cells(i, 26).Value = -1 Then
                 ws.Rows(i).Delete
@@ -794,8 +794,8 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     End If
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    LastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If LastRow > 1 Then
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
         Call modAppli_Utils.ApplyWorksheetFormat(ws, rng, 1)
     End If
@@ -1040,7 +1040,7 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", 0)
 
     Dim tbl As ListObject
-    Dim LastRow As Long
+    Dim lastRow As Long
     Dim lastCol As Long
     
     ' Trouver le tableau
@@ -1048,12 +1048,12 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     
     ' Déterminer la dernière ligne et colonne des nouvelles données
     With targetSheet
-        LastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
+        lastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
         lastCol = .Cells(tbl.Range.row, .Columns.count).End(xlToLeft).Column
     End With
     
     ' Redimensionner la plage du tableau
-    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(LastRow, lastCol))
+    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
     
     Call Log_Record("modImport:ResizeTable", startTime)
 

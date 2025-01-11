@@ -2,7 +2,7 @@ Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
 'Variables globales pour le module
-Dim LastRow As Long, lastResultRow As Long
+Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
 Public Const COULEUR_FEUILLE As Long = 14277081
 
@@ -43,15 +43,10 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
             If .Range("W" & i).Value <> 0 And _
                             Fn_Invoice_Is_Confirmed(.Range("R" & i).Value) = True Then
                 Application.EnableEvents = False
-'                wshENC_Saisie.Range("F" & rr).Value = .Range("Q" & i).Value
                 wshENC_Saisie.Range("F" & rr).Value = .Range("R" & i).Value
-'                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("R" & i).Value, wshAdmin.Range("B1").Value)
                 wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("S" & i).Value, wshAdmin.Range("B1").Value)
-'                wshENC_Saisie.Range("H" & rr).Value = .Range("S" & i).Value
                 wshENC_Saisie.Range("H" & rr).Value = .Range("T" & i).Value
-'                wshENC_Saisie.Range("I" & rr).Value = .Range("T" & i).Value
                 wshENC_Saisie.Range("I" & rr).Value = .Range("U" & i).Value + .Range("V" & i).Value
-'                wshENC_Saisie.Range("J" & rr).Value = .Range("U" & i).Value
                 wshENC_Saisie.Range("J" & rr).Value = .Range("W" & i).Value
                 Application.EnableEvents = True
                 rr = rr + 1
@@ -133,7 +128,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     Dim r As Integer
     For r = 3 To lastResultRow
 '        ws.Range("U" & r).Value = ws.Range("S" & r).Value - ws.Range("T" & r).Value
-        ws.Range("W" & r).Value = ws.Range("T" & r).Value - ws.Range("U" & r).Value - ws.Range("V" & r).Value
+        ws.Range("W" & r).Value = ws.Range("T" & r).Value - ws.Range("U" & r).Value + ws.Range("V" & r).Value
     Next r
 
     'libérer la mémoire
@@ -307,7 +302,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
         rs.Fields(fEncEAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00 $"))
         rs.Fields(fEncENotes - 1).Value = wshENC_Saisie.Range("F9").Value
     'Update the recordset (create the record)
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     rs.Close
@@ -381,7 +376,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
                 rs.Fields(fEncDPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
                 rs.Fields(fEncDPayAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00 $"))
             'Update the recordset (create the record)
-            rs.update
+            rs.Update
         End If
     Next r
     
@@ -427,7 +422,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
 
 End Sub
 
-Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Write to MASTER.xlsx
+Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", 0)
     
@@ -445,7 +440,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim r As Long
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         If wshENC_Saisie.Range("B" & r).Value = True And _
             wshENC_Saisie.Range("K" & r).Value <> 0 Then
             'Open the recordset for the specified invoice
@@ -472,7 +467,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
                 'Mettre à jour le solde de la facture
 '                rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value
                 rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value
-                rs.update
+                rs.Update
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
@@ -480,7 +475,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, LastRow As Integer) 'Writ
                 GoTo Clean_Exit
             End If
             'Update the recordset (create the record)
-            rs.update
+            rs.Update
             rs.Close
         End If
     Next r
@@ -498,7 +493,7 @@ Clean_Exit:
     
 End Sub
 
-Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, LastRow As Integer) '2024-08-22 @ 10:55
+Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", 0)
     
@@ -512,7 +507,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, LastRow As Integer) 
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim r As Integer
-    For r = firstRow To LastRow
+    For r = firstRow To lastRow
         Dim Inv_No As String
         Inv_No = CStr(wshENC_Saisie.Range("F" & r).Value)
         
@@ -605,7 +600,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields(fGlTDébit - 1).Value = montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    rs.update
+    rs.Update
     
     'Credit side
     rs.AddNew
@@ -624,7 +619,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields(fGlTCrédit - 1).Value = montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    rs.update
+    rs.Update
 
     'Close recordset and connection
     On Error Resume Next

@@ -36,10 +36,10 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     Dim r As Range
-    Set r = ws.Range("P4:P" & LastRow)
+    Set r = ws.Range("P4:P" & lastRow)
     On Error Resume Next
     r.Locked = True
     On Error GoTo 0

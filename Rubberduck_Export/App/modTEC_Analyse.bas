@@ -534,7 +534,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             rs.Fields(fFacPDHeures - 1).Value = CDbl(wshTEC_Analyse.Range("H" & l).Value)
             timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             rs.Fields(fFacPDTimeStamp - 1).Value = timeStamp
-        rs.update
+        rs.Update
     Next l
     
     'Close recordset and connection
@@ -589,7 +589,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
 End Sub
 
 Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
-                                                    SheetName As String, _
+                                                    sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
@@ -599,7 +599,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & SheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & sheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -682,7 +682,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
         rs.Fields(fFacPEestDetruite - 1).Value = 0 'Faux
         timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.Fields(fFacPETimeStamp - 1).Value = timeStamp
-    rs.update
+    rs.Update
     
     'Close recordset and connection
     On Error Resume Next
@@ -735,7 +735,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String,
 End Sub
 
 Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
-                                                   SheetName As String, _
+                                                   sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
@@ -745,7 +745,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
-    strSQL = "UPDATE [" & SheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
+    strSQL = "UPDATE [" & sheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
     cn.Execute strSQL
     
     'Close the connection
@@ -754,14 +754,14 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
     
 End Sub
 
-Sub Add_And_Modify_Checkbox(StartRow As Long, LastRow As Long)
+Sub Add_And_Modify_Checkbox(StartRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Define the range for the summary
     Dim summaryRange As Range
-    Set summaryRange = ws.Range(ws.Cells(StartRow, 10), ws.Cells(LastRow, 13)) 'Columns J to M
+    Set summaryRange = ws.Range(ws.Cells(StartRow, 10), ws.Cells(lastRow, 13)) 'Columns J to M
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -770,8 +770,8 @@ Sub Add_And_Modify_Checkbox(StartRow As Long, LastRow As Long)
     Dim checkBox As OLEObject
     With ws
         Set checkBox = .OLEObjects.Add(ClassType:="Forms.CheckBox.1", _
-                    Left:=.Cells(LastRow, 14).Left + 5, _
-                    Top:=.Cells(LastRow, 14).Top, Width:=80, Height:=16)
+                    Left:=.Cells(lastRow, 14).Left + 5, _
+                    Top:=.Cells(lastRow, 14).Top, Width:=80, Height:=16)
         
         'Modify checkbox properties
         With checkBox.Object

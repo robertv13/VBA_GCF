@@ -2,7 +2,7 @@ Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
 Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim LastRow As Long, lastResultRow As Long, resultRow As Long
+Dim lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub shp_FAC_Nouvelle_Facture_Click()
 
@@ -493,13 +493,13 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", 0)
     
-    Dim LastRow As Long
-    LastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "D").End(xlUp).row 'First line of data is at row 7
-    If LastRow > 6 Then
+    Dim lastRow As Long
+    lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "D").End(xlUp).row 'First line of data is at row 7
+    If lastRow > 6 Then
         Application.EnableEvents = False
-        wshFAC_Brouillon.Range("D7:I" & LastRow + 2).ClearContents
+        wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Application.EnableEvents = True
-        Call FAC_Brouillon_TEC_Remove_Check_Boxes(LastRow - 2)
+        Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
     End If
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", startTime)
@@ -685,11 +685,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1198,7 +1198,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

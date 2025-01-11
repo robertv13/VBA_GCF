@@ -529,7 +529,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         wsDest.Cells(rowNum, fFacCCTotal).Value = totalFact
         wsDest.Cells(rowNum, fFacCCTotalPaid).Value = recu
         wsDest.Cells(rowNum, fFacCCTotalRegul).Value = 0
-        wsDest.Cells(rowNum, fFacCCBalance).Value = totalFact - recu - regul
+        wsDest.Cells(rowNum, fFacCCBalance).Value = totalFact - recu + regul
         joursDue = DateDiff("d", dateDue, Date)
         wsDest.Cells(rowNum, fFacCCDaysOverdue).Value = joursDue
         rowNum = rowNum + 1

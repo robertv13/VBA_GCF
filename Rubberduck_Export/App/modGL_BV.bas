@@ -406,15 +406,15 @@ Sub GL_BV_Setup_And_Print()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", 0)
     
-    Dim LastRow As Long
-    LastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row + 2
-    If LastRow < 4 Then Exit Sub
+    Dim lastRow As Long
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row + 2
+    If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
-    Set printRange = wshGL_BV.Range("D1:G" & LastRow)
+    Set printRange = wshGL_BV.Range("D1:G" & lastRow)
     
     Dim pagesRequired As Long
-    pagesRequired = Int((LastRow - 1) / 60) + 1
+    pagesRequired = Int((lastRow - 1) / 60) + 1
     
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
@@ -445,15 +445,15 @@ Sub GL_BV_Setup_And_Print_Trans()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", 0)
     
-    Dim LastRow As Long
-    LastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).row
-    If LastRow < 4 Then Exit Sub
+    Dim lastRow As Long
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).row
+    If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
-    Set printRange = wshGL_BV.Range("L1:T" & LastRow)
+    Set printRange = wshGL_BV.Range("L1:T" & lastRow)
     
     Dim pagesRequired As Long
-    pagesRequired = Int((LastRow - 1) / 80) + 1
+    pagesRequired = Int((lastRow - 1) / 80) + 1
     
     Dim shp As Shape: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
     shp.Visible = msoFalse

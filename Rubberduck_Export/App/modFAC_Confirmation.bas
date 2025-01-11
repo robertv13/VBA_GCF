@@ -1014,7 +1014,7 @@ Sub MAJStatutFactureBD_MASTER(invoice As String)
     If Not rs.EOF Then
         'Update AC_ouC with 'C'
         rs.Fields(fFacEACouC - 1).Value = "C"
-        rs.update
+        rs.Update
     Else
         'Handle the case where the specified invoice is not found
         MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical

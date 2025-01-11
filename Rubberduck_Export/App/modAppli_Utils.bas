@@ -2959,7 +2959,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3325 'What is the last TECID analyzed ?
+    lastTECIDReported = 3372 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3013,15 +3013,15 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Set rngFAC_EntêteData = rngFAC_EntêteData.offset(2, 0).Resize(rngFAC_EntêteData.Rows.count - 2)
     
     'Calculer le nombre de lignes dans la plage
-    Dim LastRow As Long
-    LastRow = rngFAC_EntêteData.Rows.count
+    Dim lastRow As Long
+    lastRow = rngFAC_EntêteData.Rows.count
 
     ' Redimensionner le tableau pour contenir les données de 2 colonnes
 '    Dim arr() As Variant
-    ReDim arr(1 To LastRow, 1 To 2)
+    ReDim arr(1 To lastRow, 1 To 2)
 
     ' Remplir le tableau avec les valeurs des colonnes 1 et 3
-    For i = 1 To LastRow
+    For i = 1 To lastRow
         arr(i, 1) = rngFAC_EntêteData.Cells(i, 1).Value
         arr(i, 2) = rngFAC_EntêteData.Cells(i, 3).Value
     Next i
@@ -3714,10 +3714,6 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range(.Cells(3, fFacCCInvoiceDate), .Cells(lastUsedRow, fFacCCInvoiceDate)).NumberFormat = "yyyy-mm-dd"
                 .Range(.Cells(3, fFacCCDueDate), .Cells(lastUsedRow, fFacCCDueDate)).NumberFormat = "yyyy-mm-dd"
                 .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).NumberFormat = "###,##0.00 $"
-                
-'                .Cells(3, fFacCCBalance).formula = "=H3-I3"
-                .Cells(3, fFacCCBalance).formula = "=H3-I3+J3"
-                .Cells(3, fFacCCDaysOverdue).formula = "=NOW()-G3"
                 
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With

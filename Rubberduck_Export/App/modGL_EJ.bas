@@ -702,7 +702,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields(fGlTCrédit - 1).Value = wshGL_EJ.Range("I" & l).Value
             rs.Fields(fGlTAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.update
+        rs.Update
     Next l
     
     'Close recordset and connection
@@ -817,7 +817,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
             rs.Fields(fGlEjRDébit - 1).Value = wshGL_EJ.Range("H" & l).Value
             rs.Fields(fGlEjRCrédit - 1).Value = wshGL_EJ.Range("I" & l).Value
             rs.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
-        rs.update
+        rs.Update
     Next l
     
     'Close recordset and connection

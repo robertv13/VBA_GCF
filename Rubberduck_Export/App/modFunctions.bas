@@ -156,12 +156,12 @@ End Function
 Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColumn As Integer, returnColumn As Integer) As Variant
 
     'Définir la dernière ligne utilisée de la feuille
-    Dim LastRow As Long
-    LastRow = ws.Cells(ws.Rows.count, keyColumn).End(xlUp).row
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, keyColumn).End(xlUp).row
     
     'Définir la plage de recherche (toute la colonne de la clé)
     Dim searchRange As Range
-    Set searchRange = ws.Range(ws.Cells(1, keyColumn), ws.Cells(LastRow, keyColumn))
+    Set searchRange = ws.Range(ws.Cells(1, keyColumn), ws.Cells(lastRow, keyColumn))
     
     'Rechercher la clé dans la colonne spécifiée
     Dim foundCell As Range
@@ -1784,6 +1784,31 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
         Loop While Not celluleTrouvée Is Nothing And celluleTrouvée.Address <> premièreCellule.Address
     End If
 
+End Function
+
+Function ExtraireSecondes(chaine As String) As String
+    
+    Dim pos As Integer
+    Dim debut As Integer
+    Dim secondes As String
+    
+    ' Trouve la position de " secondes"
+    pos = InStr(chaine, " secondes")
+    If pos > 0 Then
+        'Remonte pour trouver le début du nombre avant "secondes"
+        debut = pos
+        Do While debut > 1 And Mid(chaine, debut - 1, 1) Like "[0-9,.]"
+            debut = debut - 1
+        Loop
+        'Extrait le nombre
+        secondes = Mid(chaine, debut, pos - debut)
+        'Nettoie et retourne la valeur
+        ExtraireSecondes = Trim(secondes)
+    Else
+        'Si " secondes" n'est pas trouvé, retourne une chaîne vide
+        ExtraireSecondes = ""
+    End If
+    
 End Function
 
 'Fonction pour centraliser tous les messages de l'application - 2024-12-29 @ 07:37
