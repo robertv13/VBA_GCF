@@ -45,7 +45,7 @@ End Function
 
 Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -59,13 +59,13 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
         Exit Function
     End If
     
-    'Using XLOOKUP to find the result directly, allows partial match (5th parameter) - 2024-11-07 @ 08:12
+    'Using XLOOKUP to find the result directly, reuires EXACT match (5th parameter = 0) - 2025-01-12 @ 14:48
     Dim result As Variant
     result = Application.WorksheetFunction.XLookup(nomCLient, _
                                                    dynamicRange.Columns(1), _
                                                    dynamicRange.Columns(2), _
                                                    "Not Found", _
-                                                    1, _
+                                                   0, _
                                                    1)
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result
@@ -79,7 +79,46 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
+'RMV    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
+
+End Function
+
+Function Fn_Cell_From_BD_Client(nomCLient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
+
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomCLient, 0)
+    
+    Dim ws As Worksheet: Set ws = wshBD_Clients
+    
+    On Error Resume Next
+    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrClients_All")
+    On Error GoTo 0
+
+    If ws Is Nothing Or dynamicRange Is Nothing Then
+        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+            vbExclamation
+        Exit Function
+    End If
+    
+    'Using XLOOKUP to find the result directly, requires EXACT match (5th parameter = 0 ) - 2025-01-12 @ 14:49
+    Dim result As Variant
+    result = Application.WorksheetFunction.XLookup(nomCLient, _
+                                                   dynamicRange.Columns(colNumberSearch), _
+                                                   dynamicRange.Columns(colNumberData), _
+                                                   "Not Found", _
+                                                   0, _
+                                                   1)
+    If result <> "Not Found" Then
+        Fn_Cell_From_BD_Client = result
+    Else
+        MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+                    "BD_Clients...", vbExclamation, "Fn_Cell_From_BD_Client"
+    End If
+    
+    'Libérer la mémoire
+    Set dynamicRange = Nothing
+    Set ws = Nothing
+    
+'RMV    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & result, startTime)
 
 End Function
 
@@ -1045,8 +1084,10 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Nom du client & code de client ?
     If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClientID = "" Then
-        MsgBox prompt:="Le client et son code sont OBLIGATOIRES !", _
-               Title:="Vérification", _
+        MsgBox prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
+                       "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
+                       "Nom du client = '" & ufSaisieHeures.txtClient.Value & "'", _
+               Title:="Vérifications essentielles des données du client", _
                Buttons:=vbCritical
         ufSaisieHeures.txtClient.SetFocus
         Exit Function

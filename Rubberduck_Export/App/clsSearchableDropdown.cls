@@ -110,8 +110,12 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     'If the user doubleclicks or presses enter, place the selected value in the textbox
     If m_UpdateControl = False Then
-        Call SetTextboxValue(MyListBox.Value)
-        Call ShowListbox(False)
+        Dim pureClientName As String
+        pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+        Call SetTextboxValue(pureClientName)
+'        Call SetTextboxValue(MyListBox.Value)
+        MyListBox.Visible = False
+'        Call ShowListbox(False)
 '        SendKeys "{TAB}"
         
     End If
@@ -128,9 +132,12 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         CheckListBoxFirstItem
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'Swallow the enter keycode as it passes on to the ok button
+        Debug.Print KeyCode
         KeyCode = 0
         If MyListBox.Value <> 0 Then
-            Call SetTextboxValue(MyListBox.Value)
+            Dim pureClientName As String
+            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+            Call SetTextboxValue(pureClientName)
         End If
         Call ShowListbox(False)
 '        SendKeys "{TAB}"
@@ -247,7 +254,8 @@ Private Function SetListboxPosition()
     With MyListBox
         .Left = myTextBox.Left
         .Top = myTextBox.Top + (myTextBox.Height)
-        .Width = myTextBox.Width
+'        .Width = 625
+'        .Width = myTextBox.Width
         Call ShowListbox(True)
     End With
     
@@ -294,7 +302,9 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
         If IsNull(MyListBox.Value) = False And m_textboxStartingState = False Then
-            Call SetTextboxValue(MyListBox.Value)
+            Dim pureClientName As String
+            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+            Call SetTextboxValue(pureClientName)
         End If
         Call ShowListbox(False)
     ElseIf KeyCode = vbKeyEscape Then
@@ -311,6 +321,7 @@ Private Sub SetTextboxValue(ByVal Text As String)
         With MyListBox
             m_UpdateControl = True
             'Set the listbox selected value to the textbox and hide the listbox
+            myTextBox.TextAlign = fmTextAlignLeft
             myTextBox.Value = Text
             
             Call SelectTextBox

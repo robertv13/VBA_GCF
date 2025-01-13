@@ -33,9 +33,11 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call Client_List_Import_All
     Call TEC_Import_All
     
+    'Mise en place de la colonne à rechercher dans BD_Clients
     Dim lastUsedRow As Long
     lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.Rows.count, 1).End(xlUp).row
-    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
+    ufSaisieHeures.ListData = wshBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
+'    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
@@ -75,20 +77,23 @@ End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
     
     Dim i As Long
     With Me.lstboxNomClient
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.Value = .List(i, 0)
-                Me.txtClientID.Value = Fn_GetID_From_Client_Name(Me.txtClient.Value)
+                Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 17, 2)
+                Me.txtClientRéel.Value = Fn_Cell_From_BD_Client(Me.txtClientID.Value, 2, 1)
                 Exit For
             End If
         Next i
     End With
     
-    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
+    Me.txtClient.TextAlign = fmTextAlignLeft
+
+'RMV    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
 
 End Sub
 
@@ -280,9 +285,9 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate[" & ufSaisieHeures.txtClient.Value & "]", 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate[" & ufSaisieHeures.txtClient.Value & "]", 0)
     
-    Me.txtClientID.Value = Fn_GetID_From_Client_Name(Me.txtClient.Value)
+'    Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 1, 2)
     
     If Me.txtClient.Value <> Me.txtSavedClient.Value Then
         If Me.txtTECID = "" Then
@@ -292,7 +297,7 @@ Private Sub txtClient_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
+'RMV    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
     
 End Sub
 

@@ -16,8 +16,11 @@ Global savedCommNote As String
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", 0)
 
+    'Obtenir le ID du client pur (à partir de son nom pur)
+    ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
+        
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim Y As Integer, m As Integer, d As Integer
         Dim avant As String, apres As String
@@ -70,19 +73,16 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", startTime)
+'RMV    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", startTime)
 
 End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
-    'Get the ClientID
-    ufSaisieHeures.txtClientID.Value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.Value)
-    
     Call TEC_Record_Add_Or_Update_To_DB(ufSaisieHeures.txtTECID.Value)
     Call TEC_Record_Add_Or_Update_Locally(ufSaisieHeures.txtTECID.Value)
  
@@ -105,13 +105,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", startTime)
+'RMV    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", startTime)
 
 End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", 0)
+'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", 0)
 
     If ufSaisieHeures.txtTECID.Value = "" Then
         MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -171,7 +171,7 @@ Clean_Exit:
     'Libérer la mémoire
     Set Sh = Nothing
 
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", startTime)
+'RMV    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", startTime)
 
 End Sub
 
