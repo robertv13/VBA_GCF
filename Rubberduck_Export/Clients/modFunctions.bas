@@ -163,6 +163,7 @@ Function Fn_ValidateEntries() As Boolean
         .txtFinAnnee.BackColor = vbWhite
         .txtComptable.BackColor = vbWhite
         .txtNotaireAvocat.BackColor = vbWhite
+        .txtNomClientPlusNomClientSystème = vbWhite
         
         'Valeur OBLIGATOIRE
         If Trim(.txtCodeClient.Value) = "" Then

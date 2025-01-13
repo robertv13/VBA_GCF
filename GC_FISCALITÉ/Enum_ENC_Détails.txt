@@ -1,0 +1,19 @@
+Public Enum ENC_Détails
+[_First] = 1
+fEncDPayID = [_First]
+fEncDInvNo
+fEncDCustomer
+fencDPayDate
+fENCDPayAmount
+[_Last]
+End Enum
+''            Public Enum ENC_Détails
+''                [_First] = 1
+''                fEncDPayID = [_First]
+''                fEncDInvNo
+''                fEncDCustomer
+''                fencDPayDate
+''                fENCDPayAmount
+''                [_Last]
+''            End Enum
+

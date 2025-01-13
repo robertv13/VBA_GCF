@@ -1,0 +1,4 @@
+    ' Redéfinir la plage du tableau en fonction des nouvelles données
+    Set rng = ws.Range("A1").CurrentRegion             ' Redéfinissez les colonnes/critères
+    tbl.Resize rng
+	

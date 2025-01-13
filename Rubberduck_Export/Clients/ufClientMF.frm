@@ -139,6 +139,7 @@ Private Sub cmdEdit_Click()
     Me.txtFinAnnee.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 13)
     Me.txtComptable.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 14)
     Me.txtNotaireAvocat.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 15)
+    Me.txtNomClientPlusNomClientSystème.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 16)
     
     nouveauClient = False
     
@@ -305,6 +306,43 @@ Private Sub Fix_Some_Fields()
             InStr(ufClientMF.txtNomClient.Value, ufClientMF.txtContactFact.Value) = 0 Then
                 ufClientMF.txtNomClient.Value = Trim(ufClientMF.txtNomClient.Value) & " [" & Trim(ufClientMF.txtContactFact.Value) & "]"
     End If
+    
+    'Construire la cellule NomClientPlusNomClientSystème
+    Dim nomClient As String, nomClientSystème As String, NomClientPlusNomClientSystème As String
+    
+    nomClient = Trim(ufClientMF.txtNomClient)
+    
+    nomClientSystème = Trim(ufClientMF.txtNomClientSysteme)
+    nomClientSystème = Replace(nomClientSystème, "<", "")
+    nomClientSystème = Replace(nomClientSystème, ">", "")
+    nomClientSystème = Replace(nomClientSystème, "(", "")
+    nomClientSystème = Replace(nomClientSystème, ")", "")
+    nomClientSystème = Replace(nomClientSystème, ",", "")
+    nomClientSystème = Replace(nomClientSystème, "CGA", "")
+    nomClientSystème = Replace(nomClientSystème, "CA", "")
+    nomClientSystème = Replace(nomClientSystème, "CGA", "")
+    nomClientSystème = Replace(nomClientSystème, "CPA", "")
+        
+    NomClientPlusNomClientSystème = nomClient + " "
+    
+    Dim mots() As String
+    mots = Split(nomClientSystème, " ")
+    
+    'S'il manque des mots dans NomClientPlusNomSystème, on ajoute ces mots un à un
+    Dim m As Integer
+    If UBound(mots, 1) > 0 Then
+        For m = 0 To UBound(mots, 1)
+            If InStr(UCase(NomClientPlusNomClientSystème), UCase(mots(m))) = 0 Then
+                If InStr("AU~DES~DU~ET~FILS~INC~LA~LE~", UCase(mots(m))) = 0 Then
+                    NomClientPlusNomClientSystème = NomClientPlusNomClientSystème & mots(m) & " "
+                End If
+            End If
+        Next m
+    End If
+    
+    NomClientPlusNomClientSystème = Trim(NomClientPlusNomClientSystème)
+
+    ufClientMF.txtNomClientPlusNomClientSystème.Value = NomClientPlusNomClientSystème
     
     Call CM_Log_Activities("ufClientMF:Fix_Some_Fields", "", startTime)
 

@@ -43,6 +43,7 @@ Sub CM_Reset_UserForm()
         .txtFinAnnee.Value = ""
         .txtComptable.Value = ""
         .txtNotaireAvocat.Value = ""
+        .txtNomClientPlusNomClientSystème.Value = ""
         
         'Default Color for all fields
         .txtCodeClient.BackColor = vbWhite
@@ -77,15 +78,15 @@ Sub CM_Reset_UserForm()
         ThisWorkbook.Sheets("DonnéesRecherche").Cells.Clear
         
         'ListBox parameters
-        .lstDonnées.ColumnCount = 16
+        .lstDonnées.ColumnCount = 17
         .lstDonnées.ColumnHeads = True
         
-        .lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
+        .lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 60; 105; 105; 350"
         
         '.RowSource
         On Error Resume Next
         If iRow > 1 Then
-            .lstDonnées.RowSource = "Données!A2:Q" & iRow
+            .lstDonnées.RowSource = "Données!A2:R" & iRow
         End If
         If Err.Number = 380 Then
             MsgBox "Il y a un problème avec une commande de programmation." & _
@@ -151,7 +152,8 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
         foundCell.Offset(0, 13).Value = ufClientMF.txtFinAnnee.Value
         foundCell.Offset(0, 14).Value = ufClientMF.txtComptable.Value
         foundCell.Offset(0, 15).Value = ufClientMF.txtNotaireAvocat.Value
-        foundCell.Offset(0, 16).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        foundCell.Offset(0, 16).Value = ufClientMF.txtNomClientPlusNomClientSystème.Value
+        foundCell.Offset(0, 17).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
     Else
         'Rechercher le client existant par son ID, dans la 2ème colonne
@@ -174,7 +176,8 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
             foundCell.Offset(0, 12).Value = ufClientMF.txtFinAnnee.Value
             foundCell.Offset(0, 13).Value = ufClientMF.txtComptable.Value
             foundCell.Offset(0, 14).Value = ufClientMF.txtNotaireAvocat.Value
-            foundCell.Offset(0, 15).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            foundCell.Offset(0, 15).Value = ufClientMF.txtNomClientPlusNomClientSystème.Value
+            foundCell.Offset(0, 16).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         Else
             MsgBox "#MB:101 - Le client '" & ufClientMF.txtCodeClient & "' n'a pas été trouvé dans le fichier!", vbCritical
         End If
@@ -361,7 +364,8 @@ Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
         .Cells(iRow, 14) = ufClientMF.txtFinAnnee.Value
         .Cells(iRow, 15) = ufClientMF.txtComptable.Value
         .Cells(iRow, 16) = ufClientMF.txtNotaireAvocat.Value
-        .Cells(iRow, 17) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Cells(iRow, 17) = ufClientMF.txtNomClientPlusNomClientSystème
+        .Cells(iRow, 18) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
 
     Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
@@ -392,6 +396,7 @@ Sub CM_Add_SearchColumn()
         .AddItem "FinAnnée"
         .AddItem "Comptable"
         .AddItem "NotaireAvocat"
+        .AddItem "NomClientPlusNomClientSystème"
         
         .Value = "ClientID"
     End With
@@ -428,7 +433,7 @@ Sub CM_Build_Données_Recherche()
     iDonnéesRow = ThisWorkbook.Sheets("Données").Range("A" & Application.Rows.Count).End(xlUp).Row
     sColumn = ufClientMF.cmbSearchColumn.Value
     sValue = ufClientMF.txtSearch.Value
-    iColumn = Application.WorksheetFunction.Match(sColumn, wshDonnées.Range("A1:Q1"), 0)
+    iColumn = Application.WorksheetFunction.Match(sColumn, wshDonnées.Range("A1:R1"), 0)
     
     'Remove filter from Données worksheet
     If wshDonnées.FilterMode = True Then
@@ -437,9 +442,9 @@ Sub CM_Build_Données_Recherche()
 
     'Apply filter on Données worksheet
     If ufClientMF.cmbSearchColumn.Value = "Code Client" Then
-        wshDonnées.Range("A1:Q" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
+        wshDonnées.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
     Else
-        wshDonnées.Range("A1:Q" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
+        wshDonnées.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
     End If
     
     Dim searchRowsFound As Long
@@ -450,10 +455,10 @@ Sub CM_Build_Données_Recherche()
         wshDonnées.AutoFilter.Range.Copy wshSearchData.Range("A1")
         Application.CutCopyMode = False
         iSearchRow = wshSearchData.Range("A" & Application.Rows.Count).End(xlUp).Row
-        ufClientMF.lstDonnées.ColumnCount = 16
-        ufClientMF.lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 70; 105; 105"
+        ufClientMF.lstDonnées.ColumnCount = 17
+        ufClientMF.lstDonnées.ColumnWidths = "200; 45; 150; 110; 110; 150; 130; 90; 95; 40; 55; 80; 100; 60; 105; 105; 350"
         If iSearchRow > 1 Then
-            ufClientMF.lstDonnées.RowSource = "DonnéesRecherche!A2:Q" & iSearchRow
+            ufClientMF.lstDonnées.RowSource = "DonnéesRecherche!A2:R" & iSearchRow
             ufClientMF.lblResultCount = "J'ai trouvé " & iSearchRow - 1 & " clients" '2024-08-24 @ 10:21
         End If
     Else
