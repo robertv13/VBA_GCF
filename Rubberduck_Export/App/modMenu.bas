@@ -29,10 +29,14 @@ Sub menuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", 0)
     
-    If Fn_Get_Windows_Username = "Guillaume" Or _
-            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "robertmv" Then
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    If userName = "Guillaume" Or _
+            userName = "GuillaumeCharron" Or _
+            userName = "Robert M. Vigneault" Or _
+            userName = "robertmv" Or _
+            userName = "user" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -193,6 +197,7 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
+        ws.Shapes("shpVérifierDernièresLignes").Visible = msoTrue
     Else
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
         ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
@@ -203,8 +208,9 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
+        ws.Shapes("shpVérifierDernièresLignes").Visible = msoFalse
     End If
-        
+    
     'Libérer la mémoire
     Set shp = Nothing
     Set ws = Nothing

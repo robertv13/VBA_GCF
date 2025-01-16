@@ -81,6 +81,28 @@ Sub TEC_Evaluation_Click()
 
 End Sub
 
+'Option # 5
+Sub TEC_Radiation_Click()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Radiation_Click", 0)
+    
+    fromMenu = True '2024-09-03 @ 06:20
+
+    Application.ScreenUpdating = False
+    
+    wshTEC_TDB.Application.Calculation = xlCalculationAutomatic
+    
+    With wshTEC_Radiation
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modMENU_TEC:TEC_Radiation_Click", startTime)
+
+End Sub
+
 Sub shp_Get_Deplacements_From_TEC_Click()
 
     Call Get_Deplacements_From_TEC

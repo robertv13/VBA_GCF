@@ -565,16 +565,16 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    Dim r As Long, TECID As Long, SQL As String
+    Dim r As Long, tecID As Long, SQL As String
     For r = firstRow To lastRow
         If wshTEC_Local.Range("BB" & r).Value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
-        TECID = wshTEC_Local.Range("AQ" & r).Value
+        tecID = wshTEC_Local.Range("AQ" & r).Value
         
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & TECID
+        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
         rs.Open SQL, conn, 2, 3
         If Not rs.EOF Then
             'Update EstFacturee, DateFacturee & NoFacture
@@ -622,15 +622,14 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     lastTECRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
     
-    Dim r As Long, rowToBeUpdated As Long, TECID As Long
+    Dim r As Long, rowToBeUpdated As Long, tecID As Long
     For r = firstResultRow To lastResultRow
         If wshTEC_Local.Range("BB" & r).Value = "FAUX" And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
-            TECID = wshTEC_Local.Range("AQ" & r).Value
-            rowToBeUpdated = Fn_Find_Row_Number_TECID(TECID, lookupRange)
-'            wshTEC_Local.Range("K" & rowToBeUpdated).value = Format(Now(), "dd/mm/yyyy hh:mm:ss")
+            tecID = wshTEC_Local.Range("AQ" & r).Value
+            rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
             wshTEC_Local.Range("L" & rowToBeUpdated).Value = "VRAI"
-            wshTEC_Local.Range("M" & rowToBeUpdated).Value = Format$(Now(), "yyyy-mm-dd")
+            wshTEC_Local.Range("M" & rowToBeUpdated).Value = Format$(Date, "yyyy-mm-dd")
             wshTEC_Local.Range("O" & rowToBeUpdated).Value = ThisWorkbook.Name
             wshTEC_Local.Range("P" & rowToBeUpdated).Value = wshFAC_Brouillon.Range("O6").Value
         End If
@@ -1017,36 +1016,38 @@ End Sub
 
 Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
 
-    Dim imprimanteParDefaut As String
-    'Tous les utilisateurs utilisent 'Adobe PDF'
-    imprimanteParDefaut = "Adobe PDF"
-    'Exception pour développeur
-    If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        imprimanteParDefaut = "Microsoft Print to PDF"
+    Dim ws As Worksheet
+    Set ws = wshFAC_Finale
+    
+    'Imprimante PDF à utiliser
+    Dim imprimantePDF As String
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        imprimantePDF = "Adobe PDF"
+    Else
+        imprimantePDF = "Microsoft Print to PDF"
     End If
     
+    Dim imprimanteCourante As String
     'Vérifiez si l'imprimante existe
-    Dim imprimanteActuelle As String
     On Error Resume Next
     If Len(Application.ActivePrinter) > 0 Then
         'Mémoriser l'imprimante actuelle pour la réinitialiser après
-        imprimanteActuelle = Application.ActivePrinter
+        imprimanteCourante = Application.ActivePrinter
     End If
     On Error GoTo 0
-
-    'Définir l'imprimante par défaut sur Adobe PDF
-    On Error Resume Next
-    Application.ActivePrinter = imprimanteParDefaut
-    On Error GoTo 0
-
+    Debug.Print "Imprimante actuelle : " & imprimanteCourante
+    
+    'On imprime la facture
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
     'Restaurer l'imprimante précédente après l'impression
-    If imprimanteActuelle <> "" Then
+    If imprimanteCourante <> "" Then
         On Error Resume Next
-        Application.ActivePrinter = imprimanteActuelle
+        Application.ActivePrinter = imprimanteCourante
         On Error GoTo 0
     End If
+    
+    Debug.Print "Imprimante restaurée : " & Application.ActivePrinter
 
 End Sub
 

@@ -50,6 +50,7 @@ Public Enum BD_Clients '2024-10-26 @ 17:41
     fClntFMFinAnnée
     fClntFMComptable
     fClntFMNotaireAvocat
+    fClntFMNomClientPlusNomClientSystème
     fClntFMTimeStamp
     [_Last]
 End Enum
@@ -68,6 +69,7 @@ Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
     fFourFMPays
     fFourFMNoTPS
     fFourFMNoTVQ
+    fFourFMTimeStamp
     [_Last]
 End Enum
 
@@ -102,6 +104,7 @@ Public Enum DEB_Récurrent
     fDebRTVQ
     fDebRCréditTPS
     fDebRCréditTVQ
+    fDebRTimeStamp
     [_Last]
 End Enum
 
@@ -135,6 +138,7 @@ Public Enum ENC_Détails
     fEncDCustomer
     fEncDPayDate
     fEncDPayAmount
+    fEncDTimeStamp
     [_Last]
 End Enum
 
@@ -147,6 +151,7 @@ Public Enum ENC_Entête
     fEncEPayType
     fEncEAmount
     fEncENotes
+    fEncETimeStamp
     [_Last]
 End Enum
 
@@ -164,6 +169,7 @@ Public Enum FAC_Comptes_Clients
     fFacCCTotalRegul
     fFacCCBalance
     fFacCCDaysOverdue
+    fFacCCTimeStamp
     [_Last]
 End Enum
 
@@ -175,6 +181,7 @@ Public Enum FAC_Détails
     fFacDTaux
     fFacDHonoraires
     fFacDInvRow
+    fFacDTimeStamp
     [_Last]
 End Enum
 
@@ -202,6 +209,7 @@ Public Enum FAC_Entête
     fFacEMntTVQ
     fFacEARTotal
     fFacEDépôt
+    fFacETimeStamp
     [_Last]
 End Enum
 
@@ -259,6 +267,7 @@ Public Enum FAC_Sommaire_Taux
     fFacSTProf
     fFacSTHeures
     fFacSTTaux
+    fFacSTTimeStamp
     [_Last]
 End Enum
 
@@ -271,6 +280,7 @@ Public Enum GL_EJ_Récurrente
     fGlEjRDébit
     fGlEjRCrédit
     fGlEjRAutreRemarque
+    fGlEjRTimeStamp
     [_Last]
 End Enum
 

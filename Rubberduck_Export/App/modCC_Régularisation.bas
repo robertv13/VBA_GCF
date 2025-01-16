@@ -5,7 +5,7 @@ Option Explicit
 Dim regulNo As Long
 Dim nextJENo As Long
 
-Sub MAJ_Regularisation() '2024-08-22 @ 09:46
+Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:MAJ_Regularisation", 0)
     
@@ -50,7 +50,7 @@ Sub MAJ_Regularisation() '2024-08-22 @ 09:46
         Call REGUL_GL_Posting_DB(regulNo, dateRegul, nomCLient, descRegul)
         Call REGUL_GL_Posting_Locally(regulNo, dateRegul, nomCLient, descRegul)
         
-        MsgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
+        MsgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation, "Confirmation de traitement"
         
         'Fermer le UserForm
         Unload ufEncRégularisation

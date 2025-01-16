@@ -38,6 +38,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             On Error Resume Next
                 DoEvents
                 Unload ufFraisDivers
+                Unload ufNonBillableTime '2025-01-14 @ 17:25
             On Error GoTo 0
             
             Call FAC_Brouillon_Clear_All_TEC_Displayed
@@ -202,14 +203,19 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change(" & clientName & ")", 0)
     
-    Dim myInfo() As Variant
-    Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
-    
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, 4)
-    
-    If myInfo(1) = "" Then
-        MsgBox "M: 101 - Je ne peux retrouver ce client dans ma liste", vbCritical
-        GoTo Clean_Exit
+    'Aller chercher le vrai nom de client
+    Dim allCols As Variant
+    allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+    'Vérifier le résultat retourné
+    If IsArray(allCols) Then
+        Application.EnableEvents = False
+        clientName = allCols(1)
+        wshFAC_Brouillon.Range("E3").Value = clientName
+        Application.EnableEvents = True
+    Else
+        wshFAC_Brouillon.Range("E3").Value = ""
+        MsgBox "Valeur non trouvée !!!", vbCritical
+        wshFAC_Brouillon.Range("E3").Select
     End If
     
     Dim clientNamePurged As String
@@ -219,23 +225,23 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     Loop
         
     Application.EnableEvents = False
-    wshFAC_Brouillon.Range("B18").Value = wshBD_Clients.Cells(myInfo(2), fClntFMClientID)
+    wshFAC_Brouillon.Range("B18").Value = allCols(fClntFMClientID)
     Application.EnableEvents = True
     
     With wshFAC_Brouillon
         Application.EnableEvents = False
-        .Range("K3").Value = wshBD_Clients.Cells(myInfo(2), fClntFMContactFacturation)
+        .Range("K3").Value = allCols(fClntFMContactFacturation)
         .Range("K4").Value = clientNamePurged
-        .Range("K5").Value = wshBD_Clients.Cells(myInfo(2), fClntFMAdresse1) 'Adresse1
-        If wshBD_Clients.Cells(myInfo(2), fClntFMAdresse2) <> "" Then
-            .Range("K6").Value = wshBD_Clients.Cells(myInfo(2), fClntFMAdresse2) 'Adresse2
-            .Range("K7").Value = wshBD_Clients.Cells(myInfo(2), fClntFMVille) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), fClntFMProvince) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), fClntFMCodePostal) 'Ville, Province & Code postal
+        .Range("K5").Value = allCols(fClntFMAdresse1) 'Adresse1
+        If allCols(fClntFMAdresse2) <> "" Then
+            .Range("K6").Value = allCols(fClntFMAdresse2) 'Adresse2
+            .Range("K7").Value = allCols(fClntFMVille) & ", " & _
+                                 allCols(fClntFMProvince) & ", " & _
+                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("K6").Value = wshBD_Clients.Cells(myInfo(2), fClntFMVille) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), fClntFMProvince) & ", " & _
-                                 wshBD_Clients.Cells(myInfo(2), fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("K6").Value = allCols(fClntFMVille) & ", " & _
+                                 allCols(fClntFMProvince) & ", " & _
+                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
             .Range("K7").Value = ""
         End If
         Application.EnableEvents = True
@@ -243,18 +249,18 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     
     With wshFAC_Finale
         Application.EnableEvents = False
-        .Range("B23").Value = wshBD_Clients.Cells(myInfo(2), fClntFMContactFacturation)
+        .Range("B23").Value = allCols(fClntFMContactFacturation)
         .Range("B24").Value = clientNamePurged
-        .Range("B25").Value = wshBD_Clients.Cells(myInfo(2), fClntFMAdresse1) 'Adresse1
-        If Trim(wshBD_Clients.Cells(myInfo(2), fClntFMAdresse2)) <> "" Then
-            .Range("B26").Value = wshBD_Clients.Cells(myInfo(2), fClntFMAdresse2) 'Adresse2
-            .Range("B27").Value = wshBD_Clients.Cells(myInfo(2), fClntFMVille) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), fClntFMProvince) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), fClntFMCodePostal) 'Ville, Province & Code postal
+        .Range("B25").Value = allCols(fClntFMAdresse1) 'Adresse1
+        If Trim(allCols(fClntFMAdresse2)) <> "" Then
+            .Range("B26").Value = allCols(fClntFMAdresse2) 'Adresse2
+            .Range("B27").Value = allCols(fClntFMVille) & ", " & _
+                                  allCols(fClntFMProvince) & ", " & _
+                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("B26").Value = wshBD_Clients.Cells(myInfo(2), fClntFMVille) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), fClntFMProvince) & ", " & _
-                                wshBD_Clients.Cells(myInfo(2), fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("B26").Value = allCols(fClntFMVille) & ", " & _
+                                  allCols(fClntFMProvince) & ", " & _
+                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
             .Range("B27").Value = ""
         End If
         If Trim(.Range("B26").Value) = ", ," Then
@@ -268,13 +274,12 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
-'    wshFAC_Brouillon.Range("O3").Select 'Move on to Invoice Date
+    Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
+    
+    Call FAC_Brouillon_Load_Non_Billable_Into_Userform
 
 Clean_Exit:
 
-    'Libérer la mémoire
-    Set rng = Nothing
-    
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", startTime)
     
 End Sub
@@ -541,6 +546,79 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
 End Sub
 
+Sub FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client", 0)
+    
+    'Mettre en place les critères pour aller chercher le temps NON-FACTURABLE pour le client avec AF#
+    Dim c1 As String, c3 As String, c4 As String, c5 As String
+    Dim c2 As Date
+    c1 = wshFAC_Brouillon.Range("B18").Value
+    c2 = #12/31/2099#
+    c3 = Fn_Convert_Value_Boolean_To_Text(False)
+    c4 = Fn_Convert_Value_Boolean_To_Text(False)
+    c5 = Fn_Convert_Value_Boolean_To_Text(False)
+
+    Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
+    
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client", startTime)
+
+End Sub
+
+Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
+
+    'Les charges NON FACTURABLES pour ce client sont dans TEC_Local, AF# 2
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", 0)
+
+    Dim lastUsedRow As Long
+    lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    If lastUsedRow < 3 Then Exit Sub 'No rows
+    
+    Application.ScreenUpdating = False
+    
+    Dim totalHres As Double
+    Dim ufNonBillableTime As Object
+    Dim fraisDiversMsg As String
+    Dim arr() As Variant
+    ReDim arr(1 To (lastUsedRow - 2), 1 To 5) As Variant
+    
+    With wshTEC_Local
+        Dim i As Long
+        For i = 3 To lastUsedRow
+            arr(i - 2, 1) = .Range("AQ" & i).Value      'TECID
+            arr(i - 2, 2) = .Range("AT" & i).Value      'Date
+            arr(i - 2, 3) = .Range("AS" & i).Value      'Prof
+            arr(i - 2, 4) = .Range("AW" & i).Value      'Description
+            If Len(arr(i - 2, 4)) > 105 Then
+                arr(i - 2, 4) = Left(arr(i - 2, 4), 102) & "..."
+            End If
+            arr(i - 2, 5) = Format$(.Range("AX" & i).Value, "##0.00")     'Heures
+            arr(i - 2, 5) = Space(7 - Len(arr(i - 2, 5))) & arr(i - 2, 5)
+            totalHres = totalHres + .Range("AX" & i).Value
+        Next i
+    End With
+    
+    Set ufNonBillableTime = UserForms.Add("ufNonBillableTime")
+    ufNonBillableTime.lsbNonBillable.Clear
+    
+    With ufNonBillableTime.lsbNonBillable
+        .ColumnCount = UBound(arr, 2)
+        .ColumnHeads = False
+        .ColumnWidths = "35;60;30;463;50"
+        .MultiSelect = fmMultiSelectMulti
+        .List = arr
+    End With
+    
+    ufNonBillableTime.btnConvertir.Visible = False
+
+    ufNonBillableTime.show vbModeless
+        
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", startTime)
+    
+End Sub
+
 Sub Get_TEC_For_Client_AF(clientID As String, _
                           cutoffDate As Date, _
                           isBillable As String, _
@@ -731,6 +809,7 @@ Sub shp_Goto_Onglet_FAC_Finale_Click()
     Call FAC_Brouillon_Goto_Onglet_FAC_Finale
     
 End Sub
+
 Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", 0)
@@ -1198,7 +1277,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

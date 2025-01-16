@@ -488,19 +488,19 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
-        Dim TECID As Long
-        TECID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
-        ufSaisieHeures.txtTECID.Value = TECID
-        txtTECID = TECID
+        Dim tecID As Long
+        tecID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
+        ufSaisieHeures.txtTECID.Value = tecID
+        txtTECID = tecID
         
         'Retrieve the record in wshTEC_Local
-        Dim lookupRange As Range, lastTECRow As Long, rowTecID As Long
+        Dim lookupRange As Range, lastTECRow As Long, rowTECID As Long
         lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
-        rowTecID = Fn_Find_Row_Number_TECID(TECID, lookupRange)
+        rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
         Dim isBilled As Boolean
-        isBilled = wshTEC_Local.Range("L" & rowTecID).Value
+        isBilled = wshTEC_Local.Range("L" & rowTECID).Value
 
         'Remplir le userForm, si cette charge n'a pas été facturée
         If Not isBilled Then
@@ -514,7 +514,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .txtClient.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
             savedClient = .txtClient.Value
             .txtSavedClient.Value = .txtClient.Value
-            .txtClientID.Value = wshTEC_Local.Range("E" & rowTecID).Value
+            .txtClientID.Value = wshTEC_Local.Range("E" & rowTECID).Value
     
             .txtActivite.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
             savedActivite = .txtActivite.Value
@@ -547,7 +547,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & TECID & "]", startTime)
+    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", startTime)
 
 End Sub
 

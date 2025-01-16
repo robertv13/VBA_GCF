@@ -1,36 +1,36 @@
 Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
-Sub Lire_Fichier_LogMainApp() '2025-01-11 @ 07:55
+Sub Lire_Fichier_LogMainApp() '2025-01-13 @ 07:46
 
-    'Initialiser la feuille où les données seront insérées
-    
-    Dim ws As Worksheet: Set ws = wshzDocLogMainAppAnalysis
-    
     'Utiliser une boîte de dialogue Fichier
     Dim FileDialogBox As FileDialog
     Set FileDialogBox = Application.FileDialog(msoFileDialogFilePicker)
 
-    'Configurer les filtres
-    Dim FilePath As String
+    'Configurer les filtres et afficher la boîte de dialogue
+    Dim nomCompletFichierLog As String
     With FileDialogBox
-        .Title = "Sélectionnez le fichier LogMainApp à analyser"
+        .Title = "Sélectionnez le fichier 'LogMainApp' à analyser"
         .Filters.Clear 'Supprimer les filtres existants
         .Filters.Add "Fichiers log", "*.log"
-        .Filters.Add "Tous les fichiers", "*.*"
-
-        'Afficher la boîte de dialogue
         If .show = -1 Then
-            FilePath = .selectedItems(1) 'Récupérer le chemin du fichier sélectionné
+            nomCompletFichierLog = .selectedItems(1) 'Récupérer le chemin du fichier sélectionné
         Else
             MsgBox "Aucun fichier sélectionné.", vbExclamation
             Exit Sub
         End If
     End With
 
+    'Est-ce le bon fichier de Log (format) ?
+    If InStr(nomCompletFichierLog, "LogMainApp.log") = 0 Then
+        MsgBox "Il ne s'agit pas du bon type de fichier Log", vbExclamation
+        MsgBox "Traitement annulé", vbInformation
+        Exit Sub
+    End If
+    
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(FilePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(nomCompletFichierLog, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -39,49 +39,46 @@ Sub Lire_Fichier_LogMainApp() '2025-01-11 @ 07:55
     'Ouvrir le fichier sélectionné
     Dim FileNumber As Integer
     FileNumber = FreeFile
-    Open FilePath For Input As #FileNumber
+    Open nomCompletFichierLog For Input As #FileNumber
 
-    'Utilisation d'un tableau pour préparer les données
+    'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
     ReDim output(1 To 50000, 1 To 9)
-    
-    'Lire le fichier ligne par ligne et traiter les données
-    Dim ligne As Long: ligne = 1
+    Dim ligne As Long
     Dim LineContent As String
-    Dim lineNumber As Long
-    Dim Fields() As String
+    Dim lineNo As Long
     Dim duree As String
     Dim i As Long
 
+    ligne = 1
     Do While Not EOF(FileNumber)
         Line Input #FileNumber, LineContent
-        lineNumber = lineNumber + 1
-        If Trim(LineContent) <> "" Then
-            If InStr(LineContent, " | ") <> 0 Then
-                Fields = Split(LineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
-                'Insérer les données dans la feuille
-                output(ligne, 1) = env
-                output(ligne, 2) = CStr(Left(Fields(0), 10))
-                output(ligne, 3) = CStr(Right(Fields(0), 11))
-                output(ligne, 4) = Trim(Fields(1))
-                output(ligne, 5) = Trim(Fields(2))
-                output(ligne, 6) = Trim(Fields(3))
-                If InStr(Fields(3), " secondes'") <> 0 Then
-                    duree = ExtraireSecondes(Fields(3))
-                    duree = Replace(duree, ".", ",")
+        lineNo = lineNo + 1
+        If InStr(LineContent, " | ") <> 0 Then
+            Dim Fields() As String
+            Fields = Split(LineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
+            'Insérer les données dans le tableau
+            ligne = ligne + 1
+            output(ligne, 1) = env
+            output(ligne, 2) = CStr(Left(Fields(0), 10))
+            output(ligne, 3) = CStr(Right(Fields(0), 11))
+            output(ligne, 4) = Trim(Fields(1))
+            output(ligne, 5) = Trim(Fields(2))
+            output(ligne, 6) = Trim(Fields(3))
+            If InStr(Fields(3), " secondes'") <> 0 Then
+                duree = ExtraireSecondes(Fields(3))
+                duree = Replace(duree, ".", ",")
 '                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
 '                    duree = Left(duree, InStr(duree, " ") - 1)
-                    If duree <> 0 Then
-                        output(ligne, 7) = CDbl(duree)
-                    Else
-                        output(ligne, 7) = 0
-                    End If
-                    output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                If duree <> 0 Then
+                    output(ligne, 7) = CDbl(duree)
+                Else
+                    output(ligne, 7) = 0
                 End If
-                output(ligne, 8) = lineNumber
-                output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-                ligne = ligne + 1
+                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
             End If
+            output(ligne, 8) = lineNo
+            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         End If
     Loop
 
@@ -93,26 +90,8 @@ Sub Lire_Fichier_LogMainApp() '2025-01-11 @ 07:55
     'Ajout du tableau à un classeur fermé
     Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Application")
 
-'    'Ajout du tableau (output) en une seule opération après ce qui existe déjà
-'    Dim lastUsedRow As Long
-'    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-'
-'    ws.Cells(lastUsedRow + 1, 1).Resize(UBound(output, 1), UBound(output, 2)).Value = output
-    
-'    'Appliquer le format de date à la première colonne
-'    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-'    Dim rng As Range
-'    Set rng = ws.Range("A1:I" & lastUsedRow)
-'    rng.Columns(2).NumberFormat = "yyyy-mm-dd"
-'    rng.Columns(3).NumberFormat = "hh:mm:ss.00"
-'    rng.Columns(9).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-'
-'    ws.Range("G:G").NumberFormat = "##0.0000"
-'    ws.Range("G:G").HorizontalAlignment = xlCenter
-
     'Libérer la mémoire
     Set FileDialogBox = Nothing
-    Set ws = Nothing
 
     MsgBox "Lecture du fichier LOG terminée et données insérées dans la feuille.", vbInformation
 

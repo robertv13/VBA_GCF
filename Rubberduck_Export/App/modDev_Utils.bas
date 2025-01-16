@@ -293,7 +293,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
-    ReDim allLinesOfCode(1 To 25000, 1 To 4)
+    ReDim allLinesOfCode(1 To 35000, 1 To 4)
     
 '    Application.ScreenUpdating = False
     
@@ -1577,7 +1577,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Application.ScreenUpdating = False
     For Each cell In ws.usedRange
         If Not cell.Locked Then
-            Debug.Print cell.Address
+'            Debug.Print cell.Address
             If unprotectedCells Is Nothing Then
                 Set unprotectedCells = cell
             Else
@@ -1915,6 +1915,34 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     
     'Close the file
     Close #FileNum
+    
+End Sub
+
+Sub Test_ObtenirToutesColonnesPourUneValeur() '2025-01-13 @ 08:49
+
+    Dim feuille As String
+    Dim valeurRecherche As String
+    Dim colRecherche As Long
+    Dim resultat As Variant
+    Dim i As Long
+    
+    'Définir la feuille, la valeur à rechercher et la colonne
+    feuille = "BD_Clients"
+    valeurRecherche = "9299-2585 Québec Inc. [Informat] Marie Guay Isablle Vigneault"
+    colRecherche = 17
+    
+    'Appeler la fonction de recherche
+    resultat = ObtenirToutesColonnesPourUneValeur(feuille, valeurRecherche, colRecherche)
+    
+    'Vérifier le résultat
+    If IsArray(resultat) Then
+        Debug.Print "Valeur trouvée :"
+        For i = LBound(resultat) To UBound(resultat)
+            Debug.Print i; Tab(6); resultat(i)
+        Next i
+    Else
+        MsgBox "Valeur non trouvée", vbInformation
+    End If
     
 End Sub
 

@@ -69,7 +69,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     Call Client_List_Import_All
     Call Fournisseur_List_Import_All
     
-    Call DEB_Recurrent_Import_All
+    Call DEB_Récurrent_Import_All
     Call DEB_Trans_Import_All
     
     Call ENC_Détails_Import_All

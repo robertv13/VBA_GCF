@@ -199,10 +199,17 @@ End Sub
 
 Private Sub cmbAccepte_Click()
 
-    'Confirmation
-    MsgBox "Toujours prêt a continuer ?", vbYesNo
+    Dim reponse As VbMsgBoxResult
+
+    'Afficher une boîte de message avec les boutons Oui et Non
+    reponse = MsgBox("Toujours prêt à continuer le traitement ?", vbYesNo + vbQuestion, "Confirmation avant traitement")
     
-    Call MAJ_Regularisation
+    'Vérifie la réponse de l'utilisateur
+    If reponse = vbYes Then
+        Call MAJ_Regularisation
+    Else
+        Exit Sub
+    End If
     
 End Sub
 

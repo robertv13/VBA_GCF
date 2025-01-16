@@ -147,9 +147,20 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'On Customer Change and only on new payments
     If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
         Me.Range("F5").Value <> Empty And _
-            Me.Range("B6").Value = "" Then
+        Me.Range("B6").Value = "" Then
+        'Aller chercher le vrai nom du client
+        Dim allCols As Variant
+        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        'Vérifier les résultats
+        If IsArray(allCols) Then
+            Application.EnableEvents = False
+            Target.Value = allCols(1)
+            Application.EnableEvents = True
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
         Application.EnableEvents = False
-        clientCode = Fn_GetID_From_Client_Name(Me.Range("F5").Value)
+        clientCode = allCols(fClntFMClientID)
         Call ENC_Remove_Check_Boxes(36)
         Call ENC_Get_OS_Invoices(clientCode)
         Application.EnableEvents = True
@@ -165,7 +176,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Target.Interior.COLOR = COULEUR_FEUILLE
         Application.EnableEvents = True

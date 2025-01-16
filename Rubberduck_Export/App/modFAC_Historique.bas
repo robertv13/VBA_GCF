@@ -11,7 +11,7 @@ Sub Affiche_Liste_Factures()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Historique:Affiche_Liste_Factures", 0)
     
-    wshFAC_Historique.Range("C9:P33").ClearContents
+    wshFAC_Historique.Range("C9:O33").ClearContents
     
     Call Remove_All_PDF_Icons
     
@@ -121,6 +121,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
+    'Détermine la dernière utilisée dans les résultats de AF_1 dans wshFAC_Entête
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
@@ -131,25 +132,37 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     
     With ws
         Dim i As Long, r As Long
+        Debug.Print vbNewLine & "For/Next loop - " & 3 & " to " & lastUsedRow
         For i = 3 To lastUsedRow
+            Debug.Print vbNewLine & "   Top of the loop (i=" & i & ")"
             'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
-            If .Range("AA" & i).Value >= dateMin And .Range("AA" & i).Value <= dateMax And _
-                .Range("AB" & i).Value = "C" Then
-                r = r + 1
-                arr(r, 1) = .Range("Z" & i).Value  'Invoice number
-                arr(r, 2) = .Range("AA" & i).Value 'Invoice Date
-                arr(r, 3) = .Range("AI" & i).Value 'Fees
-                arr(r, 4) = .Range("AK" & i).Value 'Misc. 1
-                arr(r, 5) = .Range("AM" & i).Value 'Misc. 2
-                arr(r, 6) = .Range("AO" & i).Value 'Misc. 3
-                arr(r, 7) = .Range("AQ" & i).Value 'GST $
-                arr(r, 8) = .Range("AS" & i).Value 'PST $
-                arr(r, 9) = .Range("AU" & i).Value 'Deposit
-                arr(r, 10) = .Range("AT" & i).Value 'AR_Total
-                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).Value)
-                arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).Value)
-                'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).Value, "Dollars")
+            Debug.Print "      "; .Range("AA" & i).Value & " >=? " & dateMin, .Range("AA" & i).Value >= dateMin
+            Debug.Print "      "; .Range("AA" & i).Value & " <=? " & dateMax, .Range("AA" & i).Value <= dateMax
+            If .Range("AA" & i).Value >= dateMin And .Range("AA" & i).Value <= dateMax Then
+                Debug.Print "      "; "'" & .Range("AB" & i).Value & "' as " & TypeName(.Range("AB" & i).Value), (.Range("AB" & i).Value = "C")
+                If .Range("AB" & i).Value = "C" Then
+                    r = r + 1
+                    Debug.Print "      Line is beeing processed - Invoice = '" & .Range("Z" & i).Value & "'"
+                    arr(r, 1) = .Range("Z" & i).Value  'Invoice number
+                    arr(r, 2) = .Range("AA" & i).Value 'Invoice Date
+                    arr(r, 3) = .Range("AI" & i).Value 'Fees
+                    arr(r, 4) = .Range("AK" & i).Value 'Misc. 1
+                    arr(r, 5) = .Range("AM" & i).Value 'Misc. 2
+                    arr(r, 6) = .Range("AO" & i).Value 'Misc. 3
+                    arr(r, 7) = .Range("AQ" & i).Value 'GST $
+                    arr(r, 8) = .Range("AS" & i).Value 'PST $
+                    arr(r, 9) = .Range("AU" & i).Value 'Deposit
+                    arr(r, 10) = .Range("AT" & i).Value 'AR_Total
+                    arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).Value)
+                    arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).Value)
+                    'Obtenir les TEC facturés par cette facture
+                    arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).Value, "Dollars")
+                    Debug.Print "         Row " & r & " has been assigned"
+                Else
+                    Debug.Print "      Line is rejected because status <> 'C'"
+                End If
+            Else
+                Debug.Print "      Line is rejected because not within valid dates"
             End If
         Next i
     End With

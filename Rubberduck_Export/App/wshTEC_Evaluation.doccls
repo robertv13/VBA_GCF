@@ -18,7 +18,6 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     'Import transactions from MASTER file
     Call Client_List_Import_All
-    Call TEC_Import_All
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -103,7 +102,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -112,7 +111,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.Value)

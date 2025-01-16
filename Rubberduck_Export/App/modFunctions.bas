@@ -43,6 +43,32 @@ Function Fn_Get_Prof_From_ProfID(i As Long)
     
 End Function
 
+Function ObtenirToutesColonnesPourUneValeur(feuille As String, valeurRecherche As Variant, colRecherche As Long) As Variant
+
+    Dim i As Long
+    Dim resultArray() As Variant
+    
+    'Charger les données en mémoire
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Worksheets(feuille)
+    Dim allData As Variant
+    allData = ws.usedRange.Value
+
+    ' Parcourir les données pour trouver la valeur
+    For i = 1 To UBound(allData, 1)
+        If allData(i, colRecherche) = valeurRecherche Then
+            'Ligne trouvée, copier toutes les colonnes dans le tableau résultat
+            resultArray = Application.Index(allData, i, 0)
+            ObtenirToutesColonnesPourUneValeur = resultArray
+            Exit Function
+        End If
+    Next i
+    
+    'Si aucune correspondance n'a été trouvée, retourner une valeur vide
+    ObtenirToutesColonnesPourUneValeur = CVErr(xlErrValue)
+    
+End Function
+
 Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
@@ -635,6 +661,8 @@ End Function
 
 Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
 
+    Debug.Print "         Entering 'Fn_Get_Invoice_Total_Payments_AF'"
+    
     Fn_Get_Invoice_Total_Payments_AF = 0
     
     Dim ws As Worksheet: Set ws = wshENC_Détails
@@ -658,7 +686,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     Dim rngResult As Range
     Set rngResult = ws.Range("U1").CurrentRegion
     rngResult.offset(3, 0).Clear
-    Set rngResult = ws.Range("U3:Y3").CurrentRegion
+    Set rngResult = ws.Range("U3:Y3")
     ws.Range("S9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
@@ -674,7 +702,8 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
-        Set rngResult = ws.Range("U3:Y" & lastUsedRow)
+        Set rngResult = ws.Range("U4:Y" & lastUsedRow)
+        Debug.Print "            rngResult.Address = " & rngResult.Address
         Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
     End If
 
@@ -684,10 +713,14 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     Set rngResult = Nothing
     Set ws = Nothing
     
+    Debug.Print "         Exiting 'Fn_Get_Invoice_Total_Payments_AF' - " & Fn_Get_Invoice_Total_Payments_AF
+    
 End Function
 
 Function Fn_Get_Invoice_Due_Date(invNo As String)
 
+    Debug.Print "         Entering - 'Fn_Get_Invoice_Due_Date'"
+    
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     
     Dim foundCell As Range
@@ -704,6 +737,8 @@ Function Fn_Get_Invoice_Due_Date(invNo As String)
     'Libérer la mémoire
     Set foundCell = Nothing
     Set ws = Nothing
+
+    Debug.Print "         Exiting - 'Fn_Get_Invoice_Due_Date' - " & Fn_Get_Invoice_Due_Date
 
 End Function
 

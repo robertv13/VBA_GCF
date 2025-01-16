@@ -38,7 +38,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
     Dim tableau As Variant
     Dim trancheAge As String
-    Dim ageTEC As Long, TECID As Long
+    Dim ageTEC As Long, tecID As Long
     For i = 1 To UBound(arr, 1)
         hresNettes = 0
         hresNFact = 0
@@ -46,7 +46,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
         hresTEC = 0
         
         If CDate(arr(i, fTECDate)) <= CDate(maxDate) Then
-            TECID = CLng(arr(i, fTECTECID))
+            tecID = CLng(arr(i, fTECTECID))
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             
             'Cette charge a-t-elle été Détruite ?
@@ -259,16 +259,16 @@ Sub Evaluation_Apercu_Avant_Impression()
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     
     Dim rngToPrint As Range
-    Set rngToPrint = ws.Range("C1:M31")
+    Set rngToPrint = ws.Range("C2:M31")
     
     Application.EnableEvents = False
 
-    'Caractères pour le rapport
-    With rngToPrint.Font
-        .Name = "Aptos Narrow"
-        .size = 10
-    End With
-    
+'    'Caractères pour le rapport
+'    With rngToPrint.Font
+'        .Name = "Aptos Narrow"
+'        .size = 10
+'    End With
+'
     Application.EnableEvents = True
     
     DoEvents

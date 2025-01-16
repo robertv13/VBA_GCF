@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto 
    Caption         =   "Choisir l'entrée récurrente à utiliser"
-   ClientHeight    =   4500
+   ClientHeight    =   5310
    ClientLeft      =   7215
    ClientTop       =   6810
-   ClientWidth     =   9000.001
+   ClientWidth     =   7200
    OleObjectBlob   =   "ufListeEJAuto.frx":0000
 End
 Attribute VB_Name = "ufListeEJAuto"
@@ -24,7 +24,7 @@ Private Sub UserForm_Initialize()
         .ColumnHeads = True
         .ColumnCount = 2
         .ColumnWidths = "275; 25"
-        .RowSource = wshGL_EJ_Recurrente.Name & "!I2:J" & lastUsedRow
+        .RowSource = wshGL_EJ_Recurrente.Name & "!J2:K" & lastUsedRow
     End With
    
 End Sub

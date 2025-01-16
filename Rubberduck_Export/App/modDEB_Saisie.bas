@@ -397,9 +397,8 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
             rs.Fields(fDebRNoDebRec - 1).Value = nextDRNo
             rs.Fields(fDebRDate - 1).Value = wshDEB_Saisie.Range("O4").Value
             rs.Fields(fDebRType - 1).Value = wshDEB_Saisie.Range("F4").Value
-            rs.Fields(fDebRBeneficiaire - 1).Value = wshDEB_Saisie.Range("F6").Value
+            rs.Fields(fDebRBeneficiaire - 1).Value = wshDEB_Saisie.Range("J4").Value
             rs.Fields(fDebRReference - 1).Value = wshDEB_Saisie.Range("M6").Value
-            
             rs.Fields(fDebRNoCompte - 1).Value = wshDEB_Saisie.Range("Q" & l).Value
             rs.Fields(fDebRCompte - 1).Value = wshDEB_Saisie.Range("E" & l).Value
             rs.Fields(fDebRCodeTaxe - 1).Value = wshDEB_Saisie.Range("H" & l).Value
@@ -408,6 +407,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
             rs.Fields(fDebRTVQ - 1).Value = wshDEB_Saisie.Range("K" & l).Value
             rs.Fields(fDebRCréditTPS - 1).Value = wshDEB_Saisie.Range("L" & l).Value
             rs.Fields(fDebRCréditTVQ - 1).Value = wshDEB_Saisie.Range("M" & l).Value
+            rs.Fields(fDebRTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.Update
     Next l
     
@@ -447,7 +447,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
         wshDEB_Récurrent.Range("A" & rowToBeUsed).Value = DEBRecNo
         wshDEB_Récurrent.Range("B" & rowToBeUsed).Value = wshDEB_Saisie.Range("O4").Value
         wshDEB_Récurrent.Range("C" & rowToBeUsed).Value = wshDEB_Saisie.Range("F4").Value
-        wshDEB_Récurrent.Range("D" & rowToBeUsed).Value = wshDEB_Saisie.Range("F6").Value
+        wshDEB_Récurrent.Range("D" & rowToBeUsed).Value = wshDEB_Saisie.Range("J4").Value
         wshDEB_Récurrent.Range("E" & rowToBeUsed).Value = wshDEB_Saisie.Range("M6").Value
         
         wshDEB_Récurrent.Range("F" & rowToBeUsed).Value = wshDEB_Saisie.Range("Q" & i).Value
@@ -458,6 +458,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
         wshDEB_Récurrent.Range("K" & rowToBeUsed).Value = wshDEB_Saisie.Range("K" & i).Value
         wshDEB_Récurrent.Range("L" & rowToBeUsed).Value = wshDEB_Saisie.Range("L" & i).Value
         wshDEB_Récurrent.Range("M" & rowToBeUsed).Value = wshDEB_Saisie.Range("M" & i).Value
+        wshDEB_Récurrent.Range("N" & rowToBeUsed).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -480,7 +481,7 @@ Sub DEB_Recurrent_Build_Summary()
     Dim lastUsedRow2 As Long
     lastUsedRow2 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "O").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshDEB_Récurrent.Range("O2:Q" & lastUsedRow2).ClearContents
+        wshDEB_Récurrent.Range("P2:R" & lastUsedRow2).ClearContents
     End If
     
     With wshDEB_Récurrent
@@ -488,9 +489,9 @@ Sub DEB_Recurrent_Build_Summary()
         k = 2
         For i = 2 To lastUsedRow1
             If .Range("A" & i).Value <> oldEntry Then
-                .Range("O" & k).Value = "'" & Fn_Pad_A_String(.Range("A" & i).Value, " ", 5, "L")
-                .Range("P" & k).Value = .Range("D" & i).Value
-                .Range("Q" & k).Value = .Range("B" & i).Value
+                .Range("P" & k).Value = "'" & Fn_Pad_A_String(.Range("A" & i).Value, " ", 5, "L")
+                .Range("Q" & k).Value = .Range("D" & i).Value
+                .Range("R" & k).Value = .Range("B" & i).Value
                 oldEntry = .Range("A" & i).Value
                 k = k + 1
             End If

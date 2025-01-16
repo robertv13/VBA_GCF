@@ -550,7 +550,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     ReDim arr(1 To 5000, 1 To 3)
     
     Dim i As Long
-    Dim TECID As Long
+    Dim tecID As Long
     Dim dateCutOff As Date
     dateCutOff = Now()
     
@@ -560,9 +560,9 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     For i = 3 To lurTEC
         With wsTEC
             If .Range("D" & i).Value > dateCutOff Then Stop
-            TECID = CLng(.Range("A" & i).Value)
-            If arr(TECID, 1) <> "" Then Stop
-            arr(TECID, 1) = TECID
+            tecID = CLng(.Range("A" & i).Value)
+            If arr(tecID, 1) <> "" Then Stop
+            arr(tecID, 1) = tecID
             h = .Range("H" & i).Value
             If UCase(.Range("N" & i).Value) = "VRAI" Then
                 h = 0
@@ -571,7 +571,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
                 If UCase(.Range("J" & i).Value) = "VRAI" And Len(.Range("E" & i).Value) > 2 Then
                     If UCase(.Range("L" & i).Value) = "FAUX" Then
                         If .Range("M" & i).Value <= dateCutOff Then
-                            arr(TECID, 2) = h
+                            arr(tecID, 2) = h
                         Else
                             Stop
                         End If
@@ -587,9 +587,9 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     For i = 2 To lurTDB
         With wsTDB
             If .Range("D" & i).Value > dateCutOff Then Stop
-            TECID = CLng(.Range("A" & i).Value)
-            arr(TECID, 1) = TECID
-            arr(TECID, 3) = .Range("Q" & i).Value
+            tecID = CLng(.Range("A" & i).Value)
+            arr(tecID, 1) = tecID
+            arr(tecID, 3) = .Range("Q" & i).Value
         End With
     Next i
     

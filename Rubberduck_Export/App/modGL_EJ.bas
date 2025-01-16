@@ -49,7 +49,7 @@ Sub GL_EJ_Update()
         .Range("F4").Activate
     End With
     
-    MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès"
+    MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
     
     Call Log_Record("modGL_EJ:GL_EJ_Update", startTime)
     
@@ -90,7 +90,7 @@ Sub JE_Renversement_Update()
     Call GL_Trans_Add_Record_To_DB(rowEJLast)
     Call GL_Trans_Add_Record_Locally(rowEJLast)
     
-    MsgBox "L'écriture numéro '" & wshGL_Trans.Range("AA3").Value & "' a été RENVERSÉ avec succès"
+    MsgBox "L'écriture numéro '" & wshGL_Trans.Range("AA3").Value & "' a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
     
     Application.ScreenUpdating = True
     DoEvents
@@ -549,9 +549,9 @@ Sub GL_EJ_Recurrente_Build_Summary()
     lastUsedRow1 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "I").End(xlUp).row
+    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshGL_EJ_Recurrente.Range("I2:J" & lastUsedRow2).ClearContents
+        wshGL_EJ_Recurrente.Range("J2:K" & lastUsedRow2).Clear
     End If
     
     With wshGL_EJ_Recurrente
@@ -559,8 +559,8 @@ Sub GL_EJ_Recurrente_Build_Summary()
         k = 2
         For i = 2 To lastUsedRow1
             If .Range("A" & i).Value <> oldEntry Then
-                .Range("I" & k).Value = .Range("B" & i).Value
-                .Range("J" & k).Value = "'" & Fn_Pad_A_String(.Range("A" & i).Value, " ", 5, "L")
+                .Range("J" & k).Value = .Range("B" & i).Value
+                .Range("K" & k).Value = "'" & Fn_Pad_A_String(.Range("A" & i).Value, " ", 5, "L")
                 oldEntry = .Range("A" & i).Value
                 k = k + 1
             End If
@@ -698,8 +698,12 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             End If
             rs.Fields(fGlTNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlTCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
-            rs.Fields(fGlTDébit - 1).Value = wshGL_EJ.Range("H" & l).Value
-            rs.Fields(fGlTCrédit - 1).Value = wshGL_EJ.Range("I" & l).Value
+            If wshGL_EJ.Range("H" & l).Value <> "" <> 0 Then
+                rs.Fields(fGlTDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+            End If
+            If wshGL_EJ.Range("I" & l).Value <> "" Then
+                rs.Fields(fGlTCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+            End If
             rs.Fields(fGlTAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.Update
@@ -775,7 +779,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_EJ_Recurrente$"
+    destinationTab = "GL_EJ_Récurrente$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -811,12 +815,17 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields(fGlEjRNoEjR - 1).Value = nextEJANo
-            rs.Fields(fGlEjRDescription - 1).Value = wshGL_EJ.Range("F6").Value
+            rs.Fields(fGlEjRDescription - 1).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", "")
             rs.Fields(fGlEjRNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlEjRCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
-            rs.Fields(fGlEjRDébit - 1).Value = wshGL_EJ.Range("H" & l).Value
-            rs.Fields(fGlEjRCrédit - 1).Value = wshGL_EJ.Range("I" & l).Value
+            If wshGL_EJ.Range("H" & l).Value <> "" Then
+                rs.Fields(fGlEjRDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+            End If
+            If wshGL_EJ.Range("I" & l).Value <> "" Then
+                rs.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+            End If
             rs.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
+            rs.Fields(fGlEjRTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rs.Update
     Next l
     
@@ -853,17 +862,19 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     Dim i As Long
     For i = 9 To r
-        wshGL_EJ_Recurrente.Range("C" & rowToBeUsed).Value = JENo
-        wshGL_EJ_Recurrente.Range("D" & rowToBeUsed).Value = wshGL_EJ.Range("F6").Value
-        wshGL_EJ_Recurrente.Range("E" & rowToBeUsed).Value = wshGL_EJ.Range("L" & i).Value
-        wshGL_EJ_Recurrente.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("E" & i).Value
+        wshGL_EJ_Recurrente.Range("A" & rowToBeUsed).Value = JENo
+        wshGL_EJ_Recurrente.Range("B" & rowToBeUsed).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", "")
+        wshGL_EJ_Recurrente.Range("C" & rowToBeUsed).Value = wshGL_EJ.Range("L" & i).Value
+        wshGL_EJ_Recurrente.Range("D" & rowToBeUsed).Value = wshGL_EJ.Range("E" & i).Value
         If wshGL_EJ.Range("H" & i).Value <> "" Then
-            wshGL_EJ_Recurrente.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("H" & i).Value
+            wshGL_EJ_Recurrente.Range("E" & rowToBeUsed).Value = wshGL_EJ.Range("H" & i).Value
         End If
         If wshGL_EJ.Range("I" & i).Value <> "" Then
-            wshGL_EJ_Recurrente.Range("H" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
+            wshGL_EJ_Recurrente.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
         End If
-        wshGL_EJ_Recurrente.Range("I" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
+        wshGL_EJ_Recurrente.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
+        wshGL_EJ_Recurrente.Range("H" & rowToBeUsed).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        
         rowToBeUsed = rowToBeUsed + 1
     Next i
     

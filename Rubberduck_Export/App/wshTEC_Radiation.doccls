@@ -1,0 +1,147 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+Public clientCode As String
+
+Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", 0)
+    
+    If fromMenu = False Then
+        Debug.Print "#014 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    Dim ws As Worksheet: Set ws = wshTEC_Radiation
+    
+    'Import transactions from MASTER file
+    Call Client_List_Import_All
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    'Masquer (si nécessaire) les colonnes A et B
+    ws.Unprotect
+    Dim colsHidden As Boolean
+    colsHidden = ws.Columns("A:B").Hidden
+    If colsHidden = False Then
+        ws.Range("A:B").EntireColumn.Hidden = True
+    End If
+    
+    Call SetTabOrder(ws)
+        
+    Call Prepare_Pour_Nouvelle_Radiation
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
+    Application.EnableEvents = True
+    
+    ws.Visible = xlSheetVisible
+    
+    fromMenu = True
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_Activate", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", 0)
+    
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
+    End If
+    
+    'Is client been selected ?
+    If Not Intersect(Target, wshTEC_Radiation.Range("F3")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_SAISIE
+    End If
+    
+    'Is date been selected ?
+    If Not Intersect(Target, wshTEC_Radiation.Range("K3")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_SAISIE
+    End If
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", startTime)
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change[" & Target.Address & "]", 0)
+    
+    Dim fullDate As Variant
+    
+    'Le client a changé
+    If Not Intersect(Target, Range("F3")) Is Nothing Then
+        'Aller chercher le vrai nom du client
+        Dim allCols As Variant
+        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        'Vérifier les résultats
+        If IsArray(allCols) Then
+            Application.EnableEvents = False
+            Target.Value = allCols(1)
+            Application.EnableEvents = True
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
+        Application.EnableEvents = False
+        Target.Interior.COLOR = COULEUR_BASE
+        clientCode = allCols(fClntFMClientID)
+        Application.EnableEvents = True
+        If Fn_Is_Client_Facturable(clientCode) = False Then
+            MsgBox "Ce client n'est pas un client facturable", vbInformation
+            Target.Activate
+        Else
+            wshTEC_Radiation.Range("K3").Select
+        End If
+        
+    End If
+    
+    'CutOffDate has changed
+    If Not Intersect(Target, Range("K3")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(Target.Text, 99, 0)
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Radiation_75")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+       
+        'Future date ?
+        If CDate(Range("L3").Value) > Format$(Now(), "dd/mm/yyyy") Then
+            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Application.EnableEvents = False
+                Target.ClearContents
+                Application.EnableEvents = True
+                Application.GoTo Range(Target.Address)
+            End If
+        Else
+            Target.Interior.COLOR = COULEUR_BASE
+            Call TEC_Radiation_Procedure(clientCode, Target.Value)
+        End If
+        
+    End If
+
+ExitSub:
+
+    Application.EnableEvents = True
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_Change", startTime)
+  
+End Sub

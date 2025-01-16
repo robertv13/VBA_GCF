@@ -199,7 +199,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     Dim clientCode As String
     Dim clientCodeFromDB As String
     Dim errorMesg As String
-    Dim TECID As Long: TECID = 342
+    Dim tecID As Long: tecID = 342
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
@@ -223,8 +223,8 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
             client = myInfo(3)
         End If
         
-        TECID = TECID + 1
-        wsDest.Range("A" & rowNum).Value = TECID
+        tecID = tecID + 1
+        wsDest.Range("A" & rowNum).Value = tecID
         wsDest.Range("B" & rowNum).Value = ObtenirProfIDAvecInitiales(prof)
         wsDest.Range("C" & rowNum).Value = prof
         wsDest.Range("D" & rowNum).Value = rst.Fields(1).Value

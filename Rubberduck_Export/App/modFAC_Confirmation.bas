@@ -3,6 +3,89 @@ Option Explicit
 
 Public invNo As String
 
+Sub FAC_Confirmation_Client_Change(clientName As String)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Client_Change(" & clientName & ")", 0)
+    
+    'Aller chercher le vrai nom de client
+    Dim allCols As Variant
+    allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+    'Vérifier le résultat retourné
+    If IsArray(allCols) Then
+        Application.EnableEvents = False
+        Dim clientNamePurged As String
+        clientNamePurged = allCols(1)
+        Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
+            clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
+        Loop
+        wshFAC_Confirmation.Range("F5").Value = clientNamePurged
+        Application.EnableEvents = True
+    Else
+        wshFAC_Confirmation.Range("F5").Value = ""
+        MsgBox "Valeur non trouvée dans la table BD_Clients !!!", vbCritical
+        wshFAC_Confirmation.Range("F5").Select
+    End If
+        
+    Application.EnableEvents = False
+    wshFAC_Confirmation.Range("B18").Value = allCols(fClntFMClientID)
+    Application.EnableEvents = True
+    
+    With wshFAC_Brouillon
+        Application.EnableEvents = False
+        .Range("K3").Value = allCols(fClntFMContactFacturation)
+        .Range("K4").Value = clientNamePurged
+        .Range("K5").Value = allCols(fClntFMAdresse1) 'Adresse1
+        If allCols(fClntFMAdresse2) <> "" Then
+            .Range("K6").Value = allCols(fClntFMAdresse2) 'Adresse2
+            .Range("K7").Value = allCols(fClntFMVille) & ", " & _
+                                 allCols(fClntFMProvince) & ", " & _
+                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+        Else
+            .Range("K6").Value = allCols(fClntFMVille) & ", " & _
+                                 allCols(fClntFMProvince) & ", " & _
+                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("K7").Value = ""
+        End If
+        Application.EnableEvents = True
+    End With
+    
+    With wshFAC_Finale
+        Application.EnableEvents = False
+        .Range("B23").Value = allCols(fClntFMContactFacturation)
+        .Range("B24").Value = clientNamePurged
+        .Range("B25").Value = allCols(fClntFMAdresse1) 'Adresse1
+        If Trim(allCols(fClntFMAdresse2)) <> "" Then
+            .Range("B26").Value = allCols(fClntFMAdresse2) 'Adresse2
+            .Range("B27").Value = allCols(fClntFMVille) & ", " & _
+                                  allCols(fClntFMProvince) & ", " & _
+                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+        Else
+            .Range("B26").Value = allCols(fClntFMVille) & ", " & _
+                                  allCols(fClntFMProvince) & ", " & _
+                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("B27").Value = ""
+        End If
+        If Trim(.Range("B26").Value) = ", ," Then
+            .Range("B26").Value = ""
+        End If
+        If Trim(.Range("B27").Value) = ", ," Then
+            .Range("B27").Value = ""
+        End If
+        Application.EnableEvents = True
+    End With
+    
+    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    
+    Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
+    
+    Call FAC_Brouillon_Load_Non_Billable_Into_Userform
+
+Clean_Exit:
+
+    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", startTime)
+    
+End Sub
+
 Sub ObtenirFactureInfos(noFact As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureInfos", 0)
@@ -581,7 +664,7 @@ Sub MontrerFacturesAConfirmer()
         .EnableSelection = xlUnlockedCells
     End With
     
-    wshFAC_Confirmation.Range("F5").Value = ""
+    wshFAC_Confirmation.Range("L5").Value = ""
     
     Application.ScreenUpdating = True
     
@@ -720,7 +803,7 @@ Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
     
     'Get Invoice number
     Dim invNo As String
-    invNo = Trim(wshFAC_Confirmation.Range("F5").Value)
+    invNo = Trim(wshFAC_Confirmation.Range("L5").Value)
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
@@ -766,7 +849,7 @@ Sub NettoyerCellulesEtIconesPDF()
     
     Application.ScreenUpdating = False
     
-    ws.Range("F5,H5,L5,F7:I11,L13:L19,L21,L23,L25,F13:H17,F20:H24").ClearContents
+    ws.Range("F5:J5,L5,F7:I11,L13:L19,L21,L23,L25,F13:H17,F20:H24").ClearContents
     
     Dim pic As Picture
     For Each pic In ws.Pictures
@@ -789,7 +872,7 @@ Sub NettoyerCellulesEtIconesPDF()
 
     Application.EnableEvents = True
     
-    wshFAC_Confirmation.Range("F5").Select
+    wshFAC_Confirmation.Range("L5").Select
     
     Call Log_Record("modFAC_Confirmation:NettoyerCellulesEtIconesPDF", startTime)
 
@@ -870,7 +953,7 @@ Sub BoutonOK()
     
     Call NettoyerCellulesEtIconesPDF
     
-    ws.Range("F5").Select
+    ws.Range("L5").Select
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -890,7 +973,7 @@ Sub ConfirmerConfirmationFacture()
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
     Dim invNo As String
-    invNo = ws.Range("F5").Value
+    invNo = ws.Range("L5").Value
     
     If invNo = "" Then
         MsgBox "Il n'y a pas de facture à confirmer!", vbCritical
@@ -920,7 +1003,7 @@ Clean_Exit:
 
     Call NettoyerCellulesEtIconesPDF
 
-    wshFAC_Confirmation.Range("F5").Select
+    wshFAC_Confirmation.Range("L5").Select
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -1048,7 +1131,7 @@ Sub MAJStatutFactureLocalement(invoice As String)
     Dim foundRange As Range
     Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
     
-    Dim r As Long, rowToBeUpdated As Long, TECID As Long
+    Dim r As Long, rowToBeUpdated As Long, tecID As Long
     If Not foundRange Is Nothing Then
         r = foundRange.row
         ws.Cells(r, 3).Value = "C"
@@ -1189,7 +1272,8 @@ Sub RetournerMenuFAC()
     wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
     
     Application.EnableEvents = False
-    wshFAC_Confirmation.Range("F5").ClearContents
+    wshFAC_Confirmation.Range("F5:J5").ClearContents
+    wshFAC_Confirmation.Range("L5").ClearContents
     Application.EnableEvents = True
     
     wshFAC_Confirmation.Visible = xlSheetHidden

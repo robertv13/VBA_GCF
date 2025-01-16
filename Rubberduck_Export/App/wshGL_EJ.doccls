@@ -74,6 +74,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.COLOR = xlNone
     End If
 
+    'Ne pas permettre aucun changement à l'écriture originale, lors d'un renversement
+    If wshGL_EJ.Range("F4").Value = "Renversement" Then
+        MsgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, ""
+        Exit Sub
+    End If
+    
     'Source has been selected
     If Not Intersect(Target, wshGL_EJ.Range("F4")) Is Nothing Then
         Target.Interior.COLOR = COULEUR_SAISIE
@@ -173,7 +179,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").Value) > Now() Then

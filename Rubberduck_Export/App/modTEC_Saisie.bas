@@ -134,12 +134,12 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
     Dim Sh As Worksheet: Set Sh = wshTEC_Local
     
-    Dim TECID As Long
+    Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
-    TECID = -ufSaisieHeures.txtTECID.Value
+    tecID = -ufSaisieHeures.txtTECID.Value
     
-    Call TEC_Record_Add_Or_Update_To_DB(TECID)  'Write to external XLSX file - 2023-12-23 @ 07:07
-    Call TEC_Record_Add_Or_Update_Locally(TECID)  'Write to local worksheet - 2024-02-25 @ 10:40
+    Call TEC_Record_Add_Or_Update_To_DB(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
+    Call TEC_Record_Add_Or_Update_Locally(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
@@ -303,9 +303,9 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
 End Sub
 
-Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to external .xlsx file
+Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(" & TECID & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(" & tecID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -326,23 +326,23 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
     Dim saveLogTECID As Long
-    saveLogTECID = TECID
+    saveLogTECID = tecID
     
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.Value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
-    If TECID = 0 And Now - dateValue > 30 Then
+    If tecID = 0 And Now - dateValue > 30 Then
         MsgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
                 "Veuillez aviser le développeur de cette situation SVP", vbInformation
         Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
     End If
     
-    If TECID < 0 Then 'Soft delete a record
+    If tecID < 0 Then 'Soft delete a record
         
         'Open the recordset for the specified ID
         
-        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & Abs(TECID), conn, 2, 3
-        saveLogTECID = TECID
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & Abs(tecID), conn, 2, 3
+        saveLogTECID = tecID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
             rs.Fields(fTECDateSaisie - 1).Value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -361,7 +361,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
 
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
-            MsgBox "L'enregistrement avec le TECID '" & TECID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
                 
             rs.Close
@@ -372,7 +372,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     
     Else 'Add a new record (TECID = 0) -OR- update an existing one (TECID <> 0)
         
-        If TECID = 0 Then 'Add a record
+        If tecID = 0 Then 'Add a record
         
             'SQL select command to find the next available ID
             Dim strSQL As String, MaxID As Long
@@ -437,7 +437,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         Else 'Update an existing record (TECID <> 0)
         
             'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & TECID, conn, 2, 3
+            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
                 rs.Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
@@ -462,7 +462,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             
                 'Handle the case where the specified ID is not found - PROBLEM !!!
                 
-                MsgBox "L'enregistrement avec le TECID '" & TECID & "' ne peut être trouvé!", vbExclamation
+                MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
                 Call Log_Record("#00480 - N'a pas trouvé le TECID '" & CStr(saveLogTECID) & "'", -1) '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 rs.Close
@@ -486,7 +486,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & TECID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & tecID, startTime)
 
     Exit Sub
     
@@ -507,13 +507,13 @@ ErrorHandler:
         On Error GoTo 0
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & TECID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & tecID, startTime)
     
 End Sub
 
-Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record to local worksheet
+Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(" & TECID & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(" & tecID & ")", 0)
 
     Application.ScreenUpdating = False
     
@@ -526,7 +526,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     Dim dateValue As Date
     dateValue = ufSaisieHeures.txtDate.Value
     
-    If TECID = 0 Then 'Add a new record
+    If tecID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
         With wshTEC_Local
@@ -553,15 +553,15 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
         lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
         Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
-        rowToBeUpdated = Fn_Find_Row_Number_TECID(Abs(TECID), lookupRange)
+        rowToBeUpdated = Fn_Find_Row_Number_TECID(Abs(tecID), lookupRange)
         If rowToBeUpdated < 1 Then
             'Handle the case where the specified TecID is not found !!
-            MsgBox "L'enregistrement avec le TECID '" & TECID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
             Exit Sub
         End If
 
-        If TECID > 0 Then 'Modify the record
+        If tecID > 0 Then 'Modify the record
             With wshTEC_Local
                 .Range("E" & rowToBeUpdated).Value = ufSaisieHeures.txtClientID.Value
                 .Range("F" & rowToBeUpdated).Value = ufSaisieHeures.txtClient.Value
@@ -590,7 +590,7 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - " & TECID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - " & tecID, startTime)
 
 End Sub
 

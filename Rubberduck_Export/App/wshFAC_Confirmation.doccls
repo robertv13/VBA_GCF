@@ -80,17 +80,24 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.COLOR = xlNone
     End If
     
+    'Le client a été sélectionné
+    If Not Intersect(Target, Range("F5:J5")) Is Nothing Then
+        Target.Interior.COLOR = COULEUR_SAISIE
+    End If
+    
     'Invoice Number is selected
-    If Not Intersect(Target, Range("F5")) Is Nothing And Target.Cells.count = 1 Then
+    If Not Intersect(Target, Range("L5")) Is Nothing And Target.Cells.count = 1 Then
         Target.Interior.COLOR = COULEUR_SAISIE
     End If
     
     'Invoice Number is selected from Invoices to be confirmed
-    If Not Intersect(Target, Me.Columns(16)) Is Nothing And Target.Cells.count = 1 And Target.Value <> "" Then
-        Call NettoyerCellulesEtIconesPDF
-        Call TraiterToutesLesFacturesAC(Target.Value)
-        wshFAC_Confirmation.Range("F5").Value = Target.Value
-        Target.Interior.COLOR = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Columns(16)) Is Nothing Then
+        If Target.Cells.count = 1 And Target.Value <> "" Then
+            Call NettoyerCellulesEtIconesPDF
+            Call TraiterToutesLesFacturesAC(Target.Value)
+            wshFAC_Confirmation.Range("L5").Value = Target.Value
+            Target.Interior.COLOR = COULEUR_SAISIE
+        End If
     End If
     
     'Save the current cell Address
@@ -102,17 +109,59 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     Debug.Print "#010 - Worksheet_Change Event - " & Target.Address & " = " & Target.Value
     
-    'Saisie du numéro de facture
-    If Not Intersect(Target, Range("F5")) Is Nothing Then
-        invNo = Trim(Target.Value)
-        If invNo <> "" Then
-            Call ObtenirFactureInfos(invNo)
-        Else
-            On Error Resume Next
-            Target.Select
-            On Error GoTo 0
-        End If
+    Dim rng As Range
+    
+    'Le nom de client a changé
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
+        Call FAC_Confirmation_Client_Change(Target.Value)
+        Set rng = Me.Range("L5")
     End If
+
+'        'Aller chercher le vrai nom du client
+'        Dim allCols As Variant
+'        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+'        'Vérifier les résultats
+'        If IsArray(allCols) Then
+'            Application.EnableEvents = False
+'            Target.Value = allCols(1)
+'            Application.EnableEvents = True
+'        Else
+'            MsgBox "Valeur non trouvée !!!", vbCritical
+'            Exit Sub
+'        End If
+'        Application.EnableEvents = False
+'        Dim clientCode As String
+'        clientCode = allCols(fClntFMClientID)
+'        Application.EnableEvents = True
+'
+'        Dim clientNamePurged As String
+'        clientNamePurged = allCols(fClntFMClientNom)
+'        Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
+'            clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
+'        Loop
+'        Application.EnableEvents = False
+'        Target.Value = clientNamePurged
+'        Application.EnableEvents = True
+'
+'        Call FAC_Brouillon_Clear_All_TEC_Displayed
+'
+'        Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
+'
+'        Call FAC_Brouillon_Load_Non_Billable_Into_Userform
+'
+'    End If
+'
+'    'Saisie du numéro de facture
+'    If Not Intersect(Target, Range("L5")) Is Nothing Then
+'        invNo = Trim(Target.Value)
+'        If invNo <> "" Then
+'            Call ObtenirFactureInfos(invNo)
+'        Else
+'            On Error Resume Next
+'            Target.Select
+'            On Error GoTo 0
+'        End If
+'    End If
 
     'Sélection d'une facture à confirmer
     If Not Intersect(Target, Range("P4:P999")) Is Nothing Then
