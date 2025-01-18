@@ -241,7 +241,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
     
     Call TEC_Import_All
-    Call modTEC_TDB.ActualiserTEC_TDB
+    Call ActualiserTEC_TDB
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
@@ -3114,7 +3114,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3459 'What is the last TECID analyzed ?
+    lastTECIDReported = 3489 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3850,6 +3850,7 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range("A2:A" & lastUsedRow).NumberFormat = "0"
                 .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("E2:E" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
             End With
         
         Case "wshENC_Entête"
@@ -3861,6 +3862,7 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range("A2:A" & lastUsedRow).NumberFormat = "0"
                 .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00 $"
+                .Range("H2:H" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
             End With
         
         Case "wshFAC_Comptes_Clients"
@@ -3916,6 +3918,15 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range("E2:E" & lastUsedRow & ", I2:I" & lastUsedRow & ", M2:M" & lastUsedRow & _
                         ", Q2:Q" & lastUsedRow & ", U2:U" & lastUsedRow & ", Y2:Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
                 .Range("G2:H" & lastUsedRow).NumberFormat = "#,##0.00"
+            End With
+        
+        Case "wshFAC_Sommaire_Taux"
+            With wshFAC_Sommaire_Taux
+                .Range("A2:C" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("D2:E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("D2:D" & lastUsedRow).NumberFormat = "#,##0.00"
+                .Range("E2:E" & lastUsedRow).NumberFormat = "###,##0.00 $"
+                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
             End With
         
         Case "wshGL_EJ_Recurrente"

@@ -36,7 +36,7 @@ Sub menuFacturation()
             userName = "GuillaumeCharron" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Or _
-            userName = "user" Then
+            userName = "User" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -60,10 +60,14 @@ Sub menuComptabilité()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilite_Click", 0)
     
-    If Fn_Get_Windows_Username = "Guillaume" Or _
-            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "robertmv" Then
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    If userName = "Guillaume" Or _
+            userName = "GuillaumeCharron" Or _
+            userName = "Robert M. Vigneault" Or _
+            userName = "robertmv" Or _
+            userName = "User" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -87,10 +91,14 @@ Sub Parametres()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", 0)
     
-    If Fn_Get_Windows_Username = "Guillaume" Or _
-            Fn_Get_Windows_Username = "GuillaumeCharron" Or _
-            Fn_Get_Windows_Username = "Robert M. Vigneault" Or _
-            Fn_Get_Windows_Username = "robertmv" Then
+    Dim userName As String
+    userName = Fn_Get_Windows_Username
+    
+    If userName = "Guillaume" Or _
+            userName = "GuillaumeCharron" Or _
+            userName = "Robert M. Vigneault" Or _
+            userName = "robertmv" Or _
+            userName = "User" Then
         wshAdmin.Visible = xlSheetVisible
         wshAdmin.Select
     Else

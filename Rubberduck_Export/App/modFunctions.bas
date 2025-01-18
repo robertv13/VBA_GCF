@@ -71,7 +71,7 @@ End Function
 
 Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
-'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -105,13 +105,13 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-'RMV    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
+    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
 
 End Function
 
 Function Fn_Cell_From_BD_Client(nomCLient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
 
-'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomCLient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomCLient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -144,7 +144,7 @@ Function Fn_Cell_From_BD_Client(nomCLient As String, ByRef colNumberSearch As In
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-'RMV    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & result, startTime)
+    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & result, startTime)
 
 End Function
 
@@ -668,26 +668,26 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     Dim ws As Worksheet: Set ws = wshENC_Détails
     
     'Effacer les données de la dernière utilisation
-    ws.Range("S6:S10").ClearContents
-    ws.Range("S6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("H6:H10").ClearContents
+    ws.Range("H6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_ENC_Détails[#All]")
-    ws.Range("S7").Value = rngData.Address
+    ws.Range("H7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("S2:S3")
-    ws.Range("S3").Value = invNo
-    ws.Range("S8").Value = rngCriteria.Address
+    Set rngCriteria = ws.Range("H2:H3")
+    ws.Range("H3").Value = invNo
+    ws.Range("H8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-    Set rngResult = ws.Range("U1").CurrentRegion
+    Set rngResult = ws.Range("J1").CurrentRegion
     rngResult.offset(3, 0).Clear
-    Set rngResult = ws.Range("U3:Y3")
-    ws.Range("S9").Value = rngResult.Address
+    Set rngResult = ws.Range("J3:N3")
+    ws.Range("H9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -697,12 +697,12 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
         
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "U").End(xlUp).row
-    ws.Range("S10").Value = lastUsedRow - 3 & " lignes"
+    lastUsedRow = ws.Cells(ws.Rows.count, "J").End(xlUp).row
+    ws.Range("H10").Value = lastUsedRow - 3 & " lignes"
     
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
-        Set rngResult = ws.Range("U4:Y" & lastUsedRow)
+        Set rngResult = ws.Range("J4:N" & lastUsedRow)
         Debug.Print "            rngResult.Address = " & rngResult.Address
         Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
     End If

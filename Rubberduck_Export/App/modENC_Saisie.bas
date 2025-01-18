@@ -4,7 +4,6 @@ Option Explicit
 'Variables globales pour le module
 Dim lastRow As Long, lastResultRow As Long
 Dim payRow As Long
-Public Const COULEUR_FEUILLE As Long = 14277081
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
@@ -301,6 +300,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
         rs.Fields(fEncEPayType - 1).Value = wshENC_Saisie.Range("F7").Value
         rs.Fields(fEncEAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00 $"))
         rs.Fields(fEncENotes - 1).Value = wshENC_Saisie.Range("F9").Value
+        rs.Fields(fEncETimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
     rs.Update
     
@@ -331,13 +331,14 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     lastUsedRow = wshENC_Entête.Cells(wshENC_Entête.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    wshENC_Entête.Range("A" & rowToBeUsed).Value = currentPmtNo
-    wshENC_Entête.Range("B" & rowToBeUsed).Value = wshENC_Saisie.Range("K5").Value
-    wshENC_Entête.Range("C" & rowToBeUsed).Value = wshENC_Saisie.Range("F5").Value
-    wshENC_Entête.Range("D" & rowToBeUsed).Value = wshENC_Saisie.clientCode
-    wshENC_Entête.Range("E" & rowToBeUsed).Value = wshENC_Saisie.Range("F7").Value
-    wshENC_Entête.Range("F" & rowToBeUsed).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00"))
-    wshENC_Entête.Range("G" & rowToBeUsed).Value = wshENC_Saisie.Range("F9").Value
+    wshENC_Entête.Cells(rowToBeUsed, fEncEPayID).Value = currentPmtNo
+    wshENC_Entête.Cells(rowToBeUsed, fEncEPayDate).Value = wshENC_Saisie.Range("K5").Value
+    wshENC_Entête.Cells(rowToBeUsed, fEncECustomer).Value = wshENC_Saisie.Range("F5").Value
+    wshENC_Entête.Cells(rowToBeUsed, fEncECodeClient).Value = wshENC_Saisie.clientCode
+    wshENC_Entête.Cells(rowToBeUsed, fEncEPayType).Value = wshENC_Saisie.Range("F7").Value
+    wshENC_Entête.Cells(rowToBeUsed, fEncEAmount).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00"))
+    wshENC_Entête.Cells(rowToBeUsed, fEncENotes).Value = wshENC_Saisie.Range("F9").Value
+    wshENC_Entête.Cells(rowToBeUsed, fEncETimeStamp).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -375,6 +376,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
                 rs.Fields(fEncDCustomer - 1).Value = wshENC_Saisie.Range("F5").Value
                 rs.Fields(fEncDPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
                 rs.Fields(fEncDPayAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00 $"))
+                rs.Fields(fEncDTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             'Update the recordset (create the record)
             rs.Update
         End If
@@ -412,6 +414,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
             wshENC_Détails.Range("C" & rowToBeUsed).Value = wshENC_Saisie.Range("F5").Value
             wshENC_Détails.Range("D" & rowToBeUsed).Value = wshENC_Saisie.Range("K5").Value
             wshENC_Détails.Range("E" & rowToBeUsed).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00"))
+            wshENC_Détails.Range("F" & rowToBeUsed).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     Next r

@@ -6,7 +6,7 @@ Private Sub Worksheet_Activate()
    
     Application.ScreenUpdating = False
     
-    Call modTEC_TDB.ActualiserTEC_TDB
+    Call ActualiserTEC_TDB
     
     'Set the zoom factor to 98% when this worksheet is activated
     ActiveWindow.Zoom = 98

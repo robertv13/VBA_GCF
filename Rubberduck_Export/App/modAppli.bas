@@ -14,13 +14,16 @@ Option Explicit
 
 'Public Const VK_NUMLOCK As Long = &H90
 
-Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
-Public Const COULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
-Public Const COULEUR_BASE As Long = 16777215 '2024-07-23 @ 08:15
-
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
+
+Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
+
+Public Const COULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
+Public Const COULEUR_BASE_TEC As Long = 6740479
+Public Const COULEUR_BASE_FACTURATION As Long = 11854022
+Public Const COULEUR_BASE_COMPTABILITÉ As Long = 14277081
 
 'Variable utilisée pour éviter l'évènement Activate à chaque fois que l'on revient dans une feuille
 Public fromMenu As Boolean '2024-09-03 @ 06:14

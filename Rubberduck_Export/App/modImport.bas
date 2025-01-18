@@ -215,7 +215,7 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
 
 End Sub
 
-Sub ENC_Détails_Import_All() '2024-03-07 @ 17:38
+Sub ENC_Détails_Import_All() '2025-01-16 @ 16:55
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", 0)
     

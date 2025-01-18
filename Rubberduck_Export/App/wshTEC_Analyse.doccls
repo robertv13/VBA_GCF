@@ -80,7 +80,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Debug.Print "#013 - " & Target.Address
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
@@ -155,7 +155,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -164,7 +164,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

@@ -36,6 +36,14 @@ Private Sub Worksheet_Activate()
     ws.Range("A:B").EntireColumn.Hidden = True
     On Error GoTo 0
     
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    Dim r As Range
+    Set r = ws.Range("P4:P" & lastRow)
+    On Error Resume Next
+    r.Locked = True
+    On Error GoTo 0
+    
     'Protéger la feuille sans mot de passe et permettre la sélection des cellules verrouillées et non verrouillées
     With ws
         .Protect UserInterfaceOnly:=True
@@ -59,6 +67,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
 
     'Libérer la mémoire
+    Set r = Nothing
     Set ws = Nothing
     
     Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", startTime)
@@ -97,6 +106,8 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
+    
+    Debug.Print "#010 - Worksheet_Change Event - " & Target.Address & " = " & Target.Value
     
     Dim rng As Range
     

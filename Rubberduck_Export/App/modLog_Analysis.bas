@@ -130,6 +130,9 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
         strSQL = "INSERT INTO [" & feuilleNom & "$] VALUES ("
         For j = LBound(tableau, 2) To UBound(tableau, 2)
             valeur = tableau(i, j)
+            If Len(valeur) > 200 Then
+                valeur = Left(valeur, 200)
+            End If
             ' Ajouter des délimiteurs dynamiquement en fonction du type de valeur
             If IsDate(valeur) Then
                 strSQL = strSQL & "#" & Format(valeur, "yyyy-mm-dd hh:nn:ss") & "#, "

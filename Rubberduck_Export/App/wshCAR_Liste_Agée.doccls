@@ -64,7 +64,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange" & " - " & Target.Address, 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_FACTURATION
     End If
     
     'Is Niveau de Détail been selected ?
@@ -124,7 +124,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
     End If

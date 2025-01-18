@@ -78,7 +78,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
 '    Call FAC_Finale_GL_Posting_Preparation
     
     'Update TEC_DashBoard
-    Call modTEC_TDB.ActualiserTEC_TDB '2024-03-21 @ 12:32
+    Call ActualiserTEC_TDB '2024-03-21 @ 12:32
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
@@ -389,6 +389,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
                 rs.Fields(fFacSTProf - 1).Value = wshFAC_Brouillon.Range("R" & r).Value
                 rs.Fields(fFacSTHeures - 1).Value = wshFAC_Brouillon.Range("S" & r).Value
                 rs.Fields(fFacSTTaux - 1).Value = wshFAC_Brouillon.Range("T" & r).Value
+                rs.Fields(fFacSTTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
@@ -435,13 +436,13 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     For i = firstRow To lastRow
         If wshFAC_Brouillon.Range("R" & i).Value <> "" Then
             With wshFAC_Sommaire_Taux
-                .Range("A" & firstFreeRow).Value = noFacture
-                .Range("B" & firstFreeRow).Value = seq
-                .Range("C" & firstFreeRow).Value = wshFAC_Brouillon.Range("R" & i).Value
-                .Range("D" & firstFreeRow).Value = CCur(wshFAC_Brouillon.Range("S" & i).Value)
-                .Range("D" & firstFreeRow).NumberFormat = "#,##0.00"
-                .Range("E" & firstFreeRow).Value = CCur(wshFAC_Brouillon.Range("T" & i).Value)
-                .Range("E" & firstFreeRow).NumberFormat = "#,##0.00"
+                .Cells(firstFreeRow, fFacSTInvNo).Value = noFacture
+                .Cells(firstFreeRow, fFacSTSéquence).Value = seq
+                .Cells(firstFreeRow, fFacSTProf).Value = wshFAC_Brouillon.Range("R" & i).Value
+                .Cells(firstFreeRow, fFacSTHeures).Value = CCur(wshFAC_Brouillon.Range("S" & i).Value)
+                .Cells(firstFreeRow, fFacSTHeures).NumberFormat = "#,##0.00"
+                .Cells(firstFreeRow, fFacSTTaux).Value = CCur(wshFAC_Brouillon.Range("T" & i).Value)
+                .Cells(firstFreeRow, fFacSTTaux).NumberFormat = "#,##0.00"
                 firstFreeRow = firstFreeRow + 1
                 seq = seq + 1
             End With

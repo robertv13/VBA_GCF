@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate()
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("G7"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_FEUILLE)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
     
     'Protect the Worksheet
     With ws
@@ -89,7 +89,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
         Debug.Print "Previous = " & previousCellAddress & " - Current = " & Target.Address
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE
+        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
     End If
     
     'Client has been selected
@@ -125,13 +125,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Ne devrait pas passer ici...
     If Not Intersect(Target, Me.Range("I5")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_FEUILLE
+        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K5").Select
         Exit Sub
     End If
     
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_FEUILLE
+        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K7").Select
         Exit Sub
     End If
@@ -176,9 +176,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
-        Target.Interior.COLOR = COULEUR_FEUILLE
+        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
         Application.EnableEvents = True
     End If
     

@@ -77,7 +77,7 @@ End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -91,9 +91,14 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
+    'Force à cacher le listbox pour les résultats de recherche
+    On Error Resume Next
+    Me.lstboxNomClient.Visible = False
+    On Error GoTo 0
+    
     Me.txtClient.TextAlign = fmTextAlignLeft
 
-'RMV    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
+    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
 
 End Sub
 
@@ -285,7 +290,7 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-'RMV    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate[" & ufSaisieHeures.txtClient.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate[" & ufSaisieHeures.txtClient.Value & "]", 0)
     
 '    Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 1, 2)
     
@@ -296,8 +301,13 @@ Private Sub txtClient_AfterUpdate()
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
     End If
+
+    'Force à cacher le listbox pour les résultats de recherche
+    On Error Resume Next
+    Me.lstboxNomClient.Visible = False
+    On Error GoTo 0
     
-'RMV    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
     
 End Sub
 
@@ -308,6 +318,14 @@ Private Sub txtActivite_AfterUpdate()
     If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
+        Else
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+        End If
+    End If
+    
+    If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then '2025-01-16 @ 16:46
+        If CCur(Me.txtHeures) <> 0 Then
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
@@ -558,7 +576,7 @@ Sub imgLogoGCF_Click()
             
             wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
         
-            Call modTEC_TDB.ActualiserTEC_TDB
+            Call ActualiserTEC_TDB
             
             Call Stats_Heures_AF
             
