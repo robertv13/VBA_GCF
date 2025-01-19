@@ -718,12 +718,12 @@ Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
         dictClients.Add CStr(referenceSheet.Cells(i, 2).Value), referenceSheet.Cells(i, 1).Value
     Next i
     
-    Dim codeClient As String, nomCLient As String, updatedNomClient As String
+    Dim codeClient As String, nomClient As String, updatedNomClient As String
     For i = 2 To lastUsedRow
         codeClient = sourceSheet.Cells(i, 5).Value
-        nomCLient = sourceSheet.Cells(i, 6).Value
+        nomClient = sourceSheet.Cells(i, 6).Value
         updatedNomClient = dictClients(codeClient)
-        Debug.Print "#069 - " & i & " : " & codeClient & " - " & nomCLient & " ---> " & updatedNomClient
+        Debug.Print "#069 - " & i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
         sourceSheet.Cells(i, 6).Value = updatedNomClient
     Next i
     
@@ -780,12 +780,12 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
 '        Debug.Print "#070 - " & referenceSheet.Cells(i, 2).value & " - " & referenceSheet.Cells(i, 1).value
     Next i
     
-    Dim codeClient As String, nomCLient As String, updatedNomClient As String
+    Dim codeClient As String, nomClient As String, updatedNomClient As String
     For i = 3 To lastUsedRow
         codeClient = sourceSheet.Cells(i, 4).Value
-        nomCLient = sourceSheet.Cells(i, 3).Value
+        nomClient = sourceSheet.Cells(i, 3).Value
         updatedNomClient = dictClients(codeClient)
-        Debug.Print "#071 - " & i & " : " & codeClient & " - " & nomCLient & " ---> " & updatedNomClient
+        Debug.Print "#071 - " & i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
         sourceSheet.Cells(i, 3).Value = updatedNomClient
     Next i
     
@@ -819,14 +819,14 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).row
     
-    Dim codeClient As String, nomCLient As String, contactFact As String
+    Dim codeClient As String, nomClient As String, contactFact As String
     Dim i As Long
     For i = 2 To lastUsedRow
         codeClient = sourceSheet.Cells(i, fClntFMClientID).Value
-        nomCLient = Trim(sourceSheet.Cells(i, fClntFMClientNom).Value)
+        nomClient = Trim(sourceSheet.Cells(i, fClntFMClientNom).Value)
         contactFact = Trim(sourceSheet.Cells(i, fClntFMContactFacturation).Value)
-        If InStr(nomCLient, contactFact) = 0 Then
-            Debug.Print "#072 - " & i & " : " & codeClient & " - " & nomCLient & " on ajoute '" & contactFact & "'"
+        If InStr(nomClient, contactFact) = 0 Then
+            Debug.Print "#072 - " & i & " : " & codeClient & " - " & nomClient & " on ajoute '" & contactFact & "'"
         End If
     Next i
     
@@ -857,7 +857,7 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).row
     
     Dim profID As Long
-    Dim prof As String, codeClient As String, nomCLient As String
+    Dim prof As String, codeClient As String, nomClient As String
     Dim estFacturable As String, estFacturee As String, estDetruit As String
     Dim dateServ As Date
     Dim hresSaisies As Double, hresDetruites As Double, hresFacturees As Double
@@ -868,7 +868,7 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
         prof = sourceSheet.Cells(i, 3).Value
         dateServ = sourceSheet.Cells(i, 4).Value
         codeClient = sourceSheet.Cells(i, 5).Value
-        nomCLient = Trim(sourceSheet.Cells(i, 6).Value)
+        nomClient = Trim(sourceSheet.Cells(i, 6).Value)
         hresSaisies = Trim(sourceSheet.Cells(i, 8).Value)
         estFacturable = sourceSheet.Cells(i, 10).Value
         estFacturee = sourceSheet.Cells(i, 12).Value

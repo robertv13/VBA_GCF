@@ -89,33 +89,33 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
         Debug.Print "Previous = " & previousCellAddress & " - Current = " & Target.Address
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
+        Range(previousCellAddress).Interior.Color = COULEUR_BASE_COMPTABILITÉ
     End If
     
     'Client has been selected
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
 '        MsgBox "Cellule F5 sélectionnée, prêt pour la saisie.", vbInformation
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Date has been selected
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Payment Type has been selected
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Total deposit has been selected
     If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Comments has been selected
     If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Première case à cocher a été sélectionnée
@@ -125,13 +125,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Ne devrait pas passer ici...
     If Not Intersect(Target, Me.Range("I5")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
+        Target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K5").Select
         Exit Sub
     End If
     
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
+        Target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K7").Select
         Exit Sub
     End If
@@ -176,9 +176,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
-        Target.Interior.COLOR = COULEUR_BASE_COMPTABILITÉ
+        Target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Application.EnableEvents = True
     End If
     

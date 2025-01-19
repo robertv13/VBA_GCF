@@ -190,7 +190,7 @@ Sub Check_Invoice_Template()
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .COLOR = 12611584
+            .Color = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With

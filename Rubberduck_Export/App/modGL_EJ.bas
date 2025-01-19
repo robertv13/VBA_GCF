@@ -112,8 +112,8 @@ Sub JE_Renversement_Update()
         End If
     Next i
     
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.COLOR = vbBlack
-    wshGL_EJ.Range("E9:K23").Font.COLOR = vbBlack
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbBlack
+    wshGL_EJ.Range("E9:K23").Font.Color = vbBlack
 
     'Retour à la source
     wshGL_EJ.Range("F4").Value = ""
@@ -183,9 +183,9 @@ Sub GL_EJ_Clear_All_Cells()
     With wshGL_EJ
         .Range("B6").ClearContents 'Code de client
         .Range("F4,F6:K6").ClearContents
-        .Range("F4, K4, F6:K6").Font.COLOR = vbBlack
+        .Range("F4, K4, F6:K6").Font.Color = vbBlack
         .Range("E9:K23").ClearContents
-        .Range("E9:K23").Font.COLOR = vbBlack
+        .Range("E9:K23").Font.Color = vbBlack
 '        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
         .Range("E6").Value = "Description:"
@@ -422,25 +422,25 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = False
     wshGL_EJ.Range("K4").Value = Format$(rngResult.Cells(1, 2).Value, wshAdmin.Range("B1").Value)
     wshGL_EJ.Range("F6").Value = rngResult.Cells(1, 3).Value
-    Dim ligne As Range
+    Dim Ligne As Range
     Dim l As Long: l = 9
-    For Each ligne In rngResult.Rows
-        wshGL_EJ.Range("E" & l).Value = ligne.Cells(6).Value
-        If ligne.Cells(7).Value <> 0 Then
-            wshGL_EJ.Range("H" & l).Value = ligne.Cells(7).Value
+    For Each Ligne In rngResult.Rows
+        wshGL_EJ.Range("E" & l).Value = Ligne.Cells(6).Value
+        If Ligne.Cells(7).Value <> 0 Then
+            wshGL_EJ.Range("H" & l).Value = Ligne.Cells(7).Value
         End If
-        If ligne.Cells(8).Value <> 0 Then
-            wshGL_EJ.Range("I" & l).Value = ligne.Cells(8).Value
+        If Ligne.Cells(8).Value <> 0 Then
+            wshGL_EJ.Range("I" & l).Value = Ligne.Cells(8).Value
         End If
-        wshGL_EJ.Range("J" & l).Value = ligne.Cells(9).Value
-        wshGL_EJ.Range("L" & l).Value = ligne.Cells(5).Value
+        wshGL_EJ.Range("J" & l).Value = Ligne.Cells(9).Value
+        wshGL_EJ.Range("L" & l).Value = Ligne.Cells(5).Value
         l = l + 1
-    Next ligne
+    Next Ligne
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
-    wshGL_EJ.Range("F4, K4, F6:k6").Font.COLOR = vbRed
-    wshGL_EJ.Range("E9:K23").Font.COLOR = vbRed
+    wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbRed
+    wshGL_EJ.Range("E9:K23").Font.Color = vbRed
     
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
@@ -448,7 +448,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Call Modifier_Forme(shp)
     
     'Libérer la mémoire
-    Set ligne = Nothing
+    Set Ligne = Nothing
     Set rngResult = Nothing
     Set shp = Nothing
     Set ws = Nothing

@@ -60,17 +60,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_TEC
+        Range(previousCellAddress).Interior.Color = COULEUR_BASE_TEC
     End If
     
     'Is client been selected ?
     If Not Intersect(Target, wshTEC_Radiation.Range("F3")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Radiation.Range("K3")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", startTime)
@@ -97,7 +97,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             MsgBox "Valeur non trouvée !!!", vbCritical
         End If
         Application.EnableEvents = False
-        Target.Interior.COLOR = COULEUR_BASE_TEC
+        Target.Interior.Color = COULEUR_BASE_TEC
         clientCode = allCols(fClntFMClientID)
         Application.EnableEvents = True
         If Fn_Is_Client_Facturable(clientCode) = False Then
@@ -120,7 +120,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -129,10 +129,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
-            Target.Interior.COLOR = COULEUR_BASE_TEC
+            Target.Interior.Color = COULEUR_BASE_TEC
             Call TEC_Radiation_Procedure(clientCode, Target.Value)
         End If
         

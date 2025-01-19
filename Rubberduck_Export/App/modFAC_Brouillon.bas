@@ -424,11 +424,11 @@ End Sub
 Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
-    Dim FilePath As String
-    FilePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-    If FilePath = "False" Then Exit Sub 'User canceled
+    Dim filePath As String
+    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    If filePath = "False" Then Exit Sub 'User canceled
 
-    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(FilePath)
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(filePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
 
     'Step 2 - Let the user selects the cells to be copied
@@ -763,11 +763,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -778,7 +778,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
 
     'Section des TEC pour le client à une date données
     With wshFAC_Brouillon
-        .Range("D7:H" & lastUsedRow + 2).Font.COLOR = vbBlack
+        .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
         
         Application.EnableEvents = False
@@ -846,7 +846,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         'Cellule en surbrillance
         With wshFAC_Brouillon.Range("O57")
             .Value = WorksheetFunction.Min(soldeDepotClient, wshFAC_Brouillon.Range("O55").Value)
-            .Interior.COLOR = RGB(255, 255, 0)
+            .Interior.Color = RGB(255, 255, 0)
             .Select
         End With
         
@@ -1205,12 +1205,12 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     
     'Réinsérer les formules dans les cellules concernées uniquement si la colonne 2 n'est pas zéro
     Dim addr As Variant
-    Dim ligne As Integer
+    Dim Ligne As Integer
     Application.EnableEvents = False
     For Each addr In formules.keys
-        ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
+        Ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
         'Vérifier la valeur de la 2ème colonne dans la ligne correspondante
-        If r.Worksheet.Cells(ligne, 19).Value <> 0 Then
+        If r.Worksheet.Cells(Ligne, 19).Value <> 0 Then
             'Vérifier si l'adresse est dans la colonne 2 ou 4
             If r.Worksheet.Range(addr).Column = 19 Or r.Worksheet.Range(addr).Column = 21 Then
                 r.Worksheet.Range(addr).formula = formules(addr)
@@ -1277,7 +1277,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

@@ -73,12 +73,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", 0)
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_TEC
+        Range(previousCellAddress).Interior.Color = COULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Evaluation.Range("L3")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", startTime)
@@ -102,7 +102,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -111,7 +111,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.Value)

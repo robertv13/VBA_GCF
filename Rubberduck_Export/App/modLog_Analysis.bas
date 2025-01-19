@@ -44,13 +44,13 @@ Sub Lire_Fichier_LogMainApp() '2025-01-13 @ 07:46
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
     ReDim output(1 To 50000, 1 To 9)
-    Dim ligne As Long
+    Dim Ligne As Long
     Dim LineContent As String
     Dim lineNo As Long
     Dim duree As String
     Dim i As Long
 
-    ligne = 1
+    Ligne = 1
     Do While Not EOF(FileNumber)
         Line Input #FileNumber, LineContent
         lineNo = lineNo + 1
@@ -58,34 +58,34 @@ Sub Lire_Fichier_LogMainApp() '2025-01-13 @ 07:46
             Dim Fields() As String
             Fields = Split(LineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
             'Insérer les données dans le tableau
-            ligne = ligne + 1
-            output(ligne, 1) = env
-            output(ligne, 2) = CStr(Left(Fields(0), 10))
-            output(ligne, 3) = CStr(Right(Fields(0), 11))
-            output(ligne, 4) = Trim(Fields(1))
-            output(ligne, 5) = Trim(Fields(2))
-            output(ligne, 6) = Trim(Fields(3))
+            Ligne = Ligne + 1
+            output(Ligne, 1) = env
+            output(Ligne, 2) = CStr(Left(Fields(0), 10))
+            output(Ligne, 3) = CStr(Right(Fields(0), 11))
+            output(Ligne, 4) = Trim(Fields(1))
+            output(Ligne, 5) = Trim(Fields(2))
+            output(Ligne, 6) = Trim(Fields(3))
             If InStr(Fields(3), " secondes'") <> 0 Then
                 duree = ExtraireSecondes(Fields(3))
                 duree = Replace(duree, ".", ",")
 '                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
 '                    duree = Left(duree, InStr(duree, " ") - 1)
                 If duree <> 0 Then
-                    output(ligne, 7) = CDbl(duree)
+                    output(Ligne, 7) = CDbl(duree)
                 Else
-                    output(ligne, 7) = 0
+                    output(Ligne, 7) = 0
                 End If
-                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                output(Ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
             End If
-            output(ligne, 8) = lineNo
-            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            output(Ligne, 8) = lineNo
+            output(Ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         End If
     Loop
 
     ' Fermer le fichier
     Close #FileNumber
     
-    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    Call Array_2D_Resizer(output, Ligne, UBound(output, 2))
     
     'Ajout du tableau à un classeur fermé
     Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Application")

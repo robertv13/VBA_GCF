@@ -214,18 +214,18 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         Application.EnableEvents = True
         
         'Prepare G/L posting
-        Dim noEnc As String, nomCLient As String, typeEnc As String, descEnc As String
+        Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
         noEnc = wshENC_Saisie.pmtNo
         dateEnc = wshENC_Saisie.Range("K5").Value
-        nomCLient = wshENC_Saisie.Range("F5").Value
+        nomClient = wshENC_Saisie.Range("F5").Value
         typeEnc = wshENC_Saisie.Range("F7").Value
         montantEnc = wshENC_Saisie.Range("K7").Value
         descEnc = wshENC_Saisie.Range("F9").Value
 
-        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
-        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomCLient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
         MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
@@ -884,14 +884,14 @@ Sub AjusteLibelléEncaissement(typeTrans As String)
     
     If Not typeTrans = "Régularisations" Then
         wshENC_Saisie.Range("J5").Value = "Date encaissement:"
-        wshENC_Saisie.Range("J5").Font.COLOR = vbBlack
+        wshENC_Saisie.Range("J5").Font.Color = vbBlack
         wshENC_Saisie.Range("J7").Value = "Total encaissement:"
-        wshENC_Saisie.Range("J7").Font.COLOR = vbBlack
+        wshENC_Saisie.Range("J7").Font.Color = vbBlack
     Else
         wshENC_Saisie.Range("J5").Value = "Date RÉGULARISATION:"
-        wshENC_Saisie.Range("J5").Font.COLOR = vbRed
+        wshENC_Saisie.Range("J5").Font.Color = vbRed
         wshENC_Saisie.Range("J7").Value = "Total RÉGULARISATION:"
-        wshENC_Saisie.Range("J7").Font.COLOR = vbRed
+        wshENC_Saisie.Range("J7").Font.Color = vbRed
     End If
 
     Application.EnableEvents = True

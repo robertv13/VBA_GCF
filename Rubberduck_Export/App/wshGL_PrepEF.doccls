@@ -60,12 +60,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 '    End If
 '
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = xlNone
+        Range(previousCellAddress).Interior.Color = xlNone
     End If
 
     'Date selected
     If Not Intersect(Target, wshGL_PrepEF.Range("J1")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
 '    'An account has been selected from Trial Balance
@@ -158,7 +158,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B9").Value = Range("J1").Value

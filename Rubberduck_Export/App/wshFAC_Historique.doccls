@@ -67,27 +67,27 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = xlNone
+        Range(previousCellAddress).Interior.Color = xlNone
     End If
 
     'Client has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("D4")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Dates period has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("D6")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Dates from has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("G6")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Dates to has been selected
     If Not Intersect(Target, wshFAC_Historique.Range("I6")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Save the current cell Address
@@ -114,8 +114,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         
         Call FAC_Historique_Montrer_Bouton
-        Range(Target.Address).Interior.COLOR = xlNone
-        Application.Goto Range("D6")
+        Range(Target.Address).Interior.Color = xlNone
+        Application.GoTo Range("D6")
      End If
    
     'Dates Period change
@@ -180,7 +180,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
     
@@ -198,7 +198,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Historique_199")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
     End If
 

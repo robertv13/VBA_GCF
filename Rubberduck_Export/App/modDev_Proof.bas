@@ -114,16 +114,16 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Set dictComptesClients = CreateObject("Scripting.Dictionary")
     
     'Lire wshFAC_Entête
-    Dim facture As String
+    Dim Facture As String
     Dim lastRowEntete As Long, lastRowComptes As Long
     lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
     Dim montantEntete As Currency, totalEntêteCC As Currency
     Dim i As Long
     For i = 3 To lastRowEntete
-        facture = wsEntete.Cells(i, fFacEInvNo).Value
+        Facture = wsEntete.Cells(i, fFacEInvNo).Value
         montantEntete = wsEntete.Cells(i, fFacEARTotal).Value
         totalEntêteCC = totalEntêteCC + montantEntete
-        If Len(facture) > 0 Then dictEntete(facture) = montantEntete
+        If Len(Facture) > 0 Then dictEntete(Facture) = montantEntete
     Next i
     
     'Lire wshFAC_Comptes_Clients
@@ -132,7 +132,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
     lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).row
     For i = 3 To lastRowComptes
-        facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
+        Facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
         montantCompte = wsComptesClients.Cells(i, fFacCCTotal).Value
         totalComptesClients = totalComptesClients + montantCompte
         montantPayé = wsComptesClients.Cells(i, fFacCCTotalPaid).Value
@@ -142,7 +142,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         soldeCC1 = soldeCC1 + solde
         soldeCC2 = soldeCC2 + montantCompte - montantPayé - montantRégul
         If soldeCC1 <> soldeCC2 Then Stop
-        If Len(facture) > 0 Then dictComptesClients(facture) = montantCompte
+        If Len(Facture) > 0 Then dictComptesClients(Facture) = montantCompte
     Next i
     
     'Comparer et générer le rapport
@@ -280,26 +280,26 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
             Set fichierSource = FSO.OpenTextFile(cheminFichier, ForReading)
 
             'Parcourir les lignes du fichier
-            Dim ligne As String, user As String, timeStamp As String, version As String, oper As String
+            Dim Ligne As String, user As String, timeStamp As String, version As String, oper As String
             Dim noTEC As Long
             Dim prof As String
             Dim dateTEC As Date
-            Dim noClient As String, nomCLient As String, desc As String, comm As String
+            Dim noClient As String, nomClient As String, desc As String, comm As String
             Dim hres As Currency
             Dim isFACT As Boolean
             
             Do Until fichierSource.AtEndOfStream
-                ligne = fichierSource.ReadLine
+                Ligne = fichierSource.ReadLine
                 compteurLigne = compteurLigne + 1
 
                 'Compter les occurrences de " | " dans la ligne
-                compteurOccurences = CompterOccurrences(ligne, "|")
+                compteurOccurences = CompterOccurrences(Ligne, "|")
                 If compteurOccurences = 0 Or compteurOccurences = 4 Then
                     Exit Do
                 End If
 '                Debug.Print compteurOccurences & " - " & ligne
-                Call FnStripLigneLogSaisieHeures(compteurOccurences, ligne, user, timeStamp, version, _
-                                                 oper, noTEC, prof, dateTEC, noClient, nomCLient, desc, _
+                Call FnStripLigneLogSaisieHeures(compteurOccurences, Ligne, user, timeStamp, version, _
+                                                 oper, noTEC, prof, dateTEC, noClient, nomClient, desc, _
                                                  hres, comm, isFACT)
                 'Ajustement de certaies variables
                 oper = UCase(Trim(oper))
@@ -323,7 +323,7 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
                 ws.Cells(r, 5) = prof
                 ws.Cells(r, 6) = dateTEC
                 ws.Cells(r, 7) = noClient
-                ws.Cells(r, 8) = nomCLient
+                ws.Cells(r, 8) = nomClient
                 ws.Cells(r, 9) = desc
                 ws.Cells(r, 10) = cheminFichier
                 ws.Cells(r, 11) = compteurLigne
@@ -364,7 +364,7 @@ End Function
 
 Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String, timeStamp As String, _
                                 version As String, oper As String, noTEC As Long, prof As String, dateTEC As Date, _
-                                noClient As String, nomCLient As String, desc As String, hres As Currency, _
+                                noClient As String, nomClient As String, desc As String, hres As Currency, _
                                 comm As String, isFACT As Boolean)
 
     Dim arr As Variant
@@ -382,7 +382,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
             prof = ""
             dateTEC = #7/31/2023#
             noClient = ""
-            nomCLient = ""
+            nomClient = ""
             desc = ""
             hres = 0
             isFACT = False
@@ -399,7 +399,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                 prof = Trim(arr(4))
                 dateTEC = arr(5)
                 noClient = Trim(arr(6))
-                nomCLient = Trim(arr(7))
+                nomClient = Trim(arr(7))
                 desc = Trim(arr(8))
                 hres = Trim(Replace(arr(9), ".", ","))
                 comm = Trim(arr(10))
@@ -414,7 +414,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                     prof = Trim(arr(4))
                     dateTEC = arr(5)
                     noClient = Trim(arr(6))
-                    nomCLient = Trim(arr(7))
+                    nomClient = Trim(arr(7))
                     desc = Trim(arr(8))
                     isFACT = arr(9)
                     hres = 0
@@ -429,7 +429,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                     prof = Trim(arr(4))
                     dateTEC = arr(5)
                     noClient = Trim(arr(6))
-                    nomCLient = Trim(arr(7))
+                    nomClient = Trim(arr(7))
                     desc = Trim(arr(8))
                     hres = Trim(Replace(arr(9), ".", ","))
                     isFACT = Trim(arr(10))
@@ -447,7 +447,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                 prof = Trim(arr(4))
                 dateTEC = arr(5)
                 noClient = Trim(arr(6))
-                nomCLient = Trim(arr(7))
+                nomClient = Trim(arr(7))
                 desc = Trim(arr(8))
                 hres = Trim(Replace(arr(9), ".", ","))
                 isFACT = arr(10)
@@ -463,7 +463,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                         prof = Trim(arr(4))
                         dateTEC = arr(5)
                         noClient = Trim(arr(6))
-                        nomCLient = Trim(arr(7))
+                        nomClient = Trim(arr(7))
                         desc = Trim(arr(8))
                         hres = Trim(Replace(arr(9), ".", ","))
                         isFACT = Trim(arr(10))
@@ -478,7 +478,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                         prof = Trim(arr(4))
                         dateTEC = arr(5)
                         noClient = Trim(arr(6))
-                        nomCLient = Trim(arr(7))
+                        nomClient = Trim(arr(7))
                         desc = Trim(arr(8))
                         hres = Trim(Replace(arr(9), ".", ","))
                         isFACT = Trim(arr(10))
@@ -493,7 +493,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                     prof = Trim(arr(3))
                     dateTEC = arr(4)
                     noClient = Trim(arr(5))
-                    nomCLient = Trim(arr(6))
+                    nomClient = Trim(arr(6))
                     desc = Trim(arr(7))
                     hres = Trim(Replace(arr(8), ".", ","))
                     isFACT = Trim(arr(9))
@@ -510,7 +510,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                 prof = Trim(arr(5))
                 dateTEC = arr(6)
                 noClient = Trim(arr(7))
-                nomCLient = Trim(arr(8))
+                nomClient = Trim(arr(8))
                 desc = Trim(arr(9))
                 hres = Trim(Replace(arr(10), ".", ","))
                 isFACT = arr(11)
@@ -524,7 +524,7 @@ Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String
                 prof = Trim(arr(4))
                 dateTEC = arr(5)
                 noClient = Trim(arr(6))
-                nomCLient = Trim(arr(7))
+                nomClient = Trim(arr(7))
                 desc = Trim(arr(8))
                 hres = Trim(Replace(arr(9), ".", ","))
                 isFACT = Trim(arr(10))

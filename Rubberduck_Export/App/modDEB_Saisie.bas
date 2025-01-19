@@ -13,7 +13,7 @@ Sub DEB_Saisie_Update()
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> "" Then
-        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.COLOR = xlNone
+        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.Color = xlNone
     End If
     
     'Date is not valid OR the transaction does not balance

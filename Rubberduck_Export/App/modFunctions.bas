@@ -58,7 +58,7 @@ Function ObtenirToutesColonnesPourUneValeur(feuille As String, valeurRecherche A
     For i = 1 To UBound(allData, 1)
         If allData(i, colRecherche) = valeurRecherche Then
             'Ligne trouvée, copier toutes les colonnes dans le tableau résultat
-            resultArray = Application.Index(allData, i, 0)
+            resultArray = Application.index(allData, i, 0)
             ObtenirToutesColonnesPourUneValeur = resultArray
             Exit Function
         End If
@@ -69,9 +69,9 @@ Function ObtenirToutesColonnesPourUneValeur(feuille As String, valeurRecherche A
     
 End Function
 
-Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
+Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomCLient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -87,7 +87,7 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
     
     'Using XLOOKUP to find the result directly, reuires EXACT match (5th parameter = 0) - 2025-01-12 @ 14:48
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(nomCLient, _
+    result = Application.WorksheetFunction.XLookup(nomClient, _
                                                    dynamicRange.Columns(1), _
                                                    dynamicRange.Columns(2), _
                                                    "Not Found", _
@@ -109,9 +109,9 @@ Function Fn_GetID_From_Client_Name(nomCLient As String) '2024-02-14 @ 06:07
 
 End Function
 
-Function Fn_Cell_From_BD_Client(nomCLient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
+Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomCLient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -127,7 +127,7 @@ Function Fn_Cell_From_BD_Client(nomCLient As String, ByRef colNumberSearch As In
     
     'Using XLOOKUP to find the result directly, requires EXACT match (5th parameter = 0 ) - 2025-01-12 @ 14:49
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(nomCLient, _
+    result = Application.WorksheetFunction.XLookup(nomClient, _
                                                    dynamicRange.Columns(colNumberSearch), _
                                                    dynamicRange.Columns(colNumberData), _
                                                    "Not Found", _
@@ -1803,7 +1803,7 @@ Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Cu
     Dim ws As Worksheet: Set ws = wshENC_Détails
     
     Dim premièreCellule As Range, celluleTrouvée As Range
-    Dim ligne As Long
+    Dim Ligne As Long
     
     'Rechercher la première cellule avec le numéro de facture
     Set premièreCellule = ws.Columns(2).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -1815,11 +1815,11 @@ Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Cu
         Set celluleTrouvée = premièreCellule
         Do
             'Obtenir la ligne correspondante
-            ligne = celluleTrouvée.row
+            Ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(ligne, 4).Value) And ws.Cells(ligne, 4).Value <= dateLimite Then
+            If IsDate(ws.Cells(Ligne, 4).Value) And ws.Cells(Ligne, 4).Value <= dateLimite Then
                 'Additionner le montant du paiement
-                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(ligne, 5).Value
+                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(Ligne, 5).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(2).FindNext(celluleTrouvée)
@@ -1833,7 +1833,7 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
     Dim ws As Worksheet: Set ws = wshCC_Régularisations
     
     Dim premièreCellule As Range, celluleTrouvée As Range
-    Dim ligne As Long
+    Dim Ligne As Long
     
     'Rechercher la première cellule avec le numéro de facture
     Set premièreCellule = ws.Columns(fREGULInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -1845,15 +1845,15 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
         Set celluleTrouvée = premièreCellule
         Do
             'Obtenir la ligne correspondante
-            ligne = celluleTrouvée.row
+            Ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(ligne, fREGULDate).Value) And ws.Cells(ligne, fREGULDate).Value <= dateLimite Then
+            If IsDate(ws.Cells(Ligne, fREGULDate).Value) And ws.Cells(Ligne, fREGULDate).Value <= dateLimite Then
                 'Additionner les cellules pertinentes
                 Fn_Obtenir_Régularisations_Facture = Fn_Obtenir_Régularisations_Facture + _
-                                                        ws.Cells(ligne, fREGULHono).Value + _
-                                                        ws.Cells(ligne, fREGULFrais).Value + _
-                                                        ws.Cells(ligne, fREGULTPS).Value + _
-                                                        ws.Cells(ligne, fREGULTVQ).Value
+                                                        ws.Cells(Ligne, fREGULHono).Value + _
+                                                        ws.Cells(Ligne, fREGULFrais).Value + _
+                                                        ws.Cells(Ligne, fREGULTPS).Value + _
+                                                        ws.Cells(Ligne, fREGULTVQ).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(fREGULInvNo).FindNext(celluleTrouvée)

@@ -2,89 +2,394 @@ Attribute VB_Name = "modFAC_Confirmation"
 Option Explicit
 
 Public invNo As String
+Public Factures As Collection
 
-Sub FAC_Confirmation_Client_Change(clientName As String)
+Sub Afficher_ufConfirmation() '2025-01-19 @ 08:42
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Client_Change(" & clientName & ")", 0)
+    'Aller chercher les factures à confirmer
+    Call PrepareDonneesPourListView
     
-    'Aller chercher le vrai nom de client
-    Dim allCols As Variant
-    allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
-    'Vérifier le résultat retourné
-    If IsArray(allCols) Then
-        Application.EnableEvents = False
-        Dim clientNamePurged As String
-        clientNamePurged = allCols(1)
-        Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
-            clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
-        Loop
-        wshFAC_Confirmation.Range("F5").Value = clientNamePurged
-        Application.EnableEvents = True
+    'Vérifiez si la collection de factures est vide
+    If Factures Is Nothing Then
+        MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
+    ElseIf Factures.count = 0 Then
+        MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
     Else
-        wshFAC_Confirmation.Range("F5").Value = ""
-        MsgBox "Valeur non trouvée dans la table BD_Clients !!!", vbCritical
-        wshFAC_Confirmation.Range("F5").Select
-    End If
+        'Charger le UserForm seulement avec une collection qui n'est pas vide
+        Load ufConfirmation
+        ufConfirmation.show vbModeless
         
-    Application.EnableEvents = False
-    wshFAC_Confirmation.Range("B18").Value = allCols(fClntFMClientID)
-    Application.EnableEvents = True
-    
-    With wshFAC_Brouillon
-        Application.EnableEvents = False
-        .Range("K3").Value = allCols(fClntFMContactFacturation)
-        .Range("K4").Value = clientNamePurged
-        .Range("K5").Value = allCols(fClntFMAdresse1) 'Adresse1
-        If allCols(fClntFMAdresse2) <> "" Then
-            .Range("K6").Value = allCols(fClntFMAdresse2) 'Adresse2
-            .Range("K7").Value = allCols(fClntFMVille) & ", " & _
-                                 allCols(fClntFMProvince) & ", " & _
-                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
-        Else
-            .Range("K6").Value = allCols(fClntFMVille) & ", " & _
-                                 allCols(fClntFMProvince) & ", " & _
-                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
-            .Range("K7").Value = ""
-        End If
-        Application.EnableEvents = True
-    End With
-    
-    With wshFAC_Finale
-        Application.EnableEvents = False
-        .Range("B23").Value = allCols(fClntFMContactFacturation)
-        .Range("B24").Value = clientNamePurged
-        .Range("B25").Value = allCols(fClntFMAdresse1) 'Adresse1
-        If Trim(allCols(fClntFMAdresse2)) <> "" Then
-            .Range("B26").Value = allCols(fClntFMAdresse2) 'Adresse2
-            .Range("B27").Value = allCols(fClntFMVille) & ", " & _
-                                  allCols(fClntFMProvince) & ", " & _
-                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
-        Else
-            .Range("B26").Value = allCols(fClntFMVille) & ", " & _
-                                  allCols(fClntFMProvince) & ", " & _
-                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
-            .Range("B27").Value = ""
-        End If
-        If Trim(.Range("B26").Value) = ", ," Then
-            .Range("B26").Value = ""
-        End If
-        If Trim(.Range("B27").Value) = ", ," Then
-            .Range("B27").Value = ""
-        End If
-        Application.EnableEvents = True
-    End With
-    
-    Call FAC_Brouillon_Clear_All_TEC_Displayed
-    
-    Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
-    
-    Call FAC_Brouillon_Load_Non_Billable_Into_Userform
+        ufConfirmation.txtNbTotalFactures.Value = Format$(Factures.count, "#,##0")
+        ufConfirmation.txtNbFacturesSélectionnées.Value = 0
+        ufConfirmation.txtTotalFacturesSélectionnées.Value = Format$(0, "###,##0.00 $")
+    End If
 
-Clean_Exit:
+End Sub
 
-    Call Log_Record("modFAC_Confirmation:FAC_Confirmation_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", startTime)
+Sub PrepareDonneesPourListView() '2025-01-19 @ 08:42
+
+    Set Factures = New Collection
+    
+    Call ObtenirFactureAConfirmer("AC")
+    
+    Dim ws As Worksheet
+    Set ws = wshFAC_Entête
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
+    
+    Dim invNo As String, dateFacture As String, nomClient As String, totalFacture As String
+    Dim r As Long
+    If lastUsedRow > 2 Then
+        For r = 3 To lastUsedRow
+            invNo = " " & ws.Range("AY" & r).Value
+            dateFacture = " " & Format$(ws.Range("AZ" & r), wshAdmin.Range("B1").Value)
+            nomClient = ws.Range("BC" & r).Value
+            totalFacture = Format$(ws.Range("BO" & r).Value, "###,##0.00 $")
+            totalFacture = Space(13 - Len(totalFacture)) & totalFacture
+            Factures.Add Array(invNo, dateFacture, nomClient, totalFacture)
+        Next r
+    End If
+
+End Sub
+
+Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", 0)
+    
+    'Utilisation de la feuille FAC_Entête
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Utilisation du AF#2 dans wshFAC_Entête
+    
+    'Effacer les données de la dernière utilisation
+    ws.Range("AW6:AW10").ClearContents
+    ws.Range("AW6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
+    ws.Range("AW7").Value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("AW2:AW3")
+    ws.Range("AW3").Value = AC_OR_C
+    ws.Range("AW8").Value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("AY1").CurrentRegion
+    rngResult.offset(2, 0).Clear
+    Set rngResult = ws.Range("AY2:BP2")
+    ws.Range("AW9").Value = rngResult.Address
+        
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Qu'avons-nous comme résultat ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
+    ws.Range("AW10").Value = lastUsedRow - 2 & " lignes"
+    
+    If lastUsedRow > 3 Then
+        With ws.Sort 'Sort - Inv_No
+            .SortFields.Clear
+            .SortFields.Add key:=ws.Range("AY3"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal 'Sort Based On Invoice Number
+            .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
+            .Apply 'Apply Sort
+         End With
+     End If
+
+    'Libérer la mémoire
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
+
+    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", startTime)
+
+End Sub
+
+Sub CocherToutesLesCases(listView As listView) '2025-01-19 @ 08:42
+
+    'On s'assure de commencer avec aucune ligne de sélectionnée
+    ufConfirmation.txtNbFacturesSélectionnées.Value = 0
+    ufConfirmation.txtTotalFacturesSélectionnées.Value = 0
+    
+    Dim valeur As Currency
+    Dim i As Integer
+    For i = 1 To listView.ListItems.count
+        listView.ListItems(i).Checked = True
+        Call MarquerLigneSelectionnee(listView.ListItems(i))
+        valeur = CCur(Trim(listView.ListItems(i).SubItems(4)))
+        ufConfirmation.txtTotalFacturesSélectionnées.Value = _
+            Format$(ufConfirmation.txtTotalFacturesSélectionnées.Value + valeur, "###,##0.00 $")
+        ufConfirmation.txtNbFacturesSélectionnées.Value = _
+            ufConfirmation.txtNbFacturesSélectionnées.Value + 1
+    Next i
+    
+    If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
+        ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
+    Else
+        ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
+         ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
+    End If
+    ufConfirmation.cmdConfirmation.Visible = True
     
 End Sub
+
+Sub DecocherToutesLesCases(listView As listView) '2025-01-19 @ 08:42
+
+    Dim i As Integer
+    For i = 1 To listView.ListItems.count
+        listView.ListItems(i).Checked = False
+        Call MarquerLigneSelectionnee(listView.ListItems(i))
+    Next i
+    
+    ufConfirmation.txtTotalFacturesSélectionnées = Format$(0, "###,##0.00 $")
+    ufConfirmation.txtNbFacturesSélectionnées = 0
+    ufConfirmation.cmdConfirmation.Visible = False
+    
+End Sub
+
+Public Sub MarquerLigneSelectionnee(item As listItem)
+
+    'Vérifie si l'élément n'a pas déjà la mention "   - Sélectionnée -"
+    If InStr(item.SubItems(3), "   - Sélectionnée -") = 0 Then
+        item.SubItems(3) = Left(item.SubItems(3), 60) & "   - Sélectionnée -"
+    Else
+        item.SubItems(3) = Left(item.SubItems(3), 60)
+    End If
+    
+End Sub
+
+Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
+
+    Dim Ligne As listItem
+    
+    ufConfirmation.lblFactureEmConfirmation.Visible = True
+    ufConfirmation.txtNoFactureEnConfirmation.Visible = True
+
+    Application.ScreenUpdating = True
+    
+    With ufConfirmation.ListView1
+        Dim i As Long
+        'Parcourir chacune des lignes
+        For i = 1 To .ListItems.count
+            Set Ligne = .ListItems(i)
+            If Ligne.Checked Then
+                invNo = Trim(Ligne.SubItems(1))
+                ufConfirmation.txtNoFactureEnConfirmation.Value = invNo
+                DoEvents
+                Call MAJ_Statut_Facture_Entête_BD_MASTER(invNo)
+                Call MAJ_Statut_Facture_Entête_Local(invNo)
+                DoEvents
+                Call Construire_GL_Posting_Confirmation(invNo)
+                DoEvents
+            End If
+        Next i
+    End With
+
+    MsgBox "La confirmation des factures est complétée", vbOKOnly + vbInformation, "Confirmation de traitement"
+
+    Unload ufConfirmation
+    Call Afficher_ufConfirmation
+    
+End Sub
+
+Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-01-19 @ 08:42
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER(" & invoice & ")", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "FAC_Entête$"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+              ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    Dim SQL As String
+    'Open the recordset for the specified invoice
+    SQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
+    rs.Open SQL, conn, 2, 3
+    If Not rs.EOF Then
+        'Update AC_ouC with 'C'
+        rs.Fields(fFacEACouC - 1).Value = "C"
+        rs.Update
+    Else
+        'Handle the case where the specified invoice is not found
+        MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
+    End If
+    
+    'Close recordset and connection
+    rs.Close
+    conn.Close
+    
+    Application.ScreenUpdating = True
+
+    'Libérer la mémoire
+    Set conn = Nothing
+    Set rs = Nothing
+    
+    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", startTime)
+
+End Sub
+
+Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-01-19 @ 08:42
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local(" & invoice & ")", 0)
+    
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Set the range to look for
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
+    
+    Dim foundRange As Range
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    Dim r As Long, rowToBeUpdated As Long, tecID As Long
+    If Not foundRange Is Nothing Then
+        r = foundRange.row
+        ws.Cells(r, fFacEACouC).Value = "C"
+    Else
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
+    End If
+    
+    'Libérer la mémoire
+    Set foundRange = Nothing
+    Set lookupRange = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", startTime)
+
+End Sub
+
+Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation(" & invoice & ")", 0)
+
+    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    
+    'Set the range to look for
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
+    
+    Dim foundRange As Range
+    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
+    
+    Dim r As Long
+    If Not foundRange Is Nothing Then
+        r = foundRange.row
+        Dim dateFact As Date
+        dateFact = Left(ws.Cells(r, fFacEDateFacture).Value, 10)
+        Dim hono As Currency
+        hono = ws.Cells(r, fFacEHonoraires).Value
+        Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
+        misc1 = ws.Cells(r, fFacEAutresFrais1).Value
+        misc2 = ws.Cells(r, fFacEAutresFrais2).Value
+        misc3 = ws.Cells(r, fFacEAutresFrais3).Value
+        Dim tps As Currency, tvq As Currency
+        tps = ws.Cells(r, fFacEMntTPS).Value
+        tvq = ws.Cells(r, fFacEMntTVQ).Value
+        
+        Dim descGL_Trans As String, source As String
+        descGL_Trans = ws.Cells(r, fFacENomClient).Value
+        source = "FACTURE:" & invoice
+        
+        Dim MyArray(1 To 7, 1 To 4) As String
+        
+        'AR amount
+        If hono + misc1 + misc2 + misc3 + tps + tvq Then
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Comptes Clients")
+            MyArray(1, 2) = "Comptes clients"
+            MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
+            MyArray(1, 4) = ""
+        End If
+        
+        'Professional Fees (hono)
+        If hono Then
+            MyArray(2, 1) = ObtenirNoGlIndicateur("Revenus de consultation")
+            MyArray(2, 2) = "Revenus de consultation"
+            MyArray(2, 3) = -hono
+            MyArray(2, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 1 (misc1)
+        If misc1 Then
+            MyArray(3, 1) = ObtenirNoGlIndicateur("Revenus frais de poste")
+            MyArray(3, 2) = "Revenus - Frais de poste"
+            MyArray(3, 3) = -misc1
+            MyArray(3, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 2 (misc2)
+        If misc2 Then
+            MyArray(4, 1) = ObtenirNoGlIndicateur("Revenus sous-traitants")
+            MyArray(4, 2) = "Revenus - Sous-traitants"
+            MyArray(4, 3) = -misc2
+            MyArray(4, 4) = ""
+        End If
+        
+        'Miscellaneous Amount # 3 (misc3)
+        If misc3 Then
+            MyArray(5, 1) = ObtenirNoGlIndicateur("Revenus autres frais")
+            MyArray(5, 2) = "Revenus - Autres Frais"
+            MyArray(5, 3) = -misc3
+            MyArray(5, 4) = ""
+        End If
+        
+        'GST to pay (tps)
+        If tps Then
+            MyArray(6, 1) = ObtenirNoGlIndicateur("TPS Facturée")
+            MyArray(6, 2) = "TPS percues"
+            MyArray(6, 3) = -tps
+            MyArray(6, 4) = ""
+        End If
+        
+        'PST to pay (tvq)
+        If tvq Then
+            MyArray(7, 1) = ObtenirNoGlIndicateur("TVQ Facturée")
+            MyArray(7, 2) = "TVQ percues"
+            MyArray(7, 3) = -tvq
+            MyArray(7, 4) = ""
+        End If
+        
+        'Mise à jour du posting GL des confirmations de facture
+        Dim GLEntryNo As Long
+        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
+        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
+        
+    Else
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
+    End If
+    
+    'Libérer la mémoire
+    On Error Resume Next
+    Set foundRange = Nothing
+    Set lookupRange = Nothing
+    Set ws = Nothing
+    On Error GoTo 0
+    
+    Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", startTime)
+
+End Sub
+
 
 Sub ObtenirFactureInfos(noFact As String)
 
@@ -195,37 +500,6 @@ Sub AfficherPDFetWIPicones()
     
     Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", startTime)
     
-End Sub
-
-Sub shpPDF_Click()
-
-    Call AfficherFactureFormatPDF
-    
-End Sub
-
-Sub AfficherFactureFormatPDF()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherFactureFormatPDF", 0)
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
-    
-    'Assuming the invoice number is at 'F5'
-    Dim fullPDFFileName As String
-    fullPDFFileName = wshAdmin.Range("F5").Value & FACT_PDF_PATH & _
-        Application.PathSeparator & ws.Cells(5, 6).Value & ".pdf"
-    
-    'Open the invoice using Adobe Acrobat Reader
-    If fullPDFFileName <> "" Then
-        Shell "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & fullPDFFileName & Chr(34), vbNormalFocus
-    Else
-        MsgBox "Je ne retrouve pas cette facture", vbExclamation
-    End If
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-    Call Log_Record("modFAC_Confirmation:AfficherFactureFormatPDF", startTime)
-
 End Sub
 
 Sub AfficherInformationsFacture(wsF As Worksheet, r As Long)
@@ -349,7 +623,7 @@ Sub PreparerRapportTECFacturés()
             .Font.size = 9
             .Font.Bold = True
             .Font.Italic = True
-            .Font.COLOR = vbWhite
+            .Font.Color = vbWhite
             .HorizontalAlignment = xlCenter
         End With
         
@@ -390,7 +664,7 @@ Sub PreparerRapportTECFacturés()
         With .Range("A4:D4").Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .COLOR = 12611584
+            .Color = 12611584
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -543,136 +817,6 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
     Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé", startTime)
     
-End Sub
-
-Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2024-11-19 @ 10:09
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", 0)
-    
-    'Utilisation de la feuille FAC_Entête
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    'wshFAC_Entête_AF#2
-    
-    'Effacer les données de la dernière utilisation
-    ws.Range("AW6:AW10").ClearContents
-    ws.Range("AW6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    
-    'Définir le range pour la source des données en utilisant un tableau
-    Dim rngData As Range
-    Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
-    ws.Range("AW7").Value = rngData.Address
-    
-    'Définir le range des critères
-    Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("AW2:AW3")
-    ws.Range("AW3").Value = AC_OR_C
-    ws.Range("AW8").Value = rngCriteria.Address
-    
-    'Définir le range des résultats et effacer avant le traitement
-    Dim rngResult As Range
-    Set rngResult = ws.Range("AY1").CurrentRegion
-    rngResult.offset(2, 0).Clear
-    Set rngResult = ws.Range("AY2:BP2")
-    ws.Range("AW9").Value = rngResult.Address
-        
-    rngData.AdvancedFilter _
-                action:=xlFilterCopy, _
-                criteriaRange:=rngCriteria, _
-                CopyToRange:=rngResult, _
-                Unique:=False
-        
-    'Qu'avons-nous comme résultat ?
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
-    ws.Range("AW10").Value = lastUsedRow - 2 & " lignes"
-    
-    If lastUsedRow > 3 Then
-        With ws.Sort 'Sort - Inv_No
-            .SortFields.Clear
-            .SortFields.Add key:=ws.Range("AY3"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal 'Sort Based On Invoice Number
-            .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
-            .Apply 'Apply Sort
-         End With
-     End If
-
-    'Libérer la mémoire
-    Set rngCriteria = Nothing
-    Set rngData = Nothing
-    Set rngResult = Nothing
-    Set ws = Nothing
-
-    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", startTime)
-
-End Sub
-
-Sub MontrerFacturesAConfirmer()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MontrerFacturesAConfirmer", 0)
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    Application.ScreenUpdating = False
-    
-    'Clear contents or the area
-    Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Confirmation.Cells(wshFAC_Confirmation.Rows.count, "P").End(xlUp).row
-    If lastUsedRow > 3 Then
-        wshFAC_Confirmation.Range("P4:AA" & lastUsedRow).ClearContents
-    End If
-
-    'Set criteria for AvancedFilter
-    ws.Range("AW3").Value = "AC"
-    
-    Call ObtenirFactureAConfirmer("AC")
-    
-    Dim lastUsedRowAF As Long
-    lastUsedRowAF = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
-    If lastUsedRowAF < 3 Then
-        GoTo Clean_Exit
-    End If
-    
-'    wshFAC_Confirmation.Unprotect
-    
-    Application.EnableEvents = False
-    
-    Dim i As Integer
-    For i = 3 To lastUsedRowAF
-        With wshFAC_Confirmation
-            wshFAC_Confirmation.Cells(i + 1, 16).Locked = False
-            .Cells(i + 1, "P").Value = ws.Cells(i, 51)
-            .Cells(i + 1, "Q").Value = Format$(ws.Cells(i, 52).Value, wshAdmin.Range("B1").Value)
-            .Cells(i + 1, "R").Value = ws.Cells(i, 55)
-            .Cells(i + 1, "S").Value = ws.Cells(i, 67)
-            .Cells(i + 1, "T").Value = ws.Cells(i, 56)
-            .Cells(i + 1, "U").Value = ws.Cells(i, 58)
-            .Cells(i + 1, "V").Value = ws.Cells(i, 60)
-            .Cells(i + 1, "W").Value = ws.Cells(i, 62)
-            .Cells(i + 1, "X").Value = ws.Cells(i, 64)
-            .Cells(i + 1, "Y").Value = ws.Cells(i, 66)
-            .Cells(i + 1, "Z").Value = ws.Cells(i, 68)
-        End With
-    Next i
-    
-    Application.EnableEvents = True
-    
-    With wshFAC_Confirmation
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
-    
-    wshFAC_Confirmation.Range("L5").Value = ""
-    
-    Application.ScreenUpdating = True
-    
-Clean_Exit:
-    Set ws = Nothing
-
-    Call Log_Record("modFAC_Confirmation:MontrerFacturesAConfirmer", startTime)
-
 End Sub
 
 Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
@@ -864,8 +1008,6 @@ Sub NettoyerCellulesEtIconesPDF()
     ws.Shapes("shpConfirmerFacture").Visible = False
     ws.Shapes("shpOK").Visible = False
     
-    Call MontrerFacturesAConfirmer
-    
     'Libérer la mémoire
     Set pic = Nothing
     Set ws = Nothing
@@ -875,140 +1017,6 @@ Sub NettoyerCellulesEtIconesPDF()
     wshFAC_Confirmation.Range("L5").Select
     
     Call Log_Record("modFAC_Confirmation:NettoyerCellulesEtIconesPDF", startTime)
-
-End Sub
-
-Sub TraiterToutesLesFacturesAC(selectedInvoice As String)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterToutesLesFacturesAC", 0)
-    
-    'Définir la feuille active et la plage des factures
-    Dim ws As Worksheet
-    Set ws = wshFAC_Confirmation
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    If lastUsedRow > 4 Then
-        Dim rngFactures As Range
-        Set rngFactures = ws.Range("P4:P" & lastUsedRow)
-        'Copier les valeurs dans un tableau
-        Dim arrFactures() As Variant
-        arrFactures = rngFactures.Value
-        Dim traiterToutes As VbMsgBoxResult
-        traiterToutes = MsgBox("Voulez-vous confirmer TOUTES les factures à confirmer ?", vbYesNo + vbQuestion, "Choix d'un traitement complet ou à la pièce")
-    End If
-    
-    'Demander à l'utilisateur s'il veut traiter toutes les factures
-    If traiterToutes = vbYes And lastUsedRow > 4 Then
-        'Traiter toutes les factures du tableau
-        Dim i As Long
-        For i = LBound(arrFactures, 1) To UBound(arrFactures, 1)
-            If Not IsEmpty(arrFactures(i, 1)) Then
-                Debug.Print "Facture : " & arrFactures(i, 1)
-                Call TraiterConfirmationFacture(CStr(arrFactures(i, 1)))
-                Application.StatusBar = "Facture # " & arrFactures(i, 1) & " a été confirmée avec succès"
-                DoEvents
-            End If
-        Next i
-        Application.StatusBar = ""
-'        For Each cellule In rngFactures
-'            If Not IsEmpty(cellule.value) Then
-'                Debug.Print cellule.value
-'                Call TraiterConfirmationFacture(cellule.value)
-'            End If
-'        Next cellule
-        MsgBox "Toutes les factures ont été confirmées.", vbInformation
-    Else
-        'On traite une seule facture
-        Call TraiterConfirmationFacture(selectedInvoice)
-        
-        MsgBox "La facture " & ActiveCell.Value & " a été traitée.", vbInformation
-        
-    End If
-    
-    Call Log_Record("modFAC_Confirmation:TraiterToutesLesFacturesAC", startTime)
-
-End Sub
-
-Sub TraiterUneFacture(facture As Variant)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterUneFacture(" & facture & ")", 0)
-    
-    ' Placez ici votre logique pour traiter une facture
-    ' Exemple : Logique de traitement
-    Debug.Print "Traitement de la facture : " & facture
-    
-    Call Log_Record("modFAC_Confirmation:TraiterUneFacture", startTime)
-
-End Sub
-
-Sub shpOK_Click()
-
-    Call BoutonOK
-    
-End Sub
-
-Sub BoutonOK()
-
-    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
-    
-    Call NettoyerCellulesEtIconesPDF
-    
-    ws.Range("L5").Select
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
-Sub shpConfirmerFacture_Click()
-
-    Call ConfirmerConfirmationFacture
-    
-End Sub
-
-Sub ConfirmerConfirmationFacture()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:ConfirmerConfirmationFacture", 0)
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Confirmation
-    
-    Dim invNo As String
-    invNo = ws.Range("L5").Value
-    
-    If invNo = "" Then
-        MsgBox "Il n'y a pas de facture à confirmer!", vbCritical
-        Exit Sub
-    End If
-    
-    ws.Shapes("shpConfirmerFacture").Visible = False
-    
-    Dim answerYesNo As Long
-    answerYesNo = MsgBox("Êtes-vous certain de vouloir CONFIRMER cette facture ? ", _
-                         vbYesNo + vbQuestion, "Confirmation de facture")
-    If answerYesNo = vbNo Then
-        MsgBox _
-            prompt:="Cette facture ne sera PAS CONFIRMÉE ! ", _
-            Title:="Confirmation", _
-            Buttons:=vbCritical
-            GoTo Clean_Exit
-    End If
-    
-    If answerYesNo = vbYes Then
-    
-        Call TraiterConfirmationFacture(invNo)
-        
-    End If
-    
-Clean_Exit:
-
-    Call NettoyerCellulesEtIconesPDF
-
-    wshFAC_Confirmation.Range("L5").Select
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-    Call Log_Record("modFAC_Confirmation:ConfirmerConfirmationFacture", startTime)
 
 End Sub
 
@@ -1048,214 +1056,6 @@ Sub ObtenirPostingExistantGL(invNo)
     Set wsGL = Nothing
     
     Call Log_Record("modFAC_Confirmation:ObtenirPostingExistantGL", startTime)
-
-End Sub
-
-Sub TraiterConfirmationFacture(invNo As String)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:TraiterConfirmationFacture(" & invNo & ")", 0)
-    
-    'Update the type of invoice (Master)
-    Call MAJStatutFactureBD_MASTER(invNo)
-    
-    'Update the type of invoice (Locally)
-    Call MAJStatutFactureLocalement(invNo)
-    
-    'Do the G/L posting
-    Call ConstruirePostingGL(invNo)
-    
-'    MsgBox "Cette facture a été confirmée avec succès", vbInformation
-
-    'Clear the cells on the current Worksheet
-    Call NettoyerCellulesEtIconesPDF
-    
-    Call Log_Record("modFAC_Confirmation:TraiterConfirmationFacture", startTime)
-    
-End Sub
-
-Sub MAJStatutFactureBD_MASTER(invoice As String)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJStatutFactureBD_MASTER(" & invoice & ")", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête$"
-    
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-              ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-
-    Dim SQL As String
-    'Open the recordset for the specified invoice
-    SQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
-    rs.Open SQL, conn, 2, 3
-    If Not rs.EOF Then
-        'Update AC_ouC with 'C'
-        rs.Fields(fFacEACouC - 1).Value = "C"
-        rs.Update
-    Else
-        'Handle the case where the specified invoice is not found
-        MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
-    End If
-    
-    'Close recordset and connection
-    rs.Close
-    conn.Close
-    
-    Application.ScreenUpdating = True
-
-    'Libérer la mémoire
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call Log_Record("modFAC_Confirmation:MAJStatutFactureBD_MASTER", startTime)
-
-End Sub
-
-Sub MAJStatutFactureLocalement(invoice As String)
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJStatutFactureLocalement(" & invoice & ")", 0)
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    'Set the range to look for
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
-    
-    Dim foundRange As Range
-    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
-    
-    Dim r As Long, rowToBeUpdated As Long, tecID As Long
-    If Not foundRange Is Nothing Then
-        r = foundRange.row
-        ws.Cells(r, 3).Value = "C"
-    Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
-    End If
-    
-    'Libérer la mémoire
-    Set foundRange = Nothing
-    Set lookupRange = Nothing
-    Set ws = Nothing
-    
-    Call Log_Record("modFAC_Confirmation:MAJStatutFactureLocalement", startTime)
-
-End Sub
-
-Sub ConstruirePostingGL(invoice As String) '2024-08-18 @17:15
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ConstruirePostingGL(" & invoice & ")", 0)
-
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    'Set the range to look for
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
-    
-    Dim foundRange As Range
-    Set foundRange = lookupRange.Find(What:=invoice, LookIn:=xlValues, LookAt:=xlWhole)
-    
-    Dim r As Long
-    If Not foundRange Is Nothing Then
-        r = foundRange.row
-        Dim dateFact As Date
-        dateFact = Left(ws.Cells(r, 2).Value, 10)
-        Dim hono As Currency
-        hono = ws.Cells(r, 10).Value
-        Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
-        misc1 = ws.Cells(r, 12).Value
-        misc2 = ws.Cells(r, 14).Value
-        misc3 = ws.Cells(r, 16).Value
-        Dim tps As Currency, tvq As Currency
-        tps = ws.Cells(r, 18).Value
-        tvq = ws.Cells(r, 20).Value
-        
-        Dim descGL_Trans As String, source As String
-        descGL_Trans = ws.Cells(r, 6).Value
-        source = "FACTURE:" & invoice
-        
-        Dim MyArray(1 To 7, 1 To 4) As String
-        
-        'AR amount
-        If hono + misc1 + misc2 + misc3 + tps + tvq Then
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Comptes Clients")
-            MyArray(1, 2) = "Comptes clients"
-            MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
-            MyArray(1, 4) = ""
-        End If
-        
-        'Professional Fees (hono)
-        If hono Then
-            MyArray(2, 1) = ObtenirNoGlIndicateur("Revenus de consultation")
-            MyArray(2, 2) = "Revenus de consultation"
-            MyArray(2, 3) = -hono
-            MyArray(2, 4) = ""
-        End If
-        
-        'Miscellaneous Amount # 1 (misc1)
-        If misc1 Then
-            MyArray(3, 1) = ObtenirNoGlIndicateur("Revenus frais de poste")
-            MyArray(3, 2) = "Revenus - Frais de poste"
-            MyArray(3, 3) = -misc1
-            MyArray(3, 4) = ""
-        End If
-        
-        'Miscellaneous Amount # 2 (misc2)
-        If misc2 Then
-            MyArray(4, 1) = ObtenirNoGlIndicateur("Revenus sous-traitants")
-            MyArray(4, 2) = "Revenus - Sous-traitants"
-            MyArray(4, 3) = -misc2
-            MyArray(4, 4) = ""
-        End If
-        
-        'Miscellaneous Amount # 3 (misc3)
-        If misc3 Then
-            MyArray(5, 1) = ObtenirNoGlIndicateur("Revenus autres frais")
-            MyArray(5, 2) = "Revenus - Autres Frais"
-            MyArray(5, 3) = -misc3
-            MyArray(5, 4) = ""
-        End If
-        
-        'GST to pay (tps)
-        If tps Then
-            MyArray(6, 1) = ObtenirNoGlIndicateur("TPS Facturée")
-            MyArray(6, 2) = "TPS percues"
-            MyArray(6, 3) = -tps
-            MyArray(6, 4) = ""
-        End If
-        
-        'PST to pay (tvq)
-        If tvq Then
-            MyArray(7, 1) = ObtenirNoGlIndicateur("TVQ Facturée")
-            MyArray(7, 2) = "TVQ percues"
-            MyArray(7, 3) = -tvq
-            MyArray(7, 4) = ""
-        End If
-        
-        Dim GLEntryNo As Long
-        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
-        
-        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
-        
-    Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
-    End If
-    
-    'Libérer la mémoire
-    On Error Resume Next
-    Set foundRange = Nothing
-    Set lookupRange = Nothing
-    Set ws = Nothing
-    On Error GoTo 0
-    
-    Call Log_Record("modFAC_Confirmation:ConstruirePostingGL", startTime)
 
 End Sub
 

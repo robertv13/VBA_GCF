@@ -40,15 +40,15 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
         Call REGUL_Update_Comptes_Clients_Locally
                 
         'Prepare G/L posting
-        Dim noRegul As String, nomCLient As String, descRegul As String
+        Dim noRegul As String, nomClient As String, descRegul As String
         Dim dateRegul As Date
         Dim montantRegul As Currency
         dateRegul = wshENC_Saisie.Range("K5").Value
-        nomCLient = wshENC_Saisie.Range("F5").Value
+        nomClient = wshENC_Saisie.Range("F5").Value
         descRegul = wshENC_Saisie.Range("F9").Value
 
-        Call REGUL_GL_Posting_DB(regulNo, dateRegul, nomCLient, descRegul)
-        Call REGUL_GL_Posting_Locally(regulNo, dateRegul, nomCLient, descRegul)
+        Call REGUL_GL_Posting_DB(regulNo, dateRegul, nomClient, descRegul)
+        Call REGUL_GL_Posting_Locally(regulNo, dateRegul, nomClient, descRegul)
         
         MsgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation, "Confirmation de traitement"
         

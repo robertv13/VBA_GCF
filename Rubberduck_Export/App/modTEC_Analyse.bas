@@ -141,12 +141,12 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .COLOR = 65535
+            .Color = 65535
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
         With .Font
-            .COLOR = -16776961
+            .Color = -16776961
             .TintAndShade = 0
             .Bold = True
             .size = 12
@@ -158,7 +158,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         With .Interior
             .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .COLOR = 255
+            .Color = 255
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -271,25 +271,25 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
             'Rule for values > 50 (Highest priority)
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
             With .item(.count)
-                .Interior.COLOR = RGB(255, 0, 0) 'Red color
+                .Interior.Color = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
             With .item(.count)
-                .Interior.COLOR = RGB(255, 165, 0) 'Orange color
+                .Interior.Color = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
             With .item(.count)
-                .Interior.COLOR = RGB(255, 255, 0) 'Yellow color
+                .Interior.Color = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
             With .item(.count)
-                .Interior.COLOR = RGB(144, 238, 144) 'Light green color
+                .Interior.Color = RGB(144, 238, 144) 'Light green color
             End With
         End With
     End If
@@ -326,7 +326,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
             Else
                 dictHours.Add Cells(i, 6).Value, Cells(i, 8).Value
             End If
-            Cells(i, 8).Font.COLOR = RGB(166, 166, 166) 'RMV_15
+            Cells(i, 8).Font.Color = RGB(166, 166, 166) 'RMV_15
         End If
         i = i + 1
     Loop
@@ -588,14 +588,14 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FilePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
@@ -609,7 +609,7 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(FilePath As String, _
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
-                                        nomCLient As String, _
+                                        nomClient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
@@ -641,7 +641,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
         'Add fields to the recordset before updating it
         'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
         rs.Fields(fFacPEProjetID - 1).Value = projetID
-        rs.Fields(fFacPENomClient - 1).Value = nomCLient
+        rs.Fields(fFacPENomClient - 1).Value = nomClient
         rs.Fields(fFacPEClientID - 1).Value = clientID
         rs.Fields(fFacPEDate - 1).Value = dte
         rs.Fields(fFacPEHonoTotal - 1).Value = hono
@@ -700,7 +700,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projet_Entête_Add_Record_Locally", 0)
     
@@ -713,7 +713,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String,
     
     Dim dateTEC As String, timeStamp As String
     wshFAC_Projets_Entête.Range("A" & rn).Value = projetID
-    wshFAC_Projets_Entête.Range("B" & rn).Value = nomCLient
+    wshFAC_Projets_Entête.Range("B" & rn).Value = nomClient
     wshFAC_Projets_Entête.Range("C" & rn).Value = clientID
     wshFAC_Projets_Entête.Range("D" & rn).Value = dte
     wshFAC_Projets_Entête.Range("E" & rn).Value = hono
@@ -734,14 +734,14 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomCLient As String,
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(FilePath As String, _
+Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & FilePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String

@@ -80,12 +80,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Debug.Print "#013 - " & Target.Address
     
     If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.COLOR = COULEUR_BASE_TEC
+        Range(previousCellAddress).Interior.Color = COULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Analyse.Range("H3")) Is Nothing Then
-        Target.Interior.COLOR = COULEUR_SAISIE
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Check if the selected cell is in column C, D or H
@@ -155,7 +155,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -164,7 +164,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -230,10 +230,10 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                     r = r + 1
                 Loop
                 
-                Dim nomCLient As String
+                Dim nomClient As String
                 Dim clientID As String
-                nomCLient = ws.Range("C" & firstRow).Value
-                clientID = Fn_GetID_From_Client_Name(nomCLient)
+                nomClient = ws.Range("C" & firstRow).Value
+                clientID = Fn_GetID_From_Client_Name(nomClient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
                 Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
@@ -258,8 +258,8 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = ws.Range("M" & r + 1).Value
                 
-                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomCLient, clientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomCLient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 

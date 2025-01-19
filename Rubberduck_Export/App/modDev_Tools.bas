@@ -159,11 +159,11 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
             End If
     
             'Compare Background Color
-            If col1.Interior.COLOR <> col2.Interior.COLOR Then
-                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.COLOR & " vs " & col2.Interior.COLOR & vbCrLf
+            If col1.Interior.Color <> col2.Interior.Color Then
+                diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.Color & " vs " & col2.Interior.Color & vbCrLf
                 wsDiff.Cells(diffRow, 3).Value = i
-                wsDiff.Cells(diffRow, 4).Value = col1.Interior.COLOR
-                wsDiff.Cells(diffRow, 5).Value = col2.Interior.COLOR
+                wsDiff.Cells(diffRow, 4).Value = col1.Interior.Color
+                wsDiff.Cells(diffRow, 5).Value = col2.Interior.Color
             End If
     
         Next i
@@ -374,9 +374,9 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     fd.Filters.Add "Fichiers Texte", "*.txt"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim FilePath As String
+    Dim filePath As String
     If fd.show = -1 Then
-        FilePath = fd.selectedItems(1)
+        filePath = fd.selectedItems(1)
     Else
         MsgBox "Aucun fichier sélectionné.", vbExclamation
         Exit Sub
@@ -385,22 +385,22 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Ouvre le fichier en mode lecture
     Dim FileNum As Integer
     FileNum = FreeFile
-    Open FilePath For Input As FileNum
+    Open filePath For Input As FileNum
     
     'Initialise la ligne de départ pour insérer les données dans Excel
     Dim ligneNum As Long
     ligneNum = 1
     
     'Lire chaque ligne du fichier
-    Dim ligne As String
+    Dim Ligne As String
     Dim champs() As String
     Dim j As Long
 
     Do While Not EOF(FileNum)
-        Line Input #FileNum, ligne
+        Line Input #FileNum, Ligne
         
         'Séparer les champs par le séparateur " | "
-        champs = Split(ligne, " | ")
+        champs = Split(Ligne, " | ")
         
         'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
@@ -433,10 +433,10 @@ Sub Fix_Date_Format()
     fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
     
     'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim FilePath As String
+    Dim filePath As String
     Dim fileSelected As Boolean
     If fd.show = -1 Then
-        FilePath = fd.selectedItems(1)
+        filePath = fd.selectedItems(1)
         fileSelected = True
     Else
         MsgBox "Aucun fichier sélectionné.", vbExclamation
@@ -446,7 +446,7 @@ Sub Fix_Date_Format()
     'Ouvrir le fichier sélectionné s'il y en a un
     Dim wb As Workbook
     If fileSelected Then
-        Set wb = Workbooks.Open(FilePath)
+        Set wb = Workbooks.Open(filePath)
         
         'Définir les colonnes spécifiques à nettoyer pour chaque feuille
         Dim colonnesANettoyer As Dictionary
@@ -1024,7 +1024,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     Dim macroName As String
     Dim VBComp As Object
     Dim codeModule As Object
-    Dim ligne As Long
+    Dim Ligne As Long
     Dim found As Boolean
     Dim oleObj As OLEObject
     
@@ -1101,7 +1101,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     'Si un module spécifique est fourni, vérifier uniquement dans ce module
     Dim VBComp As Object
     Dim codeModule As Object
-    Dim ligne As Long
+    Dim Ligne As Long
     
     If moduleName <> "" Then
         On Error Resume Next
@@ -1109,12 +1109,12 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
         On Error GoTo 0
         If Not VBComp Is Nothing Then
             Set codeModule = VBComp.codeModule
-            For ligne = 1 To codeModule.CountOfLines
-                If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
+            For Ligne = 1 To codeModule.CountOfLines
+                If codeModule.ProcOfLine(Ligne, vbext_pk_Proc) = macroName Then
                     VerifierMacroExiste = True
                     Exit Function
                 End If
-            Next ligne
+            Next Ligne
         End If
         Exit Function
     End If
@@ -1122,12 +1122,12 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     'Parcourir tous les modules si aucun module spécifique n'est fourni
     For Each VBComp In ThisWorkbook.VBProject.VBComponents
         Set codeModule = VBComp.codeModule
-        For ligne = 1 To codeModule.CountOfLines
-            If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
+        For Ligne = 1 To codeModule.CountOfLines
+            If codeModule.ProcOfLine(Ligne, vbext_pk_Proc) = macroName Then
                 VerifierMacroExiste = True
                 Exit Function
             End If
-        Next ligne
+        Next Ligne
     Next VBComp
     
 End Function
@@ -1249,7 +1249,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     Dim TotalLines As Long
     Dim codeLine As String
     Dim InEnumBlock As Boolean
-    Dim FilePath As String
+    Dim filePath As String
     
     'Variable de travail
     Dim EnumDefinition As String
@@ -1299,4 +1299,102 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     Call Array_2D_Resizer(arr, e, 2)
     
 End Sub
+
+Function CouleurEnRGBTableau(ByVal couleur As Long) As Variant
+
+    Dim rgbArray(1 To 3) As Integer
+    
+    'Décomposer la couleur en composantes RGB
+    rgbArray(1) = couleur Mod 256       ' Rouge
+    rgbArray(2) = (couleur \ 256) Mod 256 ' Vert
+    rgbArray(3) = (couleur \ 65536) Mod 256 ' Bleu
+    
+    'Retourner le tableau
+    CouleurEnRGBTableau = rgbArray
+    
+End Function
+
+Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
+
+    Dim rouge As Integer, vert As Integer, bleu As Integer
+    
+    ' Décomposer la couleur en composantes RGB
+    rouge = couleur Mod 256
+    vert = (couleur \ 256) Mod 256
+    bleu = (couleur \ 65536) Mod 256
+    
+    'Construire la valeur HEX (en format #RRGGBB)
+    Convertir_Couleur_RGB_Hex = "#" & Right("00" & Hex(rouge), 2) & _
+                                        Right("00" & Hex(vert), 2) & _
+                                        Right("00" & Hex(bleu), 2)
+    
+End Function
+
+Sub test_CouleurEnRGBTableau()
+
+    Dim couleur As Long
+    Dim rgbArray As Variant
+    
+    wshMenuFAC.Activate
+    wshMenuFAC.Range("A3").Select
+    
+    couleur = wshMenuFAC.Range("A3").Interior.Color
+    couleur = COULEUR_BASE_FACTURATION
+    
+    rgbArray = CouleurEnRGBTableau(couleur)
+    
+    'Afficher les composantes
+    MsgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
+    
+End Sub
+
+Sub Test_Convertir_Couleur_RGB_Hex()
+
+    Dim couleur As Long
+    Dim couleurHex As String
+    
+    ' Obtenir la couleur de remplissage de la cellule
+    couleur = 11854022
+    
+    ' Convertir en HEX
+    couleurHex = Convertir_Couleur_RGB_Hex(couleur)
+    
+    ' Afficher le résultat
+    MsgBox "La couleur HEX de la cellule A1 est : " & couleurHex
+    
+End Sub
+
+Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
+
+    Dim rouge As Integer, vert As Integer, bleu As Integer
+    
+    'Décomposer la couleur en composantes RGB
+    rouge = couleur Mod 256
+    vert = (couleur \ 256) Mod 256
+    bleu = (couleur \ 65536) Mod 256
+    
+    ' Construire le code OLE en inversant les composantes RGB en BGR
+    Convertir_Couleur_OLE = "&H00" & Right("00" & Hex(bleu), 2) & _
+                                        Right("00" & Hex(vert), 2) & _
+                                        Right("00" & Hex(rouge), 2) & "&"
+                                        
+End Function
+
+Sub Test_Convertir_Couleur_OLE()
+
+    Dim couleur As Long
+    Dim couleurOLE As String
+    
+    ' Exemple : couleur de la cellule A1
+    couleur = COULEUR_BASE_FACTURATION
+    
+    ' Convertir en format OLE
+    couleurOLE = Convertir_Couleur_OLE(couleur)
+    
+    ' Afficher la couleur en format OLE
+    MsgBox "La couleur OLE est : " & couleurOLE
+    
+End Sub
+
+
 
