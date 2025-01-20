@@ -1,0 +1,15 @@
+2024-11-09 08:04:54.93 | Robert M. Vigneault | APP_v5.E.0.xlsb | ADD    2318 | GC | 09/11/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test 123456789 | 0,10 | VRAI |  | 31
+2024-11-09 08:09:19.24 | Robert M. Vigneault | APP_v5.E.0.xlsb | ADD    2319 | GC | 09/11/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test 00000 | 0,10 | VRAI |  | 31
+2024-11-09 08:12:55.53 | Robert M. Vigneault | APP_v5.E.0.xlsb | ADD    2320 | GC | 09/11/2024 | 331 | Sylvain Garceau | Test abc | 0,10 | VRAI |  | 31
+2024-11-09 08:17:45.80 | Robert M. Vigneault | APP_v5.E.0.xlsb | UPDATE 2319 | GC | 09/11/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test 00000 | 0,20 | VRAI |  | 31
+2024-11-09 20:09:44.38 | Robert M. Vigneault | APP_v5.E.1.xlsb | UPDATE 2310 | GC | 08/11/2024 | 1761 | Pépinière Excel Inc. [François Racette] | analyse des modifications à apporter à mon tableau de détermination de JVM et modifications suite à toutes les réponses | 1,50 | VRAI |  | 31
+2024-11-09 20:09:52.37 | Robert M. Vigneault | APP_v5.E.1.xlsb | UPDATE 2310 | GC | 08/11/2024 | 1761 | Pépinière Excel Inc. [François Racette] | analyse des modifications à apporter à mon tableau de détermination de JVM et modifications suite à toutes les réponses | 1,25 | VRAI |  | 31
+2024-11-13 09:49:39.69 | Robert M. Vigneault | APP_v5.E.3B.xlsb | ADD    2385 | GC | 13/11/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | TEST 1234 | 0,10 | VRAI |  | 31
+2024-11-13 10:57:07.97 | Robert M. Vigneault | APP_v5.E.3B.xlsb | ADD    2386 | GC | 13/11/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test 12345 | 0,10 | VRAI |  | 31
+2024-11-13 17:13:54.66 | Robert M. Vigneault | APP_v5.E.3B.xlsb | ADD    2387 | GC | 13/11/2024 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test 12345 | 0,10 | VRAI |  | 31
+2024-11-13 17:14:05.69 | Robert M. Vigneault | APP_v5.E.3B.xlsb | UPDATE 2387 | GC | 13/11/2024 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test 12345 | 0,20 | VRAI |  | 31
+2024-11-14 10:50:23.91 | Robert M. Vigneault | APP_v5.E.4.xlsb | ADD    2417 | GC | 14/11/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test 1234 | 0,10 | VRAI |  | 31
+2024-11-15 09:04:54.03 | Robert M. Vigneault | APP_v5.E.5.xlsb | ADD    2451 | GC | 15/11/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test 1234 | 0,10 | VRAI |  | 31
+2024-11-15 09:05:05.10 | Robert M. Vigneault | APP_v5.E.5.xlsb | ADD    2452 | GC | 15/11/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | TEst 54321 | 0,10 | VRAI |  | 31
+2024-11-15 09:05:20.54 | Robert M. Vigneault | APP_v5.E.5.xlsb | UPDATE 2452 | GC | 15/11/2024 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test 54321 | 0,10 | VRAI |  | 31
+2024-11-15 09:05:27.01 | Robert M. Vigneault | APP_v5.E.5.xlsb | UPDATE 2451 | GC | 15/11/2024 | 193r | 9299-2585 Québec Inc. [anciennement Informat] [Robert M. Vigneault] | Test 12345 | 0,10 | VRAI |  | 31

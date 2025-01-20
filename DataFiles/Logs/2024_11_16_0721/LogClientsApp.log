@@ -1,0 +1,81 @@
+2024-11-03 16:12:41.48 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All |  | 
+2024-11-03 16:12:41.59 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format |  | 
+2024-11-03 16:12:41.64 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format (sortie) | 0,0547 secondes | 1103
+
+2024-11-03 16:12:41.72 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All (sortie) | 0,2422 secondes | 
+
+2024-11-03 16:12:41.75 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize |  | 
+2024-11-03 16:12:41.75 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm |  | 
+2024-11-03 16:12:41.76 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn |  | 
+2024-11-03 16:12:41.76 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change |  | 
+2024-11-03 16:12:41.76 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change (sortie) | 0,0000 secondes | Client_ID
+
+2024-11-03 16:12:41.76 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn (sortie) | 0,0000 secondes | 
+
+2024-11-03 16:12:41.78 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm (sortie) | 0,0312 secondes |  Row=1104
+
+2024-11-03 16:12:41.79 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize (sortie) | 0,0469 secondes | 
+
+2024-11-03 16:12:45.33 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change |  | 
+2024-11-03 16:12:45.34 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change (sortie) | 0,0156 secondes | ClientNom
+
+2024-11-03 16:12:51.98 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmdSearch_Click |  | 
+2024-11-03 16:12:51.98 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Build_Données_Recherche |  | 
+2024-11-03 16:12:52.11 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Build_Données_Recherche (sortie) | 0,1211 secondes | ClientNom=universi 1
+
+2024-11-03 16:12:52.11 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmdSearch_Click (sortie) | 0,1250 secondes | 
+
+2024-11-03 16:12:53.63 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | lstDonnées_Click |  | 
+2024-11-03 16:12:53.63 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | lstDonnées_Click (sortie) | 0,0000 secondes | 
+
+2024-11-03 16:12:53.84 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | lstDonnées_DblClick |  | 
+2024-11-03 16:12:53.86 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmdEdit_Click |  | 
+2024-11-03 16:12:53.86 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | Fn_Selected_List |  | 
+2024-11-03 16:12:53.86 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | Fn_Selected_List (sortie) | 0,0078 secondes | 
+
+2024-11-03 16:12:53.87 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | Fn_Selected_List |  | 
+2024-11-03 16:12:53.87 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | Fn_Selected_List (sortie) | 0,0039 secondes | 
+
+2024-11-03 16:12:53.87 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmdEdit_Click (sortie) | 0,0156 secondes | Université de Sherbrooke [Faculté d'administration, Secrétariat des maitrises]
+
+2024-11-03 16:12:53.88 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | lstDonnées_DblClick (sortie) | 0,0391 secondes | 
+
+2024-11-03 16:13:11.79 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All |  | 
+2024-11-03 16:13:11.88 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format |  | 
+2024-11-03 16:13:11.93 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format (sortie) | 0,0586 secondes | 1103
+
+2024-11-03 16:13:12.03 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All (sortie) | 0,2344 secondes | 
+
+2024-11-03 16:13:12.05 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize |  | 
+2024-11-03 16:13:12.06 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm |  | 
+2024-11-03 16:13:12.06 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn |  | 
+2024-11-03 16:13:12.06 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change |  | 
+2024-11-03 16:13:12.06 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change (sortie) | 0,0000 secondes | Client_ID
+
+2024-11-03 16:13:12.06 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn (sortie) | 0,0000 secondes | 
+
+2024-11-03 16:13:12.09 | Clients_v4.1.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm (sortie) | 0,0312 secondes |  Row=1104
+
+2024-11-03 16:13:12.09 | Clients_v4.1.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize (sortie) | 0,0391 secondes | 
+
+2024-11-03 16:13:54.52 | Clients_v4.1.xlsm | Robert M. Vigneault | ***** Fin de session - Workbook_BeforeClose ***** |  |  | 
+2024-11-03 16:14:36.80 | Clients_v4.2.xlsm | Robert M. Vigneault | ***** Début de session - Workbook_Open ***** |  |  | 
+2024-11-03 16:14:36.81 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All |  | 
+2024-11-03 16:14:36.97 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format |  | 
+2024-11-03 16:14:37.04 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Apply_Worksheet_Format (sortie) | 0,0742 secondes | 1103
+
+2024-11-03 16:14:37.10 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Client_List_Import_All (sortie) | 0,2891 secondes | 
+
+2024-11-03 16:14:37.14 | Clients_v4.2.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize |  | 
+2024-11-03 16:14:37.14 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm |  | 
+2024-11-03 16:14:37.15 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn |  | 
+2024-11-03 16:14:37.16 | Clients_v4.2.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change |  | 
+2024-11-03 16:14:37.16 | Clients_v4.2.xlsm | Robert M. Vigneault | ufClientMF | cmbSearchColumn_Change (sortie) | 0,0000 secondes | Client_ID
+
+2024-11-03 16:14:37.16 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Add_SearchColumn (sortie) | 0,0078 secondes | 
+
+2024-11-03 16:14:37.18 | Clients_v4.2.xlsm | Robert M. Vigneault | modMain | CM_Reset_UserForm (sortie) | 0,0430 secondes |  Row=1104
+
+2024-11-03 16:14:37.19 | Clients_v4.2.xlsm | Robert M. Vigneault | ufClientMF | UserForm_Initialize (sortie) | 0,0469 secondes | 
+
+2024-11-03 16:14:45.33 | Clients_v4.2.xlsm | Robert M. Vigneault | ***** Fin de session - Workbook_BeforeClose ***** |  |  | 

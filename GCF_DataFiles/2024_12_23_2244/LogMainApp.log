@@ -1,0 +1,361 @@
+2024-12-23 16:43:09.21 | Guillaume | APP_v5.H.5.xlsb | ***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****
+2024-12-23 16:43:09.42 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Create_User_Active_File
+2024-12-23 16:43:09.85 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Create_User_Active_File = '0,5820 secondes'
+
+2024-12-23 16:43:10.07 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Setup_UserDateFormat
+2024-12-23 16:43:10.32 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Setup_UserDateFormat = '0,3750 secondes'
+
+2024-12-23 16:43:10.52 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:BackupMasterFile
+2024-12-23 16:43:11.66 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:BackupMasterFile = '1,2930 secondes'
+
+2024-12-23 16:43:11.89 | Guillaume | APP_v5.H.5.xlsb | modMenu:HideDevShapesBasedOnUsername
+2024-12-23 16:43:12.09 | Guillaume | APP_v5.H.5.xlsb | modMenu:HideDevShapesBasedOnUsername = '0,3359 secondes'
+
+2024-12-23 16:43:12.29 | Guillaume | APP_v5.H.5.xlsb | modAppli:WriteInfoOnMainMenu
+2024-12-23 16:43:12.64 | Guillaume | APP_v5.H.5.xlsb | modAppli:WriteInfoOnMainMenu = '0,4922 secondes'
+
+2024-12-23 16:43:12.97 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Workbook_Open = '3,8906 secondes'
+
+2024-12-23 16:43:13.41 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click
+2024-12-23 16:43:13.64 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click = '0,3633 secondes'
+
+2024-12-23 16:43:16.14 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate
+2024-12-23 16:43:16.34 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-23 16:43:18.00 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '1,8203 secondes'
+
+2024-12-23 16:43:18.23 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All
+2024-12-23 16:43:19.35 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary
+2024-12-23 16:43:20.11 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary = '0,9141 secondes'
+
+2024-12-23 16:43:20.44 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All = '2,3398 secondes'
+
+2024-12-23 16:43:20.77 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:43:21.12 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,4766 secondes'
+
+2024-12-23 16:43:21.32 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshGL_EJ)
+2024-12-23 16:43:21.58 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,3867 secondes'
+
+2024-12-23 16:43:21.78 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:43:22.12 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,4727 secondes'
+
+2024-12-23 16:43:22.45 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(23/12/24, 999, 15)
+2024-12-23 16:43:22.65 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3359 secondes'
+
+2024-12-23 16:43:22.91 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate = '6,9141 secondes'
+
+2024-12-23 16:43:42.48 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - DAS à payer
+2024-12-23 16:43:42.73 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2120
+2024-12-23 16:43:42.95 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,6055 secondes'
+
+2024-12-23 16:43:49.88 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Encaisse
+2024-12-23 16:43:50.08 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000
+2024-12-23 16:43:50.29 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5469 secondes'
+
+2024-12-23 16:43:57.33 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Encaisse
+2024-12-23 16:43:57.55 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000
+2024-12-23 16:43:57.77 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5742 secondes'
+
+2024-12-23 16:44:24.93 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update
+2024-12-23 16:44:25.15 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB
+2024-12-23 16:44:27.11 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB = '2,1055 secondes'
+
+2024-12-23 16:44:27.34 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally
+2024-12-23 16:44:30.59 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally = '3,3789 secondes'
+
+2024-12-23 16:44:30.84 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:44:31.26 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5469 secondes'
+
+2024-12-23 16:44:33.11 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update = '8,3359 secondes'
+
+2024-12-23 16:44:39.24 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-23 16:44:39.48 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3633 secondes'
+
+2024-12-23 16:45:16.69 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click
+2024-12-23 16:45:16.96 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click = '0,4023 secondes'
+
+2024-12-23 16:45:18.86 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate
+2024-12-23 16:45:19.09 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-23 16:45:21.94 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '2,9844 secondes'
+
+2024-12-23 16:45:22.14 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All
+2024-12-23 16:45:23.23 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary
+2024-12-23 16:45:23.92 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary = '0,8203 secondes'
+
+2024-12-23 16:45:24.23 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All = '2,2227 secondes'
+
+2024-12-23 16:45:24.55 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:45:24.90 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,4844 secondes'
+
+2024-12-23 16:45:25.11 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshGL_EJ)
+2024-12-23 16:45:25.38 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,4023 secondes'
+
+2024-12-23 16:45:25.59 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:45:25.98 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5195 secondes'
+
+2024-12-23 16:45:26.30 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(23/12/24, 999, 15)
+2024-12-23 16:45:26.51 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3438 secondes'
+
+2024-12-23 16:45:26.79 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate = '8,0820 secondes'
+
+2024-12-23 16:45:40.02 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:Load_JEAuto_Into_JE
+2024-12-23 16:45:40.30 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:45:40.70 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5703 secondes'
+
+2024-12-23 16:45:41.01 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:41.23 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:41.45 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5820 secondes'
+
+2024-12-23 16:45:41.88 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:42.09 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:42.32 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5820 secondes'
+
+2024-12-23 16:45:42.79 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:43.01 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:43.24 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5820 secondes'
+
+2024-12-23 16:45:43.74 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:43.99 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:44.20 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5977 secondes'
+
+2024-12-23 16:45:44.69 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:44.91 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:45.12 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5547 secondes'
+
+2024-12-23 16:45:45.60 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:45.82 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:46.05 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5820 secondes'
+
+2024-12-23 16:45:46.52 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Encaisse
+2024-12-23 16:45:46.74 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000
+2024-12-23 16:45:46.96 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5938 secondes'
+
+2024-12-23 16:45:47.46 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:47.68 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:47.88 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5547 secondes'
+
+2024-12-23 16:45:48.29 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - DAS à payer
+2024-12-23 16:45:48.52 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2120
+2024-12-23 16:45:48.74 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5859 secondes'
+
+2024-12-23 16:45:49.20 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:45:49.43 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:45:49.64 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5781 secondes'
+
+2024-12-23 16:45:50.08 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Assurances collectives à payer
+2024-12-23 16:45:50.32 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2125
+2024-12-23 16:45:50.54 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5977 secondes'
+
+2024-12-23 16:45:51.02 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:Load_JEAuto_Into_JE = '11,1367 secondes'
+
+2024-12-23 16:45:55.22 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(27-12, 999, 15)
+2024-12-23 16:45:55.45 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3555 secondes'
+
+2024-12-23 16:49:49.72 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update
+2024-12-23 16:49:49.98 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB
+2024-12-23 16:49:51.97 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB = '2,1367 secondes'
+
+2024-12-23 16:49:52.21 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally
+2024-12-23 16:50:03.75 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally = '11,6836 secondes'
+
+2024-12-23 16:50:04.03 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:50:04.40 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5195 secondes'
+
+2024-12-23 16:50:06.78 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update = '17,1914 secondes'
+
+2024-12-23 16:51:38.32 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - DAS à payer
+2024-12-23 16:51:38.61 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2120
+2024-12-23 16:51:38.86 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,6719 secondes'
+
+2024-12-23 16:51:45.63 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:51:45.86 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:51:46.10 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,6133 secondes'
+
+2024-12-23 16:51:48.82 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update
+2024-12-23 16:51:49.05 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB
+2024-12-23 16:51:50.78 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB = '1,8633 secondes'
+
+2024-12-23 16:51:51.00 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally
+2024-12-23 16:51:53.26 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally = '2,3906 secondes'
+
+2024-12-23 16:51:53.53 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:51:53.91 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5273 secondes'
+
+2024-12-23 16:51:56.17 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update = '7,4961 secondes'
+
+2024-12-23 16:51:58.57 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-23 16:51:58.81 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3789 secondes'
+
+2024-12-23 16:52:08.92 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click
+2024-12-23 16:52:09.20 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click = '0,4141 secondes'
+
+2024-12-23 16:52:10.47 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:Worksheet_Activate
+2024-12-23 16:52:10.70 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-23 16:52:13.64 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '3,0664 secondes'
+
+2024-12-23 16:52:14.14 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(, 999, 15)
+2024-12-23 16:52:14.36 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3594 secondes'
+
+2024-12-23 16:52:14.67 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build(23/12/24)
+2024-12-23 16:52:15.07 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF( - De 31/07/24 à 23/12/24)
+2024-12-23 16:52:16.52 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF = '1,5820 secondes'
+
+2024-12-23 16:52:20.65 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:52:20.93 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4258 secondes'
+
+2024-12-23 16:52:21.15 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:52:21.43 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4219 secondes'
+
+2024-12-23 16:52:22.52 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build = '7,9727 secondes'
+
+2024-12-23 16:52:22.75 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:Worksheet_Activate = '12,4102 secondes'
+
+2024-12-23 16:52:26.45 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(27/, 999, 15)
+2024-12-23 16:52:26.66 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3320 secondes'
+
+2024-12-23 16:52:28.34 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build(00:00:00)
+2024-12-23 16:52:28.74 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF( - De 31/07/24 à 00:00:00)
+2024-12-23 16:52:29.43 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF = '0,8125 secondes'
+
+2024-12-23 16:52:31.45 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(27/12, 999, 15)
+2024-12-23 16:52:31.68 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3594 secondes'
+
+2024-12-23 16:52:31.97 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build(27/12/24)
+2024-12-23 16:52:32.37 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF( - De 31/07/24 à 27/12/24)
+2024-12-23 16:52:33.16 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF = '0,9336 secondes'
+
+2024-12-23 16:52:37.32 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:52:37.57 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4023 secondes'
+
+2024-12-23 16:52:37.81 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:52:38.08 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,3984 secondes'
+
+2024-12-23 16:52:38.99 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build = '7,1797 secondes'
+
+2024-12-23 16:52:43.84 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape
+2024-12-23 16:52:44.14 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape = '0,4336 secondes'
+
+2024-12-23 16:52:44.44 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account(2120 De 31/07/24 à 27/12/24)
+2024-12-23 16:52:50.55 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour
+2024-12-23 16:52:50.78 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour = '0,3711 secondes'
+
+2024-12-23 16:52:51.05 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account = '6,7656 secondes'
+
+2024-12-23 16:53:44.71 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:GL_Get_JE_Detail_Trans_AF
+2024-12-23 16:53:45.43 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:GL_Get_JE_Detail_Trans_AF = '0,8555 secondes'
+
+2024-12-23 16:53:45.66 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:wshGL_BV_Adjust_The_Shape
+2024-12-23 16:53:45.88 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:wshGL_BV_Adjust_The_Shape = '0,3555 secondes'
+
+2024-12-23 16:55:43.02 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate
+2024-12-23 16:55:43.29 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-23 16:55:45.09 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '1,9297 secondes'
+
+2024-12-23 16:55:45.29 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All
+2024-12-23 16:55:46.38 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary
+2024-12-23 16:55:47.07 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary = '0,8242 secondes'
+
+2024-12-23 16:55:47.37 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_EJ_Recurrente_Import_All = '2,2070 secondes'
+
+2024-12-23 16:55:47.67 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:55:48.03 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,4922 secondes'
+
+2024-12-23 16:55:48.25 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshGL_EJ)
+2024-12-23 16:55:48.50 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,3984 secondes'
+
+2024-12-23 16:55:48.72 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:55:49.09 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5117 secondes'
+
+2024-12-23 16:55:49.41 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(23/12/24, 999, 15)
+2024-12-23 16:55:49.63 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3555 secondes'
+
+2024-12-23 16:55:49.89 | Guillaume | APP_v5.H.5.xlsb | wshGL_EJ:Worksheet_Activate = '7,0078 secondes'
+
+2024-12-23 16:56:25.08 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(27/12, 999, 15)
+2024-12-23 16:56:25.33 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3984 secondes'
+
+2024-12-23 16:56:30.33 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - DAS à payer
+2024-12-23 16:56:30.58 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2120
+2024-12-23 16:56:30.78 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5859 secondes'
+
+2024-12-23 16:56:37.03 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires à payer
+2024-12-23 16:56:37.29 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 2105
+2024-12-23 16:56:37.53 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,6328 secondes'
+
+2024-12-23 16:56:40.70 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description - Salaires
+2024-12-23 16:56:40.93 | Guillaume | APP_v5.H.5.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000
+2024-12-23 16:56:41.14 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description = '0,5859 secondes'
+
+2024-12-23 16:56:42.66 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update
+2024-12-23 16:56:42.88 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB
+2024-12-23 16:56:44.62 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB = '1,8672 secondes'
+
+2024-12-23 16:56:44.82 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally
+2024-12-23 16:56:47.02 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally = '2,3164 secondes'
+
+2024-12-23 16:56:47.26 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells
+2024-12-23 16:56:47.64 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells = '0,5078 secondes'
+
+2024-12-23 16:56:49.24 | Guillaume | APP_v5.H.5.xlsb | modGL_EJ:GL_EJ_Update = '6,7109 secondes'
+
+2024-12-23 16:56:51.36 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:Worksheet_Activate
+2024-12-23 16:56:51.57 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-23 16:56:54.32 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '2,9219 secondes'
+
+2024-12-23 16:56:54.86 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(, 999, 15)
+2024-12-23 16:56:55.07 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3359 secondes'
+
+2024-12-23 16:56:55.39 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build(23/12/24)
+2024-12-23 16:56:55.79 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF( - De 31/07/24 à 23/12/24)
+2024-12-23 16:56:57.51 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF = '1,8750 secondes'
+
+2024-12-23 16:57:01.68 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:57:01.96 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4180 secondes'
+
+2024-12-23 16:57:02.18 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:57:02.47 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4297 secondes'
+
+2024-12-23 16:57:03.38 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build = '8,1328 secondes'
+
+2024-12-23 16:57:03.64 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:Worksheet_Activate = '12,4141 secondes'
+
+2024-12-23 16:57:08.73 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape
+2024-12-23 16:57:09.02 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape = '0,4219 secondes'
+
+2024-12-23 16:57:09.32 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account(2120 De 31/07/24 à 23/12/24)
+2024-12-23 16:57:14.88 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour
+2024-12-23 16:57:15.10 | Guillaume | APP_v5.H.5.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour = '0,3516 secondes'
+
+2024-12-23 16:57:15.34 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account = '6,1484 secondes'
+
+2024-12-23 16:57:15.77 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:GL_Get_JE_Detail_Trans_AF
+2024-12-23 16:57:16.44 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:GL_Get_JE_Detail_Trans_AF = '0,8008 secondes'
+
+2024-12-23 16:57:16.66 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:wshGL_BV_Adjust_The_Shape
+2024-12-23 16:57:16.91 | Guillaume | APP_v5.H.5.xlsb | wshGL_BV:wshGL_BV_Adjust_The_Shape = '0,3828 secondes'
+
+2024-12-23 16:57:20.53 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(27/12, 999, 15)
+2024-12-23 16:57:20.75 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3594 secondes'
+
+2024-12-23 16:57:21.07 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build(27/12/24)
+2024-12-23 16:57:21.54 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF( - De 31/07/24 à 27/12/24)
+2024-12-23 16:57:22.27 | Guillaume | APP_v5.H.5.xlsb | modGL_Rapport:GL_Get_Account_Trans_AF = '0,8477 secondes'
+
+2024-12-23 16:57:27.22 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:57:27.49 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,4023 secondes'
+
+2024-12-23 16:57:27.70 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2024-12-23 16:57:27.95 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_BV_Display_TB_Totals = '0,3984 secondes'
+
+2024-12-23 16:57:28.88 | Guillaume | APP_v5.H.5.xlsb | modGL_BV:GL_Trial_Balance_Build = '7,9375 secondes'
+
+2024-12-23 17:08:20.39 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-23 17:08:20.64 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3867 secondes'
+
+2024-12-23 17:12:00.18 | Guillaume | APP_v5.H.5.xlsb | modMenu:SortirApplicationAprèsSauvegarde
+2024-12-23 17:12:01.73 | Guillaume | APP_v5.H.5.xlsb | modMenu:Delete_User_Active_File
+2024-12-23 17:12:02.28 | Guillaume | APP_v5.H.5.xlsb | modMenu:Delete_User_Active_File = '0,6914 secondes'
+
+2024-12-23 17:12:02.54 | Guillaume | APP_v5.H.5.xlsb | modMenu:SortirApplicationAprèsSauvegarde = '2,5117 secondes'
+
+2024-12-23 17:12:02.77 | Guillaume | APP_v5.H.5.xlsb | ***** Session terminée NORMALEMENT (modMenu:SortirApplicationAprèsSauvegarde) *****
+
