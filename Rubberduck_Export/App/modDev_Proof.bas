@@ -280,7 +280,7 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
             Set fichierSource = FSO.OpenTextFile(cheminFichier, ForReading)
 
             'Parcourir les lignes du fichier
-            Dim Ligne As String, user As String, timeStamp As String, version As String, oper As String
+            Dim ligne As String, user As String, timeStamp As String, version As String, oper As String
             Dim noTEC As Long
             Dim prof As String
             Dim dateTEC As Date
@@ -289,16 +289,16 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
             Dim isFACT As Boolean
             
             Do Until fichierSource.AtEndOfStream
-                Ligne = fichierSource.ReadLine
+                ligne = fichierSource.ReadLine
                 compteurLigne = compteurLigne + 1
 
                 'Compter les occurrences de " | " dans la ligne
-                compteurOccurences = CompterOccurrences(Ligne, "|")
+                compteurOccurences = CompterOccurrences(ligne, "|")
                 If compteurOccurences = 0 Or compteurOccurences = 4 Then
                     Exit Do
                 End If
 '                Debug.Print compteurOccurences & " - " & ligne
-                Call FnStripLigneLogSaisieHeures(compteurOccurences, Ligne, user, timeStamp, version, _
+                Call FnStripLigneLogSaisieHeures(compteurOccurences, ligne, user, timeStamp, version, _
                                                  oper, noTEC, prof, dateTEC, noClient, nomClient, desc, _
                                                  hres, comm, isFACT)
                 'Ajustement de certaies variables

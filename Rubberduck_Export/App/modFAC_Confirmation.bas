@@ -172,7 +172,7 @@ End Sub
 
 Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
 
-    Dim Ligne As listItem
+    Dim ligne As listItem
     
     ufConfirmation.lblFactureEmConfirmation.Visible = True
     ufConfirmation.txtNoFactureEnConfirmation.Visible = True
@@ -183,9 +183,9 @@ Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
         Dim i As Long
         'Parcourir chacune des lignes
         For i = 1 To .ListItems.count
-            Set Ligne = .ListItems(i)
-            If Ligne.Checked Then
-                invNo = Trim(Ligne.SubItems(1))
+            Set ligne = .ListItems(i)
+            If ligne.Checked Then
+                invNo = Trim(ligne.SubItems(1))
                 ufConfirmation.txtNoFactureEnConfirmation.Value = invNo
                 DoEvents
                 Call MAJ_Statut_Facture_Entête_BD_MASTER(invNo)

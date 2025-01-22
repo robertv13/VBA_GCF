@@ -1710,30 +1710,6 @@ Function Fn_Valider_Portion_Heures(valeur As Currency) As Boolean
     
 End Function
 
-'CommenOut - 2024-12-05 @ 14:47
-'Function Fn_ConvertElapsedTime_In_HMS(ByRef elapsedTime As Double) As String
-'
-'    Debug.Print "#061 - " & elapsedTime
-'
-'    Dim hours As Long
-'    Dim minutes As Long
-'    Dim seconds As Double
-'
-'    'Conversion en heures, minutes et secondes
-'    hours = Int(elapsedTime / 3600)
-'    minutes = Int((elapsedTime Mod 3600) / 60)
-'    seconds = elapsedTime - (hours * 3600) - (minutes * 60)
-'
-'    'Si le temps écoulé est inférieur à 1 seconde, on affiche uniquement les secondes avec des millisecondes
-'    If elapsedTime < 1 Then
-'        Fn_ConvertElapsedTime_In_HMS = "00:00:" & Format$(seconds, "00.0000")
-'    Else
-'        'Sinon, on affiche normalement heures:minutes:secondes
-'        Fn_ConvertElapsedTime_In_HMS = Format$(hours, "00") & ":" & Format$(minutes, "00") & ":" & Format$(seconds, "00.00")
-'    End If
-'
-'End Function
-
 Function Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(d As Date) As Date
 
     'Cette fonction calcule le premier jour du trimestre pour une date de fin de trimestre (TPS/TVQ)
@@ -1803,7 +1779,7 @@ Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Cu
     Dim ws As Worksheet: Set ws = wshENC_Détails
     
     Dim premièreCellule As Range, celluleTrouvée As Range
-    Dim Ligne As Long
+    Dim ligne As Long
     
     'Rechercher la première cellule avec le numéro de facture
     Set premièreCellule = ws.Columns(2).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -1815,11 +1791,11 @@ Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Cu
         Set celluleTrouvée = premièreCellule
         Do
             'Obtenir la ligne correspondante
-            Ligne = celluleTrouvée.row
+            ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(Ligne, 4).Value) And ws.Cells(Ligne, 4).Value <= dateLimite Then
+            If IsDate(ws.Cells(ligne, 4).Value) And ws.Cells(ligne, 4).Value <= dateLimite Then
                 'Additionner le montant du paiement
-                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(Ligne, 5).Value
+                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(ligne, 5).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(2).FindNext(celluleTrouvée)
@@ -1833,7 +1809,7 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
     Dim ws As Worksheet: Set ws = wshCC_Régularisations
     
     Dim premièreCellule As Range, celluleTrouvée As Range
-    Dim Ligne As Long
+    Dim ligne As Long
     
     'Rechercher la première cellule avec le numéro de facture
     Set premièreCellule = ws.Columns(fREGULInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -1845,15 +1821,15 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
         Set celluleTrouvée = premièreCellule
         Do
             'Obtenir la ligne correspondante
-            Ligne = celluleTrouvée.row
+            ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(Ligne, fREGULDate).Value) And ws.Cells(Ligne, fREGULDate).Value <= dateLimite Then
+            If IsDate(ws.Cells(ligne, fREGULDate).Value) And ws.Cells(ligne, fREGULDate).Value <= dateLimite Then
                 'Additionner les cellules pertinentes
                 Fn_Obtenir_Régularisations_Facture = Fn_Obtenir_Régularisations_Facture + _
-                                                        ws.Cells(Ligne, fREGULHono).Value + _
-                                                        ws.Cells(Ligne, fREGULFrais).Value + _
-                                                        ws.Cells(Ligne, fREGULTPS).Value + _
-                                                        ws.Cells(Ligne, fREGULTVQ).Value
+                                                        ws.Cells(ligne, fREGULHono).Value + _
+                                                        ws.Cells(ligne, fREGULFrais).Value + _
+                                                        ws.Cells(ligne, fREGULTPS).Value + _
+                                                        ws.Cells(ligne, fREGULTVQ).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(fREGULInvNo).FindNext(celluleTrouvée)
@@ -1905,3 +1881,11 @@ Sub test_AppMsgBox()
     
 End Sub
 
+Function ExtraireNomFichier(path As String) As String
+
+    Dim parts() As String
+    parts = Split(path, "\")
+    
+    ExtraireNomFichier = parts(UBound(parts, 1))
+
+End Function

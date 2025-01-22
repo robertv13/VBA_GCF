@@ -365,8 +365,8 @@ End Sub
 Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
-    Dim fd As FileDialog
-    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    Dim fd As fileDialog
+    Set fd = Application.fileDialog(msoFileDialogFilePicker)
     
     'Configuration des filtres de fichiers (TXT uniquement)
     fd.Title = "Sélectionnez un fichier TXT"
@@ -383,24 +383,24 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     End If
     
     'Ouvre le fichier en mode lecture
-    Dim FileNum As Integer
-    FileNum = FreeFile
-    Open filePath For Input As FileNum
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    Open filePath For Input As fileNum
     
     'Initialise la ligne de départ pour insérer les données dans Excel
     Dim ligneNum As Long
     ligneNum = 1
     
     'Lire chaque ligne du fichier
-    Dim Ligne As String
+    Dim ligne As String
     Dim champs() As String
     Dim j As Long
 
-    Do While Not EOF(FileNum)
-        Line Input #FileNum, Ligne
+    Do While Not EOF(fileNum)
+        Line Input #fileNum, ligne
         
         'Séparer les champs par le séparateur " | "
-        champs = Split(Ligne, " | ")
+        champs = Split(ligne, " | ")
         
         'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
@@ -412,7 +412,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     Loop
     
     'Fermer le fichier
-    Close FileNum
+    Close fileNum
     
     'Libérer la mémoire
     Set fd = Nothing
@@ -424,8 +424,8 @@ End Sub
 Sub Fix_Date_Format()
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
-    Dim fd As FileDialog
-    Set fd = Application.FileDialog(msoFileDialogFilePicker)
+    Dim fd As fileDialog
+    Set fd = Application.fileDialog(msoFileDialogFilePicker)
     
     'Configuration des filtres de fichiers (Excel uniquement)
     fd.Title = "Sélectionnez un fichier Excel"
@@ -639,7 +639,7 @@ Sub Analyse_Search_For_Memory_Management()
     r = 2
     
     Dim ligneCode As String, moduleName As String, procName As String
-    Dim ObjetSet As String, objetForEach As String, objetNothing As String
+    Dim objetSet As String, objetForEach As String, objetNothing As String
     
     Dim added As String, cleared As String
     Dim i As Long
@@ -683,17 +683,17 @@ Sub Analyse_Search_For_Memory_Management()
             ligneCode = Replace(ligneCode, ".Offset", ".OffSET")
         End If
         
-        ObjetSet = ""
+        objetSet = ""
         objetForEach = ""
         objetNothing = ""
         'Déclaration de l'objet avec Set...
         If InStr(ligneCode, "Set ") <> 0 Then
             If Left(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
-                ObjetSet = Mid(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
-                ObjetSet = Left(ObjetSet, InStr(ObjetSet, " ") - 1)
-                If ObjetSet = "As" Then Stop
-                If InStr(added, ObjetSet & "|") = 0 Then
-                    added = added + ObjetSet + "|"
+                objetSet = Mid(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
+                objetSet = Left(objetSet, InStr(objetSet, " ") - 1)
+                If objetSet = "As" Then Stop
+                If InStr(added, objetSet & "|") = 0 Then
+                    added = added + objetSet + "|"
                 End If
             Else
                 Debug.Print ligneCode
@@ -1024,7 +1024,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     Dim macroName As String
     Dim VBComp As Object
     Dim codeModule As Object
-    Dim Ligne As Long
+    Dim ligne As Long
     Dim found As Boolean
     Dim oleObj As OLEObject
     
@@ -1101,7 +1101,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     'Si un module spécifique est fourni, vérifier uniquement dans ce module
     Dim VBComp As Object
     Dim codeModule As Object
-    Dim Ligne As Long
+    Dim ligne As Long
     
     If moduleName <> "" Then
         On Error Resume Next
@@ -1109,12 +1109,12 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
         On Error GoTo 0
         If Not VBComp Is Nothing Then
             Set codeModule = VBComp.codeModule
-            For Ligne = 1 To codeModule.CountOfLines
-                If codeModule.ProcOfLine(Ligne, vbext_pk_Proc) = macroName Then
+            For ligne = 1 To codeModule.CountOfLines
+                If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                     VerifierMacroExiste = True
                     Exit Function
                 End If
-            Next Ligne
+            Next ligne
         End If
         Exit Function
     End If
@@ -1122,12 +1122,12 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     'Parcourir tous les modules si aucun module spécifique n'est fourni
     For Each VBComp In ThisWorkbook.VBProject.VBComponents
         Set codeModule = VBComp.codeModule
-        For Ligne = 1 To codeModule.CountOfLines
-            If codeModule.ProcOfLine(Ligne, vbext_pk_Proc) = macroName Then
+        For ligne = 1 To codeModule.CountOfLines
+            If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                 VerifierMacroExiste = True
                 Exit Function
             End If
-        Next Ligne
+        Next ligne
     Next VBComp
     
 End Function

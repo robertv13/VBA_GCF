@@ -1628,37 +1628,37 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     logFile = wshAdmin.Range("F5").Value & DATA_PATH & _
                                     Application.PathSeparator & "LogMainApp.log"
     
-    Dim FileNum As Integer
-    FileNum = FreeFile
+    Dim fileNum As Integer
+    fileNum = FreeFile
     
-    Open logFile For Append As #FileNum
+    Open logFile For Append As #fileNum
     
     'On laisse une ligne blanche dans le fichier Log
     If Trim(procedureName) = "" Then
-        Print #FileNum, ""
+        Print #fileNum, ""
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
 '        startTime = Timer 'Start timing
-        Print #FileNum, timeStamp & " | " & _
+        Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
 '        startTime = Timer 'Start timing
-        Print #FileNum, timeStamp & " | " & _
+        Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
-        Print #FileNum, timeStamp & " | " & _
+        Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " *** = '" & _
                         Format(elapsedTime, "0.0000") & " secondes" & "'" & vbCrLf
     End If
     
-    Close #FileNum
+    Close #fileNum
     
     Exit Sub
     
@@ -1712,21 +1712,21 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     logSaisieHeuresFile = wshAdmin.Range("F5").Value & DATA_PATH & _
                                 Application.PathSeparator & "LogSaisieHeures.log"
     
-    Dim FileNum As Integer
-    FileNum = FreeFile
+    Dim fileNum As Integer
+    fileNum = FreeFile
     
-    Open logSaisieHeuresFile For Append As #FileNum
+    Open logSaisieHeuresFile For Append As #fileNum
     
     If blankline = True Then
-        Print #FileNum, ""
+        Print #fileNum, ""
     End If
     
-    Print #FileNum, timeStamp & " | " & _
+    Print #fileNum, timeStamp & " | " & _
                         Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt
-    Close #FileNum
+    Close #fileNum
     
     Exit Sub
     
@@ -1754,8 +1754,8 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     settraceFile = wshAdmin.Range("F5").Value & DATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
     
-    Dim FileNum As Integer
-    FileNum = FreeFile
+    Dim fileNum As Integer
+    fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
     ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
@@ -1763,9 +1763,9 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     Dim timeStamp As String
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
     
-    Open settraceFile For Append As #FileNum
+    Open settraceFile For Append As #fileNum
     
-    Print #FileNum, timeStamp & " | " & _
+    Print #fileNum, timeStamp & " | " & _
                     Fn_Get_Windows_Username & " | " & _
                     source & " | " & _
                     module & " | " & _
@@ -1773,7 +1773,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
                     variable & " | " & _
                     vType
 
-    Close #FileNum
+    Close #fileNum
     
     Exit Sub
     
@@ -1828,20 +1828,20 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     Dim logFile As String
     logFile = wshAdmin.Range("F5").Value & Application.PathSeparator & "LogMainApp.log"
     
-    Dim FileNum As Integer
-    FileNum = FreeFile
+    Dim fileNum As Integer
+    fileNum = FreeFile
     
     Dim currentTime As String
     currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
     
-    Open logFile For Input As #FileNum
+    Open logFile For Input As #fileNum
 
     Dim strUser As String, strDate As String, strVersion As String, strModule As String
     Dim logline As String
     Dim arrTime(1 To 10) As Long
     Dim ctr As Long
-    Do Until EOF(FileNum)
-        Line Input #FileNum, logline
+    Do Until EOF(fileNum)
+        Line Input #fileNum, logline
         ctr = ctr + 1
         logline = logline & "|"
         Dim arr() As String
@@ -1914,7 +1914,7 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     MsgBox "Il y a " & UBound(arrModule, 1) + 1 & " modules distincts dans le log", vbInformation
     
     'Close the file
-    Close #FileNum
+    Close #fileNum
     
 End Sub
 

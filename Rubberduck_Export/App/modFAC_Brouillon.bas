@@ -763,11 +763,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1205,12 +1205,12 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     
     'Réinsérer les formules dans les cellules concernées uniquement si la colonne 2 n'est pas zéro
     Dim addr As Variant
-    Dim Ligne As Integer
+    Dim ligne As Integer
     Application.EnableEvents = False
     For Each addr In formules.keys
-        Ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
+        ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
         'Vérifier la valeur de la 2ème colonne dans la ligne correspondante
-        If r.Worksheet.Cells(Ligne, 19).Value <> 0 Then
+        If r.Worksheet.Cells(ligne, 19).Value <> 0 Then
             'Vérifier si l'adresse est dans la colonne 2 ou 4
             If r.Worksheet.Range(addr).Column = 19 Or r.Worksheet.Range(addr).Column = 21 Then
                 r.Worksheet.Range(addr).formula = formules(addr)

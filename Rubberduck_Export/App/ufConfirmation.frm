@@ -149,7 +149,7 @@ End Sub
 'Private Sub ListView1_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
 '
 '    With ListView1
-'        .SortKey = ColumnHeader.index - 1 ' Index basé sur la colonne cliquée
+'        .SortKey = ColumnHeader.Index - 1 ' Index basé sur la colonne cliquée
 '        .sorted = True                   ' Active le tri
 '        ' Alterne l'ordre de tri
 '        If .SortOrder = lvwAscending Then

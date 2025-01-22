@@ -206,6 +206,7 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
         ws.Shapes("shpVérifierDernièresLignes").Visible = msoTrue
+        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
     Else
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
         ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
@@ -217,6 +218,7 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
         ws.Shapes("shpVérifierDernièresLignes").Visible = msoFalse
+        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
     End If
     
     'Libérer la mémoire

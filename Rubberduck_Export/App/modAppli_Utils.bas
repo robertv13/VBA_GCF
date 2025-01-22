@@ -256,6 +256,9 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call checkTEC(r, readRows)
     
+    'Obtenir le nombre de lignes utilisées dans les tables principales - 2025-01-22 @ 13:46
+    Call AnalyseLignesParFeuille
+    
     'Adjust the Output Worksheet
     With wsOutput.Range("A2:C" & r).Font
         .Name = "Courier New"
@@ -264,7 +267,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
-   'Result print setup - 2024-07-20 @ 14:31
+    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = r
     
@@ -827,10 +830,10 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
     End If
     
     Dim strGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(Ligne.Cells(1, 2).Value) & "^D:" & Trim(Ligne.Cells(1, 1).Value) & " | "
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
+    Next ligne
     
     'Copie les données vers un tableau
     Dim rng As Range
@@ -920,7 +923,7 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -972,10 +975,10 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
     Dim strGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(Ligne.Cells(1, 2).Value) & "^D:" & Trim(Ligne.Cells(1, 1).Value) & " | "
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
+    Next ligne
     
     'Copie les données vers un tableau
     Dim rng As Range
@@ -1070,7 +1073,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -2526,11 +2529,11 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
     Dim strCodeGL As String, strDescGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strCodeGL = strCodeGL & Ligne.Cells(1, 2).Value & "|:|"
-        strDescGL = strDescGL & Ligne.Cells(1, 1).Value & "|:|"
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strCodeGL = strCodeGL & ligne.Cells(1, 2).Value & "|:|"
+        strDescGL = strDescGL & ligne.Cells(1, 1).Value & "|:|"
+    Next ligne
     
     Dim numRows As Long
     numRows = ws.Range("A1").CurrentRegion.Rows.count - 1 'Remove the header row
@@ -2688,7 +2691,7 @@ Clean_Exit:
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set v = Nothing
@@ -2744,10 +2747,10 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     
     'Bâtir une chaine avec code & description
     Dim strGL As String
-    Dim Ligne As Range
-    For Each Ligne In planComptable.Rows
-        strGL = strGL & Trim(Ligne.Cells(1, 2).Value) & "-" & Trim(Ligne.Cells(1, 1).Value) & " | "
-    Next Ligne
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & Trim(ligne.Cells(1, 2).Value) & "-" & Trim(ligne.Cells(1, 1).Value) & " | "
+    Next ligne
 
     'Copier les données vers un tableau
     Dim rng As Range
@@ -2809,7 +2812,7 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -3114,7 +3117,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3533 'What is the last TECID analyzed ?
+    lastTECIDReported = 3588 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -4442,6 +4445,74 @@ Sub Paint_A_Range(rng As Range, colorRGB As String)
         .PatternTintAndShade = 0
     End With
 
+End Sub
+
+Sub AnalyseLignesParFeuille() '2025-01-22 @ 16:19
+
+    'Spécifiez les chemins des classeurs
+    Dim cheminClasseurUsage As String
+    cheminClasseurUsage = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
+    Dim cheminClasseurMASTER As String
+    cheminClasseurMASTER = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    
+    Application.ScreenUpdating = False
+    
+    'Ouvrir le classeur d'usage
+    Dim wbUsage As Workbook
+    Set wbUsage = Workbooks.Open(cheminClasseurUsage)
+    Dim wsUsage As Worksheet
+    Set wsUsage = wbUsage.Worksheets("Data")
+    
+    'Trouver la première ligne disponible
+    Dim LigneDisponible As Long
+    LigneDisponible = wsUsage.Cells(wsUsage.Rows.count, 1).End(xlUp).row + 1
+    
+    'Ouvrir le classeur maître en lecture seule
+    Dim wbMaster As Workbook
+    Set wbMaster = Workbooks.Open(cheminClasseurMASTER, ReadOnly:=True)
+    
+    'Ajouter l'horodatage à la première col
+    Dim dateHeure As String
+    dateHeure = Now
+    wsUsage.Cells(LigneDisponible, 1).Value = Format$(dateHeure, "yyyy-mm-dd hh:mm:ss")
+    
+    'Parcourir les cols de la première ligne pour les noms de feuilles
+    Dim feuilleNom As String
+    Dim lastUsedRow As Long
+    Dim col As Long
+    col = 2 'Commence à la col 2
+    Do While wsUsage.Cells(1, col).Value <> ""
+        feuilleNom = wsUsage.Cells(1, col).Value
+        
+        'Vérifier si la feuille existe dans le classeur maître
+        On Error Resume Next
+        Dim wsMaster As Worksheet
+        Set wsMaster = wbMaster.Sheets(feuilleNom)
+        On Error GoTo 0
+        
+        If Not wsMaster Is Nothing Then
+            'Compter les lignes utilisées dans la col A
+            lastUsedRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).row
+        Else
+            'Si la feuille n'existe pas, assigner 0
+            lastUsedRow = 0
+        End If
+        
+        'Écrire le résultat dans la ligne disponible
+        wsUsage.Cells(LigneDisponible, col).Value = lastUsedRow
+        
+        'Passer à la col suivante
+        col = col + 1
+    Loop
+    
+    'Fermer le classeur maître sans enregistrer
+    wbMaster.Close False
+    
+    Application.ScreenUpdating = True
+    
+    'Sauvegarder et fermer le classeur d'usage
+    wbUsage.Close SaveChanges:=True
+    
 End Sub
 
 Sub ChargerRangeDansDictionnaire(ByRef dict As Object, ByVal rng As Range, Optional colValeurOffset As Long = 0)

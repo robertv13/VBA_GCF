@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListe…critureGL 
    Caption         =   "Liste des Ècritures"
-   ClientHeight    =   7455
+   ClientHeight    =   7275
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   10035
+   ClientWidth     =   11025
    OleObjectBlob   =   "ufListe…critureGL.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -17,12 +17,12 @@ Option Explicit
 
 Private Sub lbListe…critureGL_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim Ligne As Long
+    Dim ligne As Long
     
-    Ligne = lbListe…critureGL.ListIndex
+    ligne = lbListe…critureGL.ListIndex
     
-    If Ligne <> -1 Then
-        wshGL_EJ.Range("B3").Value = lbListe…critureGL.List(Ligne, 0)
+    If ligne <> -1 Then
+        wshGL_EJ.Range("B3").Value = lbListe…critureGL.List(ligne, 0)
     End If
     
     Unload ufListe…critureGL

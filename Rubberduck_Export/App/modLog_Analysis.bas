@@ -1,100 +1,285 @@
 Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
-Sub Lire_Fichier_LogMainApp() '2025-01-13 @ 07:46
+Sub Main_OuvrirRepertoireEtTraiterFichiers()
 
-    'Utiliser une boîte de dialogue Fichier
-    Dim FileDialogBox As FileDialog
-    Set FileDialogBox = Application.FileDialog(msoFileDialogFilePicker)
-
-    'Configurer les filtres et afficher la boîte de dialogue
-    Dim nomCompletFichierLog As String
-    With FileDialogBox
-        .Title = "Sélectionnez le fichier 'LogMainApp' à analyser"
-        .Filters.Clear 'Supprimer les filtres existants
-        .Filters.Add "Fichiers log", "*.log"
-        If .show = -1 Then
-            nomCompletFichierLog = .selectedItems(1) 'Récupérer le chemin du fichier sélectionné
-        Else
-            MsgBox "Aucun fichier sélectionné.", vbExclamation
-            Exit Sub
-        End If
-    End With
-
-    'Est-ce le bon fichier de Log (format) ?
-    If InStr(nomCompletFichierLog, "LogMainApp.log") = 0 Then
-        MsgBox "Il ne s'agit pas du bon type de fichier Log", vbExclamation
-        MsgBox "Traitement annulé", vbInformation
+    'Initialisation du FileDialog pour sélectionner un répertoire
+    Dim fileDialog As fileDialog
+    Set fileDialog = Application.fileDialog(msoFileDialogFolderPicker)
+    fileDialog.Title = "Sélectionnez un répertoire à traiter"
+    
+    'Un répertoire a-t-il été sélectionné ?
+    Dim folderPath As String
+    If fileDialog.show = -1 Then
+        folderPath = fileDialog.selectedItems(1)
+    Else
+        MsgBox "Aucun répertoire sélectionné.", vbExclamation
         Exit Sub
     End If
     
+    'Vérification de l'existence du répertoire
+    If Dir(folderPath, vbDirectory) = "" Then
+        MsgBox "Répertoire invalide.", vbCritical
+        Exit Sub
+    End If
+    
+    'Lecture des fichiers dans le répertoire
+    Dim fileSystem As Object
+    Set fileSystem = CreateObject("Scripting.FileSystemObject")
+    Dim file As Object
+    For Each file In fileSystem.GetFolder(folderPath).Files
+        'Appliquer les traitements en fonction des fichiers
+        Select Case file.Name
+            Case "LogClientsApp.log"
+                Call Lire_LogClientsApp(file.path)
+            Case "LogMainApp.log"
+                Call Lire_LogMainApp(file.path)
+            Case "LogSaisieHeures.log"
+                Call Lire_LogSaisieHeures(file.path)
+        End Select
+    Next file
+    
+    'Libérer la mémoire
+    Set file = Nothing
+    Set fileDialog = Nothing
+    Set fileSystem = Nothing
+    
+    MsgBox "Le traitement des fichiers LOG est terminé !", vbInformation
+    
+End Sub
+
+Sub Lire_LogClientsApp(filePath As String)
+
+    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - 0 ligne"
+    
+    'Ouvrir le fichier 'LogClientsApp.log'
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    Open filePath For Input As #fileNum
+    
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(nomCompletFichierLog, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
         env = "PROD"
     Else
         env = "DEV"
     End If
     
-    'Ouvrir le fichier sélectionné
-    Dim FileNumber As Integer
-    FileNumber = FreeFile
-    Open nomCompletFichierLog For Input As #FileNumber
-
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 50000, 1 To 9)
-    Dim Ligne As Long
-    Dim LineContent As String
+    ReDim output(1 To 25000, 1 To 9)
+    Dim ligne As Long
+    Dim lineContent As String
     Dim lineNo As Long
     Dim duree As String
     Dim i As Long
 
-    Ligne = 1
-    Do While Not EOF(FileNumber)
-        Line Input #FileNumber, LineContent
+    ligne = 0
+    Do While Not EOF(fileNum)
+        Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-        If InStr(LineContent, " | ") <> 0 Then
+        If lineNo Mod 25 = 0 Then
+            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+        End If
+        If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
-            Fields = Split(LineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
             'Insérer les données dans le tableau
-            Ligne = Ligne + 1
-            output(Ligne, 1) = env
-            output(Ligne, 2) = CStr(Left(Fields(0), 10))
-            output(Ligne, 3) = CStr(Right(Fields(0), 11))
-            output(Ligne, 4) = Trim(Fields(1))
-            output(Ligne, 5) = Trim(Fields(2))
-            output(Ligne, 6) = Trim(Fields(3))
+            ligne = ligne + 1
+            output(ligne, 1) = env
+            output(ligne, 2) = CStr(Left(Fields(0), 10))
+            output(ligne, 3) = CStr(Right(Fields(0), 11))
+            output(ligne, 4) = Trim(Fields(1))
+            output(ligne, 5) = Trim(Fields(2))
+            output(ligne, 6) = Trim(Fields(3))
             If InStr(Fields(3), " secondes'") <> 0 Then
                 duree = ExtraireSecondes(Fields(3))
                 duree = Replace(duree, ".", ",")
 '                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
 '                    duree = Left(duree, InStr(duree, " ") - 1)
                 If duree <> 0 Then
-                    output(Ligne, 7) = CDbl(duree)
+                    output(ligne, 7) = CDbl(duree)
                 Else
-                    output(Ligne, 7) = 0
+                    output(ligne, 7) = 0
                 End If
-                output(Ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
             End If
-            output(Ligne, 8) = lineNo
-            output(Ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            output(ligne, 8) = lineNo
+            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         End If
     Loop
 
-    ' Fermer le fichier
-    Close #FileNumber
+    'Réduit la taille du tableau output
+    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
-    Call Array_2D_Resizer(output, Ligne, UBound(output, 2))
+    'Fermer le fichier
+    Close #fileNum
+    
+    'Ajout du tableau à un classeur fermé
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Clients")
+    
+    Application.StatusBar = ""
+    
+    'Afficher le nombre de lignes ajoutées au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    
+End Sub
+
+Sub Lire_LogMainApp(filePath As String)
+
+    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
+    
+    'Ouvrir et lire le contenu du fichier TXT
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    Open filePath For Input As #fileNum
+    
+    'Détermine l'environnement (DEV/PROD) ?
+    Dim env As String
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+        env = "PROD"
+    Else
+        env = "DEV"
+    End If
+    
+    'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
+    Dim output() As Variant
+    ReDim output(1 To 100000, 1 To 9)
+    Dim ligne As Long
+    Dim lineContent As String
+    Dim lineNo As Long
+    Dim duree As String
+    Dim i As Long
+
+    ligne = 0
+    Do While Not EOF(fileNum)
+        Line Input #fileNum, lineContent
+        lineNo = lineNo + 1
+        If lineNo Mod 250 = 0 Then
+            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+        End If
+        If InStr(lineContent, " | ") <> 0 Then
+            Dim Fields() As String
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
+            'Insérer les données dans le tableau
+            ligne = ligne + 1
+            output(ligne, 1) = env
+            output(ligne, 2) = CStr(Left(Fields(0), 10))
+            output(ligne, 3) = CStr(Right(Fields(0), 11))
+            output(ligne, 4) = Trim(Fields(1))
+            output(ligne, 5) = Trim(Fields(2))
+            output(ligne, 6) = Trim(Fields(3))
+            If InStr(Fields(3), " secondes'") <> 0 Then
+                duree = ExtraireSecondes(Fields(3))
+                duree = Replace(duree, ".", ",")
+'                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
+'                    duree = Left(duree, InStr(duree, " ") - 1)
+                If duree <> 0 Then
+                    output(ligne, 7) = CDbl(duree)
+                Else
+                    output(ligne, 7) = 0
+                End If
+                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+            End If
+            output(ligne, 8) = lineNo
+            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        End If
+    Loop
+
+    'Réduit la taille du tableau output
+    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    
+    'Fermer le fichier
+    Close #fileNum
     
     'Ajout du tableau à un classeur fermé
     Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Application")
 
-    'Libérer la mémoire
-    Set FileDialogBox = Nothing
+    Application.StatusBar = ""
+    
+    'Afficher le nombre de lignes ajoutées au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    
+End Sub
 
-    MsgBox "Lecture du fichier LOG terminée et données insérées dans la feuille.", vbInformation
+Sub Lire_LogSaisieHeures(filePath As String)
 
+    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
+    
+    'Ouvrir le fichier 'LogClientsApp.log'
+    Dim fileNum As Integer
+    fileNum = FreeFile
+    Open filePath For Input As #fileNum
+    
+    'Détermine l'environnement (DEV/PROD) ?
+    Dim env As String
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+        env = "PROD"
+    Else
+        env = "DEV"
+    End If
+    
+    'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
+    Dim output() As Variant
+    ReDim output(1 To 2500, 1 To 16)
+    Dim ligne As Long
+    Dim lineContent As String
+    Dim lineNo As Long
+    Dim duree As String
+    Dim i As Long
+
+    ligne = 0
+    Do While Not EOF(fileNum)
+        Line Input #fileNum, lineContent
+        lineNo = lineNo + 1
+        If lineNo Mod 25 = 0 Then
+            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+        End If
+        If InStr(lineContent, " | ") <> 0 Then
+            Dim Fields() As String
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
+            'Insérer les données dans le tableau
+            ligne = ligne + 1
+            output(ligne, 1) = env
+            output(ligne, 2) = CStr(Left(Fields(0), 10))
+            output(ligne, 3) = CStr(Right(Fields(0), 11))
+            output(ligne, 4) = Trim(Fields(1))
+            output(ligne, 5) = Trim(Fields(2))
+            Dim oper As String
+            Dim tecID As Long
+            oper = Trim(Fields(3))
+            tecID = Mid(oper, 8, Len(oper) - 7)
+            oper = Trim(Left(oper, 7))
+            output(ligne, 6) = oper
+            output(ligne, 7) = CStr(tecID)
+            output(ligne, 8) = Fields(4)
+            output(ligne, 9) = Fields(5)
+            output(ligne, 10) = Fields(6)
+            output(ligne, 11) = Fields(7)
+            output(ligne, 12) = Fields(8)
+            Dim hres As Double
+            hres = CDbl(Replace(Fields(9), ".", ","))
+            output(ligne, 13) = Round(hres, 2)
+            output(ligne, 14) = Fields(10)
+            output(ligne, 15) = lineNo
+            output(ligne, 16) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        End If
+    Loop
+
+    'Réduit la taille du tableau output
+    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    
+    'Fermer le fichier
+    Close #fileNum
+    
+    'Ajout du tableau à un classeur fermé
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Heures")
+    
+    Application.StatusBar = ""
+    
+    'Afficher le nombre de lignes ajoutées au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    
 End Sub
 
 Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As String, ByVal feuilleNom As String)
@@ -129,18 +314,33 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     For i = LBound(tableau, 1) To UBound(tableau, 1)
         strSQL = "INSERT INTO [" & feuilleNom & "$] VALUES ("
         For j = LBound(tableau, 2) To UBound(tableau, 2)
+            'Nettoyage de la valeur
+            If Not IsEmpty(valeur) Then valeur = Trim(valeur)
+            
+            'Tronque les données qui seraient trop longues
             valeur = tableau(i, j)
-            If Len(valeur) > 200 Then
-                valeur = Left(valeur, 200)
+            If Len(valeur) > 197 Then
+                valeur = Left(valeur, 197) & "..."
             End If
-            ' Ajouter des délimiteurs dynamiquement en fonction du type de valeur
-            If IsDate(valeur) Then
+            
+            'Déterminer dynamiquement le type de valeur
+            If IsEmpty(valeur) Or IsNull(valeur) Then
+                'Valeur vide ou nulle, insérer une valeur par défaut
+                strSQL = strSQL & "0, "
+            ElseIf IsDate(valeur) Then
+                'Date : Format SQL compatible
                 strSQL = strSQL & "#" & Format(valeur, "yyyy-mm-dd hh:nn:ss") & "#, "
-            ElseIf IsNumeric(valeur) And Not IsEmpty(valeur) Then
-                strSQL = strSQL & Replace(valeur, ",", ".") & ", "
-            ElseIf IsEmpty(valeur) Or IsNull(valeur) Then
-                strSQL = strSQL & 0 & ", "
+            ElseIf IsNumeric(valeur) Then
+                If InStr(1, CStr(valeur), ".") > 0 Or InStr(1, CStr(valeur), ",") > 0 Then
+                    'La valeur contient un séparateur décimal
+                    strSQL = strSQL & Replace(CDbl(valeur), ",", ".") & ", "
+'                    strSQL = strSQL & Replace(Format(CDbl(valeur), "0.00"), ",", ".") & ", "
+                Else
+                    'La valeur est entière
+                    strSQL = strSQL & CLng(valeur) & ", "
+                End If
             Else
+                'Texte : Protéger les apostrophes
                 strSQL = strSQL & "'" & Replace(valeur, "'", "''") & "', "
             End If
         Next j
@@ -151,9 +351,9 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     
     'Fermer la connexion
     cn.Close
-    Set cn = Nothing
     
-    MsgBox "Ajout terminé avec succès après la ligne " & lastUsedRow & " !"
+    'Libérer la mémoire
+    Set cn = Nothing
     
 End Sub
 

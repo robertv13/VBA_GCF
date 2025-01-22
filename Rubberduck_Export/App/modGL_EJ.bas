@@ -422,20 +422,20 @@ Sub GL_EJ_Renverser_Ecriture()
     Application.EnableEvents = False
     wshGL_EJ.Range("K4").Value = Format$(rngResult.Cells(1, 2).Value, wshAdmin.Range("B1").Value)
     wshGL_EJ.Range("F6").Value = rngResult.Cells(1, 3).Value
-    Dim Ligne As Range
+    Dim ligne As Range
     Dim l As Long: l = 9
-    For Each Ligne In rngResult.Rows
-        wshGL_EJ.Range("E" & l).Value = Ligne.Cells(6).Value
-        If Ligne.Cells(7).Value <> 0 Then
-            wshGL_EJ.Range("H" & l).Value = Ligne.Cells(7).Value
+    For Each ligne In rngResult.Rows
+        wshGL_EJ.Range("E" & l).Value = ligne.Cells(6).Value
+        If ligne.Cells(7).Value <> 0 Then
+            wshGL_EJ.Range("H" & l).Value = ligne.Cells(7).Value
         End If
-        If Ligne.Cells(8).Value <> 0 Then
-            wshGL_EJ.Range("I" & l).Value = Ligne.Cells(8).Value
+        If ligne.Cells(8).Value <> 0 Then
+            wshGL_EJ.Range("I" & l).Value = ligne.Cells(8).Value
         End If
-        wshGL_EJ.Range("J" & l).Value = Ligne.Cells(9).Value
-        wshGL_EJ.Range("L" & l).Value = Ligne.Cells(5).Value
+        wshGL_EJ.Range("J" & l).Value = ligne.Cells(9).Value
+        wshGL_EJ.Range("L" & l).Value = ligne.Cells(5).Value
         l = l + 1
-    Next Ligne
+    Next ligne
     Application.EnableEvents = True
     
     'On affiche l'écriture à renverser en rouge
@@ -448,7 +448,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Call Modifier_Forme(shp)
     
     'Libérer la mémoire
-    Set Ligne = Nothing
+    Set ligne = Nothing
     Set rngResult = Nothing
     Set shp = Nothing
     Set ws = Nothing
@@ -975,7 +975,7 @@ Sub Prepare_Affiche_Liste_Ecriture()
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     'Initialiser le tableau des résultats
-    Dim resultats() As String
+    Dim resultats() As Variant
     Dim compteur As Long
     ReDim resultats(1 To lastUsedRow, 1 To 4)
     
@@ -999,11 +999,14 @@ Sub Prepare_Affiche_Liste_Ecriture()
         Exit Sub
     End If
    
+    'Réduire la taille du tableau resultats
+    Call Array_2D_Resizer(resultats, compteur, UBound(resultats, 2))
+    
     'Charger les résultats dans la ListBox
     With ufListeÉcritureGL.lbListeÉcritureGL
         .Clear
         .ColumnCount = 4
-        .ColumnWidths = "35;55;280;90"
+        .ColumnWidths = "35;62;310;92"
         .List = resultats
     End With
     
