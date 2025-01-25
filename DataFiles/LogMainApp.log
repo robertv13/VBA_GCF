@@ -36714,3 +36714,452 @@
 
 2025-01-23 00:04:57.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
 
+2025-01-23 18:26:16.11 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-23 18:26:16.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | Validation d'accès serveur terminée *** = '0,0078 secondes'
+
+2025-01-23 18:26:16.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-23 18:26:16.14 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0078 secondes'
+
+2025-01-23 18:26:16.14 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-23 18:26:16.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0156 secondes'
+
+2025-01-23 18:26:16.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-23 18:26:16.38 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,2266 secondes'
+
+2025-01-23 18:26:16.38 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-23 18:26:16.39 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0156 secondes'
+
+2025-01-23 18:26:16.40 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-23 18:26:16.41 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0078 secondes'
+
+2025-01-23 18:27:00.60 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-23 18:27:02.11 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-23 18:27:02.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0234 secondes'
+
+2025-01-23 18:27:02.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+
+2025-01-24 23:26:04.15 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-24 23:26:04.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | Validation d'accès serveur terminée *** = '0,0000 secondes'
+
+2025-01-24 23:26:04.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-24 23:26:04.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0000 secondes'
+
+2025-01-24 23:26:04.18 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-24 23:26:04.19 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0078 secondes'
+
+2025-01-24 23:26:04.19 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-24 23:26:04.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,4062 secondes'
+
+2025-01-24 23:26:04.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-24 23:26:04.62 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0234 secondes'
+
+2025-01-24 23:26:04.62 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-24 23:26:04.63 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0078 secondes'
+
+2025-01-24 23:26:04.65 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:CodeEssentielDepart *** = '0,5000 secondes'
+
+2025-01-24 23:28:13.50 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:Integrity_Verification
+2025-01-24 23:28:13.63 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkPlanComptable
+2025-01-24 23:28:13.66 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkPlanComptable *** = '0,0391 secondes'
+
+2025-01-24 23:28:13.69 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All
+2025-01-24 23:28:13.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable
+2025-01-24 23:28:13.85 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable *** = '0,0078 secondes'
+
+2025-01-24 23:28:13.85 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting
+2025-01-24 23:28:13.85 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting *** = '0,0000 secondes'
+
+2025-01-24 23:28:13.92 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All *** = '0,2344 secondes'
+
+2025-01-24 23:28:13.92 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkClients
+2025-01-24 23:28:14.48 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkClients *** = '0,5547 secondes'
+
+2025-01-24 23:28:14.48 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Fournisseur_List_Import_All
+2025-01-24 23:28:14.61 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Fournisseur_List_Import_All *** = '0,1328 secondes'
+
+2025-01-24 23:28:14.63 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFournisseurs
+2025-01-24 23:28:14.65 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFournisseurs *** = '0,0234 secondes'
+
+2025-01-24 23:28:14.66 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:DEB_Récurrent_Import_All
+2025-01-24 23:28:14.73 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary
+2025-01-24 23:28:14.77 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary *** = '0,0391 secondes'
+
+2025-01-24 23:28:14.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:DEB_Récurrent_Import_All *** = '0,1797 secondes'
+
+2025-01-24 23:28:14.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkDEB_Récurrent
+2025-01-24 23:28:14.87 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkDEB_Récurrent *** = '0,0312 secondes'
+
+2025-01-24 23:28:14.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:DEB_Trans_Import_All
+2025-01-24 23:28:15.07 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:DEB_Trans_Import_All *** = '0,1875 secondes'
+
+2025-01-24 23:28:15.09 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkDEB_Trans
+2025-01-24 23:28:15.11 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkDEB_Trans *** = '0,0234 secondes'
+
+2025-01-24 23:28:15.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Entête_Import_All
+2025-01-24 23:28:15.31 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Entête_Import_All *** = '0,1875 secondes'
+
+2025-01-24 23:28:15.32 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Entête
+2025-01-24 23:28:15.40 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Entête *** = '0,0781 secondes'
+
+2025-01-24 23:28:15.40 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Détails_Import_All
+2025-01-24 23:28:15.63 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Détails_Import_All *** = '0,2266 secondes'
+
+2025-01-24 23:28:15.64 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Détails
+2025-01-24 23:28:15.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Détails *** = '0,0391 secondes'
+
+2025-01-24 23:28:15.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2025-01-24 23:28:15.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Comptes_Clients_Import_All *** = '0,1641 secondes'
+
+2025-01-24 23:28:15.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Comptes_Clients
+2025-01-24 23:28:17.43 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Comptes_Clients *** = '1,5859 secondes'
+
+2025-01-24 23:28:17.43 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All
+2025-01-24 23:28:17.57 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All *** = '0,1406 secondes'
+
+2025-01-24 23:28:17.58 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Sommaire_Taux
+2025-01-24 23:28:17.60 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Sommaire_Taux *** = '0,0234 secondes'
+
+2025-01-24 23:28:17.61 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ENC_Entête_Import_All
+2025-01-24 23:28:17.77 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ENC_Entête_Import_All *** = '0,1562 secondes'
+
+2025-01-24 23:28:17.77 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkENC_Entête
+2025-01-24 23:28:17.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkENC_Entête *** = '0,0547 secondes'
+
+2025-01-24 23:28:17.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ENC_Détails_Import_All
+2025-01-24 23:28:18.01 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ENC_Détails_Import_All *** = '0,1797 secondes'
+
+2025-01-24 23:28:18.01 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkENC_Détails
+2025-01-24 23:28:18.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkENC_Détails *** = '0,0469 secondes'
+
+2025-01-24 23:28:18.07 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:CC_Régularisations_Import_All
+2025-01-24 23:28:18.20 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:CC_Régularisations_Import_All *** = '0,1250 secondes'
+
+2025-01-24 23:28:18.20 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkCC_Régularisations
+2025-01-24 23:28:18.22 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkCC_Régularisations *** = '0,0234 secondes'
+
+2025-01-24 23:28:18.23 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Entête_Import_All
+2025-01-24 23:28:18.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Entête_Import_All *** = '0,5703 secondes'
+
+2025-01-24 23:28:18.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Projets_Entête
+2025-01-24 23:28:18.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Projets_Entête *** = '0,0078 secondes'
+
+2025-01-24 23:28:18.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Détails_Import_All
+2025-01-24 23:28:19.02 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Détails_Import_All *** = '0,2031 secondes'
+
+2025-01-24 23:28:19.03 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Projets_Détails
+2025-01-24 23:28:19.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkFAC_Projets_Détails *** = '0,0078 secondes'
+
+2025-01-24 23:28:19.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_Trans_Import_All
+2025-01-24 23:28:19.41 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_Trans_Import_All *** = '0,3516 secondes'
+
+2025-01-24 23:28:19.41 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkGL_Trans
+2025-01-24 23:28:19.45 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkGL_Trans *** = '0,0469 secondes'
+
+2025-01-24 23:28:19.46 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_EJ_Recurrente_Import_All
+2025-01-24 23:28:19.52 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary
+2025-01-24 23:28:19.57 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary *** = '0,0469 secondes'
+
+2025-01-24 23:28:19.66 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_EJ_Recurrente_Import_All *** = '0,1953 secondes'
+
+2025-01-24 23:28:19.66 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkGL_EJ_Recurrente
+2025-01-24 23:28:19.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkGL_EJ_Recurrente *** = '0,0156 secondes'
+
+2025-01-24 23:28:19.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All
+2025-01-24 23:28:19.97 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All *** = '0,2891 secondes'
+
+2025-01-24 23:28:19.98 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-24 23:28:19.98 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-24 23:28:20.11 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($A$2:$K$3651)
+2025-01-24 23:28:20.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,0156 secondes'
+
+2025-01-24 23:28:20.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1484 secondes'
+
+2025-01-24 23:28:20.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-24 23:28:20.32 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1875 secondes'
+
+2025-01-24 23:28:20.34 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,3594 secondes'
+
+2025-01-24 23:28:20.34 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkTEC_TdB_Data
+2025-01-24 23:28:20.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkTEC_TdB_Data *** = '0,2422 secondes'
+
+2025-01-24 23:28:20.60 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkTEC
+2025-01-24 23:28:29.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:checkTEC *** = '8,9844 secondes'
+
+2025-01-24 23:28:33.18 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:Integrity_Verification *** = '19,6797 secondes'
+
+2025-01-24 23:28:50.33 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-24 23:28:50.34 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0156 secondes'
+
+2025-01-24 23:28:54.50 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-24 23:28:55.96 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-24 23:28:55.96 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0000 secondes'
+
+2025-01-24 23:28:55.97 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+
+2025-01-25 07:20:42.55 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-25 07:20:42.58 | Robert M. Vigneault | APP_v5.N.3.xlsb | Validation d'accès serveur terminée *** = '0,0000 secondes'
+
+2025-01-25 07:20:42.58 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-25 07:20:42.58 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0078 secondes'
+
+2025-01-25 07:20:42.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-25 07:20:42.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0059 secondes'
+
+2025-01-25 07:20:42.59 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-25 07:20:42.78 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,1855 secondes'
+
+2025-01-25 07:20:42.78 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-25 07:20:42.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0391 secondes'
+
+2025-01-25 07:20:42.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-25 07:20:42.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0059 secondes'
+
+2025-01-25 07:20:42.85 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:CodeEssentielDepart *** = '0,2930 secondes'
+
+2025-01-25 07:20:44.15 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuTEC_Click
+2025-01-25 07:20:44.24 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuTEC_Click *** = '0,0879 secondes'
+
+2025-01-25 07:20:45.75 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_TDB_Click
+2025-01-25 07:20:45.76 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB:Worksheet_Activate
+2025-01-25 07:20:45.76 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-25 07:20:45.76 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-25 07:20:45.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($A$2:$K$3651)
+2025-01-25 07:20:45.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,0000 secondes'
+
+2025-01-25 07:20:45.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1133 secondes'
+
+2025-01-25 07:20:45.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-25 07:20:46.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1602 secondes'
+
+2025-01-25 07:20:46.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,2812 secondes'
+
+2025-01-25 07:20:46.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_TDB:Worksheet_Activate *** = '0,2891 secondes'
+
+2025-01-25 07:20:46.06 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_TDB_Click *** = '0,3086 secondes'
+
+2025-01-25 07:21:06.45 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_Analyse_Click
+2025-01-25 07:21:06.46 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:Worksheet_Activate
+2025-01-25 07:21:06.47 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All
+2025-01-25 07:21:06.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable
+2025-01-25 07:21:06.69 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable *** = '0,0098 secondes'
+
+2025-01-25 07:21:06.70 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting
+2025-01-25 07:21:06.70 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting *** = '0,0039 secondes'
+
+2025-01-25 07:21:06.78 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All *** = '0,3086 secondes'
+
+2025-01-25 07:21:06.78 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All
+2025-01-25 07:21:07.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All *** = '0,2559 secondes'
+
+2025-01-25 07:21:07.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Détails_Import_All
+2025-01-25 07:21:07.19 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Détails_Import_All *** = '0,1523 secondes'
+
+2025-01-25 07:21:07.19 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Entête_Import_All
+2025-01-25 07:21:07.76 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Projets_Entête_Import_All *** = '0,5703 secondes'
+
+2025-01-25 07:21:07.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:Worksheet_Change - $H$3
+2025-01-25 07:21:07.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date(25/01/2025, 45, 0)
+2025-01-25 07:21:07.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date *** = '0,0078 secondes'
+
+2025-01-25 07:21:07.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal
+2025-01-25 07:21:07.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF('', 25/01/2025, VRAI, FAUX, FAUX)
+2025-01-25 07:21:07.98 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF *** = '0,1445 secondes'
+
+2025-01-25 07:21:10.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal *** = '2,3066 secondes'
+
+2025-01-25 07:21:10.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:Worksheet_Change *** = '2,3223 secondes'
+
+2025-01-25 07:21:10.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder(wshTEC_Analyse)
+2025-01-25 07:21:10.20 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder *** = '0,0625 secondes'
+
+2025-01-25 07:21:10.22 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:Worksheet_Activate *** = '3,7598 secondes'
+
+2025-01-25 07:21:10.23 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_Analyse_Click *** = '3,7832 secondes'
+
+2025-01-25 07:21:12.11 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu
+2025-01-25 07:21:12.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox
+2025-01-25 07:21:12.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox *** = '0,0020 secondes'
+
+2025-01-25 07:21:12.15 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu *** = '0,0430 secondes'
+
+2025-01-25 07:21:13.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_Evaluation_Click
+2025-01-25 07:21:13.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Activate
+2025-01-25 07:21:13.84 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All
+2025-01-25 07:21:13.94 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable
+2025-01-25 07:21:13.94 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable *** = '0,0000 secondes'
+
+2025-01-25 07:21:13.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting
+2025-01-25 07:21:13.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting *** = '0,0020 secondes'
+
+2025-01-25 07:21:14.00 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All *** = '0,1641 secondes'
+
+2025-01-25 07:21:14.01 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder(wshTEC_Evaluation)
+2025-01-25 07:21:14.03 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder *** = '0,0195 secondes'
+
+2025-01-25 07:21:14.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change[$D$3]
+2025-01-25 07:21:14.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change *** = '0,0039 secondes'
+
+2025-01-25 07:21:14.07 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change[$D$6:$L$28]
+2025-01-25 07:21:14.07 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change *** = '0,0039 secondes'
+
+2025-01-25 07:21:14.09 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Activate *** = '0,2539 secondes'
+
+2025-01-25 07:21:14.09 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMENU_TEC:TEC_Evaluation_Click *** = '0,2910 secondes'
+
+2025-01-25 07:21:15.86 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change[$L$3]
+2025-01-25 07:21:15.86 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date(25, 99, 0)
+2025-01-25 07:21:15.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date *** = '0,0156 secondes'
+
+2025-01-25 07:21:15.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All
+2025-01-25 07:21:16.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:TEC_Import_All *** = '0,2773 secondes'
+
+2025-01-25 07:21:16.35 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF(1210 - De 31/07/2024 à 25/01/2025)
+2025-01-25 07:21:16.39 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF *** = '0,0352 secondes'
+
+2025-01-25 07:21:16.39 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:Worksheet_Change *** = '0,5332 secondes'
+
+2025-01-25 07:21:18.78 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu
+2025-01-25 07:21:18.79 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu *** = '0,0117 secondes'
+
+2025-01-25 07:24:40.49 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 07:24:40.50 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0039 secondes'
+
+2025-01-25 07:24:41.41 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuFacturation_Click
+2025-01-25 07:24:41.47 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuFacturation_Click *** = '0,0605 secondes'
+
+2025-01-25 07:24:43.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Activate
+2025-01-25 07:24:43.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All
+2025-01-25 07:24:43.14 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable
+2025-01-25 07:24:43.14 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ResizeTable *** = '0,0000 secondes'
+
+2025-01-25 07:24:43.15 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting
+2025-01-25 07:24:43.15 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:ApplyFormatting *** = '0,0020 secondes'
+
+2025-01-25 07:24:43.20 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:Client_List_Import_All *** = '0,1582 secondes'
+
+2025-01-25 07:24:43.20 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Entête_Import_All
+2025-01-25 07:24:43.37 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Entête_Import_All *** = '0,1660 secondes'
+
+2025-01-25 07:24:43.37 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2025-01-25 07:24:43.54 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:FAC_Comptes_Clients_Import_All *** = '0,1660 secondes'
+
+2025-01-25 07:24:43.56 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder(wshCAR_Liste_Agée)
+2025-01-25 07:24:43.65 | Robert M. Vigneault | APP_v5.N.3.xlsb | modDev_Utils:SetTabOrder *** = '0,0898 secondes'
+
+2025-01-25 07:24:43.67 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Change
+2025-01-25 07:24:43.69 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Change *** = '0,0156 secondes'
+
+2025-01-25 07:24:43.70 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Activate *** = '0,6602 secondes'
+
+2025-01-25 07:24:46.88 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Change
+2025-01-25 07:24:46.89 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshCAR_Liste_Agée:Worksheet_Change *** = '0,0039 secondes'
+
+2025-01-25 07:24:48.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | modCAR_Liste_Agée:CAR_CréerListeÂgée
+2025-01-25 07:24:53.57 | Robert M. Vigneault | APP_v5.N.3.xlsb | modCAR_Liste_Agée:CAR_CréerListeÂgée *** = '5,4453 secondes'
+
+2025-01-25 07:25:09.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 07:25:09.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0137 secondes'
+
+2025-01-25 07:25:10.56 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuComptabilite_Click
+2025-01-25 07:25:10.61 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:menuComptabilite_Click *** = '0,0488 secondes'
+
+2025-01-25 07:25:11.66 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshGL_BV:Worksheet_Activate
+2025-01-25 07:25:11.68 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_Trans_Import_All
+2025-01-25 07:25:11.93 | Robert M. Vigneault | APP_v5.N.3.xlsb | modImport:GL_Trans_Import_All *** = '0,2539 secondes'
+
+2025-01-25 07:25:11.97 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date(, 999, 15)
+2025-01-25 07:25:11.98 | Robert M. Vigneault | APP_v5.N.3.xlsb | modFunctions:Fn_Complete_Date *** = '0,0059 secondes'
+
+2025-01-25 07:25:11.99 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_Trial_Balance_Build(GL_BV 25/01/2025)
+2025-01-25 07:25:12.00 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF( - De 31/07/2024 à 25/01/2025)
+2025-01-25 07:25:12.08 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF *** = '0,0723 secondes'
+
+2025-01-25 07:25:12.25 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2025-01-25 07:25:12.25 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_BV_Display_TB_Totals *** = '0,0020 secondes'
+
+2025-01-25 07:25:12.25 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_BV_Display_TB_Totals
+2025-01-25 07:25:12.27 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_BV_Display_TB_Totals *** = '0,0156 secondes'
+
+2025-01-25 07:25:12.85 | Robert M. Vigneault | APP_v5.N.3.xlsb | modGL_BV:GL_Trial_Balance_Build *** = '0,8613 secondes'
+
+2025-01-25 07:25:12.87 | Robert M. Vigneault | APP_v5.N.3.xlsb | wshGL_BV:Worksheet_Activate *** = '1,2070 secondes'
+
+2025-01-25 07:25:21.19 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 07:25:21.21 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0156 secondes'
+
+2025-01-25 07:25:55.18 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-25 07:25:56.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-25 07:25:56.96 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0098 secondes'
+
+2025-01-25 07:25:56.96 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+
+2025-01-25 13:32:56.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-25 13:32:56.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | Validation d'accès serveur terminée *** = '0,0000 secondes'
+
+2025-01-25 13:32:56.81 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-25 13:32:56.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0078 secondes'
+
+2025-01-25 13:32:56.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-25 13:32:56.82 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0000 secondes'
+
+2025-01-25 13:32:56.83 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-25 13:32:57.03 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,1953 secondes'
+
+2025-01-25 13:32:57.03 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-25 13:32:57.04 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0117 secondes'
+
+2025-01-25 13:32:57.06 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-25 13:32:57.06 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0000 secondes'
+
+2025-01-25 13:32:57.07 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:CodeEssentielDepart *** = '0,2773 secondes'
+
+2025-01-25 13:34:52.21 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 13:34:52.22 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0117 secondes'
+
+2025-01-25 13:39:48.02 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 13:39:48.05 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0234 secondes'
+
+2025-01-25 13:40:15.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-25 13:40:17.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-25 13:40:17.12 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0039 secondes'
+
+2025-01-25 13:40:17.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+
+2025-01-25 13:40:53.93 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-25 13:40:53.94 | Robert M. Vigneault | APP_v5.N.3.xlsb | Validation d'accès serveur terminée *** = '0,0000 secondes'
+
+2025-01-25 13:40:53.94 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-25 13:40:53.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0078 secondes'
+
+2025-01-25 13:40:53.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-25 13:40:53.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0000 secondes'
+
+2025-01-25 13:40:53.95 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-25 13:40:54.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,1797 secondes'
+
+2025-01-25 13:40:54.13 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-25 13:40:54.14 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0156 secondes'
+
+2025-01-25 13:40:54.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-25 13:40:54.16 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0000 secondes'
+
+2025-01-25 13:40:54.27 | Robert M. Vigneault | APP_v5.N.3.xlsb | modAppli:CodeEssentielDepart *** = '0,3398 secondes'
+
+2025-01-25 14:32:11.36 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 14:32:11.38 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0195 secondes'
+
+2025-01-25 14:32:49.79 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 14:32:49.80 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0156 secondes'
+
+2025-01-25 14:33:35.61 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 14:33:35.62 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0117 secondes'
+
+2025-01-25 14:34:58.42 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 14:34:58.44 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0156 secondes'
+
+2025-01-25 14:34:59.21 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-25 14:35:00.29 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-25 14:35:00.30 | Robert M. Vigneault | APP_v5.N.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0078 secondes'
+
+2025-01-25 14:35:00.30 | Robert M. Vigneault | APP_v5.N.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+

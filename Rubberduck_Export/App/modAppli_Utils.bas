@@ -3117,7 +3117,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3588 'What is the last TECID analyzed ?
+    lastTECIDReported = 3608 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3883,13 +3883,12 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
         
         Case "wshFAC_Détails"
             With usedRange
-                .Range("A2:A" & lastUsedRow & ", C2:C" & lastUsedRow & ", F2:F" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("A2:A" & lastUsedRow & ",F2:F" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("D2:E" & lastUsedRow).HorizontalAlignment = xlRight
+                .Range("C2:E" & lastUsedRow).HorizontalAlignment = xlRight
                 .Range("C2:C" & lastUsedRow).NumberFormat = "#,##0.00"
                 .Range("D2:E" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("H2:H" & lastUsedRow & ", J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:T" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("O2:O" & lastUsedRow & ", Q2:Q" & lastUsedRow).NumberFormat = "#0.000 %"
+                .Range("G2:G" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
             End With
         
         Case "wshFAC_Entête"

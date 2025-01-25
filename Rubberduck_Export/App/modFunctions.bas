@@ -4,13 +4,6 @@ Option Explicit
 'API pour code d'utilisateur
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
 
-'API pour récupérer le format de date par défaut - 2024-09-06 @ 08:07
-'Declare PtrSafe Function GetLocaleInfo Lib "kernel32" Alias "GetLocaleInfoA" _
-'    (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
-    
-'Public Const LOCALE_USER_DEFAULT As Long = &H400
-'Public Const LOCALE_SSHORTDATE As Long = &H1F
-
 Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
@@ -561,26 +554,26 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     Dim ws As Worksheet: Set ws = wshFAC_Détails
     
     'Effacer les données de la dernière utilisation
-    ws.Range("H6:H10").ClearContents
-    ws.Range("H6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("I6:I10").ClearContents
+    ws.Range("I6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
-    ws.Range("H7").Value = rngData.Address
+    ws.Range("I7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("H2:H3")
-    ws.Range("H3").Value = invNo
-    ws.Range("H8").Value = rngCriteria.Address
+    Set rngCriteria = ws.Range("I2:I3")
+    ws.Range("I3").Value = invNo
+    ws.Range("I8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-    Set rngResult = ws.Range("J1").CurrentRegion
+    Set rngResult = ws.Range("K1").CurrentRegion
     rngResult.offset(2, 0).Clear
-    Set rngResult = ws.Range("J2:M2")
-    ws.Range("H9").Value = rngResult.Address
+    Set rngResult = ws.Range("K2:N2")
+    ws.Range("I9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -590,19 +583,18 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
         
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "J").End(xlUp).row
-    ws.Range("H10").Value = lastUsedRow - 2 & " lignes"
+    lastUsedRow = ws.Cells(ws.Rows.count, "K").End(xlUp).row
+    ws.Range("I10").Value = lastUsedRow - 2 & " lignes"
     
     'Aucun tri nécessaire (besoins)
     If lastUsedRow > 2 Then
         Dim i As Long
-'        If invNo > "24-24695" Then Stop
         For i = 3 To lastUsedRow
             If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
                 If t = "Heures" Then
-                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "K")
+                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "L")
                 Else
-                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "M")
+                    Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "N")
                 End If
             End If
         Next i

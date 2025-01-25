@@ -271,6 +271,8 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDHonoraires - 1).Value = Format$(.Range("E" & r).Value, "0.00")
             End If
             rs.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
+            rs.Fields(fFacDTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            
         End With
     'Update the recordset (create the record)
     rs.Update
@@ -338,6 +340,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
             .Range("D" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("D" & i).Value, "0.00")
             .Range("E" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("E" & i).Value, "0.00")
             .Range("F" & firstFreeRow).Value = i
+            .Range("G" & firstFreeRow).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             firstFreeRow = firstFreeRow + 1
         End With
     Next i
