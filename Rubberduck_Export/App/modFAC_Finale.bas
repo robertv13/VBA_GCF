@@ -158,6 +158,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
         
         rs.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
+        rs.Fields(fFacETimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     'Update the recordset (create the record)
     rs.Update
@@ -217,6 +218,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("U" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("E77").Value, "0.00")
         
         .Range("V" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("E79").Value, "0.00")
+        .Range("W" & firstFreeRow).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     
     Application.EnableEvents = False

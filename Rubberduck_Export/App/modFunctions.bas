@@ -1373,8 +1373,6 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     strLastInvoice = ws.Cells(lastUsedRow, 1).Value
     strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
     
-'    Debug.Print "#059 - modFunctions_Fn_Get_Next_Invoice_Number_891  lastUsedRows = "; lastUsedRow; "   ws.Cells(lastUsedRow, 1).value = "; ws.Cells(lastUsedRow, 1).value; "   strLastInvoice = "; strLastInvoice
-    
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 
     'Libérer la mémoire

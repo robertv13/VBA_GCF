@@ -64,26 +64,26 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
     With ws
     
         'Effacer les données de la dernière utilisation
-        .Range("X6:X10").ClearContents
-        .Range("X6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("Y6:Y10").ClearContents
+        .Range("Y6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
         Set rngData = .Range("l_tbl_FAC_Entête[#All]")
-        .Range("X7").Value = rngData.Address
+        .Range("Y7").Value = rngData.Address
         
         'Définir le range des critères
         Dim rngCriteria As Range
-        Set rngCriteria = .Range("X2:X3")
-        .Range("X3").Value = codeClient
-        .Range("X8").Value = rngCriteria.Address
+        Set rngCriteria = .Range("Y2:Y3")
+        .Range("Y3").Value = codeClient
+        .Range("Y8").Value = rngCriteria.Address
         
         'Définir le range des résultats et effacer avant le traitement
         Dim rngResult As Range
-        Set rngResult = .Range("Z1").CurrentRegion
+        Set rngResult = .Range("AA1").CurrentRegion
         rngResult.offset(2, 0).Clear
-        Set rngResult = .Range("Z2:AU2")
-        .Range("X9").Value = rngResult.Address
+        Set rngResult = .Range("AA2:AV2")
+        .Range("Y9").Value = rngResult.Address
         
         rngData.AdvancedFilter _
                     action:=xlFilterCopy, _
@@ -94,17 +94,17 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
         'Quels sont les résultats ?
         Dim lastResultRow As Long
         lastResultRow = .Cells(.Rows.count, "Z").End(xlUp).row
-        .Range("X10").Value = lastResultRow - 2 & " lignes"
+        .Range("Y10").Value = lastResultRow - 2 & " lignes"
          
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 4 Then Exit Sub
         With .Sort 'Sort - Invoice Date
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("Z3"), _
+            .SortFields.Add key:=ws.Range("AA3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortTextAsNumbers 'Sort Based On Invoice Number
-            .SetRange ws.Range("Z3:AU" & lastResultRow) 'Set Range
+            .SetRange ws.Range("AA3:AV" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
      End With
@@ -134,35 +134,25 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
         Dim i As Long, r As Long
         Debug.Print vbNewLine & "For/Next loop - " & 3 & " to " & lastUsedRow
         For i = 3 To lastUsedRow
-            Debug.Print vbNewLine & "   Top of the loop (i=" & i & ")"
             'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
-            Debug.Print "      "; .Range("AA" & i).Value & " >=? " & dateMin, .Range("AA" & i).Value >= dateMin
-            Debug.Print "      "; .Range("AA" & i).Value & " <=? " & dateMax, .Range("AA" & i).Value <= dateMax
-            If .Range("AA" & i).Value >= dateMin And .Range("AA" & i).Value <= dateMax Then
-                Debug.Print "      "; "'" & .Range("AB" & i).Value & "' as " & TypeName(.Range("AB" & i).Value), (.Range("AB" & i).Value = "C")
-                If .Range("AB" & i).Value = "C" Then
+            If .Range("AB" & i).Value >= dateMin And .Range("AB" & i).Value <= dateMax Then
+                If .Range("AC" & i).Value = "C" Then
                     r = r + 1
-                    Debug.Print "      Line is beeing processed - Invoice = '" & .Range("Z" & i).Value & "'"
-                    arr(r, 1) = .Range("Z" & i).Value  'Invoice number
-                    arr(r, 2) = .Range("AA" & i).Value 'Invoice Date
-                    arr(r, 3) = .Range("AI" & i).Value 'Fees
-                    arr(r, 4) = .Range("AK" & i).Value 'Misc. 1
-                    arr(r, 5) = .Range("AM" & i).Value 'Misc. 2
-                    arr(r, 6) = .Range("AO" & i).Value 'Misc. 3
-                    arr(r, 7) = .Range("AQ" & i).Value 'GST $
-                    arr(r, 8) = .Range("AS" & i).Value 'PST $
-                    arr(r, 9) = .Range("AU" & i).Value 'Deposit
-                    arr(r, 10) = .Range("AT" & i).Value 'AR_Total
-                    arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("Z" & i).Value)
-                    arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("Z" & i).Value)
+                    arr(r, 1) = .Range("AA" & i).Value  'Invoice number
+                    arr(r, 2) = .Range("AB" & i).Value 'Invoice Date
+                    arr(r, 3) = .Range("AJ" & i).Value 'Fees
+                    arr(r, 4) = .Range("AL" & i).Value 'Misc. 1
+                    arr(r, 5) = .Range("AN" & i).Value 'Misc. 2
+                    arr(r, 6) = .Range("AP" & i).Value 'Misc. 3
+                    arr(r, 7) = .Range("AR" & i).Value 'GST $
+                    arr(r, 8) = .Range("AT" & i).Value 'PST $
+                    arr(r, 9) = .Range("AV" & i).Value 'Deposit
+                    arr(r, 10) = .Range("AU" & i).Value 'AR_Total
+                    arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value)
+                    arr(r, 12) = Fn_Get_Invoice_Due_Date(.Range("AA" & i).Value)
                     'Obtenir les TEC facturés par cette facture
-                    arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("Z" & i).Value, "Dollars")
-                    Debug.Print "         Row " & r & " has been assigned"
-                Else
-                    Debug.Print "      Line is rejected because status <> 'C'"
+                    arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
                 End If
-            Else
-                Debug.Print "      Line is rejected because not within valid dates"
             End If
         Next i
     End With

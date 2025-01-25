@@ -3881,7 +3881,7 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range("A1").CurrentRegion.EntireColumn.AutoFit
             End With
         
-        Case "wshFAC_Détails"
+        Case "wshFAC_Détails" '2025-01-25 @ 14:20
             With usedRange
                 .Range("A2:A" & lastUsedRow & ",F2:F" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
@@ -3891,9 +3891,9 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                 .Range("G2:G" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
             End With
         
-        Case "wshFAC_Entête"
+        Case "wshFAC_Entête" '2025-01-25 @ 14:49
             With wshFAC_Entête
-                .Range("A2:D" & lastUsedRow).HorizontalAlignment = xlCenter
+                .Range("A2:D" & lastUsedRow & ", W2:W" & lastUsedRow).HorizontalAlignment = xlCenter
                 .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
                 .Range("E2:I" & lastUsedRow & ", K2:K" & lastUsedRow & ", M2:M" & lastUsedRow & ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
                 .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).HorizontalAlignment = xlRight

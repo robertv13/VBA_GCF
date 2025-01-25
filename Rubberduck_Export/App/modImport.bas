@@ -568,7 +568,7 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Sommaire_Taux.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshFAC_Entête, rng, 1)
+    Call ApplyWorksheetFormat(wshFAC_Taux_Sommaire, rng, 1)
     
     Application.ScreenUpdating = True
     

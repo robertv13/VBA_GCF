@@ -63,26 +63,26 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
     'Utilisation du AF#2 dans wshFAC_Entête
     
     'Effacer les données de la dernière utilisation
-    ws.Range("AW6:AW10").ClearContents
-    ws.Range("AW6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AX6:AX10").ClearContents
+    ws.Range("AX6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
-    ws.Range("AW7").Value = rngData.Address
+    ws.Range("AX7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("AW2:AW3")
-    ws.Range("AW3").Value = AC_OR_C
-    ws.Range("AW8").Value = rngCriteria.Address
+    Set rngCriteria = ws.Range("AX2:AX3")
+    ws.Range("AX3").Value = AC_OR_C
+    ws.Range("AX8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-    Set rngResult = ws.Range("AY1").CurrentRegion
+    Set rngResult = ws.Range("AZ1").CurrentRegion
     rngResult.offset(2, 0).Clear
-    Set rngResult = ws.Range("AY2:BP2")
-    ws.Range("AW9").Value = rngResult.Address
+    Set rngResult = ws.Range("AZ2:BQ2")
+    ws.Range("AX9").Value = rngResult.Address
         
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -92,17 +92,17 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
         
     'Qu'avons-nous comme résultat ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
-    ws.Range("AW10").Value = lastUsedRow - 2 & " lignes"
+    lastUsedRow = ws.Cells(ws.Rows.count, "AZ").End(xlUp).row
+    ws.Range("AX10").Value = lastUsedRow - 2 & " lignes"
     
     If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("AY3"), _
+            .SortFields.Add key:=ws.Range("AZ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Invoice Number
-            .SetRange ws.Range("AY3:BP" & lastUsedRow) 'Set Range
+            .SetRange ws.Range("AZ3:BQ" & lastUsedRow) 'Set Range
             .Apply 'Apply Sort
          End With
      End If
