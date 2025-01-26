@@ -19,7 +19,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
-    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "Q").End(xlUp).row
+    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "R").End(xlUp).row
     
     Dim i As Integer
     'Unlock the required area
@@ -39,14 +39,14 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
         For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
 '            If .Range("U" & i).Value <> 0 And _
 '                            Fn_Invoice_Is_Confirmed(.Range("Q" & i).Value) = True Then
-            If .Range("W" & i).Value <> 0 And _
-                            Fn_Invoice_Is_Confirmed(.Range("R" & i).Value) = True Then
+            If .Range("X" & i).Value <> 0 And _
+                            Fn_Invoice_Is_Confirmed(.Range("S" & i).Value) = True Then
                 Application.EnableEvents = False
-                wshENC_Saisie.Range("F" & rr).Value = .Range("R" & i).Value
-                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("S" & i).Value, wshAdmin.Range("B1").Value)
-                wshENC_Saisie.Range("H" & rr).Value = .Range("T" & i).Value
-                wshENC_Saisie.Range("I" & rr).Value = .Range("U" & i).Value + .Range("V" & i).Value
-                wshENC_Saisie.Range("J" & rr).Value = .Range("W" & i).Value
+                wshENC_Saisie.Range("F" & rr).Value = .Range("S" & i).Value
+                wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("T" & i).Value, wshAdmin.Range("B1").Value)
+                wshENC_Saisie.Range("H" & rr).Value = .Range("U" & i).Value
+                wshENC_Saisie.Range("I" & rr).Value = .Range("V" & i).Value + .Range("W" & i).Value
+                wshENC_Saisie.Range("J" & rr).Value = .Range("X" & i).Value
                 Application.EnableEvents = True
                 rr = rr + 1
             End If
@@ -69,28 +69,28 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     
     'Effacer les données de la dernière utilisation
-    ws.Range("N6:N10").ClearContents
-    ws.Range("N6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("O6:O10").ClearContents
+    ws.Range("O6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
 
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("tblFAC_Comptes_Clients[#All]")
-    ws.Range("N7").Value = rngData.Address
+    ws.Range("O7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("M2:N3")
-    ws.Range("N3").Value = wshENC_Saisie.clientCode
-    ws.Range("N8").Value = rngCriteria.Address
+    Set rngCriteria = ws.Range("O2:P3")
+    ws.Range("O3").Value = wshENC_Saisie.clientCode
+    ws.Range("O8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
 '    Set rngResult = ws.Range("P1").CurrentRegion
-    Set rngResult = ws.Range("Q1").CurrentRegion
+    Set rngResult = ws.Range("R1").CurrentRegion
     rngResult.offset(2, 0).Clear
 '    Set rngResult = ws.Range("P2:U2")
-    Set rngResult = ws.Range("Q2:W2")
-    ws.Range("N9").Value = rngResult.Address
+    Set rngResult = ws.Range("R2:X2")
+    ws.Range("O9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 xlFilterCopy, _
@@ -100,24 +100,18 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
                                         
     'Est-ce que nous avons des résultats ?
 '    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    lastResultRow = ws.Cells(ws.Rows.count, "Q").End(xlUp).row
-    ws.Range("N10").Value = lastResultRow - 2 & " lignes"
+    lastResultRow = ws.Cells(ws.Rows.count, "R").End(xlUp).row
+    ws.Range("O10").Value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - InvNo
             .SortFields.Clear
-            'Sort On InvNo
-'            .SortFields.Add key:=ws.Range("Q3"), _
-'                SortOn:=xlSortOnValues, _
-'                Order:=xlAscending, _
-'                DataOption:=xlSortNormal
-'            .SetRange ws.Range("P3:W" & lastResultRow)
-            .SortFields.Add key:=ws.Range("R3"), _
+            .SortFields.Add key:=ws.Range("S3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            .SetRange ws.Range("Q3:W" & lastResultRow)
+            .SetRange ws.Range("R3:X" & lastResultRow)
             .Apply 'Apply Sort
          End With
     End If
@@ -126,8 +120,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     'PLUG - Recalculate Column 'W' - Balance after AdvancedFilter
     Dim r As Integer
     For r = 3 To lastResultRow
-'        ws.Range("U" & r).Value = ws.Range("S" & r).Value - ws.Range("T" & r).Value
-        ws.Range("W" & r).Value = ws.Range("T" & r).Value - ws.Range("U" & r).Value + ws.Range("V" & r).Value
+        ws.Range("X" & r).Value = ws.Range("U" & r).Value - ws.Range("V" & r).Value + ws.Range("W" & r).Value
     Next r
 
     'libérer la mémoire

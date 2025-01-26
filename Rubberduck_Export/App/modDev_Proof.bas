@@ -270,7 +270,7 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
     For Each fichier In dossier.Files
         If fichier.Name Like "LogSaisieHeures.*" Then
             cheminFichier = fichier.path
-            Debug.Print "Analyse du fichier : " & cheminFichier
+            Debug.Print "#077 - Analyse du fichier : " & cheminFichier
 
             'Initialiser le compteur pour ce fichier
             compteurLigne = 0

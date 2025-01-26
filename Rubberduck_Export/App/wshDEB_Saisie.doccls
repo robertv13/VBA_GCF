@@ -172,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
 ErrorHandler:
     Application.EnableEvents = True 'Ensure events are re-enabled if an error occurs
-    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur"
+    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur # APP-002"
 
 End Sub
 

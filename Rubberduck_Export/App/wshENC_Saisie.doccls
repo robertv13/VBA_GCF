@@ -88,7 +88,7 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If previousCellAddress <> "" Then
-        Debug.Print "Previous = " & previousCellAddress & " - Current = " & Target.Address
+        Debug.Print "#097 - Previous = " & previousCellAddress & " - Current = " & Target.Address
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_COMPTABILITÉ
     End If
     

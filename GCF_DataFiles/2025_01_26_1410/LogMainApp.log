@@ -1,0 +1,240 @@
+2025-01-25 10:18:59.24 | vgervais | APP_v5.M.3.xlsb | ***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****
+2025-01-25 10:18:59.29 | vgervais | APP_v5.M.3.xlsb | Validation d'accès serveur terminée *** = '0,0039 secondes'
+
+2025-01-25 10:18:59.32 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:Create_User_Active_File
+2025-01-25 10:18:59.37 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:Create_User_Active_File *** = '0,0586 secondes'
+
+2025-01-25 10:18:59.40 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:Setup_UserDateFormat
+2025-01-25 10:18:59.43 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:Setup_UserDateFormat *** = '0,0352 secondes'
+
+2025-01-25 10:18:59.46 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:BackupMasterFile
+2025-01-25 10:18:59.70 | vgervais | APP_v5.M.3.xlsb | ThisWorkbook:BackupMasterFile *** = '0,2461 secondes'
+
+2025-01-25 10:18:59.73 | vgervais | APP_v5.M.3.xlsb | modAppli:WriteInfoOnMainMenu
+2025-01-25 10:18:59.77 | vgervais | APP_v5.M.3.xlsb | modAppli:WriteInfoOnMainMenu *** = '0,0469 secondes'
+
+2025-01-25 10:18:59.80 | vgervais | APP_v5.M.3.xlsb | modMenu:HideDevShapesBasedOnUsername
+2025-01-25 10:18:59.84 | vgervais | APP_v5.M.3.xlsb | modMenu:HideDevShapesBasedOnUsername *** = '0,0352 secondes'
+
+2025-01-25 10:18:59.87 | vgervais | APP_v5.M.3.xlsb | modAppli:CodeEssentielDepart *** = '0,6328 secondes'
+
+2025-01-25 10:19:00.68 | vgervais | APP_v5.M.3.xlsb | modMenu:menuTEC_Click
+2025-01-25 10:19:00.73 | vgervais | APP_v5.M.3.xlsb | modMenu:menuTEC_Click *** = '0,0586 secondes'
+
+2025-01-25 10:19:01.70 | vgervais | APP_v5.M.3.xlsb | modMENU_TEC:SaisieHeures_Click
+2025-01-25 10:19:01.77 | vgervais | APP_v5.M.3.xlsb | modMENU_TEC:SaisieHeures_Click *** = '0,0664 secondes'
+
+2025-01-25 10:19:01.80 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:UserForm_Activate
+2025-01-25 10:19:01.84 | vgervais | APP_v5.M.3.xlsb | modImport:Client_List_Import_All
+2025-01-25 10:19:02.14 | vgervais | APP_v5.M.3.xlsb | modImport:ResizeTable
+2025-01-25 10:19:02.18 | vgervais | APP_v5.M.3.xlsb | modImport:ResizeTable *** = '0,0312 secondes'
+
+2025-01-25 10:19:02.20 | vgervais | APP_v5.M.3.xlsb | modImport:ApplyFormatting
+2025-01-25 10:19:02.23 | vgervais | APP_v5.M.3.xlsb | modImport:ApplyFormatting *** = '0,0312 secondes'
+
+2025-01-25 10:19:02.32 | vgervais | APP_v5.M.3.xlsb | modImport:Client_List_Import_All *** = '0,4766 secondes'
+
+2025-01-25 10:19:02.35 | vgervais | APP_v5.M.3.xlsb | modImport:TEC_Import_All
+2025-01-25 10:19:02.73 | vgervais | APP_v5.M.3.xlsb | modImport:TEC_Import_All *** = '0,3828 secondes'
+
+2025-01-25 10:19:02.77 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:UserForm_Activate *** = '0,9766 secondes'
+
+2025-01-25 10:19:03.68 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2025-01-25 10:19:03.71 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate *** = '0,0391 secondes'
+
+2025-01-25 10:19:05.20 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2025-01-25 10:19:05.23 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Complete_Date(25-01-2025, 600, 15)
+2025-01-25 10:19:05.26 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Complete_Date *** = '0,0312 secondes'
+
+2025-01-25 10:19:05.28 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate *** = '0,0898 secondes'
+
+2025-01-25 10:19:05.31 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2025-01-25 10:19:05.34 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/25-01-2025
+2025-01-25 10:19:05.41 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF *** = '0,0781 secondes'
+
+2025-01-25 10:19:05.45 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025
+2025-01-25 10:19:05.49 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7)
+2025-01-25 10:19:05.52 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-25 10:19:05.55 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-25 10:19:05.66 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1094 secondes'
+
+2025-01-25 10:19:05.71 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-25 10:19:05.85 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1445 secondes'
+
+2025-01-25 10:19:05.88 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,3633 secondes'
+
+2025-01-25 10:19:05.93 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF
+2025-01-25 10:19:06.04 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF *** = '0,1133 secondes'
+
+2025-01-25 10:19:06.07 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables
+2025-01-25 10:19:06.10 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables *** = '0,0312 secondes'
+
+2025-01-25 10:19:06.13 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,6445 secondes'
+
+2025-01-25 10:19:06.20 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025 *** = '0,7461 secondes'
+
+2025-01-25 10:19:06.23 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate *** = '0,9180 secondes'
+
+2025-01-25 10:19:16.91 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[CQFF]
+2025-01-25 10:19:16.95 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate *** = '0,0430 secondes'
+
+2025-01-25 10:19:17.00 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate
+2025-01-25 10:19:17.03 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate *** = '0,0352 secondes'
+
+2025-01-25 10:19:20.82 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[.7]
+2025-01-25 10:19:20.86 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate *** = '0,0391 secondes'
+
+2025-01-25 10:19:20.89 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit[0,70]
+2025-01-25 10:19:20.92 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit *** = '0,0312 secondes'
+
+2025-01-25 10:19:22.20 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdAdd_Click
+2025-01-25 10:19:22.23 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2025-01-25 10:19:22.79 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 *** = '0,5625 secondes'
+
+2025-01-25 10:19:22.82 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2025-01-25 10:19:22.89 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 *** = '0,0664 secondes'
+
+2025-01-25 10:19:22.91 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/2025-01-25
+2025-01-25 10:19:22.98 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF *** = '0,0703 secondes'
+
+2025-01-25 10:19:23.01 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2025-01-25
+2025-01-25 10:19:23.05 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7)
+2025-01-25 10:19:23.09 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-25 10:19:23.12 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-25 10:19:23.21 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1016 secondes'
+
+2025-01-25 10:19:23.25 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-25 10:19:23.40 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1562 secondes'
+
+2025-01-25 10:19:23.43 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,3477 secondes'
+
+2025-01-25 10:19:23.48 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF
+2025-01-25 10:19:23.59 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF *** = '0,1172 secondes'
+
+2025-01-25 10:19:23.63 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables
+2025-01-25 10:19:23.65 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables *** = '0,0312 secondes'
+
+2025-01-25 10:19:23.68 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,6289 secondes'
+
+2025-01-25 10:19:23.76 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2025-01-25 *** = '0,7539 secondes'
+
+2025-01-25 10:19:23.79 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdAdd_Click *** = '1,5938 secondes'
+
+2025-01-25 10:21:05.59 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[0]
+2025-01-25 10:21:05.64 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID
+2025-01-25 10:21:05.69 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3653
+2025-01-25 10:21:05.72 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID *** = '0,0781 secondes'
+
+2025-01-25 10:21:05.77 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3654] *** = '0,1914 secondes'
+
+2025-01-25 10:21:10.67 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[CQFF mise à jour]
+2025-01-25 10:21:10.71 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate *** = '0,0430 secondes'
+
+2025-01-25 10:21:12.72 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1.1]
+2025-01-25 10:21:12.77 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate *** = '0,0586 secondes'
+
+2025-01-25 10:21:12.80 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit[1,10]
+2025-01-25 10:21:12.84 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit *** = '0,0352 secondes'
+
+2025-01-25 10:21:14.29 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdUpdate_Click[3654]
+2025-01-25 10:21:14.32 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(3654)
+2025-01-25 10:21:14.87 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 3654 *** = '0,5508 secondes'
+
+2025-01-25 10:21:14.90 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(3654)
+2025-01-25 10:21:14.93 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID
+2025-01-25 10:21:14.97 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3653
+2025-01-25 10:21:15.00 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID *** = '0,0742 secondes'
+
+2025-01-25 10:21:15.05 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 3654 *** = '0,1484 secondes'
+
+2025-01-25 10:21:15.08 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/25-01-2025
+2025-01-25 10:21:15.17 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF *** = '0,0938 secondes'
+
+2025-01-25 10:21:15.20 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025
+2025-01-25 10:21:15.23 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7)
+2025-01-25 10:21:15.27 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-25 10:21:15.30 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-25 10:21:15.39 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1133 secondes'
+
+2025-01-25 10:21:15.45 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-25 10:21:15.59 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1445 secondes'
+
+2025-01-25 10:21:15.62 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,3555 secondes'
+
+2025-01-25 10:21:15.64 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF
+2025-01-25 10:21:15.75 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF *** = '0,1094 secondes'
+
+2025-01-25 10:21:15.78 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables
+2025-01-25 10:21:15.81 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables *** = '0,0352 secondes'
+
+2025-01-25 10:21:15.84 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,6133 secondes'
+
+2025-01-25 10:21:15.92 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025 *** = '0,7266 secondes'
+
+2025-01-25 10:21:15.96 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdUpdate_Click *** = '1,6836 secondes'
+
+2025-01-25 10:21:21.60 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[0]
+2025-01-25 10:21:21.63 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID
+2025-01-25 10:21:21.68 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3653
+2025-01-25 10:21:21.71 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID *** = '0,0781 secondes'
+
+2025-01-25 10:21:21.78 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3654] *** = '0,1914 secondes'
+
+2025-01-25 10:21:34.61 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[CQFF mise à jour + suivis courrilel (urgence)]
+2025-01-25 10:21:34.65 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate *** = '0,0469 secondes'
+
+2025-01-25 10:21:36.46 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1,3]
+2025-01-25 10:21:36.49 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate *** = '0,0352 secondes'
+
+2025-01-25 10:21:36.52 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit[1,30]
+2025-01-25 10:21:36.55 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:txtHeures_Exit *** = '0,0352 secondes'
+
+2025-01-25 10:21:37.56 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdUpdate_Click[3654]
+2025-01-25 10:21:37.59 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(3654)
+2025-01-25 10:21:38.14 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 3654 *** = '0,5547 secondes'
+
+2025-01-25 10:21:38.18 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(3654)
+2025-01-25 10:21:38.21 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID
+2025-01-25 10:21:38.26 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3653
+2025-01-25 10:21:38.29 | vgervais | APP_v5.M.3.xlsb | modFunctions:Fn_Find_Row_Number_TECID *** = '0,0742 secondes'
+
+2025-01-25 10:21:38.33 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 3654 *** = '0,1562 secondes'
+
+2025-01-25 10:21:38.37 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/25-01-2025
+2025-01-25 10:21:38.43 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF *** = '0,0664 secondes'
+
+2025-01-25 10:21:38.46 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025
+2025-01-25 10:21:38.50 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7)
+2025-01-25 10:21:38.53 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB
+2025-01-25 10:21:38.56 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2025-01-25 10:21:38.66 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local *** = '0,1016 secondes'
+
+2025-01-25 10:21:38.69 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2025-01-25 10:21:38.83 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables *** = '0,1445 secondes'
+
+2025-01-25 10:21:38.86 | vgervais | APP_v5.M.3.xlsb | modTEC_TDB:ActualiserTEC_TDB *** = '0,3359 secondes'
+
+2025-01-25 10:21:38.89 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF
+2025-01-25 10:21:39.03 | vgervais | APP_v5.M.3.xlsb | modStatsHeures:Stats_Heures_AF *** = '0,1406 secondes'
+
+2025-01-25 10:21:39.06 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables
+2025-01-25 10:21:39.09 | vgervais | APP_v5.M.3.xlsb | modAppli:UpdatePivotTables *** = '0,0312 secondes'
+
+2025-01-25 10:21:39.12 | vgervais | APP_v5.M.3.xlsb | wshTEC_TDB_Data:Worksheet_Change *** = '0,6250 secondes'
+
+2025-01-25 10:21:39.18 | vgervais | APP_v5.M.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/25-01-2025 *** = '0,7188 secondes'
+
+2025-01-25 10:21:39.21 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:cmdUpdate_Click *** = '1,6523 secondes'
+
+2025-01-25 12:19:08.73 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:UserForm_Terminate
+2025-01-25 12:19:08.79 | vgervais | APP_v5.M.3.xlsb | ufSaisieHeures:UserForm_Terminate *** = '0,0664 secondes'
+
+2025-01-25 12:19:13.66 | vgervais | APP_v5.M.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2025-01-25 12:19:13.70 | vgervais | APP_v5.M.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu *** = '0,0430 secondes'
+
+2025-01-25 12:19:14.78 | vgervais | APP_v5.M.3.xlsb | modMenu:SauvegarderEtSortirApplication
+2025-01-25 12:19:16.43 | vgervais | APP_v5.M.3.xlsb | modMenu:Delete_User_Active_File
+2025-01-25 12:19:16.52 | vgervais | APP_v5.M.3.xlsb | modMenu:Delete_User_Active_File *** = '0,0898 secondes'
+
+2025-01-25 12:19:16.55 | vgervais | APP_v5.M.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****
+

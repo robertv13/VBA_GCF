@@ -499,6 +499,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields(fFacCCTotalRegul - 1).Value = 0
         rs.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
         rs.Fields(fFacCCDaysOverdue - 1).Value = -30
+        rs.Fields(fFacCCTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
     
     'Update the recordset (create the record)
@@ -544,6 +545,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Cells(firstFreeRow, fFacCCTotalRegul).Value = 0
         .Cells(firstFreeRow, fFacCCBalance).Value = wshFAC_Finale.Range("E81").Value
         .Cells(firstFreeRow, fFacCCDaysOverdue).Value = -30
+        .Cells(firstFreeRow, fFacCCTimeStamp).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
 
 nothing_to_update:
@@ -744,7 +746,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
 
     'Build the query
     Dim strSQL As String
-    strSQL = "UPDATE [" & destinationTab & "] SET estDétruite = True WHERE ProjetID = " & projetID
+    strSQL = "UPDATE [" & destinationTab & "] SET estDetruite = True WHERE ProjetID = " & projetID
 
     'Execute the SQL query
     On Error GoTo eh
@@ -765,7 +767,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error"
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -1041,7 +1043,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
         imprimanteCourante = Application.ActivePrinter
     End If
     On Error GoTo 0
-    Debug.Print "Imprimante actuelle : " & imprimanteCourante
+    Debug.Print "#083 - Imprimante actuelle : " & imprimanteCourante
     
     'On imprime la facture
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
@@ -1053,7 +1055,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
         On Error GoTo 0
     End If
     
-    Debug.Print "Imprimante restaurée : " & Application.ActivePrinter
+    Debug.Print "#084 - Imprimante restaurée : " & Application.ActivePrinter
 
 End Sub
 

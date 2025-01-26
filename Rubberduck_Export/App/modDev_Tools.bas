@@ -696,7 +696,7 @@ Sub Analyse_Search_For_Memory_Management()
                     added = added + objetSet + "|"
                 End If
             Else
-                Debug.Print ligneCode
+                Debug.Print "#078 - " & ligneCode
             End If
         End If
         'Déclaration de l'objet avec For Each...
@@ -1030,7 +1030,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     
     ' Parcourir toutes les feuilles du classeur
     For Each ws In ThisWorkbook.Worksheets
-        Debug.Print "Vérification des contrôles sur la feuille : " & ws.Name
+        Debug.Print "#079 - Vérification des contrôles sur la feuille : " & ws.Name
         
         ' Vérification des Shapes (Formulaires ou Boutons assignés)
         For Each shp In ws.Shapes

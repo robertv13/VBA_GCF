@@ -590,7 +590,7 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     If lastUsedRow > 2 Then
         Dim i As Long
         For i = 3 To lastUsedRow
-            If InStr(ws.Cells(i, 10), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
+            If InStr(ws.Cells(i, 11), "*** - [Sommaire des TEC] pour la facture - ") = 1 Then
                 If t = "Heures" Then
                     Fn_Get_TEC_Total_Invoice_AF = Fn_Get_TEC_Total_Invoice_AF + ws.Cells(i, "L")
                 Else
@@ -653,7 +653,7 @@ End Function
 
 Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
 
-    Debug.Print "         Entering 'Fn_Get_Invoice_Total_Payments_AF'"
+    Debug.Print "#085 -          Entering 'Fn_Get_Invoice_Total_Payments_AF'"
     
     Fn_Get_Invoice_Total_Payments_AF = 0
     
@@ -695,7 +695,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
         Set rngResult = ws.Range("J4:N" & lastUsedRow)
-        Debug.Print "            rngResult.Address = " & rngResult.Address
+        Debug.Print "#086 -             rngResult.Address = " & rngResult.Address
         Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
     End If
 
@@ -705,13 +705,13 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Debug.Print "         Exiting 'Fn_Get_Invoice_Total_Payments_AF' - " & Fn_Get_Invoice_Total_Payments_AF
+    Debug.Print "#087 -          Exiting 'Fn_Get_Invoice_Total_Payments_AF' - " & Fn_Get_Invoice_Total_Payments_AF
     
 End Function
 
 Function Fn_Get_Invoice_Due_Date(invNo As String)
 
-    Debug.Print "         Entering - 'Fn_Get_Invoice_Due_Date'"
+    Debug.Print "#088 -          Entering - 'Fn_Get_Invoice_Due_Date'"
     
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     
@@ -730,7 +730,7 @@ Function Fn_Get_Invoice_Due_Date(invNo As String)
     Set foundCell = Nothing
     Set ws = Nothing
 
-    Debug.Print "         Exiting - 'Fn_Get_Invoice_Due_Date' - " & Fn_Get_Invoice_Due_Date
+    Debug.Print "#089 -          Exiting - 'Fn_Get_Invoice_Due_Date' - " & Fn_Get_Invoice_Due_Date
 
 End Function
 
@@ -1867,7 +1867,7 @@ Sub test_AppMsgBox()
     Dim r As VbMsgBoxResult
     r = AppMsgBox("Voulez-vous continuer ?", vbYesNo + vbQuestion + vbDefaultButton1, "Confirmation avant de continuer")
 
-    Debug.Print r
+    Debug.Print "#090 - " & r
     
 End Sub
 

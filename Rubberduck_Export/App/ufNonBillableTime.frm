@@ -40,7 +40,7 @@ Private Sub btnConvertir_Click()
             Call Convertir_NF_en_Facturable_Dans_BD(tecID)
             Call Convertir_NF_en_Facturable_Locally(tecID)
             
-            Debug.Print "La ligne # " & i + 1 & " a été sélectionné - " & lsbNonBillable.List(i, 0)
+            Debug.Print "#096 - La ligne # " & i + 1 & " a été sélectionné - " & lsbNonBillable.List(i, 0)
         End If
     Next i
 

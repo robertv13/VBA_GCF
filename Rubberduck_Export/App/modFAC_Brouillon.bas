@@ -203,9 +203,14 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change(" & clientName & ")", 0)
     
-    'Aller chercher le vrai nom de client
+    'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim allCols As Variant
-    allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+    If wshFAC_Brouillon.Range("B52").Value = "" Then
+        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+    Else
+        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientName, fClntFMClientNom)
+    End If
+    
     'Vérifier le résultat retourné
     If IsArray(allCols) Then
         Application.EnableEvents = False

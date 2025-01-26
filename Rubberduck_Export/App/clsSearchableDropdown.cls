@@ -132,7 +132,6 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         CheckListBoxFirstItem
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'Swallow the enter keycode as it passes on to the ok button
-        Debug.Print KeyCode
         KeyCode = 0
         If MyListBox.Value <> 0 Then
             Dim pureClientName As String

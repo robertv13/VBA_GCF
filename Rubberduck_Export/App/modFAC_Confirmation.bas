@@ -36,16 +36,16 @@ Sub PrepareDonneesPourListView() '2025-01-19 @ 08:42
     Set ws = wshFAC_Entête
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AY").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "AZ").End(xlUp).row
     
     Dim invNo As String, dateFacture As String, nomClient As String, totalFacture As String
     Dim r As Long
     If lastUsedRow > 2 Then
         For r = 3 To lastUsedRow
-            invNo = " " & ws.Range("AY" & r).Value
-            dateFacture = " " & Format$(ws.Range("AZ" & r), wshAdmin.Range("B1").Value)
-            nomClient = ws.Range("BC" & r).Value
-            totalFacture = Format$(ws.Range("BO" & r).Value, "###,##0.00 $")
+            invNo = " " & ws.Range("AZ" & r).Value
+            dateFacture = " " & Format$(ws.Range("BA" & r), wshAdmin.Range("B1").Value)
+            nomClient = ws.Range("BD" & r).Value
+            totalFacture = Format$(ws.Range("BP" & r).Value, "###,##0.00 $")
             totalFacture = Space(13 - Len(totalFacture)) & totalFacture
             Factures.Add Array(invNo, dateFacture, nomClient, totalFacture)
         Next r

@@ -53,7 +53,7 @@ Private Sub UserForm_Initialize()
                 End If
             Next Facture
         Else
-            Debug.Print "La collection Factures est vide ou non initialisée."
+            Debug.Print "#091 - La collection Factures est vide ou non initialisée."
         End If
     End With
     
@@ -84,7 +84,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     If PDFInvoicePath <> "" Then
         Dim strShell As String
         strShell = "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & PDFInvoicePath & Chr(34)
-        Debug.Print strShell
+        Debug.Print "#092 - " & strShell
         Shell strShell, vbNormalFocus
     Else
         MsgBox "Le fichier PDF de la facture n'existe pas : " & PDFInvoicePath, vbExclamation, "Fichier PDF manquant"

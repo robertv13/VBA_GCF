@@ -132,7 +132,6 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     
     With ws
         Dim i As Long, r As Long
-        Debug.Print vbNewLine & "For/Next loop - " & 3 & " to " & lastUsedRow
         For i = 3 To lastUsedRow
             'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
             If .Range("AB" & i).Value >= dateMin And .Range("AB" & i).Value <= dateMax Then

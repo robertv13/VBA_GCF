@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", 0)
     
     If fromMenu = False Then
-        Debug.Print "#014 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
+        Debug.Print "#006 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
 

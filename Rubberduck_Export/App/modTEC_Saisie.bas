@@ -736,7 +736,7 @@ EndOfProcedure:
     
 ErrorHandler:
 
-    MsgBox "Erreur : " & Err.Description, vbCritical
+    MsgBox "Erreur : " & Err.Description, vbCritical, "Erreur # APP-003"
     Resume EndOfProcedure
     
 End Sub

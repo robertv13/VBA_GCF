@@ -94,15 +94,11 @@ End Sub
 Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim totalFacture As Currency
-'    Debug.Print "1 - '" & ufEncRégularisation.txtTotalFacture.Text & "' - '" & ufEncRégularisation.txtTotalFacture.Value & "'"
     ufEncRégularisation.txtTotalFacture.Text = Replace(ufEncRégularisation.txtTotalFacture.Text, ".", ",")
-'    Debug.Print "2 - '" & ufEncRégularisation.txtTotalFacture.Text & "' - '" & ufEncRégularisation.txtTotalFacture.Value & "'"
-    Debug.Print "Text  ? " & IsNumeric(ufEncRégularisation.txtTotalFacture.Text)
-    Debug.Print "Value ? " & IsNumeric(ufEncRégularisation.txtTotalFacture.Value)
     
     If ufEncRégularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
         totalFacture = CCur(ufEncRégularisation.txtTotalFacture.Text)
-        Debug.Print "totalFacture = " & totalFacture
+        Debug.Print "#093 - totalFacture = " & totalFacture
     
         Dim honoraires As Currency, fraisDivers As Currency
         Dim tps As Currency, tvq As Currency
@@ -119,7 +115,7 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Dim ecartArrondissement As Currency
         ecartArrondissement = totalFacture - honoraires - fraisDivers - tps - tvq
         If ecartArrondissement <> 0 Then
-            Debug.Print ecartArrondissement
+            Debug.Print "#094 - " & ecartArrondissement
             honoraires = honoraires + ecartArrondissement
         End If
         
@@ -172,7 +168,7 @@ Private Sub VerifieMontantsSaisis()
 
     If ufEncRégularisation.txtTotalFacture.Text <> "" Then
         With ufEncRégularisation
-            Debug.Print CCur(.txtTotalFacture.Text) & " <> ? " & CCur(.txtHonoraires.Text) & "+" & CCur(.txtFraisDivers.Text) & "+" & CCur(.txtTPS.Text) & "+" & CCur(.txtTVQ.Text)
+            Debug.Print "#095 - " & CCur(.txtTotalFacture.Text) & " <> ? " & CCur(.txtHonoraires.Text) & "+" & CCur(.txtFraisDivers.Text) & "+" & CCur(.txtTPS.Text) & "+" & CCur(.txtTVQ.Text)
             If CCur(.txtTotalFacture.Text) = CCur(.txtHonoraires.Text) + _
                                         CCur(.txtFraisDivers.Text) + _
                                         CCur(.txtTPS.Text) + _

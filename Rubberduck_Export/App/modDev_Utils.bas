@@ -1803,14 +1803,12 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     Dim temp As String
     For i = LBound(components) To UBound(components) - 1
         For j = i + 1 To UBound(components)
-'            Debug.Print "#038 - " & components(i) & " vs. " & components(j)
             intResult = StrComp(components(i), components(j), vbTextCompare)
             If intResult = 1 Then
                 'Swap components
                 temp = components(i)
                 components(i) = components(j)
                 components(j) = temp
-'            Debug.Print "#039 - " & components(i) & " < " & components(j)
             End If
         Next j
     Next i
@@ -1846,7 +1844,6 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
         logline = logline & "|"
         Dim arr() As String
         arr = Split(logline, "|")
-'        Debug.Print "#040 - " & arr(1), arr(2), arr(3), arr(4)
         If InStr(strUser, arr(0)) = 0 Then
             strUser = strUser + Fn_Pad_A_String(arr(0), " ", 15, "R") & "|"
         End If
@@ -1936,9 +1933,9 @@ Sub Test_ObtenirToutesColonnesPourUneValeur() '2025-01-13 @ 08:49
     
     'Vérifier le résultat
     If IsArray(resultat) Then
-        Debug.Print "Valeur trouvée :"
+        Debug.Print "#080 - Valeur trouvée :"
         For i = LBound(resultat) To UBound(resultat)
-            Debug.Print i; Tab(6); resultat(i)
+            Debug.Print "#081 - " & i; Tab(13); resultat(i)
         Next i
     Else
         MsgBox "Valeur non trouvée", vbInformation
@@ -1987,7 +1984,7 @@ Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
                                     SearchDirection:=xlPrevious, _
                                     MatchCase:=False).Column
                                     
-            Debug.Print ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).Value
+            Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).Value
     '        ws.Range(ws.Cells(lastRow + 1, 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     '        ws.Range(ws.Cells(1, lastCol + 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     Next sheetName

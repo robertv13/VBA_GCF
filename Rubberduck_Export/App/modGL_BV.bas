@@ -280,13 +280,13 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     rng.HorizontalAlignment = xlCenter
     
     Set rng = ws.Range("N5:N" & lastResultUsedRow)
-    rng.ColumnWidth = 6
+    rng.ColumnWidth = 7
     Set rng = ws.Range("O5:O" & lastResultUsedRow)
-    rng.ColumnWidth = 40
+    rng.ColumnWidth = 45
     Set rng = ws.Range("P5:P" & lastResultUsedRow)
-    rng.ColumnWidth = 14
+    rng.ColumnWidth = 20
     Set rng = ws.Range("Q5:S" & lastResultUsedRow)
-    rng.ColumnWidth = 14
+    rng.ColumnWidth = 15
     Set rng = ws.Range("T5:T" & lastResultUsedRow)
     rng.ColumnWidth = 35
 

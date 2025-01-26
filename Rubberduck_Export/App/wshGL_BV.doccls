@@ -71,33 +71,10 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Range(previousCellAddress).Interior.Color = xlNone
     End If
 
-'    'Définir la zone de la BV
-'    Dim rngBV As Range
-'    Dim lastUsedRowBV As Long
-'    lastUsedRowBV = Me.Cells(Me.rows.count, "D").End(xlUp).row
-'    Set rngBV = Me.Range("D4:G" & lastUsedRowBV + 2)
-'
-'    'Définir le Range des transactions détaillées d'un compte
-'    Dim rngDetailTrans As Range
-'    Set rngDetailTrans = Me.Range("L1:T" & Me.Cells(Me.rows.count, "M").End(xlUp).row)
-'
-'    'Zones sensibles
-'    Dim rngZonesSensibles As Range
-'    Set rngZonesSensibles = Union(rngBV, rngDetailTrans, Me.Range("J1"))
-'    Debug.Print rngBV.address, rngDetailTrans.address, Me.Range("J1").address
-    
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
         Target.Interior.Color = COULEUR_SAISIE
     End If
-    
-'    Dim estZoneSensile As Boolean
-'    estZoneSensile = Not Intersect(Target, rngZonesSensibles) Is Nothing
-    
-'    'Est-que l'utilisateur a cliqué ailleurs que les zones sensibles ?
-'    If Not estZoneSensile Then
-'        Call GL_BV_Effacer_Zone_Et_Shape
-'    End If
     
     'An account has been selected from Trial Balance
     If Not Intersect(Target, wshGL_BV.Range("D4:G" & Range("B2").Value - 2)) Is Nothing Then
