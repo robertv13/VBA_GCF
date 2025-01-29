@@ -653,8 +653,6 @@ End Function
 
 Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
 
-    Debug.Print "#085 -          Entering 'Fn_Get_Invoice_Total_Payments_AF'"
-    
     Fn_Get_Invoice_Total_Payments_AF = 0
     
     Dim ws As Worksheet: Set ws = wshENC_Détails
@@ -695,7 +693,6 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
         Set rngResult = ws.Range("J4:N" & lastUsedRow)
-        Debug.Print "#086 -             rngResult.Address = " & rngResult.Address
         Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
     End If
 
@@ -705,14 +702,10 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Debug.Print "#087 -          Exiting 'Fn_Get_Invoice_Total_Payments_AF' - " & Fn_Get_Invoice_Total_Payments_AF
-    
 End Function
 
 Function Fn_Get_Invoice_Due_Date(invNo As String)
 
-    Debug.Print "#088 -          Entering - 'Fn_Get_Invoice_Due_Date'"
-    
     Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
     
     Dim foundCell As Range
@@ -729,8 +722,6 @@ Function Fn_Get_Invoice_Due_Date(invNo As String)
     'Libérer la mémoire
     Set foundCell = Nothing
     Set ws = Nothing
-
-    Debug.Print "#089 -          Exiting - 'Fn_Get_Invoice_Due_Date' - " & Fn_Get_Invoice_Due_Date
 
 End Function
 
@@ -798,24 +789,24 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     adressesArray = Split(adresses, ";")
     
     ' Vérifier chaque adresse
-    Dim adresse As Variant
-    For Each adresse In adressesArray
-        adresse = Trim(adresse)
+    Dim Adresse As Variant
+    For Each Adresse In adressesArray
+        Adresse = Trim(Adresse)
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
-        If adresse <> "" Then
+        If Adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
-            If Not regex.Test(adresse) Then
+            If Not regex.Test(Adresse) Then
                 Fn_ValiderCourriel = False
                 Exit Function
             End If
         End If
-    Next adresse
+    Next Adresse
     
     ' Toutes les adresses sont valides
     Fn_ValiderCourriel = True
     
     'Nettoyer la mémoire
-    Set adresse = Nothing
+    Set Adresse = Nothing
     Set regex = Nothing
     
 End Function
@@ -1879,3 +1870,30 @@ Function ExtraireNomFichier(path As String) As String
     ExtraireNomFichier = parts(UBound(parts, 1))
 
 End Function
+
+Function ConvertirEnNumerique(rng As Range)
+
+    Dim cell As Range
+    For Each cell In rng
+        If IsNumeric(cell.Value) Then
+            cell.Value = CCur(cell.Value)
+        Else
+            cell.Value = CCur(Replace(cell.Value, " ", ""))
+        End If
+    Next cell
+    
+End Function
+
+Function TrouverLigneFacture(ws As Worksheet, numFacture As String) As Long
+
+    Dim rng As Range
+    Set rng = ws.Range("A:A").Find(What:=numFacture, LookAt:=xlWhole)
+
+    If Not rng Is Nothing Then
+        TrouverLigneFacture = rng.row
+    Else
+        TrouverLigneFacture = -1 ' Retourne -1 si la facture n'est pas trouvée
+    End If
+    
+End Function
+

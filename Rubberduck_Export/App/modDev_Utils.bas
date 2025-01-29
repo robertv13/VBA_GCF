@@ -79,12 +79,12 @@ Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCo
     
     'Create a new array with the specified dimensions
     Dim tempArray() As Variant
-    ReDim tempArray(1 To nRows, 1 To nCols)
+    ReDim tempArray(LBound(inputArray, 1) To nRows, LBound(inputArray, 2) To nCols)
     
     ' Copy the relevant data from the input array to the new array
     Dim i As Long, j As Long
-    For i = 1 To nRows
-        For j = 1 To nCols
+    For i = LBound(inputArray, 1) To nRows
+        For j = LBound(inputArray, 2) To nCols
             tempArray(i, j) = inputArray(i, j)
         Next j
     Next i

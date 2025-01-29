@@ -64,8 +64,6 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         
         Call TEC_Refresh_ListBox_And_Add_Hours
         
-'        Call TEC_TdB_Update_All
-        
         'Reset command buttons
         Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
@@ -602,16 +600,13 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     On Error GoTo ErrorHandler
     Application.ScreenUpdating = False
     Application.EnableEvents = False
-'    Application.Calculation = xlCalculationManual
 
-   If ufSaisieHeures.txtProfID.Value = "" Or Not IsDate(ufSaisieHeures.txtDate.Value) Then
+    If ufSaisieHeures.txtProfID.Value = "" Or Not IsDate(ufSaisieHeures.txtDate.Value) Then
         MsgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
         GoTo EndOfProcedure
     End If
     
-'    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
-'    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
-'
+    'On vide le formulaire
     ufSaisieHeures.txtTotalHeures.Value = ""
     ufSaisieHeures.txtHresFact.Value = ""
     ufSaisieHeures.txtHresNF.Value = ""

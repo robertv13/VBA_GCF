@@ -324,10 +324,12 @@ Private Sub txtActivite_AfterUpdate()
     End If
     
     If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then '2025-01-16 @ 16:46
-        If CCur(Me.txtHeures) <> 0 Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
-        Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+        If Me.txtHeures.Value <> "" Then
+            If CCur(Me.txtHeures.Value) <> 0 Then
+                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+            Else
+                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+            End If
         End If
     End If
     
@@ -599,12 +601,6 @@ Sub imgStats_Click()
     Application.EnableEvents = False
     
     ufSaisieHeures.Hide
-    
-    'Ne pas exécuter ces mises à jour, les données sont déjà à jour - 2024-11-09
-'    Call TEC_TdB_Update_All
-'    Call Stats_Heures_AF
-'    'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
-'    Call UpdatePivotTables
     
     Application.EnableEvents = True
     

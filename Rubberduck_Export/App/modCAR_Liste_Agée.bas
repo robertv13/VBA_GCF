@@ -58,7 +58,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     Application.EnableEvents = True
 
     'Initialiser le dictionnaire pour les résultats (Nom du client, Solde)
-    Dim dictClients As Object ' Utilisez un dictionnaire pour stocker les résultats
+    Dim dictClients As Object 'Utilisez un dictionnaire pour stocker les résultats
     Set dictClients = CreateObject("Scripting.Dictionary")
     
     'Date actuelle pour le calcul de l'âge des factures
@@ -101,7 +101,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
         dateDue = rngFactures.Cells(i, fFacCCDueDate).Value
         montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).Value)
         
-        'Obtenir les paiements pour cette facture
+        'Obtenir les paiements et régularisations pour cette facture
         montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
         montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
         

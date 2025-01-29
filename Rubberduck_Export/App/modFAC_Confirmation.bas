@@ -390,64 +390,6 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
 
 End Sub
 
-
-Sub ObtenirFactureInfos(noFact As String)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureInfos", 0)
-    
-    'Save original worksheet
-    Dim oWorkSheet As Worksheet: Set oWorkSheet = ActiveSheet
-    
-    'Reference to A/R master file
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    
-    Dim result As Variant
-    Dim rngToSearch As Range: Set rngToSearch = ws.Range("A1").CurrentRegion.offset(0, 0).Resize(lastUsedRow, 1)
-    result = Application.WorksheetFunction.XLookup(noFact, _
-                                                   rngToSearch, _
-                                                   rngToSearch, _
-                                                   "Not Found", _
-                                                   0, _
-                                                   1)
-    
-    If result <> "Not Found" Then
-        Dim matchedRow As Long
-        matchedRow = Application.Match(noFact, rngToSearch, 0)
-        
-        Call AfficherInformationsFacture(ws, matchedRow)
-        
-        Call AfficherPDFetWIPicones
-        
-        Dim resultArr As Variant
-        resultArr = Fn_ObtenirTECFacturésPourFacture(noFact)
-        
-        If Not IsEmpty(resultArr) Then
-            Dim TECSummary() As Variant
-            ReDim TECSummary(1 To 10, 1 To 3)
-            Call ObtenirSommaireTEC(resultArr, TECSummary)
-            
-            Dim FeesSummary() As Variant
-            ReDim FeesSummary(1 To 5, 1 To 3)
-            Call ObtenirSommaireDesTaux(resultArr, FeesSummary)
-        End If
-        oWorkSheet.Activate
-    Else
-        MsgBox "La facture n'existe pas"
-        GoTo CleanExit
-    End If
-    
-CleanExit:
-    Set oWorkSheet = Nothing
-    Set rngToSearch = Nothing
-    Set ws = Nothing
-
-    Call Log_Record("modFAC_Confirmation:ObtenirFactureInfos", startTime)
-
-End Sub
-
 Sub AfficherPDFetWIPicones()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", 0)
@@ -577,7 +519,7 @@ Sub ObtenirListeTECFacturés()
     If lastUsedRow < 3 Then
         MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
     Else
-        Call PreparerRapportTECFacturés
+        Call PreparerRapportTECFactures
     End If
     
     'Libérer la mémoire
@@ -587,7 +529,7 @@ Sub ObtenirListeTECFacturés()
     
 End Sub
 
-Sub PreparerRapportTECFacturés()
+Sub PreparerRapportTECFacturés(numeroFacture As String)
 
 '    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", 0)
     
@@ -605,7 +547,7 @@ Sub PreparerRapportTECFacturés()
     'Mettre en forme la feuille de rapport
     With wsRapport
         ' Titre du rapport
-        .Range("A1").Value = "TEC facturés pour la facture '" & invNo & "'"
+        .Range("A1").Value = "TEC facturés pour la facture '" & numeroFacture & "'"
         .Range("A1").Font.Bold = True
         .Range("A1").Font.size = 12
         

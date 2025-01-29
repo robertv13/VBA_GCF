@@ -32,7 +32,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Integrity_Verification", 0)
 
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
     
     'Variable pour déterminer à la fin s'il y a des erreurs...
     verificationIntegriteOK = True
@@ -45,8 +45,6 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     wsOutput.Range("C1").Value = "TimeStamp"
     wsOutput.Columns("C").NumberFormat = wshAdmin.Range("B1").Value & " hh:mm:ss"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
-
-    Application.ScreenUpdating = True
 
     'Data starts at row 2
     Dim r As Long: r = 2
@@ -82,12 +80,15 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Dim readRows As Long
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Plan Comptable")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     
+    Application.ScreenUpdating = False
     Call checkPlanComptable(r, readRows)
-    
+
     'wshBD_Clients --------------------------------------------------------------- Clients
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Clients")
     
     Call Client_List_Import_All
@@ -95,9 +96,11 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkClients(r, readRows)
     
     'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Fournisseurs")
     
     Call Fournisseur_List_Import_All
@@ -105,9 +108,11 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkFournisseurs(r, readRows)
     
     'wshDEB_Récurrent ------------------------------------------------------ DEB_Récurrent
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Récurrent")
     
     Call DEB_Récurrent_Import_All
@@ -115,9 +120,11 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkDEB_Récurrent(r, readRows)
     
     'wshDEB_Trans -------------------------------------------------------------- DEB_Trans
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Trans")
     
     Call DEB_Trans_Import_All
@@ -125,9 +132,11 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkDEB_Trans(r, readRows)
     
     'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Entête")
     
     Call FAC_Entête_Import_All
@@ -135,9 +144,11 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkFAC_Entête(r, readRows)
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
+    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Détails")
     
     Call FAC_Détails_Import_All
@@ -145,6 +156,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
     r = r + 1
     
+    Application.ScreenUpdating = False
     Call checkFAC_Détails(r, readRows)
     
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
