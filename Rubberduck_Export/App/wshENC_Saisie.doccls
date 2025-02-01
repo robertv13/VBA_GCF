@@ -51,7 +51,7 @@ Private Sub Worksheet_Activate()
     'Protect the Worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
     
     Call SetTabOrder(ws)

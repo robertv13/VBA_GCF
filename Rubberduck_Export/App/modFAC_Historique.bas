@@ -211,11 +211,11 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
             End If
             .Range("O" & i + 8).Value = arr(i, 10) - arr(i, 11) 'Balance
             If ACouC = "AC" Then
-                With wshFAC_Historique.Range("B" & i + 8)
-                    .Value = "AC"
+                With wshFAC_Historique.Range("B" & i + 8 & ":O" & i + 8)
                     .Font.Color = vbRed
                     .Font.Bold = True
                 End With
+                wshFAC_Historique.Range("B" & i + 8).Value = "AC"
             End If
         Next i
     End With

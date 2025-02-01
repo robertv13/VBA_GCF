@@ -619,7 +619,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
-        .ColumnWidths = "30; 24; 54; 157; 242; 35; 90; 32; 90"
+        .ColumnWidths = "30; 23; 60; 157; 242; 35; 90; 32; 90"
     End With
     
     'Manually add to listBox (because some tests have to be made)
@@ -636,13 +636,20 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim i As Long, ColIndex As Long
     
     'Remplissage du listBox
+    Dim hresFormat As String
     If lastRow >= 3 Then
         Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To rng.Rows.count
             With ufSaisieHeures.lsbHresJour
                 .AddItem rng.Cells(i, 1).Value
                 For ColIndex = 2 To 9
-                    .List(.ListCount - 1, ColIndex - 1) = rng.Cells(i, ColIndex).Value
+                    If ColIndex <> 6 Then '2025-01-31 @ 14:42
+                        .List(.ListCount - 1, ColIndex - 1) = rng.Cells(i, ColIndex).Value
+                    Else
+                        hresFormat = Format$(rng.Cells(i, ColIndex).Value, "#0.00")
+                        hresFormat = Space(5 - Len(hresFormat)) & hresFormat
+                        .List(.ListCount - 1, ColIndex - 1) = hresFormat
+                    End If
                 Next ColIndex
             End With
             totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
@@ -765,7 +772,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriat
     With ufSaisieHeures.lsbHresJour
         .ColumnHeads = False
         .ColumnCount = 9
-        .ColumnWidths = "30; 24; 54; 157; 242; 35; 90; 32; 90"
+        .ColumnWidths = "30; 23; 60; 157; 242; 35; 90; 32; 90"
     End With
     
     'Manually add to listBox (because some tests have to be made)
@@ -947,7 +954,8 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", 0)
 
     Dim pt As pivotTable
-    For Each pt In wshTEC_TDB_PivotTable.PivotTables
+    For Each pt In wshTEC_TDB.PivotTables
+'    For Each pt In wshTEC_TDB_PivotTable.PivotTables
         pt.RefreshTable
     Next pt
 

@@ -1362,8 +1362,14 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
     Dim strLastInvoice As String
     strLastInvoice = ws.Cells(lastUsedRow, 1).Value
-    strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
-    
+    If strLastInvoice <> "" Then
+        strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
+    Else
+        MsgBox "Problème avec les dernières lignes de la" & _
+                vbNewLine & vbNewLine & "feuille 'wshFAC_Entête'" & _
+                vbNewLine & vbNewLine & "Veuillez contacter le développeur", _
+                vbOKOnly, "Structure invalide dans 'wshFAC_Entête'"
+    End If
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 
     'Libérer la mémoire

@@ -29,7 +29,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
             .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
             .Range("E12:E" & 11 + lastResultRow - 2).Locked = False
             .Protect UserInterfaceOnly:=True
-            .EnableSelection = xlNoRestrictions
+            .EnableSelection = xlUnlockedCells
         End If
     End With
     
@@ -724,7 +724,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
     'Protect the worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
     
     Application.EnableEvents = True

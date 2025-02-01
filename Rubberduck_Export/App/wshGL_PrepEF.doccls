@@ -24,7 +24,7 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
     
 '    Dim cbx As Shape

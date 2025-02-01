@@ -324,7 +324,7 @@ Sub RetourMenuPrincipal()
     
     With wshMenu
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
         .Activate
         .Range("A1").Select
     End With

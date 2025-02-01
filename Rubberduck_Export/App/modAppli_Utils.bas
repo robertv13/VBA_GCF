@@ -361,32 +361,32 @@ CleanUp:
     
 End Sub
 
-Public Sub ProtectCells(rng As Range)
-
-    'Lock the range
-    rng.Locked = True
-    
-    'Protect the worksheet with no restrictions
-    With rng.Parent
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
-    End With
-
-End Sub
-
-Public Sub UnprotectCells(rng As Range)
-
-    'Unlcok the range
-    rng.Locked = False
-    
-    'Protect the worksheet with no restrictions
-    With rng.Parent
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
-    End With
-
-End Sub
-
+'Public Sub ProtectCells(rng As Range)
+'
+'    'Lock the range
+'    rng.Locked = True
+'
+'    'Protect the worksheet with no restrictions
+'    With rng.Parent
+'        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlUnlockedCells
+'    End With
+'
+'End Sub
+'
+'Public Sub UnprotectCells(rng As Range)
+'
+'    'Unlock the range
+'    rng.Locked = False
+'
+'    'Protect the worksheet with no restrictions
+'    With rng.Parent
+'        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlUnlockedCells
+'    End With
+'
+'End Sub
+'
 Public Sub Tx_2D_Array_2_Range(ByRef arr As Variant, _
                                ByVal rngTo As Range, _
                                Optional ByVal clearExistingData As Boolean = True, _
@@ -3129,7 +3129,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3654 'What is the last TECID analyzed ?
+    lastTECIDReported = 3787 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2

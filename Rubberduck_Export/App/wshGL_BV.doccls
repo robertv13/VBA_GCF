@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate()
         .Range("L4").CurrentRegion.offset(3, 0).Clear
         
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
         
         .Range("B10").Value = 0
     End With

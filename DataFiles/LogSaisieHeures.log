@@ -3,3 +3,14 @@
 2025-01-16 09:52:41.05 | Robert M. Vigneault | APP_v5.M.3.xlsb | DELETE-3460 | GC | 16/01/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test# | 0,20 | VRAI | 
 2025-01-16 16:26:34.30 | Robert M. Vigneault | APP_v5.N.xlsb | ADD    3461 | GC | 16/01/2025 | 1643 | Ventilation Pierre Gamache Inc. [Pierre Gamache] | Test | 0,10 | VRAI | 
 2025-01-27 10:52:40.84 | Robert M. Vigneault | APP_v5.N.6.xlsb | ADD    3655 | GC | 27/01/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-01-31 13:21:56.51 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3767 | GC | 31/01/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-01-31 13:22:30.97 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3768 | GC | 31/01/2025 | 1191 | 9308-0240 Québec Inc. [Gilbert Grimard] | Test | 8,00 | VRAI | 
+2025-01-31 13:23:49.55 | Robert M. Vigneault | APP_v5.O.xlsb | DELETE-3768 | GC | 31/01/2025 | 1191 | 9308-0240 Québec Inc. [Gilbert Grimard] | Test | 8,00 | VRAI | 
+2025-01-31 13:26:23.92 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3769 | GC | 31/01/2025 | 1350 | Acier Altitube Inc. [Philippe Robillard] | Test | 10,00 | VRAI | 
+2025-01-31 13:27:11.19 | Robert M. Vigneault | APP_v5.O.xlsb | UPDATE 3769 | GC | 31/01/2025 | 1350 | Acier Altitube Inc. [Philippe Robillard] | Test | 3,50 | VRAI | 
+2025-01-31 13:27:37.03 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3770 | GC | 31/01/2025 | 1388 | 9307-2411 Québec Inc. [Capitaine Vap] | Test | 0,20 | VRAI | 
+2025-01-31 14:37:31.52 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3771 | GC | 31/01/2025 | 2040 | 2960-4105 Québec Inc. [Mini Excavation MB] | Test | 4,30 | VRAI | 
+2025-01-31 14:38:31.80 | Robert M. Vigneault | APP_v5.O.xlsb | UPDATE 3771 | GC | 31/01/2025 | 2040 | 2960-4105 Québec Inc. [Mini Excavation MB] | Test | 3,30 | VRAI | 
+2025-01-31 14:38:40.21 | Robert M. Vigneault | APP_v5.O.xlsb | UPDATE 3769 | GC | 31/01/2025 | 1350 | Acier Altitube Inc. [Philippe Robillard] | Test | 2,50 | VRAI | 
+2025-01-31 14:42:47.55 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3772 | GC | 31/01/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,25 | VRAI | 
+2025-02-01 06:51:13.02 | Robert M. Vigneault | APP_v5.O.xlsb | ADD    3788 | GC | 31/01/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 

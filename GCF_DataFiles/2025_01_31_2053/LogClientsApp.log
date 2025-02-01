@@ -1,0 +1,110 @@
+2025-01-31 09:02:03.90 | User | Clients_v5.2.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-01-31 09:02:03.98 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All | 
+2025-01-31 09:02:04.56 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-01-31 09:02:04.70 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1406 secondes'
+2025-01-31 09:02:04.85 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All = '0,8809 secondes'
+2025-01-31 09:02:05.00 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize | 
+2025-01-31 09:02:05.05 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-01-31 09:02:05.11 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-01-31 09:02:05.16 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:02:05.21 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0605 secondes'
+2025-01-31 09:02:05.26 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0,1621 secondes'
+2025-01-31 09:02:05.35 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0,3027 secondes'
+2025-01-31 09:02:05.40 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize = '0,4062 secondes'
+2025-01-31 09:02:28.11 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 09:02:28.18 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 09:02:30.22 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '2,0566 secondes'
+2025-01-31 09:02:30.29 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '2,1875 secondes'
+2025-01-31 09:02:32.97 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:02:33.02 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0664 secondes'
+2025-01-31 09:02:36.50 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 09:02:36.55 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 09:02:38.35 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '1,8203 secondes'
+2025-01-31 09:02:38.43 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '1,9355 secondes'
+2025-01-31 09:02:40.65 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:02:40.70 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0566 secondes'
+2025-01-31 09:02:44.12 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 09:02:44.17 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 09:02:45.94 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '1,7754 secondes'
+2025-01-31 09:02:46.01 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '1,8984 secondes'
+2025-01-31 09:02:48.58 | User | Clients_v5.2.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-01-31 09:35:00.43 | Annie | Clients_v5.2.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-01-31 09:35:00.53 | Annie | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All | 
+2025-01-31 09:35:01.42 | Annie | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-01-31 09:35:01.69 | Annie | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format = '0.3047 secondes'
+2025-01-31 09:35:01.90 | Annie | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All = '1.4336 secondes'
+2025-01-31 09:35:02.09 | Annie | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize | 
+2025-01-31 09:35:02.18 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-01-31 09:35:02.26 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-01-31 09:35:02.34 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:35:02.42 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0.1055 secondes'
+2025-01-31 09:35:02.50 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0.2695 secondes'
+2025-01-31 09:35:02.63 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0.4883 secondes'
+2025-01-31 09:35:02.74 | Annie | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize = '0.6914 secondes'
+2025-01-31 09:35:06.32 | Annie | Clients_v5.2.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-01-31 09:35:06.42 | Annie | Clients_v5.2.xlsm | ufClientMF:txtNomClient_Exit = '0.1328 secondes'
+2025-01-31 09:35:06.54 | Annie | Clients_v5.2.xlsm | ufClientMF:cmdAddClient_Click | 
+2025-01-31 09:35:06.64 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-01-31 09:35:06.78 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-01-31 09:35:06.89 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:35:06.00 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0.1406 secondes'
+2025-01-31 09:35:07.09 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:35:07.20 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0.1367 secondes'
+2025-01-31 09:35:07.30 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0.5586 secondes'
+2025-01-31 09:35:07.48 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0.8672 secondes'
+2025-01-31 09:35:11.02 | Annie | Clients_v5.2.xlsm | ufClientMF:cmdAddClient_Click = '4.5078 secondes'
+2025-01-31 09:35:22.39 | Annie | Clients_v5.2.xlsm | ufClientMF:txtCodeClient_Exit | 
+2025-01-31 09:35:22.50 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-01-31 09:35:22.60 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | FAUX
+2025-01-31 09:35:22.71 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0.2383 secondes'
+2025-01-31 09:35:22.82 | Annie | Clients_v5.2.xlsm | ufClientMF:txtCodeClient_Exit = '0.4648 secondes'
+2025-01-31 09:36:46.95 | Annie | Clients_v5.2.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-01-31 09:36:47.05 | Annie | Clients_v5.2.xlsm | ufClientMF:txtNomClient_Exit = '0.1328 secondes'
+2025-01-31 09:39:13.12 | Annie | Clients_v5.2.xlsm | modMain:Fn_Fix_Txt_Fin_Annee | 
+2025-01-31 09:39:13.22 | Annie | Clients_v5.2.xlsm | modMain:Fn_Fix_Txt_Fin_Annee = '0.1289 secondes'
+2025-01-31 09:39:13.34 | Annie | Clients_v5.2.xlsm | ufClientMF:txtCodeClient_Exit | 
+2025-01-31 09:39:13.44 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-01-31 09:39:13.55 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | FAUX
+2025-01-31 09:39:13.65 | Annie | Clients_v5.2.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0.2539 secondes'
+2025-01-31 09:39:13.77 | Annie | Clients_v5.2.xlsm | ufClientMF:txtCodeClient_Exit = '0.4570 secondes'
+2025-01-31 09:39:14.57 | Annie | Clients_v5.2.xlsm | ufClientMF:cmdCancel_Click | 
+2025-01-31 09:39:17.26 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-01-31 09:39:17.37 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-01-31 09:39:17.49 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:39:17.59 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0.1367 secondes'
+2025-01-31 09:39:17.70 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 09:39:17.81 | Annie | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0.1406 secondes'
+2025-01-31 09:39:17.91 | Annie | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0.5781 secondes'
+2025-01-31 09:39:18.09 | Annie | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0.8633 secondes'
+2025-01-31 09:39:18.21 | Annie | Clients_v5.2.xlsm | ufClientMF:cmdCancel_Click = '3.6719 secondes'
+2025-01-31 09:39:23.13 | Annie | Clients_v5.2.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-01-31 15:20:47.52 | User | Clients_v5.2.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-01-31 15:20:47.59 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All | 
+2025-01-31 15:20:48.03 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-01-31 15:20:48.17 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1523 secondes'
+2025-01-31 15:20:48.34 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All = '0,7578 secondes'
+2025-01-31 15:20:48.45 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize | 
+2025-01-31 15:20:48.51 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-01-31 15:20:48.56 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-01-31 15:20:48.64 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 15:20:48.68 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0703 secondes'
+2025-01-31 15:20:48.75 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0,1992 secondes'
+2025-01-31 15:20:48.84 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0,3398 secondes'
+2025-01-31 15:20:48.89 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize = '0,4453 secondes'
+2025-01-31 15:21:12.49 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 15:21:12.55 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 15:21:14.19 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '1,6445 secondes'
+2025-01-31 15:21:14.26 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '1,7773 secondes'
+2025-01-31 15:21:17.09 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 15:21:17.14 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0586 secondes'
+2025-01-31 15:21:20.47 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 15:21:20.52 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 15:21:22.34 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '1,8281 secondes'
+2025-01-31 15:21:22.41 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '1,9531 secondes'
+2025-01-31 15:21:24.80 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-01-31 15:21:24.86 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0742 secondes'
+2025-01-31 15:21:28.20 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click | 
+2025-01-31 15:21:28.25 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-01-31 15:21:30.05 | User | Clients_v5.2.xlsm | modMain:CM_Build_Données_Recherche = '1,8086 secondes'
+2025-01-31 15:21:30.11 | User | Clients_v5.2.xlsm | ufClientMF:cmdSearch_Click = '1,9180 secondes'
+2025-01-31 15:21:33.95 | User | Clients_v5.2.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 

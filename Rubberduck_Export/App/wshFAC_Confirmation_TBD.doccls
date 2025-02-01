@@ -47,7 +47,7 @@
 '    'Protéger la feuille sans mot de passe et permettre la sélection des cellules verrouillées et non verrouillées
 '    With ws
 '        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlNoRestrictions
+'        .EnableSelection = xlUnlockedCells
 '    End With
 '
 '    Call SetTabOrder(ws)

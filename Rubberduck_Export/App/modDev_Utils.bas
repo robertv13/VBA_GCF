@@ -1568,7 +1568,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Clear previous settings AND protect the worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
 
     'Collect all unprotected cells
@@ -1637,13 +1637,11 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
     If Trim(procedureName) = "" Then
         Print #fileNum, ""
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
-'        startTime = Timer 'Start timing
         Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
-'        startTime = Timer 'Start timing
         Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _

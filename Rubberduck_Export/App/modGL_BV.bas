@@ -107,7 +107,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
         .Unprotect
         .Range("D4:G" & currRow - 2).Locked = False
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
     
     'Output Debit total
@@ -320,7 +320,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
         .Unprotect
         .Range("L4:T" & lastResultUsedRow).Locked = False
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
     End With
 
     Call GL_BV_Ajouter_Shape_Retour

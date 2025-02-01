@@ -405,7 +405,7 @@ Sub CodeEssentielDepart()
     'Protection de la feuille wshMenu
     With wshMenu
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions '2024-10-14 @ 11:28
+        .EnableSelection = xlUnlockedCells '2024-10-14 @ 11:28
     End With
     
     Dim wb As Workbook: Set wb = ActiveWorkbook

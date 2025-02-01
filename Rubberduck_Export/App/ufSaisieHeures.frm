@@ -515,7 +515,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
         'Retrieve the record in wshTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTECID As Long
-        lastTECRow = wshTEC_Local.Range("A99999").End(xlUp).row
+        lastTECRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
         Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
         rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
@@ -528,7 +528,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .cmbProfessionnel.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), "dd/mm/yyyy") '2024-08-10 @ 07:23
+            .txtDate.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wshAdmin.Range("B1").Value) '2025-01-31 @ 13:31
             .txtDate.Enabled = False
     
             .txtClient.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)

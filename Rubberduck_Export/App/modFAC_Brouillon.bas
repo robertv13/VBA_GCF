@@ -282,6 +282,8 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
     
     Call FAC_Brouillon_Load_Non_Billable_Into_Userform
+    
+    Application.EnableEvents = True '2025-02-01 @ 06:36
 
 Clean_Exit:
 
@@ -464,7 +466,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
         .Unprotect
         .Range("L11:L" & 11 + rngSource.Rows.count - 1).Value = rngSource.Value
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
 
@@ -660,10 +662,11 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         .Range("AK3").Value = clientID
         .Range("AL3").Value = "'<=" & CLng(cutoffDate)
         .Range("AM3").Value = isBillable
-        If isInvoiced <> True Then
-            .Range("AN3").Value = isInvoiced
-        Else
+        If isInvoiced = True Or isInvoiced = "VRAI" Then
+'        If isInvoiced <> True And isInvoiced <> "VRAI" Then
             .Range("AN3").Value = ""
+        Else
+            .Range("AN3").Value = "FAUX"
         End If
         .Range("AO3").Value = isDeleted
         .Range("AM8").Value = rngCriteria.Address
@@ -1032,9 +1035,9 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     End If
     Next cell
     
-    'Unlock the checkbox to view Billed charges
-    Call UnprotectCells(ws.Range("B16"))
-'    ws.Range("B16").Locked = False
+'    'Unlock the checkbox to view Billed charges
+'    Call UnprotectCells(ws.Range("B16"))
+''    ws.Range("B16").Locked = False
      
     With ws
         .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"
@@ -1047,7 +1050,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
         .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
         
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
+        .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
     
@@ -1098,8 +1101,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     'Protect the worksheet
     With ws
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlNoRestrictions
-'        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlUnlockedCells
     End With
     
     wshFAC_Brouillon.Range("C7:C" & row).Value = ""  'Remove text left over

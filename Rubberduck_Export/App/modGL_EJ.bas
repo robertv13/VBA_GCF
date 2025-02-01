@@ -461,14 +461,14 @@ Sub GL_EJ_Depot_Client()
     
     'Ajuster le formulaire
     ws.Range("E6").Value = "Client:"
-    
+            
     'Ajouter la validation des données
     Dim cell As Range: Set cell = wshGL_EJ.Range("F6:K6")
     
     Dim condition As Boolean
     condition = (wshGL_EJ.Range("F4").Value = "Dépôt de client")
     
-    Call GérerValidation(cell, "dnrClients_Names_Only", condition)
+    Call GérerValidation(cell, "dnrClients_Search_Field_Only", condition)
     
     'Force l'écriture
     wshGL_EJ.Range("E9").Value = "Encaisse"
@@ -525,7 +525,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     If feuilleProtégée Then
         With ws
             .Protect UserInterfaceOnly:=True
-            .EnableSelection = xlNoRestrictions
+            .EnableSelection = xlUnlockedCells
         End With
     End If
     
