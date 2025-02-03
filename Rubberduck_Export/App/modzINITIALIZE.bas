@@ -46,7 +46,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
         'Requires a minimum of one line (values)
         ws.Range("A2").Value = 0
         ws.Range("B2").Value = ""
-        ws.Range("C2").Value = Format$(Now(), "yyyy-mm-dd")
+        ws.Range("C2").Value = Format$(Date, wshAdmin.Range("B1").Value)
         ws.Range("E2").Value = 0
         ws.Range("F2").Value = "VRAI"
         ws.Range("G2").Value = "FAUX"

@@ -740,6 +740,8 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
+    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
+    
     Dim i As Long
     For i = 9 To r
         wshGL_Trans.Range("A" & rowToBeUsed).Value = JENo
@@ -762,6 +764,9 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wshGL_Trans.Range("I" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
         wshGL_Trans.Range("J" & rowToBeUsed).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
+        
+        Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
+
     Next i
     
     Application.ScreenUpdating = True

@@ -3129,7 +3129,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 3787 'What is the last TECID analyzed ?
+    lastTECIDReported = 3798 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3211,7 +3211,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim tecID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
-    Dim d As Integer, m As Integer, Y As Integer, p As Integer
+    Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -3346,7 +3346,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
                 isTECValid = False
                 cas_date_fact_invalide = cas_date_fact_invalide + 1
             End If
-            If dateFact > Now() Then
+            If dateFact > Date Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date de facture FUTURE '" & dateFact & " !!!")
                 r = r + 1
                 isTECValid = False
@@ -4383,7 +4383,7 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
     'Calculer la différence (jours) entre maintenant et la date de la dernière modification
     Dim diff As Double
-    diff = Now - ddm
+    diff = Date - ddm
     
     'Convertir la différence en jours, heures, minutes et secondes
     jours = Int(diff)

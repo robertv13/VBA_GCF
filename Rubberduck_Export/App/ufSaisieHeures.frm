@@ -220,13 +220,13 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
                                 "   m = " & month(fullDate) & _
                                 "   d = " & day(fullDate) & _
                                 "   type = " & TypeName(fullDate))
-    Call Log_Saisie_Heures("info     ", "@00228 - DateSerial = " & DateSerial(year(Now), month(Now), day(Now)) & _
-                                "   y = " & year(Now) & _
-                                "   m = " & month(Now) & _
-                                "   d = " & day(Now) & _
-                                "   type = " & TypeName(Now))
+    Call Log_Saisie_Heures("info     ", "@00228 - DateSerial = " & DateSerial(year(Date), month(Date), day(Date)) & _
+                                "   y = " & year(Date) & _
+                                "   m = " & month(Date) & _
+                                "   d = " & day(Date) & _
+                                "   type = " & TypeName(Date))
                                 
-    If fullDate > DateSerial(year(Now), month(Now), day(Now)) Then
+    If fullDate > DateSerial(year(Date), month(Date), day(Date)) Then
         Call Log_Saisie_Heures("future  ", "@00230 - fullDate = " & fullDate & _
                                             "   y = " & year(fullDate) & _
                                             "   m = " & month(fullDate) & _

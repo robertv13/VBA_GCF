@@ -811,13 +811,13 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, Y As Long) As Boolean
+Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
     
     Dim isLeapYear As Boolean
-    If Y Mod 4 = 0 And (Y Mod 100 <> 0 Or Y Mod 400 = 0) Then
+    If y Mod 4 = 0 And (y Mod 100 <> 0 Or y Mod 400 = 0) Then
         isLeapYear = True
     Else
         isLeapYear = False
@@ -830,7 +830,7 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, Y As Long) As Boolean
     
     If m < 1 Or m > 12 Or _
        d > mdpm(m - 1) Or _
-       Abs(year(Now()) - Y) > 75 Then
+       Abs(year(Date) - y) > 75 Then
             Exit Function
     Else
         Fn_ValidateDaySpecificMonth = True
@@ -936,19 +936,19 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     'Construct the full date
     parsedDate = DateSerial(yearPart, monthPart, dayPart)
     Dim joursEcart As Integer
-    joursEcart = parsedDate - Now()
+    joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date minimale est '" & Format$(Now() - joursArriere, wshAdmin.Range("B1").Value) & "'", _
+                    "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                        Format$(Now() - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Now() + joursFutur, wshAdmin.Range("B1").Value) & ")"
+                        Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date maximale est '" & Format$(Now() + joursFutur, wshAdmin.Range("B1").Value) & "'", _
+                    "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                    Format$(Now() - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Now() + joursFutur, wshAdmin.Range("B1").Value) & ")"
+                    Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & ")"
         GoTo Invalid_Date
     End If
    

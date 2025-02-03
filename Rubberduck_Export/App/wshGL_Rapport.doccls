@@ -100,8 +100,8 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         Select Case Range("F4").Value
             Case "Aujourd'hui"
-                wshGL_Rapport.Range("F6").Value = Format$(Now(), wshAdmin.Range("B1").Value)
-                wshGL_Rapport.Range("H6").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("F6").Value = Format$(Date, wshAdmin.Range("B1").Value)
+                wshGL_Rapport.Range("H6").Value = Format$(Date, wshAdmin.Range("B1").Value)
             Case "Mois Courant"
                 wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").Value)
                 wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").Value)

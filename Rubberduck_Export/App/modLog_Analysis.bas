@@ -116,8 +116,14 @@ Sub Lire_LogClientsApp(filePath As String)
     Close #fileNum
     
     'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Clients")
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Clients")
     
+    'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
+    Debug.Print env, filePath
+    If env = "DEV" Then
+        Kill filePath
+    End If
+
     Application.StatusBar = ""
     
     'Afficher le nombre de lignes ajoutées au fichier LOG
@@ -129,7 +135,7 @@ Sub Lire_LogMainApp(filePath As String)
 
     Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
     
-    'Ouvrir et lire le contenu du fichier TXT
+    'Ouvrir le fichier .Log
     Dim fileNum As Integer
     fileNum = FreeFile
     Open filePath For Input As #fileNum
@@ -146,8 +152,8 @@ Sub Lire_LogMainApp(filePath As String)
     Dim output() As Variant
     ReDim output(1 To 100000, 1 To 9)
     Dim ligne As Long
-    Dim lineContent As String
     Dim lineNo As Long
+    Dim lineContent As String
     Dim duree As String
     Dim i As Long
 
@@ -155,14 +161,14 @@ Sub Lire_LogMainApp(filePath As String)
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-        If lineNo Mod 250 = 0 Then
-            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
             'Insérer les données dans le tableau
             ligne = ligne + 1
+            If ligne Mod 250 = 0 Then
+                Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
+            End If
             output(ligne, 1) = env
             output(ligne, 2) = CStr(Left(Fields(0), 10))
             output(ligne, 3) = CStr(Right(Fields(0), 11))
@@ -186,15 +192,22 @@ Sub Lire_LogMainApp(filePath As String)
         End If
     Loop
 
+    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+
     'Réduit la taille du tableau output
     Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
     
-    'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Application")
-
+    'Ajout du tableau au classeur des logs
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Application")
+    
+    'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
+    If env = "DEV" Then
+        Kill filePath
+    End If
+    
     Application.StatusBar = ""
     
     'Afficher le nombre de lignes ajoutées au fichier LOG
@@ -273,7 +286,13 @@ Sub Lire_LogSaisieHeures(filePath As String)
     Close #fileNum
     
     'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsx", "Log_Heures")
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Heures")
+    
+    'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
+    Debug.Print env, filePath
+    If env = "DEV" Then
+        Kill filePath
+    End If
     
     Application.StatusBar = ""
     
@@ -284,77 +303,109 @@ End Sub
 
 Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As String, ByVal feuilleNom As String)
     
-    Dim cn As Object
-    Dim rs As Object
-    Dim strSQL As String
-    Dim lastUsedRow As Long
-    Dim i As Long, j As Long
+    Dim wbSource As Workbook
     
-    'Est-ce bien un tableau ?
-    If Not IsArray(tableau) Then
-        MsgBox "Le paramètre 'tableau' doit être un tableau.", vbExclamation
-        Exit Sub
-    End If
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
     
-    'Initialiser la connexion ADO
-    Set cn = CreateObject("ADODB.Connection")
-    cn.ConnectionString = _
-                    "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-                    "Data Source=" & cheminFichier & ";" & _
-                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
-    cn.Open
-    
-    'Obtenir la dernière ligne utilisée dans la feuille cible
-    Set rs = cn.Execute("SELECT COUNT(*) AS NbLignes FROM [" & feuilleNom & "$]")
-    lastUsedRow = rs.Fields("NbLignes").Value
-    rs.Close
-    
-    'Boucle pour insérer les lignes du tableau dans le fichier Excel fermé
-    Dim valeur As Variant
-    For i = LBound(tableau, 1) To UBound(tableau, 1)
-        strSQL = "INSERT INTO [" & feuilleNom & "$] VALUES ("
-        For j = LBound(tableau, 2) To UBound(tableau, 2)
-            'Nettoyage de la valeur
-            If Not IsEmpty(valeur) Then valeur = Trim(valeur)
-            
-            'Tronque les données qui seraient trop longues
-            valeur = tableau(i, j)
-            If Len(valeur) > 197 Then
-                valeur = Left(valeur, 197) & "..."
-            End If
-            
-            'Déterminer dynamiquement le type de valeur
-            If IsEmpty(valeur) Or IsNull(valeur) Then
-                'Valeur vide ou nulle, insérer une valeur par défaut
-                strSQL = strSQL & "0, "
-            ElseIf IsDate(valeur) Then
-                'Date : Format SQL compatible
-                strSQL = strSQL & "#" & Format(valeur, "yyyy-mm-dd hh:nn:ss") & "#, "
-            ElseIf IsNumeric(valeur) Then
-                If InStr(1, CStr(valeur), ".") > 0 Or InStr(1, CStr(valeur), ",") > 0 Then
-                    'La valeur contient un séparateur décimal
-                    strSQL = strSQL & Replace(CDbl(valeur), ",", ".") & ", "
-'                    strSQL = strSQL & Replace(Format(CDbl(valeur), "0.00"), ",", ".") & ", "
-                Else
-                    'La valeur est entière
-                    strSQL = strSQL & CLng(valeur) & ", "
-                End If
-            Else
-                'Texte : Protéger les apostrophes
-                strSQL = strSQL & "'" & Replace(valeur, "'", "''") & "', "
-            End If
-        Next j
-        strSQL = Replace(strSQL, " 00:00:00#", "#")
-        strSQL = Left(strSQL, Len(strSQL) - 2) & ")" 'Supprime la dernière virgule
-        cn.Execute strSQL
-    Next i
-    
-    'Fermer la connexion
-    cn.Close
-    
+    'Ouvrir le classeur cible en arrière-plan
+    Dim wbTarget As Workbook
+    Set wbTarget = Workbooks.Open(cheminFichier)
+    Dim wsTarget As Worksheet
+    Set wsTarget = wbTarget.Sheets(feuilleNom)
+
+    'Déterminer la première ligne vide dans la colonne A et définir le range
+    Dim premiereLigneVide As Long
+    premiereLigneVide = wsTarget.Cells(wsTarget.Rows.count, 1).End(xlUp).row + 1
+    Dim cible As Range
+    Set cible = wsTarget.Cells(premiereLigneVide, 1)
+
+    'Copier les données en une seule opération
+    cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).Value = tableau
+
+    'Sauvegarder et fermer le fichier Target
+    wbTarget.Close SaveChanges:=True
+
     'Libérer la mémoire
-    Set cn = Nothing
+    Set cible = Nothing
+    Set wbTarget = Nothing
+    Set wsTarget = Nothing
+    
+    Application.ScreenUpdating = True
+    Application.DisplayAlerts = True
+
+'    MsgBox "Données copiées avec succès dans " & vbNewLine & vbNewLine & _
+'                    "'" & cheminFichier & "'", vbInformation
+'
+'    Dim cn As Object
+'    Dim rs As Object
+'    Dim strSQL As String
+'    Dim lastUsedRow As Long
+'    Dim i As Long, j As Long
+'
+'    'Est-ce bien un tableau ?
+'    If Not IsArray(tableau) Then
+'        MsgBox "Le paramètre 'tableau' doit être un tableau.", vbExclamation
+'        Exit Sub
+'    End If
+'
+'    'Initialiser la connexion ADO
+'    Set cn = CreateObject("ADODB.Connection")
+'    cn.ConnectionString = _
+'                    "Provider=Microsoft.ACE.OLEDB.12.0;" & _
+'                    "Data Source=" & cheminFichier & ";" & _
+'                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
+'    cn.Open
+'
+'    'Obtenir la dernière ligne utilisée dans la feuille cible
+'    Set rs = cn.Execute("SELECT COUNT(*) AS NbLignes FROM [" & feuilleNom & "$]")
+'    lastUsedRow = rs.Fields("NbLignes").Value
+'    rs.Close
+'
+'    'Boucle pour insérer les lignes du tableau dans le fichier Excel fermé
+'    Dim valeur As Variant
+'    For i = LBound(tableau, 1) To UBound(tableau, 1)
+'        strSQL = "INSERT INTO [" & feuilleNom & "$] VALUES ("
+'        For j = LBound(tableau, 2) To UBound(tableau, 2)
+'            'Nettoyage de la valeur
+'            If Not IsEmpty(valeur) Then valeur = Trim(valeur)
+'
+'            'Tronque les données qui seraient trop longues
+'            valeur = tableau(i, j)
+'            If Len(valeur) > 197 Then
+'                valeur = Left(valeur, 197) & "..."
+'            End If
+'
+'            'Déterminer dynamiquement le type de valeur
+'            If IsEmpty(valeur) Or IsNull(valeur) Then
+'                'Valeur vide ou nulle, insérer une valeur par défaut
+'                strSQL = strSQL & "0, "
+'            ElseIf IsDate(valeur) Then
+'                'Date : Format SQL compatible
+'                strSQL = strSQL & "#" & Format(valeur, "yyyy-mm-dd hh:nn:ss") & "#, "
+'            ElseIf IsNumeric(valeur) Then
+'                If InStr(1, CStr(valeur), ".") > 0 Or InStr(1, CStr(valeur), ",") > 0 Then
+'                    'La valeur contient un séparateur décimal
+'                    strSQL = strSQL & Replace(CDbl(valeur), ",", ".") & ", "
+''                    strSQL = strSQL & Replace(Format(CDbl(valeur), "0.00"), ",", ".") & ", "
+'                Else
+'                    'La valeur est entière
+'                    strSQL = strSQL & CLng(valeur) & ", "
+'                End If
+'            Else
+'                'Texte : Protéger les apostrophes
+'                strSQL = strSQL & "'" & Replace(valeur, "'", "''") & "', "
+'            End If
+'        Next j
+'        strSQL = Replace(strSQL, " 00:00:00#", "#")
+'        strSQL = Left(strSQL, Len(strSQL) - 2) & ")" 'Supprime la dernière virgule
+'        cn.Execute strSQL
+'    Next i
+'
+'    'Fermer la connexion
+'    cn.Close
+'
+'    'Libérer la mémoire
+'    Set cn = Nothing
     
 End Sub
-
-

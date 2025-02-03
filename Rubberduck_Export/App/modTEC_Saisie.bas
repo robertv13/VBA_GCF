@@ -22,21 +22,21 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
         
     If Fn_TEC_Is_Data_Valid() = True Then
-        Dim Y As Integer, m As Integer, d As Integer
+        Dim y As Integer, m As Integer, d As Integer
         Dim avant As String, apres As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.Value
-            Y = year(ufSaisieHeures.txtDate.Value)
+            y = year(ufSaisieHeures.txtDate.Value)
             m = month(ufSaisieHeures.txtDate.Value)
             d = day(ufSaisieHeures.txtDate.Value)
-            If Y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
+            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
                 Dim temp As Integer
                 temp = m
                 m = d
                 d = temp
-                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & Y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.Value))
+                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.Value))
             End If
-            ufSaisieHeures.txtDate.Value = Format$(DateSerial(Y, m, d), "yyyy-mm-dd")
+            ufSaisieHeures.txtDate.Value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
             Call Log_Saisie_Heures("info     ", "@00048 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.Value & "   type = " & TypeName(ufSaisieHeures.txtDate.Value) & "   après assignation")
             apres = ufSaisieHeures.txtDate.Value
             If apres <> avant Then
@@ -329,7 +329,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.Value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
-    If tecID = 0 And Now - dateValue > 30 Then
+    If tecID = 0 And Date - dateValue > 30 Then
         MsgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
                 "Veuillez aviser le développeur de cette situation SVP", vbInformation
         Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))

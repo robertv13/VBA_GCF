@@ -552,7 +552,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     Dim i As Long
     Dim tecID As Long
     Dim dateCutOff As Date
-    dateCutOff = Now()
+    dateCutOff = Date
     
     Dim h As Currency, hTEC As Currency
     'Boucle dans TEC_Local

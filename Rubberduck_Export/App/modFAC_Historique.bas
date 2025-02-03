@@ -207,7 +207,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
             .Range("L" & i + 8).Value = arr(i, 9)
             .Range("M" & i + 8).Value = arr(i, 10)
             If arr(i, 10) - arr(i, 11) > 0 Then
-                .Range("N" & i + 8).Value = Format$(WorksheetFunction.Max(0, Now() - arr(i, 12)), "# ###")
+                .Range("N" & i + 8).Value = Format$(WorksheetFunction.Max(0, Date - arr(i, 12)), "# ###")
             End If
             .Range("O" & i + 8).Value = arr(i, 10) - arr(i, 11) 'Balance
             If ACouC = "AC" Then
@@ -1192,7 +1192,7 @@ Sub PreparerRapportTECFactures()
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").Value = "Date de création : " & Format(Now, "dd/mm/yyyy")
+        .Range("A2").Value = "Date de création : " & Format(Date, wshAdmin.Range("B1").Value)
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         

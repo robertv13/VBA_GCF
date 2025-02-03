@@ -137,7 +137,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         Call Delete_User_Active_File
 
         On Error Resume Next
-        Call Log_Record("***** Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) *****", 0)
+        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", 0)
         Call Log_Record("", -1)
         On Error GoTo 0
         

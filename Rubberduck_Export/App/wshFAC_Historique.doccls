@@ -213,17 +213,59 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 End Sub
 
 Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
-    ' Afficher un message de débogage pour vérifier l'adresse de la cellule cliquée
-    Debug.Print "Worksheet_BeforeRightClick - Adresse de la cellule cliquée : " & Target.Address
 
-    ' Vérifier si la cellule clic-droitée est dans la plage spécifique
+    ' Déprotéger temporairement la feuille pour autoriser le changement de sélection
+    Dim FeuilleProtegee As Boolean
+    FeuilleProtegee = Me.ProtectContents
+    
+    If FeuilleProtegee Then Me.Unprotect
+
+    'Forcer Excel à mettre à jour la cellule active
+    Target.Activate
+
+    ' Debugging
+    Debug.Print "Cellule Active AVANT clic : " & ActiveCell.Address
+    Debug.Print "Cellule cliquée (Target) : " & Target.Address
+
+    ' Vérifier si la cellule cliquée est dans la plage
     If Not Intersect(Target, Me.Range("C9:O33")) Is Nothing Then
-        ' Annuler le menu contextuel par défaut
-        Cancel = True
-        ' Appeler la fonction de gestion du menu
+        Cancel = True ' Annuler le menu contextuel par défaut
         Call AfficherMenuContextuel(Target)
-    Else
-        ' Ne pas annuler le menu contextuel par défaut pour les autres cellules
-        Cancel = False
     End If
+
+    ' Réactiver la protection de la feuille si elle l'était
+    If FeuilleProtegee Then Me.Protect
+    
 End Sub
+
+'Private Sub Worksheet_BeforeRightClick_20250202(ByVal Target As Range, Cancel As Boolean)
+'
+'    'Déprotéger la feuille temporairement
+'    If Me.ProtectContents Then
+'        Me.Unprotect
+'    End If
+'
+'    Target.Select
+'    Do events
+'
+'    'Debugging pour voir quelle cellule est ciblée
+'    Debug.Print "Cellule Active AVANT le clic : " & ActiveCell.Address
+'    Debug.Print "Cellule cliquée (Target) : " & Target.Address
+'
+'    ' Vérifier si la cellule clic-droitée est dans la plage spécifique
+'    If Not Intersect(Target, Me.Range("C9:O33")) Is Nothing Then
+'        ' Annuler le menu contextuel par défaut
+'        Target.Select
+'        Cancel = True
+'        ' Appeler la fonction de gestion du menu
+'        Call AfficherMenuContextuel(Target)
+'    Else
+'        ' Ne pas annuler le menu contextuel par défaut pour les autres cellules
+'        Cancel = False
+'    End If
+'
+'    'Reprotéger la feuille
+'    Me.Protect
+'
+'End Sub
+'

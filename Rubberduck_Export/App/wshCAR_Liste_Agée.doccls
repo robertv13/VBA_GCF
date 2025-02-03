@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     wshCAR_Liste_Agée.Range("B4").Value = "Facture"
     wshCAR_Liste_Agée.Range("D4").Value = "Numéro de facture"
     wshCAR_Liste_Agée.Range("F4").Value = "Non"
-    wshCAR_Liste_Agée.Range("H4").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+    wshCAR_Liste_Agée.Range("H4").Value = Format$(Date, wshAdmin.Range("B1").Value)
     
     Call SetTabOrder(ws)
     
@@ -128,7 +128,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("H4").Value) > Now() Then
+        If CDate(Range("H4").Value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

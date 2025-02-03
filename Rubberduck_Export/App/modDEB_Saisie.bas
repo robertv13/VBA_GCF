@@ -511,7 +511,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     With wshDEB_Saisie
         .Range("F4:H4, J4:M4, F6:J6, M6, O6, E9:O23, Q9:Q23").ClearContents
-        .Range("O4").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+        .Range("O4").Value = Format$(Date, wshAdmin.Range("B1").Value)
         .ckbRecurrente = False
     End With
     

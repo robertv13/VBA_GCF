@@ -7,7 +7,6 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", 0)
     
     If fromMenu = False Then
-        Debug.Print "#014 - wshTEC_Evaluation_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
 
@@ -106,7 +105,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("L3").Value) > Format$(Now(), "dd/mm/yyyy") Then
+        If CDate(Range("L3").Value) > Format$(Date, "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

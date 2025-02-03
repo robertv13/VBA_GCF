@@ -12,8 +12,6 @@ Option Explicit
 '    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 #End If
 
-'Public Const VK_NUMLOCK As Long = &H90
-
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
@@ -384,7 +382,7 @@ Sub CodeEssentielDepart()
     End If
 
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (modAppli:CodeEssentielDepart) *****", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", 0)
     Application.EnableEvents = True
     
     Call Log_Record("Validation d'accès serveur terminée", Timer)
@@ -464,7 +462,7 @@ Sub CreateUserActiveFile()
     Open traceFilePath For Output As FileNumber
     On Error GoTo 0
     
-    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Now
+    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     Close FileNumber
     
     Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)

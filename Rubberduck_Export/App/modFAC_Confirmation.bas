@@ -552,7 +552,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").Value = "Date de création : " & Format(Now, "dd/mm/yyyy")
+        .Range("A2").Value = "Date de création : " & Format(Date, "dd/mm/yyyy")
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         

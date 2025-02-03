@@ -10,11 +10,11 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Call TEC_Import_All
     
     Dim maxDate As Date
-    Dim Y As Integer, m As Integer, d As Integer
-    Y = year(cutoffDate)
+    Dim y As Integer, m As Integer, d As Integer
+    y = year(cutoffDate)
     m = month(cutoffDate)
     d = day(cutoffDate)
-    maxDate = DateSerial(Y, m, d)
+    maxDate = DateSerial(y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
@@ -67,7 +67,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
             If hresNettes <> hresNFact + hresFact Then Stop
             
             'Cette charge a-t-elle été facturée -OU- Facturée après la date limite ?
-            If UCase(arr(i, fTECEstFacturee)) = "FAUX" Or Int(arr(i, fTECDateFacturee)) > maxDate Then
+            If UCase(arr(i, fTECEstFacturee)) = "FAUX" Or CDate(arr(i, fTECDateFacturee)) > CDate(maxDate) Then
                 If hresFact > 0 Then
                     hresTEC = hresFact
                 Else
@@ -126,7 +126,9 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
                         tableau(14) = tableau(14) + hresTEC
                     End Select
                 dictHours(profInit) = tableau 'Replacer le tableau dans le dictionnaire
-            
+'                If arr(i, fTECProfID) = 3 Then
+'                    Debug.Print "999 - " & arr(i, fTECTECID), arr(i, fTECProfID), CDate(arr(i, fTECDate)), arr(i, fTECHeures), UCase(arr(i, fTECEstFacturee)), arr(i, fTECDateFacturee), hresTEC
+'                End If
             End If
         End If
     Next i
@@ -239,6 +241,7 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
     Application.EnableEvents = True
 
     ws.Shapes("Impression").Visible = True
+    ws.Range("L3").Select
     
     'Libérer la mémoire
     Set dictHours = Nothing

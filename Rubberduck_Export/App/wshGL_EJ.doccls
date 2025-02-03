@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     With ws
         .Range("B2").Value = -1
         .Range("B3").Value = -1
-        .Range("K4").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+        .Range("K4").Value = Format$(Date, wshAdmin.Range("B1").Value)
         .Range("F4").Select
         previousCellAddress = .Range("F4").Address
     End With
@@ -196,7 +196,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.GoTo Range(Target.Address)
         End If
         
-        If CDate(Me.Range("K4").Value) > Now() Then
+        If CDate(Me.Range("K4").Value) > Date Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Target.Value = ""
                 Target.Activate

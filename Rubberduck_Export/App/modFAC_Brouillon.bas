@@ -174,7 +174,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             
             'Utilisation de la date du projet de facture
-            wshFAC_Brouillon.Range("O3").Value = Format$(Now(), wshAdmin.Range("B1").Value)
+            wshFAC_Brouillon.Range("O3").Value = Format$(Date, wshAdmin.Range("B1").Value)
 '            Debug.Print "#052 - FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").Value)
             
@@ -296,9 +296,9 @@ Sub FAC_Brouillon_Date_Change(d As String)
     Application.EnableEvents = False
     
     If InStr(wshFAC_Brouillon.Range("O6").Value, "-") = 0 Then
-        Dim Y As String
-        Y = Right(year(d), 2)
-        wshFAC_Brouillon.Range("O6").Value = Y & "-" & wshFAC_Brouillon.Range("O6").Value
+        Dim y As String
+        y = Right(year(d), 2)
+        wshFAC_Brouillon.Range("O6").Value = y & "-" & wshFAC_Brouillon.Range("O6").Value
         wshFAC_Finale.Range("E28").Value = wshFAC_Brouillon.Range("O6").Value
     End If
     
