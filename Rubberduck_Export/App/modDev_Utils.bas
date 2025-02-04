@@ -1563,7 +1563,7 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder(" & ws.CodeName & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", ws.CodeName, 0)
 
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1612,11 +1612,11 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
 
-    Call Log_Record("modDev_Utils:SetTabOrder", startTime)
+    Call Log_Record("modDev_Utils:SetTabOrder", "", startTime)
 
 End Sub
 
-Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double = 0) '2024-12-14 @ 08:25
+Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
     On Error GoTo ErrorHandler
     
@@ -1640,20 +1640,23 @@ Sub Log_Record(ByVal procedureName As String, Optional ByVal startTime As Double
         Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName
+                        procedureName & " | " & _
+                        param & " | "
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName
+                        procedureName & " | " & _
+                        param & " | "
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
                         Fn_Get_Windows_Username & " | " & _
                         ThisWorkbook.Name & " | " & _
-                        procedureName & " --- = '" & _
-                        Format(elapsedTime, "0.0000") & " secondes" & "'" & vbCrLf
+                        procedureName & " | " & _
+                        param & " | " & _
+                        Format(elapsedTime, "0.0000") & " secondes" & vbCrLf
     End If
     
     Close #fileNum
@@ -1681,9 +1684,9 @@ End Sub
 
 Sub Test_Log_Record()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modzDevUtils:Test_Log_Record", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", "", 0)
 
-    Call Log_Record("modzDevUtils:Test_Log_Record", startTime)
+    Call Log_Record("modDev_Utils:Test_Log_Record", "", startTime)
     
 End Sub
 

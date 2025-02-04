@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
 
     If fromMenu = False Then
         Debug.Print "#008 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
@@ -65,13 +65,13 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = True
     
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", startTime)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange" & ":" & Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
@@ -144,13 +144,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Libérer la mémoire
     Set shapeTextBox = Nothing
     
-    Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", startTime)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", "", startTime)
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
     
     Dim targetAddress As String
     On Error Resume Next
@@ -283,7 +283,7 @@ ExitSub:
     'Libérer la mémoire
     Set rng = Nothing
 
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & targetAddress, startTime)
+    Call Log_Record("wshFAC_Brouillon:Worksheet_Change", targetAddress, startTime)
   
 End Sub
 

@@ -222,7 +222,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", "", 0)
 
     ufConfirmation.Hide
     Unload ufConfirmation
@@ -242,7 +242,7 @@ MenuSelect:
     wshMenu.Select
     
 Exit_Sub:
-    Call Log_Record("ufConfirmation:UserForm_Terminate", startTime)
+    Call Log_Record("ufConfirmation:UserForm_Terminate", "", startTime)
 
 End Sub
 

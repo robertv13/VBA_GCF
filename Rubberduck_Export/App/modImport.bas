@@ -3,7 +3,7 @@ Option Explicit
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", "", 0)
 
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.offset(2, 0).ClearContents
@@ -46,13 +46,13 @@ Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
     Set connStr = Nothing
     Set recSet = Nothing
 
-    Call Log_Record("modImport:ChartOfAccount_Import_All", startTime)
+    Call Log_Record("modImport:ChartOfAccount_Import_All", "", startTime)
 
 End Sub
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", "", 0)
     
 '    Application.ScreenUpdating = False
     
@@ -106,13 +106,13 @@ Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     Set recSet = Nothing
     Set wsLocal = Nothing
     
-    Call Log_Record("modImport:Client_List_Import_All", startTime)
+    Call Log_Record("modImport:Client_List_Import_All", "", startTime)
 
 End Sub
 
 Sub DEB_Récurrent_Import_All() '2024-07-08 @ 08:43
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Récurrent_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Récurrent_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -159,13 +159,13 @@ Sub DEB_Récurrent_Import_All() '2024-07-08 @ 08:43
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:DEB_Récurrent_Import_All", startTime)
+    Call Log_Record("modImport:DEB_Récurrent_Import_All", "", startTime)
 
 End Sub
 
 Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Trans_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Trans_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -211,13 +211,13 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:DEB_Trans_Import_All", startTime)
+    Call Log_Record("modImport:DEB_Trans_Import_All", "", startTime)
 
 End Sub
 
 Sub ENC_Détails_Import_All() '2025-01-16 @ 16:55
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -263,13 +263,13 @@ Sub ENC_Détails_Import_All() '2025-01-16 @ 16:55
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:ENC_Détails_Import_All", startTime)
+    Call Log_Record("modImport:ENC_Détails_Import_All", "", startTime)
 
 End Sub
 
 Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Entête_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -315,13 +315,13 @@ Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:ENC_Entête_Import_All", startTime)
+    Call Log_Record("modImport:ENC_Entête_Import_All", "", startTime)
 
 End Sub
 
 Sub CC_Régularisations_Import_All() '2025-01-05 @ 11:23
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:CC_Régularisations_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:CC_Régularisations_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -369,13 +369,13 @@ Sub CC_Régularisations_Import_All() '2025-01-05 @ 11:23
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:CC_Régularisations_Import_All", startTime)
+    Call Log_Record("modImport:CC_Régularisations_Import_All", "", startTime)
 
 End Sub
 
 Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -421,13 +421,13 @@ Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", "", startTime)
 
 End Sub
 
 Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Détails_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -473,13 +473,13 @@ Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:FAC_Détails_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Détails_Import_All", "", startTime)
 
 End Sub
 
 Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Entête_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -525,13 +525,13 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:FAC_Entête_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Entête_Import_All", "", startTime)
 
 End Sub
 
 Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -577,13 +577,13 @@ Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", "", startTime)
 
 End Sub
 
 Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -663,84 +663,84 @@ Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    Call Log_Record("modImport:FAC_Projets_Détails_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", startTime)
 
 End Sub
 
-Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
-    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", 0)
-    
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
-    
-    'Clear all cells, but the headers, in the target worksheet
-    ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
-
-    'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
-    Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_MASTER.xlsx"
-    sourceTab = "FAC_Projets_Détails$"
-                     
-    'ADODB connection
-    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
-    
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    
-    'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
-    With recSet
-        .ActiveConnection = connStr
-        .CursorType = adOpenStatic
-        .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceTab & "]"
-        .Open
-    End With
-    
-    'Copy all rows to wshFAC_Projets_Détails workbook
-    If recSet.RecordCount > 0 Then
-        ws.Range("A2").CopyFromRecordset recSet
-    End If
-
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    
-    'Enlever les lignes dont la valeur estDétruite est égale à VRAI / -1 - 2024-11-15 @ 07:53
-    Dim i As Long
-    For i = lastRow To 2 Step -1
-        If UCase(ws.Cells(i, "I")) = "VRAI" Or ws.Cells(i, "I") = -1 Then
-            ws.Rows(i).Delete
-        End If
-    Next i
-    
-   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastRow > 1 Then
-        Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
-        Call ApplyWorksheetFormat(wshFAC_Projets_Détails, rng, 1)
-    End If
-    
-    Application.ScreenUpdating = True
-    
-    'Libérer la mémoire
-    Set connStr = Nothing
-    Set recSet = Nothing
-    Set rng = Nothing
-    Set ws = Nothing
-    
-    Call Log_Record("modImport:FAC_Projets_Détails_Import_All", startTime)
-
-End Sub
-
+'Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
+'
+'    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+'
+'    'Clear all cells, but the headers, in the target worksheet
+'    ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+'
+'    'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
+'    Dim sourceWorkbook As String, sourceTab As String
+'    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+'                     "GCF_BD_MASTER.xlsx"
+'    sourceTab = "FAC_Projets_Détails$"
+'
+'    'ADODB connection
+'    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+'
+'    'Connection String specific to EXCEL
+'    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
+'                               "Data Source = " & sourceWorkbook & ";" & _
+'                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+'    connStr.Open
+'
+'    'Recordset
+'    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+'
+'    'Définir le type de curseur pour permettre l'utilisation de .RecordCount - 2024-11-08 @ 06:45 - RMV
+'    With recSet
+'        .ActiveConnection = connStr
+'        .CursorType = adOpenStatic
+'        .LockType = adLockReadOnly
+'        .source = "SELECT * FROM [" & sourceTab & "]"
+'        .Open
+'    End With
+'
+'    'Copy all rows to wshFAC_Projets_Détails workbook
+'    If recSet.RecordCount > 0 Then
+'        ws.Range("A2").CopyFromRecordset recSet
+'    End If
+'
+'    Dim lastRow As Long
+'    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+'
+'    'Enlever les lignes dont la valeur estDétruite est égale à VRAI / -1 - 2024-11-15 @ 07:53
+'    Dim i As Long
+'    For i = lastRow To 2 Step -1
+'        If UCase(ws.Cells(i, "I")) = "VRAI" Or ws.Cells(i, "I") = -1 Then
+'            ws.Rows(i).Delete
+'        End If
+'    Next i
+'
+'   'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
+'    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+'    If lastRow > 1 Then
+'        Dim rng As Range: Set rng = wshFAC_Projets_Détails.Range("A1").CurrentRegion
+'        Call ApplyWorksheetFormat(wshFAC_Projets_Détails, rng, 1)
+'    End If
+'
+'    Application.ScreenUpdating = True
+'
+'    'Libérer la mémoire
+'    Set connStr = Nothing
+'    Set recSet = Nothing
+'    Set rng = Nothing
+'    Set ws = Nothing
+'
+'    Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", startTime)
+'
+'End Sub
+'
 Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -810,13 +810,13 @@ Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     Set rng = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modImport:FAC_Projets_Entête_Import_All", startTime)
+    Call Log_Record("modImport:FAC_Projets_Entête_Import_All", "", startTime)
 
 End Sub
 
 Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Fournisseur_List_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Fournisseur_List_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -866,13 +866,13 @@ Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:Fournisseur_List_Import_All", startTime)
+    Call Log_Record("modImport:Fournisseur_List_Import_All", "", startTime)
 
 End Sub
 
 Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -926,13 +926,13 @@ Clean_Exit:
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", startTime)
+    Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", "", startTime)
 
 End Sub
 
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_Trans_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_Trans_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -985,13 +985,13 @@ Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     Set rng = Nothing
     Set wsLocal = Nothing
     
-    Call Log_Record("modImport:GL_Trans_Import_All", startTime)
+    Call Log_Record("modImport:GL_Trans_Import_All", "", startTime)
 
 End Sub
 
 Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:TEC_Import_All", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:TEC_Import_All", "", 0)
     
 '    Application.ScreenUpdating = False
     
@@ -1033,13 +1033,13 @@ Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     Set recSet = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modImport:TEC_Import_All", startTime)
+    Call Log_Record("modImport:TEC_Import_All", "", startTime)
 
 End Sub
 
 Sub ResizeTable(targetSheet As Worksheet, tableName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", "", 0)
 
     Dim tbl As ListObject
     Dim lastRow As Long
@@ -1057,13 +1057,13 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     ' Redimensionner la plage du tableau
     tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
     
-    Call Log_Record("modImport:ResizeTable", startTime)
+    Call Log_Record("modImport:ResizeTable", "", startTime)
 
 End Sub
 
 Sub ApplyFormatting(targetSheet As Worksheet, tableName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ApplyFormatting", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ApplyFormatting", "", 0)
     
     Dim tbl As ListObject
     
@@ -1073,6 +1073,6 @@ Sub ApplyFormatting(targetSheet As Worksheet, tableName As String)
     ' Appliquer un style existant au tableau
     tbl.tableStyle = "TableStyleMedium2" ' Modifier selon le style souhaité
     
-    Call Log_Record("modImport:ApplyFormatting", startTime)
+    Call Log_Record("modImport:ApplyFormatting", "", startTime)
     
 End Sub

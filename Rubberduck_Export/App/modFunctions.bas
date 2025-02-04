@@ -64,7 +64,7 @@ End Function
 
 Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & nomClient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -98,13 +98,13 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name - " & result, startTime)
+    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", "", startTime)
 
 End Function
 
 Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & nomClient, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Clients
     
@@ -137,13 +137,13 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client - " & result, startTime)
+    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", "", startTime)
 
 End Function
 
 Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name - " & nomFournisseur, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", nomFournisseur, 0)
     
     Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
     
@@ -175,7 +175,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name - " & result, startTime)
+    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", "", startTime)
 
 End Function
 
@@ -247,7 +247,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Otherwise it return an empty array
     '2024-03-09 - First version
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", "", 0)
     
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
@@ -268,7 +268,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Libérer la mémoire
     Set foundCell = Nothing
 
-    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", "", startTime)
 
 End Function
 
@@ -461,7 +461,7 @@ End Function
 
 Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description - " & glDescr, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", glDescr, 0)
     
     Dim ws As Worksheet: Set ws = wshAdmin
     
@@ -493,7 +493,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", startTime)
+    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", "", startTime)
 
 End Function
 
@@ -613,7 +613,7 @@ End Function
 
 Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", "", 0)
     
     On Error Resume Next
         Dim cell As Range
@@ -630,7 +630,7 @@ Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookup
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", "", startTime)
     
 End Function
 
@@ -877,7 +877,7 @@ End Function
 
 Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFutur As Integer) As Variant
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Complete_Date(" & dateInput & ", " & joursArriere & ", " & joursFutur & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Complete_Date", dateInput & ", " & joursArriere & ", " & joursFutur, 0)
     
     Dim dayPart As Long
     Dim monthPart As Long
@@ -955,7 +955,7 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", startTime)
+    Call Log_Record("modFunctions:Fn_Complete_Date", "", startTime)
 
     Exit Function
 
@@ -963,7 +963,7 @@ Invalid_Date:
 
     Fn_Complete_Date = "Invalid Date"
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", startTime)
+    Call Log_Record("modFunctions:Fn_Complete_Date", "", startTime)
     
 End Function
 
@@ -1825,27 +1825,19 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
 
 End Function
 
-Function ExtraireSecondes(chaine As String) As String
+Function ExtraireSecondes(chaine As String) As Double
     
     Dim pos As Integer
-    Dim debut As Integer
     Dim secondes As String
     
-    ' Trouve la position de " secondes"
+    'Trouve la position de " secondes"
     pos = InStr(chaine, " secondes")
     If pos > 0 Then
-        'Remonte pour trouver le début du nombre avant "secondes"
-        debut = pos
-        Do While debut > 1 And Mid(chaine, debut - 1, 1) Like "[0-9,.]"
-            debut = debut - 1
-        Loop
-        'Extrait le nombre
-        secondes = Mid(chaine, debut, pos - debut)
-        'Nettoie et retourne la valeur
-        ExtraireSecondes = Trim(secondes)
+        secondes = Left(chaine, pos - 1)
+        ExtraireSecondes = CStr(secondes)
     Else
         'Si " secondes" n'est pas trouvé, retourne une chaîne vide
-        ExtraireSecondes = ""
+        ExtraireSecondes = "0"
     End If
     
 End Function

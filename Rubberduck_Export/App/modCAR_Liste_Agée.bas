@@ -9,7 +9,7 @@ End Sub
 
 Sub CréerListeÂgée() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CAR_CréerListeÂgée", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CréerListeÂgée", "", 0)
    
     Application.ScreenUpdating = False
     
@@ -450,7 +450,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("modCAR_Liste_Agée:CAR_CréerListeÂgée", startTime)
+    Call Log_Record("modCAR_Liste_Agée:CréerListeÂgée", "", startTime)
     
 End Sub
 

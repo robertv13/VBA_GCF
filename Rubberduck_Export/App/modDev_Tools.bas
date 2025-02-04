@@ -1396,5 +1396,43 @@ Sub Test_Convertir_Couleur_OLE()
     
 End Sub
 
+Sub ValideNomProcedureCallLog()
 
+    Dim ws As Worksheet
+    Set ws = Feuil5
+    
+    Dim lastUsedRow As Long
+    lastUsedRow = 874
+    
+    Dim module As String, procedure As String, code As String
+    Dim lineNo As Long
+    Dim posPO As Integer, posPF As Integer, posCL As Integer
+    Dim i As Integer
+    For i = 2 To lastUsedRow
+        module = ws.Range("C" & i).Value
+        If module <> "" Then
+            lineNo = ws.Range("D" & i).Value
+            If lineNo = 325 Then Stop
+            procedure = ws.Range("E" & i).Value
+            procedure = Replace(procedure, "Sub ", "")
+            procedure = Replace(procedure, "Function ", "")
+            posPO = InStr(procedure, "(")
+            posPF = InStr(procedure, ")")
+            'Paramètres au complet sur la ligne -OU- Début seulement sur cette ligne
+            If posPF > posPO Or (posPF = 0 And posPO <> 0) Then
+                procedure = Trim(Left(procedure, posPO - 1))
+                If InStr(procedure, "(") <> 0 Then Stop
+            End If
+            code = ws.Range("F" & i).Value
+            posCL = InStr(code, "Call Log_Record")
+            code = Mid(code, posCL + 17)
+            If InStr(code, module & ":" & procedure) = 0 Then
+                Debug.Print i, module & ":" & procedure, code
+            End If
+        End If
+    Next i
+    
+    MsgBox "Traitement terminé"
+    
+End Sub
 

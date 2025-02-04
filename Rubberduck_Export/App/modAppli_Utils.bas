@@ -30,7 +30,7 @@ End Sub
 
 Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:Integrity_Verification", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierIntégrité", "", 0)
 
     Application.ScreenUpdating = True
     
@@ -311,7 +311,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli:Integrity_Verification", startTime)
+    Call Log_Record("modAppli_Utils:VérifierIntégrité", "", startTime)
 
 End Sub
 
@@ -445,7 +445,7 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
     
     'Check if the worksheet exists
     Dim wsExists As Boolean
@@ -466,12 +466,12 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", startTime)
+    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
 
 End Sub
 Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkPlanComptable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkPlanComptable", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -573,13 +573,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkPlanComptable", startTime)
+    Call Log_Record("modAppli_Utils:checkPlanComptable", "", startTime)
 
 End Sub
 
 Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkClients", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkClients", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -705,13 +705,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkClients", startTime)
+    Call Log_Record("modAppli_Utils:checkClients", "", startTime)
 
 End Sub
 
 Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFournisseurs", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFournisseurs", "", 0)
 
     Application.ScreenUpdating = False
 
@@ -798,13 +798,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFournisseurs", startTime)
+    Call Log_Record("modAppli_Utils:checkFournisseurs", "", startTime)
 
 End Sub
 
 Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkDEB_Récurrent", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -943,13 +943,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:checkDEB_Récurrent", startTime)
+    Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", startTime)
 
 End Sub
 
 Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkDEB_Trans", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1093,13 +1093,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:checkDEB_Trans", startTime)
+    Call Log_Record("modAppli_Utils:checkDEB_Trans", "", startTime)
 
 End Sub
 
 Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkENC_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1251,13 +1251,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkENC_Détails", startTime)
+    Call Log_Record("modAppli_Utils:checkENC_Détails", "", startTime)
 
 End Sub
 
 Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkENC_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1360,13 +1360,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkENC_Entête", startTime)
+    Call Log_Record("modAppli_Utils:checkENC_Entête", "", startTime)
 
 End Sub
 
 Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkCC_Régularisations", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1559,13 +1559,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkCC_Régularisations", startTime)
+    Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1667,13 +1667,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFAC_Détails", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Détails", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1863,13 +1863,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFAC_Entête", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Entête", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Comptes_Clients", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2096,13 +2096,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFAC_Comptes_Clients", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Sommaire_Taux", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2207,13 +2207,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:checkFAC_Sommaire_Taux", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Projets_Entête", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2372,13 +2372,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFAC_Projets_Entête", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", startTime)
 
 End Sub
 
 Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkFAC_Projets_Détails", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2487,13 +2487,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkFAC_Projets_Détails", startTime)
+    Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", startTime)
 
 End Sub
 
 Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkGL_Trans", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_Trans", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2710,13 +2710,13 @@ Clean_Exit:
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli:checkGL_Trans", startTime)
+    Call Log_Record("modAppli_Utils:checkGL_Trans", "", startTime)
 
 End Sub
 
 Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkGL_EJ_Recurrente", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2832,13 +2832,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli:checkGL_EJ_Recurrente", startTime)
+    Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", startTime)
 
 End Sub
 
 Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkTEC_TdB_Data", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -3115,13 +3115,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkTEC_TdB_Data", startTime)
+    Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", startTime)
 
 End Sub
 
 Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:checkTEC", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -3691,7 +3691,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli:checkTEC", startTime)
+    Call Log_Record("modAppli_Utils:checkTEC", "", startTime)
 
 End Sub
 
@@ -4016,7 +4016,7 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4192,182 +4192,182 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
-    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", startTime)
+    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", startTime)
 
 End Sub
 
-Sub Get_Deplacements_From_TEC_OK()  '2024-09-05 @ 10:22
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", 0)
-    
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
-    
-    'Mise en place de la feuille de sortie (output)
-    Dim strOutput As String
-    strOutput = "X_TEC_Déplacements"
-    Call CreateOrReplaceWorksheet(strOutput)
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-    wsOutput.Range("A1").Value = "Date"
-    wsOutput.Range("B1").Value = "Date"
-    wsOutput.Range("C1").Value = "Nom du client"
-    wsOutput.Range("D1").Value = "Heures"
-    wsOutput.Range("E1").Value = "Adresse_1"
-    wsOutput.Range("F1").Value = "Adresse_2"
-    wsOutput.Range("G1").Value = "Ville"
-    wsOutput.Range("H1").Value = "Province"
-    wsOutput.Range("I1").Value = "CodePostal"
-    wsOutput.Range("J1").Value = "DistanceKM"
-    wsOutput.Range("K1").Value = "Montant"
-    Call Make_It_As_Header(wsOutput.Range("A1:K1"))
-    
-    'Feuille pour les clients
-    Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
-    Dim lastUsedRowClientMF As Long
-    lastUsedRowClientMF = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
-    Dim rngClientsMF As Range
-    Set rngClientsMF = wsMF.Range("A1:A" & lastUsedRowClientMF)
-    
-    'Get From and To Dates
-    Dim dateFrom As Date, dateTo As Date
-    dateFrom = wshAdmin.Range("MoisPrecDe").Value
-    dateTo = wshAdmin.Range("MoisPrecA").Value
-    
-    'Analyse de TEC_Local
-    Call TEC_Import_All
-    
-    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
-    
-    Dim lastUsedRowTEC As Long
-    lastUsedRowTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
-    Dim arr() As Variant
-    
-    Call Tx_Range_2_2D_Array(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
-    
-    Dim rowOutput As Long
-    rowOutput = 2 'Skip the header
-    Dim clientData As Variant
-    Dim i As Long
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 3) = "GC" And _
-            arr(i, 4) >= dateFrom And _
-            arr(i, 4) <= dateTo And _
-            UCase(arr(i, 14)) <> "VRAI" Then
-                wsOutput.Cells(rowOutput, 1).Value = arr(i, 4)
-                wsOutput.Cells(rowOutput, 1).NumberFormat = wshAdmin.Range("B1").Value
-                wsOutput.Cells(rowOutput, 2).Value = arr(i, 4)
-                wsOutput.Cells(rowOutput, 2).NumberFormat = wshAdmin.Range("B1").Value
-                wsOutput.Cells(rowOutput, 4).Value = arr(i, 8)
-                clientData = Fn_Rechercher_Client_Par_ID(Trim(arr(i, 5)), wsMF)
-                If IsArray(clientData) Then
-                    wsOutput.Cells(rowOutput, 3).Value = clientData(1, fClntFMClientNom)
-                    wsOutput.Cells(rowOutput, 5).Value = clientData(1, fClntFMAdresse1)
-                    wsOutput.Cells(rowOutput, 6).Value = clientData(1, fClntFMAdresse2)
-                    wsOutput.Cells(rowOutput, 7).Value = clientData(1, fClntFMVille)
-                    wsOutput.Cells(rowOutput, 8).Value = clientData(1, fClntFMProvince)
-                    wsOutput.Cells(rowOutput, 9).Value = clientData(1, fClntFMCodePostal)
-                End If
-                rowOutput = rowOutput + 1
-        End If
-    Next i
-    
-    'Colonne des Heures
-    wsOutput.Range("D2:D" & rowOutput - 1).NumberFormat = "##0.00"
-    
-    'Tri des données
-    With wsOutput.Sort
-        .SortFields.Clear
-        .SortFields.Add key:=wsOutput.Range("B2"), _
-            SortOn:=xlSortOnValues, _
-            Order:=xlAscending, _
-            DataOption:=xlSortTextAsNumbers 'Sort Date
-        .SortFields.Add key:=wshTEC_Local.Range("C2"), _
-            SortOn:=xlSortOnValues, _
-            Order:=xlAscending, _
-            DataOption:=xlSortNormal 'Sort on Client's name
-        .SortFields.Add key:=wshTEC_Local.Range("D2"), _
-            SortOn:=xlSortOnValues, _
-            Order:=xlDescending, _
-            DataOption:=xlSortNormal 'Sort on Hours
-        .SetRange wsOutput.Range("A2:K" & rowOutput - 1) 'Set Range
-        .Apply 'Apply Sort
-     End With
-    
-    wsOutput.Columns.AutoFit
-
-    'Améliore le Look (saute 1 ligne entre chaque jour)
-    For i = rowOutput To 3 Step -1
-        If Len(Trim(wsOutput.Cells(i, 3).Value)) > 0 Then
-            If wsOutput.Cells(i, 2).Value <> wsOutput.Cells(i - 1, 2).Value Then
-                wsOutput.Rows(i).Insert Shift:=xlDown
-                wsOutput.Cells(i, 1).Value = wsOutput.Cells(i - 1, 2).Value
-            End If
-        End If
-    Next i
-    
-    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
-    
-    'Améliore le Look (cache la date, le client et l'adresse si deux charges & +)
-    Dim base As String
-    For i = 2 To rowOutput
-        If i = 2 Then
-            base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
-        End If
-        If i > 2 And Len(wsOutput.Cells(i, 2).Value) > 0 Then
-            If wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value = base Then
-                wsOutput.Cells(i, 2).Value = ""
-                wsOutput.Cells(i, 3).Value = ""
-                wsOutput.Cells(i, 5).Value = ""
-                wsOutput.Cells(i, 6).Value = ""
-                wsOutput.Cells(i, 7).Value = ""
-                wsOutput.Cells(i, 8).Value = ""
-                wsOutput.Cells(i, 9).Value = ""
-            Else
-                base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
-            End If
-        End If
-    Next i
-    
-    'Result print setup - 2024-08-05 @ 05:16
-    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
-    
-    For i = 3 To rowOutput
-        If wsOutput.Cells(i, 1).Value > wsOutput.Cells(i - 1, 1).Value Then
-            wsOutput.Cells(i, 2).Font.Bold = True
-        Else
-            wsOutput.Cells(i, 2).Value = ""
-        End If
-    Next i
-    'Première date est en caractère gras
-    wsOutput.Cells(2, 2).Font.Bold = True
-    rowOutput = rowOutput + 2
-    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 2, "###,##0") & _
-                                        " charges de temps analysées dans l'ensemble du fichier ***"
-                                    
-    'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
-    Call ApplyConditionalFormatting(rngArea, 1, True)
-
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
-    
-    'Setup print parameters
-'    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
-    Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
-    Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
-    Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
-    
-    'Libérer la mémoire
-    Set rngArea = Nothing
-    Set rngClientsMF = Nothing
-    Set wsOutput = Nothing
-    Set wsMF = Nothing
-    Set wsTEC = Nothing
-    
-    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", startTime)
-
-End Sub
-
+'Sub Get_Deplacements_From_TEC_OK()  '2024-09-05 @ 10:22
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", 0)
+'
+'    Application.ScreenUpdating = False
+'    Application.EnableEvents = False
+'
+'    'Mise en place de la feuille de sortie (output)
+'    Dim strOutput As String
+'    strOutput = "X_TEC_Déplacements"
+'    Call CreateOrReplaceWorksheet(strOutput)
+'    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+'    wsOutput.Range("A1").Value = "Date"
+'    wsOutput.Range("B1").Value = "Date"
+'    wsOutput.Range("C1").Value = "Nom du client"
+'    wsOutput.Range("D1").Value = "Heures"
+'    wsOutput.Range("E1").Value = "Adresse_1"
+'    wsOutput.Range("F1").Value = "Adresse_2"
+'    wsOutput.Range("G1").Value = "Ville"
+'    wsOutput.Range("H1").Value = "Province"
+'    wsOutput.Range("I1").Value = "CodePostal"
+'    wsOutput.Range("J1").Value = "DistanceKM"
+'    wsOutput.Range("K1").Value = "Montant"
+'    Call Make_It_As_Header(wsOutput.Range("A1:K1"))
+'
+'    'Feuille pour les clients
+'    Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
+'    Dim lastUsedRowClientMF As Long
+'    lastUsedRowClientMF = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
+'    Dim rngClientsMF As Range
+'    Set rngClientsMF = wsMF.Range("A1:A" & lastUsedRowClientMF)
+'
+'    'Get From and To Dates
+'    Dim dateFrom As Date, dateTo As Date
+'    dateFrom = wshAdmin.Range("MoisPrecDe").Value
+'    dateTo = wshAdmin.Range("MoisPrecA").Value
+'
+'    'Analyse de TEC_Local
+'    Call TEC_Import_All
+'
+'    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+'
+'    Dim lastUsedRowTEC As Long
+'    lastUsedRowTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
+'    Dim arr() As Variant
+'
+'    Call Tx_Range_2_2D_Array(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
+'
+'    Dim rowOutput As Long
+'    rowOutput = 2 'Skip the header
+'    Dim clientData As Variant
+'    Dim i As Long
+'    For i = LBound(arr, 1) To UBound(arr, 1)
+'        If arr(i, 3) = "GC" And _
+'            arr(i, 4) >= dateFrom And _
+'            arr(i, 4) <= dateTo And _
+'            UCase(arr(i, 14)) <> "VRAI" Then
+'                wsOutput.Cells(rowOutput, 1).Value = arr(i, 4)
+'                wsOutput.Cells(rowOutput, 1).NumberFormat = wshAdmin.Range("B1").Value
+'                wsOutput.Cells(rowOutput, 2).Value = arr(i, 4)
+'                wsOutput.Cells(rowOutput, 2).NumberFormat = wshAdmin.Range("B1").Value
+'                wsOutput.Cells(rowOutput, 4).Value = arr(i, 8)
+'                clientData = Fn_Rechercher_Client_Par_ID(Trim(arr(i, 5)), wsMF)
+'                If IsArray(clientData) Then
+'                    wsOutput.Cells(rowOutput, 3).Value = clientData(1, fClntFMClientNom)
+'                    wsOutput.Cells(rowOutput, 5).Value = clientData(1, fClntFMAdresse1)
+'                    wsOutput.Cells(rowOutput, 6).Value = clientData(1, fClntFMAdresse2)
+'                    wsOutput.Cells(rowOutput, 7).Value = clientData(1, fClntFMVille)
+'                    wsOutput.Cells(rowOutput, 8).Value = clientData(1, fClntFMProvince)
+'                    wsOutput.Cells(rowOutput, 9).Value = clientData(1, fClntFMCodePostal)
+'                End If
+'                rowOutput = rowOutput + 1
+'        End If
+'    Next i
+'
+'    'Colonne des Heures
+'    wsOutput.Range("D2:D" & rowOutput - 1).NumberFormat = "##0.00"
+'
+'    'Tri des données
+'    With wsOutput.Sort
+'        .SortFields.Clear
+'        .SortFields.Add key:=wsOutput.Range("B2"), _
+'            SortOn:=xlSortOnValues, _
+'            Order:=xlAscending, _
+'            DataOption:=xlSortTextAsNumbers 'Sort Date
+'        .SortFields.Add key:=wshTEC_Local.Range("C2"), _
+'            SortOn:=xlSortOnValues, _
+'            Order:=xlAscending, _
+'            DataOption:=xlSortNormal 'Sort on Client's name
+'        .SortFields.Add key:=wshTEC_Local.Range("D2"), _
+'            SortOn:=xlSortOnValues, _
+'            Order:=xlDescending, _
+'            DataOption:=xlSortNormal 'Sort on Hours
+'        .SetRange wsOutput.Range("A2:K" & rowOutput - 1) 'Set Range
+'        .Apply 'Apply Sort
+'     End With
+'
+'    wsOutput.Columns.AutoFit
+'
+'    'Améliore le Look (saute 1 ligne entre chaque jour)
+'    For i = rowOutput To 3 Step -1
+'        If Len(Trim(wsOutput.Cells(i, 3).Value)) > 0 Then
+'            If wsOutput.Cells(i, 2).Value <> wsOutput.Cells(i - 1, 2).Value Then
+'                wsOutput.Rows(i).Insert Shift:=xlDown
+'                wsOutput.Cells(i, 1).Value = wsOutput.Cells(i - 1, 2).Value
+'            End If
+'        End If
+'    Next i
+'
+'    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
+'
+'    'Améliore le Look (cache la date, le client et l'adresse si deux charges & +)
+'    Dim base As String
+'    For i = 2 To rowOutput
+'        If i = 2 Then
+'            base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
+'        End If
+'        If i > 2 And Len(wsOutput.Cells(i, 2).Value) > 0 Then
+'            If wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value = base Then
+'                wsOutput.Cells(i, 2).Value = ""
+'                wsOutput.Cells(i, 3).Value = ""
+'                wsOutput.Cells(i, 5).Value = ""
+'                wsOutput.Cells(i, 6).Value = ""
+'                wsOutput.Cells(i, 7).Value = ""
+'                wsOutput.Cells(i, 8).Value = ""
+'                wsOutput.Cells(i, 9).Value = ""
+'            Else
+'                base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
+'            End If
+'        End If
+'    Next i
+'
+'    'Result print setup - 2024-08-05 @ 05:16
+'    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
+'
+'    For i = 3 To rowOutput
+'        If wsOutput.Cells(i, 1).Value > wsOutput.Cells(i - 1, 1).Value Then
+'            wsOutput.Cells(i, 2).Font.Bold = True
+'        Else
+'            wsOutput.Cells(i, 2).Value = ""
+'        End If
+'    Next i
+'    'Première date est en caractère gras
+'    wsOutput.Cells(2, 2).Font.Bold = True
+'    rowOutput = rowOutput + 2
+'    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 2, "###,##0") & _
+'                                        " charges de temps analysées dans l'ensemble du fichier ***"
+'
+'    'Set conditional formatting for the worksheet (alternate colors)
+'    Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
+'    Call ApplyConditionalFormatting(rngArea, 1, True)
+'
+'    Application.ScreenUpdating = True
+'    Application.EnableEvents = True
+'
+'    'Setup print parameters
+''    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
+'    Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
+'    Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
+'    Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
+'
+'    'Libérer la mémoire
+'    Set rngArea = Nothing
+'    Set rngClientsMF = Nothing
+'    Set wsOutput = Nothing
+'    Set wsMF = Nothing
+'    Set wsTEC = Nothing
+'
+'    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", startTime)
+'
+'End Sub
+'
 Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef jours As Long, ByRef heures As Long, _
                                     ByRef minutes As Long, ByRef secondes As Long)
@@ -4399,7 +4399,7 @@ End Sub
 
 Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
@@ -4426,7 +4426,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call Log_Record("modImport:Dynamic_Range_Redefine_Plan_Comptable", startTime)
+    Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", startTime)
 
 End Sub
 

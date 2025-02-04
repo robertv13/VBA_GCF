@@ -26,7 +26,7 @@ End Property
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", "", 0)
     
     logSaisieHeuresVeryDetailed = False
     
@@ -71,13 +71,13 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
    
     rmv_state = rmv_modeInitial
     
-    Call Log_Record("ufSaisieHeures:UserForm_Activate", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Activate", "", startTime)
     
 End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", "", 0)
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -98,13 +98,13 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Me.txtClient.TextAlign = fmTextAlignLeft
 
-    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", startTime)
+    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", "", startTime)
 
 End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", "", 0)
 
     'Libérer la mémoire
     Set oEventHandler = Nothing
@@ -128,13 +128,13 @@ MenuSelect:
     
 Exit_Sub:
 
-    Call Log_Record("ufSaisieHeures:UserForm_Terminate", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Terminate", "", startTime)
 
 End Sub
 
 Public Sub cmbProfessionnel_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", 0)
 
     'Restreindre l'accès au professionnel par défaut du code d'utilisateur
     Select Case Fn_Get_Windows_Username
@@ -173,7 +173,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", startTime)
 
 End Sub
 
@@ -189,7 +189,7 @@ End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", "", 0)
     
     Dim fullDate As Variant
     
@@ -251,13 +251,13 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
-    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", "", startTime)
     
 End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", 0)
     
     If IsDate(ufSaisieHeures.txtDate.Value) Then
         Dim dateStr As String, dateFormated As Date
@@ -276,7 +276,7 @@ Private Sub txtDate_AfterUpdate()
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
-    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", startTime)
     
 End Sub
 
@@ -290,7 +290,7 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate[" & ufSaisieHeures.txtClient.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.Value, 0)
     
 '    Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 1, 2)
     
@@ -307,13 +307,13 @@ Private Sub txtClient_AfterUpdate()
     Me.lstboxNomClient.Visible = False
     On Error GoTo 0
     
-    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", "", startTime)
     
 End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate[" & Me.txtActivite.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.Value, 0)
     
     If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then
         If Me.txtTECID = "" Then
@@ -335,13 +335,13 @@ Private Sub txtActivite_AfterUpdate()
     
     Me.txtActivite.Value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.Value)
     
-    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", "", startTime)
     
 End Sub
 
 Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit[" & Me.txtHeures.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit", Me.txtHeures.Value, 0)
     
     Dim heure As Currency
     
@@ -387,13 +387,13 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_Exit", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_Exit", "", startTime)
     
 End Sub
 
 Sub txtHeures_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate[" & Me.txtHeures.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtHeures.Value, 0)
     
     'Validation des heures saisies
     Dim strHeures As String
@@ -411,13 +411,13 @@ Sub txtHeures_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", "", startTime)
     
 End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", 0)
     
     If Me.chbFacturable.Value <> Me.txtSavedFacturable.Value Then
         If Me.txtTECID = "" Then
@@ -427,13 +427,13 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", startTime)
     
 End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate[" & Me.txtCommNote.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.Value, 0)
     
     If Me.txtCommNote.Value <> Me.txtSavedCommNote.Value Then
         If Me.txtTECID = "" Then
@@ -443,34 +443,34 @@ Private Sub txtCommNote_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", startTime)
+    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", "", startTime)
     
 End Sub
 
 '----------------------------------------------------------------- ButtonsEvents
 Private Sub cmdClear_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", "", 0)
     
     Call TEC_Efface_Formulaire
 
-    Call Log_Record("ufSaisieHeures:cmdClear_Click", startTime)
+    Call Log_Record("ufSaisieHeures:cmdClear_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdAdd_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", "", 0)
     
     Call TEC_Ajoute_Ligne
 
-    Call Log_Record("ufSaisieHeures:cmdAdd_Click", startTime)
+    Call Log_Record("ufSaisieHeures:cmdAdd_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdUpdate_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click[" & ufSaisieHeures.txtTECID.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", ufSaisieHeures.txtTECID.Value, 0)
     
     If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Modifie_Ligne
@@ -480,13 +480,13 @@ Private Sub cmdUpdate_Click()
                Buttons:=vbCritical
     End If
 
-    Call Log_Record("ufSaisieHeures:cmdUpdate_Click", startTime)
+    Call Log_Record("ufSaisieHeures:cmdUpdate_Click", "", startTime)
 
 End Sub
 
 Private Sub cmdDelete_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click[" & ufSaisieHeures.txtTECID.Value & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
     
     If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Efface_Ligne
@@ -496,14 +496,14 @@ Private Sub cmdDelete_Click()
                Buttons:=vbCritical
     End If
 
-    Call Log_Record("ufSaisieHeures:cmdDelete_Click", startTime)
+    Call Log_Record("ufSaisieHeures:cmdDelete_Click", "", startTime)
 
 End Sub
 
 'Get a specific row from listBox and display it in the userform
 Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & ufSaisieHeures.lsbHresJour.ListIndex & "]", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick", ufSaisieHeures.lsbHresJour.ListIndex, 0)
     
     rmv_state = rmv_modeAffichage
     
@@ -567,7 +567,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", startTime)
+    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", "", startTime)
 
 End Sub
 

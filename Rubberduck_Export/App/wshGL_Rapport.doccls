@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_Rapport:Worksheet_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_Rapport:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate()
     Set lb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_Rapport:Worksheet_Activate", startTime)
+    Call Log_Record("wshGL_Rapport:Worksheet_Activate", "", startTime)
 
 End Sub
 
@@ -129,6 +129,9 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Case "Semaine"
                 wshGL_Rapport.Range("F6").Value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").Value)
                 wshGL_Rapport.Range("H6").Value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").Value)
+            Case "Toutes les dates"
+                wshGL_Rapport.Range("F6").Value = #1/1/2024#
+                wshGL_Rapport.Range("H6").Value = wshAdmin.Range("AnneeA")
             Case Else
                 wshGL_Rapport.Range("F6").Value = ""
                 wshGL_Rapport.Range("H6").Value = ""

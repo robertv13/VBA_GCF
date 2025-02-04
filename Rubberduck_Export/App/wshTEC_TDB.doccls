@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", 0)
    
     Application.ScreenUpdating = False
     
@@ -16,19 +16,19 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshTEC_TDB:Worksheet_Activate", startTime)
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", startTime)
 
 End Sub
 
 Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", 0)
     
     Dim ws As Worksheet
     Set ws = wshTEC_TDB
     
     Dim rng As Range
-    Set rng = ws.Range("A10:B34")
+    Set rng = ws.Range("A10:B39")
     
     With rng
         'Bordures extérieures (4)
@@ -75,6 +75,6 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
     Set rng = Nothing
     Set ws = Nothing
 
-    Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", startTime)
+    Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", startTime)
 
 End Sub

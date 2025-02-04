@@ -16,7 +16,7 @@ Global savedCommNote As String
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
@@ -71,13 +71,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", startTime)
 
 End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -103,13 +103,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", startTime)
 
 End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
 
     If ufSaisieHeures.txtTECID.Value = "" Then
         MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -169,14 +169,14 @@ Clean_Exit:
     'Libérer la mémoire
     Set Sh = Nothing
 
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", startTime)
 
 End Sub
 
 Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF - " & _
-                                        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", _
+                                                                 ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
     
@@ -268,13 +268,13 @@ No_Sort_Required:
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", "", startTime)
 
 End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", 0)
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -297,13 +297,13 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", startTime)
 
 End Sub
 
 Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(" & tecID & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -461,7 +461,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
                 'Handle the case where the specified ID is not found - PROBLEM !!!
                 
                 MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
-                Call Log_Record("#00480 - N'a pas trouvé le TECID '" & CStr(saveLogTECID) & "'", -1) '2024-09-13 @ 09:09
+                Call Log_Record("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 rs.Close
                 conn.Close
@@ -484,7 +484,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & tecID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
 
     Exit Sub
     
@@ -505,13 +505,13 @@ ErrorHandler:
         On Error GoTo 0
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - " & tecID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
     
 End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(" & tecID & ")", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -588,14 +588,14 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - " & tecID, startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), startTime)
 
 End Sub
 
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
-        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+            ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     On Error GoTo ErrorHandler
     Application.ScreenUpdating = False
@@ -662,25 +662,6 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         Next i
     End If
 
-'    For i = 1 To rng.Rows.count
-'        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, wshAdmin.Range("B1").value)
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
-'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, wshAdmin.Range("B1").value & " hh:mm:ss")
-'        totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
-'        If Fn_Is_Client_Facturable(rng.Cells(i, 14).value) = True And rng.Cells(i, 8).value = "VRAI" Then
-'            totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).value)
-'        Else
-'            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).value)
-'        End If
-'    Next i
-'    Application.ScreenUpdating = True
-
     'Mise à jour des totaux
     ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
     ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")
@@ -732,7 +713,7 @@ EndOfProcedure:
     Set rng = Nothing
     Set rngResult = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
+    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
                         ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, startTime)
     Exit Sub
     
@@ -743,122 +724,122 @@ ErrorHandler:
     
 End Sub
 
-Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriate records
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
-        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
-
-    If ufSaisieHeures.txtProfID.Value = "" Or ufSaisieHeures.txtDate.Value = "" Then
-        GoTo EndOfProcedure
-    End If
-    
-'    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
-'    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+'Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriate records
 '
-    ufSaisieHeures.txtTotalHeures.Value = ""
-    ufSaisieHeures.txtHresFact.Value = ""
-    ufSaisieHeures.txtHresNF.Value = ""
-    ufSaisieHeures.txtHresFactSemaine.Value = ""
-    ufSaisieHeures.txtHresNFSemaine.Value = ""
-
-    ufSaisieHeures.lsbHresJour.RowSource = ""
-    ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
-    
-    'Last Row used in first column of result
-    Dim lastRow As Long
-    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
-    If lastRow < 3 Then GoTo Rien_Aujourdhui
-        
-    With ufSaisieHeures.lsbHresJour
-        .ColumnHeads = False
-        .ColumnCount = 9
-        .ColumnWidths = "30; 23; 60; 157; 242; 35; 90; 32; 90"
-    End With
-    
-    'Manually add to listBox (because some tests have to be made)
-    Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
-     
-    Dim i As Long, j As Long
-    Dim totalHeures As Currency
-    Dim totalHresFact As Currency, totalHresNonFact As Currency
-    Application.ScreenUpdating = False
-    For i = 1 To rng.Rows.count
-        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).Value, wshAdmin.Range("B1").Value)
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).Value, "#,##0.00")
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).Value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).Value, wshAdmin.Range("B1").Value & " hh:mm:ss")
-        totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
-        If Fn_Is_Client_Facturable(rng.Cells(i, 14).Value) = True And rng.Cells(i, 8).Value = "VRAI" Then
-            totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).Value)
-        Else
-            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).Value)
-        End If
-    Next i
-    Application.ScreenUpdating = True
-    
-Rien_Aujourdhui:
-
-    ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
-    ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")
-    ufSaisieHeures.txtHresNF.Value = Format$(totalHresNonFact, "#0.00")
-    
-    'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
-    Dim totalHresFactSemaine As Currency
-    Dim totalHresNonFactSemaine As Currency
-    
-    'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
-    Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
-    dateCharge = ufSaisieHeures.txtDate.Value
-    dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
-    dateDimanche = dateLundi + 6
-    Application.EnableEvents = False
-    wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
-    wshTEC_TDB_Data.Range("T7").Value = dateLundi
-    Application.EnableEvents = True
-    wshTEC_TDB_Data.Range("U7").Value = dateDimanche
-    
-    DoEvents
-    
-    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
-    If lastRow > 1 Then
-        Dim rngResult As Range
-        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
-        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
-        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
-    End If
-
-    ufSaisieHeures.txtHresFactSemaine.Value = Format$(totalHresFactSemaine, "#0.00")
-    ufSaisieHeures.txtHresNFSemaine.Value = Format$(totalHresNonFactSemaine, "#0.00")
-    
-    ufSaisieHeures.Repaint
-    
-    DoEvents '2024-08-12 @ 10:31
-    
-    Application.ScreenUpdating = True
-
-EndOfProcedure:
-
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
-
-    ufSaisieHeures.txtClient.SetFocus
-    
-    'Libérer la mémoire
-    Set rng = Nothing
-    
-    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - " & _
-                        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, startTime)
-    
-End Sub
-
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+'        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
+'
+'    If ufSaisieHeures.txtProfID.Value = "" Or ufSaisieHeures.txtDate.Value = "" Then
+'        GoTo EndOfProcedure
+'    End If
+'
+''    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+''    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+''
+'    ufSaisieHeures.txtTotalHeures.Value = ""
+'    ufSaisieHeures.txtHresFact.Value = ""
+'    ufSaisieHeures.txtHresNF.Value = ""
+'    ufSaisieHeures.txtHresFactSemaine.Value = ""
+'    ufSaisieHeures.txtHresNFSemaine.Value = ""
+'
+'    ufSaisieHeures.lsbHresJour.RowSource = ""
+'    ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
+'
+'    'Last Row used in first column of result
+'    Dim lastRow As Long
+'    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
+'    If lastRow < 3 Then GoTo Rien_Aujourdhui
+'
+'    With ufSaisieHeures.lsbHresJour
+'        .ColumnHeads = False
+'        .ColumnCount = 9
+'        .ColumnWidths = "30; 23; 60; 157; 242; 35; 90; 32; 90"
+'    End With
+'
+'    'Manually add to listBox (because some tests have to be made)
+'    Dim rng As Range
+'    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+'
+'    Dim i As Long, j As Long
+'    Dim totalHeures As Currency
+'    Dim totalHresFact As Currency, totalHresNonFact As Currency
+'    Application.ScreenUpdating = False
+'    For i = 1 To rng.Rows.count
+'        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).Value, wshAdmin.Range("B1").Value)
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).Value, "#,##0.00")
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).Value
+'        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).Value, wshAdmin.Range("B1").Value & " hh:mm:ss")
+'        totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
+'        If Fn_Is_Client_Facturable(rng.Cells(i, 14).Value) = True And rng.Cells(i, 8).Value = "VRAI" Then
+'            totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).Value)
+'        Else
+'            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).Value)
+'        End If
+'    Next i
+'    Application.ScreenUpdating = True
+'
+'Rien_Aujourdhui:
+'
+'    ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
+'    ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")
+'    ufSaisieHeures.txtHresNF.Value = Format$(totalHresNonFact, "#0.00")
+'
+'    'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
+'    Dim totalHresFactSemaine As Currency
+'    Dim totalHresNonFactSemaine As Currency
+'
+'    'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+'    Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
+'    dateCharge = ufSaisieHeures.txtDate.Value
+'    dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
+'    dateDimanche = dateLundi + 6
+'    Application.EnableEvents = False
+'    wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
+'    wshTEC_TDB_Data.Range("T7").Value = dateLundi
+'    Application.EnableEvents = True
+'    wshTEC_TDB_Data.Range("U7").Value = dateDimanche
+'
+'    DoEvents
+'
+'    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+'    If lastRow > 1 Then
+'        Dim rngResult As Range
+'        Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
+'        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+'        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
+'    End If
+'
+'    ufSaisieHeures.txtHresFactSemaine.Value = Format$(totalHresFactSemaine, "#0.00")
+'    ufSaisieHeures.txtHresNFSemaine.Value = Format$(totalHresNonFactSemaine, "#0.00")
+'
+'    ufSaisieHeures.Repaint
+'
+'    DoEvents '2024-08-12 @ 10:31
+'
+'    Application.ScreenUpdating = True
+'
+'EndOfProcedure:
+'
+'    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+'
+'    ufSaisieHeures.txtClient.SetFocus
+'
+'    'Libérer la mémoire
+'    Set rng = Nothing
+'
+'    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+'                        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, startTime)
+'
+'End Sub
+'
 Sub TEC_Update_TDB_From_TEC_Local()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
 
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     Dim lastUsedRow As Long
@@ -897,61 +878,61 @@ Sub TEC_Update_TDB_From_TEC_Local()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", startTime)
 
 End Sub
 
-Sub TEC_Update_TDB_From_TEC_Local_OK()
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", 0)
-
-    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
-    
-    Dim arr() As Variant
-    ReDim arr(1 To lastUsedRow - 2, 1 To 11) '2 rows of Heading
-    
-    Dim i As Long
-    Dim b As Boolean
-    For i = 3 To lastUsedRow
-        With wsFrom
-            arr(i - 2, 1) = .Range("A" & i).Value 'TECID
-            arr(i - 2, 2) = Format$(.Range("B" & i).Value, "000") 'ProfID
-            arr(i - 2, 3) = .Range("C" & i).Value 'Prof
-            arr(i - 2, 4) = .Range("D" & i).Value 'Date
-            arr(i - 2, 5) = .Range("E" & i).Value 'Client's ID - 2024-09-24 @ 09:41
-            arr(i - 2, 6) = .Range("F" & i).Value 'Client's Name
-            b = Fn_Is_Client_Facturable(.Range("E" & i).Value)
-            If UCase(b) = True Then
-                 arr(i - 2, 7) = "VRAI"
-            Else
-                 arr(i - 2, 7) = "FAUX"
-            End If
-            arr(i - 2, 8) = .Range("H" & i).Value 'Hours
-            arr(i - 2, 9) = .Range("J" & i).Value 'isBillable
-            arr(i - 2, 10) = .Range("L" & i).Value 'isInvoiced
-            arr(i - 2, 11) = .Range("N" & i).Value 'isDeleted
-        End With
-    Next i
-
-    'Mettre à jour la feuille TEC_TDB_Data au complet
-    Dim rngTo As Range
-    Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
-    rngTo.Value = arr
-    
-    'Libérer la mémoire
-    Set rngTo = Nothing
-    Set wsFrom = Nothing
-    
-    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", startTime)
-
-End Sub
-
+'Sub TEC_Update_TDB_From_TEC_Local_OK()
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
+'
+'    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
+'
+'    Dim lastUsedRow As Long
+'    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
+'
+'    Dim arr() As Variant
+'    ReDim arr(1 To lastUsedRow - 2, 1 To 11) '2 rows of Heading
+'
+'    Dim i As Long
+'    Dim b As Boolean
+'    For i = 3 To lastUsedRow
+'        With wsFrom
+'            arr(i - 2, 1) = .Range("A" & i).Value 'TECID
+'            arr(i - 2, 2) = Format$(.Range("B" & i).Value, "000") 'ProfID
+'            arr(i - 2, 3) = .Range("C" & i).Value 'Prof
+'            arr(i - 2, 4) = .Range("D" & i).Value 'Date
+'            arr(i - 2, 5) = .Range("E" & i).Value 'Client's ID - 2024-09-24 @ 09:41
+'            arr(i - 2, 6) = .Range("F" & i).Value 'Client's Name
+'            b = Fn_Is_Client_Facturable(.Range("E" & i).Value)
+'            If UCase(b) = True Then
+'                 arr(i - 2, 7) = "VRAI"
+'            Else
+'                 arr(i - 2, 7) = "FAUX"
+'            End If
+'            arr(i - 2, 8) = .Range("H" & i).Value 'Hours
+'            arr(i - 2, 9) = .Range("J" & i).Value 'isBillable
+'            arr(i - 2, 10) = .Range("L" & i).Value 'isInvoiced
+'            arr(i - 2, 11) = .Range("N" & i).Value 'isDeleted
+'        End With
+'    Next i
+'
+'    'Mettre à jour la feuille TEC_TDB_Data au complet
+'    Dim rngTo As Range
+'    Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
+'    rngTo.Value = arr
+'
+'    'Libérer la mémoire
+'    Set rngTo = Nothing
+'    Set wsFrom = Nothing
+'
+'    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", startTime)
+'
+'End Sub
+'
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", 0)
 
     Dim pt As pivotTable
     For Each pt In wshTEC_TDB.PivotTables
@@ -962,7 +943,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     'Libérer la mémoire
     Set pt = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", startTime)
     
 End Sub
 
@@ -993,7 +974,7 @@ End Sub
 
 Sub UpdatePivotTables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:UpdatePivotTables", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable
@@ -1011,7 +992,7 @@ Sub UpdatePivotTables()
     Set pt = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modAppli:UpdatePivotTables", startTime)
+    Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
     
 End Sub
 

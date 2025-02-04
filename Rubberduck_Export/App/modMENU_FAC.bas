@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub PreparationFacture_Click()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:PreparationFacture_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -20,7 +20,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshMenuFAC:PreparationFacture_Click", startTime)
+    Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", startTime)
     
 End Sub
 
@@ -45,7 +45,7 @@ End Sub
 'Option # 3
 Sub FAC_Historique_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Historique_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -57,21 +57,21 @@ Sub FAC_Historique_Click()
     
     fromMenu = True '2024-09-03 @ 06:20
 
-    wshFAC_Historique.Visible = xlSheetVisible
-    wshFAC_Historique.Activate
+    wshFAC_Interrogation.Visible = xlSheetVisible
+    wshFAC_Interrogation.Activate
     
-    wshFAC_Historique.Application.Calculation = xlCalculationAutomatic
+    wshFAC_Interrogation.Application.Calculation = xlCalculationAutomatic
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshMenuFAC:FAC_Historique_Click", startTime)
+    Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", startTime)
 
 End Sub
 
 'Option # 4
 Sub FAC_Confirmation_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", 0)
     
     fromMenu = True '2024-09-03 @ 06:20
 
@@ -84,34 +84,7 @@ Sub FAC_Confirmation_Click()
     
     Call Afficher_ufConfirmation
     
-    Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", startTime)
+    Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", startTime)
 
 End Sub
 
-''Option # 4
-'Sub FAC_Confirmation_Click()
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", 0)
-'
-'    Application.ScreenUpdating = False
-'
-'    'Import data files from MASTER
-'    Call FAC_Comptes_Clients_Import_All
-'    Call FAC_Entête_Import_All
-'    Call FAC_Détails_Import_All
-'
-'    Application.EnableEvents = True
-'
-'    fromMenu = True '2024-09-03 @ 06:20
-'
-'    wshFAC_Confirmation.Visible = xlSheetVisible
-'    wshFAC_Confirmation.Activate
-'
-'    wshFAC_Confirmation.Application.Calculation = xlCalculationAutomatic
-'
-'    Application.ScreenUpdating = True
-'
-'    Call Log_Record("wshMenuFAC:FAC_Confirmation_Click", startTime)
-'
-'End Sub
-'

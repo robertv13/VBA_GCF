@@ -9,7 +9,7 @@ End Sub
 
 Public Sub GL_Report_For_Selected_Accounts()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", "", 0)
    
     'Reference the worksheet
     Dim ws As Worksheet: Set ws = wshGL_Rapport
@@ -105,7 +105,7 @@ Public Sub GL_Report_For_Selected_Accounts()
     Set selectedItems = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", startTime)
+    Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", "", startTime)
 
 End Sub
 
@@ -208,7 +208,7 @@ End Sub
 
 Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", "", 0)
     
     With ws
         .Range("B3").Value = True 'Sort by Date
@@ -218,7 +218,7 @@ Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
         .Range("F4").Select
     End With
     
-    Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", startTime)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", "", startTime)
 
 End Sub
 
@@ -362,7 +362,7 @@ End Sub
 
 Sub GL_Rapport_Back_To_Menu()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", "", 0)
    
     wshGL_Rapport.Visible = xlSheetHidden
     On Error Resume Next
@@ -372,7 +372,7 @@ Sub GL_Rapport_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", startTime)
+    Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", "", startTime)
     
 End Sub
 

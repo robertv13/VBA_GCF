@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -55,7 +55,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_BV:Worksheet_Activate", startTime)
+    Call Log_Record("wshGL_BV:Worksheet_Activate", "", startTime)
 
 End Sub
 

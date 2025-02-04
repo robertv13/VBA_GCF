@@ -150,7 +150,7 @@ Sub Lire_LogMainApp(filePath As String)
     
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 100000, 1 To 9)
+    ReDim output(1 To 100000, 1 To 10)
     Dim ligne As Long
     Dim lineNo As Long
     Dim lineContent As String
@@ -163,32 +163,55 @@ Sub Lire_LogMainApp(filePath As String)
         lineNo = lineNo + 1
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
-            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur " | "
             'Insérer les données dans le tableau
             ligne = ligne + 1
             If ligne Mod 250 = 0 Then
                 Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
             End If
-            output(ligne, 1) = env
-            output(ligne, 2) = CStr(Left(Fields(0), 10))
-            output(ligne, 3) = CStr(Right(Fields(0), 11))
-            output(ligne, 4) = Trim(Fields(1))
-            output(ligne, 5) = Trim(Fields(2))
-            output(ligne, 6) = Trim(Fields(3))
-            If InStr(Fields(3), " secondes'") <> 0 Then
-                duree = ExtraireSecondes(Fields(3))
-                duree = Replace(duree, ".", ",")
-'                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
-'                    duree = Left(duree, InStr(duree, " ") - 1)
-                If duree <> 0 Then
-                    output(ligne, 7) = CDbl(duree)
-                Else
-                    output(ligne, 7) = 0
+            If UBound(Fields) = 5 Then
+                output(ligne, 1) = env
+                output(ligne, 2) = CStr(Left(Fields(0), 10))
+                output(ligne, 3) = CStr(Right(Fields(0), 11))
+                output(ligne, 4) = Trim(Fields(1))
+                output(ligne, 5) = Trim(Fields(2))
+                output(ligne, 6) = Trim(Fields(3))
+                output(ligne, 7) = Trim(Fields(4))
+                If InStr(Fields(5), " secondes") <> 0 Then
+                    duree = ExtraireSecondes(Fields(5))
+                    duree = Replace(duree, ".", ",")
+                    If duree <> 0 Then
+                        output(ligne, 8) = CDbl(duree)
+                    Else
+                        output(ligne, 8) = 0
+                    End If
+                    output(ligne, 6) = Fields(3) & " (S)"
                 End If
-                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                output(ligne, 9) = lineNo
+                output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
             End If
-            output(ligne, 8) = lineNo
-            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            If UBound(Fields) = 4 Then
+                output(ligne, 1) = env
+                output(ligne, 2) = CStr(Left(Fields(0), 10))
+                output(ligne, 3) = CStr(Right(Fields(0), 11))
+                output(ligne, 4) = Trim(Fields(1))
+                output(ligne, 5) = Trim(Fields(2))
+                output(ligne, 6) = Trim(Fields(3))
+                If InStr(Fields(3), " secondes'") <> 0 Then
+                    duree = ExtraireSecondes(Fields(3))
+                    duree = Replace(duree, ".", ",")
+    '                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
+    '                    duree = Left(duree, InStr(duree, " ") - 1)
+                    If duree <> 0 Then
+                        output(ligne, 7) = CDbl(duree)
+                    Else
+                        output(ligne, 7) = 0
+                    End If
+                    output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                End If
+                output(ligne, 8) = lineNo
+                output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            End If
         End If
     Loop
 
@@ -321,7 +344,9 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     Set cible = wsTarget.Cells(premiereLigneVide, 1)
 
     'Copier les données en une seule opération
+    Application.EnableEvents = False
     cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).Value = tableau
+    Application.EnableEvents = True
 
     'Sauvegarder et fermer le fichier Target
     wbTarget.Close SaveChanges:=True

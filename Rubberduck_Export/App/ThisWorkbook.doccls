@@ -17,7 +17,7 @@ Private Sub Workbook_Open_OK_20241228()
     Application.ScreenUpdating = True
     
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (ThisWorkbook:Workbook_Open) -----", "", 0)
     Application.EnableEvents = True
     
     'Vérifie l'état d'Excel
@@ -92,7 +92,7 @@ Private Sub Workbook_Open_OK_20241228()
     Set wb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("ThisWorkbook:Workbook_Open", startTime)
+    Call Log_Record("ThisWorkbook:Workbook_Open", "", startTime)
     
     Exit Sub
     

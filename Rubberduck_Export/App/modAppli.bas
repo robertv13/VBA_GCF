@@ -382,10 +382,10 @@ Sub CodeEssentielDepart()
     End If
 
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", "", 0)
     Application.EnableEvents = True
     
-    Call Log_Record("Validation d'accès serveur terminée", Timer)
+    Call Log_Record("Validation d'accès serveur terminée", "", Timer)
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
     Call CreateUserActiveFile
@@ -424,7 +424,7 @@ Sub CodeEssentielDepart()
     Set wb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modAppli:CodeEssentielDepart", startTime)
+    Call Log_Record("modAppli:CodeEssentielDepart", "", startTime)
     
     Exit Sub
     
@@ -447,7 +447,7 @@ End Sub
 
 Sub CreateUserActiveFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Create_User_Active_File", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -465,7 +465,7 @@ Sub CreateUserActiveFile()
     Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     Close FileNumber
     
-    Call Log_Record("ThisWorkbook:Create_User_Active_File", startTime)
+    Call Log_Record("modAppli:CreateUserActiveFile", "", startTime)
     
     Exit Sub
 
@@ -478,7 +478,7 @@ End Sub
 
 Sub SetupUserDateFormat()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:Setup_UserDateFormat", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
 
     Dim userDateFormat As String
     
@@ -497,13 +497,13 @@ Sub SetupUserDateFormat()
 
     wshAdmin.Range("B1").Value = userDateFormat
     
-    Call Log_Record("ThisWorkbook:Setup_UserDateFormat", startTime)
+    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
 End Sub
 
 Sub BackupMasterFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ThisWorkbook:BackupMasterFile", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", "", 0)
     
     On Error GoTo MASTER_NOT_AVAILABLE
     
@@ -520,7 +520,7 @@ Sub BackupMasterFile()
     'Créer directement une copie du fichier sans ouvrir Excel
     FileCopy masterFilePath, backupFilePath
 
-    Call Log_Record("ThisWorkbook:BackupMasterFile", startTime)
+    Call Log_Record("modAppli:BackupMasterFile", "", startTime)
     
     Exit Sub
     
@@ -535,7 +535,7 @@ End Sub
 
 Sub WriteInfoOnMainMenu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", "", 0)
     
     wshMenu.Unprotect
     
@@ -555,7 +555,7 @@ Sub WriteInfoOnMainMenu()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modAppli:WriteInfoOnMainMenu", startTime)
+    Call Log_Record("modAppli:WriteInfoOnMainMenu", "", startTime)
 
 End Sub
 

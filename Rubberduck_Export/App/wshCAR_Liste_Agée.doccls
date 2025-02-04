@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -55,13 +55,13 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", startTime)
+    Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange" & " - " & Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
@@ -93,13 +93,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Save the current cell Address
     previousCellAddress = Target.Address
     
-    Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", startTime)
+    Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", "", startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", "", 0)
     
     Dim fullDate As Variant
     
@@ -140,6 +140,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", startTime)
+    Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", "", startTime)
   
 End Sub

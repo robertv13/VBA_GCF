@@ -9,13 +9,13 @@ End Sub
 
 Sub menuTEC()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", "", 0)
     
     wshMenuTEC.Visible = xlSheetVisible
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
-    Call Log_Record("modMenu:menuTEC_Click", startTime)
+    Call Log_Record("modMenu:menuTEC_Click", "", startTime)
 
 End Sub
 
@@ -27,7 +27,7 @@ End Sub
 
 Sub menuFacturation()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -46,7 +46,7 @@ Sub menuFacturation()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modMenu:menuFacturation_Click", startTime)
+    Call Log_Record("modMenu:menuFacturation_Click", "", startTime)
 
 End Sub
 
@@ -58,7 +58,7 @@ End Sub
 
 Sub menuComptabilité()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilite_Click", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -77,7 +77,7 @@ Sub menuComptabilité()
         Application.EnableEvents = True
     End If
 
-    Call Log_Record("modMenu:menuComptabilite_Click", startTime)
+    Call Log_Record("modMenu:menuComptabilité", "", startTime)
 
 End Sub
 
@@ -89,7 +89,7 @@ End Sub
 
 Sub Parametres()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -107,7 +107,7 @@ Sub Parametres()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modMenu:Parametres", startTime)
+    Call Log_Record("modMenu:Parametres", "", startTime)
 
 End Sub
 
@@ -119,7 +119,7 @@ End Sub
 
 Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", "", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -137,8 +137,8 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         Call Delete_User_Active_File
 
         On Error Resume Next
-        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", 0)
-        Call Log_Record("", -1)
+        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
+        Call Log_Record("", "", -1)
         On Error GoTo 0
         
         Application.ScreenUpdating = True
@@ -163,7 +163,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -180,13 +180,13 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", startTime)
+    Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", startTime)
     
 End Sub
 
 Sub HideDevShapesBasedOnUsername()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet: Set ws = wshMenu
@@ -225,13 +225,13 @@ Sub HideDevShapesBasedOnUsername()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", startTime)
+    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
 
 End Sub
 
 Sub Delete_User_Active_File()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -243,7 +243,7 @@ Sub Delete_User_Active_File()
         Kill traceFilePath
     End If
 
-    Call Log_Record("modMenu:Delete_User_Active_File", startTime)
+    Call Log_Record("modMenu:Delete_User_Active_File", "", startTime)
 
 End Sub
 
