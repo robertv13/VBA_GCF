@@ -9,7 +9,7 @@ End Sub
 
 Public Sub GL_Report_For_Selected_Accounts()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Rapport:GL_Report_For_Selected_Accounts", "", 0)
    
     'Reference the worksheet
     Dim ws As Worksheet: Set ws = wshGL_Rapport
@@ -208,7 +208,7 @@ End Sub
 
 Public Sub GL_Rapport_Clear_All_Cells(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Clear_All_Cells", "", 0)
     
     With ws
         .Range("B3").Value = True 'Sort by Date
@@ -362,7 +362,7 @@ End Sub
 
 Sub GL_Rapport_Back_To_Menu()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Rapport:GL_Rapport_Back_To_Menu", "", 0)
    
     wshGL_Rapport.Visible = xlSheetHidden
     On Error Resume Next

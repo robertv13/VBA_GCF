@@ -9,7 +9,7 @@ End Sub
 
 Sub menuTEC()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", "", 0)
     
     wshMenuTEC.Visible = xlSheetVisible
     wshMenuTEC.Activate
@@ -27,7 +27,7 @@ End Sub
 
 Sub menuFacturation()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -58,7 +58,7 @@ End Sub
 
 Sub menuComptabilité()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -89,7 +89,7 @@ End Sub
 
 Sub Parametres()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:Parametres", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -119,7 +119,7 @@ End Sub
 
 Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", "", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -163,7 +163,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -186,7 +186,7 @@ End Sub
 
 Sub HideDevShapesBasedOnUsername()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet: Set ws = wshMenu
@@ -231,7 +231,7 @@ End Sub
 
 Sub Delete_User_Active_File()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
+    startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username

@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", 0)
+    startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -14,8 +14,9 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Import transactions from MASTER file
     Call Client_List_Import_All
     Call FAC_Entête_Import_All
-'    Call FAC_Détails_Import_All '2024-12-18 @ 06:38
     Call FAC_Comptes_Clients_Import_All
+    Call ENC_Détails_Import_All
+    Call ENC_Entête_Import_All
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -61,7 +62,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", Target.Address, 0)
+    startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
@@ -99,7 +100,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", "", 0)
+    startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", "", 0)
     
     Dim fullDate As Variant
     

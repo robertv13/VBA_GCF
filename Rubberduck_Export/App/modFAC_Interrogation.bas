@@ -15,7 +15,7 @@ End Sub
 
 Sub Affiche_Liste_Factures()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:Affiche_Liste_Factures", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:Affiche_Liste_Factures", "", 0)
     
     Application.EnableEvents = False
     With wshFAC_Interrogation.Range("B9:O33")
@@ -233,7 +233,7 @@ End Sub
 
 Sub FAC_Historique_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", "", 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -266,7 +266,7 @@ End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", "", 0)
     
     wshFAC_Interrogation.Visible = xlSheetHidden
     
@@ -460,7 +460,7 @@ End Sub
 
 Sub ObtenirFactureInfos(noFact As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirFactureInfos", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirFactureInfos", "", 0)
     
     Call AfficherNouvelleFeuille_Stats(noFact, nomClient, dateFacture)
     
@@ -470,7 +470,7 @@ End Sub
 
 Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", "", 0)
     
     If invNo = "" Then
         Exit Sub
@@ -1131,7 +1131,7 @@ End Sub
 
 Sub ObtenirListeTECFactures(Adresse As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFactures", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFactures", "", 0)
     
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(Adresse, numeroLigne, numeroColonne)
@@ -1171,7 +1171,7 @@ End Sub
 
 Sub PreparerRapportTECFactures()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFactures", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFactures", "", 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
@@ -1319,7 +1319,7 @@ End Sub
 
 Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -1409,7 +1409,7 @@ End Sub
 
 Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_CC", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_CC", "", 0)
     
     If invNo = "" Then
         Exit Sub

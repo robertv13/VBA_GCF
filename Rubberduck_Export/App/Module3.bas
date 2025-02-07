@@ -1,24 +1,23 @@
 Attribute VB_Name = "Module3"
 Option Explicit
 
-Sub Macro2()
-Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
+Sub Macro3()
+Attribute Macro3.VB_ProcData.VB_Invoke_Func = " \n14"
 '
-' Macro2 Macro
+' Macro3 Macro
 '
 
 '
-    Range("C33").Select
     Selection.Borders(xlDiagonalDown).LineStyle = xlNone
     Selection.Borders(xlDiagonalUp).LineStyle = xlNone
     Selection.Borders(xlEdgeLeft).LineStyle = xlNone
-    Selection.Borders(xlEdgeTop).LineStyle = xlNone
-    With Selection.Borders(xlEdgeBottom)
+    With Selection.Borders(xlEdgeTop)
         .LineStyle = xlContinuous
         .ColorIndex = 0
         .TintAndShade = 0
         .Weight = xlThin
     End With
+    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
     Selection.Borders(xlEdgeRight).LineStyle = xlNone
     Selection.Borders(xlInsideVertical).LineStyle = xlNone
     Selection.Borders(xlInsideHorizontal).LineStyle = xlNone

@@ -222,7 +222,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", "", 0)
+    startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", "", 0)
 
     ufConfirmation.Hide
     Unload ufConfirmation

@@ -16,7 +16,7 @@ Global savedCommNote As String
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
@@ -77,7 +77,7 @@ End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -109,7 +109,7 @@ End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
 
     If ufSaisieHeures.txtTECID.Value = "" Then
         MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -175,7 +175,7 @@ End Sub
 
 Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", _
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", _
                                                                  ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -274,7 +274,7 @@ End Sub
 
 Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", 0)
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -303,7 +303,7 @@ End Sub
 
 Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -511,7 +511,7 @@ End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -594,7 +594,7 @@ End Sub
 
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
             ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     On Error GoTo ErrorHandler
@@ -726,7 +726,7 @@ End Sub
 
 'Sub TEC_Refresh_ListBox_And_Add_Hours_OK() 'Load the listBox with the appropriate records
 '
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+'    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
 '        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 '
 '    If ufSaisieHeures.txtProfID.Value = "" Or ufSaisieHeures.txtDate.Value = "" Then
@@ -839,7 +839,7 @@ End Sub
 '
 Sub TEC_Update_TDB_From_TEC_Local()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
 
     Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
     Dim lastUsedRow As Long
@@ -884,7 +884,7 @@ End Sub
 
 'Sub TEC_Update_TDB_From_TEC_Local_OK()
 '
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
+'    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
 '
 '    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
 '
@@ -932,7 +932,7 @@ End Sub
 '
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", 0)
 
     Dim pt As pivotTable
     For Each pt In wshTEC_TDB.PivotTables
@@ -974,7 +974,7 @@ End Sub
 
 Sub UpdatePivotTables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable

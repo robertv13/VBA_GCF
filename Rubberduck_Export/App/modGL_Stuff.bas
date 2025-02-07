@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
+    startTime = Timer: Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
 
     'Les données à AF proviennent de GL_Trans
     Dim ws As Worksheet: Set ws = wshGL_Trans
@@ -80,7 +80,7 @@ End Sub
 
 Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
@@ -158,7 +158,7 @@ End Sub
 
 Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", "", 0)
+    startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -198,7 +198,7 @@ End Sub
 
 Sub GL_BV_Ajouter_Shape_Retour()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", "", 0)
     
     Dim ws As Worksheet: Set ws = ActiveSheet
     
@@ -239,7 +239,7 @@ End Sub
 
 Sub GL_BV_Effacer_Zone_Et_Shape()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", "", 0)
+    startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", "", 0)
     
     'Effacer la plage
     Dim ws As Worksheet: Set ws = ActiveSheet

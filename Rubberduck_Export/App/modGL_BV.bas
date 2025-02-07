@@ -14,7 +14,7 @@ End Sub
 
 Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07:50
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_Trial_Balance_Build", ws.Name & " " & dateCutOff, 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_Trial_Balance_Build", ws.Name & " " & dateCutOff, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -148,7 +148,7 @@ End Sub
 
 Sub GL_BV_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Display_TB_Totals", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Display_TB_Totals", "", 0)
     
 '    Dim ws As Worksheet
 '    Set ws = ThisWorkbook.Worksheets("GL_BV")
@@ -177,7 +177,7 @@ End Sub
 
 Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String, minDate As Date, maxDate As Date) 'Display GL Trans for a specific account
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Display_Trans_For_Selected_Account", GLAcct & " De " & minDate & " à " & maxDate, 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Display_Trans_For_Selected_Account", GLAcct & " De " & minDate & " à " & maxDate, 0)
     
     Dim ws As Worksheet: Set ws = wshGL_BV
     
@@ -341,7 +341,7 @@ End Sub
 
 Sub GL_BV_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Sub_Totals", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Sub_Totals", "", 0)
 
     Dim r As Long
     With wshGL_BV
@@ -363,7 +363,7 @@ End Sub
 
 Sub GL_BV_Determine_From_And_To_Date(period As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Determine_From_And_To_Date", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Determine_From_And_To_Date", "", 0)
 
     Select Case period
         Case "Mois"
@@ -404,7 +404,7 @@ End Sub
 
 Sub GL_BV_Setup_And_Print()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", "", 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row + 2
@@ -433,7 +433,7 @@ End Sub
 
 Sub shp_GL_BV_Setup_And_Print_Trans_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", "", 0)
     
     Call GL_BV_Setup_And_Print_Trans
 
@@ -443,7 +443,7 @@ End Sub
 
 Sub GL_BV_Setup_And_Print_Trans()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", "", 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).row
@@ -472,7 +472,7 @@ End Sub
 
 Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -601,7 +601,7 @@ End Sub
 
 Sub wshGL_BV_Adjust_The_Shape()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:wshGL_BV_Adjust_The_Shape", "", 0)
+    startTime = Timer: Call Log_Record("modGL_BV:wshGL_BV_Adjust_The_Shape", "", 0)
     
     Dim lastResultRow As Long
     lastResultRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "AC").End(xlUp).row

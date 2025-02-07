@@ -12,7 +12,7 @@ Private Sub Worksheet_Activate()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", "", 0)
+    startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False

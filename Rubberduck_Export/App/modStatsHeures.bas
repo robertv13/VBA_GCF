@@ -5,7 +5,7 @@ Sub Stats_Heures_AF()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Stats_Heures_AF", "", 0)
+    startTime = Timer: Call Log_Record("modStatsHeures:Stats_Heures_AF", "", 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -318,7 +318,7 @@ End Sub
 '
 '    'La cellule 'S7' doit contenir le Professionnel
 '
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Stats_Heures_AF", "", 0)
+'    startTime = Timer: Call Log_Record("modStatsHeures:Stats_Heures_AF", "", 0)
 '
 '    'On utilise la feuille TEC_TDB_Data
 '    Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -569,7 +569,7 @@ End Sub
 
 Sub Back_To_ufSaisieHeures()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", 0)
+    startTime = Timer: Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", 0)
    
     wshStatsHeuresPivotTables.Visible = xlSheetHidden
     

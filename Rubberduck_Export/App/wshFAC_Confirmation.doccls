@@ -4,7 +4,7 @@
 '
 'Private Sub Worksheet_Activate()
 '
-'    Dim startTime as Double: startTime = Timer: Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", 0)
+'    startTime = Timer: Call Log_Record("wshFAC_Confirmation:Worksheet_Activate", 0)
 '
 '    If fromMenu = False Then
 '        Exit Sub

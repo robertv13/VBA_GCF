@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", CStr(tecID), 0)
+    startTime = Timer: Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -53,7 +53,7 @@ End Sub
 
 Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", CStr(tecID), 0)
+    startTime = Timer: Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", CStr(tecID), 0)
     
     Dim ws As Worksheet
     Set ws = wshTEC_Local

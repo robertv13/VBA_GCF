@@ -1563,7 +1563,7 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", ws.CodeName, 0)
+    startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", ws.CodeName, 0)
 
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1684,7 +1684,7 @@ End Sub
 
 Sub Test_Log_Record()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", "", 0)
+    startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", "", 0)
 
     Call Log_Record("modDev_Utils:Test_Log_Record", "", startTime)
     

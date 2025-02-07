@@ -1399,7 +1399,7 @@ End Sub
 Sub ValideNomProcedureCallLog()
 
     Dim ws As Worksheet
-    Set ws = Feuil5
+'    Set ws = Feuil5
     
     Dim lastUsedRow As Long
     lastUsedRow = 874

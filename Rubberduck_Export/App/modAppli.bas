@@ -32,6 +32,9 @@ Public logSaisieHeuresVeryDetailed As Boolean
 'Pour assurer un contrôle dans Facture Finale
 Public flagEtapeFacture As Integer
 
+'La variable startTime est utilisée pour les appels au Log
+Public startTime As Double
+
 'Using Enum to specify the column number of worksheets (data)
 Public Enum BD_Clients '2024-10-26 @ 17:41
     [_First] = 1
@@ -382,7 +385,7 @@ Sub CodeEssentielDepart()
     End If
 
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", "", 0)
+    startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", "", 0)
     Application.EnableEvents = True
     
     Call Log_Record("Validation d'accès serveur terminée", "", Timer)
@@ -447,7 +450,7 @@ End Sub
 
 Sub CreateUserActiveFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
+    startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
     
     Dim userName As String
     userName = Fn_Get_Windows_Username
@@ -478,7 +481,7 @@ End Sub
 
 Sub SetupUserDateFormat()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
+    startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
 
     Dim userDateFormat As String
     
@@ -503,7 +506,7 @@ End Sub
 
 Sub BackupMasterFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", "", 0)
+    startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", "", 0)
     
     On Error GoTo MASTER_NOT_AVAILABLE
     
@@ -535,7 +538,7 @@ End Sub
 
 Sub WriteInfoOnMainMenu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", "", 0)
+    startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", "", 0)
     
     wshMenu.Unprotect
     

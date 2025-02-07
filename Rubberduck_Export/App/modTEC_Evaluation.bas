@@ -297,7 +297,7 @@ End Sub
 
 Sub TEC_Evaluation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", 0)
+    startTime = Timer: Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     

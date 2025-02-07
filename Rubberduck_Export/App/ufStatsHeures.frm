@@ -17,7 +17,7 @@ Option Explicit
 
 Private Sub UserForm_Initialize()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:UserForm_Initialize", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:UserForm_Initialize", "", 0)
 
     Call ChargerListBoxAvec52DernieresSemaines
     
@@ -32,7 +32,7 @@ End Sub
 
 Private Sub lbxDatesSemaines_Click() '2024-12-04 @ 07:36
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click", lbxDatesSemaines.Value, 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click", lbxDatesSemaines.Value, 0)
     
     Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
     
@@ -42,7 +42,7 @@ End Sub
 
 Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_DblClick", lbxDatesSemaines.Value, 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_DblClick", lbxDatesSemaines.Value, 0)
     
     Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
 
@@ -52,7 +52,7 @@ End Sub
 
 Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", lbxDatesSemaines.Value, 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", lbxDatesSemaines.Value, 0)
     
     Dim selectedWeek As String
     
@@ -128,7 +128,7 @@ End Sub
 
 Sub AddColonnesSemaine()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesSemaine", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesSemaine", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -161,7 +161,7 @@ End Sub
 
 Sub AddColonnesMois()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesMois", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesMois", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -191,7 +191,7 @@ End Sub
 
 Sub AddColonnesTrimestre()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesTrimestre", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesTrimestre", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -221,7 +221,7 @@ End Sub
 
 Sub AddColonnesAnneeFinanciere()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -251,7 +251,7 @@ End Sub
 
 Sub ChargerListBoxAvec52DernieresSemaines()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", "", 0)
+    startTime = Timer: Call Log_Record("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", "", 0)
     
     Dim i As Integer
     Dim dtLundi As Date

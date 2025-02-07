@@ -1,7 +1,6 @@
 ﻿Option Explicit
 
 'Ces variables sont disponibles partout dans l'application
-Public startTime As Double
 Public previousCellAddress As Variant
 
 Private Sub Workbook_Open_OK_20241228()
@@ -17,7 +16,7 @@ Private Sub Workbook_Open_OK_20241228()
     Application.ScreenUpdating = True
     
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (ThisWorkbook:Workbook_Open) -----", "", 0)
+    startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (ThisWorkbook:Workbook_Open) -----", "", 0)
     Application.EnableEvents = True
     
     'Vérifie l'état d'Excel

@@ -55,7 +55,7 @@ End Sub
 
 Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", "", 0)
     
     'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wshFAC_Entête
@@ -206,7 +206,7 @@ End Sub
 
 Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-01-19 @ 08:42
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", invoice, 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", invoice, 0)
 
     Application.ScreenUpdating = False
     
@@ -250,7 +250,7 @@ End Sub
 
 Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-01-19 @ 08:42
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", invoice, 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", invoice, 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -281,7 +281,7 @@ End Sub
 
 Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", invoice, 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", invoice, 0)
 
     Dim ws As Worksheet: Set ws = wshFAC_Entête
     
@@ -392,7 +392,7 @@ End Sub
 
 Sub AfficherPDFetWIPicones()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherPDFetWIPicones", "", 0)
     
     Dim ws As Worksheet: Set ws = wshFAC_Confirmation
     
@@ -446,7 +446,7 @@ End Sub
 
 Sub AfficherInformationsFacture(wsF As Worksheet, r As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherInformationsFacture", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:AfficherInformationsFacture", "", 0)
     
     Application.EnableEvents = False
     
@@ -506,7 +506,7 @@ End Sub
 
 Sub ObtenirListeTECFacturés()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturés", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturés", "", 0)
     
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
     Call ObtenirListeTECFacturésFiltreAvancé(invNo)
@@ -531,7 +531,7 @@ End Sub
 
 Sub PreparerRapportTECFacturés(numeroFacture As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:PreparerRapportTECFacturés", "", 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
@@ -679,7 +679,7 @@ End Sub
 
 Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wshTEC_Local
@@ -763,7 +763,7 @@ End Sub
 
 Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireTEC", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireTEC", "", 0)
     
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
@@ -821,7 +821,7 @@ End Sub
 
 Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirTotalTEC", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirTotalTEC", "", 0)
     
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     
@@ -879,7 +879,7 @@ End Sub
 
 Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireDesTaux", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirSommaireDesTaux", "", 0)
     
     Dim wsFees As Worksheet: Set wsFees = wshFAC_Sommaire_Taux
     
@@ -927,7 +927,7 @@ End Sub
 
 Sub NettoyerCellulesEtIconesPDF()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:NettoyerCellulesEtIconesPDF", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:NettoyerCellulesEtIconesPDF", "", 0)
     
     Application.EnableEvents = False
     
@@ -964,7 +964,7 @@ End Sub
 
 Sub ObtenirPostingExistantGL(invNo)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirPostingExistantGL", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirPostingExistantGL", "", 0)
     
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
@@ -1009,7 +1009,7 @@ End Sub
 
 Sub RetournerMenuFAC()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:RetournerMenuFAC", "", 0)
+    startTime = Timer: Call Log_Record("modFAC_Confirmation:RetournerMenuFAC", "", 0)
    
     wshFAC_Confirmation.Unprotect '2024-08-21 @ 05:06
     

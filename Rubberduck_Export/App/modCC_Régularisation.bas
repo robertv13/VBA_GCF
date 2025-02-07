@@ -7,7 +7,7 @@ Dim nextJENo As Long
 
 Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:MAJ_Regularisation", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:MAJ_Regularisation", "", 0)
     
     With wshENC_Saisie
         'As-t-on les champs obligatoires ?
@@ -75,7 +75,7 @@ End Sub
 
 Sub Régularisation_Add_New() '2024-08-21 @ 14:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:Régularisation_Add_New", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:Régularisation_Add_New", "", 0)
 
     Call ENC_Clear_Cells
     
@@ -85,7 +85,7 @@ End Sub
 
 Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Add_DB", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Add_DB", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -153,7 +153,7 @@ End Sub
 
 Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Add_Locally", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Add_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -187,7 +187,7 @@ End Sub
 
 Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Update_Comptes_Clients_DB", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Update_Comptes_Clients_DB", "", 0)
     
     Dim errMsg As String
     
@@ -249,7 +249,7 @@ End Sub
 
 Sub REGUL_Update_Comptes_Clients_Locally() '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Update_Comptes_Clients_Locally", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_Update_Comptes_Clients_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -302,7 +302,7 @@ End Sub
 
 Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_GL_Posting_DB", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_GL_Posting_DB", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -441,7 +441,7 @@ End Sub
 
 Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As String)  'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_GL_Posting_Locally", "", 0)
+    startTime = Timer: Call Log_Record("modCC_Régularisation:REGUL_GL_Posting_Locally", "", 0)
 
     Application.ScreenUpdating = False
 

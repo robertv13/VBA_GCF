@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Finale_Intact:Worksheet_Activate", "", 0)
+    startTime = Timer: Call Log_Record("wshFAC_Finale_Intact:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     
