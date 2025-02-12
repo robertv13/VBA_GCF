@@ -1143,44 +1143,44 @@ Sub Main() '2024-12-25 @ 15:27
     Set wsOut = ThisWorkbook.Worksheets(outputName)
     
     'Tableau pour travailler en mémoire les résultats
-    Dim arrOut() As String
-    ReDim arrOut(1 To 250, 1 To 7)
+    Dim outputArr() As String
+    ReDim outputArr(1 To 500, 1 To 8)
     
     Dim outputRow As Long
     outputRow = 1
     
     Application.ScreenUpdating = False
     
-    Call ListeEnumsGenerique("BD_Clients", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("BD_Fournisseurs", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("CC_Régularisations", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("CC_Régularisations", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("DEB_Récurrent", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("DEB_Trans", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("DEB_Récurrent", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("ENC_Détails", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("ENC_Entête", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("ENC_Détails", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("ENC_Entête", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("FAC_Comptes_Clients", 2, arrOut, outputRow)
-    Call ListeEnumsGenerique("FAC_Détails", 2, arrOut, outputRow)
-    Call ListeEnumsGenerique("FAC_Entête", 2, arrOut, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Détails", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Entête", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("FAC_Sommaire_Taux", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Détails", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Entête", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_Détails", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_Entête", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("GL_EJ_Récurrente", 1, arrOut, outputRow)
-    Call ListeEnumsGenerique("GL_Trans", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("GL_EJ_Récurrente", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("TEC_Local", 2, arrOut, outputRow)
-    Call ListeEnumsGenerique("TEC_TDB_Data", 1, arrOut, outputRow)
+    Call ListeEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("TEC_TDB_Data", 1, outputArr, outputRow)
     
     Application.ScreenUpdating = True
     
     'Écriture des résultats (tableau) dans la feuille
     With wsOut
         .Cells.Clear 'Efface tout le contenu de la feuille
-        .Range("A1").Resize(outputRow, UBound(arrOut, 2)).Value = arrOut
+        .Range("A1").Resize(outputRow, UBound(outputArr, 2)).Value = outputArr
     End With
     
 End Sub
@@ -1218,20 +1218,21 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
     Dim col As Long
     For col = LBound(arr, 1) To UBound(arr, 1)
         arrArg(outputRow, 1) = arr(col, 1)
-        arrArg(outputRow, 2) = arr(col, 2)
+        arrArg(outputRow, 2) = NumeroEnLettre(col)
+        arrArg(outputRow, 3) = arr(col, 2)
         'Nom de la colonne dans la table
-        arrArg(outputRow, 3) = ws.Cells(HeaderRow, col).Value
+        arrArg(outputRow, 4) = ws.Cells(HeaderRow, col).Value
         If InStr(arr(col, 2), ws.Cells(HeaderRow, col).Value) = 0 Then
-            arrArg(outputRow, 4) = "*"
+            arrArg(outputRow, 5) = "*"
         End If
         If Not wsMaster Is Nothing Then
-            arrArg(outputRow, 5) = wsMaster.Cells(1, col).Value
+            arrArg(outputRow, 6) = wsMaster.Cells(1, col).Value
             If InStr(arr(col, 2), wsMaster.Cells(1, col).Value) = 0 Then
-                arrArg(outputRow, 6) = "*"
+                arrArg(outputRow, 7) = "*"
             End If
         End If
         'Valeurs des colonnes sur la première ligne de data
-        arrArg(outputRow, 7) = ws.Cells(HeaderRow + 1, col).Value
+        arrArg(outputRow, 8) = ws.Cells(HeaderRow + 1, col).Value
         outputRow = outputRow + 1
     Next col
     
@@ -1435,4 +1436,21 @@ Sub ValideNomProcedureCallLog()
     MsgBox "Traitement terminé"
     
 End Sub
+
+Function NumeroEnLettre(ByVal num As Long) As String
+
+    'Assurer que le nombre soit positif et supérieur à zéro
+    If num <= 0 Then
+        NumeroEnLettre = ""
+        Exit Function
+    End If
+    
+    'Construire la chaîne de caractères à partir du numéro
+    Do
+        num = num - 1
+        NumeroEnLettre = Chr(65 + (num Mod 26)) & NumeroEnLettre
+        num = num \ 26
+    Loop While num > 0
+    
+End Function
 

@@ -294,6 +294,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDTaux - 1).Value = CDbl(Format$(.Range("T" & i).Value, "0.00"))
                     rs.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
                     rs.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
+                    rs.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
                 End With
                 rs.Update
         End If

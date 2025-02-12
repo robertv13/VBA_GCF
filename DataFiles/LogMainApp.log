@@ -7741,3 +7741,1998 @@
 
 2025-02-12 07:18:52.39 | Robert M. Vigneault | APP_v5.P.2.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
 
+2025-02-12 07:22:31.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 07:22:31.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 07:22:31.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 07:22:31.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0059 secondes
+
+2025-02-12 07:22:31.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 07:22:31.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0039 secondes
+
+2025-02-12 07:22:31.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 07:22:32.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2383 secondes
+
+2025-02-12 07:22:32.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 07:22:32.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0293 secondes
+
+2025-02-12 07:22:32.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 07:22:32.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-02-12 07:22:32.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,3262 secondes
+
+2025-02-12 07:22:33.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 07:22:35.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 07:22:35.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0098 secondes
+
+2025-02-12 07:22:35.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 07:22:46.71 | Robert M. Vigneault | APP_v5.P.2.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 07:22:46.72 | Robert M. Vigneault | APP_v5.P.2.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 07:22:46.73 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 07:22:46.73 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:CreateUserActiveFile |  | 0,0098 secondes
+
+2025-02-12 07:22:46.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 07:22:46.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-02-12 07:22:46.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 07:22:46.99 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:BackupMasterFile |  | 0,2441 secondes
+
+2025-02-12 07:22:46.99 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 07:22:47.01 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0234 secondes
+
+2025-02-12 07:22:47.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 07:22:47.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-12 07:22:47.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | modAppli:CodeEssentielDepart |  | 0,3164 secondes
+
+2025-02-12 07:23:29.78 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 07:23:29.81 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0312 secondes
+
+2025-02-12 07:24:15.93 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 
+2025-02-12 07:24:15.94 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 07:24:16.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 
+2025-02-12 07:24:16.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 07:24:16.21 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 07:24:16.21 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 07:24:16.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 0,3320 secondes
+
+2025-02-12 07:24:16.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 07:24:16.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Entête_Import_All |  | 0,1621 secondes
+
+2025-02-12 07:24:16.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 07:24:16.59 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1562 secondes
+
+2025-02-12 07:24:16.59 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 07:24:16.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Détails_Import_All |  | 0,1504 secondes
+
+2025-02-12 07:24:16.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 07:24:16.87 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Entête_Import_All |  | 0,1270 secondes
+
+2025-02-12 07:24:16.92 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshCAR_Liste_Agée | 
+2025-02-12 07:24:17.05 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,1309 secondes
+
+2025-02-12 07:24:17.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Change |  | 
+2025-02-12 07:24:17.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Change |  | 0,0000 secondes
+
+2025-02-12 07:24:17.10 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 1,1719 secondes
+
+2025-02-12 07:24:18.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 
+2025-02-12 07:24:18.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 07:24:19.01 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 
+2025-02-12 07:24:19.03 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 0,0156 secondes
+
+2025-02-12 07:24:19.03 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 07:24:19.03 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 0,0059 secondes
+
+2025-02-12 07:24:19.08 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 0,2188 secondes
+
+2025-02-12 07:24:19.08 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 07:24:19.22 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Entête_Import_All |  | 0,1445 secondes
+
+2025-02-12 07:24:19.22 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 07:24:19.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1602 secondes
+
+2025-02-12 07:24:19.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 07:24:19.53 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Détails_Import_All |  | 0,1406 secondes
+
+2025-02-12 07:24:19.53 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 07:24:19.65 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ENC_Entête_Import_All |  | 0,1270 secondes
+
+2025-02-12 07:24:19.68 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshCAR_Liste_Agée | 
+2025-02-12 07:24:19.80 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,1191 secondes
+
+2025-02-12 07:24:19.83 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 0,9707 secondes
+
+2025-02-12 07:26:04.00 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-12 07:27:10.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Brouillon:Worksheet_Activate |  | 
+2025-02-12 07:32:43.12 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale_Intact:Worksheet_Activate |  | 
+2025-02-12 07:32:43.17 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale_Intact:Worksheet_Activate |  | 0,0469 secondes
+
+2025-02-12 07:32:58.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-12 07:32:58.75 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:32:59.04 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2891 secondes
+
+2025-02-12 07:32:59.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:32:59.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-12 07:32:59.13 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 12/02/2025 | 
+2025-02-12 07:32:59.16 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 12/02/2025 | 
+2025-02-12 07:32:59.24 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0840 secondes
+
+2025-02-12 07:32:59.41 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-12 07:32:59.41 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0000 secondes
+
+2025-02-12 07:32:59.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-12 07:32:59.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0000 secondes
+
+2025-02-12 07:33:00.64 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,5117 secondes
+
+2025-02-12 07:33:00.66 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_BV:Worksheet_Activate |  | 1,9180 secondes
+
+2025-02-12 07:33:03.75 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_EJ:Worksheet_Activate |  | 
+2025-02-12 07:33:03.76 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:33:04.05 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2891 secondes
+
+2025-02-12 07:33:04.05 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-12 07:33:04.10 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-12 07:33:04.13 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 07:33:04.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,1426 secondes
+
+2025-02-12 07:33:04.23 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshGL_EJ | 
+2025-02-12 07:33:04.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,0312 secondes
+
+2025-02-12 07:33:04.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-12 07:33:04.34 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,0762 secondes
+
+2025-02-12 07:33:04.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | 12/02/2025, 999, 15 | 
+2025-02-12 07:33:04.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0137 secondes
+
+2025-02-12 07:33:04.41 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_EJ:Worksheet_Activate |  | 0,6641 secondes
+
+2025-02-12 07:33:19.60 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_Rapport:Worksheet_Activate |  | 
+2025-02-12 07:33:19.60 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:33:19.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2812 secondes
+
+2025-02-12 07:33:19.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshGL_Rapport | 
+2025-02-12 07:33:19.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,0215 secondes
+
+2025-02-12 07:33:19.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 
+2025-02-12 07:33:20.05 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:33:20.06 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0156 secondes
+
+2025-02-12 07:33:20.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:33:20.08 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0020 secondes
+
+2025-02-12 07:33:20.08 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 0,0996 secondes
+
+2025-02-12 07:33:20.08 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_Rapport:Worksheet_Activate |  | 0,4824 secondes
+
+2025-02-12 07:33:34.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:33:35.19 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,3086 secondes
+
+2025-02-12 07:33:35.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/08/2024 à 31/08/2024 | 
+2025-02-12 07:33:35.32 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0586 secondes
+
+2025-02-12 07:33:35.32 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/08/2024 à 31/08/2024 | 
+2025-02-12 07:33:35.37 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:33:35.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/09/2024 à 30/09/2024 | 
+2025-02-12 07:33:35.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:33:35.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/09/2024 à 30/09/2024 | 
+2025-02-12 07:33:35.46 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:35.48 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/10/2024 à 31/10/2024 | 
+2025-02-12 07:33:35.52 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0410 secondes
+
+2025-02-12 07:33:35.54 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/10/2024 à 31/10/2024 | 
+2025-02-12 07:33:35.57 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:33:35.57 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/11/2024 à 30/11/2024 | 
+2025-02-12 07:33:35.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0449 secondes
+
+2025-02-12 07:33:35.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/11/2024 à 30/11/2024 | 
+2025-02-12 07:33:35.66 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0488 secondes
+
+2025-02-12 07:33:35.66 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/12/2024 à 31/12/2024 | 
+2025-02-12 07:33:35.71 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:33:35.73 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/12/2024 à 31/12/2024 | 
+2025-02-12 07:33:35.76 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-12 07:33:35.76 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/01/2025 à 31/01/2025 | 
+2025-02-12 07:33:35.81 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0488 secondes
+
+2025-02-12 07:33:35.81 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/01/2025 à 31/01/2025 | 
+2025-02-12 07:33:35.84 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0488 secondes
+
+2025-02-12 07:33:35.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/02/2026 à 28/02/2026 | 
+2025-02-12 07:33:35.89 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:35.91 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/02/2026 à 28/02/2026 | 
+2025-02-12 07:33:35.94 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-12 07:33:35.94 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/03/2027 à 31/03/2027 | 
+2025-02-12 07:33:35.97 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:35.99 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/03/2027 à 31/03/2027 | 
+2025-02-12 07:33:36.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:36.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/04/2028 à 30/04/2028 | 
+2025-02-12 07:33:36.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0449 secondes
+
+2025-02-12 07:33:36.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/04/2028 à 30/04/2028 | 
+2025-02-12 07:33:36.10 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:36.10 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/05/2029 à 31/05/2029 | 
+2025-02-12 07:33:36.14 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0410 secondes
+
+2025-02-12 07:33:36.15 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/05/2029 à 31/05/2029 | 
+2025-02-12 07:33:36.19 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:33:36.19 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/06/2030 à 30/06/2030 | 
+2025-02-12 07:33:36.22 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0508 secondes
+
+2025-02-12 07:33:36.24 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/06/2030 à 30/06/2030 | 
+2025-02-12 07:33:36.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0371 secondes
+
+2025-02-12 07:33:36.28 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/07/2031 à 31/07/2031 | 
+2025-02-12 07:33:36.31 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:33:36.31 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/07/2031 à 31/07/2031 | 
+2025-02-12 07:33:36.34 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:33:45.09 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale:Worksheet_Activate |  | 
+2025-02-12 07:33:45.12 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale:Worksheet_Activate |  | 0,0332 secondes
+
+2025-02-12 07:33:52.19 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshStatsHeuresPivotTables:Worksheet_Activate |  | 
+2025-02-12 07:33:55.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 
+2025-02-12 07:33:55.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 07:33:55.41 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 
+2025-02-12 07:33:55.41 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 07:33:55.42 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 07:33:55.42 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:ApplyFormatting |  | 0,0020 secondes
+
+2025-02-12 07:33:55.47 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:Client_List_Import_All |  | 0,2051 secondes
+
+2025-02-12 07:33:55.47 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:TEC_Import_All |  | 
+2025-02-12 07:33:55.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:TEC_Import_All |  | 0,2676 secondes
+
+2025-02-12 07:33:55.74 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-12 07:33:55.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,1445 secondes
+
+2025-02-12 07:33:55.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-12 07:33:56.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 0,5000 secondes
+
+2025-02-12 07:33:56.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Analyse:Worksheet_Change | $H$3 | 
+2025-02-12 07:33:56.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | 12/02/2025, 45, 0 | 
+2025-02-12 07:33:56.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0156 secondes
+
+2025-02-12 07:33:56.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 
+2025-02-12 07:33:56.42 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF | ', 12/02/2025, VRAI, FAUX, FAUX | 
+2025-02-12 07:33:56.54 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF |  | 0,1230 secondes
+
+2025-02-12 07:33:58.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 2,2168 secondes
+
+2025-02-12 07:33:58.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Analyse:Worksheet_Change |  | 2,2324 secondes
+
+2025-02-12 07:33:58.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshTEC_Analyse | 
+2025-02-12 07:33:58.85 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,2363 secondes
+
+2025-02-12 07:33:58.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 3,6152 secondes
+
+2025-02-12 07:34:01.24 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Evaluation:Worksheet_Activate |  | 
+2025-02-12 07:34:05.62 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Radiation:Worksheet_Activate |  | 
+2025-02-12 07:34:08.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Radiation:Worksheet_Activate |  | 
+2025-02-12 07:34:11.68 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Local:Worksheet_Activate |  | 
+2025-02-12 07:34:11.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_Local:Worksheet_Activate |  | 0,0195 secondes
+
+2025-02-12 07:34:55.68 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB:Worksheet_Activate |  | 
+2025-02-12 07:34:55.68 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-12 07:34:55.70 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-12 07:34:55.84 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$4051 | 
+2025-02-12 07:34:55.85 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0059 secondes
+
+2025-02-12 07:34:55.85 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1484 secondes
+
+2025-02-12 07:34:55.85 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-12 07:34:55.95 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-12 07:34:55.95 | Robert M. Vigneault | APP_v5.P.2.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,2695 secondes
+
+2025-02-12 07:34:55.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 
+2025-02-12 07:34:55.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 0,0098 secondes
+
+2025-02-12 07:34:55.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshTEC_TDB:Worksheet_Activate |  | 0,2969 secondes
+
+2025-02-12 07:36:36.84 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:36:37.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2695 secondes
+
+2025-02-12 07:36:49.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 07:36:49.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0176 secondes
+
+2025-02-12 07:37:12.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Brouillon:Worksheet_Activate |  | 
+2025-02-12 07:37:18.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale:Worksheet_Activate |  | 
+2025-02-12 07:37:19.01 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale:Worksheet_Activate |  | 0,0566 secondes
+
+2025-02-12 07:37:20.02 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale_Intact:Worksheet_Activate |  | 
+2025-02-12 07:37:20.04 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshFAC_Finale_Intact:Worksheet_Activate |  | 0,0254 secondes
+
+2025-02-12 07:37:22.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-12 07:37:22.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:37:22.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2930 secondes
+
+2025-02-12 07:37:23.06 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:37:23.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0098 secondes
+
+2025-02-12 07:37:23.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 12/02/2025 | 
+2025-02-12 07:37:23.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 12/02/2025 | 
+2025-02-12 07:37:23.19 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0820 secondes
+
+2025-02-12 07:37:23.37 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-12 07:37:23.37 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0000 secondes
+
+2025-02-12 07:37:23.37 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-12 07:37:23.38 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0156 secondes
+
+2025-02-12 07:37:24.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,1973 secondes
+
+2025-02-12 07:37:24.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_BV:Worksheet_Activate |  | 1,5742 secondes
+
+2025-02-12 07:37:24.58 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_EJ:Worksheet_Activate |  | 
+2025-02-12 07:37:24.59 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:37:24.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2871 secondes
+
+2025-02-12 07:37:24.88 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-12 07:37:24.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-12 07:37:25.03 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0781 secondes
+
+2025-02-12 07:37:25.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,2305 secondes
+
+2025-02-12 07:37:25.16 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshGL_EJ | 
+2025-02-12 07:37:25.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,0449 secondes
+
+2025-02-12 07:37:25.21 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-12 07:37:25.30 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,0898 secondes
+
+2025-02-12 07:37:25.30 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | 12/02/2025, 999, 15 | 
+2025-02-12 07:37:25.31 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0137 secondes
+
+2025-02-12 07:37:25.32 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_EJ:Worksheet_Activate |  | 0,7402 secondes
+
+2025-02-12 07:37:26.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_Rapport:Worksheet_Activate |  | 
+2025-02-12 07:37:26.44 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:37:26.73 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,2832 secondes
+
+2025-02-12 07:37:26.81 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder | wshGL_Rapport | 
+2025-02-12 07:37:26.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modDev_Utils:SetTabOrder |  | 0,0469 secondes
+
+2025-02-12 07:37:26.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 
+2025-02-12 07:37:26.93 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:37:26.93 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-12 07:37:26.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-12 07:37:26.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | modFunctions:Fn_Complete_Date |  | 0,0098 secondes
+
+2025-02-12 07:37:26.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 0,1230 secondes
+
+2025-02-12 07:37:26.99 | Robert M. Vigneault | APP_v5.P.2.xlsb | wshGL_Rapport:Worksheet_Activate |  | 0,5605 secondes
+
+2025-02-12 07:37:31.82 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 07:37:32.12 | Robert M. Vigneault | APP_v5.P.2.xlsb | modImport:GL_Trans_Import_All |  | 0,3047 secondes
+
+2025-02-12 07:37:32.22 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/08/2024 à 31/08/2024 | 
+2025-02-12 07:37:32.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:37:32.27 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/08/2024 à 31/08/2024 | 
+2025-02-12 07:37:32.32 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:37:32.33 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/09/2024 à 30/09/2024 | 
+2025-02-12 07:37:32.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0645 secondes
+
+2025-02-12 07:37:32.40 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/09/2024 à 30/09/2024 | 
+2025-02-12 07:37:32.46 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0547 secondes
+
+2025-02-12 07:37:32.46 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/10/2024 à 31/10/2024 | 
+2025-02-12 07:37:32.53 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0684 secondes
+
+2025-02-12 07:37:32.53 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/10/2024 à 31/10/2024 | 
+2025-02-12 07:37:32.58 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0488 secondes
+
+2025-02-12 07:37:32.58 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/11/2024 à 30/11/2024 | 
+2025-02-12 07:37:32.64 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0586 secondes
+
+2025-02-12 07:37:32.64 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/11/2024 à 30/11/2024 | 
+2025-02-12 07:37:32.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0430 secondes
+
+2025-02-12 07:37:32.69 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/12/2024 à 31/12/2024 | 
+2025-02-12 07:37:32.76 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0625 secondes
+
+2025-02-12 07:37:32.76 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/12/2024 à 31/12/2024 | 
+2025-02-12 07:37:32.81 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0508 secondes
+
+2025-02-12 07:37:32.82 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/01/2025 à 31/01/2025 | 
+2025-02-12 07:37:32.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0449 secondes
+
+2025-02-12 07:37:32.86 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/01/2025 à 31/01/2025 | 
+2025-02-12 07:37:32.91 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-02-12 07:37:32.93 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/02/2026 à 28/02/2026 | 
+2025-02-12 07:37:32.96 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:37:32.98 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/02/2026 à 28/02/2026 | 
+2025-02-12 07:37:33.01 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:37:33.03 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/03/2027 à 31/03/2027 | 
+2025-02-12 07:37:33.06 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:37:33.07 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/03/2027 à 31/03/2027 | 
+2025-02-12 07:37:33.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:37:33.11 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/04/2028 à 30/04/2028 | 
+2025-02-12 07:37:33.15 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0430 secondes
+
+2025-02-12 07:37:33.16 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/04/2028 à 30/04/2028 | 
+2025-02-12 07:37:33.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0391 secondes
+
+2025-02-12 07:37:33.20 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/05/2029 à 31/05/2029 | 
+2025-02-12 07:37:33.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0586 secondes
+
+2025-02-12 07:37:33.26 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/05/2029 à 31/05/2029 | 
+2025-02-12 07:37:33.30 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-12 07:37:33.31 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/06/2030 à 30/06/2030 | 
+2025-02-12 07:37:33.35 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0410 secondes
+
+2025-02-12 07:37:33.36 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/06/2030 à 30/06/2030 | 
+2025-02-12 07:37:33.39 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0332 secondes
+
+2025-02-12 07:37:33.39 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/07/2031 à 31/07/2031 | 
+2025-02-12 07:37:33.43 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0430 secondes
+
+2025-02-12 07:37:33.45 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/07/2031 à 31/07/2031 | 
+2025-02-12 07:37:33.48 | Robert M. Vigneault | APP_v5.P.2.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-12 07:38:06.22 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 07:38:06.24 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0176 secondes
+
+2025-02-12 07:38:09.21 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 07:38:11.28 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 07:38:11.29 | Robert M. Vigneault | APP_v5.P.2.xlsb | modMenu:Delete_User_Active_File |  | 0,0059 secondes
+
+2025-02-12 07:38:11.29 | Robert M. Vigneault | APP_v5.P.2.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 07:39:00.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 07:39:00.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 07:39:00.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 07:39:00.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0176 secondes
+
+2025-02-12 07:39:00.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 07:39:00.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0039 secondes
+
+2025-02-12 07:39:00.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 07:39:01.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,1992 secondes
+
+2025-02-12 07:39:01.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 07:39:01.12 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0098 secondes
+
+2025-02-12 07:39:01.12 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 07:39:01.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-02-12 07:39:01.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,2520 secondes
+
+2025-02-12 07:39:03.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:menuFacturation_Click |  | 
+2025-02-12 07:39:03.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:menuFacturation_Click |  | 0,0430 secondes
+
+2025-02-12 07:39:05.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMENU_FAC:FAC_Confirmation_Click |  | 
+2025-02-12 07:39:05.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 07:39:05.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 07:39:05.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 07:39:05.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 07:39:05.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 07:39:05.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2305 secondes
+
+2025-02-12 07:39:05.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 07:39:06.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1914 secondes
+
+2025-02-12 07:39:06.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 07:39:06.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 0,2109 secondes
+
+2025-02-12 07:39:06.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 07:39:06.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1895 secondes
+
+2025-02-12 07:39:06.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 07:39:06.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1152 secondes
+
+2025-02-12 07:39:06.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-12 07:39:06.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 0,3008 secondes
+
+2025-02-12 07:39:06.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer |  | 
+2025-02-12 07:39:06.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer |  | 0,0156 secondes
+
+2025-02-12 07:39:10.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMENU_FAC:FAC_Confirmation_Click |  | 4,5156 secondes
+
+2025-02-12 07:40:09.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 07:40:09.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 10:52:58.97 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 10:52:59.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,0820 secondes
+
+2025-02-12 10:55:06.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 10:55:23.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 10:56:44.12 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 10:56:44.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 10:56:44.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 10:56:44.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,1094 secondes
+
+2025-02-12 10:57:05.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 10:57:05.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,1250 secondes
+
+2025-02-12 10:59:28.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 10:59:28.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0273 secondes
+
+2025-02-12 11:02:44.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 11:02:44.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,0508 secondes
+
+2025-02-12 11:06:30.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 11:06:51.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 11:06:51.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0273 secondes
+
+2025-02-12 11:07:13.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 11:07:13.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,0547 secondes
+
+2025-02-12 11:09:43.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-12 11:09:43.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,0781 secondes
+
+2025-02-12 13:07:10.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_Local:Worksheet_Activate |  | 
+2025-02-12 13:07:10.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_Local:Worksheet_Activate |  | 0,0156 secondes
+
+2025-02-12 13:16:00.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:16:00.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0352 secondes
+
+2025-02-12 13:16:01.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:16:01.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:16:01.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0312 secondes
+
+2025-02-12 13:16:01.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:16:01.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:16:01.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:16:01.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:16:01.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0039 secondes
+
+2025-02-12 13:16:01.00 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1797 secondes
+
+2025-02-12 13:16:01.00 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:16:02.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5039 secondes
+
+2025-02-12 13:16:02.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:16:02.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1094 secondes
+
+2025-02-12 13:16:02.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:16:02.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0234 secondes
+
+2025-02-12 13:16:02.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:18:23.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:18:23.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 13:18:40.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:18:40.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:18:40.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:18:40.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0039 secondes
+
+2025-02-12 13:18:40.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:18:40.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-02-12 13:18:40.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:18:40.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2188 secondes
+
+2025-02-12 13:18:40.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:18:40.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,1016 secondes
+
+2025-02-12 13:18:40.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:18:41.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0195 secondes
+
+2025-02-12 13:18:41.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:18:41.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-12 13:18:41.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,5664 secondes
+
+2025-02-12 13:18:52.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:18:52.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:18:52.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0273 secondes
+
+2025-02-12 13:18:52.76 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:18:52.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:18:52.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0156 secondes
+
+2025-02-12 13:18:52.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:18:52.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:18:53.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2539 secondes
+
+2025-02-12 13:18:53.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:18:53.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5000 secondes
+
+2025-02-12 13:18:53.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:18:53.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1289 secondes
+
+2025-02-12 13:18:53.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:18:53.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0312 secondes
+
+2025-02-12 13:18:53.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:18:53.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:18:53.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 13:18:53.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1523 secondes
+
+2025-02-12 13:18:53.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:18:53.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0156 secondes
+
+2025-02-12 13:18:53.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:19:52.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:19:52.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0117 secondes
+
+2025-02-12 13:20:02.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:20:02.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:20:02.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:20:02.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-02-12 13:20:02.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:20:02.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0156 secondes
+
+2025-02-12 13:20:02.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:20:02.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,1953 secondes
+
+2025-02-12 13:20:02.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:20:02.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0898 secondes
+
+2025-02-12 13:20:02.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:20:02.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-02-12 13:20:02.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:20:02.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 13:20:02.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,4570 secondes
+
+2025-02-12 13:20:05.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:20:05.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:20:05.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 13:20:05.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:20:05.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:20:05.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:20:05.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:20:05.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0039 secondes
+
+2025-02-12 13:20:05.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2188 secondes
+
+2025-02-12 13:20:05.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:20:06.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5469 secondes
+
+2025-02-12 13:20:06.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:20:06.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1289 secondes
+
+2025-02-12 13:20:06.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:20:06.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 13:20:06.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:20:06.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:20:06.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0195 secondes
+
+2025-02-12 13:20:06.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1562 secondes
+
+2025-02-12 13:20:06.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:20:06.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0234 secondes
+
+2025-02-12 13:20:06.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:23:11.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:23:11.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 13:23:17.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:23:17.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:23:17.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:23:17.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0156 secondes
+
+2025-02-12 13:23:17.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:23:17.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0000 secondes
+
+2025-02-12 13:23:17.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:23:18.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2227 secondes
+
+2025-02-12 13:23:18.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:23:18.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0938 secondes
+
+2025-02-12 13:23:18.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:23:18.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-02-12 13:23:18.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:23:18.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 13:23:18.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,4961 secondes
+
+2025-02-12 13:23:20.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:23:20.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:23:21.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0312 secondes
+
+2025-02-12 13:23:21.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:23:21.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:23:21.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:23:21.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:23:21.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0156 secondes
+
+2025-02-12 13:23:21.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2305 secondes
+
+2025-02-12 13:23:21.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:23:21.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5078 secondes
+
+2025-02-12 13:23:21.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:23:21.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1289 secondes
+
+2025-02-12 13:23:21.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:23:21.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 13:23:21.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:23:21.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:23:22.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 13:23:22.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1680 secondes
+
+2025-02-12 13:23:22.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:23:22.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0273 secondes
+
+2025-02-12 13:23:22.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:25:31.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:25:31.00 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 13:25:33.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 13:25:34.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 13:25:34.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0039 secondes
+
+2025-02-12 13:25:34.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 13:25:46.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:25:46.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0039 secondes
+
+2025-02-12 13:25:46.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:25:46.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-02-12 13:25:46.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:25:46.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-02-12 13:25:46.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:25:46.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2070 secondes
+
+2025-02-12 13:25:46.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:25:46.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0195 secondes
+
+2025-02-12 13:25:46.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:25:46.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-12 13:25:46.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,3320 secondes
+
+2025-02-12 13:25:48.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:25:48.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:25:48.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0312 secondes
+
+2025-02-12 13:25:48.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:25:48.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:25:48.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:25:48.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:25:48.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:25:48.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2227 secondes
+
+2025-02-12 13:25:48.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:25:49.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5586 secondes
+
+2025-02-12 13:25:49.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:25:49.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1250 secondes
+
+2025-02-12 13:25:49.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:25:49.31 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 13:25:49.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:25:49.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:25:49.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0273 secondes
+
+2025-02-12 13:25:49.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1523 secondes
+
+2025-02-12 13:25:49.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:25:49.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 13:25:49.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:30:40.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:30:40.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-12 13:30:47.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:30:47.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:30:47.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:30:47.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0156 secondes
+
+2025-02-12 13:30:47.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:30:47.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-02-12 13:30:47.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:30:47.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,1992 secondes
+
+2025-02-12 13:30:47.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:30:47.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0859 secondes
+
+2025-02-12 13:30:47.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:30:47.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-02-12 13:30:47.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:30:47.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 13:30:47.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,5039 secondes
+
+2025-02-12 13:30:48.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:30:48.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:30:48.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0195 secondes
+
+2025-02-12 13:30:48.97 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:30:49.12 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:30:49.12 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:30:49.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:30:49.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:30:49.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2305 secondes
+
+2025-02-12 13:30:49.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:30:49.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5039 secondes
+
+2025-02-12 13:30:49.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:31:41.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:31:41.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 13:31:42.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:31:42.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:31:42.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 13:31:42.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:31:42.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:31:42.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:31:42.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:31:42.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:31:43.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1641 secondes
+
+2025-02-12 13:31:43.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:31:43.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5234 secondes
+
+2025-02-12 13:31:43.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:31:43.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1211 secondes
+
+2025-02-12 13:31:49.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:31:49.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:31:49.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:31:49.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0117 secondes
+
+2025-02-12 13:31:49.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:31:49.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0117 secondes
+
+2025-02-12 13:31:49.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:31:49.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2031 secondes
+
+2025-02-12 13:31:49.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:31:49.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,1055 secondes
+
+2025-02-12 13:31:49.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:31:49.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0039 secondes
+
+2025-02-12 13:31:49.76 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:31:49.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-02-12 13:31:49.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,5273 secondes
+
+2025-02-12 13:31:51.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:31:51.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:31:51.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0469 secondes
+
+2025-02-12 13:31:51.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:31:51.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:31:51.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:31:51.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:31:51.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0156 secondes
+
+2025-02-12 13:31:51.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1992 secondes
+
+2025-02-12 13:31:51.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:31:51.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5000 secondes
+
+2025-02-12 13:31:51.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:31:52.06 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1094 secondes
+
+2025-02-12 13:31:52.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:31:52.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 13:31:52.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:31:52.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:31:52.44 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0195 secondes
+
+2025-02-12 13:31:52.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1289 secondes
+
+2025-02-12 13:31:52.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:31:52.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0156 secondes
+
+2025-02-12 13:31:52.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:39:17.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:39:17.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 13:39:18.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 13:39:19.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 13:39:19.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0000 secondes
+
+2025-02-12 13:39:19.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 13:39:25.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:39:25.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:39:25.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:39:25.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0039 secondes
+
+2025-02-12 13:39:25.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:39:25.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0039 secondes
+
+2025-02-12 13:39:25.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:39:25.78 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2109 secondes
+
+2025-02-12 13:39:25.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:39:25.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0234 secondes
+
+2025-02-12 13:39:25.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:39:25.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0039 secondes
+
+2025-02-12 13:39:25.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,3242 secondes
+
+2025-02-12 13:39:26.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:39:26.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:39:26.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0234 secondes
+
+2025-02-12 13:39:26.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:39:26.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:39:26.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 13:39:26.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:39:26.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:39:26.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1406 secondes
+
+2025-02-12 13:39:26.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:39:27.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4883 secondes
+
+2025-02-12 13:39:27.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:40:18.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:40:18.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 13:40:20.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:40:20.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:40:20.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0312 secondes
+
+2025-02-12 13:40:20.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:40:20.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:40:20.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 13:40:20.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:40:20.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:40:20.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1367 secondes
+
+2025-02-12 13:40:20.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:40:21.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4961 secondes
+
+2025-02-12 13:40:21.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:40:21.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,0859 secondes
+
+2025-02-12 13:40:21.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:40:21.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0312 secondes
+
+2025-02-12 13:40:21.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:40:21.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:40:21.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0234 secondes
+
+2025-02-12 13:40:21.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1094 secondes
+
+2025-02-12 13:40:21.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:40:21.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0117 secondes
+
+2025-02-12 13:40:21.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:40:21.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1094 secondes
+
+2025-02-12 13:40:21.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 13:40:21.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,1406 secondes
+
+2025-02-12 13:40:21.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 13:43:55.44 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:43:55.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0117 secondes
+
+2025-02-12 13:43:58.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 13:43:59.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 13:43:59.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0078 secondes
+
+2025-02-12 13:43:59.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 13:44:13.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:44:13.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:44:13.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:44:13.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-02-12 13:44:13.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:44:13.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0039 secondes
+
+2025-02-12 13:44:13.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:44:13.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2148 secondes
+
+2025-02-12 13:44:13.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:44:13.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0195 secondes
+
+2025-02-12 13:44:13.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:44:13.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-12 13:44:13.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,3242 secondes
+
+2025-02-12 13:45:27.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:45:27.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:45:27.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0234 secondes
+
+2025-02-12 13:45:27.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:45:27.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:45:27.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:45:27.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:45:27.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0156 secondes
+
+2025-02-12 13:45:27.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2109 secondes
+
+2025-02-12 13:45:27.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:45:28.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4922 secondes
+
+2025-02-12 13:45:28.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:45:28.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1250 secondes
+
+2025-02-12 13:45:28.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:45:28.60 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 13:45:28.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:45:28.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:45:28.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 13:45:28.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1758 secondes
+
+2025-02-12 13:45:28.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:45:28.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 13:45:28.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:45:28.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1328 secondes
+
+2025-02-12 13:45:28.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 13:49:15.31 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:49:15.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0273 secondes
+
+2025-02-12 13:49:16.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:49:16.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:49:16.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 13:49:16.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:49:16.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:49:16.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0156 secondes
+
+2025-02-12 13:49:16.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:49:16.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:49:16.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1562 secondes
+
+2025-02-12 13:49:16.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:49:16.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4883 secondes
+
+2025-02-12 13:49:16.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:49:17.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1133 secondes
+
+2025-02-12 13:49:17.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:49:17.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0273 secondes
+
+2025-02-12 13:49:17.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:49:17.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:49:17.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0273 secondes
+
+2025-02-12 13:49:17.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1484 secondes
+
+2025-02-12 13:49:17.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:49:17.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 13:49:17.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:49:17.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1367 secondes
+
+2025-02-12 13:49:17.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 13:49:17.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0977 secondes
+
+2025-02-12 13:49:17.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 13:51:33.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:51:33.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:51:33.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0234 secondes
+
+2025-02-12 13:51:33.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:51:34.00 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:51:34.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 13:51:34.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:51:34.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0039 secondes
+
+2025-02-12 13:51:34.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1641 secondes
+
+2025-02-12 13:51:34.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:51:34.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5430 secondes
+
+2025-02-12 13:51:34.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:51:34.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1094 secondes
+
+2025-02-12 13:51:34.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:51:34.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0117 secondes
+
+2025-02-12 13:51:34.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:51:34.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:51:34.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 13:51:34.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1406 secondes
+
+2025-02-12 13:51:34.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:51:34.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0156 secondes
+
+2025-02-12 13:51:34.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:51:35.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1367 secondes
+
+2025-02-12 13:51:41.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 13:51:41.06 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 13:51:41.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 13:51:41.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0039 secondes
+
+2025-02-12 13:51:41.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 13:51:41.08 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0039 secondes
+
+2025-02-12 13:51:41.08 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 13:51:41.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2148 secondes
+
+2025-02-12 13:51:41.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 13:51:41.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,1016 secondes
+
+2025-02-12 13:51:41.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 13:51:41.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-12 13:51:41.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 13:51:41.53 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 13:51:41.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,5039 secondes
+
+2025-02-12 13:51:43.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 13:51:43.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 13:51:44.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0391 secondes
+
+2025-02-12 13:51:44.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 13:51:44.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 13:51:44.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 13:51:44.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 13:51:44.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 13:51:44.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2070 secondes
+
+2025-02-12 13:51:44.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 13:51:44.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4922 secondes
+
+2025-02-12 13:51:44.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 13:51:44.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1172 secondes
+
+2025-02-12 13:51:44.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 13:51:44.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0273 secondes
+
+2025-02-12 13:51:44.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 13:51:44.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 13:51:44.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0195 secondes
+
+2025-02-12 13:51:45.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1328 secondes
+
+2025-02-12 13:51:45.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 13:51:45.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 13:51:45.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 13:51:45.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1211 secondes
+
+2025-02-12 13:51:45.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 13:51:45.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0273 secondes
+
+2025-02-12 13:51:45.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:02:00.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:02:00.76 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 14:02:01.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:02:02.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:02:02.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0273 secondes
+
+2025-02-12 14:02:02.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:02:02.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:02:02.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:02:02.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:02:02.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:02:02.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1641 secondes
+
+2025-02-12 14:02:02.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:02:02.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4805 secondes
+
+2025-02-12 14:02:02.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:02:02.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:02:02.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:02:02.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0234 secondes
+
+2025-02-12 14:02:02.97 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:02:03.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:02:03.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 14:02:03.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:02:03.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:02:03.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0234 secondes
+
+2025-02-12 14:02:03.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:02:03.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1211 secondes
+
+2025-02-12 14:02:03.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:02:03.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0195 secondes
+
+2025-02-12 14:02:03.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:02:03.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1797 secondes
+
+2025-02-12 14:02:03.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:02:03.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0469 secondes
+
+2025-02-12 14:02:03.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:06:24.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:06:24.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 14:06:25.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:06:26.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:06:26.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0234 secondes
+
+2025-02-12 14:06:26.06 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:06:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:06:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:06:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:06:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:06:26.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1602 secondes
+
+2025-02-12 14:06:26.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:06:26.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4844 secondes
+
+2025-02-12 14:06:26.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:06:26.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,0977 secondes
+
+2025-02-12 14:06:26.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:06:26.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0195 secondes
+
+2025-02-12 14:06:26.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:06:26.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:06:26.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0391 secondes
+
+2025-02-12 14:06:26.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1406 secondes
+
+2025-02-12 14:06:26.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:06:27.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 14:06:27.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:06:27.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1367 secondes
+
+2025-02-12 14:06:27.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:06:27.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0195 secondes
+
+2025-02-12 14:06:27.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:06:27.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1719 secondes
+
+2025-02-12 14:06:27.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:06:27.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0508 secondes
+
+2025-02-12 14:06:27.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:06:27.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 0,1992 secondes
+
+2025-02-12 14:06:27.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 
+2025-02-12 14:06:27.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 0,0312 secondes
+
+2025-02-12 14:06:27.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 14:06:27.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1523 secondes
+
+2025-02-12 14:06:27.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 
+2025-02-12 14:06:29.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 1,4492 secondes
+
+2025-02-12 14:06:29.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 14:06:29.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1250 secondes
+
+2025-02-12 14:06:29.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 
+2025-02-12 14:06:29.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 0,0352 secondes
+
+2025-02-12 14:06:29.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 14:12:12.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:12:12.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0312 secondes
+
+2025-02-12 14:12:19.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 14:12:19.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 14:12:19.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 14:12:19.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0039 secondes
+
+2025-02-12 14:12:19.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 14:12:19.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0000 secondes
+
+2025-02-12 14:12:19.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 14:12:19.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2031 secondes
+
+2025-02-12 14:12:19.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 14:12:20.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0977 secondes
+
+2025-02-12 14:12:20.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 14:12:20.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0078 secondes
+
+2025-02-12 14:12:20.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:12:20.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0039 secondes
+
+2025-02-12 14:12:20.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,4648 secondes
+
+2025-02-12 14:12:22.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:12:22.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:12:22.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 14:12:22.24 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:12:22.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:12:22.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 14:12:22.40 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:12:22.40 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:12:22.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,2188 secondes
+
+2025-02-12 14:12:22.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:12:23.00 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,5352 secondes
+
+2025-02-12 14:12:23.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:16:15.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:16:15.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0352 secondes
+
+2025-02-12 14:16:16.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:16:16.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:16:16.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 14:16:16.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:16:16.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:16:16.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:16:16.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:16:16.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0156 secondes
+
+2025-02-12 14:16:16.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1680 secondes
+
+2025-02-12 14:16:16.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:16:17.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4883 secondes
+
+2025-02-12 14:16:17.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:16:17.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:16:17.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:16:17.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0195 secondes
+
+2025-02-12 14:16:17.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:16:17.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:16:17.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 14:16:17.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1445 secondes
+
+2025-02-12 14:16:17.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:16:17.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0117 secondes
+
+2025-02-12 14:16:17.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:16:17.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:16:17.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:16:17.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0156 secondes
+
+2025-02-12 14:16:17.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:16:17.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1797 secondes
+
+2025-02-12 14:16:17.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:16:18.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0547 secondes
+
+2025-02-12 14:16:18.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:16:18.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 0,2266 secondes
+
+2025-02-12 14:16:18.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 
+2025-02-12 14:16:18.31 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 0,0430 secondes
+
+2025-02-12 14:16:18.31 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 14:16:18.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1602 secondes
+
+2025-02-12 14:16:18.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 
+2025-02-12 14:16:19.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 1,4453 secondes
+
+2025-02-12 14:16:19.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 14:16:20.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1289 secondes
+
+2025-02-12 14:16:20.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 
+2025-02-12 14:16:20.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 0,0234 secondes
+
+2025-02-12 14:16:20.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 14:16:20.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 0,1523 secondes
+
+2025-02-12 14:16:20.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 
+2025-02-12 14:16:20.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 0,0547 secondes
+
+2025-02-12 14:16:20.29 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 14:31:54.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:31:54.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-12 14:33:19.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:33:19.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-12 14:33:20.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:33:20.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:33:20.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0312 secondes
+
+2025-02-12 14:33:20.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:33:20.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:33:20.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:33:20.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:33:20.81 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:33:20.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1562 secondes
+
+2025-02-12 14:33:20.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:33:21.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4844 secondes
+
+2025-02-12 14:33:21.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:33:21.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1016 secondes
+
+2025-02-12 14:33:21.48 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:33:21.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0312 secondes
+
+2025-02-12 14:33:21.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:33:21.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:33:21.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 14:33:21.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1367 secondes
+
+2025-02-12 14:33:21.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:33:21.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 14:33:21.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:33:21.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1992 secondes
+
+2025-02-12 14:33:21.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:33:21.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0195 secondes
+
+2025-02-12 14:33:21.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:33:22.08 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1797 secondes
+
+2025-02-12 14:33:22.08 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:33:22.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0508 secondes
+
+2025-02-12 14:33:22.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:33:22.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 0,2070 secondes
+
+2025-02-12 14:33:22.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 
+2025-02-12 14:33:22.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 0,0273 secondes
+
+2025-02-12 14:33:22.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 14:33:22.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1602 secondes
+
+2025-02-12 14:33:22.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 
+2025-02-12 14:33:23.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 1,4375 secondes
+
+2025-02-12 14:33:23.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 14:33:24.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:33:24.11 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 
+2025-02-12 14:33:24.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 0,0273 secondes
+
+2025-02-12 14:33:24.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 14:33:24.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:33:24.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 
+2025-02-12 14:33:24.33 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 0,0547 secondes
+
+2025-02-12 14:33:24.33 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 14:33:24.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 0,1367 secondes
+
+2025-02-12 14:33:24.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 
+2025-02-12 14:33:24.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 0,0547 secondes
+
+2025-02-12 14:33:24.52 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 
+2025-02-12 14:33:24.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 0,1484 secondes
+
+2025-02-12 14:33:24.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 
+2025-02-12 14:33:24.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 0,0156 secondes
+
+2025-02-12 14:33:24.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-12 14:33:25.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 0,5078 secondes
+
+2025-02-12 14:33:25.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 
+2025-02-12 14:33:25.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 0,0078 secondes
+
+2025-02-12 14:33:25.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-12 14:33:25.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,1602 secondes
+
+2025-02-12 14:33:25.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 
+2025-02-12 14:33:25.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 0,0234 secondes
+
+2025-02-12 14:33:25.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 14:33:25.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 0,2656 secondes
+
+2025-02-12 14:33:25.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 
+2025-02-12 14:33:25.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 0,0508 secondes
+
+2025-02-12 14:33:25.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-12 14:33:25.78 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-12 14:33:25.79 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 14:33:25.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,1289 secondes
+
+2025-02-12 14:33:25.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 
+2025-02-12 14:33:25.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 0,0156 secondes
+
+2025-02-12 14:33:25.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-12 14:33:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 0,2891 secondes
+
+2025-02-12 14:33:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-12 14:33:26.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-12 14:33:26.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$4051 | 
+2025-02-12 14:33:26.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0000 secondes
+
+2025-02-12 14:33:26.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,0977 secondes
+
+2025-02-12 14:33:26.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-12 14:33:26.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0938 secondes
+
+2025-02-12 14:33:26.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1992 secondes
+
+2025-02-12 14:33:26.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 
+2025-02-12 14:33:26.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 0,2070 secondes
+
+2025-02-12 14:33:26.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC |  | 
+2025-02-12 14:33:34.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC |  | 7,7578 secondes
+
+2025-02-12 14:33:42.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 21,8477 secondes
+
+2025-02-12 14:36:55.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:36:55.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-12 14:36:57.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:36:57.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:36:57.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0234 secondes
+
+2025-02-12 14:36:57.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:36:57.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:36:57.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:36:57.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:36:57.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:36:57.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1484 secondes
+
+2025-02-12 14:36:57.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:36:57.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4883 secondes
+
+2025-02-12 14:36:57.91 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:36:58.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:36:58.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:36:58.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0156 secondes
+
+2025-02-12 14:36:58.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:36:58.10 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:36:58.14 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0352 secondes
+
+2025-02-12 14:36:58.20 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1484 secondes
+
+2025-02-12 14:36:58.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:36:58.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0117 secondes
+
+2025-02-12 14:36:58.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:36:58.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1484 secondes
+
+2025-02-12 14:36:58.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:36:58.40 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0195 secondes
+
+2025-02-12 14:36:58.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:36:58.58 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1758 secondes
+
+2025-02-12 14:36:58.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:36:58.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0508 secondes
+
+2025-02-12 14:36:58.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:36:58.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 0,1992 secondes
+
+2025-02-12 14:36:58.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 
+2025-02-12 14:36:58.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 0,0273 secondes
+
+2025-02-12 14:36:58.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 14:36:59.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1523 secondes
+
+2025-02-12 14:36:59.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 
+2025-02-12 14:37:00.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 1,4531 secondes
+
+2025-02-12 14:37:00.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 14:37:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1367 secondes
+
+2025-02-12 14:37:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 
+2025-02-12 14:37:00.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 0,0273 secondes
+
+2025-02-12 14:37:00.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 14:37:00.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:37:00.80 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 
+2025-02-12 14:37:00.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 0,0469 secondes
+
+2025-02-12 14:37:00.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 14:37:00.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 0,1211 secondes
+
+2025-02-12 14:37:00.99 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 
+2025-02-12 14:37:01.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 0,0547 secondes
+
+2025-02-12 14:37:01.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 
+2025-02-12 14:37:01.15 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 0,1094 secondes
+
+2025-02-12 14:37:01.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 
+2025-02-12 14:37:01.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 0,0156 secondes
+
+2025-02-12 14:37:01.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-12 14:37:01.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 0,5117 secondes
+
+2025-02-12 14:37:01.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 
+2025-02-12 14:37:01.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 0,0156 secondes
+
+2025-02-12 14:37:01.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-12 14:37:01.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,1641 secondes
+
+2025-02-12 14:37:01.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 
+2025-02-12 14:37:01.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 0,0000 secondes
+
+2025-02-12 14:37:01.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 14:37:02.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 0,2656 secondes
+
+2025-02-12 14:37:02.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 
+2025-02-12 14:37:02.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 0,0547 secondes
+
+2025-02-12 14:37:02.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-12 14:37:02.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-12 14:37:02.31 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0352 secondes
+
+2025-02-12 14:37:02.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,1523 secondes
+
+2025-02-12 14:37:02.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 
+2025-02-12 14:37:02.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 0,0156 secondes
+
+2025-02-12 14:37:02.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-12 14:37:02.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 0,2656 secondes
+
+2025-02-12 14:37:02.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-12 14:37:02.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-12 14:37:02.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$4051 | 
+2025-02-12 14:37:02.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0156 secondes
+
+2025-02-12 14:37:02.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,0977 secondes
+
+2025-02-12 14:37:02.75 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-12 14:37:02.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0781 secondes
+
+2025-02-12 14:37:02.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1914 secondes
+
+2025-02-12 14:37:02.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 
+2025-02-12 14:37:03.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 0,1914 secondes
+
+2025-02-12 14:37:03.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC |  | 
+2025-02-12 14:40:49.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:40:49.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0117 secondes
+
+2025-02-12 14:40:50.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:40:51.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:40:51.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 14:40:51.07 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:40:51.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:40:51.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:40:51.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:40:51.16 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:40:51.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1562 secondes
+
+2025-02-12 14:40:51.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:40:51.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4961 secondes
+
+2025-02-12 14:40:51.72 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:40:51.83 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:40:51.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:40:51.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0312 secondes
+
+2025-02-12 14:40:51.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:40:51.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:40:51.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 14:40:52.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1406 secondes
+
+2025-02-12 14:40:52.01 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:40:52.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0156 secondes
+
+2025-02-12 14:40:52.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:40:52.18 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:40:52.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:40:52.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0195 secondes
+
+2025-02-12 14:40:52.21 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:40:52.40 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1914 secondes
+
+2025-02-12 14:40:52.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:40:52.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0508 secondes
+
+2025-02-12 14:40:52.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:42:11.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:42:11.97 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0273 secondes
+
+2025-02-12 14:42:13.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:42:13.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:42:13.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0352 secondes
+
+2025-02-12 14:42:13.26 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:42:13.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:42:13.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0039 secondes
+
+2025-02-12 14:42:13.37 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:42:13.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0078 secondes
+
+2025-02-12 14:42:13.44 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1758 secondes
+
+2025-02-12 14:42:13.44 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:42:13.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4883 secondes
+
+2025-02-12 14:42:13.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:42:14.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1094 secondes
+
+2025-02-12 14:42:14.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:42:14.08 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0312 secondes
+
+2025-02-12 14:42:14.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:42:14.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:42:14.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0352 secondes
+
+2025-02-12 14:42:14.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1445 secondes
+
+2025-02-12 14:42:14.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:42:14.25 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0234 secondes
+
+2025-02-12 14:42:14.27 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:42:14.40 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1250 secondes
+
+2025-02-12 14:42:14.41 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:42:14.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0117 secondes
+
+2025-02-12 14:42:14.42 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:42:14.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,2070 secondes
+
+2025-02-12 14:42:14.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:42:14.67 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0352 secondes
+
+2025-02-12 14:42:14.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:45:12.62 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:45:12.64 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 14:45:13.71 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 
+2025-02-12 14:45:13.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 
+2025-02-12 14:45:13.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkPlanComptable |  | 0,0195 secondes
+
+2025-02-12 14:45:13.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-12 14:45:13.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 
+2025-02-12 14:45:13.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ResizeTable |  | 0,0000 secondes
+
+2025-02-12 14:45:13.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-12 14:45:13.98 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ApplyFormatting |  | 0,0000 secondes
+
+2025-02-12 14:45:14.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Client_List_Import_All |  | 0,1602 secondes
+
+2025-02-12 14:45:14.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 
+2025-02-12 14:45:14.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkClients |  | 0,4844 secondes
+
+2025-02-12 14:45:14.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-12 14:45:14.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:45:14.66 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 
+2025-02-12 14:45:14.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFournisseurs |  | 0,0234 secondes
+
+2025-02-12 14:45:14.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 
+2025-02-12 14:45:14.73 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 
+2025-02-12 14:45:14.77 | Robert M. Vigneault | APP_v5.P.3.xlsb | modDEB_Saisie:DEB_Recurrent_Build_Summary |  | 0,0312 secondes
+
+2025-02-12 14:45:14.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Récurrent_Import_All |  | 0,1445 secondes
+
+2025-02-12 14:45:14.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 
+2025-02-12 14:45:14.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Récurrent |  | 0,0195 secondes
+
+2025-02-12 14:45:14.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-12 14:45:15.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:DEB_Trans_Import_All |  | 0,1328 secondes
+
+2025-02-12 14:45:15.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 
+2025-02-12 14:45:15.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkDEB_Trans |  | 0,0117 secondes
+
+2025-02-12 14:45:15.05 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-12 14:45:15.22 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Entête_Import_All |  | 0,1758 secondes
+
+2025-02-12 14:45:15.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 
+2025-02-12 14:45:15.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Entête |  | 0,0508 secondes
+
+2025-02-12 14:45:15.28 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-12 14:45:20.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Détails_Import_All |  | 5,3672 secondes
+
+2025-02-12 14:45:20.65 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 
+2025-02-12 14:45:20.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Détails |  | 0,0391 secondes
+
+2025-02-12 14:45:20.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-12 14:45:20.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,1289 secondes
+
+2025-02-12 14:45:20.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 
+2025-02-12 14:45:22.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Comptes_Clients |  | 1,4102 secondes
+
+2025-02-12 14:45:22.23 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 
+2025-02-12 14:45:22.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 0,1133 secondes
+
+2025-02-12 14:45:22.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 
+2025-02-12 14:45:22.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Sommaire_Taux |  | 0,0312 secondes
+
+2025-02-12 14:45:22.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-12 14:45:22.50 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Entête_Import_All |  | 0,1250 secondes
+
+2025-02-12 14:45:22.51 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 
+2025-02-12 14:45:22.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Entête |  | 0,0547 secondes
+
+2025-02-12 14:45:22.56 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-12 14:45:22.69 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:ENC_Détails_Import_All |  | 0,1289 secondes
+
+2025-02-12 14:45:22.70 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 
+2025-02-12 14:45:22.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkENC_Détails |  | 0,0469 secondes
+
+2025-02-12 14:45:22.74 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 
+2025-02-12 14:45:22.85 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:CC_Régularisations_Import_All |  | 0,1094 secondes
+
+2025-02-12 14:45:22.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 
+2025-02-12 14:45:22.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkCC_Régularisations |  | 0,0234 secondes
+
+2025-02-12 14:45:22.88 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-12 14:45:23.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 0,5000 secondes
+
+2025-02-12 14:45:23.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 
+2025-02-12 14:45:23.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Entête |  | 0,0117 secondes
+
+2025-02-12 14:45:23.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-12 14:45:23.54 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,1484 secondes
+
+2025-02-12 14:45:23.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 
+2025-02-12 14:45:23.55 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkFAC_Projets_Détails |  | 0,0000 secondes
+
+2025-02-12 14:45:23.57 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-12 14:45:23.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_Trans_Import_All |  | 0,2539 secondes
+
+2025-02-12 14:45:23.82 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 
+2025-02-12 14:45:23.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_Trans |  | 0,0508 secondes
+
+2025-02-12 14:45:23.87 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-12 14:45:23.92 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-12 14:45:23.94 | Robert M. Vigneault | APP_v5.P.3.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0156 secondes
+
+2025-02-12 14:45:24.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,1445 secondes
+
+2025-02-12 14:45:24.02 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 
+2025-02-12 14:45:24.03 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkGL_EJ_Recurrente |  | 0,0156 secondes
+
+2025-02-12 14:45:24.04 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-12 14:45:24.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modImport:TEC_Import_All |  | 0,2578 secondes
+
+2025-02-12 14:45:24.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-12 14:45:24.30 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-12 14:45:24.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$4051 | 
+2025-02-12 14:45:24.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0156 secondes
+
+2025-02-12 14:45:24.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,0938 secondes
+
+2025-02-12 14:45:24.39 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-12 14:45:24.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0781 secondes
+
+2025-02-12 14:45:24.47 | Robert M. Vigneault | APP_v5.P.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1719 secondes
+
+2025-02-12 14:45:24.49 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 
+2025-02-12 14:45:24.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC_TdB_Data |  | 0,1914 secondes
+
+2025-02-12 14:45:24.68 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC |  | 
+2025-02-12 14:45:42.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:checkTEC |  | 17,7812 secondes
+
+2025-02-12 14:45:47.17 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli_Utils:VérifierIntégrité |  | 33,4570 secondes
+
+2025-02-12 14:46:04.96 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:46:04.97 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 14:48:41.86 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:48:41.89 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0352 secondes
+
+2025-02-12 14:49:40.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:49:40.13 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 14:52:53.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:52:53.19 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-02-12 14:55:47.90 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 14:55:47.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 14:55:51.09 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 14:55:52.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 14:55:52.35 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0000 secondes
+
+2025-02-12 14:55:52.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-12 17:24:00.59 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-12 17:24:00.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-12 17:24:00.61 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-12 17:24:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0117 secondes
+
+2025-02-12 17:24:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-12 17:24:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-02-12 17:24:00.63 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-12 17:24:00.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:BackupMasterFile |  | 0,2969 secondes
+
+2025-02-12 17:24:00.93 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-12 17:24:00.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0117 secondes
+
+2025-02-12 17:24:00.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-12 17:24:00.95 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-12 17:24:01.06 | Robert M. Vigneault | APP_v5.P.3.xlsb | modAppli:CodeEssentielDepart |  | 0,4688 secondes
+
+2025-02-12 17:26:31.45 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 17:26:31.46 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-02-12 17:27:56.32 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 17:27:56.34 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-12 17:28:23.36 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-12 17:28:23.38 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0156 secondes
+
+2025-02-12 17:28:53.84 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-12 17:28:55.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-12 17:28:55.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0039 secondes
+
+2025-02-12 17:28:55.43 | Robert M. Vigneault | APP_v5.P.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+

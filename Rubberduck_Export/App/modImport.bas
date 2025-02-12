@@ -1045,16 +1045,16 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     Dim lastRow As Long
     Dim lastCol As Long
     
-    ' Trouver le tableau
+    'Trouver le tableau
     Set tbl = targetSheet.ListObjects(tableName)
     
-    ' Déterminer la dernière ligne et colonne des nouvelles données
+    'Déterminer la dernière ligne et colonne des nouvelles données
     With targetSheet
         lastRow = .Cells(.Rows.count, tbl.Range.Column).End(xlUp).row
         lastCol = .Cells(tbl.Range.row, .Columns.count).End(xlToLeft).Column
     End With
     
-    ' Redimensionner la plage du tableau
+    'Redimensionner la plage du tableau
     tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
     
     Call Log_Record("modImport:ResizeTable", "", startTime)

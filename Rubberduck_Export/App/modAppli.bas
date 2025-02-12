@@ -70,7 +70,6 @@ Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
     fFourFMPays
     fFourFMNoTPS
     fFourFMNoTVQ
-    fFourFMTimeStamp
     [_Last]
 End Enum
 

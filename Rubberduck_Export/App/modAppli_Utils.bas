@@ -1037,37 +1037,37 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Total
-        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) * 100 <> Int(arr(i, 11) * 100) Then
+        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) <> Round(arr(i, 11), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
         End If
         'TPS
-        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) * 100 <> Int(arr(i, 12) * 100) Then
+        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) <> Round(arr(i, 12), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
         End If
         'TVQ
-        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) * 100 <> Int(arr(i, 13) * 100) Then
+        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) <> Round(arr(i, 13), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
         End If
         'Intrant TPS
-        If IsNumeric(arr(i, 14)) = False Or arr(i, 14) * 100 <> Int(arr(i, 14) * 100) Then
+        If IsNumeric(arr(i, 14)) = False Or arr(i, 14) <> Round(arr(i, 14), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
         End If
         'Intrant TVQ
-        If IsNumeric(arr(i, 15)) = False Or arr(i, 15) * 100 <> Int(arr(i, 15) * 100) Then
+        If IsNumeric(arr(i, 15)) = False Or arr(i, 15) <> Round(arr(i, 15), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
         End If
         '$ dépense
-        If IsNumeric(arr(i, 16)) = False Or arr(i, 16) * 100 <> Int(arr(i, 16) * 100) Then
+        If IsNumeric(arr(i, 16)) = False Or arr(i, 16) <> Round(arr(i, 16), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
@@ -1989,11 +1989,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'PLUG pour s'assurer que le solde impayé est bel et bien aligné sur le total moins le payé à date - les régularisations
-'        If arr(i, fFacCCBalance) <> arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) Then
-        If arr(i, fFacCCBalance) <> arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul) Then
-'            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & _
-'                    ", le solde à recevoir est erroné, soit " & Format$(arr(i, fFacCCBalance), "###,##0.00 $") & "' vs. " & _
-'                    "'" & Format$(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid), "###,##0.00 $") & "'")
+        If Round(arr(i, fFacCCBalance), 2) <> Round(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & _
                     ", le solde à recevoir est erroné, soit " & Format$(CCur(arr(i, fFacCCBalance)), "###,##0.00 $") & "' vs. " & _
                     "'" & Format$(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul), "###,##0.00 $") & "'")
@@ -3769,9 +3765,6 @@ End Sub
 
 Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
 
-    'Common stuff to all worksheets
-    rng.EntireColumn.AutoFit 'Autofit all columns
-    
     'Conditional Formatting (many steps)
     '1) Remove existing conditional formatting
         rng.Cells.FormatConditions.Delete 'Remove the worksheet conditional formatting
@@ -3785,216 +3778,287 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
             Set usedRange = rng.offset(HeaderRow, 0).Resize(numRows, rng.Columns.count)
             On Error GoTo 0
         End If
-    
-'    '3) Add the standard conditional formatting
-'        If Not usedRange Is Nothing Then
-'            With usedRange
-'                .FormatConditions.add Type:=xlExpression, _
-'                    Formula1:="=MOD(LIGNE();2)=1"
-'                .FormatConditions(.FormatConditions.count).SetFirstPriority
-'                With .FormatConditions(1).Font
-'                    .Strikethrough = False
-'                    .TintAndShade = 0
-'                End With
-'                With .FormatConditions(1).Interior
-'                    .PatternColorIndex = xlAutomatic
-'                    .ThemeColor = xlThemeColorAccent1
-'                    .TintAndShade = 0.799981688894314
-'                End With
-'                .FormatConditions(1).StopIfTrue = False
-'            End With
-'        Else
-'            MsgBox "usedRange is Nothing!"
-'        End If
         
-    'Specific formats to worksheets
-    Dim lastUsedRow As Long
-    lastUsedRow = rng.Rows.count
-    If lastUsedRow = HeaderRow Then
-        Exit Sub
-    End If
-    
-    Dim firstDataRow As Long
-    firstDataRow = HeaderRow + 1
-    
-    Select Case rng.Worksheet.CodeName
-        Case "wshBD_Clients"
+    '3) Specific columns formats to worksheets
+        Dim lastUsedRow As Long
+        lastUsedRow = rng.Rows.count
+        If lastUsedRow = HeaderRow Then
+            Exit Sub
+        End If
+        
+        Debug.Print "765 - " & ws.Name, rng.Address, usedRange.Address, lastUsedRow
+        
+        Dim rngUnion As Range
+        
+        Dim firstDataRow As Long
+        firstDataRow = HeaderRow + 1
+        
+        Select Case rng.Worksheet.CodeName
+            Case "wshBD_Clients"
+                
+            Case "wshBD_Fournisseurs"
+                
+            Case "wshCC_Régularisations" '2025-02-12 @ 07:58
+                With wshCC_Régularisations
+                    .Range(.Cells(2, fREGULRegulID), .Cells(lastUsedRow, fREGULTimeStamp)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fREGULInvNo), .Cells(lastUsedRow, fREGULInvNo)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fREGULClientNom), .Cells(lastUsedRow, fREGULClientNom)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fREGULDescription), .Cells(lastUsedRow, fREGULDescription)).HorizontalAlignment = xlLeft
+                    With .Range(.Cells(2, fREGULHono), .Cells(lastUsedRow, fREGULTVQ))
+                        .HorizontalAlignment = xlRight
+                        .NumberFormat = "#,##0.00"
+                    End With
+                    .Range(.Cells(2, fREGULTimeStamp), .Cells(lastUsedRow, fREGULTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+                    
+            Case "wshDEB_Récurrent"  '2025-02-12 @ 08:06
+                With wshDEB_Récurrent
+                    .Range(.Cells(2, fDebRNoDebRec), .Cells(lastUsedRow, fDebRTimeStamp)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fDebRDate), .Cells(lastUsedRow, fDebRDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fDebRType), .Cells(lastUsedRow, fDebRReference)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fDebRCompte), .Cells(lastUsedRow, fDebRCompte)).HorizontalAlignment = xlLeft
+                    With .Range(.Cells(2, fDebRTotal), .Cells(lastUsedRow, fDebRTVQ))
+                        .HorizontalAlignment = xlRight
+                        .NumberFormat = "#,##0.00"
+                    End With
+                    .Range(.Cells(2, fDebRTimeStamp), .Cells(lastUsedRow, fDebRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+           
+            Case "wshDEB_Trans" '2025-02-12 @ 08:22
+                With wshDEB_Trans
+                    Set rngUnion = Application.Union( _
+                        .Range(ws.Cells(2, fDebTType), ws.Cells(lastUsedRow, fDebTBeneficiaire)), _
+                        .Range(ws.Cells(2, fDebTDescription), ws.Cells(lastUsedRow, fDebTReference)), _
+                        .Range(ws.Cells(2, fDebTCompte), ws.Cells(lastUsedRow, fDebTCompte)), _
+                        .Range(ws.Cells(2, fDebTAutreRemarque), ws.Cells(lastUsedRow, fDebTAutreRemarque)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fDebTNoEntrée), .Cells(lastUsedRow, fDebTTimeStamp)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fDebTDate), .Cells(lastUsedRow, fDebTDate)).NumberFormat = "yyyy-mm-dd"
+                    'Appliquer l'alignement à gauche sur les plages combinées
+                    With .Range(.Cells(2, fDebTTotal), .Cells(lastUsedRow, fDebTDépense))
+                        .HorizontalAlignment = xlRight
+                        .NumberFormat = "#,##0.00"
+                    End With
+                    .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
             
-        Case "wshBD_Fournisseurs"
+            Case "wshENC_Détails" '2025-02-12 @ 08:33
+                With wshENC_Détails
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)), _
+                        .Range(.Cells(2, fEncDInvNo), .Cells(lastUsedRow, fEncDInvNo)), _
+                        .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fEncDCustomer), .Cells(lastUsedRow, fEncDCustomer)).HorizontalAlignment = xlLeft
+                    With .Range(.Cells(2, fEncDPayAmount), .Cells(lastUsedRow, fEncDPayAmount))
+                        .HorizontalAlignment = xlRight
+                        .NumberFormat = "#,##0.00"
+                    End With
+                    .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)).NumberFormat = "0"
+                    .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fEncDTimeStamp), .Cells(lastUsedRow, fEncDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
             
-        Case "wshDEB_Récurrent"
-            With wshDEB_Récurrent
-                .Range("A2:M" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("C2:C" & lastUsedRow & _
-                     ", D2:D" & lastUsedRow & _
-                     ", E2:E" & lastUsedRow & _
-                     ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("I2:M" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "#,##0.00 $"
+            Case "wshENC_Entête" '2025-02-12 @ 08:39
+                With wshENC_Entête
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)), _
+                        .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)), _
+                        .Range(.Cells(2, fEncECodeClient), .Cells(lastUsedRow, fEncECodeClient)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fEncECustomer), .Cells(lastUsedRow, fEncECustomer)), _
+                        .Range(.Cells(2, fEncEPayType), .Cells(lastUsedRow, fEncEPayType)), _
+                        .Range(.Cells(2, fEncENotes), .Cells(lastUsedRow, fEncENotes)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).HorizontalAlignment = xlRight
+                    
+                    .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)).NumberFormat = "0"
+                    .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(2, fEncETimeStamp), .Cells(lastUsedRow, fEncETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
-                .Range("N2:N" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-       
-        Case "wshDEB_Trans"
-            With wshDEB_Trans
-                .Range("A2:R" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("C2:C" & lastUsedRow & ", " & _
-                       "D2:D" & lastUsedRow & ", " & _
-                       "F2:F" & lastUsedRow & ", " & _
-                       "G2:G" & lastUsedRow & ", " & _
-                       "I2:I" & lastUsedRow & ", " & _
-                       "Q2:Q" & lastUsedRow).HorizontalAlignment = xlLeft
-                With .Range("K2:P" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "#,##0.00 $"
+            
+            Case "wshFAC_Comptes_Clients" '2025-01-25 @ 15:35
+                With wshFAC_Comptes_Clients
+                    .Range(.Cells(3, fFacCCInvNo), .Cells(lastUsedRow, fFacCCInvoiceDate)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacCCCodeClient), .Cells(lastUsedRow, fFacCCDueDate)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacCCCustomer), .Cells(lastUsedRow, fFacCCCustomer)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacCCInvoiceDate), .Cells(lastUsedRow, fFacCCInvoiceDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(3, fFacCCDueDate), .Cells(lastUsedRow, fFacCCDueDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).NumberFormat = "###,##0.00"
+                    .Range(.Cells(3, fFacCCTimeStamp), .Cells(lastUsedRow, fFacCCTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
-                .Range("R2:R" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                
-                .Range("A1").CurrentRegion.EntireColumn.AutoFit
-            End With
-        
-        Case "wshENC_Détails"
-            With wshENC_Détails
-                .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C2:C" & lastUsedRow & ", E2:EB" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("E2:E" & lastUsedRow).HorizontalAlignment = xlRight
-                
-                .Range("A2:A" & lastUsedRow).NumberFormat = "0"
-                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("E2:E" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-        
-        Case "wshENC_Entête"
-            With wshENC_Entête
-                .Range("A2:A" & lastUsedRow & ", B2:B" & lastUsedRow & ", D2:D" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("C2:C" & lastUsedRow & ", E2:E" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("F2:F" & lastUsedRow).HorizontalAlignment = xlRight
-                
-                .Range("A2:A" & lastUsedRow).NumberFormat = "0"
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("F2:F" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("H2:H" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-        
-        Case "wshFAC_Comptes_Clients" '2025-01-25 @ 15:35
-            With wshFAC_Comptes_Clients
-                .Range(.Cells(3, fFacCCInvNo), .Cells(lastUsedRow, fFacCCInvoiceDate)).HorizontalAlignment = xlCenter
-                .Range(.Cells(3, fFacCCCodeClient), .Cells(lastUsedRow, fFacCCDueDate)).HorizontalAlignment = xlCenter
-                .Range(.Cells(3, fFacCCCustomer), .Cells(lastUsedRow, fFacCCCustomer)).HorizontalAlignment = xlLeft
-                .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).HorizontalAlignment = xlRight
-                .Range(.Cells(3, fFacCCInvoiceDate), .Cells(lastUsedRow, fFacCCInvoiceDate)).NumberFormat = "yyyy-mm-dd"
-                .Range(.Cells(3, fFacCCDueDate), .Cells(lastUsedRow, fFacCCDueDate)).NumberFormat = "yyyy-mm-dd"
-                .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).NumberFormat = "###,##0.00 $"
-                .Range(.Cells(3, fFacCCTimeStamp), .Cells(lastUsedRow, fFacCCTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                
-                .Range("A1").CurrentRegion.EntireColumn.AutoFit
-            End With
-        
-        Case "wshFAC_Détails" '2025-01-25 @ 14:20
-            With usedRange
-                .Range("A2:A" & lastUsedRow & ",F2:F" & lastUsedRow & ", G2:G" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("C2:E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("C2:C" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("D2:E" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("G2:G" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-        
-        Case "wshFAC_Entête" '2025-01-25 @ 14:49
-            With wshFAC_Entête
-                .Range("A2:D" & lastUsedRow & ", W2:W" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("E2:I" & lastUsedRow & ", K2:K" & lastUsedRow & ", M2:M" & lastUsedRow & ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("J2:J" & lastUsedRow & ", L2:L" & lastUsedRow & ", N2:N" & lastUsedRow & ", P2:V" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("Q2:Q" & lastUsedRow & ",S2:S" & lastUsedRow).NumberFormat = "#0.000 %"
-            End With
+            
+            Case "wshFAC_Détails" '2025-02-12 @ 10:15
+                With wshFAC_Détails
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(3, fFacDInvNo), .Cells(lastUsedRow, fFacDInvNo)), _
+                        .Range(.Cells(3, fFacDInvRow), .Cells(lastUsedRow, fFacDInvRow)), _
+                        .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacDDescription), .Cells(lastUsedRow, fFacDDescription)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacDHeures), .Cells(lastUsedRow, fFacDHonoraires)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacDHeures), .Cells(lastUsedRow, fFacDHonoraires)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+            
+            Case "wshFAC_Entête" '2025-02-12 @ 10:36
+                With wshFAC_Entête
+                    .Range(.Cells(3, fFacEInvNo), .Cells(lastUsedRow, fFacECustID)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacEContact), .Cells(lastUsedRow, fFacEAdresse3)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacEAF1Desc), .Cells(lastUsedRow, fFacEAF1Desc)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacEAF2Desc), .Cells(lastUsedRow, fFacEAF2Desc)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacEAF3Desc), .Cells(lastUsedRow, fFacEAF3Desc)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fFacEHonoraires), .Cells(lastUsedRow, fFacEHonoraires)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEHonoraires), .Cells(lastUsedRow, fFacEHonoraires)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEAutresFrais1), .Cells(lastUsedRow, fFacEAutresFrais1)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEAutresFrais1), .Cells(lastUsedRow, fFacEAutresFrais1)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEAutresFrais2), .Cells(lastUsedRow, fFacEAutresFrais2)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEAutresFrais2), .Cells(lastUsedRow, fFacEAutresFrais2)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEAutresFrais3), .Cells(lastUsedRow, fFacEAutresFrais3)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEAutresFrais3), .Cells(lastUsedRow, fFacEAutresFrais3)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEMntTPS), .Cells(lastUsedRow, fFacEMntTPS)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEMntTPS), .Cells(lastUsedRow, fFacEMntTPS)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEMntTVQ), .Cells(lastUsedRow, fFacEMntTVQ)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEMntTVQ), .Cells(lastUsedRow, fFacEMntTVQ)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEARTotal), .Cells(lastUsedRow, fFacEARTotal)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEARTotal), .Cells(lastUsedRow, fFacEARTotal)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEDépôt), .Cells(lastUsedRow, fFacEDépôt)).HorizontalAlignment = xlRight
+                    .Range(.Cells(3, fFacEDépôt), .Cells(lastUsedRow, fFacEDépôt)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(3, fFacEDateFacture), .Cells(lastUsedRow, fFacEDateFacture)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).HorizontalAlignment = xlCenter
 
-        Case "wshFAC_Projets_Détails"
-            With wshFAC_Projets_Détails
-                .Range("A2:A" & lastUsedRow & ", C2:G" & lastUsedRow & ", I2:J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("H2:I" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("H2:H" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("I2:I" & lastUsedRow).HorizontalAlignment = xlCenter
-            End With
-        
-        Case "wshFAC_Projets_Entête"
-            With wshFAC_Projets_Entête
-                .Range("A2:A" & lastUsedRow & ", C2:D" & lastUsedRow & ", F2:F" & lastUsedRow & _
-                       ", J2:J" & lastUsedRow & ", N2:N" & lastUsedRow & ", R2:R" & lastUsedRow & _
-                       ", V2:V" & lastUsedRow & ", Z2:AA" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).HorizontalAlignment = xlLeft
-                .Range("E2:E" & lastUsedRow & ", I2:I" & lastUsedRow & ", M2:M" & lastUsedRow & _
-                        ", Q2:Q" & lastUsedRow & ", U2:U" & lastUsedRow & ", Y2:Y" & lastUsedRow).NumberFormat = "#,##0.00 $"
-                .Range("G2:H" & lastUsedRow).NumberFormat = "#,##0.00"
-            End With
-        
-        Case "wshFAC_Sommaire_Taux"
-            With wshFAC_Sommaire_Taux
-                .Range("A2:C" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("D2:E" & lastUsedRow).HorizontalAlignment = xlRight
-                .Range("D2:D" & lastUsedRow).NumberFormat = "#,##0.00"
-                .Range("E2:E" & lastUsedRow).NumberFormat = "###,##0.00 $"
-                .Range("F2:F" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-        
-        Case "wshGL_EJ_Recurrente"
-            With wshGL_EJ_Recurrente
-                Union(.Range("A2:A" & lastUsedRow), _
-                      .Range("C2:C" & lastUsedRow), _
-                      .Range("H2:H" & lastUsedRow), _
-                      .Range("K2:K" & lastUsedRow)).HorizontalAlignment = xlCenter
-                Union(.Range("B2:B" & lastUsedRow), _
-                      .Range("D2:D" & lastUsedRow), _
-                      .Range("G2:G" & lastUsedRow), _
-                      .Range("J2:J" & lastUsedRow)).HorizontalAlignment = xlLeft
-                With .Range("E2:F" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "###,##0.00 $"
+                    .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).NumberFormat = "#0.000 %"
+                    .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).NumberFormat = "#0.000 %"
                 End With
-            End With
-        
-        Case "wshGL_Trans"
-            With wshGL_Trans
-                .Range("A2:J" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("B2:B" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("C2:C" & lastUsedRow & _
-                    ", D2:D" & lastUsedRow & _
-                    ", F2:F" & lastUsedRow & _
-                    ", I2:I" & lastUsedRow) _
-                        .HorizontalAlignment = xlLeft
-                With .Range("G2:H" & lastUsedRow)
-                    .HorizontalAlignment = xlRight
-                    .NumberFormat = "#,##0.00 $"
+    
+            Case "wshFAC_Projets_Détails" '2025-02-12 @ 11:42
+                With wshFAC_Projets_Détails
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fFacPDProjetID), .Cells(lastUsedRow, fFacPDProjetID)) _
+                        .Range(.Cells(2, fFacPDClientID), .Cells(lastUsedRow, fFacPDProf)), _
+                        .Range(.Cells(2, fFacPDestDetruite), .Cells(lastUsedRow, fFacPDTimeStamp)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fFacPDNomClient), .Cells(lastUsedRow, fFacPDNomClient)).HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).HorizontalAlignment = xlRight
+                    
+                    .Range(.Cells(2, fFacPDDate), .Cells(lastUsedRow, fFacPDDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(2, fFacPDTimeStamp), .Cells(lastUsedRow, fFacPDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
-                .Range("J2:J" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-            End With
-        
-        Case "wshTEC_Local"
-            With wshTEC_Local
-                .Range("A2:P" & lastUsedRow).HorizontalAlignment = xlCenter
-                .Range("F2:F" & lastUsedRow & ", G2:G" & lastUsedRow & ", I2:I" & lastUsedRow & _
-                            ", O2:O" & lastUsedRow).HorizontalAlignment = xlLeft
-                            
-                .Range("H2:H" & lastUsedRow).NumberFormat = "#0.00"
-                .Range("D2:D" & lastUsedRow).NumberFormat = "yyyy-mm-dd"
-                .Range("K2:K" & lastUsedRow).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                .Columns("F").ColumnWidth = 40
-                .Columns("G").ColumnWidth = 55
-                .Columns("I").ColumnWidth = 20
-            End With
+            
+            Case "wshFAC_Projets_Entête" '2025-02-12 @ 12:41
+                With wshFAC_Projets_Entête
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fFacPEProjetID), .Cells(lastUsedRow, fFacPEProjetID)) _
+                        .Range(.Cells(2, fFacPEClientID), .Cells(lastUsedRow, fFacPEDate)), _
+                        .Range(.Cells(2, fFacPEProf1), .Cells(lastUsedRow, fFacPEProf1)), _
+                        .Range(.Cells(2, fFacPEProf2), .Cells(lastUsedRow, fFacPEProf2)), _
+                        .Range(.Cells(2, fFacPEProf3), .Cells(lastUsedRow, fFacPEProf3)), _
+                        .Range(.Cells(2, fFacPEProf4), .Cells(lastUsedRow, fFacPEProf4)), _
+                        .Range(.Cells(2, fFacPEProf5), .Cells(lastUsedRow, fFacPEProf5)), _
+                        .Range(.Cells(2, fFacPEestDetruite), .Cells(lastUsedRow, fFacPETimeStamp)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fFacPENomClient), .Cells(lastUsedRow, fFacPENomClient)).HorizontalAlignment = xlLeft
+                    
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fFacPEHonoTotal), .Cells(lastUsedRow, fFacPEHonoTotal)) _
+                        .Range(.Cells(2, fFacPEHres1), .Cells(lastUsedRow, fFacPEHono1)), _
+                        .Range(.Cells(2, fFacPEHres2), .Cells(lastUsedRow, fFacPEHono2)), _
+                        .Range(.Cells(2, fFacPEHres3), .Cells(lastUsedRow, fFacPEHono3)), _
+                        .Range(.Cells(2, fFacPEHres4), .Cells(lastUsedRow, fFacPEHono4)), _
+                        .Range(.Cells(2, fFacPEHres5), .Cells(lastUsedRow, fFacPEHono5)) _
+                        )
+                     If Not rngUnion Is Nothing Then
+                        rngUnion.HorizontalAlignment = xlRight
+                        rngUnion.NumberFormat = "###,##0.00"
+                    End If
+                End With
+            
+            Case "wshFAC_Sommaire_Taux" '2025-02-12 @ 12:50
+                With wshFAC_Sommaire_Taux
+                    .Range(.Cells(2, fFacSTInvNo), .Cells(lastUsedRow, fFacSTProf)).HorizontalAlignment = xlCenter
+                    
+                    .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).HorizontalAlignment = xlRight
+                    .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).NumberFormat = "#,##0.00"
+                    .Range(.Cells(2, fFacSTTimeStamp), .Cells(lastUsedRow, fFacSTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+            
+            Case "wshGL_EJ_Recurrente" '2025-02-12 @ 12:59
+                With wshGL_EJ_Recurrente
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fGlEjRNoEjR), .Cells(lastUsedRow, fGlEjRNoEjR)) _
+                        .Range(.Cells(2, fGlEjRNoCompte), .Cells(lastUsedRow, fGlEjRNoCompte)), _
+                        .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fGlEjRDescription), .Cells(lastUsedRow, fGlEjRDescription)) _
+                        .Range(.Cells(2, fGlEjRCompte), .Cells(lastUsedRow, fGlEjRCompte)), _
+                        .Range(.Cells(2, fGlEjRAutreRemarque), .Cells(lastUsedRow, fGlEjRAutreRemarque)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).HorizontalAlignment = xlRight
+                    .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).NumberFormat = "###,##0.00 $"
+                    .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+            
+            Case "wshGL_Trans" '2025-02-12 @ 13:06
+                With wshGL_Trans
+                    .Range(.Cells(2, fGlTNoCompte), .Cells(lastUsedRow, fGlTTimeStamp)).HorizontalAlignment = xlCenter
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTSource)), _
+                        .Range(.Cells(2, fGlTCompte), .Cells(lastUsedRow, fGlTCompte)), _
+                        .Range(.Cells(2, fGlTAutreRemarque), .Cells(lastUsedRow, fGlTAutreRemarque)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
+                    .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).HorizontalAlignment = xlRight
+                    .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).NumberFormat = "###,##0.00"
+                    
+                    .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(2, fGlTTimeStamp), .Cells(lastUsedRow, fGlTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                End With
+            
+            Case "wshTEC_Local" '2025-02-12 @ 13:14
+                With wshTEC_Local
+                    .Range(.Cells(3, fTECTECID), .Cells(lastUsedRow, fTECNoFacture)).HorizontalAlignment = xlCenter
+                    Set rngUnion = Application.Union( _
+                        .Range(.Cells(3, fTECClientNom), .Cells(lastUsedRow, fTECDescription)), _
+                        .Range(.Cells(3, fTECCommentaireNote), .Cells(lastUsedRow, fTECCommentaireNote)), _
+                        .Range(.Cells(3, fTECVersionApp), .Cells(lastUsedRow, fTECVersionApp)) _
+                        )
+                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
+                    .Range(.Cells(3, fTECHeures), .Cells(lastUsedRow, fTECHeures)).NumberFormat = "#0.00"
+                    .Range(.Cells(3, fTECDate), .Cells(lastUsedRow, fTECDate)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(3, fTECDateFacturee), .Cells(lastUsedRow, fTECDateFacturee)).NumberFormat = "yyyy-mm-dd"
+                    .Range(.Cells(3, fTECDateSaisie), .Cells(lastUsedRow, fTECDateSaisie)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
+                    .Columns(fTECClientNom).ColumnWidth = 40
+                    .Columns(fTECDescription).ColumnWidth = 55
+                    .Columns(fTECCommentaireNote).ColumnWidth = 20
+                End With
+        End Select
 
-    End Select
-
+    '4) Common stuff to all worksheets
+        rng.EntireColumn.AutoFit 'Autofit all columns
+        rng.RowHeight = 15
+    
     'Libérer la mémoire
+    On Error Resume Next
+    Set rngUnion = Nothing
     Set usedRange = Nothing
-
+    On Error GoTo 0
+    
 End Sub
 
 Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
