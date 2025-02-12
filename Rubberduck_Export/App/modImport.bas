@@ -3,7 +3,7 @@ Option Explicit
 
 Sub ChartOfAccount_Import_All() '2024-02-17 @ 07:21
 
-    startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ChartOfAccount_Import_All", "", 0)
 
     'Clear all cells, but the headers, in the target worksheet
     wshAdmin.Range("T10").CurrentRegion.offset(2, 0).ClearContents
@@ -52,7 +52,7 @@ End Sub
 
 Sub Client_List_Import_All() 'Using ADODB - 2024-02-25 @ 10:23
     
-    startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Client_List_Import_All", "", 0)
     
 '    Application.ScreenUpdating = False
     
@@ -112,7 +112,7 @@ End Sub
 
 Sub DEB_Récurrent_Import_All() '2024-07-08 @ 08:43
     
-    startTime = Timer: Call Log_Record("modImport:DEB_Récurrent_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Récurrent_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -165,7 +165,7 @@ End Sub
 
 Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
     
-    startTime = Timer: Call Log_Record("modImport:DEB_Trans_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:DEB_Trans_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -217,7 +217,7 @@ End Sub
 
 Sub ENC_Détails_Import_All() '2025-01-16 @ 16:55
     
-    startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -269,7 +269,7 @@ End Sub
 
 Sub ENC_Entête_Import_All() '2024-03-07 @ 17:38
     
-    startTime = Timer: Call Log_Record("modImport:ENC_Entête_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ENC_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -321,7 +321,7 @@ End Sub
 
 Sub CC_Régularisations_Import_All() '2025-01-05 @ 11:23
     
-    startTime = Timer: Call Log_Record("modImport:CC_Régularisations_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:CC_Régularisations_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -375,7 +375,7 @@ End Sub
 
 Sub FAC_Comptes_Clients_Import_All() '2024-08-07 @ 17:41
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Comptes_Clients_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -427,7 +427,7 @@ End Sub
 
 Sub FAC_Détails_Import_All() '2024-03-07 @ 17:38
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Détails_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -479,7 +479,7 @@ End Sub
 
 Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Entête_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -531,7 +531,7 @@ End Sub
 
 Sub FAC_Sommaire_Taux_Import_All() '2024-07-11 @ 09:21
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Sommaire_Taux_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -583,7 +583,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Import_All() '2024-07-20 @ 13:25
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -669,7 +669,7 @@ End Sub
 
 'Sub FAC_Projets_Détails_Import_All_OK() '2024-07-20 @ 13:25
 '
-'    startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
+'    Dim startTime as Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Détails_Import_All", "", 0)
 '
 '    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
 '
@@ -740,7 +740,7 @@ End Sub
 '
 Sub FAC_Projets_Entête_Import_All() '2024-07-11 @ 09:21
     
-    startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:FAC_Projets_Entête_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -816,7 +816,7 @@ End Sub
 
 Sub Fournisseur_List_Import_All() 'Using ADODB - 2024-07-03 @ 15:43
     
-    startTime = Timer: Call Log_Record("modImport:Fournisseur_List_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:Fournisseur_List_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -872,7 +872,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Import_All() '2024-03-03 @ 11:36
 
-    startTime = Timer: Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_EJ_Recurrente_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -932,7 +932,7 @@ End Sub
 
 Sub GL_Trans_Import_All() '2024-03-03 @ 10:13
     
-    startTime = Timer: Call Log_Record("modImport:GL_Trans_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:GL_Trans_Import_All", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -991,7 +991,7 @@ End Sub
 
 Sub TEC_Import_All()                             '2024-02-14 @ 06:19
     
-    startTime = Timer: Call Log_Record("modImport:TEC_Import_All", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:TEC_Import_All", "", 0)
     
 '    Application.ScreenUpdating = False
     
@@ -1039,7 +1039,7 @@ End Sub
 
 Sub ResizeTable(targetSheet As Worksheet, tableName As String)
 
-    startTime = Timer: Call Log_Record("modImport:ResizeTable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ResizeTable", "", 0)
 
     Dim tbl As ListObject
     Dim lastRow As Long
@@ -1063,7 +1063,7 @@ End Sub
 
 Sub ApplyFormatting(targetSheet As Worksheet, tableName As String)
 
-    startTime = Timer: Call Log_Record("modImport:ApplyFormatting", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ApplyFormatting", "", 0)
     
     Dim tbl As ListObject
     

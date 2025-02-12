@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -75,7 +75,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", Target.Address, 0)
     
     Debug.Print "#013 - " & Target.Address
     
@@ -139,7 +139,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Change", Target.Address, 0)
     
     Dim fullDate As Variant
     
@@ -182,7 +182,7 @@ End Sub
 
 Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
-    startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     

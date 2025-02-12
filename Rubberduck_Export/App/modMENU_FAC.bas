@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub PreparationFacture_Click()
     
-    startTime = Timer: Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -45,7 +45,7 @@ End Sub
 'Option # 3
 Sub FAC_Historique_Click()
 
-    startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -71,7 +71,7 @@ End Sub
 'Option # 4
 Sub FAC_Confirmation_Click()
 
-    startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", 0)
     
     fromMenu = True '2024-09-03 @ 06:20
 

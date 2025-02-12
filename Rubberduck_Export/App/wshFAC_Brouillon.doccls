@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
 
     If fromMenu = False Then
         Debug.Print "#008 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
@@ -71,7 +71,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
-    startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
@@ -150,7 +150,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
     
     Dim targetAddress As String
     On Error Resume Next

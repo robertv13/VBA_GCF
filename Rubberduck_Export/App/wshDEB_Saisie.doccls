@@ -8,7 +8,7 @@ End Sub
 
 Private Sub Worksheet_Activate()
 
-    startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
     
     If fromMenu = False Then
         Exit Sub

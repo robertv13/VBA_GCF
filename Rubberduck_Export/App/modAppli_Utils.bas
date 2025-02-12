@@ -30,7 +30,7 @@ End Sub
 
 Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:VérifierIntégrité", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierIntégrité", "", 0)
 
     Application.ScreenUpdating = True
     
@@ -445,7 +445,7 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
     
-    startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
     
     'Check if the worksheet exists
     Dim wsExists As Boolean
@@ -471,7 +471,7 @@ Sub CreateOrReplaceWorksheet(wsName As String)
 End Sub
 Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkPlanComptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkPlanComptable", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -579,7 +579,7 @@ End Sub
 
 Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkClients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkClients", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -711,7 +711,7 @@ End Sub
 
 Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFournisseurs", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFournisseurs", "", 0)
 
     Application.ScreenUpdating = False
 
@@ -804,7 +804,7 @@ End Sub
 
 Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -949,7 +949,7 @@ End Sub
 
 Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1099,7 +1099,7 @@ End Sub
 
 Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1257,7 +1257,7 @@ End Sub
 
 Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1366,7 +1366,7 @@ End Sub
 
 Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1565,7 +1565,7 @@ End Sub
 
 Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1673,7 +1673,7 @@ End Sub
 
 Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -1869,7 +1869,7 @@ End Sub
 
 Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2102,7 +2102,7 @@ End Sub
 
 Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2213,7 +2213,7 @@ End Sub
 
 Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2378,7 +2378,7 @@ End Sub
 
 Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2493,7 +2493,7 @@ End Sub
 
 Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_Trans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_Trans", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2716,7 +2716,7 @@ End Sub
 
 Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -2838,7 +2838,7 @@ End Sub
 
 Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -3121,7 +3121,7 @@ End Sub
 
 Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -4016,7 +4016,7 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
-    startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4198,7 +4198,7 @@ End Sub
 
 'Sub Get_Deplacements_From_TEC_OK()  '2024-09-05 @ 10:22
 '
-'    startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", 0)
+'    Dim startTime as Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", 0)
 '
 '    Application.ScreenUpdating = False
 '    Application.EnableEvents = False
@@ -4399,7 +4399,7 @@ End Sub
 
 Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     
-    startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)

@@ -9,7 +9,7 @@ End Sub
 
 Sub DEB_Saisie_Update()
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", "", 0)
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> "" Then
@@ -61,7 +61,7 @@ End Sub
 
 Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -155,7 +155,7 @@ End Sub
 
 Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    startTime = Timer: Call Log_Record("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
     
     Application.ScreenUpdating = False
     
@@ -203,7 +203,7 @@ End Sub
 
 Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", 0)
 
     Dim montant As Double, dateDebours As Date
     Dim descGL_Trans As String, source As String, deboursType As String
@@ -294,7 +294,7 @@ End Sub
 
 Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:Load_DEB_Auto_Into_JE", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Load_DEB_Auto_Into_JE", "", 0)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto, rowDEB As Long
@@ -338,7 +338,7 @@ End Sub
 
 Sub Save_DEB_Recurrent(ll As Long)
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", "", 0)
     
     Dim rowDEBLast As Long
     rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).row  'Last Used Row in wshDEB_Saisie
@@ -352,7 +352,7 @@ End Sub
 
 Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -429,7 +429,7 @@ End Sub
 
 Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -472,7 +472,7 @@ End Sub
 
 Sub DEB_Recurrent_Build_Summary()
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", "", 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -504,7 +504,7 @@ End Sub
 
 Public Sub DEB_Saisie_Clear_All_Cells()
 
-    startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", "", 0)
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False

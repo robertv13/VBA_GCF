@@ -15,7 +15,7 @@ Public Dividendes_Année_AC As Currency, Dividendes_Année_AP As Currency
 
 Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 04:26
     
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutOff, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutOff, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -234,7 +234,7 @@ End Sub
 
 Sub Assembler_États_Financiers()
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
@@ -264,7 +264,7 @@ End Sub
 
 Sub CréerFeuillesEtFormat()
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
@@ -315,7 +315,7 @@ End Sub
 
 Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -336,7 +336,7 @@ End Sub
 
 Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -368,7 +368,7 @@ End Sub
 
 Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -390,7 +390,7 @@ End Sub
 
 Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -426,7 +426,7 @@ End Sub
 
 Sub Assembler_TM_2_Lignes(ws As Worksheet)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wshAdmin
@@ -465,7 +465,7 @@ End Sub
 
 Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -493,7 +493,7 @@ End Sub
 
 Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -558,7 +558,7 @@ End Sub
 
 Sub Assembler_ER_2_Lignes(ws As Worksheet)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wshAdmin
@@ -622,7 +622,7 @@ End Sub
 
 Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -644,7 +644,7 @@ End Sub
 
 Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -689,7 +689,7 @@ End Sub
 
 Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wshAdmin
@@ -739,7 +739,7 @@ End Sub
 
 Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -761,7 +761,7 @@ End Sub
 
 Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -822,7 +822,7 @@ End Sub
 
 Sub Assembler_BNR_2_Lignes(ws As Worksheet)
 
-    startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wshAdmin

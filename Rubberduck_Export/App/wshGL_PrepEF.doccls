@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-'    startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
+'    Dim startTime as Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
 
     Dim ws As Worksheet: Set ws = wshGL_PrepEF
     

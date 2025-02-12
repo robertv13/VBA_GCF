@@ -16,7 +16,7 @@ Sub GL_EJ_Update()
         Exit Sub
     End If
     
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Update", "", 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
     
@@ -57,7 +57,7 @@ End Sub
 
 Sub JE_Renversement_Update()
 
-    startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", "", 0)
     
     If Fn_Is_Ecriture_Balance = False Then
         MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
@@ -132,7 +132,7 @@ End Sub
 
 Sub Save_EJ_Recurrente(ll As Long)
 
-    startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", "", 0)
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).row  'Last Used Row in wshGL_EJ
@@ -146,7 +146,7 @@ End Sub
 
 Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
 
-    startTime = Timer: Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", "", 0)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto, rowJE As Long
@@ -175,7 +175,7 @@ End Sub
 
 Sub GL_EJ_Clear_All_Cells()
 
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", "", 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -542,7 +542,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Build_Summary()
 
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", "", 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -573,7 +573,7 @@ End Sub
 
 Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", "", 0)
 
     Dim ws As Worksheet: Set ws = wshGL_Trans
     
@@ -643,7 +643,7 @@ End Sub
 
 Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -727,7 +727,7 @@ End Sub
 
 Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -777,7 +777,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", "", 0)
 
     Application.ScreenUpdating = False
     
@@ -852,7 +852,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
-    startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", "", 0)
     
     Application.ScreenUpdating = False
     

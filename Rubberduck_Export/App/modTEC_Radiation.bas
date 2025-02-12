@@ -264,7 +264,7 @@ End Sub
 
 Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", firstRow & ", " & lastRow, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", firstRow & ", " & lastRow, 0)
 
     Application.ScreenUpdating = False
     
@@ -329,7 +329,7 @@ End Sub
 
 Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
 
-    startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
     
     'Set the range to look for
     Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("l_tbl_TEC_Local[TECID]")
@@ -401,7 +401,7 @@ End Sub
 
 Sub TEC_Radiation_Back_To_TEC_Menu()
 
-    startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", "", 0)
     
     wshTEC_Radiation.Visible = xlSheetHidden
     

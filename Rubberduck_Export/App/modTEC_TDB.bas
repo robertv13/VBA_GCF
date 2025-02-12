@@ -24,7 +24,7 @@ End Sub
 
 Sub ActualiserTEC_TDB()
 
-    startTime = Timer: Call Log_Record("modTEC_TDB:ActualiserTEC_TDB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_TDB:ActualiserTEC_TDB", "", 0)
     
     Call TEC_Update_TDB_From_TEC_Local
     Call TEC_TdB_Refresh_All_Pivot_Tables

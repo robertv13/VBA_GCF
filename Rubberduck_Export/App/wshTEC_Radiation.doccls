@@ -5,7 +5,7 @@ Public clientCode As String
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
-    startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
     
     If fromMenu = False Then
         Debug.Print "#006 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
@@ -62,7 +62,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
     
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = vbWhite
@@ -86,7 +86,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
     
     Dim fullDate As Variant
     
