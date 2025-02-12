@@ -51,7 +51,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     Dim arr As Variant
     arr = Fn_Get_Plan_Comptable(2) 'Returns array with 2 columns (Code, Description)
     
-    Dim dictSolde As Dictionary: Set dictSolde = New Dictionary
+    Dim dictSoldesParGL As Dictionary: Set dictSoldesParGL = New Dictionary
     Dim arrSolde() As Variant 'GLbalances
     ReDim arrSolde(1 To UBound(arr, 1), 1 To 2)
     Dim newRowID As Long: newRowID = 1
@@ -61,12 +61,12 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To lastUsedRow
         glNo = rngResultAF.Cells(i, 5)
-        If Not dictSolde.Exists(glNo) Then
-            dictSolde.Add glNo, newRowID
+        If Not dictSoldesParGL.Exists(glNo) Then
+            dictSoldesParGL.Add glNo, newRowID
             arrSolde(newRowID, 1) = glNo
             newRowID = newRowID + 1
         End If
-        currRowID = dictSolde(glNo)
+        currRowID = dictSoldesParGL(glNo)
         'Update the summary array
         arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + rngResultAF.Cells(i, 7).Value - rngResultAF.Cells(i, 8).Value
     Next i
@@ -83,7 +83,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     For i = LBound(arr, 1) To UBound(arr, 1)
         glNo = arr(i, 1)
         If glNo <> "" Then
-            r = dictSolde.item(glNo) 'Get the value of the item associated with GLNo
+            r = dictSoldesParGL.item(glNo) 'Get the value of the item associated with GLNo
             If r <> 0 Then
                 ws.Range("D" & currRow).Value = glNo
                 ws.Range("E" & currRow).Value = arr(i, 2)
@@ -139,7 +139,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     Application.EnableEvents = True
     
     'Libérer la mémoire
-    Set dictSolde = Nothing
+    Set dictSoldesParGL = Nothing
     Set rng = Nothing
     
     Call Log_Record("modGL_BV:GL_Trial_Balance_Build", "", startTime)

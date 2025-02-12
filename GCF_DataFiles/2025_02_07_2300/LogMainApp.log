@@ -1,0 +1,2298 @@
+2025-02-07 09:36:45.86 | Guillaume | APP_v5.O.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-07 09:36:46.16 | Guillaume | APP_v5.O.3.xlsb | Validation d'accès serveur terminée |  | 0,1992 secondes
+
+2025-02-07 09:36:46.41 | Guillaume | APP_v5.O.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-07 09:36:46.91 | Guillaume | APP_v5.O.3.xlsb | modAppli:CreateUserActiveFile |  | 0,6836 secondes
+
+2025-02-07 09:36:47.16 | Guillaume | APP_v5.O.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-07 09:36:47.45 | Guillaume | APP_v5.O.3.xlsb | modAppli:SetupUserDateFormat |  | 0,4727 secondes
+
+2025-02-07 09:36:47.70 | Guillaume | APP_v5.O.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-07 09:36:50.06 | Guillaume | APP_v5.O.3.xlsb | modAppli:BackupMasterFile |  | 2,5430 secondes
+
+2025-02-07 09:36:50.30 | Guillaume | APP_v5.O.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-07 09:36:50.72 | Guillaume | APP_v5.O.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,5938 secondes
+
+2025-02-07 09:36:51.01 | Guillaume | APP_v5.O.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-07 09:36:51.25 | Guillaume | APP_v5.O.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,4141 secondes
+
+2025-02-07 09:36:51.49 | Guillaume | APP_v5.O.3.xlsb | modAppli:CodeEssentielDepart |  | 5,7891 secondes
+
+2025-02-07 09:36:51.73 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 09:36:51.00 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 0,4375 secondes
+
+2025-02-07 09:36:53.24 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:36:53.52 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,4531 secondes
+
+2025-02-07 09:36:53.77 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:36:53.00 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:36:55.95 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:36:56.10 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 0,2148 secondes
+
+2025-02-07 09:36:56.23 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:36:56.36 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,2031 secondes
+
+2025-02-07 09:36:56.55 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 2,6172 secondes
+
+2025-02-07 09:36:56.68 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:36:59.22 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,6055 secondes
+
+2025-02-07 09:36:59.36 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 5,6641 secondes
+
+2025-02-07 09:37:01.24 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:37:01.41 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,2656 secondes
+
+2025-02-07 09:37:01.89 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 09:37:02.05 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 09:37:02.20 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date |  | 0,2422 secondes
+
+2025-02-07 09:37:02.36 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,5664 secondes
+
+2025-02-07 09:37:02.52 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 09:37:02.68 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 09:37:03.43 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,8398 secondes
+
+2025-02-07 09:37:03.59 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 09:37:03.88 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 09:37:04.02 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 09:37:04.18 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 09:37:04.57 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,4648 secondes
+
+2025-02-07 09:37:04.70 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 09:37:04.98 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,3477 secondes
+
+2025-02-07 09:37:05.13 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 1,1719 secondes
+
+2025-02-07 09:37:05.26 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 09:37:07.50 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 2,3086 secondes
+
+2025-02-07 09:37:07.63 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 09:37:08.00 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,4414 secondes
+
+2025-02-07 09:37:08.14 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 4,3398 secondes
+
+2025-02-07 09:37:08.38 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 4,8633 secondes
+
+2025-02-07 09:37:08.53 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 6,0859 secondes
+
+2025-02-07 09:37:59.66 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate | LOGI | 
+2025-02-07 09:37:59.80 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,2070 secondes
+
+2025-02-07 09:38:00.86 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] Logiciels | 
+2025-02-07 09:38:00.98 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,1953 secondes
+
+2025-02-07 09:38:01.12 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | 
+2025-02-07 09:38:01.25 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,2031 secondes
+
+2025-02-07 09:38:05.95 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtHeures_Exit |  | 
+2025-02-07 09:38:09.84 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 09:38:09.99 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,2148 secondes
+
+2025-02-07 09:38:11.61 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 09:38:11.75 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 0,1992 secondes
+
+2025-02-07 09:38:12.45 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:38:12.62 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,2344 secondes
+
+2025-02-07 09:38:12.75 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:38:12.88 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:38:14.34 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:38:14.48 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 0,2070 secondes
+
+2025-02-07 09:38:14.61 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:38:14.75 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,2031 secondes
+
+2025-02-07 09:38:14.93 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 2,1055 secondes
+
+2025-02-07 09:38:15.05 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:38:17.35 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,3633 secondes
+
+2025-02-07 09:38:17.50 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 4,8086 secondes
+
+2025-02-07 09:38:19.47 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:38:19.61 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,1992 secondes
+
+2025-02-07 09:38:20.15 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 09:38:20.29 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 09:38:20.46 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date |  | 0,2578 secondes
+
+2025-02-07 09:38:20.61 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,5391 secondes
+
+2025-02-07 09:38:20.76 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 09:38:20.92 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 09:38:21.63 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,7930 secondes
+
+2025-02-07 09:38:21.78 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 09:38:22.06 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 09:38:22.23 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 09:38:22.39 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 09:38:22.66 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,3516 secondes
+
+2025-02-07 09:38:22.81 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 09:38:23.15 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,4336 secondes
+
+2025-02-07 09:38:23.32 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 1,1641 secondes
+
+2025-02-07 09:38:23.46 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 09:38:25.46 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 2,0859 secondes
+
+2025-02-07 09:38:25.62 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 09:38:25.98 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,4453 secondes
+
+2025-02-07 09:38:26.13 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 4,1523 secondes
+
+2025-02-07 09:38:26.39 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 4,6875 secondes
+
+2025-02-07 09:38:26.53 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 5,8516 secondes
+
+2025-02-07 09:38:34.47 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 09:38:34.64 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,2617 secondes
+
+2025-02-07 09:38:37.87 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:38:38.05 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,2539 secondes
+
+2025-02-07 09:38:38.20 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:38:38.35 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:38:39.99 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:38:40.15 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 0,2383 secondes
+
+2025-02-07 09:38:40.30 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:38:40.45 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,2305 secondes
+
+2025-02-07 09:38:40.64 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 2,3633 secondes
+
+2025-02-07 09:38:40.79 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:38:43.32 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,6211 secondes
+
+2025-02-07 09:38:43.49 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 5,3867 secondes
+
+2025-02-07 09:38:46.64 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:38:46.81 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,2500 secondes
+
+2025-02-07 09:38:47.60 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 09:38:47.75 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 09:38:47.93 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date |  | 0,2734 secondes
+
+2025-02-07 09:38:48.13 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,6211 secondes
+
+2025-02-07 09:38:48.28 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 09:38:48.45 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 09:38:49.11 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,7422 secondes
+
+2025-02-07 09:38:49.26 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 09:38:49.52 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 09:38:49.67 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 09:38:49.83 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 09:38:50.09 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,3438 secondes
+
+2025-02-07 09:38:50.25 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 09:38:50.52 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,3555 secondes
+
+2025-02-07 09:38:50.67 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 1,0859 secondes
+
+2025-02-07 09:38:50.83 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 09:38:52.53 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 1,7773 secondes
+
+2025-02-07 09:38:52.68 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 09:38:52.00 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,4023 secondes
+
+2025-02-07 09:38:53.14 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 3,6875 secondes
+
+2025-02-07 09:38:53.37 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 4,1719 secondes
+
+2025-02-07 09:38:53.51 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 5,2930 secondes
+
+2025-02-07 09:39:10.76 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 09:39:10.93 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,2305 secondes
+
+2025-02-07 09:39:12.91 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 09:39:13.05 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,2070 secondes
+
+2025-02-07 09:39:14.16 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 09:39:14.32 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 0,2344 secondes
+
+2025-02-07 09:39:15.12 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:39:15.30 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,2500 secondes
+
+2025-02-07 09:39:15.45 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:39:15.58 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:39:16.99 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:39:17.13 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 15,2617 secondes
+
+2025-02-07 09:39:32.30 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:39:32.45 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,2422 secondes
+
+2025-02-07 09:39:32.66 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 17,1680 secondes
+
+2025-02-07 09:39:32.82 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:39:35.34 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,6016 secondes
+
+2025-02-07 09:39:35.49 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 20,1250 secondes
+
+2025-02-07 09:39:35.67 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:39:35.83 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,2422 secondes
+
+2025-02-07 09:39:36.02 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 09:39:36.17 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,2109 secondes
+
+2025-02-07 09:39:36.48 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 09:39:36.64 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,2227 secondes
+
+2025-02-07 09:39:38.95 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 09:39:39.08 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 0,2031 secondes
+
+2025-02-07 09:39:39.95 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:39:40.11 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,2344 secondes
+
+2025-02-07 09:39:40.25 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:39:40.38 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:39:41.86 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:39:41.99 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 0,1992 secondes
+
+2025-02-07 09:39:42.13 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:39:42.25 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,1953 secondes
+
+2025-02-07 09:39:42.45 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 2,1367 secondes
+
+2025-02-07 09:39:42.58 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:39:44.93 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,4219 secondes
+
+2025-02-07 09:39:45.08 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 4,8984 secondes
+
+2025-02-07 09:39:47.95 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:39:48.07 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,1992 secondes
+
+2025-02-07 09:39:48.66 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 09:39:48.79 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 09:39:48.93 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date |  | 0,2031 secondes
+
+2025-02-07 09:39:49.06 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,4766 secondes
+
+2025-02-07 09:39:49.20 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 09:39:49.34 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 09:39:49.99 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,7109 secondes
+
+2025-02-07 09:39:50.13 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 09:39:50.39 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 09:39:50.52 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 09:39:50.66 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 09:39:50.91 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,3242 secondes
+
+2025-02-07 09:39:51.05 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 09:39:51.32 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,3398 secondes
+
+2025-02-07 09:39:51.46 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 1,0117 secondes
+
+2025-02-07 09:39:51.59 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 09:39:53.23 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 1,7031 secondes
+
+2025-02-07 09:39:53.36 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 09:39:53.72 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,4258 secondes
+
+2025-02-07 09:39:53.89 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 3,5938 secondes
+
+2025-02-07 09:39:54.14 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 4,1055 secondes
+
+2025-02-07 09:39:54.30 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 5,1875 secondes
+
+2025-02-07 09:40:11.09 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 09:40:11.25 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,2500 secondes
+
+2025-02-07 09:40:15.03 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 09:40:15.18 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,2305 secondes
+
+2025-02-07 09:40:16.11 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 09:40:16.26 | Guillaume | APP_v5.O.3.xlsb | modMenu:menuTEC_Click |  | 0,2383 secondes
+
+2025-02-07 09:40:19.86 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 09:40:20.04 | Guillaume | APP_v5.O.3.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,2734 secondes
+
+2025-02-07 09:40:20.21 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 09:40:20.36 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 09:40:21.99 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 
+2025-02-07 09:40:22.14 | Guillaume | APP_v5.O.3.xlsb | modImport:ResizeTable |  | 0,2305 secondes
+
+2025-02-07 09:40:22.29 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 09:40:22.44 | Guillaume | APP_v5.O.3.xlsb | modImport:ApplyFormatting |  | 0,2383 secondes
+
+2025-02-07 09:40:22.64 | Guillaume | APP_v5.O.3.xlsb | modImport:Client_List_Import_All |  | 2,3672 secondes
+
+2025-02-07 09:40:22.79 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 09:40:25.31 | Guillaume | APP_v5.O.3.xlsb | modImport:TEC_Import_All |  | 2,6172 secondes
+
+2025-02-07 09:40:25.49 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Activate |  | 5,3711 secondes
+
+2025-02-07 09:40:27.49 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 09:40:27.65 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,2383 secondes
+
+2025-02-07 09:40:28.40 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 09:40:28.55 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 09:40:28.70 | Guillaume | APP_v5.O.3.xlsb | modFunctions:Fn_Complete_Date |  | 0,2344 secondes
+
+2025-02-07 09:40:28.86 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,5312 secondes
+
+2025-02-07 09:40:28.00 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 09:40:29.16 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 09:40:29.80 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,7266 secondes
+
+2025-02-07 09:40:29.96 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 09:40:30.21 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 09:40:30.36 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 09:40:30.51 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 09:40:30.76 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,3320 secondes
+
+2025-02-07 09:40:30.93 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 09:40:31.21 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,3750 secondes
+
+2025-02-07 09:40:31.36 | Guillaume | APP_v5.O.3.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 1,0859 secondes
+
+2025-02-07 09:40:31.55 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 09:40:33.25 | Guillaume | APP_v5.O.3.xlsb | modStatsHeures:Stats_Heures_AF |  | 1,7930 secondes
+
+2025-02-07 09:40:33.40 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 09:40:33.80 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,4844 secondes
+
+2025-02-07 09:40:33.96 | Guillaume | APP_v5.O.3.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 3,8398 secondes
+
+2025-02-07 09:40:34.20 | Guillaume | APP_v5.O.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 4,3164 secondes
+
+2025-02-07 09:40:34.34 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 5,4180 secondes
+
+2025-02-07 09:46:48.85 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 09:46:49.03 | Guillaume | APP_v5.O.3.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,2773 secondes
+
+2025-02-07 09:46:49.80 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 09:46:49.97 | Guillaume | APP_v5.O.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,2539 secondes
+
+2025-02-07 09:46:50.49 | Guillaume | APP_v5.O.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-07 09:46:52.02 | Guillaume | APP_v5.O.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-07 09:46:52.41 | Guillaume | APP_v5.O.3.xlsb | modMenu:Delete_User_Active_File |  | 0,4727 secondes
+
+2025-02-07 09:46:52.56 | Guillaume | APP_v5.O.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-07 10:53:38.71 | GuillaumeCharron | APP_v5.P.0.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-07 10:53:38.74 | GuillaumeCharron | APP_v5.P.0.xlsb | Validation d'accès serveur terminée |  | 0,0078 secondes
+
+2025-02-07 10:53:38.76 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-07 10:53:38.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 0,0547 secondes
+
+2025-02-07 10:53:38.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-07 10:53:38.87 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 0,0352 secondes
+
+2025-02-07 10:53:38.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-07 10:53:39.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 0,8320 secondes
+
+2025-02-07 10:53:39.74 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-07 10:53:39.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0586 secondes
+
+2025-02-07 10:53:39.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-07 10:53:39.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0352 secondes
+
+2025-02-07 10:53:39.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modAppli:CodeEssentielDepart |  | 0,0742 secondes
+
+2025-02-07 13:37:14.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 13:37:14.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 0,0781 secondes
+
+2025-02-07 13:37:15.50 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 13:37:15.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,0625 secondes
+
+2025-02-07 13:37:15.59 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 13:37:15.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 13:37:16.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 13:37:16.03 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0273 secondes
+
+2025-02-07 13:37:16.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 13:37:16.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0234 secondes
+
+2025-02-07 13:37:16.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0977 secondes
+
+2025-02-07 13:37:16.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 13:37:16.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,8242 secondes
+
+2025-02-07 13:37:17.01 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 0,8477 secondes
+
+2025-02-07 13:37:17.59 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 13:37:17.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 13:37:17.96 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 13:37:17.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 13:37:17.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0195 secondes
+
+2025-02-07 13:37:18.01 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,0391 secondes
+
+2025-02-07 13:37:18.03 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 13:37:18.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 13:37:18.15 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1055 secondes
+
+2025-02-07 13:37:18.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 13:37:18.20 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 13:37:18.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 13:37:18.24 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 13:37:18.37 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1328 secondes
+
+2025-02-07 13:37:18.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 13:37:18.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 13:37:18.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 13:37:18.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 13:37:18.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3008 secondes
+
+2025-02-07 13:37:18.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 13:37:18.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0898 secondes
+
+2025-02-07 13:37:18.95 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1133 secondes
+
+2025-02-07 13:37:19.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1641 secondes
+
+2025-02-07 13:37:19.03 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,1836 secondes
+
+2025-02-07 13:37:21.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine] Petis | 
+2025-02-07 13:37:21.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0234 secondes
+
+2025-02-07 13:37:21.65 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine] | 
+2025-02-07 13:37:21.68 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 13:37:52.26 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse de bilans et voir si d'autres gestes à poser réorg pré-vente pour éliminer toutes les avances | 
+2025-02-07 13:37:52.29 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 13:37:55.82 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.25 | 
+2025-02-07 13:37:55.85 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0391 secondes
+
+2025-02-07 13:37:55.88 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,25 | 
+2025-02-07 13:37:55.89 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0312 secondes
+
+2025-02-07 13:37:56.78 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 13:37:56.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 13:37:56.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine] | 
+2025-02-07 13:37:56.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 13:37:56.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 13:37:57.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8906 secondes
+
+2025-02-07 13:37:57.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 13:37:57.87 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0820 secondes
+
+2025-02-07 13:37:57.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 13:37:57.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1016 secondes
+
+2025-02-07 13:37:58.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 13:37:58.04 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 13:37:58.06 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 13:37:58.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 13:37:58.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1797 secondes
+
+2025-02-07 13:37:58.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 13:37:58.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1211 secondes
+
+2025-02-07 13:37:58.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1406 secondes
+
+2025-02-07 13:37:58.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 13:37:58.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,4180 secondes
+
+2025-02-07 13:37:58.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 13:37:58.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,1172 secondes
+
+2025-02-07 13:37:59.02 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1406 secondes
+
+2025-02-07 13:37:59.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1914 secondes
+
+2025-02-07 13:37:59.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,2148 secondes
+
+2025-02-07 13:37:59.11 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2344 secondes
+
+2025-02-07 13:38:56.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | La Cie Repentigny Électrique Inc. [Jean-François Durand] | 
+2025-02-07 13:38:56.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0234 secondes
+
+2025-02-07 13:38:56.97 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | La Cie Repentigny Électrique Inc. [Jean-François Durand] | 
+2025-02-07 13:38:56.99 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 13:39:18.01 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | courriel avec annie pour appel roulements modifiés | 
+2025-02-07 13:39:18.04 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 13:39:20.48 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.25 | 
+2025-02-07 13:39:20.51 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 13:39:20.53 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 0,25 | 
+2025-02-07 13:39:20.55 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 13:39:21.56 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 13:39:21.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 13:39:21.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | La Cie Repentigny Électrique Inc. [Jean-François Durand] | 
+2025-02-07 13:39:21.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 13:39:21.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 13:39:22.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8281 secondes
+
+2025-02-07 13:39:22.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 13:39:22.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0742 secondes
+
+2025-02-07 13:39:22.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 13:39:22.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1016 secondes
+
+2025-02-07 13:39:22.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 13:39:22.73 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 13:39:22.76 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 13:39:22.78 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 13:39:22.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1641 secondes
+
+2025-02-07 13:39:22.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 13:39:23.06 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1055 secondes
+
+2025-02-07 13:39:23.08 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 13:39:23.10 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 13:39:23.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3281 secondes
+
+2025-02-07 13:39:23.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 13:39:23.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0781 secondes
+
+2025-02-07 13:39:23.54 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0938 secondes
+
+2025-02-07 13:39:23.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1680 secondes
+
+2025-02-07 13:39:23.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1875 secondes
+
+2025-02-07 13:39:23.65 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2070 secondes
+
+2025-02-07 14:16:56.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 2956-5645 Québec Inc. [Roulements et produits industriels] Yvon Boucher | 
+2025-02-07 14:16:56.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0547 secondes
+
+2025-02-07 14:16:57.09 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 2956-5645 Québec Inc. [Roulements et produits industriels] | 
+2025-02-07 14:16:57.11 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 14:17:03.52 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | réception d'infos comptables | 
+2025-02-07 14:17:03.55 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:17:04.38 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.25 | 
+2025-02-07 14:17:04.41 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 14:17:04.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 0,25 | 
+2025-02-07 14:17:04.45 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 14:17:05.57 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 14:17:05.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 14:17:05.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 2956-5645 Québec Inc. [Roulements et produits industriels] | 
+2025-02-07 14:17:05.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0312 secondes
+
+2025-02-07 14:17:05.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 14:17:06.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8477 secondes
+
+2025-02-07 14:17:06.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 14:17:06.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0781 secondes
+
+2025-02-07 14:17:06.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 14:17:06.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1289 secondes
+
+2025-02-07 14:17:06.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 14:17:06.81 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:17:06.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:17:06.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:17:07.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1719 secondes
+
+2025-02-07 14:17:07.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:17:07.15 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1055 secondes
+
+2025-02-07 14:17:07.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 14:17:07.19 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:17:07.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3750 secondes
+
+2025-02-07 14:17:07.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:17:07.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0938 secondes
+
+2025-02-07 14:17:07.70 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1133 secondes
+
+2025-02-07 14:17:07.78 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1914 secondes
+
+2025-02-07 14:17:07.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,2148 secondes
+
+2025-02-07 14:17:07.82 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2422 secondes
+
+2025-02-07 14:34:52.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9307-2411 Québec Inc. [Capitaine Vap] Capt'n Vape | 
+2025-02-07 14:34:52.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0391 secondes
+
+2025-02-07 14:34:53.10 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 9307-2411 Québec Inc. [Capitaine Vap] | 
+2025-02-07 14:34:53.13 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:35:37.94 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | sortir les dettes long terme des diffréntes sociétés et fournir à Dany pour discussion avec acheteur | 
+2025-02-07 14:35:37.97 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:35:41.48 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1 | 
+2025-02-07 14:35:41.50 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0352 secondes
+
+2025-02-07 14:35:41.53 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,00 | 
+2025-02-07 14:35:41.55 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 14:35:43.18 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 14:35:43.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 14:35:43.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9307-2411 Québec Inc. [Capitaine Vap] | 
+2025-02-07 14:35:43.24 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 14:35:43.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 14:35:44.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8320 secondes
+
+2025-02-07 14:35:44.11 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 14:35:44.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0781 secondes
+
+2025-02-07 14:35:44.21 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 14:35:44.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1094 secondes
+
+2025-02-07 14:35:44.33 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 14:35:44.37 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:35:44.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:35:44.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:35:44.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1719 secondes
+
+2025-02-07 14:35:44.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:35:44.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1055 secondes
+
+2025-02-07 14:35:44.73 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 14:35:44.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:35:45.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3281 secondes
+
+2025-02-07 14:35:45.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:35:45.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0781 secondes
+
+2025-02-07 14:35:45.18 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0977 secondes
+
+2025-02-07 14:35:45.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1797 secondes
+
+2025-02-07 14:35:45.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,2031 secondes
+
+2025-02-07 14:35:45.31 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2227 secondes
+
+2025-02-07 14:49:07.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 
+2025-02-07 14:49:07.64 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0391 secondes
+
+2025-02-07 14:49:07.67 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 14:49:07.71 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,0430 secondes
+
+2025-02-07 14:49:08.93 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 14:49:08.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0430 secondes
+
+2025-02-07 14:49:10.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 14:49:10.37 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 0,0391 secondes
+
+2025-02-07 14:49:11.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 14:49:11.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,0508 secondes
+
+2025-02-07 14:49:11.08 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 14:49:11.10 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 14:49:11.42 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 14:49:11.44 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0234 secondes
+
+2025-02-07 14:49:11.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 14:49:11.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0234 secondes
+
+2025-02-07 14:49:11.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0938 secondes
+
+2025-02-07 14:49:11.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 14:49:12.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,7656 secondes
+
+2025-02-07 14:49:12.34 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 0,7891 secondes
+
+2025-02-07 14:49:12.99 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 14:49:13.01 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,0195 secondes
+
+2025-02-07 14:49:13.42 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 14:49:13.44 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 14:49:13.46 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0195 secondes
+
+2025-02-07 14:49:13.48 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,0391 secondes
+
+2025-02-07 14:49:13.50 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 14:49:13.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 14:49:13.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0859 secondes
+
+2025-02-07 14:49:13.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 14:49:13.65 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:49:13.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:49:13.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:49:13.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1289 secondes
+
+2025-02-07 14:49:13.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:49:13.95 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 14:49:13.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 14:49:13.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:49:14.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2773 secondes
+
+2025-02-07 14:49:14.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:49:14.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 14:49:14.36 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 14:49:14.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1367 secondes
+
+2025-02-07 14:49:14.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,1562 secondes
+
+2025-02-07 14:49:16.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:49:16.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0234 secondes
+
+2025-02-07 14:49:17.10 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:49:17.12 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 14:49:47.66 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | scan, contact outilook, fiche client et envoyer liste de ce que j'ai besoin pour analyse | 
+2025-02-07 14:49:47.68 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 14:49:49.95 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.75 | 
+2025-02-07 14:49:49.97 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:49:49.99 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 0,75 | 
+2025-02-07 14:49:50.02 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0234 secondes
+
+2025-02-07 14:49:51.69 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 14:49:51.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 14:49:51.73 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:49:51.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0195 secondes
+
+2025-02-07 14:49:51.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 14:49:52.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8164 secondes
+
+2025-02-07 14:49:52.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 14:49:52.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0742 secondes
+
+2025-02-07 14:49:52.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 14:49:52.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1211 secondes
+
+2025-02-07 14:49:52.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 14:49:52.87 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:49:52.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:49:52.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:49:53.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1875 secondes
+
+2025-02-07 14:49:53.11 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:49:53.21 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1055 secondes
+
+2025-02-07 14:49:53.24 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 14:49:53.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:49:53.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3203 secondes
+
+2025-02-07 14:49:53.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:49:53.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 14:49:53.69 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0898 secondes
+
+2025-02-07 14:49:53.76 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1602 secondes
+
+2025-02-07 14:49:53.78 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1797 secondes
+
+2025-02-07 14:49:53.80 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2031 secondes
+
+2025-02-07 14:49:54.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 14:49:54.48 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,0469 secondes
+
+2025-02-07 14:49:55.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 14:49:55.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0352 secondes
+
+2025-02-07 14:49:56.87 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuFacturation_Click |  | 
+2025-02-07 14:49:56.92 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuFacturation_Click |  | 0,0547 secondes
+
+2025-02-07 14:50:03.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 14:50:03.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0430 secondes
+
+2025-02-07 14:50:05.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 14:50:05.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 0,0391 secondes
+
+2025-02-07 14:50:07.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 
+2025-02-07 14:50:07.07 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 
+2025-02-07 14:50:07.10 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 14:50:07.40 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 14:50:07.42 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0195 secondes
+
+2025-02-07 14:50:07.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 14:50:07.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0234 secondes
+
+2025-02-07 14:50:07.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0938 secondes
+
+2025-02-07 14:50:07.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 14:50:08.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,7539 secondes
+
+2025-02-07 14:50:08.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-07 14:50:08.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,6289 secondes
+
+2025-02-07 14:50:08.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-07 14:50:09.97 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 1,0039 secondes
+
+2025-02-07 14:50:10.02 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Change | $H$3 | 
+2025-02-07 14:50:10.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 45, 0 | 
+2025-02-07 14:50:10.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0234 secondes
+
+2025-02-07 14:50:10.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 
+2025-02-07 14:50:10.13 | GuillaumeCharron | APP_v5.P.0.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF | ', 07/02/25, VRAI, FAUX, FAUX | 
+2025-02-07 14:50:10.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF |  | 0,1211 secondes
+
+2025-02-07 14:50:12.12 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 1,9922 secondes
+
+2025-02-07 14:50:12.14 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Change |  | 2,0156 secondes
+
+2025-02-07 14:50:12.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder | wshTEC_Analyse | 
+2025-02-07 14:50:12.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder |  | 0,1602 secondes
+
+2025-02-07 14:50:12.36 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 0,2031 secondes
+
+2025-02-07 14:50:12.38 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 0,2266 secondes
+
+2025-02-07 14:50:16.51 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange | $E$167 | 
+2025-02-07 14:50:16.54 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange |  | 0,0234 secondes
+
+2025-02-07 14:50:23.25 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange | $C$762 | 
+2025-02-07 14:50:23.43 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange |  | 0,1797 secondes
+
+2025-02-07 14:50:38.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 
+2025-02-07 14:50:38.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 
+2025-02-07 14:50:38.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 0,0547 secondes
+
+2025-02-07 14:50:38.44 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 0,1055 secondes
+
+2025-02-07 14:50:41.74 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 14:50:41.78 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,0469 secondes
+
+2025-02-07 14:50:41.80 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 14:50:41.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 14:50:42.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 14:50:42.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0234 secondes
+
+2025-02-07 14:50:42.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 14:50:42.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0234 secondes
+
+2025-02-07 14:50:42.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0977 secondes
+
+2025-02-07 14:50:42.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 14:50:43.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,7617 secondes
+
+2025-02-07 14:50:43.11 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 0,7930 secondes
+
+2025-02-07 14:50:52.91 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 14:50:52.94 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,0352 secondes
+
+2025-02-07 14:50:56.28 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 14:50:56.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 03/02/25, 600, 15 | 
+2025-02-07 14:50:56.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0391 secondes
+
+2025-02-07 14:50:56.36 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,0625 secondes
+
+2025-02-07 14:50:56.38 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 14:50:56.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/03/02/25 | 
+2025-02-07 14:50:56.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1523 secondes
+
+2025-02-07 14:50:56.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/03/02/25 | 
+2025-02-07 14:50:56.64 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:50:56.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:50:56.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:50:56.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1406 secondes
+
+2025-02-07 14:50:56.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:50:56.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 14:50:56.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 14:50:56.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:50:57.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2891 secondes
+
+2025-02-07 14:50:57.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:50:57.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0781 secondes
+
+2025-02-07 14:50:57.39 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1016 secondes
+
+2025-02-07 14:50:57.46 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/03/02/25 | 0,1836 secondes
+
+2025-02-07 14:50:57.49 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,2070 secondes
+
+2025-02-07 14:50:59.83 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 19 | 
+2025-02-07 14:50:59.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:50:59.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3836 | -1 | 
+2025-02-07 14:50:59.92 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0703 secondes
+
+2025-02-07 14:50:59.98 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3837] |  | 0,1328 secondes
+
+2025-02-07 14:51:04.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:51:04.12 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0312 secondes
+
+2025-02-07 14:51:05.20 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:51:05.22 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:51:06.00 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3837 | 
+2025-02-07 14:51:07.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 14:51:07.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3837 | 
+2025-02-07 14:51:07.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3837 | 0,8359 secondes
+
+2025-02-07 14:51:07.90 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3837 | 
+2025-02-07 14:51:07.92 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:51:07.97 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3836 | -1 | 
+2025-02-07 14:51:07.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0703 secondes
+
+2025-02-07 14:51:08.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3837 | 0,1250 secondes
+
+2025-02-07 14:51:08.06 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/03/02/25 | 
+2025-02-07 14:51:08.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0977 secondes
+
+2025-02-07 14:51:08.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/03/02/25 | 
+2025-02-07 14:51:08.23 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:51:08.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:51:08.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:51:08.40 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1250 secondes
+
+2025-02-07 14:51:08.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:51:08.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0898 secondes
+
+2025-02-07 14:51:08.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1094 secondes
+
+2025-02-07 14:51:08.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:51:08.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2773 secondes
+
+2025-02-07 14:51:08.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:51:08.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 14:51:08.93 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0898 secondes
+
+2025-02-07 14:51:09.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/03/02/25 | 0,1680 secondes
+
+2025-02-07 14:51:09.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1914 secondes
+
+2025-02-07 14:51:09.05 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,2109 secondes
+
+2025-02-07 14:51:12.37 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 14:51:12.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 06/02/25, 600, 15 | 
+2025-02-07 14:51:12.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0195 secondes
+
+2025-02-07 14:51:12.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,0391 secondes
+
+2025-02-07 14:51:12.45 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 14:51:12.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/06/02/25 | 
+2025-02-07 14:51:12.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1016 secondes
+
+2025-02-07 14:51:12.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/06/02/25 | 
+2025-02-07 14:51:12.63 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:51:12.65 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:51:12.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:51:12.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1289 secondes
+
+2025-02-07 14:51:12.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:51:12.93 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1133 secondes
+
+2025-02-07 14:51:12.95 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1367 secondes
+
+2025-02-07 14:51:12.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:51:13.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2812 secondes
+
+2025-02-07 14:51:13.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:51:13.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0742 secondes
+
+2025-02-07 14:51:13.36 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0977 secondes
+
+2025-02-07 14:51:13.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/06/02/25 | 0,1680 secondes
+
+2025-02-07 14:51:13.46 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,1875 secondes
+
+2025-02-07 14:51:16.29 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 3 | 
+2025-02-07 14:51:16.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:51:16.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3917 | -1 | 
+2025-02-07 14:51:16.38 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0664 secondes
+
+2025-02-07 14:51:16.44 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3918] |  | 0,1289 secondes
+
+2025-02-07 14:51:22.92 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:51:22.95 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0352 secondes
+
+2025-02-07 14:51:23.89 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Dr Edith Bandi MD Inc [Andrei Dundaru] | 
+2025-02-07 14:51:23.91 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 14:51:25.77 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3918 | 
+2025-02-07 14:51:25.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 14:51:25.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3918 | 
+2025-02-07 14:51:26.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3918 | 0,7969 secondes
+
+2025-02-07 14:51:26.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3918 | 
+2025-02-07 14:51:26.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:51:26.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3917 | -1 | 
+2025-02-07 14:51:26.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 14:51:26.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3918 | 0,1172 secondes
+
+2025-02-07 14:51:26.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/06/02/25 | 
+2025-02-07 14:51:26.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0977 secondes
+
+2025-02-07 14:51:26.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/06/02/25 | 
+2025-02-07 14:51:26.96 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:51:26.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:51:27.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:51:27.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1328 secondes
+
+2025-02-07 14:51:27.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:51:27.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1172 secondes
+
+2025-02-07 14:51:27.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1406 secondes
+
+2025-02-07 14:51:27.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:51:27.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3164 secondes
+
+2025-02-07 14:51:27.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:51:27.72 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0703 secondes
+
+2025-02-07 14:51:27.74 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0898 secondes
+
+2025-02-07 14:51:27.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/06/02/25 | 0,1641 secondes
+
+2025-02-07 14:51:27.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1875 secondes
+
+2025-02-07 14:51:27.86 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,2070 secondes
+
+2025-02-07 14:51:30.83 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 14:51:30.87 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,0430 secondes
+
+2025-02-07 14:51:32.93 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 
+2025-02-07 14:51:32.96 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 
+2025-02-07 14:51:32.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 14:51:33.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 14:51:33.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0234 secondes
+
+2025-02-07 14:51:33.33 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 14:51:33.35 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0234 secondes
+
+2025-02-07 14:51:33.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0977 secondes
+
+2025-02-07 14:51:33.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 14:51:34.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,7578 secondes
+
+2025-02-07 14:51:34.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 
+2025-02-07 14:51:34.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Détails_Import_All |  | 0,6133 secondes
+
+2025-02-07 14:51:34.85 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 
+2025-02-07 14:51:35.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:FAC_Projets_Entête_Import_All |  | 1,0859 secondes
+
+2025-02-07 14:51:35.97 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Change | $H$3 | 
+2025-02-07 14:51:35.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 45, 0 | 
+2025-02-07 14:51:36.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0234 secondes
+
+2025-02-07 14:51:36.03 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 
+2025-02-07 14:51:36.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF | ', 07/02/25, VRAI, FAUX, FAUX | 
+2025-02-07 14:51:36.19 | GuillaumeCharron | APP_v5.P.0.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF |  | 0,1250 secondes
+
+2025-02-07 14:51:38.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 2,1406 secondes
+
+2025-02-07 14:51:38.23 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Change |  | 2,1641 secondes
+
+2025-02-07 14:51:38.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder | wshTEC_Analyse | 
+2025-02-07 14:51:38.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder |  | 0,1641 secondes
+
+2025-02-07 14:51:38.45 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 0,2148 secondes
+
+2025-02-07 14:51:38.48 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 0,2383 secondes
+
+2025-02-07 14:51:41.55 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange | $E$167 | 
+2025-02-07 14:51:41.58 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange |  | 0,0273 secondes
+
+2025-02-07 14:51:46.20 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange | $C$762 | 
+2025-02-07 14:51:46.33 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_Analyse:Worksheet_SelectionChange |  | 0,1328 secondes
+
+2025-02-07 14:51:51.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 
+2025-02-07 14:51:51.11 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 
+2025-02-07 14:51:51.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 0,0508 secondes
+
+2025-02-07 14:51:51.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 0,1094 secondes
+
+2025-02-07 14:51:59.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 14:51:59.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0508 secondes
+
+2025-02-07 14:57:16.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 14:57:16.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 0,0391 secondes
+
+2025-02-07 14:57:16.95 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 14:57:17.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,0547 secondes
+
+2025-02-07 14:57:17.03 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 14:57:17.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 14:57:17.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 14:57:17.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0195 secondes
+
+2025-02-07 14:57:17.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 14:57:17.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0195 secondes
+
+2025-02-07 14:57:17.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,0898 secondes
+
+2025-02-07 14:57:17.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 14:57:18.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,7773 secondes
+
+2025-02-07 14:57:18.34 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 0,8047 secondes
+
+2025-02-07 14:57:19.78 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 14:57:19.80 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 14:57:20.45 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 14:57:20.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07/02/25, 600, 15 | 
+2025-02-07 14:57:20.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0234 secondes
+
+2025-02-07 14:57:20.51 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,0430 secondes
+
+2025-02-07 14:57:20.53 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 14:57:20.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 14:57:20.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1094 secondes
+
+2025-02-07 14:57:20.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 14:57:20.72 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:57:20.74 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:57:20.76 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:57:20.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1328 secondes
+
+2025-02-07 14:57:20.92 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:57:21.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 14:57:21.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 14:57:21.06 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:57:21.38 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3203 secondes
+
+2025-02-07 14:57:21.40 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:57:21.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0703 secondes
+
+2025-02-07 14:57:21.49 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0898 secondes
+
+2025-02-07 14:57:21.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1836 secondes
+
+2025-02-07 14:57:21.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,2070 secondes
+
+2025-02-07 14:57:25.28 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 0 | 
+2025-02-07 14:57:25.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:57:25.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3936 | -1 | 
+2025-02-07 14:57:25.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 14:57:25.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3937] |  | 0,1250 secondes
+
+2025-02-07 14:57:26.58 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine] | 
+2025-02-07 14:57:26.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 14:57:41.80 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse de bilans et voir si d'autres gestes à poser réorg pré-vente pour éliminer toutes les avances + envoi des actes de fiducie pour vérification diligente | 
+2025-02-07 14:57:41.82 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 14:57:43.03 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.75 | 
+2025-02-07 14:57:43.05 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 14:57:43.07 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,75 | 
+2025-02-07 14:57:43.09 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0195 secondes
+
+2025-02-07 14:57:44.64 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3937 | 
+2025-02-07 14:57:44.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 14:57:44.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3937 | 
+2025-02-07 14:57:45.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3937 | 0,8242 secondes
+
+2025-02-07 14:57:45.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3937 | 
+2025-02-07 14:57:45.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 14:57:45.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3936 | -1 | 
+2025-02-07 14:57:45.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0664 secondes
+
+2025-02-07 14:57:45.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3937 | 0,1328 secondes
+
+2025-02-07 14:57:45.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 14:57:45.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1055 secondes
+
+2025-02-07 14:57:45.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 14:57:45.86 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 14:57:45.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 14:57:45.90 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 14:57:46.03 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1289 secondes
+
+2025-02-07 14:57:46.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 14:57:46.15 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0977 secondes
+
+2025-02-07 14:57:46.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1172 secondes
+
+2025-02-07 14:57:46.19 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 14:57:46.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3086 secondes
+
+2025-02-07 14:57:46.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 14:57:46.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0742 secondes
+
+2025-02-07 14:57:46.61 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0938 secondes
+
+2025-02-07 14:57:46.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1562 secondes
+
+2025-02-07 14:57:46.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1797 secondes
+
+2025-02-07 14:57:46.71 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,1992 secondes
+
+2025-02-07 15:59:14.21 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 15:59:14.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0391 secondes
+
+2025-02-07 15:59:14.45 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 15:59:14.48 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 15:59:39.88 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse des avances et préparation des directives à Michael + courriels pour obtenir documents et validations | 
+2025-02-07 15:59:39.90 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 15:59:41.81 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.5 | 
+2025-02-07 15:59:41.84 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 15:59:41.86 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,50 | 
+2025-02-07 15:59:41.88 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 15:59:43.23 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 15:59:43.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 15:59:43.28 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 15:59:43.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0391 secondes
+
+2025-02-07 15:59:43.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 15:59:44.15 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8164 secondes
+
+2025-02-07 15:59:44.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 15:59:44.24 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0781 secondes
+
+2025-02-07 15:59:44.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 15:59:44.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1328 secondes
+
+2025-02-07 15:59:44.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 15:59:44.45 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 15:59:44.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 15:59:44.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 15:59:44.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1719 secondes
+
+2025-02-07 15:59:44.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 15:59:44.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0977 secondes
+
+2025-02-07 15:59:44.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1172 secondes
+
+2025-02-07 15:59:44.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 15:59:45.12 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2969 secondes
+
+2025-02-07 15:59:45.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 15:59:45.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 15:59:45.22 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 15:59:45.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1523 secondes
+
+2025-02-07 15:59:45.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1758 secondes
+
+2025-02-07 15:59:45.33 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,1953 secondes
+
+2025-02-07 15:59:47.57 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 5 | 
+2025-02-07 15:59:47.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 15:59:47.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3941 | -1 | 
+2025-02-07 15:59:47.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 15:59:47.70 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3942] |  | 0,1172 secondes
+
+2025-02-07 15:59:50.42 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 15:59:50.44 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 16:00:00.16 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse des avances et préparation des directives à Michael pour dividendes et attributions + courriels pour obtenir documents et validations | 
+2025-02-07 16:00:00.18 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 16:00:02.02 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,50 | 
+2025-02-07 16:00:02.04 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0352 secondes
+
+2025-02-07 16:00:04.44 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 16:00:04.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 16:00:04.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 16:00:04.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 16:00:04.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 16:00:05.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,8047 secondes
+
+2025-02-07 16:00:05.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 16:00:05.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0781 secondes
+
+2025-02-07 16:00:05.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 16:00:05.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1055 secondes
+
+2025-02-07 16:00:05.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 16:00:05.62 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:00:05.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:00:05.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:00:05.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1680 secondes
+
+2025-02-07 16:00:05.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:00:05.95 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 16:00:05.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 16:00:05.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:00:06.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3086 secondes
+
+2025-02-07 16:00:06.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:00:06.38 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 16:00:06.41 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 16:00:06.48 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1602 secondes
+
+2025-02-07 16:00:06.50 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1797 secondes
+
+2025-02-07 16:00:06.52 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,1992 secondes
+
+2025-02-07 16:00:08.97 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 6 | 
+2025-02-07 16:00:08.99 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 16:00:09.03 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3942 | -1 | 
+2025-02-07 16:00:09.05 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0625 secondes
+
+2025-02-07 16:00:09.11 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3943] |  | 0,1211 secondes
+
+2025-02-07 16:00:10.68 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 5 | 
+2025-02-07 16:00:10.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 16:00:10.74 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3941 | -1 | 
+2025-02-07 16:00:10.76 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0742 secondes
+
+2025-02-07 16:00:10.79 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3942] |  | 0,0977 secondes
+
+2025-02-07 16:00:12.18 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 16:00:12.21 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 16:00:12.25 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdDelete_Click | 3942 | 
+2025-02-07 16:00:12.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Efface_Ligne |  | 
+2025-02-07 16:00:13.32 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - -3942 | -1 | 
+2025-02-07 16:00:13.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | -3942 | 
+2025-02-07 16:00:14.15 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | -3942 | 0,8164 secondes
+
+2025-02-07 16:00:14.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | -3942 | 
+2025-02-07 16:00:14.19 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 16:00:14.23 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3941 | -1 | 
+2025-02-07 16:00:14.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0625 secondes
+
+2025-02-07 16:00:14.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | -3942 | 0,0977 secondes
+
+2025-02-07 16:00:15.37 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 16:00:15.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1055 secondes
+
+2025-02-07 16:00:15.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 16:00:15.53 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:00:15.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:00:15.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:00:15.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1367 secondes
+
+2025-02-07 16:00:15.73 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:00:15.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1094 secondes
+
+2025-02-07 16:00:15.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1289 secondes
+
+2025-02-07 16:00:15.88 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:00:16.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2930 secondes
+
+2025-02-07 16:00:16.19 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:00:16.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 16:00:16.28 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 16:00:16.35 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1562 secondes
+
+2025-02-07 16:00:16.37 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Efface_Ligne |  | 0,1758 secondes
+
+2025-02-07 16:00:16.39 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdDelete_Click |  | 0,1992 secondes
+
+2025-02-07 16:00:18.02 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 5 | 
+2025-02-07 16:00:18.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 16:00:18.08 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3942 | -1 | 
+2025-02-07 16:00:18.10 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0703 secondes
+
+2025-02-07 16:00:18.17 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3943] |  | 0,1328 secondes
+
+2025-02-07 16:02:34.36 | User | APP_v5.P.0.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-07 16:02:34.43 | User | APP_v5.P.0.xlsb | Validation d'accès serveur terminée |  | 0,0078 secondes
+
+2025-02-07 16:02:34.48 | User | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-07 16:02:34.59 | User | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 0,1133 secondes
+
+2025-02-07 16:02:34.64 | User | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-07 16:02:34.73 | User | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 0,0977 secondes
+
+2025-02-07 16:02:34.78 | User | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-07 16:02:35.26 | User | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 0,4883 secondes
+
+2025-02-07 16:02:35.31 | User | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-07 16:02:35.54 | User | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,2383 secondes
+
+2025-02-07 16:02:35.64 | User | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-07 16:02:35.72 | User | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0859 secondes
+
+2025-02-07 16:02:35.79 | User | APP_v5.P.0.xlsb | modAppli:CodeEssentielDepart |  | 0,1523 secondes
+
+2025-02-07 16:02:46.73 | User | APP_v5.P.0.xlsb | modMenu:menuComptabilité |  | 
+2025-02-07 16:02:46.84 | User | APP_v5.P.0.xlsb | modMenu:menuComptabilité |  | 0,1172 secondes
+
+2025-02-07 16:02:48.92 | User | APP_v5.P.0.xlsb | wshGL_EJ:Worksheet_Activate |  | 
+2025-02-07 16:02:48.97 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-07 16:02:50.50 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 1,5312 secondes
+
+2025-02-07 16:02:50.55 | User | APP_v5.P.0.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 
+2025-02-07 16:02:51.05 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-02-07 16:02:51.82 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,7734 secondes
+
+2025-02-07 16:02:51.94 | User | APP_v5.P.0.xlsb | modImport:GL_EJ_Recurrente_Import_All |  | 0,8984 secondes
+
+2025-02-07 16:02:52.16 | User | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder | wshGL_EJ | 
+2025-02-07 16:02:52.24 | User | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder |  | 0,0898 secondes
+
+2025-02-07 16:02:52.29 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-07 16:02:52.60 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,3164 secondes
+
+2025-02-07 16:02:52.79 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07-02-2025, 999, 15 | 
+2025-02-07 16:02:56.74 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 3,9805 secondes
+
+2025-02-07 16:02:58.36 | User | APP_v5.P.0.xlsb | wshGL_EJ:Worksheet_Activate |  | 5,5820 secondes
+
+2025-02-07 16:03:03.93 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 2025-02-06, 999, 15 | 
+2025-02-07 16:03:03.98 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0625 secondes
+
+2025-02-07 16:03:18.56 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Frais financiers | 
+2025-02-07 16:03:18.63 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5140 | -1 | 
+2025-02-07 16:03:18.68 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1250 secondes
+
+2025-02-07 16:03:28.30 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Encaisse | 
+2025-02-07 16:03:28.35 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000 | -1 | 
+2025-02-07 16:03:28.40 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1094 secondes
+
+2025-02-07 16:03:44.16 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 
+2025-02-07 16:03:44.23 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 
+2025-02-07 16:03:45.13 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 0,9141 secondes
+
+2025-02-07 16:03:45.19 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 
+2025-02-07 16:03:45.24 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - r = 10 | -1 | 
+2025-02-07 16:03:46.28 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 9 | -1 | 
+2025-02-07 16:03:47.37 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 10 | -1 | 
+2025-02-07 16:03:47.45 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 2,2656 secondes
+
+2025-02-07 16:03:47.54 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-07 16:03:47.77 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,2461 secondes
+
+2025-02-07 16:03:49.92 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 2,4141 secondes
+
+2025-02-07 16:04:14.12 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Frais financiers | 
+2025-02-07 16:04:14.18 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5140 | -1 | 
+2025-02-07 16:04:14.23 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1250 secondes
+
+2025-02-07 16:04:24.12 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Encaisse | 
+2025-02-07 16:04:24.17 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000 | -1 | 
+2025-02-07 16:04:24.23 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1250 secondes
+
+2025-02-07 16:04:30.78 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 
+2025-02-07 16:04:30.84 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 
+2025-02-07 16:04:31.70 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 0,8672 secondes
+
+2025-02-07 16:04:31.75 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 
+2025-02-07 16:04:31.80 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - r = 10 | -1 | 
+2025-02-07 16:04:32.92 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 9 | -1 | 
+2025-02-07 16:04:34.03 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 10 | -1 | 
+2025-02-07 16:04:34.09 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 2,3516 secondes
+
+2025-02-07 16:04:34.18 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-07 16:04:34.41 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,2383 secondes
+
+2025-02-07 16:04:36.60 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 2,4297 secondes
+
+2025-02-07 16:04:46.57 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Salaires | 
+2025-02-07 16:04:46.64 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5000 | -1 | 
+2025-02-07 16:04:46.69 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1289 secondes
+
+2025-02-07 16:04:57.46 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Encaisse | 
+2025-02-07 16:04:57.53 | User | APP_v5.P.0.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1000 | -1 | 
+2025-02-07 16:04:57.59 | User | APP_v5.P.0.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,1328 secondes
+
+2025-02-07 16:05:01.34 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 
+2025-02-07 16:05:01.39 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 
+2025-02-07 16:05:02.16 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_To_DB |  | 0,7734 secondes
+
+2025-02-07 16:05:02.21 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 
+2025-02-07 16:05:02.27 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - r = 10 | -1 | 
+2025-02-07 16:05:03.40 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 9 | -1 | 
+2025-02-07 16:05:04.50 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally - i = 10 | -1 | 
+2025-02-07 16:05:04.59 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_Trans_Add_Record_Locally |  | 2,3789 secondes
+
+2025-02-07 16:05:04.66 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 
+2025-02-07 16:05:04.89 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Clear_All_Cells |  | 0,2383 secondes
+
+2025-02-07 16:05:06.53 | User | APP_v5.P.0.xlsb | modGL_EJ:GL_EJ_Update |  | 1,8711 secondes
+
+2025-02-07 16:05:16.58 | User | APP_v5.P.0.xlsb | wshENC_Saisie:Worksheet_Activate |  | 
+2025-02-07 16:05:16.65 | User | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 16:05:17.38 | User | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 16:05:17.44 | User | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0664 secondes
+
+2025-02-07 16:05:17.49 | User | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 16:05:17.54 | User | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0625 secondes
+
+2025-02-07 16:05:17.65 | User | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,1719 secondes
+
+2025-02-07 16:05:17.71 | User | APP_v5.P.0.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 
+2025-02-07 16:05:18.31 | User | APP_v5.P.0.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 0,6055 secondes
+
+2025-02-07 16:05:18.36 | User | APP_v5.P.0.xlsb | modImport:FAC_Détails_Import_All |  | 
+2025-02-07 16:05:19.21 | User | APP_v5.P.0.xlsb | modImport:FAC_Détails_Import_All |  | 0,8555 secondes
+
+2025-02-07 16:05:19.27 | User | APP_v5.P.0.xlsb | modImport:FAC_Entête_Import_All |  | 
+2025-02-07 16:05:19.82 | User | APP_v5.P.0.xlsb | modImport:FAC_Entête_Import_All |  | 0,5625 secondes
+
+2025-02-07 16:05:19.88 | User | APP_v5.P.0.xlsb | modImport:ENC_Détails_Import_All |  | 
+2025-02-07 16:05:20.36 | User | APP_v5.P.0.xlsb | modImport:ENC_Détails_Import_All |  | 0,4922 secondes
+
+2025-02-07 16:05:20.41 | User | APP_v5.P.0.xlsb | modImport:ENC_Entête_Import_All |  | 
+2025-02-07 16:05:20.94 | User | APP_v5.P.0.xlsb | modImport:ENC_Entête_Import_All |  | 0,5352 secondes
+
+2025-02-07 16:05:20.99 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-07 16:05:22.00 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 2,0195 secondes
+
+2025-02-07 16:05:23.10 | User | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder | wshENC_Saisie | 
+2025-02-07 16:05:23.18 | User | APP_v5.P.0.xlsb | modDev_Utils:SetTabOrder |  | 0,0820 secondes
+
+2025-02-07 16:05:23.23 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 
+2025-02-07 16:05:23.30 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 0,0859 secondes
+
+2025-02-07 16:05:23.52 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 07-02-2025, 30, 0 | 
+2025-02-07 16:05:25.63 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 2,1211 secondes
+
+2025-02-07 16:05:27.48 | User | APP_v5.P.0.xlsb | wshENC_Saisie:Worksheet_Activate |  | 3,9805 secondes
+
+2025-02-07 16:05:35.61 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 2025-02-07, 30, 0 | 
+2025-02-07 16:05:35.67 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0625 secondes
+
+2025-02-07 16:06:57.19 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 
+2025-02-07 16:06:57.30 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 0,1172 secondes
+
+2025-02-07 16:06:57.34 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices |  | 
+2025-02-07 16:06:57.45 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices_With_AF |  | 
+2025-02-07 16:06:57.86 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices_With_AF |  | 0,4141 secondes
+
+2025-02-07 16:06:57.90 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Check_Boxes |  | 
+2025-02-07 16:06:57.95 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Check_Boxes |  | 0,0547 secondes
+
+2025-02-07 16:06:58.00 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices |  | 0,1055 secondes
+
+2025-02-07 16:07:10.46 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 
+2025-02-07 16:07:10.56 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes |  | 0,1055 secondes
+
+2025-02-07 16:07:10.61 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices |  | 
+2025-02-07 16:07:10.72 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices_With_AF |  | 
+2025-02-07 16:07:11.27 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices_With_AF |  | 0,5547 secondes
+
+2025-02-07 16:07:11.50 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Check_Boxes |  | 
+2025-02-07 16:07:11.60 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Check_Boxes |  | 0,1133 secondes
+
+2025-02-07 16:07:11.65 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Get_OS_Invoices |  | 0,1641 secondes
+
+2025-02-07 16:07:32.79 | User | APP_v5.P.0.xlsb | modENC_Saisie:MAJ_Encaissement |  | 
+2025-02-07 16:07:32.86 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_DB_Entete |  | 
+2025-02-07 16:07:33.70 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_DB_Entete |  | 0,8516 secondes
+
+2025-02-07 16:07:33.75 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Locally_Entete |  | 
+2025-02-07 16:07:34.71 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Locally_Entete |  | 0,9648 secondes
+
+2025-02-07 16:07:34.77 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_DB_Details |  | 
+2025-02-07 16:07:35.55 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_DB_Details |  | 0,7930 secondes
+
+2025-02-07 16:07:35.61 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Locally_Details |  | 
+2025-02-07 16:07:36.33 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Add_Locally_Details |  | 0,7266 secondes
+
+2025-02-07 16:07:36.38 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Update_DB_Comptes_Clients |  | 
+2025-02-07 16:07:37.19 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Update_DB_Comptes_Clients |  | 0,8164 secondes
+
+2025-02-07 16:07:37.24 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Update_Locally_Comptes_Clients |  | 
+2025-02-07 16:07:37.42 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Update_Locally_Comptes_Clients |  | 0,1875 secondes
+
+2025-02-07 16:07:37.65 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_GL_Posting_DB |  | 
+2025-02-07 16:07:38.50 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_GL_Posting_DB |  | 0,8594 secondes
+
+2025-02-07 16:07:38.55 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_GL_Posting_Locally |  | 
+2025-02-07 16:07:40.75 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_GL_Posting_Locally |  | 2,2031 secondes
+
+2025-02-07 16:07:43.07 | User | APP_v5.P.0.xlsb | modENC_Saisie:Encaissement_Add_New |  | 
+2025-02-07 16:07:43.14 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Clear_Cells |  | 
+2025-02-07 16:07:43.47 | User | APP_v5.P.0.xlsb | modENC_Saisie:ENC_Clear_Cells |  | 0,3398 secondes
+
+2025-02-07 16:07:43.52 | User | APP_v5.P.0.xlsb | modENC_Saisie:Encaissement_Add_New |  | 0,3906 secondes
+
+2025-02-07 16:07:43.58 | User | APP_v5.P.0.xlsb | modENC_Saisie:MAJ_Encaissement |  | 0,4492 secondes
+
+2025-02-07 16:07:46.49 | User | APP_v5.P.0.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-07 16:07:46.54 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-07 16:07:48.64 | User | APP_v5.P.0.xlsb | modImport:GL_Trans_Import_All |  | 2,1094 secondes
+
+2025-02-07 16:07:48.96 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-07 16:07:49.01 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0586 secondes
+
+2025-02-07 16:07:49.16 | User | APP_v5.P.0.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 2025-07-02 | 
+2025-02-07 16:07:49.39 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 2024-07-31 à 2025-07-02 | 
+2025-02-07 16:07:50.73 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 1,3438 secondes
+
+2025-02-07 16:07:54.84 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-07 16:07:54.95 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,1211 secondes
+
+2025-02-07 16:07:55.02 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-07 16:07:55.13 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,1172 secondes
+
+2025-02-07 16:07:55.95 | User | APP_v5.P.0.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 0,9414 secondes
+
+2025-02-07 16:07:56.03 | User | APP_v5.P.0.xlsb | wshGL_BV:Worksheet_Activate |  | 1,0234 secondes
+
+2025-02-07 16:08:01.79 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-07 16:08:01.93 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,1562 secondes
+
+2025-02-07 16:08:02.05 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 1000 De 2024-07-31 à 2025-02-07 | 
+2025-02-07 16:09:22.10 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-07 16:09:22.18 | User | APP_v5.P.0.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0938 secondes
+
+2025-02-07 16:09:22.38 | User | APP_v5.P.0.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,2852 secondes
+
+2025-02-07 16:09:29.28 | User | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 16:09:29.36 | User | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0820 secondes
+
+2025-02-07 16:09:30.65 | User | APP_v5.P.0.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-07 16:09:33.15 | User | APP_v5.P.0.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-07 16:09:33.32 | User | APP_v5.P.0.xlsb | modMenu:Delete_User_Active_File |  | 0,1797 secondes
+
+2025-02-07 16:09:33.38 | User | APP_v5.P.0.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-07 16:23:38.22 | User | APP_v5.P.0.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-07 16:23:38.29 | User | APP_v5.P.0.xlsb | Validation d'accès serveur terminée |  | 0,0078 secondes
+
+2025-02-07 16:23:38.34 | User | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-07 16:23:38.44 | User | APP_v5.P.0.xlsb | modAppli:CreateUserActiveFile |  | 0,1055 secondes
+
+2025-02-07 16:23:38.49 | User | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-07 16:23:38.54 | User | APP_v5.P.0.xlsb | modAppli:SetupUserDateFormat |  | 0,0547 secondes
+
+2025-02-07 16:23:38.59 | User | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-07 16:23:39.07 | User | APP_v5.P.0.xlsb | modAppli:BackupMasterFile |  | 0,4922 secondes
+
+2025-02-07 16:23:39.12 | User | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-07 16:23:39.35 | User | APP_v5.P.0.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,2305 secondes
+
+2025-02-07 16:23:39.45 | User | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-07 16:23:39.50 | User | APP_v5.P.0.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0586 secondes
+
+2025-02-07 16:23:39.55 | User | APP_v5.P.0.xlsb | Erreur dans modAppli:CodeEssentielDepart : Un classeur doit contenir au moins une feuille visible. 
+
+Pour masquer, supprimer ou déplacer les feuilles sélectionnées, insérez d'abord une nouvelle feuille ou affichez une feuille masquée. | 59019,55 | 
+2025-02-07 16:23:48.90 | User | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 
+2025-02-07 16:23:49.00 | User | APP_v5.P.0.xlsb | modMenu:menuTEC_Click |  | 0,1094 secondes
+
+2025-02-07 16:23:49.97 | User | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 
+2025-02-07 16:23:50.09 | User | APP_v5.P.0.xlsb | modMENU_TEC:SaisieHeures_Click |  | 0,1289 secondes
+
+2025-02-07 16:23:50.15 | User | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 
+2025-02-07 16:23:50.20 | User | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 
+2025-02-07 16:23:50.64 | User | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 
+2025-02-07 16:23:50.69 | User | APP_v5.P.0.xlsb | modImport:ResizeTable |  | 0,0547 secondes
+
+2025-02-07 16:23:50.73 | User | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 
+2025-02-07 16:23:50.80 | User | APP_v5.P.0.xlsb | modImport:ApplyFormatting |  | 0,0898 secondes
+
+2025-02-07 16:23:50.92 | User | APP_v5.P.0.xlsb | modImport:Client_List_Import_All |  | 0,1914 secondes
+
+2025-02-07 16:23:50.97 | User | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 
+2025-02-07 16:23:51.65 | User | APP_v5.P.0.xlsb | modImport:TEC_Import_All |  | 0,6914 secondes
+
+2025-02-07 16:23:51.73 | User | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Activate |  | 0,7734 secondes
+
+2025-02-07 16:23:53.29 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 
+2025-02-07 16:23:53.34 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 0,0625 secondes
+
+2025-02-07 16:23:59.16 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 
+2025-02-07 16:23:59.22 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date | 2025-02-07, 600, 15 | 
+2025-02-07 16:23:59.27 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Complete_Date |  | 0,0586 secondes
+
+2025-02-07 16:23:59.34 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 0,1250 secondes
+
+2025-02-07 16:23:59.39 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 
+2025-02-07 16:23:59.46 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 4/02-07-2025 | 
+2025-02-07 16:23:59.58 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1289 secondes
+
+2025-02-07 16:23:59.63 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/02-07-2025 | 
+2025-02-07 16:23:59.69 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:23:59.74 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:23:59.79 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:23:59.96 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1797 secondes
+
+2025-02-07 16:24:00.01 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:24:00.14 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1406 secondes
+
+2025-02-07 16:24:00.19 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1836 secondes
+
+2025-02-07 16:24:00.23 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:24:00.40 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,1719 secondes
+
+2025-02-07 16:24:00.45 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:24:00.58 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,1406 secondes
+
+2025-02-07 16:24:00.63 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1875 secondes
+
+2025-02-07 16:24:00.78 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/02-07-2025 | 0,3320 secondes
+
+2025-02-07 16:24:00.82 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate |  | 0,3828 secondes
+
+2025-02-07 16:24:30.41 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | A | 
+2025-02-07 16:24:30.47 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0703 secondes
+
+2025-02-07 16:24:30.58 | User | APP_v5.P.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick |  | 
+2025-02-07 16:24:30.68 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | z_Administratif_Autres non chargeables | 
+2025-02-07 16:24:30.72 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0547 secondes
+
+2025-02-07 16:24:30.77 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 5 | 
+2025-02-07 16:24:30.82 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0625 secondes
+
+2025-02-07 16:24:30.89 | User | APP_v5.P.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick |  | 0,1250 secondes
+
+2025-02-07 16:24:30.94 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | z_Administratif_Autres non chargeables | 
+2025-02-07 16:24:30.00 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0664 secondes
+
+2025-02-07 16:24:31.07 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | z_Administratif_Autres non chargeables | 
+2025-02-07 16:24:31.14 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0703 secondes
+
+2025-02-07 16:24:36.44 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | Comptabilité du cabinet 
+ | 
+2025-02-07 16:24:36.50 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0664 secondes
+
+2025-02-07 16:24:38.39 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1 | 
+2025-02-07 16:24:38.46 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0820 secondes
+
+2025-02-07 16:24:38.52 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,00 | 
+2025-02-07 16:24:38.57 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0586 secondes
+
+2025-02-07 16:24:39.99 | User | APP_v5.P.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate |  | 
+2025-02-07 16:24:40.04 | User | APP_v5.P.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate |  | 0,0625 secondes
+
+2025-02-07 16:24:41.25 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 16:24:41.31 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 16:24:41.36 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | z_Administratif_Autres non chargeables | 
+2025-02-07 16:24:41.41 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0586 secondes
+
+2025-02-07 16:24:41.47 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 16:24:42.45 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,9883 secondes
+
+2025-02-07 16:24:42.50 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 16:24:42.63 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,1289 secondes
+
+2025-02-07 16:24:42.68 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 4/2025-02-07 | 
+2025-02-07 16:24:42.83 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1641 secondes
+
+2025-02-07 16:24:42.88 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/2025-02-07 | 
+2025-02-07 16:24:42.94 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:24:42.99 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:24:43.04 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:24:43.21 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1758 secondes
+
+2025-02-07 16:24:43.27 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:24:43.39 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1406 secondes
+
+2025-02-07 16:24:43.45 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1914 secondes
+
+2025-02-07 16:24:43.50 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:24:43.65 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,1562 secondes
+
+2025-02-07 16:24:43.70 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:24:43.79 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0977 secondes
+
+2025-02-07 16:24:43.84 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1484 secondes
+
+2025-02-07 16:24:44.02 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/2025-02-07 | 0,3281 secondes
+
+2025-02-07 16:24:44.07 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,3750 secondes
+
+2025-02-07 16:24:44.12 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,4258 secondes
+
+2025-02-07 16:24:49.32 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 9241 | 
+2025-02-07 16:24:49.37 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0664 secondes
+
+2025-02-07 16:24:49.49 | User | APP_v5.P.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick |  | 
+2025-02-07 16:24:49.59 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9241-7344 Québec Inc. [Carl Paquin] | 
+2025-02-07 16:24:49.65 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0664 secondes
+
+2025-02-07 16:24:49.70 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 1138 | 
+2025-02-07 16:24:49.75 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0664 secondes
+
+2025-02-07 16:24:49.81 | User | APP_v5.P.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick |  | 0,1250 secondes
+
+2025-02-07 16:24:49.87 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9241-7344 Québec Inc. [Carl Paquin] | 
+2025-02-07 16:24:49.92 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0586 secondes
+
+2025-02-07 16:24:49.98 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 9241-7344 Québec Inc. [Carl Paquin] | 
+2025-02-07 16:24:50.03 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0586 secondes
+
+2025-02-07 16:24:56.88 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | Comptabilité de la gestion et la fiducie + prise de connaissance du mémorendum 
+ | 
+2025-02-07 16:24:56.94 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0664 secondes
+
+2025-02-07 16:24:58.03 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1 | 
+2025-02-07 16:24:58.10 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0820 secondes
+
+2025-02-07 16:24:58.16 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,00 | 
+2025-02-07 16:24:58.21 | User | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0586 secondes
+
+2025-02-07 16:24:59.74 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 16:24:59.81 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 16:24:59.87 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 9241-7344 Québec Inc. [Carl Paquin] | 
+2025-02-07 16:24:59.93 | User | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0664 secondes
+
+2025-02-07 16:24:59.98 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 16:25:00.91 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,9375 secondes
+
+2025-02-07 16:25:00.96 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 16:25:01.10 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,1562 secondes
+
+2025-02-07 16:25:01.16 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 4/2025-02-07 | 
+2025-02-07 16:25:01.39 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,2422 secondes
+
+2025-02-07 16:25:01.44 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/2025-02-07 | 
+2025-02-07 16:25:01.50 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:25:01.55 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:25:01.60 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:25:01.75 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1602 secondes
+
+2025-02-07 16:25:01.80 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:25:01.92 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1250 secondes
+
+2025-02-07 16:25:01.97 | User | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1758 secondes
+
+2025-02-07 16:25:02.02 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:25:02.20 | User | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,1875 secondes
+
+2025-02-07 16:25:02.25 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:25:02.34 | User | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0938 secondes
+
+2025-02-07 16:25:02.41 | User | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1758 secondes
+
+2025-02-07 16:25:02.65 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 4/2025-02-07 | 0,4023 secondes
+
+2025-02-07 16:25:02.70 | User | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,4570 secondes
+
+2025-02-07 16:25:02.75 | User | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,5117 secondes
+
+2025-02-07 16:25:28.49 | User | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 
+2025-02-07 16:25:28.57 | User | APP_v5.P.0.xlsb | ufSaisieHeures:UserForm_Terminate |  | 0,0859 secondes
+
+2025-02-07 16:25:30.18 | User | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-07 16:25:30.23 | User | APP_v5.P.0.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0625 secondes
+
+2025-02-07 16:25:30.74 | User | APP_v5.P.0.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-07 16:25:32.23 | User | APP_v5.P.0.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-07 16:25:32.42 | User | APP_v5.P.0.xlsb | modMenu:Delete_User_Active_File |  | 0,1953 secondes
+
+2025-02-07 16:25:32.48 | User | APP_v5.P.0.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-07 16:55:29.68 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 16:55:29.71 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0391 secondes
+
+2025-02-07 16:55:29.76 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdClear_Click |  | 
+2025-02-07 16:55:29.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Efface_Formulaire |  | 
+2025-02-07 16:55:29.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 16:55:29.90 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0977 secondes
+
+2025-02-07 16:55:29.93 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 16:55:29.96 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:55:29.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:55:30.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:55:30.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1406 secondes
+
+2025-02-07 16:55:30.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:55:30.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0977 secondes
+
+2025-02-07 16:55:30.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 16:55:30.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:55:30.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2969 secondes
+
+2025-02-07 16:55:30.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:55:30.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0742 secondes
+
+2025-02-07 16:55:30.71 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0938 secondes
+
+2025-02-07 16:55:30.78 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1641 secondes
+
+2025-02-07 16:55:30.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Efface_Formulaire |  | 0,1836 secondes
+
+2025-02-07 16:55:30.82 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdClear_Click |  | 0,2070 secondes
+
+2025-02-07 16:55:37.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Sécurauto-Plus Inc. [Richard JR Loiseau] Sécure | 
+2025-02-07 16:55:37.23 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0312 secondes
+
+2025-02-07 16:55:37.60 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Sécurauto-Plus Inc. [Richard JR Loiseau] | 
+2025-02-07 16:55:37.64 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0391 secondes
+
+2025-02-07 16:56:16.78 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse et préparation des directives à Marie-Claude + courriels + appel Maurice Dufour | 
+2025-02-07 16:56:16.81 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0352 secondes
+
+2025-02-07 16:56:19.88 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 2 | 
+2025-02-07 16:56:19.91 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 16:56:19.93 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 2,00 | 
+2025-02-07 16:56:19.95 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 16:56:20.69 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 16:56:20.71 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 16:56:20.73 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Sécurauto-Plus Inc. [Richard JR Loiseau] | 
+2025-02-07 16:56:20.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 16:56:20.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 16:56:21.51 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,7422 secondes
+
+2025-02-07 16:56:21.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 16:56:21.62 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0859 secondes
+
+2025-02-07 16:56:21.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 16:56:21.74 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1094 secondes
+
+2025-02-07 16:56:21.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 16:56:21.80 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 16:56:21.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 16:56:21.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 16:56:22.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1758 secondes
+
+2025-02-07 16:56:22.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 16:56:22.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1094 secondes
+
+2025-02-07 16:56:22.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 16:56:22.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 16:56:22.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3125 secondes
+
+2025-02-07 16:56:22.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 16:56:22.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 16:56:22.60 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 16:56:22.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1602 secondes
+
+2025-02-07 16:56:22.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1836 secondes
+
+2025-02-07 16:56:22.71 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2031 secondes
+
+2025-02-07 17:22:20.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Succession Éric Morais [Louise Morais] | 
+2025-02-07 17:22:20.64 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0430 secondes
+
+2025-02-07 17:22:21.16 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Succession Éric Morais [Louise Morais] | 
+2025-02-07 17:22:21.19 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 17:23:01.37 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse de solde de cdc + courriels à louise et Marie-Claude et Nathalie + modif memo + réception et analyse des chiffres reçus pour produire T3 | 
+2025-02-07 17:23:01.40 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 17:23:02.84 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.25 | 
+2025-02-07 17:23:02.86 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0352 secondes
+
+2025-02-07 17:23:02.89 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,25 | 
+2025-02-07 17:23:02.91 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 17:23:04.47 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 17:23:04.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 17:23:04.52 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Succession Éric Morais [Louise Morais] | 
+2025-02-07 17:23:04.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0312 secondes
+
+2025-02-07 17:23:04.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 17:23:05.33 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,7656 secondes
+
+2025-02-07 17:23:05.35 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 17:23:05.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0859 secondes
+
+2025-02-07 17:23:05.46 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 17:23:05.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1094 secondes
+
+2025-02-07 17:23:05.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 17:23:05.63 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:23:05.65 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:23:05.67 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:23:05.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1758 secondes
+
+2025-02-07 17:23:05.87 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:23:05.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 17:23:05.98 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 17:23:06.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:23:06.34 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3398 secondes
+
+2025-02-07 17:23:06.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:23:06.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0977 secondes
+
+2025-02-07 17:23:06.48 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,1211 secondes
+
+2025-02-07 17:23:06.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,2188 secondes
+
+2025-02-07 17:23:06.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,2383 secondes
+
+2025-02-07 17:23:06.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2578 secondes
+
+2025-02-07 17:23:14.06 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 7 | 
+2025-02-07 17:23:14.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:23:14.12 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3944 | -1 | 
+2025-02-07 17:23:14.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 17:23:14.20 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3947] |  | 0,1172 secondes
+
+2025-02-07 17:23:15.12 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Succession Éric Morais [Louise Morais] | 
+2025-02-07 17:23:15.14 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 17:23:17.43 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1,5 | 
+2025-02-07 17:23:17.45 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 17:23:17.47 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,50 | 
+2025-02-07 17:23:17.49 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0234 secondes
+
+2025-02-07 17:23:18.77 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3947 | 
+2025-02-07 17:23:18.80 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 17:23:18.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3947 | 
+2025-02-07 17:23:19.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3947 | 0,7148 secondes
+
+2025-02-07 17:23:19.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3947 | 
+2025-02-07 17:23:19.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:23:19.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3944 | -1 | 
+2025-02-07 17:23:19.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0625 secondes
+
+2025-02-07 17:23:19.69 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3947 | 0,1250 secondes
+
+2025-02-07 17:23:19.72 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 17:23:19.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0977 secondes
+
+2025-02-07 17:23:19.83 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 17:23:19.87 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:23:19.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:23:19.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:23:20.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1328 secondes
+
+2025-02-07 17:23:20.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:23:20.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0977 secondes
+
+2025-02-07 17:23:20.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1172 secondes
+
+2025-02-07 17:23:20.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:23:20.50 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3008 secondes
+
+2025-02-07 17:23:20.53 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:23:20.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0703 secondes
+
+2025-02-07 17:23:20.61 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0898 secondes
+
+2025-02-07 17:23:20.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1523 secondes
+
+2025-02-07 17:23:20.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1719 secondes
+
+2025-02-07 17:23:20.72 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,1953 secondes
+
+2025-02-07 17:38:39.86 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | martin la | 
+2025-02-07 17:38:39.89 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0430 secondes
+
+2025-02-07 17:38:40.22 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Martin Lavoie (compagnie à être créée) | 
+2025-02-07 17:38:40.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 17:38:40.27 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Martin Lavoie (compagnie à être créée) | 
+2025-02-07 17:38:40.30 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:39:13.52 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | révision de contrat modifié + révision directives de paiements | 
+2025-02-07 17:39:13.54 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 17:39:15.27 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.75 | 
+2025-02-07 17:39:15.30 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0352 secondes
+
+2025-02-07 17:39:15.33 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 0,75 | 
+2025-02-07 17:39:15.35 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 17:39:16.61 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 17:39:16.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 17:39:16.65 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | Martin Lavoie (compagnie à être créée) | 
+2025-02-07 17:39:16.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0273 secondes
+
+2025-02-07 17:39:16.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 17:39:17.44 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,7500 secondes
+
+2025-02-07 17:39:17.46 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 17:39:17.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0820 secondes
+
+2025-02-07 17:39:17.56 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 17:39:17.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0977 secondes
+
+2025-02-07 17:39:17.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 17:39:17.73 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:39:17.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:39:17.77 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:39:17.93 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1758 secondes
+
+2025-02-07 17:39:17.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:39:18.07 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1055 secondes
+
+2025-02-07 17:39:18.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1250 secondes
+
+2025-02-07 17:39:18.11 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:39:18.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3047 secondes
+
+2025-02-07 17:39:18.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:39:18.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0625 secondes
+
+2025-02-07 17:39:18.51 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0820 secondes
+
+2025-02-07 17:39:18.58 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1562 secondes
+
+2025-02-07 17:39:18.60 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1758 secondes
+
+2025-02-07 17:39:18.62 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,1953 secondes
+
+2025-02-07 17:46:10.83 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 3 | 
+2025-02-07 17:46:10.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:46:10.89 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3939 | -1 | 
+2025-02-07 17:46:10.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 17:46:10.97 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3940] |  | 0,1172 secondes
+
+2025-02-07 17:46:12.31 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 9307-2411 Québec Inc. [Capitaine Vap] | 
+2025-02-07 17:46:12.34 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:46:29.33 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | sortir les dettes long terme des diffréntes sociétés et fournir à Dany pour discussion avec acheteur + répondre aux questions sur ajustements et prix de vente de base | 
+2025-02-07 17:46:29.36 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:46:31.17 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.75 | 
+2025-02-07 17:46:31.20 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0312 secondes
+
+2025-02-07 17:46:31.22 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,75 | 
+2025-02-07 17:46:31.24 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0234 secondes
+
+2025-02-07 17:46:33.25 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3940 | 
+2025-02-07 17:46:33.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 17:46:33.29 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3940 | 
+2025-02-07 17:46:34.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3940 | 0,7344 secondes
+
+2025-02-07 17:46:34.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3940 | 
+2025-02-07 17:46:34.06 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:46:34.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3939 | -1 | 
+2025-02-07 17:46:34.11 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 17:46:34.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3940 | 0,1211 secondes
+
+2025-02-07 17:46:34.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 17:46:34.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1094 secondes
+
+2025-02-07 17:46:34.33 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 17:46:34.37 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:46:34.39 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:46:34.41 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:46:34.54 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1367 secondes
+
+2025-02-07 17:46:34.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:46:34.66 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0977 secondes
+
+2025-02-07 17:46:34.68 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1172 secondes
+
+2025-02-07 17:46:34.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:46:35.00 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3047 secondes
+
+2025-02-07 17:46:35.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:46:35.09 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0781 secondes
+
+2025-02-07 17:46:35.11 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0977 secondes
+
+2025-02-07 17:46:35.17 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1562 secondes
+
+2025-02-07 17:46:35.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1797 secondes
+
+2025-02-07 17:46:35.21 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,1992 secondes
+
+2025-02-07 17:53:58.26 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 137888 Canada Inc. [Martine Lachance] Yves Gosselin | 
+2025-02-07 17:53:58.28 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0234 secondes
+
+2025-02-07 17:53:58.81 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 137888 Canada Inc. [Martine Lachance] | 
+2025-02-07 17:53:58.84 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:54:12.13 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | transmettre les T5/R3 | 
+2025-02-07 17:54:12.16 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:54:14.09 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.5 | 
+2025-02-07 17:54:14.12 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:54:14.14 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 0,50 | 
+2025-02-07 17:54:14.16 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0195 secondes
+
+2025-02-07 17:54:15.10 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 
+2025-02-07 17:54:15.13 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 
+2025-02-07 17:54:15.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client | 137888 Canada Inc. [Martine Lachance] | 
+2025-02-07 17:54:15.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Cell_From_BD_Client |  | 0,0195 secondes
+
+2025-02-07 17:54:15.18 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 
+2025-02-07 17:54:15.91 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0 | 0,7383 secondes
+
+2025-02-07 17:54:15.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 
+2025-02-07 17:54:16.01 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0 | 0,0898 secondes
+
+2025-02-07 17:54:16.04 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/2025-02-07 | 
+2025-02-07 17:54:16.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,1523 secondes
+
+2025-02-07 17:54:16.21 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 
+2025-02-07 17:54:16.25 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:54:16.27 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:54:16.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:54:16.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1758 secondes
+
+2025-02-07 17:54:16.50 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:54:16.59 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,1016 secondes
+
+2025-02-07 17:54:16.61 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1211 secondes
+
+2025-02-07 17:54:16.63 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:54:16.94 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,3086 secondes
+
+2025-02-07 17:54:16.96 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:54:17.02 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 17:54:17.04 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 17:54:17.12 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/2025-02-07 | 0,1602 secondes
+
+2025-02-07 17:54:17.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 0,1875 secondes
+
+2025-02-07 17:54:17.17 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdAdd_Click |  | 0,2109 secondes
+
+2025-02-07 17:56:08.73 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick | 5 | 
+2025-02-07 17:56:08.75 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:56:08.79 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3942 | -1 | 
+2025-02-07 17:56:08.81 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 17:56:08.87 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[3943] |  | 0,1211 secondes
+
+2025-02-07 17:56:09.81 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate | Maranda Lauzon Inc. [Sandy Maranda] | 
+2025-02-07 17:56:09.83 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate |  | 0,0234 secondes
+
+2025-02-07 17:56:15.07 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | analyse des avances et préparation des directives à Michael pour dividendes et attributions + courriels pour obtenir documents et validations + courriels | 
+2025-02-07 17:56:15.10 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:56:17.16 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 1.75 | 
+2025-02-07 17:56:17.18 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 0,0273 secondes
+
+2025-02-07 17:56:17.20 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit | 1,75 | 
+2025-02-07 17:56:17.23 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:txtHeures_Exit |  | 0,0273 secondes
+
+2025-02-07 17:56:18.40 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click | 3943 | 
+2025-02-07 17:56:18.43 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 
+2025-02-07 17:56:18.45 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3943 | 
+2025-02-07 17:56:19.20 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 3943 | 0,7617 secondes
+
+2025-02-07 17:56:19.23 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3943 | 
+2025-02-07 17:56:19.25 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 
+2025-02-07 17:56:19.28 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID - Row # = 3942 | -1 | 
+2025-02-07 17:56:19.30 | GuillaumeCharron | APP_v5.P.0.xlsb | modFunctions:Fn_Find_Row_Number_TECID |  | 0,0586 secondes
+
+2025-02-07 17:56:19.36 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 3943 | 0,1133 secondes
+
+2025-02-07 17:56:19.38 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 1/07/02/25 | 
+2025-02-07 17:56:19.47 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF |  | 0,0938 secondes
+
+2025-02-07 17:56:19.49 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 
+2025-02-07 17:56:19.53 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change | $U$7 | 
+2025-02-07 17:56:19.55 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-02-07 17:56:19.57 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-02-07 17:56:19.70 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1367 secondes
+
+2025-02-07 17:56:19.73 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-02-07 17:56:19.82 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0938 secondes
+
+2025-02-07 17:56:19.84 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1133 secondes
+
+2025-02-07 17:56:19.86 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 
+2025-02-07 17:56:20.14 | GuillaumeCharron | APP_v5.P.0.xlsb | modStatsHeures:Stats_Heures_AF |  | 0,2852 secondes
+
+2025-02-07 17:56:20.16 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 
+2025-02-07 17:56:20.23 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:UpdatePivotTables |  | 0,0664 secondes
+
+2025-02-07 17:56:20.25 | GuillaumeCharron | APP_v5.P.0.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0859 secondes
+
+2025-02-07 17:56:20.31 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1/07/02/25 | 0,1484 secondes
+
+2025-02-07 17:56:20.33 | GuillaumeCharron | APP_v5.P.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne |  | 0,1719 secondes
+
+2025-02-07 17:56:20.35 | GuillaumeCharron | APP_v5.P.0.xlsb | ufSaisieHeures:cmdUpdate_Click |  | 0,1914 secondes
+

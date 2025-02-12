@@ -523,7 +523,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         wsDest.Cells(rowNum, fFacCCCustomer).Value = client
         wsDest.Cells(rowNum, fFacCCCodeClient).Value = clientCode
         wsDest.Cells(rowNum, fFacCCStatus).Value = "Unpaid"
-        wsDest.Cells(rowNum, fFacCCTerms).Value = "Net 30"
+        wsDest.Cells(rowNum, fFacCCTerms).Value = "Net"
         dateDue = DateAdd("d", 30, CDate(dateFact))
         wsDest.Cells(rowNum, fFacCCDueDate).Value = Format$(CDate(dateDue), "mm/dd/yyyy")
         wsDest.Cells(rowNum, fFacCCTotal).Value = totalFact

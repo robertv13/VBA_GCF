@@ -492,13 +492,13 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields(fFacCCCustomer - 1).Value = .Range("B24").Value
         rs.Fields(fFacCCCodeClient - 1).Value = wshFAC_Brouillon.Range("B18").Value
         rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
-        rs.Fields(fFacCCTerms - 1).Value = "Net 30"
-        rs.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value) + 30
+        rs.Fields(fFacCCTerms - 1).Value = "Net"
+        rs.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
         rs.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
         rs.Fields(fFacCCTotalPaid - 1).Value = 0
         rs.Fields(fFacCCTotalRegul - 1).Value = 0
         rs.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
-        rs.Fields(fFacCCDaysOverdue - 1).Value = -30
+        rs.Fields(fFacCCDaysOverdue - 1).Value = 0
         rs.Fields(fFacCCTimeStamp - 1).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
     
@@ -538,13 +538,13 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Cells(firstFreeRow, fFacCCCustomer).Value = wshFAC_Finale.Range("B24").Value
         .Cells(firstFreeRow, fFacCCCodeClient).Value = wshFAC_Brouillon.Range("B18").Value
         .Cells(firstFreeRow, fFacCCStatus).Value = "Unpaid"
-        .Cells(firstFreeRow, fFacCCTerms).Value = "Net 30"
-        .Cells(firstFreeRow, fFacCCDueDate).Value = CDate(wshFAC_Brouillon.Range("O3").Value) + 30
+        .Cells(firstFreeRow, fFacCCTerms).Value = "Net"
+        .Cells(firstFreeRow, fFacCCDueDate).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
         .Cells(firstFreeRow, fFacCCTotal).Value = wshFAC_Finale.Range("E81").Value
         .Cells(firstFreeRow, fFacCCTotalPaid).Value = 0
         .Cells(firstFreeRow, fFacCCTotalRegul).Value = 0
         .Cells(firstFreeRow, fFacCCBalance).Value = wshFAC_Finale.Range("E81").Value
-        .Cells(firstFreeRow, fFacCCDaysOverdue).Value = -30
+        .Cells(firstFreeRow, fFacCCDaysOverdue).Value = 0
         .Cells(firstFreeRow, fFacCCTimeStamp).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     End With
 

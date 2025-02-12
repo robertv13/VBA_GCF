@@ -95,14 +95,12 @@ Sub Lire_LogClientsApp(filePath As String)
             If InStr(Fields(3), " secondes'") <> 0 Then
                 duree = ExtraireSecondes(Fields(3))
                 duree = Replace(duree, ".", ",")
-'                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
-'                    duree = Left(duree, InStr(duree, " ") - 1)
                 If duree <> 0 Then
                     output(ligne, 7) = CDbl(duree)
                 Else
                     output(ligne, 7) = 0
                 End If
-                output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                output(ligne, 6) = Trim(Left(output(ligne, 6), InStr(output(ligne, 6), " = ") - 1)) & " (S)"
             End If
             output(ligne, 8) = lineNo
             output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")

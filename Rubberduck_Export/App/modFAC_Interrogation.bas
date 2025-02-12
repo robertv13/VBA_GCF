@@ -1647,4 +1647,152 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
 End Sub
 
+Sub PreparerRapportTECFacturés(numeroFacture As String)
+
+    startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", "", 0)
+    
+    'Assigner la feuille du rapport
+    Dim strRapport As String
+    strRapport = "Rapport TEC facturés"
+    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacturé
+    wsRapport.Cells.Clear
+    
+    'Désactiver les mises à jour de l'écran et autres alertes
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.DisplayAlerts = False
+    
+    'Mettre en forme la feuille de rapport
+    With wsRapport
+        ' Titre du rapport
+        .Range("A1").Value = "TEC facturés pour la facture '" & numeroFacture & "'"
+        .Range("A1").Font.Bold = True
+        .Range("A1").Font.size = 12
+        
+        'Ajouter une date de génération du rapport
+        .Range("A2").Value = "Date de création : " & Format(Date, "dd/mm/yyyy")
+        .Range("A2").Font.Italic = True
+        .Range("A2").Font.size = 10
+        
+        'Entête du rapport (A4:D4)
+        .Range("A4").Value = "Date"
+        .Range("B4").Value = "Prof."
+        .Range("C4").Value = "Description"
+        .Range("D4").Value = "Heures"
+        With .Range("A4:D4")
+            .Font.size = 9
+            .Font.Bold = True
+            .Font.Italic = True
+            .Font.Color = vbWhite
+            .HorizontalAlignment = xlCenter
+        End With
+        
+        'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
+        Dim wsSource As Worksheet
+        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        
+        'Copier quelques données de la source
+        Dim rngResult As Range
+        Set rngResult = wsSource.Range("BJ1").CurrentRegion.offset(2, 0)
+        'Redimensionner la plage après l'offset pour avoir que les données (pas d'entête)
+        Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
+        'Transfert des données vers un tableau
+        Dim tableau As Variant
+        tableau = rngResult.Value
+        
+        'Créer un tableau pour les résultats
+        Dim output() As Variant
+        ReDim output(1 To UBound(tableau, 1), 1 To 4)
+        Dim r As Long
+        
+        Dim i As Long
+        For i = LBound(tableau, 1) To UBound(tableau, 1)
+            r = r + 1
+            output(r, 1) = tableau(i, 4)
+            output(r, 2) = tableau(i, 3)
+            output(r, 3) = tableau(i, 7)
+            output(r, 4) = tableau(i, 8)
+        Next i
+
+        'Copier le tableau dans la feuille du rapport  partir de la ligne 5, colonne 1
+        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).Value = output
+        'Ligne dans la feuille du rapport
+        r = 5 + UBound(output, 1) - 1
+        
+        'Corps du rapport
+        .Range("A5:D" & r).VerticalAlignment = xlCenter
+        With .Range("A4:D4").Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 12611584
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        
+        'Ajouter une bordure aux données
+        .Range("A4:D" & r).Borders.LineStyle = xlContinuous
+        With .Range("A5:D" & r).Borders(xlInsideVertical)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        With .Range("A5:D" & r).Borders(xlInsideHorizontal)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        
+        .Range("A4:D" & r).Font.Name = "Aptos Narrow"
+        .Range("A4:D" & r).Font.size = 10
+        
+        .Columns("A").ColumnWidth = 10
+        .Range("A4:A" & r).HorizontalAlignment = xlCenter
+        
+        .Columns("B").ColumnWidth = 6
+        .Range("B4:B" & r).HorizontalAlignment = xlCenter
+        
+        .Columns("C").ColumnWidth = 72
+        .Columns("C").WrapText = True
+        
+        .Columns("D").ColumnWidth = 7
+        .Columns("D").NumberFormat = "##0.00"
+        
+    End With
+
+    'Configurer la mise en page pour l'impression ou l'export en PDF
+    With wsRapport.PageSetup
+        .TopMargin = Application.CentimetersToPoints(1)
+        .BottomMargin = Application.CentimetersToPoints(1)
+        .LeftMargin = Application.CentimetersToPoints(0.5)
+        .RightMargin = Application.CentimetersToPoints(0.5)
+        
+        'Ajuster la marge des en-têtes et pieds de page (1 cm)
+        .HeaderMargin = Application.CentimetersToPoints(1)
+        .FooterMargin = Application.CentimetersToPoints(1)
+        
+        .Orientation = xlPortrait 'Portrait
+        .FitToPagesWide = 1 'Ajuster sur une page en largeur
+        .FitToPagesTall = False ' Ne pas ajuster en hauteur
+        .PrintArea = "A1:D" & r ' Définir la zone d'impression
+        .CenterHorizontally = True ' Centrer horizontalement
+        .CenterVertically = False ' Centrer verticalement
+    End With
+    
+    'On se déplace à la feuille contenant le rapport
+    wsRapport.Visible = xlSheetVisible
+    wsRapport.Activate
+    
+    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    
+    'Libérer la mémoire
+    Set rngResult = Nothing
+    Set wsRapport = Nothing
+    Set wsSource = Nothing
+    
+    Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", "", startTime)
+    
+End Sub
+
 

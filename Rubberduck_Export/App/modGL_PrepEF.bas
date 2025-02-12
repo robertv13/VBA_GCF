@@ -1,7 +1,7 @@
 Attribute VB_Name = "modGL_PrepEF"
 Option Explicit
 
-Public dictCodeEF As Object
+Public dictSoldeCodeEF As Object
 Public dictSectionSub As Object
 Public soldeCodeEF() As Variant
 Public savePremiereLigne As Integer
@@ -53,30 +53,31 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     lastUsedRow = rngResultAF.Rows.count
     If lastUsedRow < 2 Then Exit Sub
     
-    'Charge en mémoire (tableau) toutes les transactions du G/L
+    'Charge en mémoire (matrice) toutes les transactions du G/L
     Dim arrTrans As Variant
     arrTrans = rngResultAF.Value2
     
-    Dim dictSolde As Dictionary: Set dictSolde = New Dictionary
-    Dim arrSoldes() As Variant 'Soldes Année Courante & Année précédente
-    Dim rowID_to_arrSoldes As Long
-    ReDim arrSoldes(1 To UBound(arr, 1), 1 To 3)
+    'Dictionary par code d'état financier, pointe vers une matrice
+    Dim dictSoldesParGL As Dictionary: Set dictSoldesParGL = New Dictionary
+    Dim rowID_to_arrSoldesParGL As Long 'Pointeur à la matrice
+    Dim arrSoldesParGL() As Variant 'Soldes Année Courante & Année précédente
+    ReDim arrSoldesParGL(1 To UBound(arr, 1), 1 To 3)
     
     'Lire chacune des lignes de transaction du résultat (GL_Trans_AF#1)
     Dim currRowID As Long
     Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To UBound(arrTrans, 1)
         glNo = arrTrans(i, 5)
-        If Not dictSolde.Exists(glNo) Then
-            rowID_to_arrSoldes = rowID_to_arrSoldes + 1
-            dictSolde.Add glNo, rowID_to_arrSoldes
-            arrSoldes(rowID_to_arrSoldes, 1) = glNo
+        If Not dictSoldesParGL.Exists(glNo) Then
+            rowID_to_arrSoldesParGL = rowID_to_arrSoldesParGL + 1
+            dictSoldesParGL.Add glNo, rowID_to_arrSoldesParGL
+            arrSoldesParGL(rowID_to_arrSoldesParGL, 1) = glNo
         End If
-        currRowID = dictSolde(glNo)
-        'Mettre à jour le tableau des soldes
-        arrSoldes(currRowID, 2) = arrSoldes(currRowID, 2) + arrTrans(i, 7) - arrTrans(i, 8)
+        currRowID = dictSoldesParGL(glNo)
+        'Mettre à jour la matrice des soldes
+        arrSoldesParGL(currRowID, 2) = arrSoldesParGL(currRowID, 2) + arrTrans(i, 7) - arrTrans(i, 8)
         If CDate(arrTrans(i, 2)) <= cutOffAnPassé Then
-            arrSoldes(currRowID, 3) = arrSoldes(currRowID, 3) + arrTrans(i, 7) - arrTrans(i, 8)
+            arrSoldesParGL(currRowID, 3) = arrSoldesParGL(currRowID, 3) + arrTrans(i, 7) - arrTrans(i, 8)
         End If
     Next i
     
@@ -90,11 +91,11 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     
     'Maintenant on affiche des résulats, piloté par le plan comptable
     'Utilisation d'un dictionary pour sommariser les lignes de EF
-    If Not dictCodeEF Is Nothing Then
-        dictCodeEF.RemoveAll
+    If Not dictSoldeCodeEF Is Nothing Then
+        dictSoldeCodeEF.RemoveAll
     End If
-    If dictCodeEF Is Nothing Then
-        Set dictCodeEF = CreateObject("Scripting.Dictionary")
+    If dictSoldeCodeEF Is Nothing Then
+        Set dictSoldeCodeEF = CreateObject("Scripting.Dictionary")
     End If
     Dim rowID_to_soldeCodeEF As Long
     ReDim soldeCodeEF(1 To UBound(arr, 1), 1 To 3)
@@ -111,58 +112,55 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     End If
     Dim section As String
     
-    Dim totalAC As Currency, totalAP As Currency
+    Dim soldeAC As Currency, soldeAP As Currency, totalAC As Currency, totalAP As Currency
+    Dim descGL As String
     currRow = 5
     Dim r As Long
-    'arr est un tableau contenant le plan comptable
+    'arr est la matrice contenant le plan comptable
     For i = LBound(arr, 1) To UBound(arr, 1)
-        currRow = currRow + 1
         glNo = arr(i, 1)
-        ws.Range("C" & currRow).Value = glNo
-        ws.Range("D" & currRow).Value = arr(i, 2)
-        r = dictSolde.item(glNo) 'Si le pointeur est <> 0
+        descGL = arr(i, 2)
         codeEF = arr(i, 4)
-        ws.Range("E" & currRow).Value = codeEF
-        If isDeveloppeur = True Then
-            ws.Range("M" & currRow).Value = codeEF
-            ws.Range("N" & currRow).Value = glNo
-        End If
-        'Accumule les montants par ligne d'état financier (codeEF)
-        If Not dictCodeEF.Exists(codeEF) Then
-            rowID_to_soldeCodeEF = rowID_to_soldeCodeEF + 1
-            dictCodeEF.Add codeEF, rowID_to_soldeCodeEF
-            soldeCodeEF(rowID_to_soldeCodeEF, 1) = codeEF
-        End If
-        currRowID = dictCodeEF(codeEF)
-        If currRowID = 0 Then Stop
-        If r <> 0 Then
-            ws.Range("F" & currRow).Value = arrSoldes(r, 2)
-            ws.Range("H" & currRow).Value = arrSoldes(r, 3)
-            totalAC = totalAC + arrSoldes(r, 2)
-            soldeCodeEF(currRowID, 2) = soldeCodeEF(currRowID, 2) + arrSoldes(r, 2)
-            
-            'Preuve
-            If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
-                dictPreuve.Add codeEF & "-" & glNo, 0
+        
+        r = dictSoldesParGL.item(glNo)
+        If r <> 0 Then 'r <> 0 indique qu'il y a un solde pour ce G/L
+            If arrSoldesParGL(r, 2) <> 0 Or arrSoldesParGL(r, 3) <> 0 Then
+                currRow = currRow + 1
+                ws.Range("C" & currRow).Value = glNo
+                ws.Range("D" & currRow).Value = descGL
+                ws.Range("E" & currRow).Value = codeEF
+                If isDeveloppeur = True Then
+                    ws.Range("M" & currRow).Value = codeEF
+                    ws.Range("N" & currRow).Value = glNo
+                End If
+                'Accumule les montants par ligne d'état financier (codeEF)
+                If Not dictSoldeCodeEF.Exists(codeEF) Then
+                    rowID_to_soldeCodeEF = rowID_to_soldeCodeEF + 1
+                    dictSoldeCodeEF.Add codeEF, rowID_to_soldeCodeEF
+                    soldeCodeEF(rowID_to_soldeCodeEF, 1) = codeEF
+                End If
+                currRowID = dictSoldeCodeEF(codeEF)
+                
+                ws.Range("F" & currRow).Value = arrSoldesParGL(r, 2)
+                soldeCodeEF(currRowID, 2) = soldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
+                totalAC = totalAC + arrSoldesParGL(r, 2)
+                ws.Range("H" & currRow).Value = arrSoldesParGL(r, 3)
+                soldeCodeEF(currRowID, 3) = soldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
+                totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
+                
+                'Preuve
+                If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
+                    dictPreuve.Add codeEF & "-" & glNo, 0
+                End If
+                dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
+                
+                'Preuve - Sous-total par section
+                section = Left(codeEF, 1)
+                If Not dictSectionSub.Exists(section) Then
+                    dictSectionSub.Add section, 0
+                End If
+                dictSectionSub(section) = dictSectionSub(section) + arrSoldesParGL(r, 2)
             End If
-            dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldes(r, 2)
-            
-            'Sous-total par section
-            section = Left(codeEF, 1)
-            If Not dictSectionSub.Exists(section) Then
-                dictSectionSub.Add section, 0
-            End If
-            dictSectionSub(section) = dictSectionSub(section) + arrSoldes(r, 2)
-            
-            If Not arrSoldes(r, 3) = Null Then
-                totalAP = totalAP + CCur(arrSoldes(r, 3))
-                soldeCodeEF(currRowID, 3) = soldeCodeEF(currRowID, 3) + arrSoldes(r, 3)
-            Else
-                ws.Range("H" & currRow).Value = 0
-            End If
-        Else
-            ws.Range("F" & currRow).Value = 0
-            ws.Range("H" & currRow).Value = 0
         End If
         
         'Sauvegarde des BNR au début de l'année et Dividendes
@@ -178,7 +176,6 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
             ws.Range("O" & currRow).Value = ws.Range("F" & currRow).Value
             ws.Range("P" & currRow).Value = ws.Range("H" & currRow).Value
         End If
-
     Next i
 
     currRow = currRow + 2
@@ -205,7 +202,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     
     'Libérer la mémoire
     Set dictPreuve = Nothing
-    Set dictSolde = Nothing
+    Set dictSoldesParGL = Nothing
     
     Call Log_Record("modGL_PrepEF:Calculer_Soldes_Pour_EF", "", startTime)
 
@@ -359,7 +356,7 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Verdana"
+        .Font.Name = "Calibri"
         .Font.size = 20
         .Font.Color = RGB(98, 88, 80)
     End With
@@ -455,8 +452,8 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
+        .Font.Name = "Calibri"
+        .Font.size = 11
         .Font.Color = RGB(98, 88, 80)
     End With
     
@@ -482,7 +479,7 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
     Dim indice As Integer
-    indice = dictCodeEF("E02")
+    indice = dictSoldeCodeEF("E02")
     soldeCodeEF(indice, 2) = soldeCodeEF(indice, 2) - totalRevenuNet_AC
     soldeCodeEF(indice, 3) = soldeCodeEF(indice, 3) - totalRevenuNet_AP
     
@@ -591,8 +588,8 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
+        .Font.Name = "Calibri"
+        .Font.size = 11
         .Font.Color = RGB(98, 88, 80)
     End With
 
@@ -605,6 +602,19 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
         End If
     Next i
     ws.Range("G7:I45").Clear
+    
+    'Tri par ordre descendant une plage
+    With ws.Sort
+        .SortFields.Clear
+        .SortFields.Add key:=ws.Range("C17:C31"), Order:=xlDescending
+        .SetRange ws.Range("B17:E31")
+        .Header = xlNo
+        .MatchCase = False
+        .Orientation = xlTopToBottom
+        .SortMethod = xlPinYin
+        .Apply
+    End With
+    
     
     Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", startTime)
 
@@ -646,21 +656,17 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").Value = year(dateAC)
-'    ws.Range("C6").Value = "$"
+    ws.Range("C5").Font.Bold = True
     ws.Range("E5").Value = year(dateAP)
-'    ws.Range("E6").Value = "$"
+    ws.Range("E5").Font.Bold = True
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
-'    With ws.Range("B6:E6").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
-'        .ColorIndex = 0
-'        .TintAndShade = 0
         .Weight = xlMedium
     End With
     
     Dim currRow As Integer
     currRow = 7
-'    currRow = 8
 
     ws.Range("C7:C38").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
     ws.Range("E7:E38").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
@@ -712,8 +718,8 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
+        .Font.Name = "Calibri"
+        .Font.size = 11
         .Font.Color = RGB(98, 88, 80)
     End With
 
@@ -786,15 +792,12 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     Call PositionnerCellule(ws, UCase(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").Value = year(dateAC)
-'    ws.Range("C6").Value = "$"
+    ws.Range("C5").Font.Bold = True
     ws.Range("E5").Value = year(dateAP)
-'    ws.Range("E6").Value = "$"
+    ws.Range("E5").Font.Bold = True
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
-'    With ws.Range("B6:E6").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
-'        .ColorIndex = 0
-'        .TintAndShade = 0
         .Weight = xlMedium
     End With
     
@@ -848,8 +851,8 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
+        .Font.Name = "Calibri"
+        .Font.size = 11
         .Font.Color = RGB(98, 88, 80)
     End With
 
@@ -919,14 +922,14 @@ End Function
 
 Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
     
-    Debug.Print "#7-"; currRow; Tab(10); codeEF; Tab(18); typeLigne; Tab(25); gras; Tab(33); souligne; Tab(41); size
+'    Debug.Print "#7-"; currRow; Tab(10); codeEF; Tab(18); typeLigne; Tab(25); gras; Tab(33); souligne; Tab(41); size
     Dim correcteurSigne As Integer
     Dim section As String
     section = Left(codeEF, 1)
     correcteurSigne = IIf(InStr("PERIB", section), -1, 1)
     
-'    If Left(codeEF, 1) = "B" Then Stop
-   
+    Dim doitImprimer As Boolean
+    doitImprimer = True
     Dim index As Integer
     Select Case typeLigne
     
@@ -942,19 +945,22 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
                 savePremiereLigne = currRow + 1
             End If
             
-        
         Case "G" 'Groupement
-            index = dictCodeEF(codeEF)
+            index = dictSoldeCodeEF(codeEF)
             If index <> 0 Then
-                ws.Range("G" & currRow).Value = soldeCodeEF(index, 2) * correcteurSigne
-                ws.Range("I" & currRow).Value = soldeCodeEF(index, 3) * correcteurSigne
+                If Round(soldeCodeEF(index, 2), 2) <> 0 Or Round(soldeCodeEF(index, 3), 2) <> 0 Then
+                    ws.Range("G" & currRow).Value = soldeCodeEF(index, 2) * correcteurSigne
+                    ws.Range("I" & currRow).Value = soldeCodeEF(index, 3) * correcteurSigne
+                Else
+                    doitImprimer = False
+                End If
+                
             Else
-                ws.Range("G" & currRow).Value = 0
-                ws.Range("I" & currRow).Value = 0
+                doitImprimer = False
             End If
         
         Case "T" 'Totaux
-            If InStr("E50^E60^R99^", codeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
+            If InStr("E50^E60^", codeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
                 currRow = currRow + 1
             End If
             If codeEF <> "E60" And codeEF <> "B10" Then 'Bordure en haut de la cellule
@@ -1002,9 +1008,6 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
             
     End Select
         
-'    ws.Range("A" & currRow).Value = codeEF
-    ws.Range("B" & currRow).Value = LigneEF
-
     'Certaines lignes ont besoin d'être notées pour utilisation particulière
     If codeEF = "P99" Then ligneTotalPassif = currRow
     If codeEF = "E50" Then ligneTotalADA = currRow
@@ -1070,7 +1073,10 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
         End With
     End If
     
-    currRow = currRow + 1
+    If doitImprimer = True Then
+        ws.Range("B" & currRow).Value = LigneEF
+        currRow = currRow + 1
+    End If
     
     If typeLigne = "T" Then
         currRow = currRow + 1
@@ -1113,5 +1119,64 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
     For i = LBound(keys) To UBound(keys)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
+End Sub
+
+Sub CreerSommaireAvecLiensEtTirets()
+
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim cell As Range
+    
+    'Vérifie si une feuille "Sommaire" existe déjà
+    Dim sommaire As Worksheet
+    On Error Resume Next
+    Set sommaire = ThisWorkbook.Worksheets("États Financiers")
+    On Error GoTo 0
+    
+    'Supprime l'ancienne feuille de sommaire si elle existe
+    If Not sommaire Is Nothing Then
+        Application.DisplayAlerts = False
+        sommaire.Delete
+        Application.DisplayAlerts = True
+    End If
+    
+    'Crée une nouvelle feuille de sommaire
+    Set sommaire = ThisWorkbook.Worksheets.Add
+    sommaire.Name = "États Financiers"
+    
+    ' Titre de la feuille
+    sommaire.Cells(1, 1).Value = "États Financiers"
+    sommaire.Cells(1, 1).Font.Bold = True
+    sommaire.Cells(1, 1).Font.size = 16
+    
+    Dim ligne As Integer
+    ligne = 3
+    
+    'Parcourt toutes les feuilles du classeur
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.Name <> "États Financiers" Then
+            'Insère le nom de la feuille avec un lien
+            sommaire.Cells(ligne, 1).Value = ws.Name
+            sommaire.Hyperlinks.Add Anchor:=sommaire.Cells(ligne, 1), _
+                Address:="", SubAddress:="'" & ws.Name & "'!A1", _
+                TextToDisplay:=ws.Name
+            ligne = ligne + 1
+            
+            'Recherche des cellules non vides dans la colonne A
+            lastRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+            For Each cell In ws.Range("A1:A" & lastRow)
+                If cell.Value <> "" Then
+                    sommaire.Cells(ligne, 1).Value = "- " & cell.Value
+                    sommaire.Hyperlinks.Add Anchor:=sommaire.Cells(ligne, 1), _
+                        Address:="", SubAddress:="'" & ws.Name & "'!" & cell.Address, _
+                        TextToDisplay:="- " & cell.Value
+                    ligne = ligne + 1
+                End If
+            Next cell
+        End If
+    Next ws
+    
+    MsgBox "Le sommaire a été créé avec succès !"
+    
 End Sub
 

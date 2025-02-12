@@ -98,4 +98,17 @@ Sub EF_Click()
 
 End Sub
 
+'Option # 7
+Sub Stats_CA_Click()
+
+    Application.ScreenUpdating = False
+
+    With wshGL_Stats_CA
+        .Visible = xlSheetVisible
+        .Activate
+    End With
+
+    Application.ScreenUpdating = True
+
+End Sub
 

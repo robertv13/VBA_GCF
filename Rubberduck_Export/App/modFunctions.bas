@@ -511,6 +511,23 @@ Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Doubl
 
 End Function
 
+Function Fn_Get_GL_Trans_Total(glCode As String, dateSolde As Date) As Double '2025-02-07 @ 13:46
+    
+    Fn_Get_GL_Trans_Total = 0
+    
+    Dim dateDebutMois As Date
+    dateDebutMois = DateSerial(year(dateSolde), month(dateSolde), 1)
+    
+    'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
+    Dim rngResult As Range
+    Call GL_Get_Account_Trans_AF(glCode, dateDebutMois, dateSolde, rngResult)
+    
+    'Méthode plus rapide pour obtenir une somme
+    Fn_Get_GL_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
+
+End Function
+
 Function Fn_ObtenirTECFacturésPourFacture(invNo As String) As Variant
 
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
@@ -1744,11 +1761,12 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no Gl)
     Dim plage As Range
-    Set plage = wshAdmin.Range("D44:F59")
+    Set plage = wshAdmin.Range("D44:F60")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
     For Each cellule In plage.Columns(1).Cells
+        Debug.Print cellule.Value
         If cellule.Value = indic Then
             'Retourner la valeur de la troisième colonne pour la ligne correspondante
             ObtenirNoGlIndicateur = cellule.offset(0, 1).Value
@@ -1831,6 +1849,11 @@ Function ExtraireSecondes(chaine As String) As Double
     Dim secondes As String
     
     chaine = Replace(chaine, ".", ",")
+    chaine = Replace(chaine, "'", "")
+    
+    If InStr(chaine, " = ") > 0 Then
+        chaine = Right(chaine, Len(chaine) - InStr(chaine, " = ") - 2)
+    End If
     
     'Trouve la position de " secondes"
     pos = InStr(chaine, " secondes")
