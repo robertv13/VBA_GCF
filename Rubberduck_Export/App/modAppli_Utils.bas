@@ -50,7 +50,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Dim r As Long: r = 2
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Répertoire utilisé")
     Call AddMessageToWorkSheet(wsOutput, r, 2, wshAdmin.Range("FolderSharedData").Value & DATA_PATH)
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
 
     'Fichier utilisé
@@ -82,7 +82,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Plan Comptable")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     
     Application.ScreenUpdating = False
     Call checkPlanComptable(r, readRows)
@@ -93,7 +93,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call Client_List_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -105,7 +105,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call Fournisseur_List_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -117,7 +117,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call DEB_Récurrent_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -129,7 +129,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call DEB_Trans_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Trans a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -141,7 +141,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Entête_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -153,7 +153,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Détails_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Application.ScreenUpdating = False
@@ -164,7 +164,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Comptes_Clients_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkFAC_Comptes_Clients(r, readRows)
@@ -174,7 +174,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Sommaire_Taux_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkFAC_Sommaire_Taux(r, readRows)
@@ -184,7 +184,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call ENC_Entête_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkENC_Entête(r, readRows)
@@ -194,7 +194,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call ENC_Détails_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkENC_Détails(r, readRows)
@@ -204,7 +204,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call CC_Régularisations_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkCC_Régularisations(r, readRows)
@@ -214,7 +214,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Projets_Entête_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkFAC_Projets_Entête(r, readRows)
@@ -224,7 +224,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call FAC_Projets_Détails_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkFAC_Projets_Détails(r, readRows)
@@ -234,7 +234,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call GL_Trans_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkGL_Trans(r, readRows)
@@ -244,7 +244,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     
     Call GL_EJ_Recurrente_Import_All
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkGL_EJ_Recurrente(r, readRows)
@@ -255,7 +255,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call TEC_Import_All
     Call ActualiserTEC_TDB
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkTEC_TdB_Data(r, readRows)
@@ -263,7 +263,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_Local")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss"))
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call checkTEC(r, readRows)
@@ -802,568 +802,6 @@ Clean_Exit:
 
 End Sub
 
-Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim ws As Worksheet: Set ws = wshDEB_Récurrent
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'wshDEB_Récurrent
-    Dim HeaderRow As Long: HeaderRow = 1
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastUsedRow <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Récurrent'")
-    r = r + 1
-    
-    'On a besoin du plan comptable pour valider les données
-    On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
-    On Error GoTo 0
-
-    If planComptable Is Nothing Then
-        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
-        r = r + 1
-        Exit Sub
-    End If
-    
-    Dim strGL As String
-    Dim ligne As Range
-    For Each ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
-    Next ligne
-    
-    'Copie les données vers un tableau
-    Dim rng As Range
-    Set rng = ws.Range("A1:N" & lastUsedRow)
-    Dim arr() As Variant
-    Dim headerRows As Long
-    headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
-    
-    'On analyse chacune des lignes du tableau
-    Dim i As Long, p As Long
-    Dim GL As String, descGL As String
-    
-    Dim isDebRécurrentValid As Boolean
-    isDebRécurrentValid = True
-    
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        
-        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        
-        p = InStr(strGL, "^C:" & arr(i, 6))
-        If p = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 6) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        If p > 0 Then
-            GL = Mid(strGL, p + 3)
-            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
-            If descGL <> Trim(arr(i, 7)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 7) & "' est INVALIDE")
-                r = r + 1
-                isDebRécurrentValid = False
-            End If
-        End If
-        
-        'Total
-        If IsNumeric(arr(i, 9)) = False Or arr(i, 9) * 100 <> Int(arr(i, 9) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 9) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        'TPS
-        If IsNumeric(arr(i, 10)) = False Or arr(i, 10) * 100 <> Int(arr(i, 10) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 10) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        'TVQ
-        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) * 100 <> Int(arr(i, 11) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 11) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        'Intrant TPS
-        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) * 100 <> Int(arr(i, 12) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 12) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        'Intrant TVQ
-        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) * 100 <> Int(arr(i, 13) * 100) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 13) & "' est INVALIDE")
-            r = r + 1
-            isDebRécurrentValid = False
-        End If
-        '$ dépense
-        readRows = readRows + 1
-    Next i
-
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
-    r = r + 2
-    
-    'Cas problème dans cette vérification ?
-    If isDebRécurrentValid = False Then
-        verificationIntegriteOK = False
-    End If
-
-Clean_Exit:
-    'Libérer la mémoire
-    Set ligne = Nothing
-    Set planComptable = Nothing
-    Set rng = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-
-    Application.ScreenUpdating = True
-
-    Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", startTime)
-
-End Sub
-
-Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim ws As Worksheet: Set ws = wshDEB_Trans
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'wshDEB_Trans
-    Dim HeaderRow As Long: HeaderRow = 1
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastUsedRow <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Trans'")
-    r = r + 1
-    
-    'On a besoin du plan comptable pour valider les données
-    On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
-    On Error GoTo 0
-
-    If planComptable Is Nothing Then
-        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
-        r = r + 1
-        Exit Sub
-    End If
-    
-    Dim strGL As String
-    Dim ligne As Range
-    For Each ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
-    Next ligne
-    
-    'Copie les données vers un tableau
-    Dim rng As Range
-    Set rng = ws.Range("A1:R" & lastUsedRow)
-    Dim arr() As Variant
-    Dim headerRows As Long
-    headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
-    
-    'On analyse chacune des lignes du tableau
-    Dim i As Long, p As Long
-    Dim GL As String, descGL As String
-    
-    Dim isDebTransValid As Boolean
-    isDebTransValid = True
-    
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        
-        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        
-        p = InStr(strGL, "^C:" & arr(i, 8))
-        If p = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 8) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        If p > 0 Then
-            GL = Mid(strGL, p + 3)
-            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
-            If descGL <> Trim(arr(i, 9)) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
-                r = r + 1
-                isDebTransValid = False
-            End If
-        End If
-        
-        'Total
-        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) <> Round(arr(i, 11), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        'TPS
-        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) <> Round(arr(i, 12), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        'TVQ
-        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) <> Round(arr(i, 13), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        'Intrant TPS
-        If IsNumeric(arr(i, 14)) = False Or arr(i, 14) <> Round(arr(i, 14), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        'Intrant TVQ
-        If IsNumeric(arr(i, 15)) = False Or arr(i, 15) <> Round(arr(i, 15), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        '$ dépense
-        If IsNumeric(arr(i, 16)) = False Or arr(i, 16) <> Round(arr(i, 16), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
-            r = r + 1
-            isDebTransValid = False
-        End If
-        readRows = readRows + 1
-    Next i
-
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
-    r = r + 2
-    
-    'Cas problème dans cette vérification ?
-    If isDebTransValid = False Then
-        verificationIntegriteOK = False
-    End If
-
-Clean_Exit:
-    'Libérer la mémoire
-    Set ligne = Nothing
-    Set planComptable = Nothing
-    Set rng = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-
-    Application.ScreenUpdating = True
-
-    Call Log_Record("modAppli_Utils:checkDEB_Trans", "", startTime)
-
-End Sub
-
-Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'wshENC_Détails
-    Dim ws As Worksheet: Set ws = wshENC_Détails
-    Dim HeaderRow As Long: HeaderRow = 1
-    Dim lastUsedRowDetails As Long
-    lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    If lastUsedRowDetails <= 2 - HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRowDetails, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    'ENC_Entête Worksheet
-    Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
-    Dim lastUsedRowEntete As Long
-    lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
-    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
-    Dim strPmtNo As String
-    Dim i As Long
-    For i = 2 To lastUsedRowEntete
-        strPmtNo = strPmtNo & CLng(wsEntete.Cells(i, fEncEPayID).Value) & "|"
-    Next i
-    
-    'FAC_Entête Worksheet
-    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
-    Dim lastUsedRowFacEntete As Long
-    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
-    Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
-    r = r + 1
-    
-    'Array pointer
-    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
-    Dim pmtNo As Long, oldpmtNo As Long
-    Dim result As Variant
-    'Dictionary pour accumuler les encaissements par facture
-    Dim dictENC As Scripting.Dictionary
-    Set dictENC = New Scripting.Dictionary
-    Dim totalEncDetails As Currency
-    
-    Dim isEncDétailsValid As Boolean
-    isEncDétailsValid = True
-    
-    For i = 2 To lastUsedRowDetails
-        pmtNo = CLng(ws.Cells(i, fEncDPayID).Value)
-        If pmtNo <> oldpmtNo Then
-            If InStr(strPmtNo, pmtNo) = 0 Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
-                r = r + 1
-                isEncDétailsValid = False
-            End If
-            strPmtNo = strPmtNo & pmtNo & "|"
-            oldpmtNo = pmtNo
-        End If
-        
-        Dim Inv_No As String
-        Inv_No = CStr(ws.Cells(i, fEncDInvNo).Value)
-        result = Application.WorksheetFunction.XLookup(Inv_No, _
-                        rngFACEntete, _
-                        rngFACEntete, _
-                        "Not Found", _
-                        0, _
-                        1)
-        If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
-            r = r + 1
-            isEncDétailsValid = False
-        End If
-        
-        If IsDate(ws.Cells(i, fEncDPayDate).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fEncDPayDate).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
-            r = r + 1
-            isEncDétailsValid = False
-        End If
-        
-        If IsNumeric(ws.Cells(i, fEncDPayAmount).Value) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant '" & ws.Cells(i, fEncDPayAmount).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
-            r = r + 1
-            isEncDétailsValid = False
-        Else
-            If dictENC.Exists(Inv_No) Then
-                dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
-            Else
-                dictENC.Add Inv_No, ws.Cells(i, fEncDPayAmount).Value
-            End If
-            totalEncDetails = totalEncDetails + ws.Cells(i, fEncDPayAmount).Value
-        End If
-    Next i
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
-    r = r + 1
-    
-    'Compare les encaissements accumulés (dictENC) avec wshFAC_Comptes_Clients
-    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
-    Dim lastUsedRow As Long
-    lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.Rows.count, 1).End(xlUp).row
-    Dim totalPaid As Currency
-    
-    For i = 3 To lastUsedRow
-        Inv_No = wsComptes_Clients.Cells(i, fFacCCInvNo).Value
-        totalPaid = wsComptes_Clients.Cells(i, fFacCCTotalPaid).Value
-        If totalPaid <> dictENC(Inv_No) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Ligne # " & i & " - La facture '" & Inv_No & "', le total des enc. " _
-                            & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
-                            & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
-            r = r + 1
-            isEncDétailsValid = False
-        End If
-    Next i
-    
-    'Un peu de couleur
-    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.Value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.Color = vbRed
-    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.Bold = True
-
-    r = r + 2
-    
-    'Add number of rows processed (read)
-    readRows = readRows + lastUsedRowDetails - 1
-    
-    'Cas problème dans cette vérification ?
-    If isEncDétailsValid = False Then
-        verificationIntegriteOK = False
-    End If
-    
-Clean_Exit:
-    'Libérer la mémoire
-    Set dictENC = Nothing
-    Set rng = Nothing
-    Set rngEntete = Nothing
-    Set rngFACEntete = Nothing
-    Set ws = Nothing
-    Set wsComptes_Clients = Nothing
-    Set wsFACEntete = Nothing
-    Set wsEntete = Nothing
-    Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli_Utils:checkENC_Détails", "", startTime)
-
-End Sub
-
-Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
-
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
-
-    Application.ScreenUpdating = False
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    
-    'Clients Master File
-    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
-    Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
-    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
-    
-    'wshENC_Entête
-    Dim ws As Worksheet: Set ws = wshENC_Entête
-    Dim HeaderRow As Long: HeaderRow = 1
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
-    If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Entête'")
-    r = r + 1
-    
-    If lastUsedRow = HeaderRow Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-
-    Dim arr As Variant
-    arr = wshENC_Entête.Range("A1").CurrentRegion.offset(1, 0) _
-              .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
-    
-    'Array pointer
-    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
-    Dim i As Long
-    Dim pmtNo As String
-    Dim totals As Currency
-    Dim result As Variant
-    
-    Dim isEncEntêteValid As Boolean
-    isEncEntêteValid = True
-    
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        pmtNo = arr(i, 1)
-        If IsDate(arr(i, 2)) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
-            r = r + 1
-            isEncEntêteValid = False
-        End If
-        
-        Dim codeClient As String
-        codeClient = arr(i, 4)
-        result = Application.WorksheetFunction.XLookup(codeClient, _
-                        rngClients, _
-                        rngClients, _
-                        "Not Found", _
-                        0, _
-                        1)
-        If result = "Not Found" Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
-            r = r + 1
-            isEncEntêteValid = False
-        End If
-        totals = totals + arr(i, 6)
-    Next i
-    
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
-    r = r + 1
-    
-    'Un peu de couleur
-    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.Value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Color = vbRed
-    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Bold = True
-    r = r + 2
-    
-    'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1)
-    
-    'Cas problème dans cette vérification ?
-    If isEncEntêteValid = False Then
-        verificationIntegriteOK = False
-    End If
-    
-Clean_Exit:
-    'Libérer la mémoire
-    Set rng = Nothing
-    Set rngClients = Nothing
-    Set ws = Nothing
-    Set wsClients = Nothing
-    Set wsOutput = Nothing
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli_Utils:checkENC_Entête", "", startTime)
-
-End Sub
-
 Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", 0)
@@ -1563,6 +1001,568 @@ Clean_Exit:
 
 End Sub
 
+Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet: Set ws = wshDEB_Récurrent
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'wshDEB_Récurrent
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastUsedRow <= 2 - HeaderRow Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Récurrent'")
+    r = r + 1
+    
+    'On a besoin du plan comptable pour valider les données
+    On Error Resume Next
+    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    On Error GoTo 0
+
+    If planComptable Is Nothing Then
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        r = r + 1
+        Exit Sub
+    End If
+    
+    Dim strGL As String
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
+    Next ligne
+    
+    'Copie les données vers un tableau
+    Dim rng As Range
+    Set rng = ws.Range("A1:N" & lastUsedRow)
+    Dim arr() As Variant
+    Dim headerRows As Long
+    headerRows = 1
+    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    
+    'On analyse chacune des lignes du tableau
+    Dim i As Long, p As Long
+    Dim GL As String, descGL As String
+    
+    Dim isDebRécurrentValid As Boolean
+    isDebRécurrentValid = True
+    
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        
+        p = InStr(strGL, "^C:" & arr(i, 6))
+        If p = 0 Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 6) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        If p > 0 Then
+            GL = Mid(strGL, p + 3)
+            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            If descGL <> Trim(arr(i, 7)) Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 7) & "' est INVALIDE")
+                r = r + 1
+                isDebRécurrentValid = False
+            End If
+        End If
+        
+        'Total
+        If IsNumeric(arr(i, 9)) = False Or arr(i, 9) * 100 <> Int(arr(i, 9) * 100) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 9) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        'TPS
+        If IsNumeric(arr(i, 10)) = False Or arr(i, 10) * 100 <> Int(arr(i, 10) * 100) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 10) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        'TVQ
+        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) * 100 <> Int(arr(i, 11) * 100) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 11) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        'Intrant TPS
+        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) * 100 <> Int(arr(i, 12) * 100) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 12) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        'Intrant TVQ
+        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) * 100 <> Int(arr(i, 13) * 100) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 13) & "' est INVALIDE")
+            r = r + 1
+            isDebRécurrentValid = False
+        End If
+        '$ dépense
+        readRows = readRows + 1
+    Next i
+
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
+    r = r + 2
+    
+    'Cas problème dans cette vérification ?
+    If isDebRécurrentValid = False Then
+        verificationIntegriteOK = False
+    End If
+
+Clean_Exit:
+    'Libérer la mémoire
+    Set ligne = Nothing
+    Set planComptable = Nothing
+    Set rng = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+
+    Application.ScreenUpdating = True
+
+    Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", startTime)
+
+End Sub
+
+Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet: Set ws = wshDEB_Trans
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'wshDEB_Trans
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastUsedRow <= 2 - HeaderRow Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Trans'")
+    r = r + 1
+    
+    'On a besoin du plan comptable pour valider les données
+    On Error Resume Next
+    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    On Error GoTo 0
+
+    If planComptable Is Nothing Then
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
+        r = r + 1
+        Exit Sub
+    End If
+    
+    Dim strGL As String
+    Dim ligne As Range
+    For Each ligne In planComptable.Rows
+        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).Value) & "^D:" & Trim(ligne.Cells(1, 1).Value) & " | "
+    Next ligne
+    
+    'Copie les données vers un tableau
+    Dim rng As Range
+    Set rng = ws.Range("A1:R" & lastUsedRow)
+    Dim arr() As Variant
+    Dim headerRows As Long
+    headerRows = 1
+    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    
+    'On analyse chacune des lignes du tableau
+    Dim i As Long, p As Long
+    Dim GL As String, descGL As String
+    
+    Dim isDebTransValid As Boolean
+    isDebTransValid = True
+    
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        
+        p = InStr(strGL, "^C:" & arr(i, 8))
+        If p = 0 Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 8) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        If p > 0 Then
+            GL = Mid(strGL, p + 3)
+            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            If descGL <> Trim(arr(i, 9)) Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
+                r = r + 1
+                isDebTransValid = False
+            End If
+        End If
+        
+        'Total
+        If IsNumeric(arr(i, 11)) = False Or arr(i, 11) <> Round(arr(i, 11), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        'TPS
+        If IsNumeric(arr(i, 12)) = False Or arr(i, 12) <> Round(arr(i, 12), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        'TVQ
+        If IsNumeric(arr(i, 13)) = False Or arr(i, 13) <> Round(arr(i, 13), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        'Intrant TPS
+        If IsNumeric(arr(i, 14)) = False Or arr(i, 14) <> Round(arr(i, 14), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        'Intrant TVQ
+        If IsNumeric(arr(i, 15)) = False Or arr(i, 15) <> Round(arr(i, 15), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        '$ dépense
+        If IsNumeric(arr(i, 16)) = False Or arr(i, 16) <> Round(arr(i, 16), 2) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
+            r = r + 1
+            isDebTransValid = False
+        End If
+        readRows = readRows + 1
+    Next i
+
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes de transactions ont été analysées")
+    r = r + 2
+    
+    'Cas problème dans cette vérification ?
+    If isDebTransValid = False Then
+        verificationIntegriteOK = False
+    End If
+
+Clean_Exit:
+    'Libérer la mémoire
+    Set ligne = Nothing
+    Set planComptable = Nothing
+    Set rng = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+
+    Application.ScreenUpdating = True
+
+    Call Log_Record("modAppli_Utils:checkDEB_Trans", "", startTime)
+
+End Sub
+
+Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'wshENC_Détails
+    Dim ws As Worksheet: Set ws = wshENC_Détails
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRowDetails As Long
+    lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    If lastUsedRowDetails <= 2 - HeaderRow Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRowDetails, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    'ENC_Entête Worksheet
+    Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
+    Dim lastUsedRowEntete As Long
+    lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
+    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
+    Dim strPmtNo As String
+    Dim i As Long
+    For i = 2 To lastUsedRowEntete
+        strPmtNo = strPmtNo & CLng(wsEntete.Cells(i, fEncEPayID).Value) & "|"
+    Next i
+    
+    'FAC_Entête Worksheet
+    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
+    Dim lastUsedRowFacEntete As Long
+    lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
+    Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
+    r = r + 1
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim pmtNo As Long, oldpmtNo As Long
+    Dim result As Variant
+    'Dictionary pour accumuler les encaissements par facture
+    Dim dictENC As Scripting.Dictionary
+    Set dictENC = New Scripting.Dictionary
+    Dim totalEncDetails As Currency
+    
+    Dim isEncDétailsValid As Boolean
+    isEncDétailsValid = True
+    
+    For i = 2 To lastUsedRowDetails
+        pmtNo = CLng(ws.Cells(i, fEncDPayID).Value)
+        If pmtNo <> oldpmtNo Then
+            If InStr(strPmtNo, pmtNo) = 0 Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
+                r = r + 1
+                isEncDétailsValid = False
+            End If
+            strPmtNo = strPmtNo & pmtNo & "|"
+            oldpmtNo = pmtNo
+        End If
+        
+        Dim Inv_No As String
+        Inv_No = CStr(ws.Cells(i, fEncDInvNo).Value)
+        result = Application.WorksheetFunction.XLookup(Inv_No, _
+                        rngFACEntete, _
+                        rngFACEntete, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
+            r = r + 1
+            isEncDétailsValid = False
+        End If
+        
+        If IsDate(ws.Cells(i, fEncDPayDate).Value) = False Or ws.Cells(i, fEncDPayDate) > Date Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fEncDPayDate).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
+            r = r + 1
+            isEncDétailsValid = False
+        End If
+        
+        If IsNumeric(ws.Cells(i, fEncDPayAmount).Value) = False Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le montant '" & ws.Cells(i, fEncDPayAmount).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
+            r = r + 1
+            isEncDétailsValid = False
+        Else
+            If dictENC.Exists(Inv_No) Then
+                dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
+            Else
+                dictENC.Add Inv_No, ws.Cells(i, fEncDPayAmount).Value
+            End If
+            totalEncDetails = totalEncDetails + ws.Cells(i, fEncDPayAmount).Value
+        End If
+    Next i
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
+    r = r + 1
+    
+    'Compare les encaissements accumulés (dictENC) avec wshFAC_Comptes_Clients
+    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
+    Dim lastUsedRow As Long
+    lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.Rows.count, 1).End(xlUp).row
+    Dim totalPaid As Currency
+    
+    For i = 3 To lastUsedRow
+        Inv_No = wsComptes_Clients.Cells(i, fFacCCInvNo).Value
+        totalPaid = wsComptes_Clients.Cells(i, fFacCCTotalPaid).Value
+        If totalPaid <> dictENC(Inv_No) Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Ligne # " & i & " - La facture '" & Inv_No & "', le total des enc. " _
+                            & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
+                            & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
+            r = r + 1
+            isEncDétailsValid = False
+        End If
+    Next i
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.Value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totalEncDetails, 1)), 12).Font.Bold = True
+
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + lastUsedRowDetails - 1
+    
+    'Cas problème dans cette vérification ?
+    If isEncDétailsValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set dictENC = Nothing
+    Set rng = Nothing
+    Set rngEntete = Nothing
+    Set rngFACEntete = Nothing
+    Set ws = Nothing
+    Set wsComptes_Clients = Nothing
+    Set wsFACEntete = Nothing
+    Set wsEntete = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli_Utils:checkENC_Détails", "", startTime)
+
+End Sub
+
+Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
+
+    Application.ScreenUpdating = False
+    
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    
+    'Clients Master File
+    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
+    Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
+    
+    'wshENC_Entête
+    Dim ws As Worksheet: Set ws = wshENC_Entête
+    Dim HeaderRow As Long: HeaderRow = 1
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    If lastUsedRow <= HeaderRow Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
+        r = r + 2
+        GoTo Clean_Exit
+    End If
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
+    r = r + 1
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Entête'")
+    r = r + 1
+    
+    If lastUsedRow = HeaderRow Then
+        r = r + 1
+        GoTo Clean_Exit
+    End If
+
+    Dim arr As Variant
+    arr = wshENC_Entête.Range("A1").CurrentRegion.offset(1, 0) _
+              .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
+    
+    'Array pointer
+    Dim row As Long: row = 1
+    Dim currentRow As Long
+        
+    Dim i As Long
+    Dim pmtNo As String
+    Dim totals As Currency
+    Dim result As Variant
+    
+    Dim isEncEntêteValid As Boolean
+    isEncEntêteValid = True
+    
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        pmtNo = arr(i, 1)
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
+            r = r + 1
+            isEncEntêteValid = False
+        End If
+        
+        Dim codeClient As String
+        codeClient = arr(i, 4)
+        result = Application.WorksheetFunction.XLookup(codeClient, _
+                        rngClients, _
+                        rngClients, _
+                        "Not Found", _
+                        0, _
+                        1)
+        If result = "Not Found" Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
+            r = r + 1
+            isEncEntêteValid = False
+        End If
+        totals = totals + arr(i, 6)
+    Next i
+    
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
+    r = r + 1
+    
+    'Un peu de couleur
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.Value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
+    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.Value, Left(totals, 1)), 12).Font.Bold = True
+    r = r + 2
+    
+    'Add number of rows processed (read)
+    readRows = readRows + UBound(arr, 1)
+    
+    'Cas problème dans cette vérification ?
+    If isEncEntêteValid = False Then
+        verificationIntegriteOK = False
+    End If
+    
+Clean_Exit:
+    'Libérer la mémoire
+    Set rng = Nothing
+    Set rngClients = Nothing
+    Set ws = Nothing
+    Set wsClients = Nothing
+    Set wsOutput = Nothing
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli_Utils:checkENC_Entête", "", startTime)
+
+End Sub
+
 Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Détails", "", 0)
@@ -1622,7 +1622,6 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
             If result = "Not Found" Then
                 Debug.Print "#019 " & result
             End If
-'            result = Application.WorksheetFunction.XLookup(ws.Cells(i, 1), rngMaster, rngMaster, "Not Found", 0, 1)
             oldInv_No = CStr(Inv_No)
         End If
         If result = "Not Found" Then
@@ -1725,7 +1724,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
-        If IsDate(arr(i, 2)) = False Then
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
             isFACEntêteValid = False
@@ -1927,7 +1926,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Date ?
-        If IsDate(CDate(arr(i, fFacCCInvoiceDate))) = False Then
+        If IsDate(CDate(arr(i, fFacCCInvoiceDate))) = False Or arr(i, fFacCCInvoiceDate) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date '" & arr(i, fFacCCInvoiceDate) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
@@ -2264,7 +2263,7 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isFacProjetEntêteValid = False
         End If
-        If IsDate(arr(i, 4)) = False Then
+        If IsDate(arr(i, 4)) = False Or arr(i, 4) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
             r = r + 1
             isFacProjetEntêteValid = False
@@ -2457,6 +2456,10 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
         End If
+        If IsDate(arr(i, 6)) = False Or arr(i, 6) > Date Then
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
+            r = r + 1
+        End If
         If IsNumeric(arr(i, 8)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
             r = r + 1
@@ -2576,7 +2579,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
             sum_arr(row, 1) = GL_Entry_No
             row = row + 1
         End If
-        If IsDate(arr(i, 2)) = False Then
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
             isGLTransValid = False
@@ -2897,7 +2900,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
             isTECTDBValid = False
         End If
         dateTEC = arr(i, 4)
-        If IsDate(dateTEC) = False Then
+        If IsDate(dateTEC) = False Or arr(i, 4) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECTDBValid = False
@@ -3125,7 +3128,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4053 'What is the last TECID analyzed ?
+    lastTECIDReported = 4079 'What is the last TECID analyzed ?
 
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3253,7 +3256,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         'Date
         dateTEC = arrTEC_Local_Data(i, 4)
         testDate = IsDate(dateTEC)
-        If testDate = False Then
+        If testDate = False Or arrTEC_Local_Data(i, 4) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECValid = False
@@ -3336,7 +3339,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         If arrTEC_Local_Data(i, 13) <> "" Then
             dateFact = arrTEC_Local_Data(i, 13)
             testDate = IsDate(dateFact)
-            If testDate = False Then
+            If testDate = False Or arrTEC_Local_Data(i, 13) > Date Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date de facture INVALIDE '" & dateFact & " !!!")
                 r = r + 1
                 isTECValid = False
@@ -4260,178 +4263,6 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
 End Sub
 
-'Sub Get_Deplacements_From_TEC_OK()  '2024-09-05 @ 10:22
-'
-'    Dim startTime as Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", 0)
-'
-'    Application.ScreenUpdating = False
-'    Application.EnableEvents = False
-'
-'    'Mise en place de la feuille de sortie (output)
-'    Dim strOutput As String
-'    strOutput = "X_TEC_Déplacements"
-'    Call CreateOrReplaceWorksheet(strOutput)
-'    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-'    wsOutput.Range("A1").Value = "Date"
-'    wsOutput.Range("B1").Value = "Date"
-'    wsOutput.Range("C1").Value = "Nom du client"
-'    wsOutput.Range("D1").Value = "Heures"
-'    wsOutput.Range("E1").Value = "Adresse_1"
-'    wsOutput.Range("F1").Value = "Adresse_2"
-'    wsOutput.Range("G1").Value = "Ville"
-'    wsOutput.Range("H1").Value = "Province"
-'    wsOutput.Range("I1").Value = "CodePostal"
-'    wsOutput.Range("J1").Value = "DistanceKM"
-'    wsOutput.Range("K1").Value = "Montant"
-'    Call Make_It_As_Header(wsOutput.Range("A1:K1"))
-'
-'    'Feuille pour les clients
-'    Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
-'    Dim lastUsedRowClientMF As Long
-'    lastUsedRowClientMF = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
-'    Dim rngClientsMF As Range
-'    Set rngClientsMF = wsMF.Range("A1:A" & lastUsedRowClientMF)
-'
-'    'Get From and To Dates
-'    Dim dateFrom As Date, dateTo As Date
-'    dateFrom = wshAdmin.Range("MoisPrecDe").Value
-'    dateTo = wshAdmin.Range("MoisPrecA").Value
-'
-'    'Analyse de TEC_Local
-'    Call TEC_Import_All
-'
-'    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
-'
-'    Dim lastUsedRowTEC As Long
-'    lastUsedRowTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
-'    Dim arr() As Variant
-'
-'    Call Tx_Range_2_2D_Array(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
-'
-'    Dim rowOutput As Long
-'    rowOutput = 2 'Skip the header
-'    Dim clientData As Variant
-'    Dim i As Long
-'    For i = LBound(arr, 1) To UBound(arr, 1)
-'        If arr(i, 3) = "GC" And _
-'            arr(i, 4) >= dateFrom And _
-'            arr(i, 4) <= dateTo And _
-'            UCase(arr(i, 14)) <> "VRAI" Then
-'                wsOutput.Cells(rowOutput, 1).Value = arr(i, 4)
-'                wsOutput.Cells(rowOutput, 1).NumberFormat = wshAdmin.Range("B1").Value
-'                wsOutput.Cells(rowOutput, 2).Value = arr(i, 4)
-'                wsOutput.Cells(rowOutput, 2).NumberFormat = wshAdmin.Range("B1").Value
-'                wsOutput.Cells(rowOutput, 4).Value = arr(i, 8)
-'                clientData = Fn_Rechercher_Client_Par_ID(Trim(arr(i, 5)), wsMF)
-'                If IsArray(clientData) Then
-'                    wsOutput.Cells(rowOutput, 3).Value = clientData(1, fClntFMClientNom)
-'                    wsOutput.Cells(rowOutput, 5).Value = clientData(1, fClntFMAdresse1)
-'                    wsOutput.Cells(rowOutput, 6).Value = clientData(1, fClntFMAdresse2)
-'                    wsOutput.Cells(rowOutput, 7).Value = clientData(1, fClntFMVille)
-'                    wsOutput.Cells(rowOutput, 8).Value = clientData(1, fClntFMProvince)
-'                    wsOutput.Cells(rowOutput, 9).Value = clientData(1, fClntFMCodePostal)
-'                End If
-'                rowOutput = rowOutput + 1
-'        End If
-'    Next i
-'
-'    'Colonne des Heures
-'    wsOutput.Range("D2:D" & rowOutput - 1).NumberFormat = "##0.00"
-'
-'    'Tri des données
-'    With wsOutput.Sort
-'        .SortFields.Clear
-'        .SortFields.Add key:=wsOutput.Range("B2"), _
-'            SortOn:=xlSortOnValues, _
-'            Order:=xlAscending, _
-'            DataOption:=xlSortTextAsNumbers 'Sort Date
-'        .SortFields.Add key:=wshTEC_Local.Range("C2"), _
-'            SortOn:=xlSortOnValues, _
-'            Order:=xlAscending, _
-'            DataOption:=xlSortNormal 'Sort on Client's name
-'        .SortFields.Add key:=wshTEC_Local.Range("D2"), _
-'            SortOn:=xlSortOnValues, _
-'            Order:=xlDescending, _
-'            DataOption:=xlSortNormal 'Sort on Hours
-'        .SetRange wsOutput.Range("A2:K" & rowOutput - 1) 'Set Range
-'        .Apply 'Apply Sort
-'     End With
-'
-'    wsOutput.Columns.AutoFit
-'
-'    'Améliore le Look (saute 1 ligne entre chaque jour)
-'    For i = rowOutput To 3 Step -1
-'        If Len(Trim(wsOutput.Cells(i, 3).Value)) > 0 Then
-'            If wsOutput.Cells(i, 2).Value <> wsOutput.Cells(i - 1, 2).Value Then
-'                wsOutput.Rows(i).Insert Shift:=xlDown
-'                wsOutput.Cells(i, 1).Value = wsOutput.Cells(i - 1, 2).Value
-'            End If
-'        End If
-'    Next i
-'
-'    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
-'
-'    'Améliore le Look (cache la date, le client et l'adresse si deux charges & +)
-'    Dim base As String
-'    For i = 2 To rowOutput
-'        If i = 2 Then
-'            base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
-'        End If
-'        If i > 2 And Len(wsOutput.Cells(i, 2).Value) > 0 Then
-'            If wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value = base Then
-'                wsOutput.Cells(i, 2).Value = ""
-'                wsOutput.Cells(i, 3).Value = ""
-'                wsOutput.Cells(i, 5).Value = ""
-'                wsOutput.Cells(i, 6).Value = ""
-'                wsOutput.Cells(i, 7).Value = ""
-'                wsOutput.Cells(i, 8).Value = ""
-'                wsOutput.Cells(i, 9).Value = ""
-'            Else
-'                base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
-'            End If
-'        End If
-'    Next i
-'
-'    'Result print setup - 2024-08-05 @ 05:16
-'    rowOutput = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row
-'
-'    For i = 3 To rowOutput
-'        If wsOutput.Cells(i, 1).Value > wsOutput.Cells(i - 1, 1).Value Then
-'            wsOutput.Cells(i, 2).Font.Bold = True
-'        Else
-'            wsOutput.Cells(i, 2).Value = ""
-'        End If
-'    Next i
-'    'Première date est en caractère gras
-'    wsOutput.Cells(2, 2).Font.Bold = True
-'    rowOutput = rowOutput + 2
-'    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 2, "###,##0") & _
-'                                        " charges de temps analysées dans l'ensemble du fichier ***"
-'
-'    'Set conditional formatting for the worksheet (alternate colors)
-'    Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
-'    Call ApplyConditionalFormatting(rngArea, 1, True)
-'
-'    Application.ScreenUpdating = True
-'    Application.EnableEvents = True
-'
-'    'Setup print parameters
-''    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
-'    Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
-'    Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
-'    Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
-'
-'    'Libérer la mémoire
-'    Set rngArea = Nothing
-'    Set rngClientsMF = Nothing
-'    Set wsOutput = Nothing
-'    Set wsMF = Nothing
-'    Set wsTEC = Nothing
-'
-'    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC_OK", "", startTime)
-'
-'End Sub
-'
 Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef jours As Long, ByRef heures As Long, _
                                     ByRef minutes As Long, ByRef secondes As Long)
@@ -4447,7 +4278,7 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
     'Calculer la différence (jours) entre maintenant et la date de la dernière modification
     Dim diff As Double
-    diff = Date - ddm
+    diff = Now - ddm
     
     'Convertir la différence en jours, heures, minutes et secondes
     jours = Int(diff)

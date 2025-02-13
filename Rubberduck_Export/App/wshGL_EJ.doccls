@@ -41,7 +41,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     shp.Left = 530
     shp.Width = 115
     shp.Height = 30
-'    shp.Fill.ForeColor.RGB = RGB(166, 166, 166)
     shp.TextFrame2.TextRange.Text = "Mettre à jour"
     shp.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
     
@@ -213,7 +212,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             If .Range("E" & Target.row).Value <> "" Then
                 .Range("L" & Target.row).Value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.row).Value)
             End If
-            
+
             If Target.row > 9 And wshGL_EJ.Range("F4").Value <> "Remise TPS/TVQ" And _
                 (.Range("H26").Value <> 0 Or .Range("I26").Value <> 0) And _
                 .Range("H26").Value <> .Range("I26").Value Then
